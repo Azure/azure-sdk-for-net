@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{0ED772D0-2E8C-4E55-B1EE-5B75FA80A896}</ProjectGuid>
+    <RootNamespace>NotificationHubs.Tests</RootNamespace>
+    <AssemblyName>NotificationHubs.Tests</AssemblyName>
+    <NuGetPackageImportStamp>da945abd</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NotificationHubsManagement\NotificationHubsManagement.csproj">
+      <Project>{D56E4444-B9DF-4B02-9329-FFE12B39832D}</Project>
+      <Name>NotificationHubsManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TestHelper\RecordedDelegatingHandler.cs" />
+    <Compile Include="Tests\ScenarioTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelper\NotificationHubsManagementHelper.cs" />
+    <Compile Include="Tests\ScenarioTests.NamespaceTests.CRUD.cs" />
+    <Compile Include="Tests\ScenarioTests.NamespaceTests.CRUDAuthorizationRules.cs" />
+    <Compile Include="Tests\ScenarioTests.NotificationHubTests.CheckAvailability.cs" />
+    <Compile Include="Tests\ScenarioTests.NotificationHubTests.CRUD.cs" />
+    <Compile Include="Tests\ScenarioTests.NotificationHubTests.CRUDAuthorizationRules.cs" />
+    <Compile Include="Tests\ScenarioTests.NamespaceTests.CheckAvailability.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\ScenarioTests\CheckNamespaceNameAvailability.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ScenarioTests\CheckNotificationHubNameAvailability.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ScenarioTests\NamespaceCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ScenarioTests\NamespaceCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ScenarioTests\NotificationHubCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ScenarioTests\NotificationHubCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

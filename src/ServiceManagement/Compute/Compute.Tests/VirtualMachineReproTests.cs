@@ -25,6 +25,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.Azure.Test;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Xunit;
     using Hyak.Common;
 
@@ -39,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
         }
 
         [Fact]
-        public void CanUpdateVMInputEndpoints()
+        public void CanUpdateHostedServiceExtendedProperties()
         {
             TestLogTracingInterceptor.Current.Start();
             using (var undoContext = UndoContext.Current)
@@ -186,6 +187,65 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     Assert.True(hostedService.Properties.ExtendedProperties["bar"] == "foo1");
                     Assert.True(hostedService.Properties.ExtendedProperties["baz"] == "foo2");
 
+                    var result = compute.HostedServices.DeleteAll(serviceName);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    compute.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanUpdateVMInputEndpoints()
+        {
+            TestLogTracingInterceptor.Current.Start();
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = fixture.GetManagementClient();
+                var compute = fixture.GetComputeManagementClient();
+                var storage = fixture.GetStorageManagementClient();
+
+                try
+                {
+                    string storageAccountName = TestUtilities.GenerateName("psteststo").ToLower();
+                    string serviceName = TestUtilities.GenerateName("pstestsvc");
+                    string serviceLabel = serviceName + "1";
+                    string serviceDescription = serviceName + "2";
+                    string deploymentName = string.Format("{0}Prod", serviceName);
+                    string deploymentLabel = deploymentName;
+
+                    string location = mgmt.GetDefaultLocation("Storage", "Compute");
+                    const string usWestLocStr = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, usWestLocStr, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = usWestLocStr;
+                    }
+
+                    storage.StorageAccounts.Create(
+                        new StorageAccountCreateParameters
+                        {
+                            Location = location,
+                            Label = storageAccountName,
+                            Name = storageAccountName,
+                            AccountType = StorageAccountTypes.StandardGRS
+                        });
+
+                    compute.HostedServices.Create(
+                        new HostedServiceCreateParameters
+                        {
+                            Location = location,
+                            Label = serviceDescription,
+                            Description = serviceLabel,
+                            ServiceName = serviceName
+                        });
+
                     var image = compute.VirtualMachineOSImages.List()
                                 .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
                                                                    "Windows",
@@ -244,7 +304,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
@@ -321,14 +406,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                            </RebootEvent>
                          </RebootEvents>
                        </DeploymentEventCollection> */
-                    var startTime = new DateTime(2015, 1, 10);
-                    var endTime = new DateTime(2015, 1, 20);
+                    //
+                    // Request Uri needs to be modified accordingly as well:
+                    // ".../events?starttime=2015-01-10T08:00:00.0000000Z&endtime=2015-01-20T08:00:00.0000000Z"
+                    var startTime = ComputeManagementTestUtilities.GetDeploymentEventStartDate();
+                    var endTime = ComputeManagementTestUtilities.GetDeploymentEventEndDate();
                     var events = compute.Deployments.ListEvents(serviceName, deploymentName, startTime, endTime);
                     var slot = DeploymentSlot.Production;
                     Func<RebootEvent, bool> func = e => !string.IsNullOrEmpty(e.RoleName)
                         && !string.IsNullOrEmpty(e.InstanceName)
                         && !string.IsNullOrEmpty(e.RebootReason)
-                        && e.RebootStartTime.Value >= startTime && e.RebootStartTime.Value <= endTime;
+                        && e.RebootStartTime.Value >= DateTime.MinValue.AddDays(1) && e.RebootStartTime.Value <= DateTime.MaxValue.AddDays(-1);
                     Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
                     events = compute.Deployments.ListEventsBySlot(serviceName, slot, startTime, endTime);
                     Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
@@ -376,7 +464,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                         ComputerName = serviceName,
                                         HostName = string.Format("{0}.cloudapp.net", serviceName),
                                         EnableAutomaticUpdates = false,
-                                        TimeZone = "Pacific Standard Time"
+                                        TimeZone = "Pacific Standard Time",
+                                        AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                        {
+                                            UnattendPasses = new List<UnattendPassSettings>
+                                            {
+                                                new UnattendPassSettings
+                                                {
+                                                    PassName = "oobeSystem",
+                                                    UnattendComponents = new List<UnattendComponent>
+                                                    {
+                                                        new UnattendComponent
+                                                        {
+                                                            ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                            UnattendComponentSettings = new List<ComponentSetting>
+                                                            {
+                                                                new ComponentSetting
+                                                                {
+                                                                    SettingName = "AutoLogon",
+                                                                    Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     },
                                     new ConfigurationSet
                                     {
@@ -1065,19 +1178,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             Location = location,
                             Label = serviceDescription,
                             Description = serviceLabel,
-                            ServiceName = serviceName,
-                            ExtendedProperties = new Dictionary<string, string>
-                            {
-                                { "foo1", "bar" },
-                                { "foo2", "baz" }
-                            }
+                            ServiceName = serviceName
                         });
 
                     var hostedService = compute.HostedServices.Get(serviceName);
                     Assert.True(hostedService.Properties.Label == serviceDescription);
                     Assert.True(hostedService.Properties.Description == serviceLabel);
-                    Assert.True(hostedService.Properties.ExtendedProperties["foo1"] == "bar");
-                    Assert.True(hostedService.Properties.ExtendedProperties["foo2"] == "baz");
 
                     var image = compute.VirtualMachineOSImages.List()
                                 .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
@@ -1137,7 +1243,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
@@ -1194,18 +1325,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                              || listSvcResult.ComputeCapabilities.VirtualMachinesRoleSizes.Count() > 0);
                     Assert.True(listSvcResult.ComputeCapabilities == null
                              || listSvcResult.ComputeCapabilities.WebWorkerRoleSizes.Count() > 0);
-
-                    var startTime = new DateTime(2015, 1, 10);
-                    var endTime = new DateTime(2015, 1, 20);
-                    var events = compute.Deployments.ListEvents(serviceName, deploymentName, startTime, endTime);
-                    var slot = DeploymentSlot.Production;
-                    Func<RebootEvent, bool> func = e => !string.IsNullOrEmpty(e.RoleName)
-                        && !string.IsNullOrEmpty(e.InstanceName)
-                        && !string.IsNullOrEmpty(e.RebootReason)
-                        && e.RebootStartTime.Value >= startTime && e.RebootStartTime.Value <= endTime;
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
-                    events = compute.Deployments.ListEventsBySlot(serviceName, slot, startTime, endTime);
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
 
                     compute.VirtualMachines.Shutdown(
                         serviceName,
@@ -1298,7 +1417,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
@@ -1496,6 +1640,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     //
                     // If this test is re-recorded, 'CreatedTime' and 'LastModifiedTime' of the response body
                     // should be modified again.
+                    //
+                    // Sample:
+                    // <CreatedTime>0001-01-01T00:00:00Z</CreatedTime>
+                    // <LastModifiedTime>9999-12-31T23:59:59Z</LastModifiedTime>
                     var getDepResult = compute.Deployments.GetByName(serviceName, deploymentName);
                     Assert.True(getDepResult.CreatedTime < DateTime.MinValue.AddDays(1));
                     Assert.True(getDepResult.LastModifiedTime > DateTime.MaxValue.AddDays(-1));

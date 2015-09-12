@@ -34,6 +34,25 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IResourceOperations
     {
         /// <summary>
+        /// Begin moving resources.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='sourceResourceGroupName'>
+        /// Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// move resources' parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginMovingAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Checks whether resource exists.
         /// </summary>
         /// <param name='resourceGroupName'>

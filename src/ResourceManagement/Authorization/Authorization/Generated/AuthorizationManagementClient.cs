@@ -84,6 +84,17 @@ namespace Microsoft.Azure.Management.Authorization
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IClassicAdministratorOperations _classicAdministrators;
+        
+        /// <summary>
+        /// Get classic administrator details  (see http://TBD for more
+        /// information)
+        /// </summary>
+        public virtual IClassicAdministratorOperations ClassicAdministrators
+        {
+            get { return this._classicAdministrators; }
+        }
+        
         private IPermissionOperations _permissions;
         
         /// <summary>
@@ -122,10 +133,11 @@ namespace Microsoft.Azure.Management.Authorization
         public AuthorizationManagementClient()
             : base()
         {
+            this._classicAdministrators = new ClassicAdministratorOperations(this);
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._apiVersion = "2015-07-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -193,10 +205,11 @@ namespace Microsoft.Azure.Management.Authorization
         public AuthorizationManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._classicAdministrators = new ClassicAdministratorOperations(this);
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._apiVersion = "2015-07-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

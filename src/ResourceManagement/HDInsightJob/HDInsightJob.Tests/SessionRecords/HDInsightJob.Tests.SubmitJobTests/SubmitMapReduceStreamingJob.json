@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1hZG1pbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=admin&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "173"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat MapReduce streaming job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "MapReduce",
+          "streaming",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0058\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265362253&s=bP8dPBlNxTuLubAigETfpdEDKu4=\"; Path=/; Expires=Thu, 03-Sep-2015 07:29:22 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:29:27 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

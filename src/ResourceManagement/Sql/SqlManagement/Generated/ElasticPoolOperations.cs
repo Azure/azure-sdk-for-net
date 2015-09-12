@@ -335,28 +335,28 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken dtuValue = propertiesValue2["dtu"];
                                 if (dtuValue != null && dtuValue.Type != JTokenType.Null)
                                 {
-                                    long dtuInstance = ((long)dtuValue);
+                                    int dtuInstance = ((int)dtuValue);
                                     propertiesInstance.Dtu = dtuInstance;
                                 }
                                 
                                 JToken databaseDtuMaxValue = propertiesValue2["databaseDtuMax"];
                                 if (databaseDtuMaxValue != null && databaseDtuMaxValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMaxInstance = ((long)databaseDtuMaxValue);
+                                    int databaseDtuMaxInstance = ((int)databaseDtuMaxValue);
                                     propertiesInstance.DatabaseDtuMax = databaseDtuMaxInstance;
                                 }
                                 
                                 JToken databaseDtuMinValue = propertiesValue2["databaseDtuMin"];
                                 if (databaseDtuMinValue != null && databaseDtuMinValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMinInstance = ((long)databaseDtuMinValue);
+                                    int databaseDtuMinInstance = ((int)databaseDtuMinValue);
                                     propertiesInstance.DatabaseDtuMin = databaseDtuMinInstance;
                                 }
                                 
                                 JToken storageMBValue = propertiesValue2["storageMB"];
                                 if (storageMBValue != null && storageMBValue.Type != JTokenType.Null)
                                 {
-                                    long storageMBInstance = ((long)storageMBValue);
+                                    int storageMBInstance = ((int)storageMBValue);
                                     propertiesInstance.StorageMB = storageMBInstance;
                                 }
                             }
@@ -858,28 +858,28 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken dtuValue = propertiesValue["dtu"];
                                 if (dtuValue != null && dtuValue.Type != JTokenType.Null)
                                 {
-                                    long dtuInstance = ((long)dtuValue);
+                                    int dtuInstance = ((int)dtuValue);
                                     propertiesInstance.Dtu = dtuInstance;
                                 }
                                 
                                 JToken databaseDtuMaxValue = propertiesValue["databaseDtuMax"];
                                 if (databaseDtuMaxValue != null && databaseDtuMaxValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMaxInstance = ((long)databaseDtuMaxValue);
+                                    int databaseDtuMaxInstance = ((int)databaseDtuMaxValue);
                                     propertiesInstance.DatabaseDtuMax = databaseDtuMaxInstance;
                                 }
                                 
                                 JToken databaseDtuMinValue = propertiesValue["databaseDtuMin"];
                                 if (databaseDtuMinValue != null && databaseDtuMinValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMinInstance = ((long)databaseDtuMinValue);
+                                    int databaseDtuMinInstance = ((int)databaseDtuMinValue);
                                     propertiesInstance.DatabaseDtuMin = databaseDtuMinInstance;
                                 }
                                 
                                 JToken storageMBValue = propertiesValue["storageMB"];
                                 if (storageMBValue != null && storageMBValue.Type != JTokenType.Null)
                                 {
-                                    long storageMBInstance = ((long)storageMBValue);
+                                    int storageMBInstance = ((int)storageMBValue);
                                     propertiesInstance.StorageMB = storageMBInstance;
                                 }
                             }
@@ -1897,6 +1897,13 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
+                                
+                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                {
+                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -2119,28 +2126,28 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken dtuValue = propertiesValue["dtu"];
                                 if (dtuValue != null && dtuValue.Type != JTokenType.Null)
                                 {
-                                    long dtuInstance = ((long)dtuValue);
+                                    int dtuInstance = ((int)dtuValue);
                                     propertiesInstance.Dtu = dtuInstance;
                                 }
                                 
                                 JToken databaseDtuMaxValue = propertiesValue["databaseDtuMax"];
                                 if (databaseDtuMaxValue != null && databaseDtuMaxValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMaxInstance = ((long)databaseDtuMaxValue);
+                                    int databaseDtuMaxInstance = ((int)databaseDtuMaxValue);
                                     propertiesInstance.DatabaseDtuMax = databaseDtuMaxInstance;
                                 }
                                 
                                 JToken databaseDtuMinValue = propertiesValue["databaseDtuMin"];
                                 if (databaseDtuMinValue != null && databaseDtuMinValue.Type != JTokenType.Null)
                                 {
-                                    long databaseDtuMinInstance = ((long)databaseDtuMinValue);
+                                    int databaseDtuMinInstance = ((int)databaseDtuMinValue);
                                     propertiesInstance.DatabaseDtuMin = databaseDtuMinInstance;
                                 }
                                 
                                 JToken storageMBValue = propertiesValue["storageMB"];
                                 if (storageMBValue != null && storageMBValue.Type != JTokenType.Null)
                                 {
-                                    long storageMBInstance = ((long)storageMBValue);
+                                    int storageMBInstance = ((int)storageMBValue);
                                     propertiesInstance.StorageMB = storageMBInstance;
                                 }
                             }
@@ -2391,28 +2398,28 @@ namespace Microsoft.Azure.Management.Sql
                                         JToken dtuValue = propertiesValue["dtu"];
                                         if (dtuValue != null && dtuValue.Type != JTokenType.Null)
                                         {
-                                            long dtuInstance = ((long)dtuValue);
+                                            int dtuInstance = ((int)dtuValue);
                                             propertiesInstance.Dtu = dtuInstance;
                                         }
                                         
                                         JToken databaseDtuMaxValue = propertiesValue["databaseDtuMax"];
                                         if (databaseDtuMaxValue != null && databaseDtuMaxValue.Type != JTokenType.Null)
                                         {
-                                            long databaseDtuMaxInstance = ((long)databaseDtuMaxValue);
+                                            int databaseDtuMaxInstance = ((int)databaseDtuMaxValue);
                                             propertiesInstance.DatabaseDtuMax = databaseDtuMaxInstance;
                                         }
                                         
                                         JToken databaseDtuMinValue = propertiesValue["databaseDtuMin"];
                                         if (databaseDtuMinValue != null && databaseDtuMinValue.Type != JTokenType.Null)
                                         {
-                                            long databaseDtuMinInstance = ((long)databaseDtuMinValue);
+                                            int databaseDtuMinInstance = ((int)databaseDtuMinValue);
                                             propertiesInstance.DatabaseDtuMin = databaseDtuMinInstance;
                                         }
                                         
                                         JToken storageMBValue = propertiesValue["storageMB"];
                                         if (storageMBValue != null && storageMBValue.Type != JTokenType.Null)
                                         {
-                                            long storageMBInstance = ((long)storageMBValue);
+                                            int storageMBInstance = ((int)storageMBValue);
                                             propertiesInstance.StorageMB = storageMBInstance;
                                         }
                                     }
@@ -4103,6 +4110,13 @@ namespace Microsoft.Azure.Management.Sql
                                                 }
                                             }
                                         }
+                                        
+                                        JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                        if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                            propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                        }
                                     }
                                     
                                     JToken idValue8 = valueValue["id"];
@@ -4141,579 +4155,6 @@ namespace Microsoft.Azure.Management.Sql
                                             string tagsKey8 = ((string)property8.Name);
                                             string tagsValue8 = ((string)property8.Value);
                                             databaseInstance.Tags.Add(tagsKey8, tagsValue8);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns information about metrics defined on a Azure SQL Database
-        /// Elastic Pool.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Serve belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server in which Azure SQL
-        /// Database Elastic Pools are hosted.
-        /// </param>
-        /// <param name='elasticPoolName'>
-        /// Required. The name of the Azure SQL Elastic Pool for which to get
-        /// the metrics.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents Azure SQL Database Elastic Pool metric definitions.
-        /// </returns>
-        public async Task<ElasticPoolMetricDefinitions> ListMetricDefinitionsAsync(string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException("elasticPoolName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("elasticPoolName", elasticPoolName);
-                TracingAdapter.Enter(invocationId, this, "ListMetricDefinitionsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/elasticPools/";
-            url = url + Uri.EscapeDataString(elasticPoolName);
-            url = url + "/metricDefinitions";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ElasticPoolMetricDefinitions result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ElasticPoolMetricDefinitions();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    MetricDefinition metricDefinitionInstance = new MetricDefinition();
-                                    result.MetricDefinitions.Add(metricDefinitionInstance);
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        MetricName nameInstance = new MetricName();
-                                        metricDefinitionInstance.Name = nameInstance;
-                                        
-                                        JToken valueValue2 = nameValue["value"];
-                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                        {
-                                            string valueInstance = ((string)valueValue2);
-                                            nameInstance.Value = valueInstance;
-                                        }
-                                        
-                                        JToken localizedValueValue = nameValue["localizedValue"];
-                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
-                                        {
-                                            string localizedValueInstance = ((string)localizedValueValue);
-                                            nameInstance.LocalizedValue = localizedValueInstance;
-                                        }
-                                    }
-                                    
-                                    JToken unitValue = valueValue["unit"];
-                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                    {
-                                        string unitInstance = ((string)unitValue);
-                                        metricDefinitionInstance.Unit = unitInstance;
-                                    }
-                                    
-                                    JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
-                                    if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string primaryAggregationTypeInstance = ((string)primaryAggregationTypeValue);
-                                        metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
-                                    }
-                                    
-                                    JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
-                                    if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
-                                        {
-                                            MetricAvailability metricAvailabilityInstance = new MetricAvailability();
-                                            metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
-                                            
-                                            JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
-                                            if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
-                                            {
-                                                string timeGrainInstance = ((string)timeGrainValue);
-                                                metricAvailabilityInstance.TimeGrain = timeGrainInstance;
-                                            }
-                                            
-                                            JToken retentionValue = metricAvailabilitiesValue["retention"];
-                                            if (retentionValue != null && retentionValue.Type != JTokenType.Null)
-                                            {
-                                                string retentionInstance = ((string)retentionValue);
-                                                metricAvailabilityInstance.Retention = retentionInstance;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns information about Azure SQL Database Elastic Pools.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Serve belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server in which Azure SQL
-        /// Database Elastic Pools are hosted.
-        /// </param>
-        /// <param name='elasticPoolName'>
-        /// Required. The name of the Azure SQL Elastic Pool for which to get
-        /// the metrics.
-        /// </param>
-        /// <param name='nameFilter'>
-        /// Required. The filter to apply on the name of the metrics.
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Required. The time granularity of the metric to retrieve.
-        /// </param>
-        /// <param name='startTime'>
-        /// Required. The start time for the interval.
-        /// </param>
-        /// <param name='endTime'>
-        /// Required. The end time for the interval.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents Azure SQL Database Elastic Pool metrics.
-        /// </returns>
-        public async Task<ElasticPoolMetrics> ListMetricsAsync(string resourceGroupName, string serverName, string elasticPoolName, string nameFilter, string timeGrain, string startTime, string endTime, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException("elasticPoolName");
-            }
-            if (nameFilter == null)
-            {
-                throw new ArgumentNullException("nameFilter");
-            }
-            if (timeGrain == null)
-            {
-                throw new ArgumentNullException("timeGrain");
-            }
-            if (startTime == null)
-            {
-                throw new ArgumentNullException("startTime");
-            }
-            if (endTime == null)
-            {
-                throw new ArgumentNullException("endTime");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("elasticPoolName", elasticPoolName);
-                tracingParameters.Add("nameFilter", nameFilter);
-                tracingParameters.Add("timeGrain", timeGrain);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                TracingAdapter.Enter(invocationId, this, "ListMetricsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/elasticPools/";
-            url = url + Uri.EscapeDataString(elasticPoolName);
-            url = url + "/metrics";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            List<string> odataFilter = new List<string>();
-            List<string> odataFilter2 = new List<string>();
-            odataFilter2.Add(Uri.EscapeDataString(nameFilter));
-            if (odataFilter2.Count > 0)
-            {
-                odataFilter.Add("(" + string.Join(null, odataFilter2) + ")");
-            }
-            odataFilter.Add("timeGrain eq duration'" + Uri.EscapeDataString(timeGrain) + "'");
-            odataFilter.Add("startTime eq " + Uri.EscapeDataString(startTime));
-            odataFilter.Add("endTime eq " + Uri.EscapeDataString(endTime));
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ElasticPoolMetrics result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ElasticPoolMetrics();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    Metric metricInstance = new Metric();
-                                    result.Metrics.Add(metricInstance);
-                                    
-                                    JToken startTimeValue = valueValue["startTime"];
-                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        metricInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = valueValue["endTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        metricInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken timeGrainValue = valueValue["timeGrain"];
-                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
-                                    {
-                                        string timeGrainInstance = ((string)timeGrainValue);
-                                        metricInstance.TimeGrain = timeGrainInstance;
-                                    }
-                                    
-                                    JToken unitValue = valueValue["unit"];
-                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                    {
-                                        string unitInstance = ((string)unitValue);
-                                        metricInstance.Unit = unitInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        Name nameInstance = new Name();
-                                        metricInstance.Name = nameInstance;
-                                        
-                                        JToken valueValue2 = nameValue["value"];
-                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                        {
-                                            string valueInstance = ((string)valueValue2);
-                                            nameInstance.Value = valueInstance;
-                                        }
-                                        
-                                        JToken localizedValueValue = nameValue["localizedValue"];
-                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
-                                        {
-                                            string localizedValueInstance = ((string)localizedValueValue);
-                                            nameInstance.LocalizedValue = localizedValueInstance;
-                                        }
-                                    }
-                                    
-                                    JToken metricValuesArray = valueValue["metricValues"];
-                                    if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
-                                        {
-                                            Value valueInstance2 = new Value();
-                                            metricInstance.Values.Add(valueInstance2);
-                                            
-                                            JToken timestampValue = metricValuesValue["timestamp"];
-                                            if (timestampValue != null && timestampValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime timestampInstance = ((DateTime)timestampValue);
-                                                valueInstance2.Timestamp = timestampInstance;
-                                            }
-                                            
-                                            JToken averageValue = metricValuesValue["average"];
-                                            if (averageValue != null && averageValue.Type != JTokenType.Null)
-                                            {
-                                                double averageInstance = ((double)averageValue);
-                                                valueInstance2.Average = averageInstance;
-                                            }
-                                            
-                                            JToken minimumValue = metricValuesValue["minimum"];
-                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
-                                            {
-                                                double minimumInstance = ((double)minimumValue);
-                                                valueInstance2.Minimum = minimumInstance;
-                                            }
-                                            
-                                            JToken maximumValue = metricValuesValue["maximum"];
-                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
-                                            {
-                                                double maximumInstance = ((double)maximumValue);
-                                                valueInstance2.Maximum = maximumInstance;
-                                            }
-                                            
-                                            JToken totalValue = metricValuesValue["total"];
-                                            if (totalValue != null && totalValue.Type != JTokenType.Null)
-                                            {
-                                                double totalInstance = ((double)totalValue);
-                                                valueInstance2.Total = totalInstance;
-                                            }
-                                            
-                                            JToken countValue = metricValuesValue["count"];
-                                            if (countValue != null && countValue.Type != JTokenType.Null)
-                                            {
-                                                double countInstance = ((double)countValue);
-                                                valueInstance2.Count = countInstance;
-                                            }
                                         }
                                     }
                                 }

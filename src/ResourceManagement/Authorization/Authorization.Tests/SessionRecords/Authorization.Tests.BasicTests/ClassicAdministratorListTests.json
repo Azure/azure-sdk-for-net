@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9jbGFzc2ljQWRtaW5pc3RyYXRvcnM/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test2@rbacCliTest.onmicrosoft.com\",\r\n        \"role\": \"ServiceAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000930A2D88\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000930A2D88\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test1@rbacCliTest.onmicrosoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10033FFF930A05B2\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10033FFF930A05B2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test3@rbacclitest.onmicrosoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000935D412D\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000935D412D\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"adrumea@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000803CDC0B\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000803CDC0B\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"shuagarw@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10033FFF8BEAB769\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10033FFF8BEAB769\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"stefmil@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/1003BFFD801C213F\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"1003BFFD801C213F\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"rakashya@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10033FFF8068C995\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10033FFF8068C995\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"nbaliga@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10037FFE801B28A0\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10037FFE801B28A0\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"mkayes@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10037FFE801BFC91\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10037FFE801BFC91\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"adaztsvc@microsoft.com\",\r\n        \"role\": \"AccountAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10037FFE85310016\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10037FFE85310016\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2999"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:88ae3e65-8152-42d2-8822-c99998b90a43"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "879f8cd4-301b-4390-b4e9-5c47dd9e6d43"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150902T220539Z:879f8cd4-301b-4390-b4e9-5c47dd9e6d43"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 22:05:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+  }
+}

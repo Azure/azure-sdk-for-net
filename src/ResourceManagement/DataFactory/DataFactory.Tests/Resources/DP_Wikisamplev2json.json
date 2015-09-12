@@ -1,57 +1,67 @@
 {
-    name: "DP_WikipediaSamplePipeline",
-    properties:
-    {
-        description : "DP Wikipedia Sample Pipelines",
-        activities:
-        [
-            {
-                name: "WikiHiveActivity",
-                inputs: [ {name: "DA_WikipediaClickEvents"} ],
-                outputs: [ {name: "DA_CuratedWikiData"} ],
-                linkedServiceName: "HDILinkedService",
-                type: "HDInsightActivity",
-                transformation:
-                {
-                    type: "Hive",
-                    script: "$$Text.Format('DROP TABLE IF EXISTS values; CREATE EXTERNAL TABLE values (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\' \\' LINES TERMINATED BY \\'10\\' STORED AS TEXTFILE LOCATION \\'wasb://wikidatagateway@linstore.blob.core.windows.net/wikisampledatain\\'; DROP TABLE IF EXISTS stats; CREATE EXTERNAL TABLE stats (slicetimestamp string, projectname string, pageviews string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\',\\' LINES TERMINATED BY \\'10\\' STORED AS TEXTFILE LOCATION \\'wasb://wikidatagateway@linstore.blob.core.windows.net/wikisampledataout/{0:yyyyMMddHH}\\'; INSERT OVERWRITE TABLE Stats SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\'2014/02/25\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\'[.]\\'))=1 THEN \\'wikipedia\\' ELSE CASE split(projectname, \\'[.]\\')[1] WHEN \\'b\\' THEN \\'wikibooks\\' WHEN \\'d\\' THEN \\'wiktionary\\' WHEN \\'m\\' THEN \\'wikimedia\\' WHEN \\'mv\\' THEN \\'wikipedia mobile\\' WHEN \\'n\\' THEN \\'wikinews\\' WHEN \\'q\\' THEN \\'wikiquote\\' WHEN \\'s\\' THEN \\'wikisource\\' WHEN \\'v\\' THEN \\'wikiversity\\' WHEN \\'w\\' THEN \\'mediawiki\\' ELSE \\'n/a\\' END END AS projectname, pageviews FROM values) A GROUP BY slicetimestamp, projectname;', SliceStart)"
-                },
-                policy:
-                {
-                    concurrency: 1,
-                    executionPriorityOrder: "NewestFirst",
-                    retry: 2,
-                    timeout: "01:00:00"
-                }
-            },
-            {
-                name: "BlobToSqlCopyActivity",
-                inputs: [ {name: "DA_CuratedWikiData"} ],
-                outputs: [ {name: "DA_WikiAggregatedData"} ],
-                linkedServiceName: "HDILinkedService",
-                type: "CopyActivity",
-                transformation:
-                {
-                    source:
-                    {                               
-                        type: "BlobSource",
-                        blobColumnSeparators: ","
-                    },
-                    sink:
-                    {
-                        type: "SqlSink",
-                        writeBatchSize: 1000000,
-                        writeBatchTimeout: "01:00:00"
-                    }
-                },
-                policy:
-                {
-                    concurrency: 1,
-                    executionPriorityOrder: "NewestFirst",
-                    retry: 2,
-                    timeout: "01:00:00"
-                }
-            }
-        ]
-    }
+  "name": "DP_WikipediaSamplePipeline",
+  "properties": {
+    "description": "DP Wikipedia Sample Pipelines",
+    "activities": [
+      {
+        "name": "WikiHiveActivity",
+        "inputs": [
+          {
+            "name": "DA_WikipediaClickEvents"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "DA_CuratedWikiData"
+          }
+        ],
+        "linkedServiceName": "HDILinkedService",
+        "type": "HDInsightHive",
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "NewestFirst",
+          "retry": 2,
+          "timeout": "01:00:00"
+        },
+        "typeProperties": {
+            "script": "$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\' \\' LINES TERMINATED BY \\'10\\' STORED AS TEXTFILE LOCATION \\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledatain\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\',\\' LINES TERMINATED BY \\'10\\' STORED AS TEXTFILE LOCATION \\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\'{0:yyyyMMddHH}\\') LOCATION \\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\'{0:yyyyMMddHH}\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\'{0:yyyy/MM/dd HH:00:00}\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\'[.]\\'))=1 THEN \\'wikipedia\\' ELSE CASE split(projectname, \\'[.]\\')[1] WHEN \\'b\\' THEN \\'wikibooks\\' WHEN \\'d\\' THEN \\'wiktionary\\' WHEN \\'m\\' THEN \\'wikimedia\\' WHEN \\'mv\\' THEN \\'wikipedia mobile\\' WHEN \\'n\\' THEN \\'wikinews\\' WHEN \\'q\\' THEN \\'wikiquote\\' WHEN \\'s\\' THEN \\'wikisource\\' WHEN \\'v\\' THEN \\'wikiversity\\' WHEN \\'w\\' THEN \\'mediawiki\\' ELSE \\'n/a\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)"
+        },
+        "scheduler": {
+            "frequency": "Hour",
+            "interval": 1
+        }
+      },
+      {
+        "name": "BlobToSqlCopyActivity",
+        "inputs": [
+          {
+            "name": "DA_CuratedWikiData"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "DA_WikiAggregatedData"
+          }
+        ],
+        "linkedServiceName": "HDILinkedService",
+        "type": "Copy",
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "NewestFirst",
+          "retry": 2,
+          "timeout": "01:00:00"
+        },
+        "typeProperties": {
+          "source": {
+            "type": "BlobSource"
+          },
+          "sink": {
+            "type": "SqlSink",
+            "writeBatchSize": 1000000,
+            "writeBatchTimeout": "01:00:00"
+          }
+        }
+      }
+    ]
+  }
 }

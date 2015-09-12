@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/pig?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9waWc/dXNlci5uYW1lPWFkbWlu",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=admin&execute=records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';grouped_records = GROUP filtered_records BY Country;DUMP grouped_records;&file=&arg=&files=&statusdir=&enablelog=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "384"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat Hive job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "Hive",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0057\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265358273&s=S2kQoDFSgXfo3+lN68B8WN1q1W0=\"; Path=/; Expires=Thu, 03-Sep-2015 07:29:18 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:29:22 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

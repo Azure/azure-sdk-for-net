@@ -1,0 +1,133 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/hive?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1hZG1pbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=admin&execute=FAKEQUERY;&file=&arg=&files=&statusdir=jobstatus&enablelog=&define=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "91"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat Hive job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "Hive",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0062\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265405152&s=V72nHrLL0iDiKn39YYWw2y8embU=\"; Path=/; Expires=Thu, 03-Sep-2015 07:30:05 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:30:32 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1441139801399_0062?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMTM5ODAxMzk5XzAwNjI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat get job"
+        ],
+        "User-Agent": [
+          "xplat",
+          "get",
+          "job"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441229431578,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0062/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0062/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1441139801399_0062\",\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 62,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    },\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0062/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0062/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1441139801399_0062\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 62,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    }\r\n  },\r\n  \"id\": \"job_1441139801399_0062\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1447"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:30:32 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1441139801399_0062?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMTM5ODAxMzk5XzAwNjI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat get job"
+        ],
+        "User-Agent": [
+          "xplat",
+          "get",
+          "job"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441229431578,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0062/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0062/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1441139801399_0062\",\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 62,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    },\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0062/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0062/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1441139801399_0062\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 62,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    }\r\n  },\r\n  \"id\": \"job_1441139801399_0062\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1447"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:30:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
