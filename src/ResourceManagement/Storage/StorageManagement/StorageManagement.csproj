@@ -18,7 +18,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Storage.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.Storage.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Microsoft.Azure.Management.Storage.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
