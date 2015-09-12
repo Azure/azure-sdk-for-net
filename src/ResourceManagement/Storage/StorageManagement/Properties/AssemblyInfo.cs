@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Storage management functions for managing the Microsoft Azure Storage service.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.4.1.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
