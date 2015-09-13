@@ -13,18 +13,17 @@
 // limitations under the License.
 //
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using System.Collections;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -77,9 +76,9 @@ namespace Compute.Tests
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
-                string rgName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM;
                 try
                 {   
@@ -140,9 +139,9 @@ namespace Compute.Tests
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
-                string rgName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM;
 
                 try
@@ -160,8 +159,8 @@ namespace Compute.Tests
 
                     Subnet subnetResponse = CreateVNET(rgName);
 
-                    string nicname1 = TestUtilities.GenerateName();
-                    string nicname2 = TestUtilities.GenerateName();
+                    string nicname1 = ComputeManagementTestUtilities.GenerateName(null);
+                    string nicname2 = ComputeManagementTestUtilities.GenerateName(null);
                     NetworkInterface nicResponse1 = CreateNIC(rgName, subnetResponse, null, nicname1);
                     NetworkInterface nicResponse2 = CreateNIC(rgName, subnetResponse, null, nicname2);
                     string asetId = CreateAvailabilitySet(rgName, asName);

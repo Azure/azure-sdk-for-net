@@ -15,11 +15,9 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using System.Net;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
-using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -50,9 +48,9 @@ namespace Compute.Tests
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 // Create resource group
-                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
-                string asName = TestUtilities.GenerateName("as");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                string rg1Name = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1;
 
                 try
@@ -70,8 +68,8 @@ namespace Compute.Tests
 
                     var captureParams = new VirtualMachineCaptureParameters
                     {
-                        DestinationContainerName = TestUtilities.GenerateName(TestPrefix),
-                        VhdPrefix = TestUtilities.GenerateName(TestPrefix),
+                        DestinationContainerName = ComputeManagementTestUtilities.GenerateName(TestPrefix),
+                        VhdPrefix = ComputeManagementTestUtilities.GenerateName(TestPrefix),
                         OverwriteVhds = true
                     };
 
