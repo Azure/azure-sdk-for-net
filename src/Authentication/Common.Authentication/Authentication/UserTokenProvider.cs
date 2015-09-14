@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         private AuthenticationContext CreateContext(AdalConfiguration config)
         {
-            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, AzureSession.TokenCache)
+            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, config.TokenCache)
             {
                 OwnerWindow = parentWindow
             };

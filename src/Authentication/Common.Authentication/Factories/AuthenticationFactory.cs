@@ -12,14 +12,15 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Hyak.Common;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure.Authentication;
 using System;
 using System.Linq;
 using System.Security;
+using Hyak.Common;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Azure.Common.Authentication.Factories
 {
@@ -40,14 +41,28 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             string tenant, 
             SecureString password, 
             ShowDialog promptBehavior,
+            TokenCache tokenCache, 
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
-            var configuration = GetAdalConfiguration(environment, tenant, resourceId);
+            var configuration = GetAdalConfiguration(environment, tenant, resourceId, tokenCache);
+
             TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint, 
                 configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
+
             var token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
             account.Id = token.UserId;
             return token;
+        }
+
+        public IAccessToken Authenticate(
+            AzureAccount account,
+            AzureEnvironment environment,
+            string tenant,
+            SecureString password,
+            ShowDialog promptBehavior,
+            AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
+        {
+            return Authenticate(account, environment, tenant, password, promptBehavior, AzureSession.TokenCache, resourceId);
         }
 
         public SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context)
@@ -100,7 +115,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         }
 
         private AdalConfiguration GetAdalConfiguration(AzureEnvironment environment, string tenantId,
-            AzureEnvironment.Endpoint resourceId)
+            AzureEnvironment.Endpoint resourceId, TokenCache tokenCache)
         {
             if (environment == null)
             {
@@ -113,7 +128,8 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 AdEndpoint = adEndpoint,
                 ResourceClientUri = environment.Endpoints[resourceId],
                 AdDomain = tenantId, 
-                ValidateAuthority = !environment.OnPremise
+                ValidateAuthority = !environment.OnPremise,
+                TokenCache = tokenCache
             };
         }
 
