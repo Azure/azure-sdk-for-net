@@ -46,8 +46,7 @@ namespace Microsoft.Azure.Common.Authentication
             StoreAppKey(appId, config.AdDomain, appKey);
 
             string authority = config.AdEndpoint + config.AdDomain;
-            var context = new AuthenticationContext(authority, config.ValidateAuthority,
-                AzureSession.TokenCache);
+            var context = new AuthenticationContext(authority, config.ValidateAuthority, config.TokenCache);
             var credential = new ClientCredential(appId, appKey);
             return context.AcquireToken("https://management.core.windows.net/", credential);
         }
