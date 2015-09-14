@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
         public TClient CreateClient<TClient>(AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) 
             where TClient : ServiceClient<TClient>
         {
-            return CreateClient<TClient>(profile.DefaultContext, endpoint);
+            return CreateClient<TClient>(profile.Context, endpoint);
         }
 
         public TClient CreateCustomClient<TClient>(params object[] parameters) 

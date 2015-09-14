@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                   .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
                   .FirstOrDefault();
 
+            if (tenant == null && context.Tenant != null && context.Tenant.Id != Guid.Empty)
+            {
+                tenant = context.Tenant.Id.ToString();
+            }
+
             if (tenant == null)
             {
                 throw new ArgumentException(Resources.TenantNotFound);
@@ -101,8 +106,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
                     context.Account.Id, context.Environment.Name, tenant);
-                var token = Authenticate(context.Account, context.Environment, 
-                    tenant, null, ShowDialog.Never);
+                var tokenCache = new TokenCache(context.TokenCache);
+                var token = Authenticate(context.Account, context.Environment,
+                    tenant, null, ShowDialog.Never, tokenCache);
+                context.TokenCache = tokenCache.Serialize();
                 TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace, 
                     token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
@@ -154,6 +161,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
                   .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
                   .FirstOrDefault();
+
+            if (tenant == null && context.Tenant != null && context.Tenant.Id != Guid.Empty)
+            {
+                tenant = context.Tenant.Id.ToString();
+            }
 
             if (tenant == null)
             {
