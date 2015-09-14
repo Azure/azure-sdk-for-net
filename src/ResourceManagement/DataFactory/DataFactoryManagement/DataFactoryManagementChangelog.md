@@ -6,5 +6,6 @@ _Release date:_
 
 ### Feature Additions
 
+* Add stored procedure support for both SQL and SQL DW source.
 
 ### Bug Fixes
