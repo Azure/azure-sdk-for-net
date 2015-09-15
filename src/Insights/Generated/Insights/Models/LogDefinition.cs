@@ -20,68 +20,66 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// The event count summary item for a single resource.
+    /// Log definition class specifies the metadata for a log.
     /// </summary>
-    public partial class EventStatusCountSummaryItem
+    public partial class LogDefinition
     {
-        private DateTime _eventTime;
+        private BlobLocation _blobLocation;
         
         /// <summary>
-        /// Optional. The event summary time.
+        /// Optional. Gets or sets the location of the blob.
         /// </summary>
-        public DateTime EventTime
+        public BlobLocation BlobLocation
         {
-            get { return this._eventTime; }
-            set { this._eventTime = value; }
+            get { return this._blobLocation; }
+            set { this._blobLocation = value; }
         }
         
-        private string _id;
+        private LocalizableString _category;
         
         /// <summary>
-        /// Optional. The resource id.
+        /// Optional. Gets or sets the category of the log.
         /// </summary>
-        public string Id
+        public LocalizableString Category
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._category; }
+            set { this._category = value; }
         }
         
-        private IList<StatusCount> _statusCounts;
+        private string _resourceUri;
         
         /// <summary>
-        /// Optional. The status counts.
+        /// Optional. Gets or sets the resource identifier of the resource that
+        /// has emitted the log.
         /// </summary>
-        public IList<StatusCount> StatusCounts
+        public string ResourceUri
         {
-            get { return this._statusCounts; }
-            set { this._statusCounts = value; }
+            get { return this._resourceUri; }
+            set { this._resourceUri = value; }
         }
         
-        private TimeSpan _timeGrain;
+        private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. The time grain of the summary item.
+        /// Optional. Gets or sets the retention.
         /// </summary>
-        public TimeSpan TimeGrain
+        public TimeSpan Retention
         {
-            get { return this._timeGrain; }
-            set { this._timeGrain = value; }
+            get { return this._retention; }
+            set { this._retention = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventStatusCountSummaryItem class.
+        /// Initializes a new instance of the LogDefinition class.
         /// </summary>
-        public EventStatusCountSummaryItem()
+        public LogDefinition()
         {
-            this.StatusCounts = new LazyList<StatusCount>();
         }
     }
 }

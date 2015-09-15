@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleResourceCollection _ruleResourceCollection;
         
         /// <summary>
-        /// Optional. Alert rules collection.
+        /// Optional. Gets or sets the alert rules collection.
         /// </summary>
         public RuleResourceCollection RuleResourceCollection
         {

@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Insights
             // Construct URL
             string url = "";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + resourceUri;
             url = url + "/metricDefinitions";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-04-01");

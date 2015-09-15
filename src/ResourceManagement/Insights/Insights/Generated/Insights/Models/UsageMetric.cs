@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Insights.Models
         private double _currentValue;
         
         /// <summary>
-        /// Optional. The current value for the usage metric.
+        /// Optional. Gets or sets the current value for the usage metric.
         /// </summary>
         public double CurrentValue
         {
@@ -41,10 +41,21 @@ namespace Microsoft.Azure.Insights.Models
             set { this._currentValue = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id for the usage metric.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private double _limit;
         
         /// <summary>
-        /// Optional. The quota limit the usage metric.
+        /// Optional. Gets or sets the quota limit the usage metric.
         /// </summary>
         public double Limit
         {
@@ -55,7 +66,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. Get the usage metric name and display name.
+        /// Optional. Gets or sets the usage metric name and display name.
         /// </summary>
         public LocalizableString Name
         {
@@ -66,7 +77,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _nextResetTime;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// Optional. Gets or sets the next reset time for the current value.
         /// </summary>
         public string NextResetTime
         {
@@ -77,7 +88,8 @@ namespace Microsoft.Azure.Insights.Models
         private System.TimeSpan? _quotaPeriod;
         
         /// <summary>
-        /// Optional. The amount of time it takes to reset the value.
+        /// Optional. Gets or sets the amount of time it takes to reset the
+        /// value.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {
@@ -88,7 +100,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. The unit for the usage metric.
+        /// Optional. Gets or sets the unit for the usage metric.
         /// </summary>
         public string Unit
         {

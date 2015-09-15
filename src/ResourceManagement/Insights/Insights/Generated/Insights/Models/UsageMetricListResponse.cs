@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private UsageMetricCollection _usageMetricCollection;
         
         /// <summary>
-        /// Optional. The list of usage metrics.
+        /// Optional. Gets or sets the list of usage metrics.
         /// </summary>
         public UsageMetricCollection UsageMetricCollection
         {

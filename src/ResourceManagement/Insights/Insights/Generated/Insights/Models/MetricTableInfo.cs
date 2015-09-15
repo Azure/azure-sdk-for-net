@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// Optional. The last data that will this table.
+        /// Optional. Gets or sets the last data that will this table.
         /// </summary>
         public DateTime EndTime
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _sasToken;
         
         /// <summary>
-        /// Optional. SAS Key for accessing the table.
+        /// Optional. Gets or sets the SAS Key for accessing the table.
         /// </summary>
         public string SasToken
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _sasTokenExpirationTime;
         
         /// <summary>
-        /// Optional. When the SAS Key will expire.
+        /// Optional. Gets or sets the expiration date/time of the SAS Key.
         /// </summary>
         public DateTime SasTokenExpirationTime
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. The first data will appear in the data.
+        /// Optional. Gets or sets the first data will appear in the data.
         /// </summary>
         public DateTime StartTime
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableName;
         
         /// <summary>
-        /// Optional. The name of the table.
+        /// Optional. Gets or sets the name of the table.
         /// </summary>
         public string TableName
         {

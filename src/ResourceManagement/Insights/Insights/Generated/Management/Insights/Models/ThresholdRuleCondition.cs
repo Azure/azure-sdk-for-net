@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Optional. The resource from which the rule collects its data.
+        /// Optional. Gets or sets the resource from which the rule collects
+        /// its data.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ConditionOperator _operator;
         
         /// <summary>
-        /// Optional. The operator used to compare the data and the threshold.
+        /// Optional. Gets or sets the operator used to compare the data and
+        /// the threshold.
         /// </summary>
         public ConditionOperator Operator
         {
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private double _threshold;
         
         /// <summary>
-        /// Optional. The threshold value that activates the alert.
+        /// Optional. Gets or sets the threshold value that activates the alert.
         /// </summary>
         public double Threshold
         {
@@ -66,9 +68,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? _timeAggregation;
         
         /// <summary>
-        /// Optional. How the data that is collected should be combined over
-        /// time. The default value is the PrimaryAggregationType of the
-        /// Metric.
+        /// Optional. Gets or sets the time aggregation operator. How the data
+        /// that is collected should be combined over time. The default value
+        /// is the PrimaryAggregationType of the Metric.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? TimeAggregation
         {
@@ -79,8 +81,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// Optional. The period of time that is used to monitor alert activity
-        /// based on the threshold. Must be between 5 minutes and 1 day.
+        /// Optional. Gets or sets the period of time that is used to monitor
+        /// alert activity based on the threshold. Must be between 5 minutes
+        /// and 1 day.
         /// </summary>
         public TimeSpan WindowSize
         {

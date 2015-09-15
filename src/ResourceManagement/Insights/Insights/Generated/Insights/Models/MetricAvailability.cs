@@ -31,10 +31,22 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     public partial class MetricAvailability
     {
+        private BlobLocation _blobLocation;
+        
+        /// <summary>
+        /// Optional. Gets or sets the location info for this availability.
+        /// </summary>
+        public BlobLocation BlobLocation
+        {
+            get { return this._blobLocation; }
+            set { this._blobLocation = value; }
+        }
+        
         private MetricLocation _location;
         
         /// <summary>
-        /// Optional. Where the data for this metric availability is stored.
+        /// Optional. Gets or sets the location where the data for this metric
+        /// availability is stored.
         /// </summary>
         public MetricLocation Location
         {
@@ -45,8 +57,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. The retention period for the metric at the specified
-        /// timegrain.
+        /// Optional. Gets or sets the retention period for the metric at the
+        /// specified timegrain.
         /// </summary>
         public TimeSpan Retention
         {
@@ -57,8 +69,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The time grain specifies the aggregation interval for the
-        /// metric.
+        /// Optional. Gets or sets the time grain specifies the aggregation
+        /// interval for the metric.
         /// </summary>
         public TimeSpan TimeGrain
         {

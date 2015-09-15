@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricDefinition> _value;
         
         /// <summary>
-        /// Optional. The values for the metric definitions.
+        /// Optional. Gets or sets the values for the metric definitions.
         /// </summary>
         public IList<MetricDefinition> Value
         {

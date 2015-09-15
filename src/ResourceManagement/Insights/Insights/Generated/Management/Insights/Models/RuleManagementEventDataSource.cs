@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleManagementEventClaimsDataSource _claims;
         
         /// <summary>
-        /// Optional. The claims.
+        /// Optional. Gets or sets the claims.
         /// </summary>
         public RuleManagementEventClaimsDataSource Claims
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _eventName;
         
         /// <summary>
-        /// Optional. The event name.
+        /// Optional. Gets or sets the event name.
         /// </summary>
         public string EventName
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _eventSource;
         
         /// <summary>
-        /// Optional. The event source.
+        /// Optional. Gets or sets the event source.
         /// </summary>
         public string EventSource
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _level;
         
         /// <summary>
-        /// Optional. The level.
+        /// Optional. Gets or sets the level.
         /// </summary>
         public string Level
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _operationName;
         
         /// <summary>
-        /// Optional. The operation name.
+        /// Optional. Gets or sets the operation name.
         /// </summary>
         public string OperationName
         {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceGroupName;
         
         /// <summary>
-        /// Optional. The resource group name.
+        /// Optional. Gets or sets the resource group name.
         /// </summary>
         public string ResourceGroupName
         {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceProviderName;
         
         /// <summary>
-        /// Optional. The resource provider name.
+        /// Optional. Gets or sets the resource provider name.
         /// </summary>
         public string ResourceProviderName
         {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceUri;
         
         /// <summary>
-        /// Optional. The resource uri.
+        /// Optional. Gets or sets the resource uri.
         /// </summary>
         public string ResourceUri
         {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _status;
         
         /// <summary>
-        /// Optional. The status.
+        /// Optional. Gets or sets the status.
         /// </summary>
         public string Status
         {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _subStatus;
         
         /// <summary>
-        /// Optional. The substatus.
+        /// Optional. Gets or sets the substatus.
         /// </summary>
         public string SubStatus
         {

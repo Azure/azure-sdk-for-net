@@ -33,10 +33,11 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageLoggingConfiguration _loggingConfiguration;
         
         /// <summary>
-        /// Optional. Settings for logging successful and failed requests to a
-        /// storage service. This information can be used to monitor
-        /// individual requests and to diagnose issues with a storage service.
-        /// Requests are logged on a best-effort basis.
+        /// Optional. Gets or sets the storage logging configuration. Settings
+        /// for logging successful and failed requests to a storage service.
+        /// This information can be used to monitor individual requests and to
+        /// diagnose issues with a storage service. Requests are logged on a
+        /// best-effort basis.
         /// </summary>
         public StorageLoggingConfiguration LoggingConfiguration
         {
@@ -47,8 +48,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageMetricConfiguration _metricConfiguration;
         
         /// <summary>
-        /// Optional. Settings for metrics that include aggregated transaction
-        /// statistics and capacity data about requests to a storage service.
+        /// Optional. Gets or sets the settings for metrics that include
+        /// aggregated transaction statistics and capacity data about requests
+        /// to a storage service.
         /// </summary>
         public StorageMetricConfiguration MetricConfiguration
         {

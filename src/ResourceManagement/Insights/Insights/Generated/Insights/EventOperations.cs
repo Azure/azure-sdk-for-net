@@ -26,7 +26,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Hyak.Common;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.Insights
             }
             url = url + "/providers/microsoft.insights/eventtypes/management/digestEvents";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-04-01");
             List<string> odataFilter = new List<string>();
             odataFilter.Add(Uri.EscapeDataString(filterString));
             if (odataFilter.Count > 0)
@@ -311,24 +310,24 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken eventSourceValue = valueValue["eventSource"];
-                                    if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                     {
-                                        LocalizableString eventSourceInstance = new LocalizableString();
-                                        eventDataInstance.EventSource = eventSourceInstance;
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
                                         
-                                        JToken valueValue3 = eventSourceValue["value"];
+                                        JToken valueValue3 = categoryValue["value"];
                                         if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                         {
                                             string valueInstance2 = ((string)valueValue3);
-                                            eventSourceInstance.Value = valueInstance2;
+                                            categoryInstance.Value = valueInstance2;
                                         }
                                         
-                                        JToken localizedValueValue2 = eventSourceValue["localizedValue"];
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
                                         if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                         {
                                             string localizedValueInstance2 = ((string)localizedValueValue2);
-                                            eventSourceInstance.LocalizedValue = localizedValueInstance2;
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
                                         }
                                     }
                                     
@@ -402,11 +401,32 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        eventDataInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
                                     }
                                     
                                     JToken operationIdValue = valueValue["operationId"];
@@ -422,18 +442,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString operationNameInstance = new LocalizableString();
                                         eventDataInstance.OperationName = operationNameInstance;
                                         
-                                        JToken valueValue5 = operationNameValue["value"];
-                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                         {
-                                            string valueInstance4 = ((string)valueValue5);
-                                            operationNameInstance.Value = valueInstance4;
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
                                         }
                                         
-                                        JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance4 = ((string)localizedValueValue4);
-                                            operationNameInstance.LocalizedValue = localizedValueInstance4;
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
                                         }
                                     }
                                     
@@ -454,18 +474,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString statusInstance = new LocalizableString();
                                         eventDataInstance.Status = statusInstance;
                                         
-                                        JToken valueValue6 = statusValue["value"];
-                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                         {
-                                            string valueInstance5 = ((string)valueValue6);
-                                            statusInstance.Value = valueInstance5;
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
                                         }
                                         
-                                        JToken localizedValueValue5 = statusValue["localizedValue"];
-                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance5 = ((string)localizedValueValue5);
-                                            statusInstance.LocalizedValue = localizedValueInstance5;
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
                                         }
                                     }
                                     
@@ -475,18 +495,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString subStatusInstance = new LocalizableString();
                                         eventDataInstance.SubStatus = subStatusInstance;
                                         
-                                        JToken valueValue7 = subStatusValue["value"];
-                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
                                         {
-                                            string valueInstance6 = ((string)valueValue7);
-                                            subStatusInstance.Value = valueInstance6;
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
                                         }
                                         
-                                        JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance6 = ((string)localizedValueValue6);
-                                            subStatusInstance.LocalizedValue = localizedValueInstance6;
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
                                         }
                                     }
                                     
@@ -509,6 +529,13 @@ namespace Microsoft.Azure.Insights
                                     {
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
                                         eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
                                     }
                                 }
                             }
@@ -765,24 +792,24 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken eventSourceValue = valueValue["eventSource"];
-                                    if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                     {
-                                        LocalizableString eventSourceInstance = new LocalizableString();
-                                        eventDataInstance.EventSource = eventSourceInstance;
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
                                         
-                                        JToken valueValue3 = eventSourceValue["value"];
+                                        JToken valueValue3 = categoryValue["value"];
                                         if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                         {
                                             string valueInstance2 = ((string)valueValue3);
-                                            eventSourceInstance.Value = valueInstance2;
+                                            categoryInstance.Value = valueInstance2;
                                         }
                                         
-                                        JToken localizedValueValue2 = eventSourceValue["localizedValue"];
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
                                         if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                         {
                                             string localizedValueInstance2 = ((string)localizedValueValue2);
-                                            eventSourceInstance.LocalizedValue = localizedValueInstance2;
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
                                         }
                                     }
                                     
@@ -856,11 +883,32 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        eventDataInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
                                     }
                                     
                                     JToken operationIdValue = valueValue["operationId"];
@@ -876,18 +924,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString operationNameInstance = new LocalizableString();
                                         eventDataInstance.OperationName = operationNameInstance;
                                         
-                                        JToken valueValue5 = operationNameValue["value"];
-                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                         {
-                                            string valueInstance4 = ((string)valueValue5);
-                                            operationNameInstance.Value = valueInstance4;
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
                                         }
                                         
-                                        JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance4 = ((string)localizedValueValue4);
-                                            operationNameInstance.LocalizedValue = localizedValueInstance4;
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
                                         }
                                     }
                                     
@@ -908,18 +956,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString statusInstance = new LocalizableString();
                                         eventDataInstance.Status = statusInstance;
                                         
-                                        JToken valueValue6 = statusValue["value"];
-                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                         {
-                                            string valueInstance5 = ((string)valueValue6);
-                                            statusInstance.Value = valueInstance5;
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
                                         }
                                         
-                                        JToken localizedValueValue5 = statusValue["localizedValue"];
-                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance5 = ((string)localizedValueValue5);
-                                            statusInstance.LocalizedValue = localizedValueInstance5;
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
                                         }
                                     }
                                     
@@ -929,18 +977,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString subStatusInstance = new LocalizableString();
                                         eventDataInstance.SubStatus = subStatusInstance;
                                         
-                                        JToken valueValue7 = subStatusValue["value"];
-                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
                                         {
-                                            string valueInstance6 = ((string)valueValue7);
-                                            subStatusInstance.Value = valueInstance6;
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
                                         }
                                         
-                                        JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance6 = ((string)localizedValueValue6);
-                                            subStatusInstance.LocalizedValue = localizedValueInstance6;
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
                                         }
                                     }
                                     
@@ -964,6 +1012,13 @@ namespace Microsoft.Azure.Insights
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
                                         eventDataInstance.SubscriptionId = subscriptionIdInstance;
                                     }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
+                                    }
                                 }
                             }
                             
@@ -972,6 +1027,166 @@ namespace Microsoft.Azure.Insights
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 eventDataCollectionInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The list of event categories.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response of List Event Categories.
+        /// </returns>
+        public async Task<EventCategoryListResponse> ListEventCategoriesAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                TracingAdapter.Enter(invocationId, this, "ListEventCategoriesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/providers/microsoft.insights/eventtypes/management/eventcategories";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    EventCategoryListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new EventCategoryListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            EventCategoryCollection eventDataCollectionInstance = new EventCategoryCollection();
+                            result.EventDataCollection = eventDataCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    LocalizableString localizableStringInstance = new LocalizableString();
+                                    eventDataCollectionInstance.Value.Add(localizableStringInstance);
+                                    
+                                    JToken valueValue2 = valueValue["value"];
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                    {
+                                        string valueInstance = ((string)valueValue2);
+                                        localizableStringInstance.Value = valueInstance;
+                                    }
+                                    
+                                    JToken localizedValueValue = valueValue["localizedValue"];
+                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                    {
+                                        string localizedValueInstance = ((string)localizedValueValue);
+                                        localizableStringInstance.LocalizedValue = localizedValueInstance;
+                                    }
+                                }
                             }
                         }
                         
@@ -1056,7 +1271,7 @@ namespace Microsoft.Azure.Insights
             }
             url = url + "/providers/microsoft.insights/eventtypes/management/values";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-04-01");
             List<string> odataFilter = new List<string>();
             odataFilter.Add(Uri.EscapeDataString(filterString));
             if (odataFilter.Count > 0)
@@ -1261,24 +1476,24 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken eventSourceValue = valueValue["eventSource"];
-                                    if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                     {
-                                        LocalizableString eventSourceInstance = new LocalizableString();
-                                        eventDataInstance.EventSource = eventSourceInstance;
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
                                         
-                                        JToken valueValue3 = eventSourceValue["value"];
+                                        JToken valueValue3 = categoryValue["value"];
                                         if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                         {
                                             string valueInstance2 = ((string)valueValue3);
-                                            eventSourceInstance.Value = valueInstance2;
+                                            categoryInstance.Value = valueInstance2;
                                         }
                                         
-                                        JToken localizedValueValue2 = eventSourceValue["localizedValue"];
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
                                         if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                         {
                                             string localizedValueInstance2 = ((string)localizedValueValue2);
-                                            eventSourceInstance.LocalizedValue = localizedValueInstance2;
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
                                         }
                                     }
                                     
@@ -1352,11 +1567,32 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        eventDataInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
                                     }
                                     
                                     JToken operationIdValue = valueValue["operationId"];
@@ -1372,18 +1608,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString operationNameInstance = new LocalizableString();
                                         eventDataInstance.OperationName = operationNameInstance;
                                         
-                                        JToken valueValue5 = operationNameValue["value"];
-                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                         {
-                                            string valueInstance4 = ((string)valueValue5);
-                                            operationNameInstance.Value = valueInstance4;
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
                                         }
                                         
-                                        JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance4 = ((string)localizedValueValue4);
-                                            operationNameInstance.LocalizedValue = localizedValueInstance4;
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
                                         }
                                     }
                                     
@@ -1404,18 +1640,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString statusInstance = new LocalizableString();
                                         eventDataInstance.Status = statusInstance;
                                         
-                                        JToken valueValue6 = statusValue["value"];
-                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                         {
-                                            string valueInstance5 = ((string)valueValue6);
-                                            statusInstance.Value = valueInstance5;
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
                                         }
                                         
-                                        JToken localizedValueValue5 = statusValue["localizedValue"];
-                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance5 = ((string)localizedValueValue5);
-                                            statusInstance.LocalizedValue = localizedValueInstance5;
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
                                         }
                                     }
                                     
@@ -1425,18 +1661,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString subStatusInstance = new LocalizableString();
                                         eventDataInstance.SubStatus = subStatusInstance;
                                         
-                                        JToken valueValue7 = subStatusValue["value"];
-                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
                                         {
-                                            string valueInstance6 = ((string)valueValue7);
-                                            subStatusInstance.Value = valueInstance6;
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
                                         }
                                         
-                                        JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance6 = ((string)localizedValueValue6);
-                                            subStatusInstance.LocalizedValue = localizedValueInstance6;
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
                                         }
                                     }
                                     
@@ -1459,6 +1695,13 @@ namespace Microsoft.Azure.Insights
                                     {
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
                                         eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
                                     }
                                 }
                             }
@@ -1716,24 +1959,24 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken eventSourceValue = valueValue["eventSource"];
-                                    if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                     {
-                                        LocalizableString eventSourceInstance = new LocalizableString();
-                                        eventDataInstance.EventSource = eventSourceInstance;
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
                                         
-                                        JToken valueValue3 = eventSourceValue["value"];
+                                        JToken valueValue3 = categoryValue["value"];
                                         if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                         {
                                             string valueInstance2 = ((string)valueValue3);
-                                            eventSourceInstance.Value = valueInstance2;
+                                            categoryInstance.Value = valueInstance2;
                                         }
                                         
-                                        JToken localizedValueValue2 = eventSourceValue["localizedValue"];
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
                                         if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                         {
                                             string localizedValueInstance2 = ((string)localizedValueValue2);
-                                            eventSourceInstance.LocalizedValue = localizedValueInstance2;
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
                                         }
                                     }
                                     
@@ -1807,11 +2050,32 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        eventDataInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
                                     }
                                     
                                     JToken operationIdValue = valueValue["operationId"];
@@ -1827,18 +2091,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString operationNameInstance = new LocalizableString();
                                         eventDataInstance.OperationName = operationNameInstance;
                                         
-                                        JToken valueValue5 = operationNameValue["value"];
-                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                         {
-                                            string valueInstance4 = ((string)valueValue5);
-                                            operationNameInstance.Value = valueInstance4;
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
                                         }
                                         
-                                        JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance4 = ((string)localizedValueValue4);
-                                            operationNameInstance.LocalizedValue = localizedValueInstance4;
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
                                         }
                                     }
                                     
@@ -1859,18 +2123,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString statusInstance = new LocalizableString();
                                         eventDataInstance.Status = statusInstance;
                                         
-                                        JToken valueValue6 = statusValue["value"];
-                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                         {
-                                            string valueInstance5 = ((string)valueValue6);
-                                            statusInstance.Value = valueInstance5;
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
                                         }
                                         
-                                        JToken localizedValueValue5 = statusValue["localizedValue"];
-                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance5 = ((string)localizedValueValue5);
-                                            statusInstance.LocalizedValue = localizedValueInstance5;
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
                                         }
                                     }
                                     
@@ -1880,18 +2144,18 @@ namespace Microsoft.Azure.Insights
                                         LocalizableString subStatusInstance = new LocalizableString();
                                         eventDataInstance.SubStatus = subStatusInstance;
                                         
-                                        JToken valueValue7 = subStatusValue["value"];
-                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
                                         {
-                                            string valueInstance6 = ((string)valueValue7);
-                                            subStatusInstance.Value = valueInstance6;
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
                                         }
                                         
-                                        JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
                                         {
-                                            string localizedValueInstance6 = ((string)localizedValueValue6);
-                                            subStatusInstance.LocalizedValue = localizedValueInstance6;
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
                                         }
                                     }
                                     
@@ -1914,6 +2178,13 @@ namespace Microsoft.Azure.Insights
                                     {
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
                                         eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
                                     }
                                 }
                             }
@@ -1957,18 +2228,23 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
-        /// The status count of events in a subscription.
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
         /// </summary>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List event status count summary operation response.
+        /// The List Events operation response.
         /// </returns>
-        public async Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken)
+        public async Task<EventDataListResponse> ListTenantDigestEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken)
         {
             // Validate
             if (filterString == null)
@@ -1984,24 +2260,24 @@ namespace Microsoft.Azure.Insights
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filterString", filterString);
-                TracingAdapter.Enter(invocationId, this, "ListEventStatusCountSummaryItemsAsync", tracingParameters);
+                tracingParameters.Add("selectedProperties", selectedProperties);
+                TracingAdapter.Enter(invocationId, this, "ListTenantDigestEventsAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/providers/microsoft.insights/eventtypes/management/statusSummaryItems";
+            url = url + "/providers/microsoft.insights/eventtypes/management/digestEvents";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-11-01");
+            queryParameters.Add("api-version=2015-04-01");
             List<string> odataFilter = new List<string>();
             odataFilter.Add(Uri.EscapeDataString(filterString));
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (selectedProperties != null)
+            {
+                queryParameters.Add("$select=" + Uri.EscapeDataString(selectedProperties));
             }
             if (queryParameters.Count > 0)
             {
@@ -2062,13 +2338,13 @@ namespace Microsoft.Azure.Insights
                     }
                     
                     // Create Result
-                    EventStatusCountSummaryListResponse result = null;
+                    EventDataListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EventStatusCountSummaryListResponse();
+                        result = new EventDataListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -2077,76 +2353,1845 @@ namespace Microsoft.Azure.Insights
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            EventStatusCountSummaryItemCollection eventStatusCountSummaryItemCollectionInstance = new EventStatusCountSummaryItemCollection();
-                            result.EventStatusCountSummaryItemCollection = eventStatusCountSummaryItemCollectionInstance;
+                            EventDataCollection eventDataCollectionInstance = new EventDataCollection();
+                            result.EventDataCollection = eventDataCollectionInstance;
                             
                             JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    EventStatusCountSummaryItem eventStatusCountSummaryItemInstance = new EventStatusCountSummaryItem();
-                                    eventStatusCountSummaryItemCollectionInstance.Value.Add(eventStatusCountSummaryItemInstance);
+                                    EventData eventDataInstance = new EventData();
+                                    eventDataCollectionInstance.Value.Add(eventDataInstance);
+                                    
+                                    JToken authorizationValue = valueValue["authorization"];
+                                    if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
+                                    {
+                                        SenderAuthorization authorizationInstance = new SenderAuthorization();
+                                        eventDataInstance.Authorization = authorizationInstance;
+                                        
+                                        JToken actionValue = authorizationValue["action"];
+                                        if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                        {
+                                            string actionInstance = ((string)actionValue);
+                                            authorizationInstance.Action = actionInstance;
+                                        }
+                                        
+                                        JToken conditionValue = authorizationValue["condition"];
+                                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                        {
+                                            string conditionInstance = ((string)conditionValue);
+                                            authorizationInstance.Condition = conditionInstance;
+                                        }
+                                        
+                                        JToken roleValue = authorizationValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            authorizationInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken scopeValue = authorizationValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            authorizationInstance.Scope = scopeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken channelsValue = valueValue["channels"];
+                                    if (channelsValue != null && channelsValue.Type != JTokenType.Null)
+                                    {
+                                        EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
+                                        eventDataInstance.EventChannels = channelsInstance;
+                                    }
+                                    
+                                    JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                    if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in claimsSequenceElement)
+                                        {
+                                            string claimsKey = ((string)property.Name);
+                                            string claimsValue = ((string)property.Value);
+                                            eventDataInstance.Claims.Add(claimsKey, claimsValue);
+                                        }
+                                    }
+                                    
+                                    JToken callerValue = valueValue["caller"];
+                                    if (callerValue != null && callerValue.Type != JTokenType.Null)
+                                    {
+                                        string callerInstance = ((string)callerValue);
+                                        eventDataInstance.Caller = callerInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        eventDataInstance.Description = descriptionInstance;
+                                    }
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        eventStatusCountSummaryItemInstance.Id = idInstance;
+                                        eventDataInstance.Id = idInstance;
                                     }
                                     
-                                    JToken timeGrainValue = valueValue["timeGrain"];
-                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                    JToken eventDataIdValue = valueValue["eventDataId"];
+                                    if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
-                                        eventStatusCountSummaryItemInstance.TimeGrain = timeGrainInstance;
+                                        string eventDataIdInstance = ((string)eventDataIdValue);
+                                        eventDataInstance.EventDataId = eventDataIdInstance;
                                     }
                                     
-                                    JToken eventTimeValue = valueValue["eventTime"];
-                                    if (eventTimeValue != null && eventTimeValue.Type != JTokenType.Null)
+                                    JToken correlationIdValue = valueValue["correlationId"];
+                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
                                     {
-                                        DateTime eventTimeInstance = ((DateTime)eventTimeValue);
-                                        eventStatusCountSummaryItemInstance.EventTime = eventTimeInstance;
+                                        string correlationIdInstance = ((string)correlationIdValue);
+                                        eventDataInstance.CorrelationId = correlationIdInstance;
                                     }
                                     
-                                    JToken statusCountsArray = valueValue["statusCounts"];
-                                    if (statusCountsArray != null && statusCountsArray.Type != JTokenType.Null)
+                                    JToken eventNameValue = valueValue["eventName"];
+                                    if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken statusCountsValue in ((JArray)statusCountsArray))
+                                        LocalizableString eventNameInstance = new LocalizableString();
+                                        eventDataInstance.EventName = eventNameInstance;
+                                        
+                                        JToken valueValue2 = eventNameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                         {
-                                            StatusCount statusCountInstance = new StatusCount();
-                                            eventStatusCountSummaryItemInstance.StatusCounts.Add(statusCountInstance);
-                                            
-                                            JToken statusValue = statusCountsValue["status"];
-                                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                            {
-                                                LocalizableString statusInstance = new LocalizableString();
-                                                statusCountInstance.Status = statusInstance;
-                                                
-                                                JToken valueValue2 = statusValue["value"];
-                                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                                {
-                                                    string valueInstance = ((string)valueValue2);
-                                                    statusInstance.Value = valueInstance;
-                                                }
-                                                
-                                                JToken localizedValueValue = statusValue["localizedValue"];
-                                                if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
-                                                {
-                                                    string localizedValueInstance = ((string)localizedValueValue);
-                                                    statusInstance.LocalizedValue = localizedValueInstance;
-                                                }
-                                            }
-                                            
-                                            JToken countValue = statusCountsValue["count"];
-                                            if (countValue != null && countValue.Type != JTokenType.Null)
-                                            {
-                                                int countInstance = ((int)countValue);
-                                                statusCountInstance.Count = countInstance;
-                                            }
+                                            string valueInstance = ((string)valueValue2);
+                                            eventNameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = eventNameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            eventNameInstance.LocalizedValue = localizedValueInstance;
                                         }
                                     }
+                                    
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
+                                        
+                                        JToken valueValue3 = categoryValue["value"];
+                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance2 = ((string)valueValue3);
+                                            categoryInstance.Value = valueInstance2;
+                                        }
+                                        
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
+                                        if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance2 = ((string)localizedValueValue2);
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken httpRequestValue = valueValue["httpRequest"];
+                                    if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
+                                    {
+                                        HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
+                                        eventDataInstance.HttpRequest = httpRequestInstance;
+                                        
+                                        JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
+                                        if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                            httpRequestInstance.ClientRequestId = clientRequestIdInstance;
+                                        }
+                                        
+                                        JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
+                                        if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIpAddressInstance = ((string)clientIpAddressValue);
+                                            httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
+                                        }
+                                        
+                                        JToken methodValue = httpRequestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            httpRequestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken uriValue = httpRequestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            httpRequestInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                    
+                                    JToken levelValue = valueValue["level"];
+                                    if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                    {
+                                        EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
+                                        eventDataInstance.Level = levelInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken resourceProviderNameValue = valueValue["resourceProviderName"];
+                                    if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceProviderNameInstance = new LocalizableString();
+                                        eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
+                                        
+                                        JToken valueValue4 = resourceProviderNameValue["value"];
+                                        if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance3 = ((string)valueValue4);
+                                            resourceProviderNameInstance.Value = valueInstance3;
+                                        }
+                                        
+                                        JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
+                                        if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance3 = ((string)localizedValueValue3);
+                                            resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken operationIdValue = valueValue["operationId"];
+                                    if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string operationIdInstance = ((string)operationIdValue);
+                                        eventDataInstance.OperationId = operationIdInstance;
+                                    }
+                                    
+                                    JToken operationNameValue = valueValue["operationName"];
+                                    if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString operationNameInstance = new LocalizableString();
+                                        eventDataInstance.OperationName = operationNameInstance;
+                                        
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
+                                        }
+                                        
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
+                                            eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString statusInstance = new LocalizableString();
+                                        eventDataInstance.Status = statusInstance;
+                                        
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
+                                        }
+                                        
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
+                                        }
+                                    }
+                                    
+                                    JToken subStatusValue = valueValue["subStatus"];
+                                    if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString subStatusInstance = new LocalizableString();
+                                        eventDataInstance.SubStatus = subStatusInstance;
+                                        
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
+                                        }
+                                        
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
+                                        }
+                                    }
+                                    
+                                    JToken eventTimestampValue = valueValue["eventTimestamp"];
+                                    if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
+                                        eventDataInstance.EventTimestamp = eventTimestampInstance;
+                                    }
+                                    
+                                    JToken submissionTimestampValue = valueValue["submissionTimestamp"];
+                                    if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
+                                        eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
+                                    }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                eventDataCollectionInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public async Task<EventDataListResponse> ListTenantDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListTenantDigestEventsNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    EventDataListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new EventDataListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            EventDataCollection eventDataCollectionInstance = new EventDataCollection();
+                            result.EventDataCollection = eventDataCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    EventData eventDataInstance = new EventData();
+                                    eventDataCollectionInstance.Value.Add(eventDataInstance);
+                                    
+                                    JToken authorizationValue = valueValue["authorization"];
+                                    if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
+                                    {
+                                        SenderAuthorization authorizationInstance = new SenderAuthorization();
+                                        eventDataInstance.Authorization = authorizationInstance;
+                                        
+                                        JToken actionValue = authorizationValue["action"];
+                                        if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                        {
+                                            string actionInstance = ((string)actionValue);
+                                            authorizationInstance.Action = actionInstance;
+                                        }
+                                        
+                                        JToken conditionValue = authorizationValue["condition"];
+                                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                        {
+                                            string conditionInstance = ((string)conditionValue);
+                                            authorizationInstance.Condition = conditionInstance;
+                                        }
+                                        
+                                        JToken roleValue = authorizationValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            authorizationInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken scopeValue = authorizationValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            authorizationInstance.Scope = scopeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken channelsValue = valueValue["channels"];
+                                    if (channelsValue != null && channelsValue.Type != JTokenType.Null)
+                                    {
+                                        EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
+                                        eventDataInstance.EventChannels = channelsInstance;
+                                    }
+                                    
+                                    JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                    if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in claimsSequenceElement)
+                                        {
+                                            string claimsKey = ((string)property.Name);
+                                            string claimsValue = ((string)property.Value);
+                                            eventDataInstance.Claims.Add(claimsKey, claimsValue);
+                                        }
+                                    }
+                                    
+                                    JToken callerValue = valueValue["caller"];
+                                    if (callerValue != null && callerValue.Type != JTokenType.Null)
+                                    {
+                                        string callerInstance = ((string)callerValue);
+                                        eventDataInstance.Caller = callerInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        eventDataInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        eventDataInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken eventDataIdValue = valueValue["eventDataId"];
+                                    if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string eventDataIdInstance = ((string)eventDataIdValue);
+                                        eventDataInstance.EventDataId = eventDataIdInstance;
+                                    }
+                                    
+                                    JToken correlationIdValue = valueValue["correlationId"];
+                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string correlationIdInstance = ((string)correlationIdValue);
+                                        eventDataInstance.CorrelationId = correlationIdInstance;
+                                    }
+                                    
+                                    JToken eventNameValue = valueValue["eventName"];
+                                    if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString eventNameInstance = new LocalizableString();
+                                        eventDataInstance.EventName = eventNameInstance;
+                                        
+                                        JToken valueValue2 = eventNameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            eventNameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = eventNameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            eventNameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
+                                        
+                                        JToken valueValue3 = categoryValue["value"];
+                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance2 = ((string)valueValue3);
+                                            categoryInstance.Value = valueInstance2;
+                                        }
+                                        
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
+                                        if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance2 = ((string)localizedValueValue2);
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken httpRequestValue = valueValue["httpRequest"];
+                                    if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
+                                    {
+                                        HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
+                                        eventDataInstance.HttpRequest = httpRequestInstance;
+                                        
+                                        JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
+                                        if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                            httpRequestInstance.ClientRequestId = clientRequestIdInstance;
+                                        }
+                                        
+                                        JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
+                                        if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIpAddressInstance = ((string)clientIpAddressValue);
+                                            httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
+                                        }
+                                        
+                                        JToken methodValue = httpRequestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            httpRequestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken uriValue = httpRequestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            httpRequestInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                    
+                                    JToken levelValue = valueValue["level"];
+                                    if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                    {
+                                        EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
+                                        eventDataInstance.Level = levelInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken resourceProviderNameValue = valueValue["resourceProviderName"];
+                                    if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceProviderNameInstance = new LocalizableString();
+                                        eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
+                                        
+                                        JToken valueValue4 = resourceProviderNameValue["value"];
+                                        if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance3 = ((string)valueValue4);
+                                            resourceProviderNameInstance.Value = valueInstance3;
+                                        }
+                                        
+                                        JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
+                                        if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance3 = ((string)localizedValueValue3);
+                                            resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken operationIdValue = valueValue["operationId"];
+                                    if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string operationIdInstance = ((string)operationIdValue);
+                                        eventDataInstance.OperationId = operationIdInstance;
+                                    }
+                                    
+                                    JToken operationNameValue = valueValue["operationName"];
+                                    if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString operationNameInstance = new LocalizableString();
+                                        eventDataInstance.OperationName = operationNameInstance;
+                                        
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
+                                        }
+                                        
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
+                                            eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString statusInstance = new LocalizableString();
+                                        eventDataInstance.Status = statusInstance;
+                                        
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
+                                        }
+                                        
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
+                                        }
+                                    }
+                                    
+                                    JToken subStatusValue = valueValue["subStatus"];
+                                    if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString subStatusInstance = new LocalizableString();
+                                        eventDataInstance.SubStatus = subStatusInstance;
+                                        
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
+                                        }
+                                        
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
+                                        }
+                                    }
+                                    
+                                    JToken eventTimestampValue = valueValue["eventTimestamp"];
+                                    if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
+                                        eventDataInstance.EventTimestamp = eventTimestampInstance;
+                                    }
+                                    
+                                    JToken submissionTimestampValue = valueValue["submissionTimestamp"];
+                                    if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
+                                        eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                eventDataCollectionInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The list tenant event values operation lists the tenant events.
+        /// </summary>
+        /// <param name='filterString'>
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public async Task<EventDataListResponse> ListTenantEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (filterString == null)
+            {
+                throw new ArgumentNullException("filterString");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filterString", filterString);
+                tracingParameters.Add("selectedProperties", selectedProperties);
+                TracingAdapter.Enter(invocationId, this, "ListTenantEventsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/providers/microsoft.insights/eventtypes/management/values";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filterString));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (selectedProperties != null)
+            {
+                queryParameters.Add("$select=" + Uri.EscapeDataString(selectedProperties));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    EventDataListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new EventDataListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            EventDataCollection eventDataCollectionInstance = new EventDataCollection();
+                            result.EventDataCollection = eventDataCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    EventData eventDataInstance = new EventData();
+                                    eventDataCollectionInstance.Value.Add(eventDataInstance);
+                                    
+                                    JToken authorizationValue = valueValue["authorization"];
+                                    if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
+                                    {
+                                        SenderAuthorization authorizationInstance = new SenderAuthorization();
+                                        eventDataInstance.Authorization = authorizationInstance;
+                                        
+                                        JToken actionValue = authorizationValue["action"];
+                                        if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                        {
+                                            string actionInstance = ((string)actionValue);
+                                            authorizationInstance.Action = actionInstance;
+                                        }
+                                        
+                                        JToken conditionValue = authorizationValue["condition"];
+                                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                        {
+                                            string conditionInstance = ((string)conditionValue);
+                                            authorizationInstance.Condition = conditionInstance;
+                                        }
+                                        
+                                        JToken roleValue = authorizationValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            authorizationInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken scopeValue = authorizationValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            authorizationInstance.Scope = scopeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken channelsValue = valueValue["channels"];
+                                    if (channelsValue != null && channelsValue.Type != JTokenType.Null)
+                                    {
+                                        EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
+                                        eventDataInstance.EventChannels = channelsInstance;
+                                    }
+                                    
+                                    JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                    if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in claimsSequenceElement)
+                                        {
+                                            string claimsKey = ((string)property.Name);
+                                            string claimsValue = ((string)property.Value);
+                                            eventDataInstance.Claims.Add(claimsKey, claimsValue);
+                                        }
+                                    }
+                                    
+                                    JToken callerValue = valueValue["caller"];
+                                    if (callerValue != null && callerValue.Type != JTokenType.Null)
+                                    {
+                                        string callerInstance = ((string)callerValue);
+                                        eventDataInstance.Caller = callerInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        eventDataInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        eventDataInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken eventDataIdValue = valueValue["eventDataId"];
+                                    if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string eventDataIdInstance = ((string)eventDataIdValue);
+                                        eventDataInstance.EventDataId = eventDataIdInstance;
+                                    }
+                                    
+                                    JToken correlationIdValue = valueValue["correlationId"];
+                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string correlationIdInstance = ((string)correlationIdValue);
+                                        eventDataInstance.CorrelationId = correlationIdInstance;
+                                    }
+                                    
+                                    JToken eventNameValue = valueValue["eventName"];
+                                    if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString eventNameInstance = new LocalizableString();
+                                        eventDataInstance.EventName = eventNameInstance;
+                                        
+                                        JToken valueValue2 = eventNameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            eventNameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = eventNameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            eventNameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
+                                        
+                                        JToken valueValue3 = categoryValue["value"];
+                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance2 = ((string)valueValue3);
+                                            categoryInstance.Value = valueInstance2;
+                                        }
+                                        
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
+                                        if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance2 = ((string)localizedValueValue2);
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken httpRequestValue = valueValue["httpRequest"];
+                                    if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
+                                    {
+                                        HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
+                                        eventDataInstance.HttpRequest = httpRequestInstance;
+                                        
+                                        JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
+                                        if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                            httpRequestInstance.ClientRequestId = clientRequestIdInstance;
+                                        }
+                                        
+                                        JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
+                                        if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIpAddressInstance = ((string)clientIpAddressValue);
+                                            httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
+                                        }
+                                        
+                                        JToken methodValue = httpRequestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            httpRequestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken uriValue = httpRequestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            httpRequestInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                    
+                                    JToken levelValue = valueValue["level"];
+                                    if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                    {
+                                        EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
+                                        eventDataInstance.Level = levelInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken resourceProviderNameValue = valueValue["resourceProviderName"];
+                                    if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceProviderNameInstance = new LocalizableString();
+                                        eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
+                                        
+                                        JToken valueValue4 = resourceProviderNameValue["value"];
+                                        if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance3 = ((string)valueValue4);
+                                            resourceProviderNameInstance.Value = valueInstance3;
+                                        }
+                                        
+                                        JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
+                                        if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance3 = ((string)localizedValueValue3);
+                                            resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken operationIdValue = valueValue["operationId"];
+                                    if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string operationIdInstance = ((string)operationIdValue);
+                                        eventDataInstance.OperationId = operationIdInstance;
+                                    }
+                                    
+                                    JToken operationNameValue = valueValue["operationName"];
+                                    if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString operationNameInstance = new LocalizableString();
+                                        eventDataInstance.OperationName = operationNameInstance;
+                                        
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
+                                        }
+                                        
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
+                                            eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString statusInstance = new LocalizableString();
+                                        eventDataInstance.Status = statusInstance;
+                                        
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
+                                        }
+                                        
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
+                                        }
+                                    }
+                                    
+                                    JToken subStatusValue = valueValue["subStatus"];
+                                    if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString subStatusInstance = new LocalizableString();
+                                        eventDataInstance.SubStatus = subStatusInstance;
+                                        
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
+                                        }
+                                        
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
+                                        }
+                                    }
+                                    
+                                    JToken eventTimestampValue = valueValue["eventTimestamp"];
+                                    if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
+                                        eventDataInstance.EventTimestamp = eventTimestampInstance;
+                                    }
+                                    
+                                    JToken submissionTimestampValue = valueValue["submissionTimestamp"];
+                                    if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
+                                        eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                eventDataCollectionInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public async Task<EventDataListResponse> ListTenantEventsNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListTenantEventsNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    EventDataListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new EventDataListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            EventDataCollection eventDataCollectionInstance = new EventDataCollection();
+                            result.EventDataCollection = eventDataCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    EventData eventDataInstance = new EventData();
+                                    eventDataCollectionInstance.Value.Add(eventDataInstance);
+                                    
+                                    JToken authorizationValue = valueValue["authorization"];
+                                    if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
+                                    {
+                                        SenderAuthorization authorizationInstance = new SenderAuthorization();
+                                        eventDataInstance.Authorization = authorizationInstance;
+                                        
+                                        JToken actionValue = authorizationValue["action"];
+                                        if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                        {
+                                            string actionInstance = ((string)actionValue);
+                                            authorizationInstance.Action = actionInstance;
+                                        }
+                                        
+                                        JToken conditionValue = authorizationValue["condition"];
+                                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                        {
+                                            string conditionInstance = ((string)conditionValue);
+                                            authorizationInstance.Condition = conditionInstance;
+                                        }
+                                        
+                                        JToken roleValue = authorizationValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            authorizationInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken scopeValue = authorizationValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            authorizationInstance.Scope = scopeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken channelsValue = valueValue["channels"];
+                                    if (channelsValue != null && channelsValue.Type != JTokenType.Null)
+                                    {
+                                        EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
+                                        eventDataInstance.EventChannels = channelsInstance;
+                                    }
+                                    
+                                    JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                    if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in claimsSequenceElement)
+                                        {
+                                            string claimsKey = ((string)property.Name);
+                                            string claimsValue = ((string)property.Value);
+                                            eventDataInstance.Claims.Add(claimsKey, claimsValue);
+                                        }
+                                    }
+                                    
+                                    JToken callerValue = valueValue["caller"];
+                                    if (callerValue != null && callerValue.Type != JTokenType.Null)
+                                    {
+                                        string callerInstance = ((string)callerValue);
+                                        eventDataInstance.Caller = callerInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        eventDataInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        eventDataInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken eventDataIdValue = valueValue["eventDataId"];
+                                    if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string eventDataIdInstance = ((string)eventDataIdValue);
+                                        eventDataInstance.EventDataId = eventDataIdInstance;
+                                    }
+                                    
+                                    JToken correlationIdValue = valueValue["correlationId"];
+                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string correlationIdInstance = ((string)correlationIdValue);
+                                        eventDataInstance.CorrelationId = correlationIdInstance;
+                                    }
+                                    
+                                    JToken eventNameValue = valueValue["eventName"];
+                                    if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString eventNameInstance = new LocalizableString();
+                                        eventDataInstance.EventName = eventNameInstance;
+                                        
+                                        JToken valueValue2 = eventNameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            eventNameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = eventNameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            eventNameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken categoryValue = valueValue["category"];
+                                    if (categoryValue != null && categoryValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString categoryInstance = new LocalizableString();
+                                        eventDataInstance.Category = categoryInstance;
+                                        
+                                        JToken valueValue3 = categoryValue["value"];
+                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance2 = ((string)valueValue3);
+                                            categoryInstance.Value = valueInstance2;
+                                        }
+                                        
+                                        JToken localizedValueValue2 = categoryValue["localizedValue"];
+                                        if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance2 = ((string)localizedValueValue2);
+                                            categoryInstance.LocalizedValue = localizedValueInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken httpRequestValue = valueValue["httpRequest"];
+                                    if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
+                                    {
+                                        HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
+                                        eventDataInstance.HttpRequest = httpRequestInstance;
+                                        
+                                        JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
+                                        if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                            httpRequestInstance.ClientRequestId = clientRequestIdInstance;
+                                        }
+                                        
+                                        JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
+                                        if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIpAddressInstance = ((string)clientIpAddressValue);
+                                            httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
+                                        }
+                                        
+                                        JToken methodValue = httpRequestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            httpRequestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken uriValue = httpRequestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            httpRequestInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                    
+                                    JToken levelValue = valueValue["level"];
+                                    if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                    {
+                                        EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
+                                        eventDataInstance.Level = levelInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken resourceProviderNameValue = valueValue["resourceProviderName"];
+                                    if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceProviderNameInstance = new LocalizableString();
+                                        eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
+                                        
+                                        JToken valueValue4 = resourceProviderNameValue["value"];
+                                        if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance3 = ((string)valueValue4);
+                                            resourceProviderNameInstance.Value = valueInstance3;
+                                        }
+                                        
+                                        JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
+                                        if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance3 = ((string)localizedValueValue3);
+                                            resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        eventDataInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString resourceTypeInstance = new LocalizableString();
+                                        eventDataInstance.ResourceType = resourceTypeInstance;
+                                        
+                                        JToken valueValue5 = resourceTypeValue["value"];
+                                        if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance4 = ((string)valueValue5);
+                                            resourceTypeInstance.Value = valueInstance4;
+                                        }
+                                        
+                                        JToken localizedValueValue4 = resourceTypeValue["localizedValue"];
+                                        if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance4 = ((string)localizedValueValue4);
+                                            resourceTypeInstance.LocalizedValue = localizedValueInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken operationIdValue = valueValue["operationId"];
+                                    if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                    {
+                                        string operationIdInstance = ((string)operationIdValue);
+                                        eventDataInstance.OperationId = operationIdInstance;
+                                    }
+                                    
+                                    JToken operationNameValue = valueValue["operationName"];
+                                    if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString operationNameInstance = new LocalizableString();
+                                        eventDataInstance.OperationName = operationNameInstance;
+                                        
+                                        JToken valueValue6 = operationNameValue["value"];
+                                        if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance5 = ((string)valueValue6);
+                                            operationNameInstance.Value = valueInstance5;
+                                        }
+                                        
+                                        JToken localizedValueValue5 = operationNameValue["localizedValue"];
+                                        if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance5 = ((string)localizedValueValue5);
+                                            operationNameInstance.LocalizedValue = localizedValueInstance5;
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
+                                            eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString statusInstance = new LocalizableString();
+                                        eventDataInstance.Status = statusInstance;
+                                        
+                                        JToken valueValue7 = statusValue["value"];
+                                        if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance6 = ((string)valueValue7);
+                                            statusInstance.Value = valueInstance6;
+                                        }
+                                        
+                                        JToken localizedValueValue6 = statusValue["localizedValue"];
+                                        if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance6 = ((string)localizedValueValue6);
+                                            statusInstance.LocalizedValue = localizedValueInstance6;
+                                        }
+                                    }
+                                    
+                                    JToken subStatusValue = valueValue["subStatus"];
+                                    if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString subStatusInstance = new LocalizableString();
+                                        eventDataInstance.SubStatus = subStatusInstance;
+                                        
+                                        JToken valueValue8 = subStatusValue["value"];
+                                        if (valueValue8 != null && valueValue8.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance7 = ((string)valueValue8);
+                                            subStatusInstance.Value = valueInstance7;
+                                        }
+                                        
+                                        JToken localizedValueValue7 = subStatusValue["localizedValue"];
+                                        if (localizedValueValue7 != null && localizedValueValue7.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance7 = ((string)localizedValueValue7);
+                                            subStatusInstance.LocalizedValue = localizedValueInstance7;
+                                        }
+                                    }
+                                    
+                                    JToken eventTimestampValue = valueValue["eventTimestamp"];
+                                    if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
+                                        eventDataInstance.EventTimestamp = eventTimestampInstance;
+                                    }
+                                    
+                                    JToken submissionTimestampValue = valueValue["submissionTimestamp"];
+                                    if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
+                                        eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        eventDataInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        eventDataInstance.TenantId = tenantIdInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                eventDataCollectionInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

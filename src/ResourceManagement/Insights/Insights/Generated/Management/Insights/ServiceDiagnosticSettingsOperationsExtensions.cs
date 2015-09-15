@@ -117,52 +117,6 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
-        /// Gets the status of the diagnostic settings being applied. Once it
-        /// is successfull, it will replace the current diagnostic settings.
-        /// To get the active one, use Get.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Insights.IServiceDiagnosticSettingsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required. The resource identifier of the configuration.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static ServiceDiagnosticSettingsGetResponse GetStatus(this IServiceDiagnosticSettingsOperations operations, string resourceUri)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IServiceDiagnosticSettingsOperations)s).GetStatusAsync(resourceUri);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets the status of the diagnostic settings being applied. Once it
-        /// is successfull, it will replace the current diagnostic settings.
-        /// To get the active one, use Get.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Insights.IServiceDiagnosticSettingsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required. The resource identifier of the configuration.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<ServiceDiagnosticSettingsGetResponse> GetStatusAsync(this IServiceDiagnosticSettingsOperations operations, string resourceUri)
-        {
-            return operations.GetStatusAsync(resourceUri, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Create or update new diagnostic settings for the specified
         /// resource. This operation is long running. Use GetStatus to check
         /// the status of this operation.

@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _scheduledTransferPeriod;
         
         /// <summary>
-        /// Optional. The interval between scheduled transfers to storage
-        /// rounded up to the nearest minute.
+        /// Optional. Gets or sets the interval between scheduled transfers to
+        /// storage rounded up to the nearest minute.
         /// </summary>
         public TimeSpan ScheduledTransferPeriod
         {

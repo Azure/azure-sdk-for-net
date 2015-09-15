@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location of the configuration.
+        /// Optional. Gets or sets the location of the configuration.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the configuration.
+        /// Optional. Gets or sets the name of the configuration.
         /// </summary>
         public string Name
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ServiceDiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The retrieved configuration.
+        /// Optional. Gets or sets the retrieved configuration.
         /// </summary>
         public ServiceDiagnosticSettings Properties
         {

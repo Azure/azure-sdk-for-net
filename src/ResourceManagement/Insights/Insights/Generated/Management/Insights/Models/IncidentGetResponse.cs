@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Incident _incident;
         
         /// <summary>
-        /// Optional. The retrieved incident.
+        /// Optional. Gets or sets the retrieved incident.
         /// </summary>
         public Incident Incident
         {

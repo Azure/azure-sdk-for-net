@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<MetricAggregation> _metricAggregations;
         
         /// <summary>
-        /// Optional. The list of aggregations to generate.
+        /// Optional. Gets or sets the list of aggregations to generate.
         /// </summary>
         public IList<MetricAggregation> MetricAggregations
         {
@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceId;
         
         /// <summary>
-        /// Optional. The resource ID of the resource the agent runs on.
+        /// Optional. Gets or sets the resource ID of the resource the agent
+        /// runs on.
         /// </summary>
         public string ResourceId
         {

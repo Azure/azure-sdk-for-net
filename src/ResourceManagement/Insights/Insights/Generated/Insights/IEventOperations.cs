@@ -67,6 +67,17 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The list of event categories.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response of List Event Categories.
+        /// </returns>
+        Task<EventCategoryListResponse> ListEventCategoriesAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
@@ -106,17 +117,76 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The status count of events in a subscription.
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
         /// </summary>
         /// <param name='filterString'>
-        /// The filter string.
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List event status count summary operation response.
+        /// The List Events operation response.
         /// </returns>
-        Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
+        Task<EventDataListResponse> ListTenantDigestEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListTenantDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The list tenant event values operation lists the tenant events.
+        /// </summary>
+        /// <param name='filterString'>
+        /// The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwidth
+        /// by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListTenantEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The next link works as a continuation token when all of the events
+        /// are not returned in the response and a second call is required
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListTenantEventsNextAsync(string nextLink, CancellationToken cancellationToken);
     }
 }

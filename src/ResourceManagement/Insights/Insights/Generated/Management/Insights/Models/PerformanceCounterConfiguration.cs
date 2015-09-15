@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<LocalizedString> _annotations;
         
         /// <summary>
-        /// Optional. The display name for the counter.
+        /// Optional. Gets or sets the display name for the counter.
         /// </summary>
         public IList<LocalizedString> Annotations
         {
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _counterSpecifier;
         
         /// <summary>
-        /// Optional. The name of the performance counter. For example,
-        /// "\\Processor(_Total)\\% Processor Time". To get a list of
+        /// Optional. Gets or sets the name of the performance counter. For
+        /// example, "\\Processor(_Total)\\% Processor Time". To get a list of
         /// performance counters on your host run the command typeperf.
         /// </summary>
         public string CounterSpecifier
@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _sampleRate;
         
         /// <summary>
-        /// Optional. How often the counter should be sampled.
+        /// Optional. Gets or sets the sample rate. How often the counter
+        /// should be sampled.
         /// </summary>
         public TimeSpan SampleRate
         {
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Units _unit;
         
         /// <summary>
-        /// Optional. The unit of measure of the counter.
+        /// Optional. Gets or sets the unit of measure of the counter.
         /// </summary>
         public Units Unit
         {

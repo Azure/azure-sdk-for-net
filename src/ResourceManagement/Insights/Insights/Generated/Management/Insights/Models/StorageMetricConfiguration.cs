@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<StorageMetricAggregation> _metricAggregations;
         
         /// <summary>
-        /// Optional. The list of aggregations to generate.
+        /// Optional. Gets or sets the list of aggregations to generate.
         /// </summary>
         public IList<StorageMetricAggregation> MetricAggregations
         {

@@ -21,48 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Insights.Models
 {
-    internal partial class AntaresSkuUpdateRequest
+    /// <summary>
+    /// The List Log Definitions operation response.
+    /// </summary>
+    public partial class LogDefinitionListResponse : AzureOperationResponse
     {
-        private int _numberOfWorkers;
+        private LogDefinitionCollection _logDefinitionCollection;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the retrieved log definitions.
         /// </summary>
-        public int NumberOfWorkers
+        public LogDefinitionCollection LogDefinitionCollection
         {
-            get { return this._numberOfWorkers; }
-            set { this._numberOfWorkers = value; }
-        }
-        
-        private string _sku;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Sku
-        {
-            get { return this._sku; }
-            set { this._sku = value; }
-        }
-        
-        private int _workerSize;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
+            get { return this._logDefinitionCollection; }
+            set { this._logDefinitionCollection = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AntaresSkuUpdateRequest class.
+        /// Initializes a new instance of the LogDefinitionListResponse class.
         /// </summary>
-        public AntaresSkuUpdateRequest()
+        public LogDefinitionListResponse()
         {
         }
     }

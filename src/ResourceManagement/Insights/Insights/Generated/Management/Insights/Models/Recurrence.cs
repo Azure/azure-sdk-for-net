@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RecurrenceFrequency _frequency;
         
         /// <summary>
-        /// Optional. How often the schedule profile should take effect. This
-        /// value must be Week, meaning each week will have the same set of
-        /// profiles.
+        /// Optional. Gets or sets the recurrence frequency. How often the
+        /// schedule profile should take effect. This value must be Week,
+        /// meaning each week will have the same set of profiles.
         /// </summary>
         public RecurrenceFrequency Frequency
         {
@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RecurrentSchedule _schedule;
         
         /// <summary>
-        /// Optional. The scheduling constraints for when the profile begins.
+        /// Optional. Gets or sets the scheduling constraints for when the
+        /// profile begins.
         /// </summary>
         public RecurrentSchedule Schedule
         {

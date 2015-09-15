@@ -20,50 +20,48 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    internal partial class AntaresSku
+    /// <summary>
+    /// Specifies the action to post to service when the rule condition is
+    /// evaluated.
+    /// </summary>
+    public partial class RuleWebhookAction : RuleAction
     {
-        private int _currentNumberOfWorkers;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the dictionary of custom properties to
+        /// include with the post operation.
         /// </summary>
-        public int CurrentNumberOfWorkers
+        public IDictionary<string, string> Properties
         {
-            get { return this._currentNumberOfWorkers; }
-            set { this._currentNumberOfWorkers = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
-        private int _currentWorkerSize;
+        private string _serviceUri;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the service uri to Post the notitication.
         /// </summary>
-        public int CurrentWorkerSize
+        public string ServiceUri
         {
-            get { return this._currentWorkerSize; }
-            set { this._currentWorkerSize = value; }
-        }
-        
-        private string _sku;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Sku
-        {
-            get { return this._sku; }
-            set { this._sku = value; }
+            get { return this._serviceUri; }
+            set { this._serviceUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AntaresSku class.
+        /// Initializes a new instance of the RuleWebhookAction class.
         /// </summary>
-        public AntaresSku()
+        public RuleWebhookAction()
         {
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

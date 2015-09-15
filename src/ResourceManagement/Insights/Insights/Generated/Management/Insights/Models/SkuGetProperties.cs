@@ -28,16 +28,16 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuGetProperties
     {
         private CurrentSku _sku;
-
+        
         /// <summary>
-        /// Optional. The resource sku.
+        /// Optional. Gets or sets the resource sku.
         /// </summary>
         public CurrentSku Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the SkuGetProperties class.
         /// </summary>

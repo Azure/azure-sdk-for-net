@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageDiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The storage diagnostic settings.
+        /// Optional. Gets or sets the storage diagnostic settings.
         /// </summary>
         public StorageDiagnosticSettings Properties
         {

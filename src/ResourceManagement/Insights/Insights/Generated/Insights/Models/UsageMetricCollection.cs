@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<UsageMetric> _value;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// Optional. Gets or sets the usage values.
         /// </summary>
         public IList<UsageMetric> Value
         {

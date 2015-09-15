@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _containerName;
         
         /// <summary>
-        /// Optional. The name of the blob container in your Azure Storage
-        /// account that will be used to store the log files.
+        /// Optional. Gets or sets the name of the blob container in your Azure
+        /// Storage account that will be used to store the log files.
         /// </summary>
         public string ContainerName
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DirectoryPath _path;
         
         /// <summary>
-        /// Optional. The path of the resource to monitor.
+        /// Optional. Gets or sets the path of the resource to monitor.
         /// </summary>
         public DirectoryPath Path
         {

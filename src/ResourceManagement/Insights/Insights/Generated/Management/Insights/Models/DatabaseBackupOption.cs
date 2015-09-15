@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DatabaseConsistencyOption _consistencyOption;
         
         /// <summary>
-        /// Optional. The database consistency option.
+        /// Optional. Gets or sets the database consistency option.
         /// </summary>
         public DatabaseConsistencyOption ConsistencyOption
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _keepAtLeastOneBackup;
         
         /// <summary>
-        /// Optional. Whether at least one exported file will be kept.
+        /// Optional. Gets or sets the keep at least one backup flag.Whether at
+        /// least one exported file will be kept.
         /// </summary>
         public bool KeepAtLeastOneBackup
         {
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _repeatInterval;
         
         /// <summary>
-        /// Optional. How often the automated export job will run.
+        /// Optional. Gets or sets the repeat interval.How often the automated
+        /// export job will run.
         /// </summary>
         public TimeSpan RepeatInterval
         {
@@ -66,7 +68,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _retentionPeriod;
         
         /// <summary>
-        /// Optional. How long the exported files will be saved.
+        /// Optional. Gets or sets the retention period.How long the exported
+        /// files will be saved.
         /// </summary>
         public TimeSpan RetentionPeriod
         {
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. The start time for the job.
+        /// Optional. Gets or sets the start time for the job.
         /// </summary>
         public DateTime StartTime
         {

@@ -19,44 +19,48 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using System;
-using System.Linq;
-using Microsoft.Azure.Insights.Models;
+// IMPORTANT: This code was machine generated and then modified by humans.
+// Updating this file with the machine generated one might overwrite important changes. 
+// Please review and revert unintended changes carefully.
 
-namespace Microsoft.Azure.Insights.Models
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure.Insights;
+using Microsoft.Azure.Insights.Models;
+using Newtonsoft.Json.Linq;
+
+namespace Microsoft.Azure.Insights
 {
     /// <summary>
-    /// The status count.
+    /// Operations for logs.
     /// </summary>
-    public partial class StatusCount
+    internal partial class LogOperations : IServiceOperations<InsightsClient>, ILogOperations
     {
-        private int _count;
-        
         /// <summary>
-        /// Optional. The count.
+        /// Initializes a new instance of the LogOperations class.
         /// </summary>
-        public int Count
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal LogOperations(InsightsClient client)
         {
-            get { return this._count; }
-            set { this._count = value; }
+            this._client = client;
         }
-        
-        private LocalizableString _status;
-        
+
+        private InsightsClient _client;
+
         /// <summary>
-        /// Optional. The status.
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
         /// </summary>
-        public LocalizableString Status
+        public InsightsClient Client
         {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the StatusCount class.
-        /// </summary>
-        public StatusCount()
-        {
+            get { return this._client; }
         }
     }
 }

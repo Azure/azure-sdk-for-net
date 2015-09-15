@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _expandEnvironment;
         
         /// <summary>
-        /// Optional. Configures whether or not environment variables in Path
-        /// will be expanded.
+        /// Optional. Gets or sets the expand environment flag. Configures
+        /// whether or not environment variables in Path will be expanded.
         /// </summary>
         public bool ExpandEnvironment
         {
@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _path;
         
         /// <summary>
-        /// Optional. The absolute path to the directory to monitor.
+        /// Optional. Gets or sets the absolute path to the directory to
+        /// monitor.
         /// </summary>
         public string Path
         {

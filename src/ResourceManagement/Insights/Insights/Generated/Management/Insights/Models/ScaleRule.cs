@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private MetricTrigger _metricTrigger;
         
         /// <summary>
-        /// Optional. The trigger that results in a scaling action.
+        /// Optional. Gets or sets the trigger that results in a scaling action.
         /// </summary>
         public MetricTrigger MetricTrigger
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ScaleAction _scaleAction;
         
         /// <summary>
-        /// Optional. The parameters for the scaling action.
+        /// Optional. Gets or sets the parameters for the scaling action.
         /// </summary>
         public ScaleAction ScaleAction
         {
