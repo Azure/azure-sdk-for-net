@@ -88,9 +88,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.GetProperty(AzureAccount.Property.AccessToken));
             }
 
-            var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
-                  .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
-                  .FirstOrDefault();
+            string tenant = null;
+
+            if (context.Subscription != null && context.Account != null)
+            {
+                tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
+                      .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
+                      .FirstOrDefault();
+            }
 
             if (tenant == null && context.Tenant != null && context.Tenant.Id != Guid.Empty)
             {
@@ -152,7 +157,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
         {
-
             if (context.Account == null)
             {
                 throw new ArgumentException(Resources.AccountNotFound);
@@ -168,9 +172,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 return new TokenCredentials(context.Account.GetProperty(AzureAccount.Property.AccessToken));
             }
 
-            var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
-                  .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
-                  .FirstOrDefault();
+            string tenant = null;
+
+            if (context.Subscription != null && context.Account != null)
+            {
+                tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
+                      .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
+                      .FirstOrDefault();
+            }
 
             if (tenant == null && context.Tenant != null && context.Tenant.Id != Guid.Empty)
             {
@@ -198,22 +207,44 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                     ValidateAuthority = !context.Environment.OnPremise
                 };
 
-                if(context.Account.Type == AzureAccount.AccountType.User)
+                var tokenCache = AzureSession.TokenCache;
+
+                if (context.TokenCache != null && context.TokenCache.Length > 0)
                 {
-                    return Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
-                        AdalConfiguration.PowerShellClientId, tenant, context.Account.Id, env, AzureSession.TokenCache)
-                        .ConfigureAwait(false).GetAwaiter().GetResult();
-                }
-                
-                if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
-                {
-                    return ApplicationTokenProvider.LoginSilentAsync(
-                        tenant, context.Account.Id,
-                        new KeyStoreApplicationCredentialProvider(tenant),
-                        env, AzureSession.TokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
+                    tokenCache = new TokenCache(context.TokenCache);
                 }
 
-                throw new NotSupportedException(context.Account.Type.ToString());
+                ServiceClientCredentials result = null;
+
+                if(context.Account.Type == AzureAccount.AccountType.User)
+                {
+                    result = Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
+                        AdalConfiguration.PowerShellClientId, 
+                        tenant, 
+                        context.Account.Id, 
+                        env, 
+                        tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
+                }
+                else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
+                {
+                    result = ApplicationTokenProvider.LoginSilentAsync(
+                        tenant, 
+                        context.Account.Id,
+                        new KeyStoreApplicationCredentialProvider(tenant),
+                        env, 
+                        tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    throw new NotSupportedException(context.Account.Type.ToString());
+                }
+
+                if (context.TokenCache != null && context.TokenCache.Length > 0)
+                {
+                    context.TokenCache = tokenCache.Serialize();
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
