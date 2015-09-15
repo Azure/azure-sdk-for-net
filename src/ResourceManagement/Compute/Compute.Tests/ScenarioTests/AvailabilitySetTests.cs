@@ -13,17 +13,16 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Xunit;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -92,7 +91,7 @@ namespace Compute.Tests
             subId = computeClient.SubscriptionId;
             location = ComputeManagementTestUtilities.DefaultLocation;
 
-            resourceGroupName = TestUtilities.GenerateName(testPrefix);
+            resourceGroupName = ComputeManagementTestUtilities.GenerateName(testPrefix);
 
             resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
                 resourceGroupName,
@@ -104,7 +103,7 @@ namespace Compute.Tests
 
         private void VerifyUpdateFails()
         {
-            var availabilitySetName = TestUtilities.GenerateName("asupdateFails");
+            var availabilitySetName = ComputeManagementTestUtilities.GenerateName("asupdateFails");
             var inputAvailabilitySet = new AvailabilitySet
             {
                 Location = location,
@@ -176,7 +175,7 @@ namespace Compute.Tests
                 Message = "test"
             };
 
-            string inputAvailabilitySetName = TestUtilities.GenerateName("asnondefault");
+            string inputAvailabilitySetName = ComputeManagementTestUtilities.GenerateName("asnondefault");
             var inputAvailabilitySet = new AvailabilitySet
             {
                 Location = location,
@@ -204,7 +203,7 @@ namespace Compute.Tests
 
         private void VerifyDefaultValuesSucceed()
         {
-            var inputAvailabilitySetName = TestUtilities.GenerateName("asdefaultvalues");
+            var inputAvailabilitySetName = ComputeManagementTestUtilities.GenerateName("asdefaultvalues");
             var inputAvailabilitySet = new AvailabilitySet
             {
                 Location = location,
@@ -232,7 +231,7 @@ namespace Compute.Tests
 
         private void VerifyInvalidFDUDValuesFail()
         {
-            var inputAvailabilitySetName = TestUtilities.GenerateName("invalidfdud");
+            var inputAvailabilitySetName = ComputeManagementTestUtilities.GenerateName("invalidfdud");
             var inputAvailabilitySet = new AvailabilitySet
             {
                 Location = location,

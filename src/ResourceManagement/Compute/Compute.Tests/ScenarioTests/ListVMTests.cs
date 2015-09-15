@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -33,11 +33,11 @@ namespace Compute.Tests
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
-                string baseRGName = TestUtilities.GenerateName(TestPrefix);
+                string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string rg1Name = baseRGName + "_1";
                 string rg2Name = baseRGName + "_2";
-                string asName = TestUtilities.GenerateName("as");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1, inputVM2;
 
                 try

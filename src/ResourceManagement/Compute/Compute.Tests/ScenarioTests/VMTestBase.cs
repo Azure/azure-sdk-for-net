@@ -13,12 +13,6 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -27,9 +21,14 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-
-using Xunit;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -206,8 +205,8 @@ namespace Compute.Tests
         protected PublicIpAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
-            string publicIpName = TestUtilities.GenerateName();
-            string domainNameLabel = TestUtilities.GenerateName();
+            string publicIpName = ComputeManagementTestUtilities.GenerateName(null);
+            string domainNameLabel = ComputeManagementTestUtilities.GenerateName(null);
 
             var publicIp = new PublicIpAddress()
             {
@@ -232,8 +231,8 @@ namespace Compute.Tests
         {
             // Create Vnet
             // Populate parameter for Put Vnet
-            string vnetName = TestUtilities.GenerateName();
-            string subnetName = TestUtilities.GenerateName();
+            string vnetName = ComputeManagementTestUtilities.GenerateName(null);
+            string subnetName = ComputeManagementTestUtilities.GenerateName(null);
 
             var vnet = new VirtualNetwork()
             {
@@ -270,8 +269,8 @@ namespace Compute.Tests
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
-            nicname = nicname ?? TestUtilities.GenerateName();
-            string ipConfigName = TestUtilities.GenerateName();
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName(null);
+            string ipConfigName = ComputeManagementTestUtilities.GenerateName(null);
 
             var nicParameters = new NetworkInterface()
             {
@@ -327,10 +326,10 @@ namespace Compute.Tests
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId)
         {
             // Generate Container name to hold disk VHds
-            string containerName = TestUtilities.GenerateName(TestPrefix);
+            string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
             var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
-            var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
-            var osVhduri = vhdContainer + string.Format("/os{0}.vhd", TestUtilities.GenerateName(TestPrefix));
+            var vhduri = vhdContainer + string.Format("/{0}.vhd", ComputeManagementTestUtilities.GenerateName(TestPrefix));
+            var osVhduri = vhdContainer + string.Format("/os{0}.vhd", ComputeManagementTestUtilities.GenerateName(TestPrefix));
 
             var vm = new VirtualMachine
             {
@@ -374,8 +373,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(Resource).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
-            typeof(Resource).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Resource).GetProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
+            typeof(Resource).GetProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 
