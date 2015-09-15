@@ -19,6 +19,10 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+// IMPORTANT: This code was machine generated and then modified by humans.
+// Updating this file with the machine generated one might overwrite important changes. 
+// Please review and revert unintended changes carefully.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,9 +53,9 @@ namespace Microsoft.Azure.Insights
         {
             this._client = client;
         }
-        
+
         private InsightsClient _client;
-        
+
         /// <summary>
         /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
         /// </summary>
@@ -59,7 +63,7 @@ namespace Microsoft.Azure.Insights
         {
             get { return this._client; }
         }
-        
+
         /// <summary>
         /// The List Metric Definitions operation lists the metric definitions
         /// for the resource.
@@ -87,7 +91,7 @@ namespace Microsoft.Azure.Insights
             {
                 throw new ArgumentNullException("resourceUri");
             }
-            
+
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -99,14 +103,28 @@ namespace Microsoft.Azure.Insights
                 tracingParameters.Add("filterString", filterString);
                 TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
             }
-            
+
+            #region Manually added
+
+            // We need to handle document db differently for now until they onboard to shoebox.
             // Construct URL
             string url = "";
             url = url + "/";
-            url = url + resourceUri;
-            url = url + "/metricDefinitions";
+            url = url + Uri.EscapeDataString(resourceUri);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            if (Util.IsLegacyResource(resourceUri))
+            {
+                url = url + "/metricDefinitions";
+                queryParameters.Add("api-version=2014-04-01");
+            }
+            else
+            {
+                url = url + "/providers/microsoft.insights/metricDefinitions";
+                queryParameters.Add("api-version=2015-07-01");
+            }
+
+            #endregion
+
             List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
@@ -132,7 +150,7 @@ namespace Microsoft.Azure.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-            
+
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -140,15 +158,15 @@ namespace Microsoft.Azure.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-                
+
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("x-ms-version", "2014-04-01");
-                
+
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
+
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -174,7 +192,7 @@ namespace Microsoft.Azure.Insights
                         }
                         throw ex;
                     }
-                    
+
                     // Create Result
                     MetricDefinitionListResponse result = null;
                     // Deserialize Response
@@ -188,12 +206,12 @@ namespace Microsoft.Azure.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-                        
+
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                             MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                             result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
-                            
+
                             JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
@@ -201,20 +219,20 @@ namespace Microsoft.Azure.Insights
                                 {
                                     MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                     metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
-                                    
+
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         LocalizableString nameInstance = new LocalizableString();
                                         metricDefinitionInstance.Name = nameInstance;
-                                        
+
                                         JToken valueValue2 = nameValue["value"];
                                         if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                         {
                                             string valueInstance = ((string)valueValue2);
                                             nameInstance.Value = valueInstance;
                                         }
-                                        
+
                                         JToken localizedValueValue = nameValue["localizedValue"];
                                         if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                         {
@@ -222,28 +240,28 @@ namespace Microsoft.Azure.Insights
                                             nameInstance.LocalizedValue = localizedValueInstance;
                                         }
                                     }
-                                    
+
                                     JToken unitValue = valueValue["unit"];
                                     if (unitValue != null && unitValue.Type != JTokenType.Null)
                                     {
                                         Unit unitInstance = ((Unit)Enum.Parse(typeof(Unit), ((string)unitValue), true));
                                         metricDefinitionInstance.Unit = unitInstance;
                                     }
-                                    
+
                                     JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
                                     if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
                                     {
                                         AggregationType primaryAggregationTypeInstance = ((AggregationType)Enum.Parse(typeof(AggregationType), ((string)primaryAggregationTypeValue), true));
                                         metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
                                     }
-                                    
+
                                     JToken resourceUriValue = valueValue["resourceUri"];
                                     if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                     {
                                         string resourceUriInstance = ((string)resourceUriValue);
                                         metricDefinitionInstance.ResourceUri = resourceUriInstance;
                                     }
-                                    
+
                                     JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
                                     if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                     {
@@ -251,34 +269,34 @@ namespace Microsoft.Azure.Insights
                                         {
                                             MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                             metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
-                                            
+
                                             JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
                                             if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                             {
                                                 TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
                                                 metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                             }
-                                            
+
                                             JToken retentionValue = metricAvailabilitiesValue["retention"];
                                             if (retentionValue != null && retentionValue.Type != JTokenType.Null)
                                             {
                                                 TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
                                                 metricAvailabilityInstance.Retention = retentionInstance;
                                             }
-                                            
+
                                             JToken locationValue = metricAvailabilitiesValue["location"];
                                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                                             {
                                                 MetricLocation locationInstance = new MetricLocation();
                                                 metricAvailabilityInstance.Location = locationInstance;
-                                                
+
                                                 JToken tableEndpointValue = locationValue["tableEndpoint"];
                                                 if (tableEndpointValue != null && tableEndpointValue.Type != JTokenType.Null)
                                                 {
                                                     string tableEndpointInstance = ((string)tableEndpointValue);
                                                     locationInstance.TableEndpoint = tableEndpointInstance;
                                                 }
-                                                
+
                                                 JToken tableInfoArray = locationValue["tableInfo"];
                                                 if (tableInfoArray != null && tableInfoArray.Type != JTokenType.Null)
                                                 {
@@ -286,35 +304,35 @@ namespace Microsoft.Azure.Insights
                                                     {
                                                         MetricTableInfo metricTableInfoInstance = new MetricTableInfo();
                                                         locationInstance.TableInfo.Add(metricTableInfoInstance);
-                                                        
+
                                                         JToken tableNameValue = tableInfoValue["tableName"];
                                                         if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
                                                         {
                                                             string tableNameInstance = ((string)tableNameValue);
                                                             metricTableInfoInstance.TableName = tableNameInstance;
                                                         }
-                                                        
+
                                                         JToken startTimeValue = tableInfoValue["startTime"];
                                                         if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                                         {
                                                             DateTime startTimeInstance = ((DateTime)startTimeValue);
                                                             metricTableInfoInstance.StartTime = startTimeInstance;
                                                         }
-                                                        
+
                                                         JToken endTimeValue = tableInfoValue["endTime"];
                                                         if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                                         {
                                                             DateTime endTimeInstance = ((DateTime)endTimeValue);
                                                             metricTableInfoInstance.EndTime = endTimeInstance;
                                                         }
-                                                        
+
                                                         JToken sasTokenValue = tableInfoValue["sasToken"];
                                                         if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
                                                         {
                                                             string sasTokenInstance = ((string)sasTokenValue);
                                                             metricTableInfoInstance.SasToken = sasTokenInstance;
                                                         }
-                                                        
+
                                                         JToken sasTokenExpirationTimeValue = tableInfoValue["sasTokenExpirationTime"];
                                                         if (sasTokenExpirationTimeValue != null && sasTokenExpirationTimeValue.Type != JTokenType.Null)
                                                         {
@@ -323,7 +341,7 @@ namespace Microsoft.Azure.Insights
                                                         }
                                                     }
                                                 }
-                                                
+
                                                 JToken partitionKeyValue = locationValue["partitionKey"];
                                                 if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
                                                 {
@@ -331,9 +349,61 @@ namespace Microsoft.Azure.Insights
                                                     locationInstance.PartitionKey = partitionKeyInstance;
                                                 }
                                             }
+
+                                            JToken blobLocationValue = metricAvailabilitiesValue["blobLocation"];
+                                            if (blobLocationValue != null && blobLocationValue.Type != JTokenType.Null)
+                                            {
+                                                BlobLocation blobLocationInstance = new BlobLocation();
+                                                metricAvailabilityInstance.BlobLocation = blobLocationInstance;
+
+                                                JToken blobEndpointValue = blobLocationValue["blobEndpoint"];
+                                                if (blobEndpointValue != null && blobEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string blobEndpointInstance = ((string)blobEndpointValue);
+                                                    blobLocationInstance.BlobEndpoint = blobEndpointInstance;
+                                                }
+
+                                                JToken blobInfoArray = blobLocationValue["blobInfo"];
+                                                if (blobInfoArray != null && blobInfoArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken blobInfoValue in ((JArray)blobInfoArray))
+                                                    {
+                                                        BlobInfo blobInfoInstance = new BlobInfo();
+                                                        blobLocationInstance.BlobInfo.Add(blobInfoInstance);
+
+                                                        JToken blobUriValue = blobInfoValue["blobUri"];
+                                                        if (blobUriValue != null && blobUriValue.Type != JTokenType.Null)
+                                                        {
+                                                            string blobUriInstance = ((string)blobUriValue);
+                                                            blobInfoInstance.BlobUri = blobUriInstance;
+                                                        }
+
+                                                        JToken startTimeValue2 = blobInfoValue["startTime"];
+                                                        if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                            blobInfoInstance.StartTime = startTimeInstance2;
+                                                        }
+
+                                                        JToken endTimeValue2 = blobInfoValue["endTime"];
+                                                        if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                            blobInfoInstance.EndTime = endTimeInstance2;
+                                                        }
+
+                                                        JToken sasTokenValue2 = blobInfoValue["sasToken"];
+                                                        if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string sasTokenInstance2 = ((string)sasTokenValue2);
+                                                            blobInfoInstance.SasToken = sasTokenInstance2;
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
-                                    
+
                                     JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                     if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                     {
@@ -344,7 +414,7 @@ namespace Microsoft.Azure.Insights
                                             metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
                                         }
                                     }
-                                    
+
                                     JToken dimensionsArray = valueValue["dimensions"];
                                     if (dimensionsArray != null && dimensionsArray.Type != JTokenType.Null)
                                     {
@@ -352,20 +422,20 @@ namespace Microsoft.Azure.Insights
                                         {
                                             Dimension dimensionInstance = new Dimension();
                                             metricDefinitionInstance.Dimensions.Add(dimensionInstance);
-                                            
+
                                             JToken nameValue2 = dimensionsValue["name"];
                                             if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                             {
                                                 LocalizableString nameInstance2 = new LocalizableString();
                                                 dimensionInstance.Name = nameInstance2;
-                                                
+
                                                 JToken valueValue3 = nameValue2["value"];
                                                 if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                                 {
                                                     string valueInstance2 = ((string)valueValue3);
                                                     nameInstance2.Value = valueInstance2;
                                                 }
-                                                
+
                                                 JToken localizedValueValue2 = nameValue2["localizedValue"];
                                                 if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                                 {
@@ -373,7 +443,7 @@ namespace Microsoft.Azure.Insights
                                                     nameInstance2.LocalizedValue = localizedValueInstance2;
                                                 }
                                             }
-                                            
+
                                             JToken valuesArray = dimensionsValue["values"];
                                             if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                             {
@@ -381,14 +451,14 @@ namespace Microsoft.Azure.Insights
                                                 {
                                                     LocalizableString localizableStringInstance = new LocalizableString();
                                                     dimensionInstance.Values.Add(localizableStringInstance);
-                                                    
+
                                                     JToken valueValue4 = valuesValue["value"];
                                                     if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
                                                     {
                                                         string valueInstance3 = ((string)valueValue4);
                                                         localizableStringInstance.Value = valueInstance3;
                                                     }
-                                                    
+
                                                     JToken localizedValueValue3 = valuesValue["localizedValue"];
                                                     if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
                                                     {
@@ -402,14 +472,14 @@ namespace Microsoft.Azure.Insights
                                 }
                             }
                         }
-                        
+
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    
+
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);
