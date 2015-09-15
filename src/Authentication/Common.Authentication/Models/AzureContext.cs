@@ -64,10 +64,15 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Gets the azure environment.
         /// </summary>
         public AzureEnvironment Environment { get; private set; }
-
+        
         /// <summary>
         /// Gets the azure tenant.
         /// </summary>
         public AzureTenant Tenant { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the token cache contents.
+        /// </summary>
+        public byte[] TokenCache { get; set; }
     }
 }

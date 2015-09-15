@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Gets the default azure context object.
         /// </summary>
         [JsonIgnore]
-        public AzureContext DefaultContext 
+        public AzureContext Context 
         { 
             get
             {

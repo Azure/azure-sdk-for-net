@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public virtual TClient CreateClient<TClient>(AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
-            TClient client = CreateClient<TClient>(profile.DefaultContext, endpoint);
+            TClient client = CreateClient<TClient>(profile.Context, endpoint);
 
             foreach (IClientAction action in actions.Values)
             {
