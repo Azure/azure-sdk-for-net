@@ -69,7 +69,6 @@ namespace Common.Authentication.Test
 
             AzureContext context = new AzureContext
             (
-
                 new AzureSubscription()
                 {
                     Account = userAccount,

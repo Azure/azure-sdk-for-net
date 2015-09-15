@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         { 
             get
             {
-                var context = new AzureContext(null, null, null);
+                var context = new AzureContext(null, null, null, null);
 
                 if (DefaultSubscription != null)
                 {
