@@ -106,10 +106,20 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
                     context.Account.Id, context.Environment.Name, tenant);
-                var tokenCache = new TokenCache(context.TokenCache);
+                var tokenCache = AzureSession.TokenCache;
+
+                if(context.TokenCache != null && context.TokenCache.Length > 0)
+                {
+                    tokenCache = new TokenCache(context.TokenCache);
+                }
                 var token = Authenticate(context.Account, context.Environment,
                     tenant, null, ShowDialog.Never, tokenCache);
-                context.TokenCache = tokenCache.Serialize();
+
+                if (context.TokenCache != null && context.TokenCache.Length > 0)
+                {
+                    context.TokenCache = tokenCache.Serialize();
+                }
+
                 TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace, 
                     token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
