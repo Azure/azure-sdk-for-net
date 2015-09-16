@@ -2794,7 +2794,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The type name of the hadoop congfiguration.
+        /// Required. The type name of the hadoop configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

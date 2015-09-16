@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.HDInsight.Job.Models;
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
     /// <summary>
-    /// Operations for managing jobs against HDInsight clusters.
+    /// Operations for managing jobs against HDInsight clusters. 
     /// </summary>
     public partial interface IJobOperations
     {
