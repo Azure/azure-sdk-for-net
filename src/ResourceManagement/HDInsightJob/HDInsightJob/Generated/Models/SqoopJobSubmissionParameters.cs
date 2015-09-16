@@ -73,6 +73,17 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
             set { this._statusDir = value; }
         }
         
+        private string _userName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string UserName
+        {
+            get { return this._userName; }
+            set { this._userName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the SqoopJobSubmissionParameters
         /// class.
