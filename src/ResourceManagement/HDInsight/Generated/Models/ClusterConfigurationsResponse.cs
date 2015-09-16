@@ -20,43 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Hyak.Common;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The Cluster Configurations operation response.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class ClusterConfigurationsResponse : AzureOperationResponse
     {
-        private JobDetailRootJsonObject _detail;
+        private IDictionary<string, string> _configuration;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public IDictionary<string, string> Configuration
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ClusterConfigurationsResponse
+        /// class.
         /// </summary>
-        public JobListJsonObject()
+        public ClusterConfigurationsResponse()
         {
+            this.Configuration = new LazyDictionary<string, string>();
         }
     }
 }

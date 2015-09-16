@@ -21,42 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The provisioning state of the cluster.
     /// </summary>
-    public partial class JobListJsonObject
+    public enum HDInsightClusterProvisioningState
     {
-        private JobDetailRootJsonObject _detail;
+        /// <summary>
+        /// The cluster create is in progress.
+        /// </summary>
+        InProgress = 1,
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// The cluster create failed.
         /// </summary>
-        public JobDetailRootJsonObject Detail
-        {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
+        Failed = 2,
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// The cluster create succeeded.
         /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
+        Succeeded = 3,
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// The cluster create is canceled.
         /// </summary>
-        public JobListJsonObject()
-        {
-        }
+        Canceled = 4,
+        
+        /// <summary>
+        /// The cluster is deleting.
+        /// </summary>
+        Deleting = 5,
     }
 }

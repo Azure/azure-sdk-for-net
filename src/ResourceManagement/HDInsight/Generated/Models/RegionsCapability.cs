@@ -20,43 +20,31 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Hyak.Common;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class RegionsCapability
     {
-        private JobDetailRootJsonObject _detail;
+        private IList<string> _availableRegions;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public IList<string> AvailableRegions
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._availableRegions; }
+            set { this._availableRegions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the RegionsCapability class.
         /// </summary>
-        public JobListJsonObject()
+        public RegionsCapability()
         {
+            this.AvailableRegions = new LazyList<string>();
         }
     }
 }

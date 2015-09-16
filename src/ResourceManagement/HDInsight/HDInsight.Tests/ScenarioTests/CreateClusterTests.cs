@@ -180,7 +180,7 @@ namespace HDInsight.Tests
             }
         }
 
-        //[Fact]
+        [Fact]
         public void TestCreateHumboldtClusterWithSshUsernamePassword()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

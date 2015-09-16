@@ -21,42 +21,22 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The operating system type.
     /// </summary>
-    public partial class JobListJsonObject
+    public enum OSType
     {
-        private JobDetailRootJsonObject _detail;
+        /// <summary>
+        /// Windows Operating System.
+        /// </summary>
+        Windows = 1,
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Linux Operating System.
         /// </summary>
-        public JobDetailRootJsonObject Detail
-        {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
-        /// </summary>
-        public JobListJsonObject()
-        {
-        }
+        Linux = 2,
     }
 }

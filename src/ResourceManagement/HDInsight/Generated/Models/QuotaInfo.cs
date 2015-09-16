@@ -21,41 +21,26 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class QuotaInfo
     {
-        private JobDetailRootJsonObject _detail;
+        private int _coresUsed;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the cores used by the cluster.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public int CoresUsed
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._coresUsed; }
+            set { this._coresUsed = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the QuotaInfo class.
         /// </summary>
-        public JobListJsonObject()
+        public QuotaInfo()
         {
         }
     }

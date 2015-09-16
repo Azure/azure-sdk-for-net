@@ -21,41 +21,63 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// Parameters specifying the HDInsight Hive job definition.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class SqoopJobSubmissionParameters
     {
-        private JobDetailRootJsonObject _detail;
+        private string _command;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public string Command
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._command; }
+            set { this._command = value; }
         }
         
-        private string _id;
+        private string _file;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional.
         /// </summary>
-        public string Id
+        public string File
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._file; }
+            set { this._file = value; }
+        }
+        
+        private string _files;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Files
+        {
+            get { return this._files; }
+            set { this._files = value; }
+        }
+        
+        private string _statusDir;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string StatusDir
+        {
+            get { return this._statusDir; }
+            set { this._statusDir = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the SqoopJobSubmissionParameters
+        /// class.
         /// </summary>
-        public JobListJsonObject()
+        public SqoopJobSubmissionParameters()
         {
         }
     }

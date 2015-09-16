@@ -21,42 +21,47 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// Parameters specifying the data factory gateway definition for a create
+    /// or update operation.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class RDPSettingsParameters
     {
-        private JobDetailRootJsonObject _detail;
+        private OsProfile _osProfile;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Required. Gets or sets the definition of a data factory gateway to
+        /// be created or updated.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public OsProfile OsProfile
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._osProfile; }
+            set { this._osProfile = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the RDPSettingsParameters class.
         /// </summary>
-        public JobListJsonObject()
+        public RDPSettingsParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RDPSettingsParameters class with
+        /// required arguments.
+        /// </summary>
+        public RDPSettingsParameters(OsProfile osProfile)
+            : this()
+        {
+            if (osProfile == null)
+            {
+                throw new ArgumentNullException("osProfile");
+            }
+            this.OsProfile = osProfile;
         }
     }
 }

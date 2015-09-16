@@ -21,41 +21,49 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class ClusterDefinition
     {
-        private JobDetailRootJsonObject _detail;
+        private Uri _blueprintUri;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the link to the blueprint.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public Uri BlueprintUri
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._blueprintUri; }
+            set { this._blueprintUri = value; }
         }
         
-        private string _id;
+        private HDInsightClusterType _clusterType;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the type of cluster.
         /// </summary>
-        public string Id
+        public HDInsightClusterType ClusterType
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._clusterType; }
+            set { this._clusterType = value; }
+        }
+        
+        private string _configurations;
+        
+        /// <summary>
+        /// Optional. Gets or sets the cluster configurations.
+        /// </summary>
+        public string Configurations
+        {
+            get { return this._configurations; }
+            set { this._configurations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ClusterDefinition class.
         /// </summary>
-        public JobListJsonObject()
+        public ClusterDefinition()
         {
         }
     }

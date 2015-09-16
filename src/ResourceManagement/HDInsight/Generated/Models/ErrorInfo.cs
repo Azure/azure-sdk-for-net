@@ -21,41 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class ErrorInfo
     {
-        private JobDetailRootJsonObject _detail;
+        private string _code;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the error code.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public string Code
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._code; }
+            set { this._code = value; }
         }
         
-        private string _id;
+        private string _message;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the error message.
         /// </summary>
-        public string Id
+        public string Message
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ErrorInfo class.
         /// </summary>
-        public JobListJsonObject()
+        public ErrorInfo()
         {
         }
     }

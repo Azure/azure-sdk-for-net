@@ -21,41 +21,38 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class OsProfile
     {
-        private JobDetailRootJsonObject _detail;
+        private LinuxOperatingSystemProfile _linuxOperatingSystemProfile;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the Linux OS profile.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public LinuxOperatingSystemProfile LinuxOperatingSystemProfile
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._linuxOperatingSystemProfile; }
+            set { this._linuxOperatingSystemProfile = value; }
         }
         
-        private string _id;
+        private WindowsOperatingSystemProfile _windowsOperatingSystemProfile;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the Windows OS profile.
         /// </summary>
-        public string Id
+        public WindowsOperatingSystemProfile WindowsOperatingSystemProfile
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._windowsOperatingSystemProfile; }
+            set { this._windowsOperatingSystemProfile = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the OsProfile class.
         /// </summary>
-        public JobListJsonObject()
+        public OsProfile()
         {
         }
     }
