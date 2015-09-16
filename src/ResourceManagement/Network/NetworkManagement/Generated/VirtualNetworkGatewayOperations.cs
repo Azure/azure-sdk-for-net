@@ -258,6 +258,11 @@ namespace Microsoft.Azure.Management.Network
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -452,6 +457,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     bool enableBgpInstance = ((bool)enableBgpValue);
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue3["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
@@ -963,6 +975,11 @@ namespace Microsoft.Azure.Management.Network
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -1157,6 +1174,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     bool enableBgpInstance = ((bool)enableBgpValue);
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue3["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
@@ -1709,6 +1733,13 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
                                 }
                                 
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
                                 JToken provisioningStateValue2 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
@@ -2027,6 +2058,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             bool enableBgpInstance = ((bool)enableBgpValue);
                                             virtualNetworkGatewayJsonFormatInstance.EnableBgp = enableBgpInstance;
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            virtualNetworkGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];

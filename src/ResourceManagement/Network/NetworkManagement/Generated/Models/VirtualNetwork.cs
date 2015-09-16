@@ -68,6 +68,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
+        private string _resourceGuid;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource guid property of the VirtualNetwork
+        /// resource
+        /// </summary>
+        public string ResourceGuid
+        {
+            get { return this._resourceGuid; }
+            set { this._resourceGuid = value; }
+        }
+        
         private IList<Subnet> _subnets;
         
         /// <summary>

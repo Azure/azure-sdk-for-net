@@ -182,6 +182,7 @@ namespace Networks.Tests
                 Assert.Equal("Succeeded", getLoadBalancer.LoadBalancer.InboundNatRules[1].ProvisioningState);
                 Assert.Equal(3390, getLoadBalancer.LoadBalancer.InboundNatRules[1].FrontendPort);
                 Assert.Equal(15, getLoadBalancer.LoadBalancer.InboundNatRules[1].IdleTimeoutInMinutes);
+                Assert.NotNull(getLoadBalancer.LoadBalancer.ResourceGuid);
                 
                 // Verify List LoadBalancer
                 var listLoadBalancer = networkResourceProviderClient.LoadBalancers.List(resourceGroupName);
