@@ -49,6 +49,7 @@ namespace Networks.Tests
                 var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
                 Assert.Equal(HttpStatusCode.OK, getNsgResponse.StatusCode);
                 Assert.Equal(networkSecurityGroupName, getNsgResponse.NetworkSecurityGroup.Name);
+                Assert.NotNull(getNsgResponse.NetworkSecurityGroup.ResourceGuid);
                 Assert.Equal(6, getNsgResponse.NetworkSecurityGroup.DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", getNsgResponse.NetworkSecurityGroup.DefaultSecurityRules[0].Name);
                 Assert.Equal("AllowAzureLoadBalancerInBound", getNsgResponse.NetworkSecurityGroup.DefaultSecurityRules[1].Name);
