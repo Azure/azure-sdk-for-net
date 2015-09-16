@@ -20,43 +20,52 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The List Cluster operation response.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class ClusterListResponse : AzureOperationResponse, IEnumerable<Cluster>
     {
-        private JobDetailRootJsonObject _detail;
+        private IList<Cluster> _clusters;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public IList<Cluster> Clusters
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._clusters; }
+            set { this._clusters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ClusterListResponse class.
         /// </summary>
-        public JobListJsonObject()
+        public ClusterListResponse()
         {
+            this.Clusters = new LazyList<Cluster>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Clusters.
+        /// </summary>
+        public IEnumerator<Cluster> GetEnumerator()
+        {
+            return this.Clusters.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Clusters.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

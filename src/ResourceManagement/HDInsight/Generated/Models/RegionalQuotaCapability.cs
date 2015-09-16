@@ -21,41 +21,48 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class RegionalQuotaCapability
     {
-        private JobDetailRootJsonObject _detail;
+        private long _coresAvailable;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public long CoresAvailable
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._coresAvailable; }
+            set { this._coresAvailable = value; }
         }
         
-        private string _id;
+        private long _coresUsed;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional.
         /// </summary>
-        public string Id
+        public long CoresUsed
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._coresUsed; }
+            set { this._coresUsed = value; }
+        }
+        
+        private string _regionName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RegionName
+        {
+            get { return this._regionName; }
+            set { this._regionName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the RegionalQuotaCapability class.
         /// </summary>
-        public JobListJsonObject()
+        public RegionalQuotaCapability()
         {
         }
     }

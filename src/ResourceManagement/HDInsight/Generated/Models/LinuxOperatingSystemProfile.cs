@@ -21,41 +21,49 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class LinuxOperatingSystemProfile
     {
-        private JobDetailRootJsonObject _detail;
+        private string _password;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the password.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public string Password
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._password; }
+            set { this._password = value; }
         }
         
-        private string _id;
+        private SshProfile _sshProfile;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the SSH profile.
         /// </summary>
-        public string Id
+        public SshProfile SshProfile
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._sshProfile; }
+            set { this._sshProfile = value; }
+        }
+        
+        private string _userName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the username.
+        /// </summary>
+        public string UserName
+        {
+            get { return this._userName; }
+            set { this._userName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the LinuxOperatingSystemProfile class.
         /// </summary>
-        public JobListJsonObject()
+        public LinuxOperatingSystemProfile()
         {
         }
     }

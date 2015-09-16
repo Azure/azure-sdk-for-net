@@ -21,41 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The Resize Cluster request parameters.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class ClusterResizeParameters
     {
-        private JobDetailRootJsonObject _detail;
+        private int _targetInstanceCount;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the target instance count for the operation.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public int TargetInstanceCount
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._targetInstanceCount; }
+            set { this._targetInstanceCount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ClusterResizeParameters class.
         /// </summary>
-        public JobListJsonObject()
+        public ClusterResizeParameters()
         {
         }
     }

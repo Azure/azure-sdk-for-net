@@ -21,30 +21,15 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class VirtualNetworkProfile
     {
-        private JobDetailRootJsonObject _detail;
-        
-        /// <summary>
-        /// Optional. Gets or sets the detail of the job.
-        /// </summary>
-        public JobDetailRootJsonObject Detail
-        {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the ID of the virtual network.
         /// </summary>
         public string Id
         {
@@ -52,10 +37,21 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
             set { this._id = value; }
         }
         
+        private string _subnetName;
+        
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Optional. Gets or sets the name of the subnet.
         /// </summary>
-        public JobListJsonObject()
+        public string SubnetName
+        {
+            get { return this._subnetName; }
+            set { this._subnetName = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualNetworkProfile class.
+        /// </summary>
+        public VirtualNetworkProfile()
         {
         }
     }

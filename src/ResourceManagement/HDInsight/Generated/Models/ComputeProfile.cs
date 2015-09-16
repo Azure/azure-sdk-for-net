@@ -20,43 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Hyak.Common;
+using Microsoft.Azure.Management.HDInsight.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// Describes the compute profile.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class ComputeProfile
     {
-        private JobDetailRootJsonObject _detail;
+        private IList<Role> _roles;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the list of roles in the cluster.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public IList<Role> Roles
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._roles; }
+            set { this._roles = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the ComputeProfile class.
         /// </summary>
-        public JobListJsonObject()
+        public ComputeProfile()
         {
+            this.Roles = new LazyList<Role>();
         }
     }
 }

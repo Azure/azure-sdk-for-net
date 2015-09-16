@@ -21,41 +21,26 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    /// <summary>
-    /// The List Job operation response.
-    /// </summary>
-    public partial class JobListJsonObject
+    public partial class SshPublicKey
     {
-        private JobDetailRootJsonObject _detail;
+        private string _certificateData;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the certificate for SSH.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public string CertificateData
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._certificateData; }
+            set { this._certificateData = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the SshPublicKey class.
         /// </summary>
-        public JobListJsonObject()
+        public SshPublicKey()
         {
         }
     }
