@@ -250,6 +250,7 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
             public List<MetricValueBlob> records { get; set; }
         }
 
+#pragma warning disable 0649
         private class MetricValueBlob
         {
             public string metricName;
@@ -260,5 +261,6 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 			public double minimum;
 			public double average;
         }
+#pragma warning restore 0649
     }
 }

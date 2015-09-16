@@ -14,10 +14,11 @@ namespace Microsoft.Azure.Insights
         private static readonly Uri DummyUri = new Uri("https://localhost");
 
         private const string ProviderNameVariable = "providerName";
+        private const string ResourceTypeVariable = "resourceType";
         private static readonly List<UriTemplate> ResourceIdTemplates = new List<UriTemplate>
         {
-            new UriTemplate("subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/{providerName}/*"),
-            new UriTemplate("subscriptions/{subscriptionId}/providers/{providerName}/*")
+            new UriTemplate("subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/{providerName}/{resourceType}/*"),
+            new UriTemplate("subscriptions/{subscriptionId}/providers/{providerName}/{resourceType}/*")
         };
 
         private static readonly HashSet<string> StorageResourceProviders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -44,14 +45,29 @@ namespace Microsoft.Azure.Insights
         };
 
         /// <summary>
+        /// Collection of legacy resource types
+        /// </summary>
+        public static readonly HashSet<string> LegacyResourceTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "microsoft.insights/components",
+            "microsoft.insights/webtests"
+        };
+
+        /// <summary>
         /// Check to see if the resourceId is backed by a legacy resouce provider
         /// </summary>
         /// <param name="resourceId">resource id</param>
         /// <returns>true, if the resourceId is a legacy resource</returns>
         internal static bool IsLegacyResource(string resourceId)
         {
-            string resourceProvider = ExtractResourceProvider(resourceId);
-            return LegacyResourceProviders.Contains(resourceProvider);
+            string resourceProvider;
+            string resourceType;
+            if (TryExtractResourceProviderAndType(resourceId, out resourceProvider, out resourceType))
+            {
+                return LegacyResourceProviders.Contains(resourceProvider) || LegacyResourceTypes.Contains(resourceType);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -66,8 +82,14 @@ namespace Microsoft.Azure.Insights
                 throw new ArgumentNullException("resourceId");
             }
             
-            string resourceProvider = ExtractResourceProvider(resourceId);
-            return StorageResourceProviders.Contains(resourceProvider);
+            string resourceProvider;
+            string resourceType;
+            if (TryExtractResourceProviderAndType(resourceId, out resourceProvider, out resourceType))
+            {
+                return StorageResourceProviders.Contains(resourceProvider);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -82,18 +104,29 @@ namespace Microsoft.Azure.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            string resourceProvider = ExtractResourceProvider(resourceId);
-            return ComputeResourceProviders.Contains(resourceProvider);
+            string resourceProvider;
+            string resourceType;
+            if (TryExtractResourceProviderAndType(resourceId, out resourceProvider, out resourceType))
+            {
+                return ComputeResourceProviders.Contains(resourceProvider);
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Extract the resource provider from the resourceId
         /// </summary>
         /// <param name="resourceId">resource id</param>
-        /// <returns>the resource provider name</returns>
-        private static string ExtractResourceProvider(string resourceId)
+        /// <param name="resourceProviderName">the resource provider name</param>
+        /// <param name="resourceType">the resource type</param>
+        /// <returns>true, if the extraction was a success</returns>
+        private static bool TryExtractResourceProviderAndType(string resourceId, out string resourceProviderName, out string resourceType)
         {
-            string resourceProviderName = null;
+            bool status = false;
+
+            resourceProviderName = null;
+            resourceType = null;
 
             resourceId = resourceId.Trim('/');
             foreach (UriTemplate uriTemplate in ResourceIdTemplates)
@@ -102,11 +135,15 @@ namespace Microsoft.Azure.Insights
                 if (match != null)
                 {
                     resourceProviderName = match.BoundVariables[ProviderNameVariable];
+                    resourceType = match.BoundVariables[ResourceTypeVariable];
+                    resourceType = resourceProviderName + "/" + resourceType;
+
+                    status = true;
                     break;
                 }
             }
 
-            return resourceProviderName;
+            return status;
         }
     }
 }
