@@ -138,6 +138,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._requestRoutingRules = value; }
         }
         
+        private string _resourceGuid;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource guid property of the
+        /// ApplicationGateway resource
+        /// </summary>
+        public string ResourceGuid
+        {
+            get { return this._resourceGuid; }
+            set { this._resourceGuid = value; }
+        }
+        
         private ApplicationGatewaySku _sku;
         
         /// <summary>

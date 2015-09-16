@@ -139,6 +139,7 @@ namespace Networks.Tests
                 Assert.Equal(ipConfigName, getNicResponse.NetworkInterface.IpConfigurations[0].Name);
                 Assert.Equal(getPublicIpAddressResponse.PublicIpAddress.Id, getNicResponse.NetworkInterface.IpConfigurations[0].PublicIpAddress.Id);
                 Assert.Equal(getSubnetResponse.Subnet.Id, getNicResponse.NetworkInterface.IpConfigurations[0].Subnet.Id);
+                Assert.NotNull(getNicResponse.NetworkInterface.ResourceGuid);
 
                 // Get all Nics
                 var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
