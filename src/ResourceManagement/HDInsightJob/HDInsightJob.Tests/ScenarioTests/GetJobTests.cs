@@ -71,7 +71,9 @@ namespace HDInsightJob.Tests
                 var parameters = new HiveJobSubmissionParameters
                 {
                     UserName = username,
-                    Query = "SHOW TABLES;"
+                    Query = "SHOW TABLES;",
+                    Arguments = "arg1",
+                    Defines = "def1"
                 };
 
                 var jobid = client.JobManagement.SubmitHiveJob(parameters).JobSubmissionJsonResponse.Id;
