@@ -151,105 +151,12 @@ namespace Insights.Tests.InMemoryTests
             AreEqual(expectedEventDataCollection, actualEventDataCollection.EventDataCollection);
         }
 
-        /// <summary>
-        /// Test for the ListEventStatusCountSummaryItems method
-        /// </summary>
-        [Fact]
-        public void ListEventStatusCountSummaryItemsTest()
-        {
-            EventStatusCountSummaryItemCollection eventStatusCountSummaryItemCollection = GetEventStatusCountSummaryItemCollection();
-
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(eventStatusCountSummaryItemCollection.ToJson())
-            };
-
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-
-            var startTime = DateTimeOffset.Parse("2014-03-11T01:00:00.00Z");
-            var endTime = DateTimeOffset.Parse("2014-03-11T02:00:00.00Z");
-
-            var insightsClient = GetInsightsClient(handler);
-
-            var filterString = FilterString.Generate<ListEventsParameters>(
-                    p => (p.EventTimestamp >= startTime) && (p.EventTimestamp < endTime));
-
-            var actualEventStatusCountSummaryResponse = insightsClient.EventOperations.ListEventStatusCountSummaryItemsAsync(filterString).Result;
-
-            AreEqual(eventStatusCountSummaryItemCollection, actualEventStatusCountSummaryResponse.EventStatusCountSummaryItemCollection);
-        }
-
         #region private methods
-
-        private static EventStatusCountSummaryItemCollection GetEventStatusCountSummaryItemCollection()
-        {
-            return new EventStatusCountSummaryItemCollection()
-            {
-                Value = new List<EventStatusCountSummaryItem>()
-                {
-                    new EventStatusCountSummaryItem()
-                    {
-                        EventTime = new DateTime(2014, 03, 11, 1, 1, 1, 0),
-                        Id = "'/subscriptions/6b483e7e-f352-4d25-b49d-e0cc8b0b78f6/resourcegroups/Default-Web-SouthCentralUS/providers/Microsoft.Web/sites/si/managementSummariesCount'",
-                        TimeGrain = TimeSpan.FromDays(1),
-                        StatusCounts = new List<StatusCount>()
-                        {
-                            new StatusCount()
-                            {
-                                Status = new LocalizableString()
-                                {
-                                    Value = "Success",
-                                    LocalizedValue = "Success",
-                                },
-                                Count = 1
-                            },
-                        },
-                    }
-                }
-            };
-        }
-
-        private static void AreEqual(StatusCount exp, StatusCount act)
-        {
-            if (exp != null)
-            {
-                AreEqual(exp.Status, act.Status);
-                Assert.Equal(exp.Count, act.Count);
-            }
-        }
-
-        private static void AreEqual(IList<StatusCount> exp, IList<StatusCount> act)
-        {
-            if (exp != null)
-            {
-                Assert.NotNull(act);
-                Assert.Equal(exp.Count, act.Count);
-
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
-        }
 
         private static void AreEqual(EventDataCollection exp, EventDataCollection act)
         {
             if (exp != null)
             {
-                for (int i = 0; i < exp.Value.Count; i++)
-                {
-                    AreEqual(exp.Value[i], act.Value[i]);
-                }
-            }
-        }
-
-        private static void AreEqual(EventStatusCountSummaryItemCollection exp, EventStatusCountSummaryItemCollection act)
-        {
-            if (exp != null)
-            {
-                Assert.NotNull(act);
-                Assert.Equal(exp.Value.Count, act.Value.Count);
-
                 for (int i = 0; i < exp.Value.Count; i++)
                 {
                     AreEqual(exp.Value[i], act.Value[i]);
@@ -267,7 +174,6 @@ namespace Insights.Tests.InMemoryTests
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.EventDataId, act.EventDataId);
                 AreEqual(exp.EventName, act.EventName);
-                AreEqual(exp.EventSource, act.EventSource);
                 Assert.Equal(exp.EventTimestamp.ToUniversalTime(), act.EventTimestamp.ToUniversalTime());
                 AreEqual(exp.HttpRequest, act.HttpRequest);
                 Assert.Equal(exp.Level, act.Level);
@@ -276,7 +182,6 @@ namespace Insights.Tests.InMemoryTests
                 AreEqual(exp.Properties, act.Properties);
                 Assert.Equal(exp.ResourceGroupName, act.ResourceGroupName);
                 AreEqual(exp.ResourceProviderName, act.ResourceProviderName);
-                Assert.Equal(exp.ResourceUri, act.ResourceUri);
                 AreEqual(exp.Status, act.Status);
                 AreEqual(exp.SubStatus, act.SubStatus);
                 Assert.Equal(exp.SubmissionTimestamp.ToUniversalTime(), act.SubmissionTimestamp.ToUniversalTime());
@@ -285,14 +190,6 @@ namespace Insights.Tests.InMemoryTests
                 // TODO: This cannot be verified for now. Should fix this in the next mmilestone.
                 // Assert.Equal(exp.EventChannels, act.EventChannels);
             }
-        }
-
-        private static void AreEqual(EventStatusCountSummaryItem exp, EventStatusCountSummaryItem act)
-        {
-            Assert.Equal(exp.EventTime.ToUniversalTime(), act.EventTime.ToUniversalTime());
-            Assert.Equal(exp.Id, act.Id);
-            Assert.Equal(exp.TimeGrain, act.TimeGrain);
-            AreEqual(exp.StatusCounts, act.StatusCounts);
         }
 
         private static void AreEqual(HttpRequestInfo exp, HttpRequestInfo act)
@@ -342,7 +239,7 @@ namespace Insights.Tests.InMemoryTests
                         EventChannels = EventChannels.Operation,
                         EventDataId = Guid.NewGuid().ToString("N"),
                         EventName = new LocalizableString() {LocalizedValue = "Event Name", Value = "EventName"},
-                        EventSource = new LocalizableString() {LocalizedValue = "Event Source", Value = "EventSource"},
+                        Category = new LocalizableString() {LocalizedValue = "Administrative", Value = "Administrative"},
                         EventTimestamp = DateTime.UtcNow,
                         HttpRequest = new HttpRequestInfo()
                         {
@@ -366,7 +263,7 @@ namespace Insights.Tests.InMemoryTests
                                 LocalizedValue = "Resource provider name",
                                 Value = "ResourceProviderName"
                             },
-                        ResourceUri = "/subscriptions/sub1",
+                        ResourceId = "/subscriptions/sub1",
                         Status = new LocalizableString() {LocalizedValue = "Is Ready", Value = "IsReady"},
                         SubStatus = new LocalizableString() {LocalizedValue = "sub 1", Value = "sub1"},
                         SubmissionTimestamp = DateTime.UtcNow,

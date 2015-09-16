@@ -14,7 +14,7 @@
     <Compile Include="InMemoryTests\MonitoringConfiguration.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\TestBase.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\EventData.InMemoryTests.cs" />
-    <Compile Include="InMemoryTests\Metrics.InMemoryTests.cs" />
+    <None Include="InMemoryTests\Metrics.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\Usages.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\Autoscale.InMemoryTests.cs" />
   </ItemGroup>
@@ -31,4 +31,6 @@
       <Name>Insights</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>
