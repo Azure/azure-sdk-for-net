@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -232,11 +232,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(parameters.ComputeType.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -427,24 +427,34 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 JObject transportValue = new JObject();
                 propertiesValue["transport"] = transportValue;
-                if (parameters.ComputeType.Properties.Transport is ServiceBusTransport)
+                if (parameters.ComputeType.Properties.Transport is ServiceBusReferenceTransport)
                 {
-                    transportValue["type"] = "ServiceBus";
-                    ServiceBusTransport derived = ((ServiceBusTransport)parameters.ComputeType.Properties.Transport);
-                    
-                    transportValue["activityRequestQueue"] = derived.ActivityRequestQueue;
-                    
-                    transportValue["activityStatusQueue"] = derived.ActivityStatusQueue;
-                    
-                    transportValue["serviceBusEndpoint"] = derived.ServiceBusEndpoint;
-                    
-                    transportValue["serviceBusSharedAccessKeyName"] = derived.ServiceBusSharedAccessKeyName;
-                    
-                    transportValue["serviceBusSharedAccessKey"] = derived.ServiceBusSharedAccessKey;
+                    transportValue["type"] = "ServiceBusReference";
+                    ServiceBusReferenceTransport derived = ((ServiceBusReferenceTransport)parameters.ComputeType.Properties.Transport);
                     
                     if (derived.TransportProtocolVersion != null)
                     {
                         transportValue["transportProtocolVersion"] = derived.TransportProtocolVersion;
+                    }
+                }
+                if (parameters.ComputeType.Properties.Transport is ServiceBusTransport)
+                {
+                    transportValue["type"] = "ServiceBus";
+                    ServiceBusTransport derived2 = ((ServiceBusTransport)parameters.ComputeType.Properties.Transport);
+                    
+                    transportValue["activityRequestQueue"] = derived2.ActivityRequestQueue;
+                    
+                    transportValue["activityStatusQueue"] = derived2.ActivityStatusQueue;
+                    
+                    transportValue["serviceBusEndpoint"] = derived2.ServiceBusEndpoint;
+                    
+                    transportValue["serviceBusSharedAccessKeyName"] = derived2.ServiceBusSharedAccessKeyName;
+                    
+                    transportValue["serviceBusSharedAccessKey"] = derived2.ServiceBusSharedAccessKey;
+                    
+                    if (derived2.TransportProtocolVersion != null)
+                    {
+                        transportValue["transportProtocolVersion"] = derived2.TransportProtocolVersion;
                     }
                 }
                 
@@ -536,6 +546,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 if (transportValue2 != null && transportValue2.Type != JTokenType.Null)
                                 {
                                     string typeName = ((string)transportValue2["type"]);
+                                    if (typeName == "ServiceBusReference")
+                                    {
+                                        ServiceBusReferenceTransport serviceBusReferenceTransportInstance = new ServiceBusReferenceTransport();
+                                        
+                                        JToken transportProtocolVersionValue = transportValue2["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusReferenceTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusReferenceTransportInstance;
+                                    }
                                     if (typeName == "ServiceBus")
                                     {
                                         ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
@@ -575,11 +597,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
                                         }
                                         
-                                        JToken transportProtocolVersionValue = transportValue2["transportProtocolVersion"];
-                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        JToken transportProtocolVersionValue2 = transportValue2["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue2 != null && transportProtocolVersionValue2.Type != JTokenType.Null)
                                         {
-                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
-                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                            string transportProtocolVersionInstance2 = ((string)transportProtocolVersionValue2);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance2;
                                         }
                                         propertiesInstance.Transport = serviceBusTransportInstance;
                                     }
@@ -731,7 +753,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -838,6 +860,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 if (transportValue != null && transportValue.Type != JTokenType.Null)
                                 {
                                     string typeName = ((string)transportValue["type"]);
+                                    if (typeName == "ServiceBusReference")
+                                    {
+                                        ServiceBusReferenceTransport serviceBusReferenceTransportInstance = new ServiceBusReferenceTransport();
+                                        
+                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusReferenceTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusReferenceTransportInstance;
+                                    }
                                     if (typeName == "ServiceBus")
                                     {
                                         ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
@@ -877,11 +911,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
                                         }
                                         
-                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
-                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        JToken transportProtocolVersionValue2 = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue2 != null && transportProtocolVersionValue2.Type != JTokenType.Null)
                                         {
-                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
-                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                            string transportProtocolVersionInstance2 = ((string)transportProtocolVersionValue2);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance2;
                                         }
                                         propertiesInstance.Transport = serviceBusTransportInstance;
                                     }
@@ -1103,7 +1137,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(parameters.ComputeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
             if (queryParameters.Count > 0)
             {
@@ -1206,6 +1240,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 if (transportValue != null && transportValue.Type != JTokenType.Null)
                                 {
                                     string typeName = ((string)transportValue["type"]);
+                                    if (typeName == "ServiceBusReference")
+                                    {
+                                        ServiceBusReferenceTransport serviceBusReferenceTransportInstance = new ServiceBusReferenceTransport();
+                                        
+                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusReferenceTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusReferenceTransportInstance;
+                                    }
                                     if (typeName == "ServiceBus")
                                     {
                                         ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
@@ -1245,11 +1291,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
                                         }
                                         
-                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
-                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        JToken transportProtocolVersionValue2 = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue2 != null && transportProtocolVersionValue2.Type != JTokenType.Null)
                                         {
-                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
-                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                            string transportProtocolVersionInstance2 = ((string)transportProtocolVersionValue2);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance2;
                                         }
                                         propertiesInstance.Transport = serviceBusTransportInstance;
                                     }
@@ -1384,7 +1430,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/computeTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (parameters.ComputeTypeName != null)
             {
                 queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ComputeTypeName));
@@ -1496,6 +1542,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         if (transportValue != null && transportValue.Type != JTokenType.Null)
                                         {
                                             string typeName = ((string)transportValue["type"]);
+                                            if (typeName == "ServiceBusReference")
+                                            {
+                                                ServiceBusReferenceTransport serviceBusReferenceTransportInstance = new ServiceBusReferenceTransport();
+                                                
+                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                                    serviceBusReferenceTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                }
+                                                propertiesInstance.Transport = serviceBusReferenceTransportInstance;
+                                            }
                                             if (typeName == "ServiceBus")
                                             {
                                                 ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
@@ -1535,11 +1593,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
                                                 }
                                                 
-                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
-                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                JToken transportProtocolVersionValue2 = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue2 != null && transportProtocolVersionValue2.Type != JTokenType.Null)
                                                 {
-                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
-                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                    string transportProtocolVersionInstance2 = ((string)transportProtocolVersionValue2);
+                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance2;
                                                 }
                                                 propertiesInstance.Transport = serviceBusTransportInstance;
                                             }
@@ -1728,6 +1786,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         if (transportValue != null && transportValue.Type != JTokenType.Null)
                                         {
                                             string typeName = ((string)transportValue["type"]);
+                                            if (typeName == "ServiceBusReference")
+                                            {
+                                                ServiceBusReferenceTransport serviceBusReferenceTransportInstance = new ServiceBusReferenceTransport();
+                                                
+                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                                    serviceBusReferenceTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                }
+                                                propertiesInstance.Transport = serviceBusReferenceTransportInstance;
+                                            }
                                             if (typeName == "ServiceBus")
                                             {
                                                 ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
@@ -1767,11 +1837,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
                                                 }
                                                 
-                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
-                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                JToken transportProtocolVersionValue2 = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue2 != null && transportProtocolVersionValue2.Type != JTokenType.Null)
                                                 {
-                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
-                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                    string transportProtocolVersionInstance2 = ((string)transportProtocolVersionValue2);
+                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance2;
                                                 }
                                                 propertiesInstance.Transport = serviceBusTransportInstance;
                                             }

@@ -77,6 +77,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
+        private string _resourceGuid;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource guid property of the
+        /// VirtualNetworkGateway resource
+        /// </summary>
+        public string ResourceGuid
+        {
+            get { return this._resourceGuid; }
+            set { this._resourceGuid = value; }
+        }
+        
         private string _vpnType;
         
         /// <summary>

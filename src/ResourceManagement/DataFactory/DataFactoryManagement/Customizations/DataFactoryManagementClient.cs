@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </summary>
         public virtual ITableOperations Tables { get; private set; }
 
+        /// <summary>
+        /// Operations for OAuth authorization.
+        /// </summary>
+        public virtual IOAuthOperations OAuth { get; private set; }
+
         internal Core.DataFactoryManagementClient InternalClient { get; private set; }
 
         /// <summary>
@@ -262,6 +267,7 @@ namespace Microsoft.Azure.Management.DataFactories
             this.Gateways = new GatewayOperations(this);
             this.Hubs = new HubOperations(this);
             this.LinkedServices = new LinkedServiceOperations(this);
+            this.OAuth = new OAuthOperations(this);
             this.Pipelines = new PipelineOperations(this);
             this.Tables = new TableOperations(this);
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;

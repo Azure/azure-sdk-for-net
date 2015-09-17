@@ -36,6 +36,7 @@
     <Compile Include="Framework\ValueWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\BasicDelegatingHandler.cs" />
+    <Compile Include="ScenarioTests\OAuthTests.cs" />
     <Compile Include="ScenarioTests\PipelineTests.cs" />
     <Compile Include="ScenarioTests\TestHelper.cs" />
     <Compile Include="UnitTests\ActivityConfigurationTests.cs" />
@@ -81,6 +82,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\LinkedService_WikipediaClickEvents.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataFactory.Tests.ScenarioTests.OAuthTests\OAuthAuthorizationSessionTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataFactory.Tests.ScenarioTests.PipelineTests\WikipediaPipelineE2ETest.json">

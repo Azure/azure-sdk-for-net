@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -561,7 +561,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -588,7 +588,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -755,7 +755,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -782,7 +782,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -955,7 +955,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -982,7 +982,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1149,7 +1149,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1176,7 +1176,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1362,7 +1362,16 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            List<string> odataFilter3 = new List<string>();
+            if (parameters != null && parameters.AssignedToPrincipalId != null)
+            {
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+            }
+            if (odataFilter3.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
+            }
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1389,7 +1398,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1623,7 +1632,16 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            List<string> odataFilter3 = new List<string>();
+            if (parameters != null && parameters.AssignedToPrincipalId != null)
+            {
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+            }
+            if (odataFilter3.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
+            }
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1650,7 +1668,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1852,7 +1870,16 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            List<string> odataFilter3 = new List<string>();
+            if (parameters != null && parameters.AssignedToPrincipalId != null)
+            {
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+            }
+            if (odataFilter3.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
+            }
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1879,7 +1906,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2077,7 +2104,16 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            List<string> odataFilter3 = new List<string>();
+            if (parameters != null && parameters.AssignedToPrincipalId != null)
+            {
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+            }
+            if (odataFilter3.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
+            }
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2104,7 +2140,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

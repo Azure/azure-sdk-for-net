@@ -616,6 +616,11 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -1224,6 +1229,13 @@ namespace Microsoft.Azure.Management.Network
                                             inboundNatRuleJsonFormatInstance.Id = idInstance17;
                                         }
                                     }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue7["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    loadBalancerInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
@@ -2336,6 +2348,13 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    loadBalancerInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
                                 JToken provisioningStateValue6 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
                                 {
@@ -3070,6 +3089,13 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            loadBalancerJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
                                         JToken provisioningStateValue6 = propertiesValue["provisioningState"];
                                         if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
                                         {
@@ -3801,6 +3827,13 @@ namespace Microsoft.Azure.Management.Network
                                                     inboundNatRuleJsonFormatInstance.Id = idInstance17;
                                                 }
                                             }
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            loadBalancerJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue6 = propertiesValue["provisioningState"];

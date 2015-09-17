@@ -23,6 +23,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class SqlDWSink : CopySink
     {
         /// <summary>
+        /// Optional. Name of the SQL column which is used to save slice
+        /// identifier information, to support idempotent copy.
+        /// </summary>
+        public string SliceIdentifierColumnName { get; set; }
+
+        /// <summary>
+        /// Optional. SQL writer cleanup script.
+        /// </summary>
+        public string SqlWriterCleanupScript { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlDWSink class.
         /// </summary>
         public SqlDWSink()
