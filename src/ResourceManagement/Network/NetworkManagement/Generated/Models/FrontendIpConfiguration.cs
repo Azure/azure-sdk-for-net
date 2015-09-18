@@ -65,6 +65,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._loadBalancingRules = value; }
         }
         
+        private IList<ResourceId> _outboundNatRules;
+        
+        /// <summary>
+        /// Optional. Read only.Outbound rules URIs that use this frontend IP
+        /// </summary>
+        public IList<ResourceId> OutboundNatRules
+        {
+            get { return this._outboundNatRules; }
+            set { this._outboundNatRules = value; }
+        }
+        
         private string _privateIpAddress;
         
         /// <summary>
@@ -133,6 +144,7 @@ namespace Microsoft.Azure.Management.Network.Models
             this.InboundNatPools = new LazyList<ResourceId>();
             this.InboundNatRules = new LazyList<ResourceId>();
             this.LoadBalancingRules = new LazyList<ResourceId>();
+            this.OutboundNatRules = new LazyList<ResourceId>();
         }
     }
 }

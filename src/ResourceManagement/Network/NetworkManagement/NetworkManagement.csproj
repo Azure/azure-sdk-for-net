@@ -103,6 +103,7 @@
     <Compile Include="Generated\Models\NetworkSecurityGroupListResponse.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroupPutResponse.cs" />
     <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\OutboundNatRule.cs" />
     <Compile Include="Generated\Models\Probe.cs" />
     <Compile Include="Generated\Models\ProbeProtocol.cs" />
     <Compile Include="Generated\Models\ProvisioningState.cs" />

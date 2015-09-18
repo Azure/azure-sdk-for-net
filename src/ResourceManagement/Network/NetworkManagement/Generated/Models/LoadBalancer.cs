@@ -87,6 +87,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._loadBalancingRules = value; }
         }
         
+        private IList<OutboundNatRule> _outboundNatRules;
+        
+        /// <summary>
+        /// Optional. Gets or sets outbound NAT rules
+        /// </summary>
+        public IList<OutboundNatRule> OutboundNatRules
+        {
+            get { return this._outboundNatRules; }
+            set { this._outboundNatRules = value; }
+        }
+        
         private IList<Probe> _probes;
         
         /// <summary>
@@ -132,6 +143,7 @@ namespace Microsoft.Azure.Management.Network.Models
             this.InboundNatPools = new LazyList<InboundNatPool>();
             this.InboundNatRules = new LazyList<InboundNatRule>();
             this.LoadBalancingRules = new LazyList<LoadBalancingRule>();
+            this.OutboundNatRules = new LazyList<OutboundNatRule>();
             this.Probes = new LazyList<Probe>();
         }
         
