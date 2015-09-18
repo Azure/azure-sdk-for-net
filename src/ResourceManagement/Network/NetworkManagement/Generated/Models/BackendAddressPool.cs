@@ -55,6 +55,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._loadBalancingRules = value; }
         }
         
+        private ResourceId _outboundNatRule;
+        
+        /// <summary>
+        /// Optional. Gets outbound rules that use this Backend Address Pool
+        /// </summary>
+        public ResourceId OutboundNatRule
+        {
+            get { return this._outboundNatRule; }
+            set { this._outboundNatRule = value; }
+        }
+        
         private string _provisioningState;
         
         /// <summary>
