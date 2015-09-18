@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._frontendIpConfigurations = value; }
         }
         
+        private IList<InboundNatPool> _inboundNatPools;
+        
+        /// <summary>
+        /// Optional. Gets or sets inbound NAT pools
+        /// </summary>
+        public IList<InboundNatPool> InboundNatPools
+        {
+            get { return this._inboundNatPools; }
+            set { this._inboundNatPools = value; }
+        }
+        
         private IList<InboundNatRule> _inboundNatRules;
         
         /// <summary>
@@ -118,6 +129,7 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             this.BackendAddressPools = new LazyList<BackendAddressPool>();
             this.FrontendIpConfigurations = new LazyList<FrontendIpConfiguration>();
+            this.InboundNatPools = new LazyList<InboundNatPool>();
             this.InboundNatRules = new LazyList<InboundNatRule>();
             this.LoadBalancingRules = new LazyList<LoadBalancingRule>();
             this.Probes = new LazyList<Probe>();

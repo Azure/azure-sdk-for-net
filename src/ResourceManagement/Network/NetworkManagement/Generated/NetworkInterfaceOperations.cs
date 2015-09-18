@@ -1915,6 +1915,13 @@ namespace Microsoft.Azure.Management.Network
                                     networkInterfaceInstance.EnableIPForwarding = enableIPForwardingInstance;
                                 }
                                 
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    networkInterfaceInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
                                 JToken provisioningStateValue2 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
@@ -2334,6 +2341,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
                                             networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            networkInterfaceJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];
