@@ -1317,6 +1317,10 @@ namespace Networks.Tests
                 Assert.Equal(100, getLoadBalancer.LoadBalancer.InboundNatPools[0].FrontendPortRangeStart);
                 Assert.Equal(105, getLoadBalancer.LoadBalancer.InboundNatPools[0].FrontendPortRangeEnd);
                 Assert.Equal(TransportProtocol.Tcp, getLoadBalancer.LoadBalancer.InboundNatPools[0].Protocol);
+                Assert.Equal(GetChildLbResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                    resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName), getLoadBalancer.LoadBalancer.InboundNatPools[0].FrontendIPConfiguration.Id);
+
+                Assert.Equal(getLoadBalancer.LoadBalancer.InboundNatPools[0].Id, getLoadBalancer.LoadBalancer.FrontendIpConfigurations[0].InboundNatPools[0].Id);
 
                 // Add a new nat pool
                 var natpool2 = new InboundNatPool()

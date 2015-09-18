@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class FrontendIpConfiguration : ChildResource
     {
+        private IList<ResourceId> _inboundNatPools;
+        
+        /// <summary>
+        /// Optional. Read only.Inbound pools URIs that use this frontend IP
+        /// </summary>
+        public IList<ResourceId> InboundNatPools
+        {
+            get { return this._inboundNatPools; }
+            set { this._inboundNatPools = value; }
+        }
+        
         private IList<ResourceId> _inboundNatRules;
         
         /// <summary>
@@ -119,6 +130,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public FrontendIpConfiguration()
         {
+            this.InboundNatPools = new LazyList<ResourceId>();
             this.InboundNatRules = new LazyList<ResourceId>();
             this.LoadBalancingRules = new LazyList<ResourceId>();
         }
