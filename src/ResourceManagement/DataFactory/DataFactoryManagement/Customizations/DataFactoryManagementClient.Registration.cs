@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 ((LinkedServiceOperations)this.LinkedServices).RegisterType<T>(force);
             }
-            else if (typeof(TableTypeProperties).IsAssignableFrom(type))
+            else if (typeof(DatasetTypeProperties).IsAssignableFrom(type))
             {
-                ((TableOperations)this.Tables).RegisterType<T>(force);
+                ((DatasetOperations)this.Datasets).RegisterType<T>(force);
             }
             else if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
             {
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.DataFactories
                 return ((LinkedServiceOperations)this.LinkedServices).TypeIsRegistered<T>();
             }
 
-            if (typeof(TableTypeProperties).IsAssignableFrom(type))
+            if (typeof(DatasetTypeProperties).IsAssignableFrom(type))
             {
-                return ((TableOperations)this.Tables).TypeIsRegistered<T>();
+                return ((DatasetOperations)this.Datasets).TypeIsRegistered<T>();
             }
 
             if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
