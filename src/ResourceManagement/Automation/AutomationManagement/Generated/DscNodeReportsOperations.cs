@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.Automation
             List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.StartTime != null)
             {
-                odataFilter.Add("startTime ge " + Uri.EscapeDataString(parameters.StartTime));
+                odataFilter.Add("endTime ge " + Uri.EscapeDataString(parameters.StartTime));
             }
             if (parameters != null && parameters.EndTime != null)
             {
