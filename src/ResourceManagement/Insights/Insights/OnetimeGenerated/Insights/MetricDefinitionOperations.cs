@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Insights
         /// <returns>
         /// The List Metric Definitions operation response.
         /// </returns>
-        public async Task<MetricDefinitionListResponse> GetMetricDefinitionsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        internal async Task<MetricDefinitionListResponse> GetMetricDefinitionsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Insights
             // Construct URL
             string url = "";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + resourceUri;
             List<string> queryParameters = new List<string>();
             if (Util.IsLegacyResource(resourceUri))
             {
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Insights
                                     if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                     {
                                         string resourceUriInstance = ((string)resourceUriValue);
-                                        metricDefinitionInstance.ResourceUri = resourceUriInstance;
+                                        metricDefinitionInstance.ResourceId = resourceUriInstance;
                                     }
 
                                     JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];

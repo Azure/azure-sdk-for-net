@@ -54,15 +54,15 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._retentionPolicy = value; }
         }
         
-        private string _timegrain;
+        private TimeSpan _timeGrain;
         
         /// <summary>
         /// Optional. Gets or sets the timegrain of the metric.
         /// </summary>
-        public string Timegrain
+        public TimeSpan TimeGrain
         {
-            get { return this._timegrain; }
-            set { this._timegrain = value; }
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
         }
         
         /// <summary>

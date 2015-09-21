@@ -223,11 +223,11 @@ namespace Microsoft.Azure.Insights
                                         }
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        logDefinitionInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        logDefinitionInstance.ResourceId = resourceIdInstance;
                                     }
                                     
                                     JToken retentionValue = valueValue["retention"];

@@ -28,14 +28,14 @@ using Microsoft.Azure.Insights.Models;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Details the location of the Metrics and contains the SAS Key.
+    /// Details about the set of blobs containing data split by time.
     /// </summary>
     public partial class BlobLocation
     {
         private string _blobEndpoint;
         
         /// <summary>
-        /// Optional. Gets or sets the table endpoint.
+        /// Optional. Gets or sets the blob endpoint.
         /// </summary>
         public string BlobEndpoint
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<BlobInfo> _blobInfo;
         
         /// <summary>
-        /// Optional. Gets or sets the table info.
+        /// Optional. Gets or sets the blob info.
         /// </summary>
         public IList<BlobInfo> BlobInfo
         {

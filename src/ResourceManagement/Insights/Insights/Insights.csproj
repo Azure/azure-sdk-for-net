@@ -57,7 +57,6 @@
     <Compile Include="Generated\Insights\Models\LogDefinitionListResponse.cs" />
     <Compile Include="Generated\Insights\Models\LogListResponse.cs" />
     <Compile Include="Generated\Insights\Models\LogValue.cs" />
-    <Compile Include="Generated\Insights\Models\MetricBlobInfo.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAutomatedExportOperations.cs" />
@@ -78,7 +77,6 @@
     <Compile Include="Generated\Management\Insights\Models\RuleWebhookAction.cs" />
     <Compile Include="Generated\Management\Insights\Models\Sku.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuDefinition.cs" />
-    <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateParameters.cs" />
@@ -86,6 +84,7 @@
     <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
+    <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
     <Compile Include="OnetimeGenerated\Management\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />
@@ -95,7 +94,6 @@
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettingsGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\CreateOrUpdateStorageConfigurationParameters.cs" />
-    <Compile Include="Generated\Management\Insights\Models\DiagnosticSettingsStatus.cs" />
     <Compile Include="Generated\Management\Insights\Models\EmptyResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\MonitoringConfigurationCreateOrUpdateResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\ServiceDiagnosticSettings.cs" />
@@ -122,7 +120,6 @@
     <Compile Include="OnetimeGenerated\Management\StorageDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
-    <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
     <Compile Include="Generated\Management\Insights\SkuOperations.cs" />
     <Compile Include="Generated\Management\Insights\SkuOperationsExtensions.cs" />
     <Compile Include="OnetimeGenerated\Insights\MetricDefinitionOperations.cs" />

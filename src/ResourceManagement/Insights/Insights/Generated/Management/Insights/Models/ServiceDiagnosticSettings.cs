@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _storageAccountName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the storage account.
+        /// Optional. [Deprecated] Use StorageAccountId instead. Gets or sets
+        /// the name of the storage account.
         /// </summary>
         public string StorageAccountName
         {

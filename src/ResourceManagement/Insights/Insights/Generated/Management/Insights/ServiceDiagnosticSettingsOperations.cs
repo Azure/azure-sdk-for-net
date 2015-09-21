@@ -28,6 +28,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure.Management.Insights;
@@ -368,8 +369,8 @@ namespace Microsoft.Azure.Management.Insights
                                         JToken timeGrainValue = metricsValue["timeGrain"];
                                         if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                         {
-                                            string timeGrainInstance = ((string)timeGrainValue);
-                                            metricSettingsInstance.Timegrain = timeGrainInstance;
+                                            TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                            metricSettingsInstance.TimeGrain = timeGrainInstance;
                                         }
                                         
                                         JToken enabledValue = metricsValue["enabled"];
@@ -592,10 +593,7 @@ namespace Microsoft.Azure.Management.Insights
                                 JObject metricSettingsValue = new JObject();
                                 metricsArray.Add(metricSettingsValue);
                                 
-                                if (metricsItem.Timegrain != null)
-                                {
-                                    metricSettingsValue["timeGrain"] = metricsItem.Timegrain;
-                                }
+                                metricSettingsValue["timeGrain"] = XmlConvert.ToString(metricsItem.TimeGrain);
                                 
                                 metricSettingsValue["enabled"] = metricsItem.Enabled;
                                 

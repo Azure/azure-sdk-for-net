@@ -25,15 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Contains the Table information for N-day Tables, each table is used for
-    /// a specific date range.
+    /// Contains the information for blobs. Each one is used for a specific
+    /// time range.
     /// </summary>
     public partial class BlobInfo
     {
         private string _blobUri;
         
         /// <summary>
-        /// Optional. Gets or sets the table info.
+        /// Optional. Gets or sets the blob info.
         /// </summary>
         public string BlobUri
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// Optional. Gets or sets the end time of the range for this table.
+        /// Optional. Gets or sets the end time of the range for this blob.
         /// </summary>
         public DateTime EndTime
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _sasToken;
         
         /// <summary>
-        /// Optional. Gets or sets the SAS Key for accessing Table Storage.
+        /// Optional. Gets or sets the SAS Key for accessing Blob Storage.
         /// </summary>
         public string SasToken
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. Gets or sets the start time of the range for this table.
+        /// Optional. Gets or sets the start time of the range for this blob.
         /// </summary>
         public DateTime StartTime
         {

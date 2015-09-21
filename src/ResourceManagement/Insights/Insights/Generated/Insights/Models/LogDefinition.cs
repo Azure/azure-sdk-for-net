@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Insights.Models
             set { this._category = value; }
         }
         
-        private string _resourceUri;
+        private string _resourceId;
         
         /// <summary>
         /// Optional. Gets or sets the resource identifier of the resource that
         /// has emitted the log.
         /// </summary>
-        public string ResourceUri
+        public string ResourceId
         {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
         }
         
         private TimeSpan _retention;
