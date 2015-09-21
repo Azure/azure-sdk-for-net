@@ -126,5 +126,19 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// The Create Job operation response.
         /// </returns>
         Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Sqoop job parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters, CancellationToken cancellationToken);
     }
 }

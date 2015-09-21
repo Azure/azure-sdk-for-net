@@ -27,39 +27,17 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// <summary>
     /// Parameters specifying the HDInsight Hive job definition.
     /// </summary>
-    public partial class HiveJobSubmissionParameters
+    public partial class SqoopJobSubmissionParameters
     {
-        private string _arguments;
+        private string _command;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Arguments
+        public string Command
         {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
-        private string _defines;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Defines
-        {
-            get { return this._defines; }
-            set { this._defines = value; }
-        }
-        
-        private string _enableLog;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string EnableLog
-        {
-            get { return this._enableLog; }
-            set { this._enableLog = value; }
+            get { return this._command; }
+            set { this._command = value; }
         }
         
         private string _file;
@@ -82,17 +60,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         {
             get { return this._files; }
             set { this._files = value; }
-        }
-        
-        private string _query;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Query
-        {
-            get { return this._query; }
-            set { this._query = value; }
         }
         
         private string _statusDir;
@@ -118,9 +85,10 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the HiveJobSubmissionParameters class.
+        /// Initializes a new instance of the SqoopJobSubmissionParameters
+        /// class.
         /// </summary>
-        public HiveJobSubmissionParameters()
+        public SqoopJobSubmissionParameters()
         {
         }
     }

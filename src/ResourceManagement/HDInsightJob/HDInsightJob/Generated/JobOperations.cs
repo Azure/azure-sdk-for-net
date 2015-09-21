@@ -1846,7 +1846,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + "&define=" + parameters.Defines;
+                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + parameters.Defines;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
@@ -2291,6 +2291,154 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Serialize Request
                 string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    JobSubmissionResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobSubmissionResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JobSubmissionJsonResponse jobSubmissionJsonResponseInstance = new JobSubmissionJsonResponse();
+                            result.JobSubmissionJsonResponse = jobSubmissionJsonResponseInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobSubmissionJsonResponseInstance.Id = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "SubmitSqoopJobAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
+            url = url + "/templeton/v1/sqoop";
+            List<string> queryParameters = new List<string>();
+            if (this.Client.Credentials.Username != null)
+            {
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("useragent", "xplat Sqoop job submission");
+                httpRequest.Headers.Add("User-Agent", "xplat Sqoop job submission");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = "user.name=" + parameters.UserName + "&command=" + parameters.Command + "&file=" + parameters.File + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
