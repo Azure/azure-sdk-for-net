@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             List<string> queryParameters = new List<string>();
             queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
             queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             }
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
