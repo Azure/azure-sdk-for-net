@@ -220,6 +220,7 @@
     <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataFactoryManagementChangelog.md" />
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">
       <SubType>Designer</SubType>
     </None>

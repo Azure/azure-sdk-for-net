@@ -70,6 +70,12 @@
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithStaticIp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerNatPoolTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerOutboundNatRuleTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\UpdateLoadBalancerRule.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
