@@ -21,15 +21,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Commerce.UsageAggregates;
 using Microsoft.Azure.Commerce.UsageAggregates.Models;
 using Newtonsoft.Json.Linq;
@@ -1052,9 +1049,15 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
 
                                 if (!string.IsNullOrWhiteSpace(nextLinkInstance))
                                 {
-                                    Uri nextLink = new Uri(nextLinkInstance);
-                                    NameValueCollection query = HttpUtility.ParseQueryString(nextLink.Query);
-                                    result.ContinuationToken = query["continuationToken"];
+                                    string key = "continuationToken=";
+                                    int startLocation = nextLinkInstance.IndexOf(key, StringComparison.OrdinalIgnoreCase);
+                                    if (startLocation >= 0)
+                                    {
+                                        startLocation = startLocation + key.Length;
+                                        int length = nextLinkInstance.Length - startLocation;
+                                        string token = nextLinkInstance.Substring(startLocation, length);
+                                        result.ContinuationToken = HttpUtility.UrlDecode(token);
+                                    }
                                 }
                             }
                         }
