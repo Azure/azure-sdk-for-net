@@ -954,14 +954,14 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         if (usageStartTimeValue != null && usageStartTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime usageStartTimeInstance = ((DateTime)usageStartTimeValue);
-                                            propertiesInstance.UsageStartTime = usageStartTimeInstance;
+                                            propertiesInstance.UsageStartTime = usageStartTimeInstance.ToUniversalTime();
                                         }
                                         
                                         JToken usageEndTimeValue = propertiesValue["usageEndTime"];
                                         if (usageEndTimeValue != null && usageEndTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime usageEndTimeInstance = ((DateTime)usageEndTimeValue);
-                                            propertiesInstance.UsageEndTime = usageEndTimeInstance;
+                                            propertiesInstance.UsageEndTime = usageEndTimeInstance.ToUniversalTime();
                                         }
                                         
                                         JToken quantityValue = propertiesValue["quantity"];

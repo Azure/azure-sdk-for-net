@@ -129,5 +129,32 @@ namespace UsageAggregatesTest.ScenarioTests
             Assert.False(string.IsNullOrEmpty(instanceData));
 
         }
+
+        [Fact]
+        public void VerifyTheDateFieldsRemainAsUniversalTime()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(HttpPayload.GetOneAggregates)
+            };
+
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetUsageAggregationManagementClient(handler);
+
+            UsageAggregationGetResponse result = client.UsageAggregates.Get(startDate, endDate, AggregationGranularity.Daily,
+                false, null);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Get, handler.Method);
+
+            UsageAggregation ua = result.UsageAggregations[0];
+
+            DateTime expectedStartTime = new DateTime(2015, 6, 1, 11, 0, 0);
+            DateTime expectedEndTime = new DateTime(2015, 6, 1, 12, 0, 0);
+
+            Assert.True(expectedStartTime == ua.Properties.UsageStartTime, "expectedStartTime == ua.Properties.UsageStartTime");
+            Assert.True(expectedEndTime == ua.Properties.UsageEndTime, "expectedEndTime == ua.Properties.UsageEndTime");
+        }
     }
 }
