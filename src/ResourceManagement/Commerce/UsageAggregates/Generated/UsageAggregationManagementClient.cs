@@ -21,11 +21,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Commerce.UsageAggregates;
@@ -129,7 +131,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
     public partial class UsageAggregationGetResponse : AzureOperationResponse
     {
         private string _nextLink;
-        
+
         /// <summary>
         /// Optional. Gets or sets the link to the next set of results.
         /// </summary>
@@ -138,7 +140,19 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
             get { return this._nextLink; }
             set { this._nextLink = value; }
         }
-        
+
+        private string _continuationToken;
+
+        /// <summary>
+        /// Optional.  Gets or sets the continuation token used for success calls to the same set of input
+        /// parameters.  If null or emtpy then there aren't anymore results on the server.
+        /// </summary>
+        public string ContinuationToken
+        {
+            get { return this._continuationToken; }
+            set { this._continuationToken = value; }
+        }
+
         private IList<UsageAggregation> _usageAggregations;
         
         /// <summary>
@@ -1035,6 +1049,13 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
+
+                                if (!string.IsNullOrWhiteSpace(nextLinkInstance))
+                                {
+                                    Uri nextLink = new Uri(nextLinkInstance);
+                                    NameValueCollection query = HttpUtility.ParseQueryString(nextLink.Query);
+                                    result.ContinuationToken = query["continuationToken"];
+                                }
                             }
                         }
                         

@@ -156,5 +156,30 @@ namespace UsageAggregatesTest.ScenarioTests
             Assert.True(expectedStartTime == ua.Properties.UsageStartTime, "expectedStartTime == ua.Properties.UsageStartTime");
             Assert.True(expectedEndTime == ua.Properties.UsageEndTime, "expectedEndTime == ua.Properties.UsageEndTime");
         }
+
+        [Fact]
+        public void ContinuationTokenShouldBeCorrectlyParsedFromNextLink()
+        {
+            const string expectedToken =
+                "eyJyIjoiMjAxNTA2MDItNjM1Njg4NDMyMDAwMDAwMDAwIiwiaSI6IkhYSDhoekRQUnBFM3NZTVE1bDB5YW5MNTFsUWw3Nzdwd3FWMzhFdDFqb2pqS3Vza0JwSWNkQWozOXRuSjYwNjhqd0ZzYXBEUGhRa0VhSXJKOWtxMjNnPT0iLCJzIjoicEpWME0rRT0ifQ==";
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(HttpPayload.GetOneAggregates)
+            };
+
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetUsageAggregationManagementClient(handler);
+
+            UsageAggregationGetResponse result = client.UsageAggregates.Get(startDate, endDate, AggregationGranularity.Daily,
+                false, null);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Get, handler.Method);
+
+            string actualToken = result.ContinuationToken;
+            Assert.True(expectedToken.Equals(actualToken, StringComparison.OrdinalIgnoreCase), "The continuation token didn't match up");
+        }
     }
 }
