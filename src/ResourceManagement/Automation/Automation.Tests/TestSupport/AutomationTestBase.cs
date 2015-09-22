@@ -421,5 +421,12 @@ namespace Microsoft.Azure.Management.Automation.Testing
         {
             AutomationClient.Dispose();
         }
+
+        public IList<Usage> GetUsages()
+        {
+            var response = AutomationClient.Usages.List(resourceGroup, automationAccount);
+            return response.Usage;
+        }
+
     }
 }
