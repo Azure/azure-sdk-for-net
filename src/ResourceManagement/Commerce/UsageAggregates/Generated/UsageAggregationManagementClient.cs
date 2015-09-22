@@ -21,12 +21,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Commerce.UsageAggregates;
 using Microsoft.Azure.Commerce.UsageAggregates.Models;
 using Newtonsoft.Json.Linq;
@@ -1056,7 +1057,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         startLocation = startLocation + key.Length;
                                         int length = nextLinkInstance.Length - startLocation;
                                         string token = nextLinkInstance.Substring(startLocation, length);
-                                        result.ContinuationToken = HttpUtility.UrlDecode(token);
+                                        result.ContinuationToken = Uri.UnescapeDataString(token);
                                     }
                                 }
                             }
