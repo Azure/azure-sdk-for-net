@@ -65,10 +65,10 @@ namespace DataFactory.Tests.UnitTests
         [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringLinkedServiceTypeWithReservedNameThrowsException<T>(Type type, T registeredType)
+        public void CanRegisterLinkedServiceTypeWithReservedName<T>(Type type, T registeredType)
             where T : TypeProperties
         {
-            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+            this.TestCanRegisterTypeWithReservedName<T>();
         }
 
         [Fact]
