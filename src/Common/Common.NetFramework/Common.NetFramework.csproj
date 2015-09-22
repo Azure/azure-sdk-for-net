@@ -26,9 +26,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Hyak.Common">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Hyak.Common.1.0.3\lib\net45\Hyak.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
