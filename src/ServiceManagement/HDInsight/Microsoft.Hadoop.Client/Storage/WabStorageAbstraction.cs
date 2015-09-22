@@ -128,10 +128,8 @@ namespace Microsoft.Hadoop.Client.Storage
             this.AssertPathRootedToThisAccount(httpPath);
             var blobReference = await this.GetBlobReference(httpPath, true);
 
-            var blobStream = new MemoryStream();
-            blobReference.DownloadToStream(blobStream);
-            blobStream.Seek(0, SeekOrigin.Begin);
-
+            var blobStream = await blobReference.OpenReadAsync();
+            
             return blobStream;
         }
 

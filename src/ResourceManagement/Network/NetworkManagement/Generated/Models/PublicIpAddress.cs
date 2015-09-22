@@ -99,6 +99,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._publicIpAllocationMethod = value; }
         }
         
+        private string _resourceGuid;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource guid property of the PublicIP
+        /// resource
+        /// </summary>
+        public string ResourceGuid
+        {
+            get { return this._resourceGuid; }
+            set { this._resourceGuid = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the PublicIpAddress class.
         /// </summary>

@@ -1,0 +1,94 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/sqoop?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9zcW9vcD91c2VyLm5hbWU9YWRtaW4=",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=admin&command=some command&file=&files=&statusdir=sqoopstatus",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "71"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat Sqoop job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "Sqoop",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1442869213322_0001\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1442905426771&s=J8XALZiuZxIRx2NrG3iNVOzswFc=\"; Path=/; Expires=Tue, 22-Sep-2015 07:03:46 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 21 Sep 2015 21:04:01 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1442869213322_0001?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQyODY5MjEzMzIyXzAwMDE/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat get job"
+        ],
+        "User-Agent": [
+          "xplat",
+          "get",
+          "job"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1442869440005,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1442869213322_0001/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1442869213322_0001/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1442869213322_0001\",\r\n    \"username\": \"admin\",\r\n    \"jobID\": {\r\n      \"id\": 1,\r\n      \"jtIdentifier\": \"1442869213322\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1442869213322_0001/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1442869213322_0001/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1442869213322_0001\",\r\n    \"jobID\": {\r\n      \"id\": 1,\r\n      \"jtIdentifier\": \"1442869213322\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1442869213322_0001\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"sqoopstatus\",\r\n    \"optionsfile\": null,\r\n    \"files\": \"\",\r\n    \"enablelog\": \"false\",\r\n    \"user.name\": \"admin\",\r\n    \"callback\": null,\r\n    \"command\": \"some command\",\r\n    \"enablejobreconnect\": null,\r\n    \"libdir\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1458"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 21 Sep 2015 21:04:14 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
