@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Authentication;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Common.Authentication
 
                 if (result == null)
                 {
-                    throw new Exception(Resources.ExpiredRefreshToken);
+                    throw new AuthenticationException(Resources.ExpiredRefreshToken);
                 }
                 else
                 {

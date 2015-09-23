@@ -79,5 +79,11 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
         {
             throw new System.NotImplementedException();
         }
+
+
+        public SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint)
+        {
+            return new CertificateCloudCredentials(context.Subscription.Id.ToString(), Certificate);
+        }
     }
 }
