@@ -67,14 +67,25 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context)
         {
+            return GetSubscriptionCloudCredentials(context, AzureEnvironment.Endpoint.ServiceManagement);
+        }
+
+        public SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint)
+        {
             if (context.Subscription == null)
             {
-                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+                var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
+                    ? Resources.InvalidDefaultSubscription
+                    : Resources.NoSubscriptionInContext;
+                throw new ApplicationException(exceptionMessage);
             }
             
             if (context.Account == null)
             {
-                throw new ArgumentException(Resources.AccountNotFound);
+                var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
+                    ? Resources.AccountNotFound
+                    : Resources.ArmAccountNotFound;
+                throw new ArgumentException(exceptionMessage);
             }
 
             if (context.Account.Type == AzureAccount.AccountType.Certificate)
@@ -104,7 +115,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (tenant == null)
             {
-                throw new ArgumentException(Resources.TenantNotFound);
+                var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
+                    ? Resources.TenantNotFound
+                    : Resources.NoTenantInContext;
+                throw new ArgumentException(exceptionMessage);
             }
 
             try
@@ -132,34 +146,18 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             catch (Exception ex)
             {
                  TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
-                throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
+                var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
+                    ? Resources.InvalidSubscriptionState
+                    : Resources.InvalidArmContext;
+                throw new ArgumentException(exceptionMessage, ex);
             }
-        }
-
-        private AdalConfiguration GetAdalConfiguration(AzureEnvironment environment, string tenantId,
-            AzureEnvironment.Endpoint resourceId, TokenCache tokenCache)
-        {
-            if (environment == null)
-            {
-                throw new ArgumentNullException("environment");
-            }
-            var adEndpoint = environment.Endpoints[AzureEnvironment.Endpoint.ActiveDirectory];
-
-            return new AdalConfiguration
-            {
-                AdEndpoint = adEndpoint,
-                ResourceClientUri = environment.Endpoints[resourceId],
-                AdDomain = tenantId, 
-                ValidateAuthority = !environment.OnPremise,
-                TokenCache = tokenCache
-            };
         }
 
         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
         {
             if (context.Account == null)
             {
-                throw new ArgumentException(Resources.AccountNotFound);
+                throw new ArgumentException(Resources.ArmAccountNotFound);
             }
 
             if (context.Account.Type == AzureAccount.AccountType.Certificate)
@@ -188,7 +186,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (tenant == null)
             {
-                throw new ArgumentException(Resources.TenantNotFound);
+                throw new ArgumentException(Resources.NoTenantInContext);
             }
 
             try
@@ -249,8 +247,27 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             catch (Exception ex)
             {
                 TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
-                throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
+                throw new ArgumentException(Resources.InvalidArmContext, ex);
             }
+        }
+
+        private AdalConfiguration GetAdalConfiguration(AzureEnvironment environment, string tenantId,
+            AzureEnvironment.Endpoint resourceId, TokenCache tokenCache)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+            var adEndpoint = environment.Endpoints[AzureEnvironment.Endpoint.ActiveDirectory];
+
+            return new AdalConfiguration
+            {
+                AdEndpoint = adEndpoint,
+                ResourceClientUri = environment.Endpoints[resourceId],
+                AdDomain = tenantId, 
+                ValidateAuthority = !environment.OnPremise,
+                TokenCache = tokenCache
+            };
         }
     }
 }
