@@ -21,19 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Response for Put ExpressRouteCircuit Authorization Api service call
+    /// </summary>
+    public partial class AuthorizationPutResponse : UpdateOperationResponse
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private ExpressRouteCircuitAuthorization _authorization;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets the Authorization in an ExpressRouteCircuit
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public ExpressRouteCircuitAuthorization Authorization
+        {
+            get { return this._authorization; }
+            set { this._authorization = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AuthorizationPutResponse class.
+        /// </summary>
+        public AuthorizationPutResponse()
+        {
+        }
     }
 }

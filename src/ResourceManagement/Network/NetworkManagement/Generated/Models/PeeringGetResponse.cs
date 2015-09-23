@@ -21,19 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Response for GET ExpressRouteCircuit Peering Api service call
+    /// </summary>
+    public partial class PeeringGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private Peering _peering;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets the Authorization in an ExpressRouteCircuit
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public Peering Peering
+        {
+            get { return this._peering; }
+            set { this._peering = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the PeeringGetResponse class.
+        /// </summary>
+        public PeeringGetResponse()
+        {
+        }
     }
 }

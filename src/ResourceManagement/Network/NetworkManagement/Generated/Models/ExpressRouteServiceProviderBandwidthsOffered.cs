@@ -24,16 +24,39 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Contains Bandwidths offered in ExpressRouteServiceProviders
+    /// </summary>
+    public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private string _offerName;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets the OfferName
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public string OfferName
+        {
+            get { return this._offerName; }
+            set { this._offerName = value; }
+        }
+        
+        private int _valueInMbps;
+        
+        /// <summary>
+        /// Optional. Gets the ValueInMbps.
+        /// </summary>
+        public int ValueInMbps
+        {
+            get { return this._valueInMbps; }
+            set { this._valueInMbps = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ExpressRouteServiceProviderBandwidthsOffered class.
+        /// </summary>
+        public ExpressRouteServiceProviderBandwidthsOffered()
+        {
+        }
     }
 }

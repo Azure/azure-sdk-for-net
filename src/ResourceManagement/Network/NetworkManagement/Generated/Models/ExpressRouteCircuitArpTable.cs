@@ -24,16 +24,38 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// The arp table associated with the ExpressRouteCircuit
+    /// </summary>
+    public partial class ExpressRouteCircuitArpTable
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private string _iPAddress;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets ipAddress.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public string IPAddress
+        {
+            get { return this._iPAddress; }
+            set { this._iPAddress = value; }
+        }
+        
+        private string _macAddress;
+        
+        /// <summary>
+        /// Optional. Gets macAddress.
+        /// </summary>
+        public string MacAddress
+        {
+            get { return this._macAddress; }
+            set { this._macAddress = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteCircuitArpTable class.
+        /// </summary>
+        public ExpressRouteCircuitArpTable()
+        {
+        }
     }
 }

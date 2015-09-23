@@ -108,6 +108,39 @@ namespace Microsoft.Azure.Management.Network
             get { return this._applicationGateways; }
         }
         
+        private IAuthorizationOperations _authorizations;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Authorizations for your subscription.
+        /// </summary>
+        public virtual IAuthorizationOperations Authorizations
+        {
+            get { return this._authorizations; }
+        }
+        
+        private IExpressRouteCircuitOperations _expressRouteCircuits;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteCircuits for your subscription.
+        /// </summary>
+        public virtual IExpressRouteCircuitOperations ExpressRouteCircuits
+        {
+            get { return this._expressRouteCircuits; }
+        }
+        
+        private IExpressRouteServiceProviderOperations _expressRouteServiceProviders;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteServiceProviders for your subscription.
+        /// </summary>
+        public virtual IExpressRouteServiceProviderOperations ExpressRouteServiceProviders
+        {
+            get { return this._expressRouteServiceProviders; }
+        }
+        
         private ILoadBalancerOperations _loadBalancers;
         
         /// <summary>
@@ -150,6 +183,17 @@ namespace Microsoft.Azure.Management.Network
         public virtual INetworkSecurityGroupOperations NetworkSecurityGroups
         {
             get { return this._networkSecurityGroups; }
+        }
+        
+        private IPeeringOperations _peerings;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Peerings for your subscription.
+        /// </summary>
+        public virtual IPeeringOperations Peerings
+        {
+            get { return this._peerings; }
         }
         
         private IPublicIpAddressOperations _publicIpAddresses;
@@ -258,10 +302,14 @@ namespace Microsoft.Azure.Management.Network
             : base()
         {
             this._applicationGateways = new ApplicationGatewayOperations(this);
+            this._authorizations = new AuthorizationOperations(this);
+            this._expressRouteCircuits = new ExpressRouteCircuitOperations(this);
+            this._expressRouteServiceProviders = new ExpressRouteServiceProviderOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
+            this._peerings = new PeeringOperations(this);
             this._publicIpAddresses = new PublicIpAddressOperations(this);
             this._routes = new RouteOperations(this);
             this._routeTables = new RouteTableOperations(this);
@@ -340,10 +388,14 @@ namespace Microsoft.Azure.Management.Network
             : base(httpClient)
         {
             this._applicationGateways = new ApplicationGatewayOperations(this);
+            this._authorizations = new AuthorizationOperations(this);
+            this._expressRouteCircuits = new ExpressRouteCircuitOperations(this);
+            this._expressRouteServiceProviders = new ExpressRouteServiceProviderOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
+            this._peerings = new PeeringOperations(this);
             this._publicIpAddresses = new PublicIpAddressOperations(this);
             this._routes = new RouteOperations(this);
             this._routeTables = new RouteTableOperations(this);
