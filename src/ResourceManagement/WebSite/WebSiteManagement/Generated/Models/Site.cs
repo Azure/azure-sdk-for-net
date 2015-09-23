@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -17,11 +18,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     public partial class Site : Resource
     {
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
-        /// <summary>
         /// Name of web app
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
@@ -31,26 +27,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// State of the web app
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Hostnames associated with web app
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostNames")]
-        public IList<string> HostNames { get; set; }
+        public IList<string> HostNames { get; private set; }
 
         /// <summary>
         /// Name of repository site
         /// </summary>
         [JsonProperty(PropertyName = "properties.repositorySiteName")]
-        public string RepositorySiteName { get; set; }
+        public string RepositorySiteName { get; private set; }
 
         /// <summary>
         /// State indicating whether web app has exceeded its quota usage.
         /// Possible values for this property include: 'Normal', 'Exceeded'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usageState")]
-        public string UsageState { get; set; }
+        public UsageState? UsageState { get; private set; }
 
         /// <summary>
         /// True if the site is enabled; otherwise, false. Setting this  value
@@ -66,7 +62,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// the app is not served on those hostnames
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabledHostNames")]
-        public IList<string> EnabledHostNames { get; set; }
+        public IList<string> EnabledHostNames { get; private set; }
 
         /// <summary>
         /// Management information availability state for the web app.
@@ -79,20 +75,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Limited', 'DisasterRecoveryMode'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilityState")]
-        public string AvailabilityState { get; set; }
+        public SiteAvailabilityState? AvailabilityState { get; private set; }
 
         /// <summary>
         /// Hostname SSL states are  used to manage the SSL bindings for
         /// site's hostnames.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostNameSslStates")]
-        public IList<HostNameSslState> HostNameSslStates { get; set; }
-
-        /// <summary>
-        /// App service plan web app is assoicated with
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serverFarm")]
-        public string ServerFarm { get; set; }
+        public IList<HostNameSslState> HostNameSslStates { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -103,7 +93,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Last time web app was modified in UTC
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTimeUtc")]
-        public DateTime? LastModifiedTimeUtc { get; set; }
+        public DateTime? LastModifiedTimeUtc { get; private set; }
 
         /// <summary>
         /// Configuration of web app
@@ -116,13 +106,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// web app
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficManagerHostNames")]
-        public IList<string> TrafficManagerHostNames { get; set; }
+        public IList<string> TrafficManagerHostNames { get; private set; }
 
         /// <summary>
         /// If set indicates whether web app is deployed as a premium app
         /// </summary>
         [JsonProperty(PropertyName = "properties.premiumAppDeployed")]
-        public bool? PremiumAppDeployed { get; set; }
+        public bool? PremiumAppDeployed { get; private set; }
 
         /// <summary>
         /// If set indicates whether to stop SCM (KUDU) site when the web app
@@ -136,14 +126,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// into
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetSwapSlot")]
-        public string TargetSwapSlot { get; set; }
-
-        /// <summary>
-        /// Name of hosting environment (App Service Environment) the web app
-        /// belongs to
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hostingEnvironment")]
-        public string HostingEnvironment { get; set; }
+        public string TargetSwapSlot { get; private set; }
 
         /// <summary>
         /// Specification for the hosting environment (App Service
@@ -177,10 +160,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? ClientCertEnabled { get; set; }
 
         /// <summary>
-        /// Kind of resource
+        /// List of identifiers that verify the custom domains assigned to the
+        /// web app (e.g. to a CA for purchasing SSL certificate).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.kind")]
-        public string Kind { get; set; }
+        [JsonProperty(PropertyName = "properties.domainVerificationIdentifiers")]
+        public IList<string> DomainVerificationIdentifiers { get; private set; }
 
         /// <summary>
         /// List of comma separated IP addresses that this web app uses for
@@ -188,7 +172,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// rules for databases accessed by this web app.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundIpAddresses")]
-        public string OutboundIpAddresses { get; set; }
+        public string OutboundIpAddresses { get; private set; }
 
         /// <summary>
         /// This is only valid for web app creation. If specified, web app is
@@ -198,5 +182,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.cloningInfo")]
         public CloningInfo CloningInfo { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.HostNameSslStates != null)
+            {
+                foreach (var element in this.HostNameSslStates)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.SiteConfig != null)
+            {
+                this.SiteConfig.Validate();
+            }
+        }
     }
 }

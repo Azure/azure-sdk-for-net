@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class Domain : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Admin contact information
         /// </summary>
@@ -54,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'JsonConverterFailed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registrationStatus")]
-        public string RegistrationStatus { get; set; }
+        public DomainStatus? RegistrationStatus { get; set; }
 
         /// <summary>
         /// Name servers
@@ -113,5 +109,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.consent")]
         public DomainPurchaseConsent Consent { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

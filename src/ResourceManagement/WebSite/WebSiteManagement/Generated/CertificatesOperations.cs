@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -349,6 +349,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (certificateEnvelope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateEnvelope");
+            }
+            if (certificateEnvelope != null)
+            {
+                certificateEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1074,6 +1078,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (csrEnvelope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "csrEnvelope");
+            }
+            if (csrEnvelope != null)
+            {
+                csrEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {

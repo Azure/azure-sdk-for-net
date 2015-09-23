@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -39,6 +40,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "promotionCode")]
         public string PromotionCode { get; set; }
+
+        /// <summary>
+        /// Version of product
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; set; }
 
     }
 }

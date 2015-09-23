@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'SniEnabled', 'IpBasedEnabled'.
         /// </summary>
         [JsonProperty(PropertyName = "sslState")]
-        public string SslState { get; set; }
+        public SslState? SslState { get; set; }
 
         /// <summary>
         /// Virtual IP address assigned to the host name if IP based SSL is
@@ -54,5 +55,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "toUpdateIpBasedSsl")]
         public bool? ToUpdateIpBasedSsl { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (SslState == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SslState");
+            }
+        }
     }
 }

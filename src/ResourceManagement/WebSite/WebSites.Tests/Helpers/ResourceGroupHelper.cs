@@ -40,35 +40,11 @@ namespace WebSites.Tests.Helpers
         /// <summary>
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="handler"></param>
-        /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handler);
-            return client;
-        }
-
-        /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
-        /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static WebSiteManagementClient GetWebSiteManagementClient(this TestBase testBase, MockContext context)
         {
             var client = context.GetServiceClient<WebSiteManagementClient>();
-            return client;
-        }
-
-        /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
-        /// </summary>
-        /// <param name="handler"></param>
-        /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static WebSiteManagementClient GetWebSiteManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<WebSiteManagementClient>(handler);
             return client;
         }
 

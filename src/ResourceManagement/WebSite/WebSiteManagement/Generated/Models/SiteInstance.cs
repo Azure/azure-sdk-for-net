@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -17,15 +18,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
     public partial class SiteInstance : Resource
     {
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
-        /// <summary>
         /// Name of instance
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
         public string SiteInstanceName { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

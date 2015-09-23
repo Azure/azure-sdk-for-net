@@ -79,11 +79,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Gets the default azure context object.
         /// </summary>
         [JsonIgnore]
-        public AzureContext DefaultContext 
+        public AzureContext Context 
         { 
             get
             {
-                var context = new AzureContext(null, null, null);
+                var context = new AzureContext(null, null, null, null);
 
                 if (DefaultSubscription != null)
                 {

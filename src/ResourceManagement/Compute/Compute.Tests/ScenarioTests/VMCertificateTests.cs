@@ -16,14 +16,11 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
-using System.Linq;
-using System.Net;
-using Xunit;
-using System;
-using System.Collections.Generic;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -48,9 +45,9 @@ namespace Compute.Tests
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
 
                 Action<VirtualMachine> AddCertificateInfo = SetCertificateInfo;

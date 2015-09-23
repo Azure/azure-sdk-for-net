@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -243,6 +243,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (hostingEnvironmentEnvelope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostingEnvironmentEnvelope");
+            }
+            if (hostingEnvironmentEnvelope != null)
+            {
+                hostingEnvironmentEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -536,6 +540,299 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of hostingEnvironment (App Service Environment)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<IList<HostingEnvironmentDiagnostics>>> GetHostingEnvironmentDiagnosticsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentDiagnostics", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<IList<HostingEnvironmentDiagnostics>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<IList<HostingEnvironmentDiagnostics>>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of hostingEnvironment (App Service Environment)
+        /// </param>
+        /// <param name='diagnosticsName'>
+        /// Name of the diagnostics
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HostingEnvironmentDiagnostics>> GetHostingEnvironmentDiagnosticsItemWithHttpMessagesAsync(string resourceGroupName, string name, string diagnosticsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (diagnosticsName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "diagnosticsName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("diagnosticsName", diagnosticsName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentDiagnosticsItem", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{diagnosticsName}", Uri.EscapeDataString(diagnosticsName));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<HostingEnvironmentDiagnostics>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<HostingEnvironmentDiagnostics>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1268,20 +1565,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1289,7 +1580,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1316,11 +1607,8 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentMetrics", tracingParameters);
             }
@@ -1330,25 +1618,13 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1592,8 +1868,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1601,7 +1880,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetHostingEnvironmentUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetHostingEnvironmentUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1628,7 +1907,7 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentUsages", tracingParameters);
             }
@@ -1638,9 +1917,9 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
+            if (filter != null)
             {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1742,9 +2021,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
         /// <param name='startTime'>
         /// Beginning time of metrics query
         /// </param>
@@ -1757,13 +2033,19 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='details'>
         /// Include instance details
         /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1790,11 +2072,11 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
                 tracingParameters.Add("startTime", startTime);
                 tracingParameters.Add("endTime", endTime);
                 tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentMultiRoleMetrics", tracingParameters);
             }
@@ -1804,10 +2086,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
             if (startTime != null)
             {
                 queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
@@ -1823,6 +2101,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1927,20 +2209,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='workerSizeId'>
         /// Id of worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1948,7 +2224,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1980,11 +2256,8 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("workerSizeId", workerSizeId);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentWebWorkerMetrics", tracingParameters);
             }
@@ -1995,25 +2268,13 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{workerSizeId}", Uri.EscapeDataString(workerSizeId));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -2408,16 +2669,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2444,7 +2702,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentMultiRoleUsages", tracingParameters);
             }
@@ -2454,10 +2711,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -2561,16 +2814,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='workerSizeId'>
         /// Id of worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2602,7 +2852,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("workerSizeId", workerSizeId);
-                tracingParameters.Add("names", names);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentWebWorkerUsages", tracingParameters);
             }
@@ -2613,10 +2862,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{workerSizeId}", Uri.EscapeDataString(workerSizeId));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -2873,7 +3118,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2901,10 +3146,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentWebHostingPlans", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentServerFarms", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/webhostingplans").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -3015,7 +3260,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3043,10 +3288,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentServerFarms", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetHostingEnvironmentWebHostingPlans", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/webhostingplans").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -3342,6 +3587,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (multiRolePoolEnvelope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "multiRolePoolEnvelope");
+            }
+            if (multiRolePoolEnvelope != null)
+            {
+                multiRolePoolEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -3827,6 +4076,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workerPoolEnvelope");
             }
+            if (workerPoolEnvelope != null)
+            {
+                workerPoolEnvelope.Validate();
+            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -4117,20 +4370,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='instance'>
         /// Name of instance in the worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4138,7 +4385,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4175,11 +4422,8 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("workerSizeId", workerSizeId);
                 tracingParameters.Add("instance", instance);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetWorkerPoolInstanceMetrics", tracingParameters);
             }
@@ -4191,25 +4435,13 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{instance}", Uri.EscapeDataString(instance));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -4474,18 +4706,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='instance'>
         /// Name of instance in the multiRole pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
         /// </param>
@@ -4495,7 +4715,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4527,10 +4747,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("instance", instance);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetMultiRolePoolInstanceMetrics", tracingParameters);
@@ -4542,22 +4758,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{instance}", Uri.EscapeDataString(instance));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));

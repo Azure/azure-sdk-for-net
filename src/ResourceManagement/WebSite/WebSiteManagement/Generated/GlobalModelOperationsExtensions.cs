@@ -103,40 +103,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// all of the properties.
             /// Retrieval of all properties may increase the API latency.
             /// </param>
-            public static ServerFarmCollection GetAllWebHostingPlans(this IGlobalModelOperations operations, bool? detailed = default(bool?))
-            {
-                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetAllWebHostingPlansAsync(detailed), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='detailed'>
-            /// False to return a subset of App Service Plan properties, true to return
-            /// all of the properties.
-            /// Retrieval of all properties may increase the API latency.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetAllWebHostingPlansAsync( this IGlobalModelOperations operations, bool? detailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ServerFarmCollection> result = await operations.GetAllWebHostingPlansWithHttpMessagesAsync(detailed, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='detailed'>
-            /// False to return a subset of App Service Plan properties, true to return
-            /// all of the properties.
-            /// Retrieval of all properties may increase the API latency.
-            /// </param>
             public static ServerFarmCollection GetAllServerFarms(this IGlobalModelOperations operations, bool? detailed = default(bool?))
             {
                 return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetAllServerFarmsAsync(detailed), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -158,6 +124,40 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ServerFarmCollection> GetAllServerFarmsAsync( this IGlobalModelOperations operations, bool? detailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<ServerFarmCollection> result = await operations.GetAllServerFarmsWithHttpMessagesAsync(detailed, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='detailed'>
+            /// False to return a subset of App Service Plan properties, true to return
+            /// all of the properties.
+            /// Retrieval of all properties may increase the API latency.
+            /// </param>
+            public static ServerFarmCollection GetAllWebHostingPlans(this IGlobalModelOperations operations, bool? detailed = default(bool?))
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetAllWebHostingPlansAsync(detailed), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='detailed'>
+            /// False to return a subset of App Service Plan properties, true to return
+            /// all of the properties.
+            /// Retrieval of all properties may increase the API latency.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetAllWebHostingPlansAsync( this IGlobalModelOperations operations, bool? detailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ServerFarmCollection> result = await operations.GetAllWebHostingPlansWithHttpMessagesAsync(detailed, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -263,6 +263,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// Hosting environment name
             /// </param>
             public static object IsHostingEnvironmentNameAvailable(this IGlobalModelOperations operations, string name)
             {
@@ -275,6 +276,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// Hosting environment name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -291,6 +293,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// Hosting environment name
             /// </param>
             public static object IsHostingEnvironmentWithLegacyNameAvailable(this IGlobalModelOperations operations, string name)
             {
@@ -303,6 +306,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// Hosting environment name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -310,6 +314,36 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> IsHostingEnvironmentWithLegacyNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<object> result = await operations.IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='request'>
+            /// Name availability request
+            /// </param>
+            public static ResourceNameAvailability CheckNameAvailability(this IGlobalModelOperations operations, ResourceNameAvailabilityRequest request)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).CheckNameAvailabilityAsync(request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='request'>
+            /// Name availability request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync( this IGlobalModelOperations operations, ResourceNameAvailabilityRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ResourceNameAvailability> result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(request, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -28,10 +28,22 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <param name="subscription">The azure subscription object</param>
         /// <param name="account">The azure account object</param>
         /// <param name="environment">The azure environment object</param>
-        public AzureContext(AzureSubscription subscription, AzureAccount account, AzureEnvironment environment) :
-            this(subscription, account, environment, null)
+        public AzureContext(AzureSubscription subscription, AzureAccount account, AzureEnvironment environment) 
+            : this(subscription, account, environment, null)
         {
             
+        }
+
+        /// <summary>
+        /// Creates new instance of AzureContext.
+        /// </summary>
+        /// <param name="account">The azure account object</param>
+        /// <param name="environment">The azure environment object</param>
+        /// <param name="tenant">The azure tenant object</param>
+        public AzureContext(AzureAccount account, AzureEnvironment environment, AzureTenant tenant)
+            : this(null, account, environment, tenant)
+        {
+
         }
 
         /// <summary>
@@ -64,10 +76,15 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Gets the azure environment.
         /// </summary>
         public AzureEnvironment Environment { get; private set; }
-
+        
         /// <summary>
         /// Gets the azure tenant.
         /// </summary>
         public AzureTenant Tenant { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the token cache contents.
+        /// </summary>
+        public byte[] TokenCache { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace WebSites.Tests.ScenarioTests
 
         private static readonly SourceControl GitHubSourceControl = new SourceControl()
         {
+            Location = "global",
             SourceControlName = "GitHub",
             Token = "myToken",
             TokenSecret = "myTokenSecret"
@@ -46,11 +47,9 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void TestUpdateSourceControlUpdates()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
 
                 webSitesClient.Provider.UpdateSourceControl(GitHubSourceControl.SourceControlName, GitHubSourceControl);
 

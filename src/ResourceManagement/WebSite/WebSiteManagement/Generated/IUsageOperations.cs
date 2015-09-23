@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -24,8 +23,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Name of resource group
         /// </param>
-        /// <param name='webSystemName'>
-        /// Name of the sub system: WebSites or Mobile
+        /// <param name='environmentName'>
+        /// Environment name
         /// </param>
         /// <param name='lastId'>
         /// Last marker that was returned from the batch
@@ -39,6 +38,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> GetUsageWithHttpMessagesAsync(string resourceGroupName, string webSystemName, string lastId, int? batchSize, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetUsageWithHttpMessagesAsync(string resourceGroupName, string environmentName, string lastId, int? batchSize, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

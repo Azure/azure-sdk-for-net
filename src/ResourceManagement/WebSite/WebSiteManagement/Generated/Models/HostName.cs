@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -43,21 +44,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// values for this property include: 'Website', 'TrafficManager'.
         /// </summary>
         [JsonProperty(PropertyName = "azureResourceType")]
-        public string AzureResourceType { get; set; }
+        public AzureResourceType? AzureResourceType { get; set; }
 
         /// <summary>
         /// Type of the Dns record. Possible values for this property include:
         /// 'CName', 'A'.
         /// </summary>
         [JsonProperty(PropertyName = "customHostNameDnsRecordType")]
-        public string CustomHostNameDnsRecordType { get; set; }
+        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
 
         /// <summary>
         /// Type of the hostname. Possible values for this property include:
         /// 'Verified', 'Managed'.
         /// </summary>
         [JsonProperty(PropertyName = "hostNameType")]
-        public string HostNameType { get; set; }
+        public HostNameType? HostNameType { get; set; }
 
     }
 }

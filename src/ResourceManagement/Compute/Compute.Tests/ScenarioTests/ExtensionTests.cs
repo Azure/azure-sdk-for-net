@@ -13,16 +13,14 @@
 // limitations under the License.
 //
 
-using System;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using Microsoft.Rest.Azure;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -53,12 +51,13 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 EnsureClientsInitialized(context);
+                //VMNetworkInterfaceTests.FixRecords();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
                 try
                 {
@@ -88,7 +87,7 @@ namespace Compute.Tests
                     // Validate the extension in the VM info
                     var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
-                    // ValidateVMExtension(vmExtension, getVMResponse.Resources.FirstOrDefault());
+                    ValidateVMExtension(vmExtension, getVMResponse.Resources.FirstOrDefault());
 
                     // Validate the extension instance view in the VM instance-view
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, "instanceView");
@@ -119,10 +118,10 @@ namespace Compute.Tests
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)
         {
             Assert.NotNull(vmExtInstanceView);
-            //Assert.NotNull(vmExtInstanceView.Statuses[0].DisplayStatus);
-            //Assert.NotNull(vmExtInstanceView.Statuses[0].Code);
-            //Assert.NotNull(vmExtInstanceView.Statuses[0].Level);
-            //Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
+            Assert.NotNull(vmExtInstanceView.Statuses[0].DisplayStatus);
+            Assert.NotNull(vmExtInstanceView.Statuses[0].Code);
+            Assert.NotNull(vmExtInstanceView.Statuses[0].Level);
+            Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
         }
     }
 }
