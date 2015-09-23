@@ -29,7 +29,7 @@ namespace HDInsight.Tests
     {
         //Since we are validating the fields these should have default values.
         private string ApplicationId = "11111111-1111-1111-1111-111111111111";
-        private string AadTenantId = "http://default";
+        private string AadTenantId = "11111111-1111-1111-1111-111111111111";
         private byte[] CertificateFileBytes = { };
         private string CertificatePassword = "";
         private string ResourceUri = "";
