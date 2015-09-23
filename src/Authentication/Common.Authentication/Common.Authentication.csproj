@@ -62,7 +62,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DictionaryExtensions.cs" />
-    <Compile Include="Utilities\ExceptionUtilities.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="Utilities\JsonUtilities.cs" />
     <Compile Include="Utilities\XmlUtilities.cs" />
