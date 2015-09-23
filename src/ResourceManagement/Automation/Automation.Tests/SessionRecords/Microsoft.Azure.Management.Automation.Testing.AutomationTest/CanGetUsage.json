@@ -523,8 +523,7 @@
       "StatusCode": 200
     }
   ],
-  "Names": {},
-  "Variables": {
+   "Variables": {
     "SubscriptionId": "8da0c0bc-9385-44e3-90cd-732b4268735d"
   }
 }
