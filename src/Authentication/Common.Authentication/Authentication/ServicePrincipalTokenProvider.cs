@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Common.Authentication
             string authority = config.AdEndpoint + config.AdDomain;
             var context = new AuthenticationContext(authority, config.ValidateAuthority, config.TokenCache);
             var credential = new ClientCredential(appId, appKey);
-            return context.AcquireToken("https://management.core.windows.net/", credential);
+            return context.AcquireToken(config.ResourceClientUri, credential);
         }
 
         private AuthenticationResult Renew(AdalConfiguration config, string appId)
