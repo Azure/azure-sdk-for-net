@@ -458,14 +458,25 @@ namespace Microsoft.Azure.Management.HDInsight
             };
             roles.Add(workerNode);
 
-            if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+            if (clusterCreateParameters.OSType == OSType.Windows)
             {
-                return roles;
+                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                {
+                    return roles;
+                }                
+            }
+
+            if (clusterCreateParameters.OSType == OSType.Linux)
+            {
+                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                {
+                    clusterCreateParameters.ZookeeperNodeSize = "Small";
+                }
             }
 
             string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "Medium";
-
             var zookeepernode = new Role
             {
                 Name = "zookeepernode",
@@ -477,6 +488,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     VmSize = zookeeperNodeSize
                 }
             };
+            
             roles.Add(zookeepernode);
 
             return roles;

@@ -591,7 +591,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The name of the cluster.
+        /// Required. The type name of the hadoop configuration.
         /// </param>
         /// <returns>
         /// The Cluster Configurations operation response.
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The name of the cluster.
+        /// Required. The type name of the hadoop configuration.
         /// </param>
         /// <returns>
         /// The Cluster Configurations operation response.

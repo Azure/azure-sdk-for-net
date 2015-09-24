@@ -62,7 +62,8 @@ namespace Sample.Microsoft.HelloKeyVault
                 keyOperations.Add( KeyOperationType.BACKUP_RESTORE );
                 keyOperations.Add( KeyOperationType.SIGN_VERIFY );
                 keyOperations.Add( KeyOperationType.WRAP_UNWRAP );
-                keyOperations.Add( KeyOperationType.ENCRYPT_DECRYPT );
+                keyOperations.Add( KeyOperationType.ENCRYPT );
+                keyOperations.Add( KeyOperationType.DECRYPT );
                 keyOperations.Add( KeyOperationType.UPDATE_KEY );
                 keyOperations.Add( KeyOperationType.LIST_KEYVERSIONS );
                 keyOperations.Add( KeyOperationType.DELETE_KEY );
@@ -90,6 +91,24 @@ namespace Sample.Microsoft.HelloKeyVault
             }
 
             return System.Text.Encoding.UTF8.GetBytes( text );
+        }
+
+        /// <summary>
+        /// Gets plain text to be encrypted, if the argument is not provided returns the default plain text
+        /// </summary>
+        /// <returns> plain text </returns>
+        public byte[] GetCipherText()
+        {
+            var tag = "-text";
+            var text = GetArgumentValue( tag );
+            
+            if ( text == string.Empty )
+            {
+                Console.Out.WriteLine( tag + " is not provided. Using default value!" );
+                text = File.ReadAllText( "cipherText.txt" );
+            }
+
+            return Convert.FromBase64String(text);
         }
 
         /// <summary>

@@ -164,13 +164,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/tables/";
+            url = url + "/datasets/";
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/slices";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
             queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -624,7 +624,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/tables/";
+            url = url + "/datasets/";
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/slices/setstatus";
             List<string> queryParameters = new List<string>();
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             }
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

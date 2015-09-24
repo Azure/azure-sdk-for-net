@@ -14,6 +14,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
+    <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopyBehavior\CopyBehaviorType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\FileSystemSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\SqlDWSink.cs" />
@@ -50,6 +51,9 @@
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
+    <Compile Include="Customizations\Operations\OAuth\IOAuthOperations.cs" />
+    <Compile Include="Customizations\Operations\OAuth\OAuthOperations.cs" />
+    <Compile Include="Customizations\Operations\OAuth\OAuthOperationsExtensions.cs" />
     <Compile Include="Customizations\Runtime\ActivityConfiguration.cs" />
     <Compile Include="Customizations\Runtime\ActivityConfigurationConverter.cs" />
     <Compile Include="Customizations\Runtime\ActivityExecutor.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataFactoryManagementChangelog.md" />
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">
       <SubType>Designer</SubType>
     </None>

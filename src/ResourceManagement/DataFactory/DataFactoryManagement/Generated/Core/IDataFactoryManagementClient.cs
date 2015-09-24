@@ -134,6 +134,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
+        /// Operations for OAuth authorizations.
+        /// </summary>
+        IOAuthOperations OAuth
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing pipelines.
         /// </summary>
         IPipelineOperations Pipelines
