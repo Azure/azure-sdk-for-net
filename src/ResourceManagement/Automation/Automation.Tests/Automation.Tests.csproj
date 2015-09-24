@@ -33,6 +33,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteWebhook.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanGetUsage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

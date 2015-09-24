@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// The name of the storage account
         /// </param>
         /// <param name="storageAccountKey">
-        /// 
+        /// The default storage account key.
         /// </param>
         /// <param name="defaultContainer">
-        /// 
+        /// The default container.
         /// </param>
         /// Cancellation token.
         /// </param>

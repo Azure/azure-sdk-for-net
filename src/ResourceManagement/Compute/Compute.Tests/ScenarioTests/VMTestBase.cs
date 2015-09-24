@@ -47,7 +47,7 @@ namespace Compute.Tests
         protected string m_location;
         ImageReference m_windowsImageReference, m_linuxImageReference;
 
-        protected void EnsureClientsInitialized()
+        protected void EnsureClientsInitialized(bool useSPN = false)
         {
             if (!m_initialized)
             {
@@ -56,12 +56,20 @@ namespace Compute.Tests
                     if (!m_initialized)
                     {
                         var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-                        m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
-                        m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
-                        m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
-                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
-
+                        if (useSPN)
+                        {
+                            m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClientWithSpn(handler);
+                            m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClientWithSpn(handler);
+                            m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClientSpn(handler);
+                            m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClientSpn(handler);
+                        }
+                        else
+                        {
+                            m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
+                            m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
+                            m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
+                            m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                        }
                         m_subId = m_CrpClient.Credentials.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
                     }
@@ -105,6 +113,18 @@ namespace Compute.Tests
                 m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.04");
             }
             return m_linuxImageReference;
+        }
+
+        protected DiagnosticsProfile GetDiagnosticsProfile(string storageAccountName)
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true,
+                    StorageUri = new Uri(string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName))
+                }
+            };
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -184,14 +204,14 @@ namespace Compute.Tests
                 }
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
-
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreatingOrUpdating (
-                     rgName,  inputVM);
+                var createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreatingOrUpdating(
+                    rgName, inputVM);
 
                 Assert.True(createOrUpdateResponse.StatusCode == HttpStatusCode.Created);
 
                 Assert.True(createOrUpdateResponse.VirtualMachine.Name == inputVM.Name);
-                Assert.True(createOrUpdateResponse.VirtualMachine.Location == inputVM.Location.ToLower().Replace(" ", "") || createOrUpdateResponse.VirtualMachine.Location.ToLower() == inputVM.Location.ToLower());
+                Assert.True(createOrUpdateResponse.VirtualMachine.Location == inputVM.Location.ToLower().Replace(" ", "") ||
+                            createOrUpdateResponse.VirtualMachine.Location.ToLower() == inputVM.Location.ToLower());
 
                 Assert.True(
                     createOrUpdateResponse.VirtualMachine.AvailabilitySetReference.ReferenceUri
@@ -210,7 +230,6 @@ namespace Compute.Tests
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 Assert.True(getResponse.StatusCode == HttpStatusCode.OK);
                 ValidateVM(inputVM, getResponse.VirtualMachine, expectedVMReferenceId);
-
                 return getResponse.VirtualMachine;
             }
             catch
@@ -348,7 +367,7 @@ namespace Compute.Tests
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
-            var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
+            var vhdContainer = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName) + containerName;
             var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
             var osVhduri = vhdContainer + string.Format("/os{0}.vhd", TestUtilities.GenerateName(TestPrefix));
 
@@ -506,6 +525,15 @@ namespace Compute.Tests
             Assert.NotNull(diskInstanceView.Statuses[0].Level);
             //Assert.NotNull(diskInstanceView.Statuses[0].Message); // TODO: it's null somtimes.
             //Assert.NotNull(diskInstanceView.Statuses[0].Time);    // TODO: it's null somtimes.
+            if (vmIn.DiagnosticsProfile != null && vmIn.DiagnosticsProfile.BootDiagnostics != null &&
+                vmIn.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue &&
+                vmIn.DiagnosticsProfile.BootDiagnostics.Enabled.Value)
+            {
+                BootDiagnosticsInstanceView bootDiagnostics = vmOut.InstanceView.BootDiagnostics;
+                Assert.NotNull(bootDiagnostics);
+                Assert.NotNull(bootDiagnostics.ConsoleScreenshotBlobUri);
+                //TODO: validate serialConsoleLog for Linux OsType
+            }
         }
 
         protected void ValidatePlan(Microsoft.Azure.Management.Compute.Models.Plan inputPlan, Microsoft.Azure.Management.Compute.Models.Plan outPutPlan)

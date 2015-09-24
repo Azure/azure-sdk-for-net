@@ -79,6 +79,7 @@
     <Compile Include="Generated\Models\Error.cs" />
     <Compile Include="Generated\Models\ErrorDetails.cs" />
     <Compile Include="Generated\Models\FrontendIpConfiguration.cs" />
+    <Compile Include="Generated\Models\InboundNatPool.cs" />
     <Compile Include="Generated\Models\InboundNatRule.cs" />
     <Compile Include="Generated\Models\IpAllocationMethod.cs" />
     <Compile Include="Generated\Models\LoadBalancer.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Generated\Models\NetworkSecurityGroupListResponse.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroupPutResponse.cs" />
     <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\OutboundNatRule.cs" />
     <Compile Include="Generated\Models\Probe.cs" />
     <Compile Include="Generated\Models\ProbeProtocol.cs" />
     <Compile Include="Generated\Models\ProvisioningState.cs" />

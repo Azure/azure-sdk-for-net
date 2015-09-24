@@ -686,6 +686,11 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -1390,6 +1395,13 @@ namespace Microsoft.Azure.Management.Network
                                             applicationGatewayRequestRoutingRuleJsonFormatInstance.Id = idInstance18;
                                         }
                                     }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue10["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    applicationGatewayInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue9 = propertiesValue10["provisioningState"];
@@ -2907,6 +2919,13 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    applicationGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
                                 JToken provisioningStateValue9 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
                                 {
@@ -3737,6 +3756,13 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            applicationGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
                                         JToken provisioningStateValue9 = propertiesValue["provisioningState"];
                                         if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
                                         {
@@ -4564,6 +4590,13 @@ namespace Microsoft.Azure.Management.Network
                                                     applicationGatewayRequestRoutingRuleJsonFormatInstance.Id = idInstance18;
                                                 }
                                             }
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            applicationGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue9 = propertiesValue["provisioningState"];

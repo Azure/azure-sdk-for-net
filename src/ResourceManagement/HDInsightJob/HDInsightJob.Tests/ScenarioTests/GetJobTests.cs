@@ -24,7 +24,7 @@ namespace HDInsightJob.Tests
 {
     public class GetJobTests
     {
-//        [Fact]
+        [Fact]
         public void ListJobs()
         {
             using (var context = UndoContext.Current)
@@ -49,7 +49,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void GetHiveJob()
         {
             using (var context = UndoContext.Current)
@@ -71,7 +71,9 @@ namespace HDInsightJob.Tests
                 var parameters = new HiveJobSubmissionParameters
                 {
                     UserName = username,
-                    Query = "SHOW TABLES;"
+                    Query = "SHOW TABLES;",
+                    Arguments = "arg1",
+                    Defines = "def1"
                 };
 
                 var jobid = client.JobManagement.SubmitHiveJob(parameters).JobSubmissionJsonResponse.Id;
@@ -82,7 +84,41 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
+        public void GetSqoopJob()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.UserName;
+                var password = TestUtils.Password;
+                var clustername = TestUtils.ClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                var parameters = new SqoopJobSubmissionParameters
+                {
+                    UserName = username,
+                    Command = "some command",
+                    StatusDir = "sqoopstatus",
+                };
+
+                var jobid = client.JobManagement.SubmitSqoopJob(parameters).JobSubmissionJsonResponse.Id;
+
+                var response = client.JobManagement.GetJob(jobid);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+            }
+        }
+
+        [Fact]
         public void GetPigJob()
         {
             using (var context = UndoContext.Current)

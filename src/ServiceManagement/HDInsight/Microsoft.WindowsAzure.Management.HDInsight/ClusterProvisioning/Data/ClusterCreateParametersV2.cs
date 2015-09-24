@@ -306,13 +306,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             // if OSType == Linux then Username must be "admin"
             if (this.OSType == HDInsight.OSType.Linux && this.UserName != "admin")
             {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster' connectivity username must be admin.", this.OSType));
+                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster's connectivity username must be admin.", this.OSType));
             }
 
             // if OSType == Linux then ClusterType must be Hadoop
             if (this.OSType == HDInsight.OSType.Linux && this.ClusterType != ClusterType.Hadoop)
             {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster' type must be {1}.", this.OSType, ClusterType.Hadoop));
+                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster type must be {1}.", this.OSType, ClusterType.Hadoop));
             }
 
             // if OSType == Linux then VirtualNetworkId must not be set/specified

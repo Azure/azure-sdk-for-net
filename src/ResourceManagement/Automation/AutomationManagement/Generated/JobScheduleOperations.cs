@@ -208,6 +208,11 @@ namespace Microsoft.Azure.Management.Automation
                     runbookValue["name"] = parameters.Properties.Runbook.Name;
                 }
                 
+                if (parameters.Properties.RunOn != null)
+                {
+                    propertiesValue["runOn"] = parameters.Properties.RunOn;
+                }
+                
                 if (parameters.Properties.Parameters != null)
                 {
                     if (parameters.Properties.Parameters is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Parameters).IsInitialized)
@@ -311,6 +316,13 @@ namespace Microsoft.Azure.Management.Automation
                                         string nameInstance2 = ((string)nameValue2);
                                         runbookInstance.Name = nameInstance2;
                                     }
+                                }
+                                
+                                JToken runOnValue = propertiesValue2["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken parametersSequenceElement = ((JToken)propertiesValue2["parameters"]);
@@ -698,6 +710,13 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken runOnValue = propertiesValue["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
+                                }
+                                
                                 JToken parametersSequenceElement = ((JToken)propertiesValue["parameters"]);
                                 if (parametersSequenceElement != null && parametersSequenceElement.Type != JTokenType.Null)
                                 {
@@ -926,6 +945,13 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
+                                        }
+                                        
                                         JToken parametersSequenceElement = ((JToken)propertiesValue["parameters"]);
                                         if (parametersSequenceElement != null && parametersSequenceElement.Type != JTokenType.Null)
                                         {
@@ -1129,6 +1155,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance2 = ((string)nameValue2);
                                                 runbookInstance.Name = nameInstance2;
                                             }
+                                        }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken parametersSequenceElement = ((JToken)propertiesValue["parameters"]);

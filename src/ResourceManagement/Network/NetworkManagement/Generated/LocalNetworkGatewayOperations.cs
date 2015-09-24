@@ -201,6 +201,11 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["gatewayIpAddress"] = parameters.GatewayIpAddress;
                 }
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -313,6 +318,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
                                     localNetworkGatewayInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue2["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    localNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue2["provisioningState"];
@@ -941,6 +953,13 @@ namespace Microsoft.Azure.Management.Network
                                     localNetworkGatewayInstance.GatewayIpAddress = gatewayIpAddressInstance;
                                 }
                                 
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    localNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
@@ -1177,6 +1196,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
                                             localNetworkGatewayJsonFormatInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            localNetworkGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
