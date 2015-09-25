@@ -126,6 +126,9 @@
     <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\GetResourceSubscriptionPermissions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptionLocations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
