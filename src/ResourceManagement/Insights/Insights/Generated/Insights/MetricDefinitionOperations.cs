@@ -103,10 +103,10 @@ namespace Microsoft.Azure.Insights
             // Construct URL
             string url = "";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + resourceUri;
             url = url + "/metricDefinitions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-07-01");
             List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
@@ -237,11 +237,11 @@ namespace Microsoft.Azure.Insights
                                         metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
                                     }
                                     
-                                    JToken resourceUriValue = valueValue["resourceUri"];
-                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    JToken resourceIdValue = valueValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        string resourceUriInstance = ((string)resourceUriValue);
-                                        metricDefinitionInstance.ResourceUri = resourceUriInstance;
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        metricDefinitionInstance.ResourceId = resourceIdInstance;
                                     }
                                     
                                     JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
@@ -329,6 +329,58 @@ namespace Microsoft.Azure.Insights
                                                 {
                                                     string partitionKeyInstance = ((string)partitionKeyValue);
                                                     locationInstance.PartitionKey = partitionKeyInstance;
+                                                }
+                                            }
+                                            
+                                            JToken blobLocationValue = metricAvailabilitiesValue["blobLocation"];
+                                            if (blobLocationValue != null && blobLocationValue.Type != JTokenType.Null)
+                                            {
+                                                BlobLocation blobLocationInstance = new BlobLocation();
+                                                metricAvailabilityInstance.BlobLocation = blobLocationInstance;
+                                                
+                                                JToken blobEndpointValue = blobLocationValue["blobEndpoint"];
+                                                if (blobEndpointValue != null && blobEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string blobEndpointInstance = ((string)blobEndpointValue);
+                                                    blobLocationInstance.BlobEndpoint = blobEndpointInstance;
+                                                }
+                                                
+                                                JToken blobInfoArray = blobLocationValue["blobInfo"];
+                                                if (blobInfoArray != null && blobInfoArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken blobInfoValue in ((JArray)blobInfoArray))
+                                                    {
+                                                        BlobInfo blobInfoInstance = new BlobInfo();
+                                                        blobLocationInstance.BlobInfo.Add(blobInfoInstance);
+                                                        
+                                                        JToken blobUriValue = blobInfoValue["blobUri"];
+                                                        if (blobUriValue != null && blobUriValue.Type != JTokenType.Null)
+                                                        {
+                                                            string blobUriInstance = ((string)blobUriValue);
+                                                            blobInfoInstance.BlobUri = blobUriInstance;
+                                                        }
+                                                        
+                                                        JToken startTimeValue2 = blobInfoValue["startTime"];
+                                                        if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                            blobInfoInstance.StartTime = startTimeInstance2;
+                                                        }
+                                                        
+                                                        JToken endTimeValue2 = blobInfoValue["endTime"];
+                                                        if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                            blobInfoInstance.EndTime = endTimeInstance2;
+                                                        }
+                                                        
+                                                        JToken sasTokenValue2 = blobInfoValue["sasToken"];
+                                                        if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string sasTokenInstance2 = ((string)sasTokenValue2);
+                                                            blobInfoInstance.SasToken = sasTokenInstance2;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }

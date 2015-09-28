@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ManagementEventAggregationCondition _aggregation;
         
         /// <summary>
-        /// Optional. Aggregation condition.
+        /// Optional. Gets or sets the aggregation condition.
         /// </summary>
         public ManagementEventAggregationCondition Aggregation
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Optional. Condition data source.
+        /// Optional. Gets or sets the condition data source.
         /// </summary>
         public RuleDataSource DataSource
         {

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<PerformanceCounterConfiguration> _counters;
         
         /// <summary>
-        /// Optional. List of performance counters.
+        /// Optional. Gets or sets the list of performance counters.
         /// </summary>
         public IList<PerformanceCounterConfiguration> Counters
         {

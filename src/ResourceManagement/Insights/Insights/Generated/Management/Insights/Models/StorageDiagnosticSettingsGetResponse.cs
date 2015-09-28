@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location of the configuration.
+        /// Optional. Gets or sets the location of the configuration.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the configuration.
+        /// Optional. Gets or sets the name of the configuration.
         /// </summary>
         public string Name
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageDiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The storage diagnostic settings.
+        /// Optional. Gets or sets the storage diagnostic settings.
         /// </summary>
         public StorageDiagnosticSettings Properties
         {
