@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (context == null)
             {
-                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+                throw new ApplicationException(Resources.NoSubscriptionInContext);
             }
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
@@ -83,10 +83,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (context == null)
             {
-                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+                var exceptionMessage = endpoint == AzureEnvironment.Endpoint.ServiceManagement
+                    ? Resources.InvalidDefaultSubscription
+                    : Resources.NoSubscriptionInContext;
+                throw new ApplicationException(exceptionMessage);
             }
 
-            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context, endpoint);
             TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
 
             return client;

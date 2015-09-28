@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Common.Authentication
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);
 
         SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context);
-        
+        SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint);
+       
         ServiceClientCredentials GetServiceClientCredentials(AzureContext context);
     }
 }
