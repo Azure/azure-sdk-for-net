@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.DataFactories
         public virtual IPipelineOperations Pipelines { get; private set; }
 
         /// <summary>
-        /// Operations for managing tables.
+        /// Operations for managing Datasets.
         /// </summary>
-        public virtual ITableOperations Tables { get; private set; }
+        public virtual IDatasetOperations Datasets { get; private set; }
 
         /// <summary>
         /// Operations for OAuth authorization.
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.DataFactories
             this.LinkedServices = new LinkedServiceOperations(this);
             this.OAuth = new OAuthOperations(this);
             this.Pipelines = new PipelineOperations(this);
-            this.Tables = new TableOperations(this);
+            this.Datasets = new DatasetOperations(this);
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;
             this.Credentials = this.InternalClient.Credentials;
             this.BaseUri = this.InternalClient.BaseUri;

@@ -23,17 +23,17 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
     internal static class Utils
     {
         private static readonly LinkedServiceConverter LinkedServiceConverter = GetLinkedServiceConverter();
-        private static readonly TableConverter TableConverter = GetTableConverter();
+        private static readonly DatasetConverter DatasetConverter = GetDatasetConverter();
         private static readonly PipelineConverter PipelineConverter = GetPipelineConverter();
 
         internal static JsonConverter[] GetAllConverters()
         {
-            return new JsonConverter[] { LinkedServiceConverter, PipelineConverter, TableConverter };
+            return new JsonConverter[] { LinkedServiceConverter, PipelineConverter, DatasetConverter };
         }
 
         internal static JsonConverter[] GetConverters(
             bool includelinkedServiceConverter = false,
-            bool includeTableConverter = false,
+            bool includeDatasetConverter = false,
             bool includePipelineConverter = false)
         {
             var converters = new List<JsonConverter>();
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
                 converters.Add(LinkedServiceConverter);
             }
 
-            if (includeTableConverter)
+            if (includeDatasetConverter)
             {
-                converters.Add(TableConverter);
+                converters.Add(DatasetConverter);
             }
 
             if (includePipelineConverter)
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             return new LinkedServiceConverter();
         }
 
-        private static TableConverter GetTableConverter()
+        private static DatasetConverter GetDatasetConverter()
         {
-            return new TableConverter();
+            return new DatasetConverter();
         }
 
         private static PipelineConverter GetPipelineConverter()

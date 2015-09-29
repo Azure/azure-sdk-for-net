@@ -127,7 +127,7 @@ namespace DataFactory.Tests.UnitTests
         public void CreatingGenericLinkedServiceWithoutTypeNameThrowsExceptionTest()
         {
             string expectedError =
-                "cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity";
+                "cannot be used if its value is GenericLinkedService, GenericDataset or GenericActivity";
 
             var genericLinkedService = new GenericLinkedService();
             ArgumentException ex =

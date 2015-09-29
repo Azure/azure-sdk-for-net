@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A hub is a group of related linked services and tables where pipeline
+    /// A hub is a group of related linked services and datasets where pipeline
     /// activities run.
     /// </summary>
     public partial class Hub

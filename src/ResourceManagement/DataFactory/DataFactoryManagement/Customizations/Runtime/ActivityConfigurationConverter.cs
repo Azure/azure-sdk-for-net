@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
         private const string InputsToken = "inputs";
         private const string OutputsToken = "outputs";
 
-        private TableConverter tableConverter;
+        private DatasetConverter datasetConverter;
         private LinkedServiceConverter linkedServiceConverter;
         private PipelineConverter pipelineConverter;
 
         public ActivityConfigurationConverter()
         {
-            tableConverter = new TableConverter();
+            this.datasetConverter = new DatasetConverter();
             linkedServiceConverter = new LinkedServiceConverter();
             pipelineConverter = new PipelineConverter();
         }
@@ -87,13 +87,13 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
         {
             ResolvedTable resolvedTable = new ResolvedTable();
 
-            JToken tableJToken;
+            JToken datasetJToken;
             JToken linkedServiceJToken;
 
-            if (jObject.TryGetValue(TableToken, StringComparison.OrdinalIgnoreCase, out tableJToken))
+            if (jObject.TryGetValue(TableToken, StringComparison.OrdinalIgnoreCase, out datasetJToken))
             {
-                Core.Models.Table internalTable = Core.DataFactoryManagementClient.DeserializeInternalTableJson(tableJToken.ToString());
-                resolvedTable.Table = tableConverter.ToWrapperType(internalTable);
+                Core.Models.Dataset internalDataset = Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(datasetJToken.ToString());
+                resolvedTable.Dataset = this.datasetConverter.ToWrapperType(internalDataset);
             }
 
             if (jObject.TryGetValue(LinkedServiceToken, StringComparison.OrdinalIgnoreCase, out linkedServiceJToken))

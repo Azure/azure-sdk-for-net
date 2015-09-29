@@ -4,7 +4,16 @@ For additional details on features, see the full [Azure Data Factory Release Not
 _Release date:_
 
 ### Breaking Changes
-
+* Rename Table to Dataset.
+    * ITableOperations → IDatasetOperations 
+    * Models.Table → Models.Dataset
+    * Models.TableProperties → Models.DatasetProperties
+    * Models.TableTypeProprerties → Models.DatasetTypeProperties
+    * Models.TableCreateOrUpdateParameters → Models.DatasetCreateOrUpdateParameters
+    * Models.TableCreateOrUpdateResponse → Models.DatasetCreateOrUpdateResponse
+    * Models.TableGetResponse → Models.DatasetGetResponse
+    * Models.TableListResponse → Models.DatasetListResponse
+    * Models.CreateOrUpdateWithRawJsonContentParameters.cs → Models.DatasetCreateOrUpdateWithRawJsonContentParameters.cs
 
 ### Feature Additions
 * Add SliceIdentifierColumnName and SqlWriterCleanupScript to support idempotent copy to SQL Data Warehouse. 

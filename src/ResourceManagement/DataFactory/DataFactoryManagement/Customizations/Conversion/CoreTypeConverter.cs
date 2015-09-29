@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         public abstract TCore ToCoreType(TWrapper wrappedObject);
 
         /// <summary>
-        /// Converts <paramref name="coreObject"/> from type TWrapper to TCore.
+        /// Converts <paramref name="internalDataset"/> from type TWrapper to TCore.
         /// </summary>
-        /// <param name="coreObject">
+        /// <param name="internalDataset">
         /// The object to convert to its strong/wrapped type equivalent.
         /// </param>
-        /// <returns>The wrapped representation of <paramref name="coreObject"/>.</returns>
-        public abstract TWrapper ToWrapperType(TCore coreObject);
+        /// <returns>The wrapped representation of <paramref name="internalDataset"/>.</returns>
+        public abstract TWrapper ToWrapperType(TCore internalDataset);
 
         /// <summary>
         /// Checks if <paramref name="wrappedObject"/> is valid.
