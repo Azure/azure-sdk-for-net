@@ -21,22 +21,27 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Storage.Models;
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Storage
 {
     /// <summary>
-    /// The key names.
+    /// Operations for listing usage.
     /// </summary>
-    public enum KeyName
+    public partial interface IUsageOperations
     {
         /// <summary>
-        /// The primary key.
+        /// Gets the current usage count and the limit for the resources under
+        /// the subscription.
         /// </summary>
-        Key1 = 0,
-        
-        /// <summary>
-        /// The secondary key.
-        /// </summary>
-        Key2 = 1,
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Usages operation response.
+        /// </returns>
+        Task<UsageListResponse> ListAsync(CancellationToken cancellationToken);
     }
 }

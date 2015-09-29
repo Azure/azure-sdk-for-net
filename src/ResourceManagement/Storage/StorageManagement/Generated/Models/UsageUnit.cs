@@ -25,18 +25,38 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
-    /// The status of the storage account.
+    /// The usage unit.
     /// </summary>
-    public enum AccountStatus
+    public enum UsageUnit
     {
         /// <summary>
-        /// Available.
+        /// The count usage unit.
         /// </summary>
-        Available = 0,
+        Count = 0,
         
         /// <summary>
-        /// Unavailable.
+        /// The bytes usage unit.
         /// </summary>
-        Unavailable = 1,
+        Bytes = 1,
+        
+        /// <summary>
+        /// The seconds usage unit.
+        /// </summary>
+        Seconds = 2,
+        
+        /// <summary>
+        /// The percent usage unit.
+        /// </summary>
+        Percent = 3,
+        
+        /// <summary>
+        /// The counts per second usage unit.
+        /// </summary>
+        CountsPerSecond = 4,
+        
+        /// <summary>
+        /// The bytes per second usage unit.
+        /// </summary>
+        BytesPerSecond = 5,
     }
 }

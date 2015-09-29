@@ -85,6 +85,14 @@ namespace Microsoft.Azure.Management.Storage
         }
         
         /// <summary>
+        /// Operations for listing usage.
+        /// </summary>
+        IUsageOperations Usage
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Create Operation Status operation returns the status of the
         /// specified create operation. After calling the asynchronous Begin
         /// Create operation, you can call Get Create Operation Status to

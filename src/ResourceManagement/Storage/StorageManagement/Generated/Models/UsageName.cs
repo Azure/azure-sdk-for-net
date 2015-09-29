@@ -25,18 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
-    /// The status of the storage account.
+    /// The Usage Names.
     /// </summary>
-    public enum AccountStatus
+    public partial class UsageName
     {
-        /// <summary>
-        /// Available.
-        /// </summary>
-        Available = 0,
+        private string _localizedValue;
         
         /// <summary>
-        /// Unavailable.
+        /// Optional. Gets a localized string describing the resource name.
         /// </summary>
-        Unavailable = 1,
+        public string LocalizedValue
+        {
+            get { return this._localizedValue; }
+            set { this._localizedValue = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// Optional. Gets a string describing the resource name.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageName class.
+        /// </summary>
+        public UsageName()
+        {
+        }
     }
 }

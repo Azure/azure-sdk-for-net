@@ -29,39 +29,39 @@ using Microsoft.Azure.Management.Storage.Models;
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
-    /// The list storage accounts operation response.
+    /// The List Usages operation response.
     /// </summary>
-    public partial class StorageAccountListResponse : AzureOperationResponse, IEnumerable<StorageAccount>
+    public partial class UsageListResponse : AzureOperationResponse, IEnumerable<Usage>
     {
-        private IList<StorageAccount> _storageAccounts;
+        private IList<Usage> _usages;
         
         /// <summary>
-        /// Optional. Gets the list of storage accounts and their properties.
+        /// Optional. Gets or sets the list Storage Resource Usages.
         /// </summary>
-        public IList<StorageAccount> StorageAccounts
+        public IList<Usage> Usages
         {
-            get { return this._storageAccounts; }
-            set { this._storageAccounts = value; }
+            get { return this._usages; }
+            set { this._usages = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageAccountListResponse class.
+        /// Initializes a new instance of the UsageListResponse class.
         /// </summary>
-        public StorageAccountListResponse()
+        public UsageListResponse()
         {
-            this.StorageAccounts = new LazyList<StorageAccount>();
+            this.Usages = new LazyList<Usage>();
         }
         
         /// <summary>
-        /// Gets the sequence of StorageAccounts.
+        /// Gets the sequence of Usages.
         /// </summary>
-        public IEnumerator<StorageAccount> GetEnumerator()
+        public IEnumerator<Usage> GetEnumerator()
         {
-            return this.StorageAccounts.GetEnumerator();
+            return this.Usages.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of StorageAccounts.
+        /// Gets the sequence of Usages.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

@@ -42,7 +42,7 @@ namespace Storage.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? "North US" : "West US";
+        public static string DefaultLocation = IsTestTenant ? null : "westus";
         public static AccountType DefaultAccountType = AccountType.StandardGRS;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
@@ -148,6 +148,7 @@ namespace Storage.Tests.Helpers
             {
                 Assert.NotNull(account.PrimaryEndpoints.Queue);
                 Assert.NotNull(account.PrimaryEndpoints.Table);
+                Assert.NotNull(account.PrimaryEndpoints.File);
             }
 
             Assert.Equal(Microsoft.Azure.Management.Storage.Models.ProvisioningState.Succeeded, account.ProvisioningState);
@@ -158,7 +159,7 @@ namespace Storage.Tests.Helpers
                 case AccountType.StandardLRS:
                 case AccountType.StandardZRS:
                 case AccountType.PremiumLRS:
-                    Assert.Equal("", account.SecondaryLocation); // TODO: make null when service is fixed
+                    Assert.Null(account.SecondaryLocation);
                     Assert.Null(account.StatusOfSecondary);
                     Assert.Null(account.SecondaryEndpoints);
                     break;
