@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Common.Authentication
                     { AzureEnvironment.Endpoint.ServiceManagement, this.ServiceEndpoint },
                     { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, this.SqlDatabaseDnsSuffix },
                     { AzureEnvironment.Endpoint.StorageEndpointSuffix, this.StorageEndpointSuffix },
-                    { AzureEnvironment.Endpoint.AzureBigAnalyticsCatalogAndJobEndpointSuffix, this.AzureBigAnalyticsCatalogAndJobEndpointSuffix },
-                    { AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix, this.AzureDataLakeFileSystemEndpointSuffix },
+                    { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, this.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix },
+                    { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, this.AzureDataLakeStoreFileSystemEndpointSuffix },
                 }
             };
         }
@@ -106,10 +106,10 @@ namespace Microsoft.Azure.Common.Authentication
         public string TrafficManagerEndpointSuffix { get; set; }
 
         [DataMember]
-        public string AzureBigAnalyticsCatalogAndJobEndpointSuffix { get; set; }
+        public string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix { get; set; }
 
         [DataMember]
-        public string AzureDataLakeFileSystemEndpointSuffix { get; set; }
+        public string AzureDataLakeStoreFileSystemEndpointSuffix { get; set; }
     }
 
     /// <summary>

@@ -98,8 +98,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
-                        { AzureEnvironment.Endpoint.AzureBigAnalyticsCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureBigAnalyticsCatalogAndJobEndpointSuffix},
-                        { AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeFileSystemEndpointSuffix}
+                        { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix},
+                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeStoreFileSystemEndpointSuffix}
                     }
                 }
             },
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
-                        // TODO: BigAnalytics and ADL do not have a China endpoint yet. Once they do, add them here.
+                        // TODO: DataLakeAnalytics and ADL do not have a China endpoint yet. Once they do, add them here.
                     }
                 }
             }
@@ -289,9 +289,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             AzureKeyVaultServiceEndpointResourceId,
             
-            AzureBigAnalyticsCatalogAndJobEndpointSuffix,
+            AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix,
 
-            AzureDataLakeFileSystemEndpointSuffix
+            AzureDataLakeStoreFileSystemEndpointSuffix
         }
     }
 
@@ -348,8 +348,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
 
-        public const string AzureBigAnalyticsCatalogAndJobEndpointSuffix = "azurebiganalytics.net";
+        public const string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix = "azurebiganalytics.net";
 
-        public const string AzureDataLakeFileSystemEndpointSuffix = "azuredatalake.net";
+        public const string AzureDataLakeStoreFileSystemEndpointSuffix = "azuredatalake.net";
     }
 }
