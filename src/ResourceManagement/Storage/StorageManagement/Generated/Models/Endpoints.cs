@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Management.Storage.Models
             set { this._blob = value; }
         }
         
+        private Uri _file;
+        
+        /// <summary>
+        /// Optional. Gets the file endpoint.
+        /// </summary>
+        public Uri File
+        {
+            get { return this._file; }
+            set { this._file = value; }
+        }
+        
         private Uri _queue;
         
         /// <summary>

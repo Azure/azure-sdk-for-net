@@ -20,52 +20,67 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Storage.Models;
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
-    /// The list storage accounts operation response.
+    /// Describes Storage Resource Usage.
     /// </summary>
-    public partial class StorageAccountListResponse : AzureOperationResponse, IEnumerable<StorageAccount>
+    public partial class Usage
     {
-        private IList<StorageAccount> _storageAccounts;
+        private int _currentValue;
         
         /// <summary>
-        /// Optional. Gets the list of storage accounts and their properties.
+        /// Required. Gets the current count of the allocated resources in the
+        /// subscription.
         /// </summary>
-        public IList<StorageAccount> StorageAccounts
+        public int CurrentValue
         {
-            get { return this._storageAccounts; }
-            set { this._storageAccounts = value; }
+            get { return this._currentValue; }
+            set { this._currentValue = value; }
+        }
+        
+        private int _limit;
+        
+        /// <summary>
+        /// Required. Gets the maximum count of the resources that can be
+        /// allocated in the subscription.
+        /// </summary>
+        public int Limit
+        {
+            get { return this._limit; }
+            set { this._limit = value; }
+        }
+        
+        private UsageName _name;
+        
+        /// <summary>
+        /// Required. Gets the name of the type of usage.
+        /// </summary>
+        public UsageName Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private UsageUnit _unit;
+        
+        /// <summary>
+        /// Required. Gets the unit of measurement.
+        /// </summary>
+        public UsageUnit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageAccountListResponse class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        public StorageAccountListResponse()
+        public Usage()
         {
-            this.StorageAccounts = new LazyList<StorageAccount>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of StorageAccounts.
-        /// </summary>
-        public IEnumerator<StorageAccount> GetEnumerator()
-        {
-            return this.StorageAccounts.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of StorageAccounts.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
