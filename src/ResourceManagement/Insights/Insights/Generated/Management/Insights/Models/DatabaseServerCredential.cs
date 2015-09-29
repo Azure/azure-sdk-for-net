@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _databasePassword;
         
         /// <summary>
-        /// Optional. The database password.
+        /// Optional. Gets or sets the database password.
         /// </summary>
         public string DatabasePassword
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _databaseUserName;
         
         /// <summary>
-        /// Optional. The database user name.
+        /// Optional. Gets or sets the database user name.
         /// </summary>
         public string DatabaseUserName
         {

@@ -95,6 +95,26 @@ namespace Microsoft.Azure.Insights
             get { return this._eventOperations; }
         }
         
+        private ILogDefinitionOperations _logDefinitionOperations;
+        
+        /// <summary>
+        /// Operations for log definitions.
+        /// </summary>
+        public virtual ILogDefinitionOperations LogDefinitionOperations
+        {
+            get { return this._logDefinitionOperations; }
+        }
+        
+        private ILogOperations _logOperations;
+        
+        /// <summary>
+        /// Operations for logs.
+        /// </summary>
+        public virtual ILogOperations LogOperations
+        {
+            get { return this._logOperations; }
+        }
+        
         private IMetricDefinitionOperations _metricDefinitionOperations;
         
         /// <summary>
@@ -129,6 +149,8 @@ namespace Microsoft.Azure.Insights
             : base()
         {
             this._eventOperations = new EventOperations(this);
+            this._logDefinitionOperations = new LogDefinitionOperations(this);
+            this._logOperations = new LogOperations(this);
             this._metricDefinitionOperations = new MetricDefinitionOperations(this);
             this._metricOperations = new MetricOperations(this);
             this._usageMetricOperations = new UsageMetricsOperations(this);
@@ -198,6 +220,8 @@ namespace Microsoft.Azure.Insights
             : base(httpClient)
         {
             this._eventOperations = new EventOperations(this);
+            this._logDefinitionOperations = new LogDefinitionOperations(this);
+            this._logOperations = new LogOperations(this);
             this._metricDefinitionOperations = new MetricDefinitionOperations(this);
             this._metricOperations = new MetricOperations(this);
             this._usageMetricOperations = new UsageMetricsOperations(this);

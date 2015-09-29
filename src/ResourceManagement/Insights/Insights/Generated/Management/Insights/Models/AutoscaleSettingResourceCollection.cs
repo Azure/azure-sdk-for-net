@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<AutoscaleSettingResource> _value;
         
         /// <summary>
-        /// Optional. The values for the autoscale setting resources.
+        /// Optional. Gets or sets the values for the autoscale setting
+        /// resources.
         /// </summary>
         public IList<AutoscaleSettingResource> Value
         {

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ConditionOperator _operator;
         
         /// <summary>
-        /// Optional. Condition operator.
+        /// Optional. Gets or sets the condition operator.
         /// </summary>
         public ConditionOperator Operator
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private double _threshold;
         
         /// <summary>
-        /// Optional. Condition threshold.
+        /// Optional. Gets or sets the condition threshold.
         /// </summary>
         public double Threshold
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// Optional. The time period over which the alert rule is evaluated.
+        /// Optional. Gets or sets the time period over which the alert rule is
+        /// evaluated.
         /// </summary>
         public TimeSpan WindowSize
         {

@@ -13,6 +13,10 @@
 // limitations under the License. 
 // 
 
+using System;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Serialization;
 using Newtonsoft.Json;
@@ -71,6 +75,37 @@ namespace Microsoft.Azure.Search
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>() where T : class
         {
             return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>();
+        }
+
+        public static T DeserializeObject<T>(string json, JsonSerializerSettings settings)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+
+            // Use Create() instead of CreateDefault() here so that our own settings aren't merged with the defaults.
+            var serializer = JsonSerializer.Create(settings);
+            serializer.CheckAdditionalContent = true;
+
+            using (var reader = new JsonTextReader(new StringReader(json)))
+            {
+                return (T)serializer.Deserialize(reader, typeof(T));
+            }
+        }
+
+        public static string SerializeObject(object obj, JsonSerializerSettings settings)
+        {
+            // Use Create() instead of CreateDefault() here so that our own settings aren't merged with the defaults.
+            var serializer = JsonSerializer.Create(settings);
+            var stringWriter = new StringWriter(CultureInfo.InvariantCulture);
+
+            using (var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = serializer.Formatting })
+            {
+                serializer.Serialize(jsonWriter, obj);
+            }
+
+            return stringWriter.ToString();
         }
 
         private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>()

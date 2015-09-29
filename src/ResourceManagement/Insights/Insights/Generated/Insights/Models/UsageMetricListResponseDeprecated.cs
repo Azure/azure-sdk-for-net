@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private UsageMetricCollectionDeprecated _usageMetricCollection;
         
         /// <summary>
-        /// Optional. Deprecated. The list of usage metrics.
+        /// Optional. Deprecated. Gets or sets the list of usage metrics.
         /// </summary>
         public UsageMetricCollectionDeprecated UsageMetricCollection
         {

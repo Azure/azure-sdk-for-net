@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location of the rule.
+        /// Optional. Gets or sets the location of the rule.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Rule _properties;
         
         /// <summary>
-        /// Optional. The rule to create or update.
+        /// Optional. Gets or sets the rule to create or update.
         /// </summary>
         public Rule Properties
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. The tags of the rule.
+        /// Optional. Gets or sets the tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {

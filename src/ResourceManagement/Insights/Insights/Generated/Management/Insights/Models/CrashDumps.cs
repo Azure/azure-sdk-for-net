@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _containerName;
         
         /// <summary>
-        /// Optional. The name of the blob container in your Azure Storage
-        /// account that will be used to store crash dumps.
+        /// Optional. Gets or sets the name of the blob container in your Azure
+        /// Storage account that will be used to store crash dumps.
         /// </summary>
         public string ContainerName
         {
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int? _directoryQuotaPercentage;
         
         /// <summary>
-        /// Optional. Configures the percentage of overallQuotaInMB that will
-        /// be reserved for crash dumps.
+        /// Optional. Gets or sets the configures the percentage of
+        /// overallQuotaInMB that will be reserved for crash dumps.
         /// </summary>
         public int? DirectoryQuotaPercentage
         {
@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.CrashDumpType? _dumpType;
         
         /// <summary>
-        /// Optional. Configures collection of Mini or Full cash dumps.
+        /// Optional. Gets or sets the crash dump type. Configures collection
+        /// of Mini or Full cash dumps.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.CrashDumpType? DumpType
         {
@@ -70,8 +71,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _processes;
         
         /// <summary>
-        /// Optional. The names of the process you want to collect a crash dump
-        /// for.
+        /// Optional. Gets or sets the names of the process you want to collect
+        /// a crash dump for.
         /// </summary>
         public IList<string> Processes
         {

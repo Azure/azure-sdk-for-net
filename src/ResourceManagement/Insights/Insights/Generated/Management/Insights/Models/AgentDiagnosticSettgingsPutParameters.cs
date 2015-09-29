@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private AgentDiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The public configuration settings.
+        /// Optional. Gets or sets the public configuration settings.
         /// </summary>
         public AgentDiagnosticSettings Properties
         {
