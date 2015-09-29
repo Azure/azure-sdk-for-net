@@ -5,7 +5,7 @@
     Microsoft.Azure.Insights
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Insights">
-      <PackageVersion>0.7.7-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

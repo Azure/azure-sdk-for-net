@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _average;
         
         /// <summary>
-        /// Optional. Specifies the average value in the time range.
+        /// Optional. Gets or sets the average value in the time range.
         /// </summary>
         public double? Average
         {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Insights.Models
         private long? _count;
         
         /// <summary>
-        /// Optional. Specifies the number of samples in the time range. Can be
-        /// used to determine the number of values that contributed to the
+        /// Optional. Gets or sets the number of samples in the time range. Can
+        /// be used to determine the number of values that contributed to the
         /// average value.
         /// </summary>
         public long? Count
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _last;
         
         /// <summary>
-        /// Optional. Specifies the last sample in the time range.
+        /// Optional. Gets or sets the last sample in the time range.
         /// </summary>
         public double? Last
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _maximum;
         
         /// <summary>
-        /// Optional. Specifies the greatest value in the time range.
+        /// Optional. Gets or sets the greatest value in the time range.
         /// </summary>
         public double? Maximum
         {
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _minimum;
         
         /// <summary>
-        /// Optional. Specifies the least value in the time range.
+        /// Optional. Gets or sets the least value in the time range.
         /// </summary>
         public double? Minimum
         {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Insights.Models
         private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. Collection of extended properties.
+        /// Optional. Gets or sets the collection of extended properties.
         /// </summary>
         public IDictionary<string, string> Properties
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _timestamp;
         
         /// <summary>
-        /// Optional. The timestamp for the metric value.
+        /// Optional. Gets or sets the timestamp for the metric value.
         /// </summary>
         public DateTime Timestamp
         {
@@ -113,7 +113,8 @@ namespace Microsoft.Azure.Insights.Models
         private double? _total;
         
         /// <summary>
-        /// Optional. Specifies the sum of all of the values in the time range.
+        /// Optional. Gets or sets the sum of all of the values in the time
+        /// range.
         /// </summary>
         public double? Total
         {

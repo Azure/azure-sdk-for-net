@@ -58,5 +58,10 @@ namespace Microsoft.Azure.Insights.Models
         /// Unit as a percentage.
         /// </summary>
         Percent = 5,
+        
+        /// <summary>
+        /// Unit in milli-seconds.
+        /// </summary>
+        MilliSeconds = 6,
     }
 }

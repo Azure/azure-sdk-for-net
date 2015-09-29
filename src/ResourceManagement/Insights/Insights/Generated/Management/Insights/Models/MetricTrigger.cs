@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricName;
         
         /// <summary>
-        /// Optional. The name of the metric that defines what the rule
-        /// monitors.
+        /// Optional. Gets or sets the name of the metric that defines what the
+        /// rule monitors.
         /// </summary>
         public string MetricName
         {
@@ -45,8 +45,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// Optional. Only should be present for availability level metrics,
-        /// where the value must be WindowsAzure.Availability.
+        /// Optional. Gets or sets the metric namespace.Only should be present
+        /// for availability level metrics, where the value must be
+        /// WindowsAzure.Availability.
         /// </summary>
         public string MetricNamespace
         {
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricResourceUri;
         
         /// <summary>
-        /// Optional. The resource identifier of the resource the rule monitors.
+        /// Optional. Gets or sets the resource identifier of the resource the
+        /// rule monitors.
         /// </summary>
         public string MetricResourceUri
         {
@@ -68,8 +70,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ComparisonOperationType _operator;
         
         /// <summary>
-        /// Optional. The operator that is used to compare the metric data and
-        /// the threshold.
+        /// Optional. Gets or sets the operator that is used to compare the
+        /// metric data and the threshold.
         /// </summary>
         public ComparisonOperationType Operator
         {
@@ -80,7 +82,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private MetricStatisticType _statistic;
         
         /// <summary>
-        /// Optional. How the metrics from multiple instances are combined.
+        /// Optional. Gets or sets the metric statistic type.How the metrics
+        /// from multiple instances are combined.
         /// </summary>
         public MetricStatisticType Statistic
         {
@@ -91,8 +94,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private double _threshold;
         
         /// <summary>
-        /// Optional. The threshold of the metric that triggers the scale
-        /// action.
+        /// Optional. Gets or sets the threshold of the metric that triggers
+        /// the scale action.
         /// </summary>
         public double Threshold
         {
@@ -103,8 +106,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeAggregationType _timeAggregation;
         
         /// <summary>
-        /// Optional. How the data that is collected should be combined over
-        /// time. The default value is Average.
+        /// Optional. Gets or sets time aggregation type.How the data that is
+        /// collected should be combined over time. The default value is
+        /// Average.
         /// </summary>
         public TimeAggregationType TimeAggregation
         {
@@ -115,9 +119,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The granularity of metrics the rule monitors. Must be one
-        /// of the predefined values returned from metric definitions for the
-        /// metric. Must be between 12 hours and 1 minute.
+        /// Optional. Gets or sets the granularity of metrics the rule
+        /// monitors. Must be one of the predefined values returned from
+        /// metric definitions for the metric. Must be between 12 hours and 1
+        /// minute.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -128,10 +133,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _timeWindow;
         
         /// <summary>
-        /// Optional. The range of time in which instance data is collected.
-        /// This value must be greater than the delay in metric collection,
-        /// which can vary from resource-to-resource. Must be between 12 hours
-        /// and 5 minutes.
+        /// Optional. Gets or sets the range of time in which instance data is
+        /// collected. This value must be greater than the delay in metric
+        /// collection, which can vary from resource-to-resource. Must be
+        /// between 12 hours and 5 minutes.
         /// </summary>
         public TimeSpan TimeWindow
         {

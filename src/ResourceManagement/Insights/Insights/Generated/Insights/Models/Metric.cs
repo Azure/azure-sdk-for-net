@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _dimensionName;
         
         /// <summary>
-        /// Optional. The name of the dimension.
+        /// Optional. Gets or sets the name of the dimension.
         /// </summary>
         public LocalizableString DimensionName
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _dimensionValue;
         
         /// <summary>
-        /// Optional. The value of the dimension.
+        /// Optional. Gets or sets the value of the dimension.
         /// </summary>
         public LocalizableString DimensionValue
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// Optional. The end time.
+        /// Optional. Gets or sets the end time.
         /// </summary>
         public DateTime EndTime
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricValue> _metricValues;
         
         /// <summary>
-        /// Optional. The collection of actual metric values.
+        /// Optional. Gets or sets the collection of actual metric values.
         /// </summary>
         public IList<MetricValue> MetricValues
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. The name and the display name of the metric.
+        /// Optional. Gets or sets the name and the display name of the metric.
         /// </summary>
         public LocalizableString Name
         {
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Insights.Models
         private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. Collection of extended properties.
+        /// Optional. Gets or sets the collection of extended properties.
         /// </summary>
         public IDictionary<string, string> Properties
         {
@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceId;
         
         /// <summary>
-        /// Optional. The resource ID of the resource that has emitted the
-        /// metric.
+        /// Optional. Gets or sets the resource ID of the resource that has
+        /// emitted the metric.
         /// </summary>
         public string ResourceId
         {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. The start time.
+        /// Optional. Gets or sets the start time.
         /// </summary>
         public DateTime StartTime
         {
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The time grain of the metric. Also known as the
-        /// aggregation interval or frequency.
+        /// Optional. Gets or sets the time grain of the metric. Also known as
+        /// the aggregation interval or frequency.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Insights.Models
         private Unit _unit;
         
         /// <summary>
-        /// Optional. The unit of the metric.
+        /// Optional. Gets or sets the unit of the metric.
         /// </summary>
         public Unit Unit
         {

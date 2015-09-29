@@ -33,5 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         Maximum = 2,
         
         Total = 3,
+        
+        Last = 4,
     }
 }

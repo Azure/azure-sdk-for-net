@@ -21,129 +21,68 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure.Insights.Customizations.Shoebox;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights
 {
-    public partial class MetricOperations
+    /// <summary>
+    /// Thick client class for getting metrics
+    /// </summary>
+    internal partial class MetricOperations
     {
         public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
-            // Ensure exactly one '/' at the start
-            resourceUri = '/' + resourceUri.TrimStart('/');
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
 
             // Generate filter strings
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
-            string metricFilterString = GenerateNamelessMetricFilterString(filter);
-            string definitionFilterString = filter.DimensionFilters == null ? null
+            string filterStringNamesOnly = filter.DimensionFilters == null ? null
                 : ShoeboxHelper.GenerateMetricDefinitionFilterString(filter.DimensionFilters.Select(df => df.Name));
 
             // Get definitions for requested metrics
             IList<MetricDefinition> definitions =
                 (await this.Client.MetricDefinitionOperations.GetMetricDefinitionsAsync(
                     resourceUri,
-                    definitionFilterString,
+                    filterStringNamesOnly,
                     cancellationToken).ConfigureAwait(false)).MetricDefinitionCollection.Value;
 
-            // Separate passthrough metrics with dimensions specified
-            IEnumerable<MetricDefinition> passthruDefinitions = definitions.Where(d => !IsShoebox(d, filter.TimeGrain));
-            IEnumerable<MetricDefinition> shoeboxDefinitions = definitions.Where(d => IsShoebox(d, filter.TimeGrain));
-
-            // Get Passthru definitions
-            List<Metric> passthruMetrics = new List<Metric>();
-            string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
-            this.LogStartGetMetrics(invocationId, resourceUri, filterString, passthruDefinitions);
-            if (passthruDefinitions.Any())
-            {
-                // Create new filter for passthru metrics
-                List<MetricDimension> passthruDimensionFilters = filter.DimensionFilters == null ? new List<MetricDimension>() :
-                    filter.DimensionFilters.Where(df => passthruDefinitions.Any(d => string.Equals(d.Name.Value, df.Name, StringComparison.OrdinalIgnoreCase))).ToList();
-
-                foreach (MetricDefinition def in passthruDefinitions
-                    .Where(d => !passthruDimensionFilters.Any(pdf => string.Equals(pdf.Name, d.Name.Value, StringComparison.OrdinalIgnoreCase))))
-                {
-                    passthruDimensionFilters.Add(new MetricDimension() { Name = def.Name.Value });
-                }
-
-                MetricFilter passthruFilter = new MetricFilter()
-                {
-                    TimeGrain = filter.TimeGrain,
-                    StartTime = filter.StartTime,
-                    EndTime = filter.EndTime,
-                    DimensionFilters = passthruDimensionFilters
-                };
-
-                // Create passthru filter string
-                string passthruFilterString = ShoeboxHelper.GenerateMetricFilterString(passthruFilter);
-
-                // Get Metrics from passthrough (hydra) client
-                MetricListResponse passthruResponse = await this.GetMetricsInternalAsync(resourceUri, passthruFilterString, cancellationToken).ConfigureAwait(false);
-                passthruMetrics = passthruResponse.MetricCollection.Value.ToList();
-
-                this.LogMetricCountFromResponses(invocationId, passthruMetrics.Count());
-
-                // Fill in values (resourceUri, displayName, unit) from definitions
-                CompleteShoeboxMetrics(passthruMetrics, passthruDefinitions, resourceUri);
-
-                // Add empty objects for metrics that had no values come back, ensuring a metric is returned for each definition
-                IEnumerable<Metric> emptyMetrics = passthruDefinitions
-                    .Where(d => !passthruMetrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase)))
-                    .Select(d => new Metric()
-                    {
-                        Name = d.Name,
-                        Unit = d.Unit,
-                        ResourceId = resourceUri,
-                        StartTime = filter.StartTime,
-                        EndTime = filter.EndTime,
-                        TimeGrain = filter.TimeGrain,
-                        MetricValues = new List<MetricValue>(),
-                        Properties = new Dictionary<string, string>()
-                    });
-
-                passthruMetrics.AddRange(emptyMetrics);
-            }
-
-            // Get Metrics by definitions
-            MetricListResponse shoeboxResponse = await this.GetMetricsAsync(resourceUri, metricFilterString, shoeboxDefinitions, cancellationToken).ConfigureAwait(false);
-
-            // Create response (merge and wrap metrics)
-            MetricListResponse result = new MetricListResponse()
-            {
-                RequestId = Guid.NewGuid().ToString("D"),
-                StatusCode = HttpStatusCode.OK,
-                MetricCollection = new MetricCollection()
-                {
-                    Value = passthruMetrics.Union(shoeboxResponse.MetricCollection.Value).ToList()
-                }
-            };
-
-            this.LogEndGetMetrics(invocationId, result);
-
-            return result;
+            // Get Metrics with definitions
+            return await this.GetMetricsAsync(resourceUri, filterString, definitions, cancellationToken);
         }
 
         // Alternate method for getting metrics by passing in the definitions
-        // TODO [davmc]: Revisit - this method cannot support dimensions
         public async Task<MetricListResponse> GetMetricsAsync(
             string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions, CancellationToken cancellationToken)
         {
-            MetricListResponse result;
-
             if (definitions == null)
             {
                 throw new ArgumentNullException("definitions");
             }
 
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+
+            // Remove any '/' characters from the start since these are handled by the hydra (thin) client
+            // Don't encode Uri segments here since this will mess up the SAS retrievers (they use the resourceUri directly)
+            resourceUri = resourceUri.TrimStart('/');
+
+            MetricListResponse result;
             string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
-            this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
 
             // If no definitions provided, return empty collection
             if (!definitions.Any())
             {
+                this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
                 result = new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode =  HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     MetricCollection = new MetricCollection()
                     {
                         Value = new Metric[0]
@@ -158,59 +97,100 @@ namespace Microsoft.Azure.Insights
             // Parse MetricFilter
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
 
-            // Names not allowed in filter since the names are in the definitions
+            // Names in filter must match the names in the definitions
             if (filter.DimensionFilters != null && filter.DimensionFilters.Any())
             {
-                throw new ArgumentException("Cannot specify names (or dimensions) when MetricDefinitions are included", "filterString");
-            }
+                IEnumerable<string> filterNames = filter.DimensionFilters.Select(df => df.Name);
+                IEnumerable<string> definitionNames = definitions.Select(d => d.Name.Value);
+                IEnumerable<string> filterOnly = filterNames.Where(fn => !definitionNames.Contains(fn, StringComparer.InvariantCultureIgnoreCase));
+                IEnumerable<string> definitionOnly = definitionNames.Where(df => !filterNames.Contains(df, StringComparer.InvariantCultureIgnoreCase));
 
-            // Ensure every definition has at least one availability matching the filter timegrain
-            if (!definitions.All(d => d.MetricAvailabilities.Any(a => a.TimeGrain == filter.TimeGrain)))
+                if (filterOnly.Any() || definitionOnly.Any())
+                {
+                    throw new ArgumentException("Set of names specified in filter string must match set of names in provided definitions", "filterString");
+                }
+
+                // "Filter out" metrics with unsupported dimensions
+                definitions = definitions.Where(d => SupportsRequestedDimensions(d, filter));
+            }
+            else
             {
-                throw new ArgumentException("Definition contains no availability for the timeGrain requested", "definitions");
+                filter = new MetricFilter()
+                {
+                    TimeGrain = filter.TimeGrain,
+                    StartTime = filter.StartTime,
+                    EndTime = filter.EndTime,
+                    DimensionFilters = definitions.Select(d => new MetricDimension()
+                    {
+                        Name = d.Name.Value
+                    })
+                };
             }
 
-            // Group definitions by location so we can make one request to each location
-            Dictionary<MetricAvailability, MetricFilter> groups =
-                definitions.GroupBy(d => d.MetricAvailabilities.First(a => a.TimeGrain == filter.TimeGrain),
-                    new AvailabilityComparer()).ToDictionary(g => g.Key, g => new MetricFilter()
-                    {
-                        TimeGrain = filter.TimeGrain,
-                        StartTime = filter.StartTime,
-                        EndTime = filter.EndTime,
-                        DimensionFilters = g.Select(d => new MetricDimension() { Name = d.Name.Value })
-                    });
+            // Parse out provider name and determine if provider is storage
+            string providerName = this.GetProviderFromResourceId(resourceUri);
+            bool isStorageProvider =
+                string.Equals(providerName, "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(providerName, "Microsoft.ClassicStorage", StringComparison.OrdinalIgnoreCase);
 
-            // Get Metrics from each location (group)
-            IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g => g.Key.Location == null
-                    ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), cancellationToken)
-                    : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location, invocationId));
+            // Create supported MetricRetrievers
+            IMetricRetriever proxyRetriever = new ProxyMetricRetriever(this);
+            IMetricRetriever shoeboxRetriever = new ShoeboxMetricRetriever();
+            IMetricRetriever storageRetriever = new StorageMetricRetriever();
+            IMetricRetriever blobShoeboxMetricRetriever = new BlobShoeboxMetricRetriever();
+            IMetricRetriever emptyRetriever = EmptyMetricRetriever.Instance;
+
+            // Create the selector function here so it has access to the retrievers, filter, and providerName
+            Func<MetricDefinition, IMetricRetriever> retrieverSelector = (d) =>
+            {
+                if (!d.MetricAvailabilities.Any())
+                {
+                    return emptyRetriever;
+                }
+
+                if (isStorageProvider)
+                {
+                    return storageRetriever;
+                }
+
+                if (IsBlobSasMetric(d, filter.TimeGrain))
+                {
+                    return blobShoeboxMetricRetriever;
+                }
+
+                if (IsTableSasMetric(d, filter.TimeGrain))
+                {
+                    return shoeboxRetriever;
+                }
+
+                return proxyRetriever;
+            };
+
+            // Group definitions by retriever so we can make one request to each retriever
+            IEnumerable<IGrouping<IMetricRetriever, MetricDefinition>> groups = definitions.GroupBy(retrieverSelector);
+
+            // Get Metrics from each retriever (group)
+            IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g =>
+                g.Key.GetMetricsAsync(resourceUri, GetFilterStringForDefinitions(filter, g), g, invocationId));
 
             // Aggregate metrics from all groups
+            this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
             MetricListResponse[] results = (await Task.Factory.ContinueWhenAll(locationTasks.ToArray(), tasks => tasks.Select(t => t.Result))).ToArray();
             IEnumerable<Metric> metrics = results.Aggregate<MetricListResponse, IEnumerable<Metric>>(
                 new List<Metric>(), (list, response) => list.Union(response.MetricCollection.Value));
-            
+
             this.LogMetricCountFromResponses(invocationId, metrics.Count());
 
             // Fill in values (resourceUri, displayName, unit) from definitions
             CompleteShoeboxMetrics(metrics, definitions, resourceUri);
 
             // Add empty objects for metrics that had no values come back, ensuring a metric is returned for each definition
-            IEnumerable<Metric> emptyMetrics = definitions
-                .Where(d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase)))
-                .Select(d => new Metric()
-                {
-                    Name = d.Name,
-                    Unit = d.Unit,
-                    ResourceId = resourceUri,
-                    StartTime = filter.StartTime,
-                    EndTime = filter.EndTime,
-                    TimeGrain = filter.TimeGrain,
-                    MetricValues = new List<MetricValue>(),
-                    Properties = new Dictionary<string, string>()
-                });
-            
+            IEnumerable<Metric> emptyMetrics = (await emptyRetriever.GetMetricsAsync(
+                resourceUri,
+                filterString,
+                definitions.Where(d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase))),
+                invocationId)).MetricCollection.Value;
+
             // Create response (merge and wrap metrics)
             result = new MetricListResponse()
             {
@@ -225,6 +205,65 @@ namespace Microsoft.Azure.Insights
             this.LogEndGetMetrics(invocationId, result);
 
             return result;
+        }
+
+        private string GetProviderFromResourceId(string resourceId)
+        {
+            // Find start index of provider name
+            string knownStart = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourceGroups/";
+            int endOfResourceGroup = resourceId.IndexOf('/', knownStart.Length);
+
+            // skip /providers/
+            // plus 1 to start index to skip first '/', plus 1 to result to skip last '/'
+            int startOfProviderName = resourceId.IndexOf('/', endOfResourceGroup + 1) + 1;
+            int endOfProviderName = resourceId.IndexOf('/', startOfProviderName);
+
+            return resourceId.Substring(startOfProviderName, endOfProviderName - startOfProviderName);
+        }
+
+        private string GetFilterStringForDefinitions(MetricFilter filter, IEnumerable<MetricDefinition> definitions)
+        {
+            return ShoeboxHelper.GenerateMetricFilterString(new MetricFilter()
+            {
+                TimeGrain = filter.TimeGrain,
+                StartTime = filter.StartTime,
+                EndTime = filter.EndTime,
+                DimensionFilters = filter.DimensionFilters.Where(df =>
+                    definitions.Any(d => string.Equals(df.Name, d.Name.Value, StringComparison.OrdinalIgnoreCase)))
+            });
+        }
+
+        private bool SupportsRequestedDimensions(MetricDefinition definition, MetricFilter filter)
+        {
+            MetricDimension metric = filter.DimensionFilters.FirstOrDefault(df => string.Equals(df.Name, definition.Name.Value, StringComparison.OrdinalIgnoreCase));
+            var supportedDimensionNames = definition.Dimensions.Select(dim => dim.Name);
+            var supportedDimensionValues = definition.Dimensions.ToDictionary(dim => dim.Name.Value, dim => dim.Values.Select(v => v.Value));
+
+            // No dimensions specified for this metric
+            if (metric == null || metric.Dimensions == null)
+            {
+                return true;
+            }
+
+            foreach (MetricFilterDimension dimension in metric.Dimensions)
+            {
+                // find dimension in definition
+                Dimension d = definition.Dimensions.FirstOrDefault(dim => string.Equals(dim.Name.Value, dimension.Name));
+
+                // Dimension name does't show up in definition
+                if (d == null)
+                {
+                    return false;
+                }
+
+                // Requested dimension has any value that don't show up in the values list for the definiton
+                if (dimension.Values.Any(value => !d.Values.Select(v => v.Value).Contains(value, StringComparer.OrdinalIgnoreCase)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void LogMetricCountFromResponses(string invocationId, int metricsCount)
@@ -263,59 +302,57 @@ namespace Microsoft.Azure.Insights
                 MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
                 metric.ResourceId = resourceUri;
-                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) 
-                    ? definition.Name.LocalizedValue 
+                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue))
+                    ? definition.Name.LocalizedValue
                     : metric.Name.Value;
                 metric.Unit = definition == null ? Unit.Count : definition.Unit;
             }
         }
 
-        private static bool IsShoebox(MetricDefinition definition, TimeSpan timeGrain)
+        private static bool IsTableSasMetric(MetricDefinition definition, TimeSpan timeGrain)
         {
             MetricAvailability availability = definition.MetricAvailabilities.FirstOrDefault(a => a.TimeGrain.Equals(timeGrain));
 
-            if (availability == null)
+            // Definition has requested availability, Location is null (non-SAS) or contains SAS key
+            if (availability != null)
+            {
+                return availability.Location != null;
+            }
+
+            // Definition has availabilities, but none with the requested timegrain (Bad request)
+            if (definition.MetricAvailabilities.Any())
             {
                 throw new InvalidOperationException(string.Format(
-                    CultureInfo.InvariantCulture, "MetricDefinition for {0} does not contain an availability with timegrain {1}", definition.Name.Value, timeGrain));
+                    CultureInfo.InvariantCulture,
+                    "MetricDefinition for {0} does not contain an availability with timegrain {1}",
+                    definition.Name.Value, timeGrain));
             }
 
-            return availability.Location != null;
+            // Definition has no availablilities (metrics are not configured for this resource), return empty metrics (non-SAS)
+            return false;
         }
 
-        private static string GenerateNamelessMetricFilterString(MetricFilter filter)
+        private static bool IsBlobSasMetric(MetricDefinition definition, TimeSpan timeGrain)
         {
-            MetricFilter nameless = new MetricFilter()
+            MetricAvailability availability = definition.MetricAvailabilities.FirstOrDefault(a => a.TimeGrain.Equals(timeGrain));
+
+            // Definition has requested availability, Location is null (non-SAS) or contains SAS key
+            if (availability != null)
             {
-                TimeGrain = filter.TimeGrain,
-                StartTime = filter.StartTime,
-                EndTime = filter.EndTime
-            };
-
-            return ShoeboxHelper.GenerateMetricFilterString(nameless);
-        }
-
-        private class AvailabilityComparer : IEqualityComparer<MetricAvailability>
-        {
-            public bool Equals(MetricAvailability x, MetricAvailability y)
-            {
-                if (x.Location == null && y.Location == null)
-                {
-                    return true;
-                }
-
-                if (x.Location == null || y.Location == null)
-                {
-                    return false;
-                }
-
-                return x.Location.TableEndpoint == y.Location.TableEndpoint;
+                return availability.BlobLocation != null;
             }
 
-            public int GetHashCode(MetricAvailability obj)
+            // Definition has availabilities, but none with the requested timegrain (Bad request)
+            if (definition.MetricAvailabilities.Any())
             {
-                return obj.Location == null ? 0 : obj.Location.TableEndpoint.GetHashCode();
+                throw new InvalidOperationException(string.Format(
+                    CultureInfo.InvariantCulture,
+                    "MetricDefinition for {0} does not contain an availability with timegrain {1}",
+                    definition.Name.Value, timeGrain));
             }
+
+            // Definition has no availablilities (metrics are not configured for this resource), return empty metrics (non-SAS)
+            return false;
         }
     }
 }
