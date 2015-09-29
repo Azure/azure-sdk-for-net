@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The local resource that contains the directory to monitor.
+        /// Optional. Gets or sets the local resource that contains the
+        /// directory to monitor.
         /// </summary>
         public string Name
         {
@@ -44,8 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _relativePath;
         
         /// <summary>
-        /// Optional. The path relative to Name that contains the directory to
-        /// monitor.
+        /// Optional. Gets or sets the path relative to Name that contains the
+        /// directory to monitor.
         /// </summary>
         public string RelativePath
         {

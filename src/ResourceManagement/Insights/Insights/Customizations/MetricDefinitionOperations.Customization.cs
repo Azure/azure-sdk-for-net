@@ -25,7 +25,7 @@ using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights
 {
-    public partial class MetricDefinitionOperations
+    internal partial class MetricDefinitionOperations
     {
         public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Insights
             string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
             this.LogStartGetMetricDefinitions(invocationId, resourceUri, filterString);
 
-            // Ensure exactly one '/' at the start
-            resourceUri = '/' + resourceUri.TrimStart('/');
+            // Remove any '/' characters from the start since these are handled by the hydra (thin) client
+            // Encode segments here since they are not encoded by hydra client
+            resourceUri = ShoeboxHelper.EncodeUriSegments(resourceUri.TrimStart('/'));
             IEnumerable<MetricDefinition> definitions = null;
 
-            // If no filter string, must request all metric definiitons since we don't know if we have them all
+            // If no filter string, must request all metric definitions since we don't know if we have them all
             if (string.IsNullOrWhiteSpace(filterString))
             {
                 // request all definitions
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Insights
                 {
                     this.Client.Cache[resourceUri] = definitions;
                 }
-                    
+
                 // wrap and return definitions
                 result = new MetricDefinitionListResponse()
                 {
@@ -122,7 +123,7 @@ namespace Microsoft.Azure.Insights
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
 
-                
+
                 TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
             }
         }

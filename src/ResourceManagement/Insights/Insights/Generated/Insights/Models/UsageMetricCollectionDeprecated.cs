@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<UsageMetricDeprecated> _properties;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// Optional. Gets or sets the usage values.
         /// </summary>
         public IList<UsageMetricDeprecated> Properties
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<UsageMetricDeprecated> _value;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// Optional. Gets or sets the usage values.
         /// </summary>
         public IList<UsageMetricDeprecated> Value
         {
