@@ -16,7 +16,8 @@ _Release date:_
     * Models.CreateOrUpdateWithRawJsonContentParameters.cs → Models.DatasetCreateOrUpdateWithRawJsonContentParameters.cs
 
 ### Feature Additions
-* Add SliceIdentifierColumnName and SqlWriterCleanupScript to support idempotent copy to SQL Data Warehouse. 
+* Add SliceIdentifierColumnName and SqlWriterCleanupScript to support idempotent copy to SQL Data Warehouse.
+* Add stored procedure support for both SQL and SQL Data Warehouse source. 
 
 ### Bug Fixes
 
