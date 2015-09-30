@@ -24,16 +24,13 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// AuthorizationUseStatus
+    /// </summary>
+    public static partial class AuthorizationUseStatus
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        public const string Available = "Available";
         
-        /// <summary>
-        /// Express Route
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public const string InUse = "InUse";
     }
 }

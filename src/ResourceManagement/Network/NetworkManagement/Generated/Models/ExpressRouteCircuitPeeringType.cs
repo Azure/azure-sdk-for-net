@@ -24,16 +24,15 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Type of the peering
+    /// </summary>
+    public static partial class ExpressRouteCircuitPeeringType
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        public const string AzurePublicPeering = "AzurePublicPeering";
         
-        /// <summary>
-        /// Express Route
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public const string AzurePrivatePeering = "AzurePrivatePeering";
+        
+        public const string MicrosoftPeering = "MicrosoftPeering";
     }
 }

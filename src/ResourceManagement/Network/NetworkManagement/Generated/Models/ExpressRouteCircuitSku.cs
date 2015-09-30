@@ -24,23 +24,48 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public partial class ResourceProperties
+    /// <summary>
+    /// Contains sku in an ExpressRouteCircuit
+    /// </summary>
+    public partial class ExpressRouteCircuitSku
     {
-        private string _provisioningState;
+        private string _family;
         
         /// <summary>
-        /// Optional. Gets or sets Provisioning state of the resource
+        /// Optional. Gets or sets family of the sku.
         /// </summary>
-        public string ProvisioningState
+        public string Family
         {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
+            get { return this._family; }
+            set { this._family = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets name of the sku.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _tier;
+        
+        /// <summary>
+        /// Optional. Gets or sets tier of the sku.
+        /// </summary>
+        public string Tier
+        {
+            get { return this._tier; }
+            set { this._tier = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceProperties class.
+        /// Initializes a new instance of the ExpressRouteCircuitSku class.
         /// </summary>
-        public ResourceProperties()
+        public ExpressRouteCircuitSku()
         {
         }
     }
