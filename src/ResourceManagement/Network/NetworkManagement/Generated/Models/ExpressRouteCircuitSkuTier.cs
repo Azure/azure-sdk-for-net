@@ -25,37 +25,12 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Contains Stats associated with the peering
+    /// Tier of the sku
     /// </summary>
-    public partial class PeeringStats
+    public static partial class ExpressRouteCircuitSkuTier
     {
-        private int _bytesIn;
+        public const string Standard = "Standard";
         
-        /// <summary>
-        /// Optional. Gets BytesIn of the peering.
-        /// </summary>
-        public int BytesIn
-        {
-            get { return this._bytesIn; }
-            set { this._bytesIn = value; }
-        }
-        
-        private int _bytesOut;
-        
-        /// <summary>
-        /// Optional. Gets BytesOut of the peering.
-        /// </summary>
-        public int BytesOut
-        {
-            get { return this._bytesOut; }
-            set { this._bytesOut = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the PeeringStats class.
-        /// </summary>
-        public PeeringStats()
-        {
-        }
+        public const string Premium = "Premium";
     }
 }

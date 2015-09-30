@@ -29,23 +29,24 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Response for GET ExpressRouteCircuit Peering Api service call
     /// </summary>
-    public partial class PeeringGetResponse : AzureOperationResponse
+    public partial class ExpressRouteCircuitPeeringGetResponse : AzureOperationResponse
     {
-        private Peering _peering;
+        private ExpressRouteCircuitPeering _peering;
         
         /// <summary>
         /// Optional. Gets the Authorization in an ExpressRouteCircuit
         /// </summary>
-        public Peering Peering
+        public ExpressRouteCircuitPeering Peering
         {
             get { return this._peering; }
             set { this._peering = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PeeringGetResponse class.
+        /// Initializes a new instance of the
+        /// ExpressRouteCircuitPeeringGetResponse class.
         /// </summary>
-        public PeeringGetResponse()
+        public ExpressRouteCircuitPeeringGetResponse()
         {
         }
     }

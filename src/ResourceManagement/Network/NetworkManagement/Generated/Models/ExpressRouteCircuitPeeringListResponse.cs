@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Response for ListPeering Api service callRetrieves all Peerings that
     /// belongs to an ExpressRouteCircuit
     /// </summary>
-    public partial class PeeringListResponse : AzureOperationResponse
+    public partial class ExpressRouteCircuitPeeringListResponse : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -45,23 +45,24 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._nextLink = value; }
         }
         
-        private IList<Peering> _peerings;
+        private IList<ExpressRouteCircuitPeering> _peerings;
         
         /// <summary>
         /// Optional. Gets the peerings in an express route circuit
         /// </summary>
-        public IList<Peering> Peerings
+        public IList<ExpressRouteCircuitPeering> Peerings
         {
             get { return this._peerings; }
             set { this._peerings = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PeeringListResponse class.
+        /// Initializes a new instance of the
+        /// ExpressRouteCircuitPeeringListResponse class.
         /// </summary>
-        public PeeringListResponse()
+        public ExpressRouteCircuitPeeringListResponse()
         {
-            this.Peerings = new LazyList<Peering>();
+            this.Peerings = new LazyList<ExpressRouteCircuitPeering>();
         }
     }
 }

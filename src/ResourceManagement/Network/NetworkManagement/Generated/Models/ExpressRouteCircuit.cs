@@ -55,12 +55,12 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._circuitProvisioningState = value; }
         }
         
-        private IList<Peering> _peerings;
+        private IList<ExpressRouteCircuitPeering> _peerings;
         
         /// <summary>
         /// Optional. Gets or sets list of peerings
         /// </summary>
-        public IList<Peering> Peerings
+        public IList<ExpressRouteCircuitPeering> Peerings
         {
             get { return this._peerings; }
             set { this._peerings = value; }
@@ -100,12 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._serviceProviderNotes = value; }
         }
         
-        private ServiceProviderProperties _serviceProviderProperties;
+        private ExpressRouteCircuitServiceProviderProperties _serviceProviderProperties;
         
         /// <summary>
         /// Optional. Gets or sets ServiceProviderProperties
         /// </summary>
-        public ServiceProviderProperties ServiceProviderProperties
+        public ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties
         {
             get { return this._serviceProviderProperties; }
             set { this._serviceProviderProperties = value; }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuit()
         {
             this.Authorizations = new LazyList<ExpressRouteCircuitAuthorization>();
-            this.Peerings = new LazyList<Peering>();
+            this.Peerings = new LazyList<ExpressRouteCircuitPeering>();
         }
         
         /// <summary>

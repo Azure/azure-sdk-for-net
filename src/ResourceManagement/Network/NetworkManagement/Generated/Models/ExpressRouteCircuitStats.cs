@@ -25,16 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// AdvertisedPublicPrefixState of the peering
+    /// Contains Stats associated with the peering
     /// </summary>
-    public static partial class PeeringAdvertisedPublicPrefixState
+    public partial class ExpressRouteCircuitStats
     {
-        public const string NotConfigured = "NotConfigured";
+        private int _bytesIn;
         
-        public const string Configuring = "Configuring";
+        /// <summary>
+        /// Optional. Gets BytesIn of the peering.
+        /// </summary>
+        public int BytesIn
+        {
+            get { return this._bytesIn; }
+            set { this._bytesIn = value; }
+        }
         
-        public const string Configured = "Configured";
+        private int _bytesOut;
         
-        public const string ValidationNeeded = "ValidationNeeded";
+        /// <summary>
+        /// Optional. Gets BytesOut of the peering.
+        /// </summary>
+        public int BytesOut
+        {
+            get { return this._bytesOut; }
+            set { this._bytesOut = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteCircuitStats class.
+        /// </summary>
+        public ExpressRouteCircuitStats()
+        {
+        }
     }
 }

@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._nextLink = value; }
         }
         
-        private IList<PeeringStats> _stats;
+        private IList<ExpressRouteCircuitStats> _stats;
         
         /// <summary>
         /// Optional. Gets List of Stats
         /// </summary>
-        public IList<PeeringStats> Stats
+        public IList<ExpressRouteCircuitStats> Stats
         {
             get { return this._stats; }
             set { this._stats = value; }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public ExpressRouteCircuitsStatsListResponse()
         {
-            this.Stats = new LazyList<PeeringStats>();
+            this.Stats = new LazyList<ExpressRouteCircuitStats>();
         }
     }
 }

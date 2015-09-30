@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Specfies the peering config
     /// </summary>
-    public partial class PeeringConfig
+    public partial class ExpressRouteCircuitPeeringConfig
     {
         private IList<string> _advertisedPublicPrefixes;
         
@@ -42,44 +42,45 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._advertisedPublicPrefixes = value; }
         }
         
-        private string _advertisedPublicPrefixState;
+        private string _advertisedPublicPrefixesState;
         
         /// <summary>
         /// Optional. Gets or sets AdvertisedPublicPrefixState of the Peering
         /// resource
         /// </summary>
-        public string AdvertisedPublicPrefixState
+        public string AdvertisedPublicPrefixesState
         {
-            get { return this._advertisedPublicPrefixState; }
-            set { this._advertisedPublicPrefixState = value; }
+            get { return this._advertisedPublicPrefixesState; }
+            set { this._advertisedPublicPrefixesState = value; }
         }
         
-        private string _customerAsn;
+        private int _customerASN;
         
         /// <summary>
         /// Optional. Gets or Sets CustomerAsn of the peering.
         /// </summary>
-        public string CustomerAsn
+        public int CustomerASN
         {
-            get { return this._customerAsn; }
-            set { this._customerAsn = value; }
+            get { return this._customerASN; }
+            set { this._customerASN = value; }
         }
         
-        private string _routingIRRName;
+        private string _routingRegistryName;
         
         /// <summary>
-        /// Optional. Gets or Sets RoutingIRRName of the peering.
+        /// Optional. Gets or Sets RoutingRegistryName of the config.
         /// </summary>
-        public string RoutingIRRName
+        public string RoutingRegistryName
         {
-            get { return this._routingIRRName; }
-            set { this._routingIRRName = value; }
+            get { return this._routingRegistryName; }
+            set { this._routingRegistryName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PeeringConfig class.
+        /// Initializes a new instance of the ExpressRouteCircuitPeeringConfig
+        /// class.
         /// </summary>
-        public PeeringConfig()
+        public ExpressRouteCircuitPeeringConfig()
         {
             this.AdvertisedPublicPrefixes = new LazyList<string>();
         }

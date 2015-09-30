@@ -25,12 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// State of the peering
+    /// AdvertisedPublicPrefixState of the peering
     /// </summary>
-    public static partial class PeeringState
+    public static partial class ExpressRouteCircuitPeeringAdvertisedPublicPrefixState
     {
-        public const string Disabled = "Disabled";
+        public const string NotConfigured = "NotConfigured";
         
-        public const string Enabled = "Enabled";
+        public const string Configuring = "Configuring";
+        
+        public const string Configured = "Configured";
+        
+        public const string ValidationNeeded = "ValidationNeeded";
     }
 }

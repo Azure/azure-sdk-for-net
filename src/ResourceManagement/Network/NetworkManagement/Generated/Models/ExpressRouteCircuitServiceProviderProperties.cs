@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Contains ServiceProviderProperties in an ExpressRouteCircuit
     /// </summary>
-    public partial class ServiceProviderProperties
+    public partial class ExpressRouteCircuitServiceProviderProperties
     {
         private int _bandwidthInMbps;
         
@@ -63,9 +63,10 @@ namespace Microsoft.Azure.Management.Network.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServiceProviderProperties class.
+        /// Initializes a new instance of the
+        /// ExpressRouteCircuitServiceProviderProperties class.
         /// </summary>
-        public ServiceProviderProperties()
+        public ExpressRouteCircuitServiceProviderProperties()
         {
         }
     }

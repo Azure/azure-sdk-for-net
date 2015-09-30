@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.Network
     /// relationship between an end user and the Windows Azure Networks
     /// service.
     /// </summary>
-    public static partial class AuthorizationOperationsExtensions
+    public static partial class ExpressRouteCircuitPeeringOperationsExtensions
     {
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in the
+        /// specified ExpressRouteCircuits
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -52,32 +52,32 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
+        /// <param name='peeringParameters'>
         /// Required. Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// ExpressRouteCircuit Peering operation
         /// </param>
         /// <returns>
-        /// Response for Put ExpressRouteCircuit Authorization Api service call
+        /// Response for Put ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public static AuthorizationPutResponse BeginCreateOrUpdating(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
+        public static ExpressRouteCircuitPeeringPutResponse BeginCreateOrUpdating(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters);
+                return ((IExpressRouteCircuitPeeringOperations)s).BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, peeringName, peeringParameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in the
+        /// specified ExpressRouteCircuits
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -85,28 +85,28 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
+        /// <param name='peeringParameters'>
         /// Required. Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// ExpressRouteCircuit Peering operation
         /// </param>
         /// <returns>
-        /// Response for Put ExpressRouteCircuit Authorization Api service call
+        /// Response for Put ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public static Task<AuthorizationPutResponse> BeginCreateOrUpdatingAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
+        public static Task<ExpressRouteCircuitPeeringPutResponse> BeginCreateOrUpdatingAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
         {
-            return operations.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, CancellationToken.None);
+            return operations.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, peeringName, peeringParameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -114,8 +114,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
         /// If the resource provide needs to return an error to any operation,
@@ -124,22 +124,22 @@ namespace Microsoft.Azure.Management.Network
         /// Accept-Language header specified in the original request such
         /// thatit could be directly be exposed to users
         /// </returns>
-        public static UpdateOperationResponse BeginDeleting(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static UpdateOperationResponse BeginDeleting(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).BeginDeletingAsync(resourceGroupName, circuitName, authorizationName);
+                return ((IExpressRouteCircuitPeeringOperations)s).BeginDeletingAsync(resourceGroupName, circuitName, peeringName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -147,8 +147,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
         /// If the resource provide needs to return an error to any operation,
@@ -157,18 +157,18 @@ namespace Microsoft.Azure.Management.Network
         /// Accept-Language header specified in the original request such
         /// thatit could be directly be exposed to users
         /// </returns>
-        public static Task<UpdateOperationResponse> BeginDeletingAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static Task<UpdateOperationResponse> BeginDeletingAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
-            return operations.BeginDeletingAsync(resourceGroupName, circuitName, authorizationName, CancellationToken.None);
+            return operations.BeginDeletingAsync(resourceGroupName, circuitName, peeringName, CancellationToken.None);
         }
         
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in thespecified
+        /// ExpressRouteCircuits
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -176,12 +176,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
+        /// <param name='peeringParameters'>
         /// Required. Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// ExpressRouteCircuit Peering operation
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -194,22 +194,22 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static AzureAsyncOperationResponse CreateOrUpdate(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
+        public static AzureAsyncOperationResponse CreateOrUpdate(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters);
+                return ((IExpressRouteCircuitPeeringOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in thespecified
+        /// ExpressRouteCircuits
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -217,12 +217,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
+        /// <param name='peeringParameters'>
         /// Required. Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// ExpressRouteCircuit Peering operation
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -235,18 +235,18 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
+        public static Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -254,29 +254,29 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Delete(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static AzureOperationResponse Delete(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).DeleteAsync(resourceGroupName, circuitName, authorizationName);
+                return ((IExpressRouteCircuitPeeringOperations)s).DeleteAsync(resourceGroupName, circuitName, peeringName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -284,25 +284,25 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
-            return operations.DeleteAsync(resourceGroupName, circuitName, authorizationName, CancellationToken.None);
+            return operations.DeleteAsync(resourceGroupName, circuitName, peeringName, CancellationToken.None);
         }
         
         /// <summary>
-        /// The GET authorization operation retrieves the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The GET peering operation retrieves the specified authorization
+        /// from the ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -310,28 +310,28 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
-        /// Response for GET ExpressRouteCircuit Authorization Api service call
+        /// Response for GET ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public static AuthorizationGetResponse Get(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static ExpressRouteCircuitPeeringGetResponse Get(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).GetAsync(resourceGroupName, circuitName, authorizationName);
+                return ((IExpressRouteCircuitPeeringOperations)s).GetAsync(resourceGroupName, circuitName, peeringName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The GET authorization operation retrieves the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The GET peering operation retrieves the specified authorization
+        /// from the ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -339,24 +339,24 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// Required. The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Required. The name of the authorization.
+        /// <param name='peeringName'>
+        /// Required. The name of the peering.
         /// </param>
         /// <returns>
-        /// Response for GET ExpressRouteCircuit Authorization Api service call
+        /// Response for GET ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public static Task<AuthorizationGetResponse> GetAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName, string authorizationName)
+        public static Task<ExpressRouteCircuitPeeringGetResponse> GetAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName, string peeringName)
         {
-            return operations.GetAsync(resourceGroupName, circuitName, authorizationName, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, circuitName, peeringName, CancellationToken.None);
         }
         
         /// <summary>
-        /// The List authorization operation retrieves all the authorizations
-        /// in an ExpressRouteCircuit.
+        /// The List peering operation retrieves all the peerings in an
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -365,25 +365,25 @@ namespace Microsoft.Azure.Management.Network
         /// Required. The name of the curcuit.
         /// </param>
         /// <returns>
-        /// Response for ListAuthorizations Api service callRetrieves all
-        /// authorizations that belongs to an ExpressRouteCircuit
+        /// Response for ListPeering Api service callRetrieves all Peerings
+        /// that belongs to an ExpressRouteCircuit
         /// </returns>
-        public static AuthorizationListResponse List(this IAuthorizationOperations operations, string resourceGroupName, string circuitName)
+        public static ExpressRouteCircuitPeeringListResponse List(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuthorizationOperations)s).ListAsync(resourceGroupName, circuitName);
+                return ((IExpressRouteCircuitPeeringOperations)s).ListAsync(resourceGroupName, circuitName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The List authorization operation retrieves all the authorizations
-        /// in an ExpressRouteCircuit.
+        /// The List peering operation retrieves all the peerings in an
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Network.IAuthorizationOperations.
+        /// Microsoft.Azure.Management.Network.IExpressRouteCircuitPeeringOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -392,10 +392,10 @@ namespace Microsoft.Azure.Management.Network
         /// Required. The name of the curcuit.
         /// </param>
         /// <returns>
-        /// Response for ListAuthorizations Api service callRetrieves all
-        /// authorizations that belongs to an ExpressRouteCircuit
+        /// Response for ListPeering Api service callRetrieves all Peerings
+        /// that belongs to an ExpressRouteCircuit
         /// </returns>
-        public static Task<AuthorizationListResponse> ListAsync(this IAuthorizationOperations operations, string resourceGroupName, string circuitName)
+        public static Task<ExpressRouteCircuitPeeringListResponse> ListAsync(this IExpressRouteCircuitPeeringOperations operations, string resourceGroupName, string circuitName)
         {
             return operations.ListAsync(resourceGroupName, circuitName, CancellationToken.None);
         }

@@ -41,15 +41,16 @@ namespace Microsoft.Azure.Management.Network
     /// The Network Resource Provider API includes operations for managing the
     /// Authorizations for your subscription.
     /// </summary>
-    internal partial class AuthorizationOperations : IServiceOperations<NetworkResourceProviderClient>, IAuthorizationOperations
+    internal partial class ExpressRouteCircuitAuthorizationOperations : IServiceOperations<NetworkResourceProviderClient>, IExpressRouteCircuitAuthorizationOperations
     {
         /// <summary>
-        /// Initializes a new instance of the AuthorizationOperations class.
+        /// Initializes a new instance of the
+        /// ExpressRouteCircuitAuthorizationOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal AuthorizationOperations(NetworkResourceProviderClient client)
+        internal ExpressRouteCircuitAuthorizationOperations(NetworkResourceProviderClient client)
         {
             this._client = client;
         }
@@ -625,7 +626,7 @@ namespace Microsoft.Azure.Management.Network
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            AuthorizationPutResponse response = await client.Authorizations.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
+            AuthorizationPutResponse response = await client.ExpressRouteCircuitAuthorizations.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -698,7 +699,7 @@ namespace Microsoft.Azure.Management.Network
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            UpdateOperationResponse response = await client.Authorizations.BeginDeletingAsync(resourceGroupName, circuitName, authorizationName, cancellationToken).ConfigureAwait(false);
+            UpdateOperationResponse response = await client.ExpressRouteCircuitAuthorizations.BeginDeletingAsync(resourceGroupName, circuitName, authorizationName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;

@@ -42,15 +42,16 @@ namespace Microsoft.Azure.Management.Network
     /// The Network Resource Provider API includes operations for managing the
     /// Peerings for your subscription.
     /// </summary>
-    internal partial class PeeringOperations : IServiceOperations<NetworkResourceProviderClient>, IPeeringOperations
+    internal partial class ExpressRouteCircuitPeeringOperations : IServiceOperations<NetworkResourceProviderClient>, IExpressRouteCircuitPeeringOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PeeringOperations class.
+        /// Initializes a new instance of the
+        /// ExpressRouteCircuitPeeringOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal PeeringOperations(NetworkResourceProviderClient client)
+        internal ExpressRouteCircuitPeeringOperations(NetworkResourceProviderClient client)
         {
             this._client = client;
         }
@@ -89,7 +90,7 @@ namespace Microsoft.Azure.Management.Network
         /// <returns>
         /// Response for Put ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public async Task<PeeringPutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string circuitName, string peeringName, Peering peeringParameters, CancellationToken cancellationToken)
+        public async Task<ExpressRouteCircuitPeeringPutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -175,11 +176,11 @@ namespace Microsoft.Azure.Management.Network
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject peeringJsonFormatValue = new JObject();
-                requestDoc = peeringJsonFormatValue;
+                JObject expressRouteCircuitPeeringJsonFormatValue = new JObject();
+                requestDoc = expressRouteCircuitPeeringJsonFormatValue;
                 
                 JObject propertiesValue = new JObject();
-                peeringJsonFormatValue["properties"] = propertiesValue;
+                expressRouteCircuitPeeringJsonFormatValue["properties"] = propertiesValue;
                 
                 if (peeringParameters.PeeringType != null)
                 {
@@ -191,19 +192,18 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["state"] = peeringParameters.State;
                 }
                 
-                if (peeringParameters.PeerASN != null)
+                propertiesValue["azureASN"] = peeringParameters.AzureASN;
+                
+                propertiesValue["peerASN"] = peeringParameters.PeerASN;
+                
+                if (peeringParameters.PrimaryPeerAddressPrefix != null)
                 {
-                    propertiesValue["peerASN"] = peeringParameters.PeerASN;
+                    propertiesValue["primaryPeerAddressPrefix"] = peeringParameters.PrimaryPeerAddressPrefix;
                 }
                 
-                if (peeringParameters.PrimaryPeerSubnet != null)
+                if (peeringParameters.SecondaryPeerAddressPrefix != null)
                 {
-                    propertiesValue["primaryPeerSubnet"] = peeringParameters.PrimaryPeerSubnet;
-                }
-                
-                if (peeringParameters.SecondaryPeerSubnet != null)
-                {
-                    propertiesValue["secondaryPeerSubnet"] = peeringParameters.SecondaryPeerSubnet;
+                    propertiesValue["secondaryPeerAddressPrefix"] = peeringParameters.SecondaryPeerAddressPrefix;
                 }
                 
                 if (peeringParameters.PrimaryAzurePort != null)
@@ -221,10 +221,7 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["sharedKey"] = peeringParameters.SharedKey;
                 }
                 
-                if (peeringParameters.VlanId != null)
-                {
-                    propertiesValue["vlanId"] = peeringParameters.VlanId;
-                }
+                propertiesValue["vlanId"] = peeringParameters.VlanId;
                 
                 if (peeringParameters.MicrosoftPeeringConfig != null)
                 {
@@ -244,19 +241,16 @@ namespace Microsoft.Azure.Management.Network
                         }
                     }
                     
-                    if (peeringParameters.MicrosoftPeeringConfig.AdvertisedPublicPrefixState != null)
+                    if (peeringParameters.MicrosoftPeeringConfig.AdvertisedPublicPrefixesState != null)
                     {
-                        microsoftPeeringConfigValue["advertisedPublicPrefixState"] = peeringParameters.MicrosoftPeeringConfig.AdvertisedPublicPrefixState;
+                        microsoftPeeringConfigValue["advertisedPublicPrefixesState"] = peeringParameters.MicrosoftPeeringConfig.AdvertisedPublicPrefixesState;
                     }
                     
-                    if (peeringParameters.MicrosoftPeeringConfig.CustomerAsn != null)
-                    {
-                        microsoftPeeringConfigValue["customerAsn"] = peeringParameters.MicrosoftPeeringConfig.CustomerAsn;
-                    }
+                    microsoftPeeringConfigValue["customerASN"] = peeringParameters.MicrosoftPeeringConfig.CustomerASN;
                     
-                    if (peeringParameters.MicrosoftPeeringConfig.RoutingIRRName != null)
+                    if (peeringParameters.MicrosoftPeeringConfig.RoutingRegistryName != null)
                     {
-                        microsoftPeeringConfigValue["routingIRRName"] = peeringParameters.MicrosoftPeeringConfig.RoutingIRRName;
+                        microsoftPeeringConfigValue["routingRegistryName"] = peeringParameters.MicrosoftPeeringConfig.RoutingRegistryName;
                     }
                 }
                 
@@ -277,17 +271,17 @@ namespace Microsoft.Azure.Management.Network
                 
                 if (peeringParameters.Name != null)
                 {
-                    peeringJsonFormatValue["name"] = peeringParameters.Name;
+                    expressRouteCircuitPeeringJsonFormatValue["name"] = peeringParameters.Name;
                 }
                 
                 if (peeringParameters.Etag != null)
                 {
-                    peeringJsonFormatValue["etag"] = peeringParameters.Etag;
+                    expressRouteCircuitPeeringJsonFormatValue["etag"] = peeringParameters.Etag;
                 }
                 
                 if (peeringParameters.Id != null)
                 {
-                    peeringJsonFormatValue["id"] = peeringParameters.Id;
+                    expressRouteCircuitPeeringJsonFormatValue["id"] = peeringParameters.Id;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -321,13 +315,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    PeeringPutResponse result = null;
+                    ExpressRouteCircuitPeeringPutResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new PeeringPutResponse();
+                        result = new ExpressRouteCircuitPeeringPutResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -336,7 +330,7 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Peering peeringInstance = new Peering();
+                            ExpressRouteCircuitPeering peeringInstance = new ExpressRouteCircuitPeering();
                             result.Peering = peeringInstance;
                             
                             JToken propertiesValue2 = responseDoc["properties"];
@@ -356,25 +350,32 @@ namespace Microsoft.Azure.Management.Network
                                     peeringInstance.State = stateInstance;
                                 }
                                 
+                                JToken azureASNValue = propertiesValue2["azureASN"];
+                                if (azureASNValue != null && azureASNValue.Type != JTokenType.Null)
+                                {
+                                    int azureASNInstance = ((int)azureASNValue);
+                                    peeringInstance.AzureASN = azureASNInstance;
+                                }
+                                
                                 JToken peerASNValue = propertiesValue2["peerASN"];
                                 if (peerASNValue != null && peerASNValue.Type != JTokenType.Null)
                                 {
-                                    string peerASNInstance = ((string)peerASNValue);
+                                    int peerASNInstance = ((int)peerASNValue);
                                     peeringInstance.PeerASN = peerASNInstance;
                                 }
                                 
-                                JToken primaryPeerSubnetValue = propertiesValue2["primaryPeerSubnet"];
-                                if (primaryPeerSubnetValue != null && primaryPeerSubnetValue.Type != JTokenType.Null)
+                                JToken primaryPeerAddressPrefixValue = propertiesValue2["primaryPeerAddressPrefix"];
+                                if (primaryPeerAddressPrefixValue != null && primaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                 {
-                                    string primaryPeerSubnetInstance = ((string)primaryPeerSubnetValue);
-                                    peeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
+                                    string primaryPeerAddressPrefixInstance = ((string)primaryPeerAddressPrefixValue);
+                                    peeringInstance.PrimaryPeerAddressPrefix = primaryPeerAddressPrefixInstance;
                                 }
                                 
-                                JToken secondaryPeerSubnetValue = propertiesValue2["secondaryPeerSubnet"];
-                                if (secondaryPeerSubnetValue != null && secondaryPeerSubnetValue.Type != JTokenType.Null)
+                                JToken secondaryPeerAddressPrefixValue = propertiesValue2["secondaryPeerAddressPrefix"];
+                                if (secondaryPeerAddressPrefixValue != null && secondaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                 {
-                                    string secondaryPeerSubnetInstance = ((string)secondaryPeerSubnetValue);
-                                    peeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
+                                    string secondaryPeerAddressPrefixInstance = ((string)secondaryPeerAddressPrefixValue);
+                                    peeringInstance.SecondaryPeerAddressPrefix = secondaryPeerAddressPrefixInstance;
                                 }
                                 
                                 JToken primaryAzurePortValue = propertiesValue2["primaryAzurePort"];
@@ -401,14 +402,14 @@ namespace Microsoft.Azure.Management.Network
                                 JToken vlanIdValue = propertiesValue2["vlanId"];
                                 if (vlanIdValue != null && vlanIdValue.Type != JTokenType.Null)
                                 {
-                                    string vlanIdInstance = ((string)vlanIdValue);
+                                    int vlanIdInstance = ((int)vlanIdValue);
                                     peeringInstance.VlanId = vlanIdInstance;
                                 }
                                 
                                 JToken microsoftPeeringConfigValue2 = propertiesValue2["microsoftPeeringConfig"];
                                 if (microsoftPeeringConfigValue2 != null && microsoftPeeringConfigValue2.Type != JTokenType.Null)
                                 {
-                                    PeeringConfig microsoftPeeringConfigInstance = new PeeringConfig();
+                                    ExpressRouteCircuitPeeringConfig microsoftPeeringConfigInstance = new ExpressRouteCircuitPeeringConfig();
                                     peeringInstance.MicrosoftPeeringConfig = microsoftPeeringConfigInstance;
                                     
                                     JToken advertisedPublicPrefixesArray2 = microsoftPeeringConfigValue2["advertisedPublicPrefixes"];
@@ -420,32 +421,32 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken advertisedPublicPrefixStateValue = microsoftPeeringConfigValue2["advertisedPublicPrefixState"];
-                                    if (advertisedPublicPrefixStateValue != null && advertisedPublicPrefixStateValue.Type != JTokenType.Null)
+                                    JToken advertisedPublicPrefixesStateValue = microsoftPeeringConfigValue2["advertisedPublicPrefixesState"];
+                                    if (advertisedPublicPrefixesStateValue != null && advertisedPublicPrefixesStateValue.Type != JTokenType.Null)
                                     {
-                                        string advertisedPublicPrefixStateInstance = ((string)advertisedPublicPrefixStateValue);
-                                        microsoftPeeringConfigInstance.AdvertisedPublicPrefixState = advertisedPublicPrefixStateInstance;
+                                        string advertisedPublicPrefixesStateInstance = ((string)advertisedPublicPrefixesStateValue);
+                                        microsoftPeeringConfigInstance.AdvertisedPublicPrefixesState = advertisedPublicPrefixesStateInstance;
                                     }
                                     
-                                    JToken customerAsnValue = microsoftPeeringConfigValue2["customerAsn"];
-                                    if (customerAsnValue != null && customerAsnValue.Type != JTokenType.Null)
+                                    JToken customerASNValue = microsoftPeeringConfigValue2["customerASN"];
+                                    if (customerASNValue != null && customerASNValue.Type != JTokenType.Null)
                                     {
-                                        string customerAsnInstance = ((string)customerAsnValue);
-                                        microsoftPeeringConfigInstance.CustomerAsn = customerAsnInstance;
+                                        int customerASNInstance = ((int)customerASNValue);
+                                        microsoftPeeringConfigInstance.CustomerASN = customerASNInstance;
                                     }
                                     
-                                    JToken routingIRRNameValue = microsoftPeeringConfigValue2["routingIRRName"];
-                                    if (routingIRRNameValue != null && routingIRRNameValue.Type != JTokenType.Null)
+                                    JToken routingRegistryNameValue = microsoftPeeringConfigValue2["routingRegistryName"];
+                                    if (routingRegistryNameValue != null && routingRegistryNameValue.Type != JTokenType.Null)
                                     {
-                                        string routingIRRNameInstance = ((string)routingIRRNameValue);
-                                        microsoftPeeringConfigInstance.RoutingIRRName = routingIRRNameInstance;
+                                        string routingRegistryNameInstance = ((string)routingRegistryNameValue);
+                                        microsoftPeeringConfigInstance.RoutingRegistryName = routingRegistryNameInstance;
                                     }
                                 }
                                 
                                 JToken statsValue2 = propertiesValue2["stats"];
                                 if (statsValue2 != null && statsValue2.Type != JTokenType.Null)
                                 {
-                                    PeeringStats statsInstance = new PeeringStats();
+                                    ExpressRouteCircuitStats statsInstance = new ExpressRouteCircuitStats();
                                     peeringInstance.Stats = statsInstance;
                                     
                                     JToken bytesInValue = statsValue2["bytesIn"];
@@ -795,7 +796,7 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string circuitName, string peeringName, Peering peeringParameters, CancellationToken cancellationToken)
+        public async Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken)
         {
             NetworkResourceProviderClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -812,7 +813,7 @@ namespace Microsoft.Azure.Management.Network
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            PeeringPutResponse response = await client.Peerings.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, peeringName, peeringParameters, cancellationToken).ConfigureAwait(false);
+            ExpressRouteCircuitPeeringPutResponse response = await client.ExpressRouteCircuitPeerings.BeginCreateOrUpdatingAsync(resourceGroupName, circuitName, peeringName, peeringParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -885,7 +886,7 @@ namespace Microsoft.Azure.Management.Network
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            UpdateOperationResponse response = await client.Peerings.BeginDeletingAsync(resourceGroupName, circuitName, peeringName, cancellationToken).ConfigureAwait(false);
+            UpdateOperationResponse response = await client.ExpressRouteCircuitPeerings.BeginDeletingAsync(resourceGroupName, circuitName, peeringName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -941,7 +942,7 @@ namespace Microsoft.Azure.Management.Network
         /// <returns>
         /// Response for GET ExpressRouteCircuit Peering Api service call
         /// </returns>
-        public async Task<PeeringGetResponse> GetAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken)
+        public async Task<ExpressRouteCircuitPeeringGetResponse> GetAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1045,13 +1046,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    PeeringGetResponse result = null;
+                    ExpressRouteCircuitPeeringGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new PeeringGetResponse();
+                        result = new ExpressRouteCircuitPeeringGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1060,7 +1061,7 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Peering peeringInstance = new Peering();
+                            ExpressRouteCircuitPeering peeringInstance = new ExpressRouteCircuitPeering();
                             result.Peering = peeringInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
@@ -1080,25 +1081,32 @@ namespace Microsoft.Azure.Management.Network
                                     peeringInstance.State = stateInstance;
                                 }
                                 
+                                JToken azureASNValue = propertiesValue["azureASN"];
+                                if (azureASNValue != null && azureASNValue.Type != JTokenType.Null)
+                                {
+                                    int azureASNInstance = ((int)azureASNValue);
+                                    peeringInstance.AzureASN = azureASNInstance;
+                                }
+                                
                                 JToken peerASNValue = propertiesValue["peerASN"];
                                 if (peerASNValue != null && peerASNValue.Type != JTokenType.Null)
                                 {
-                                    string peerASNInstance = ((string)peerASNValue);
+                                    int peerASNInstance = ((int)peerASNValue);
                                     peeringInstance.PeerASN = peerASNInstance;
                                 }
                                 
-                                JToken primaryPeerSubnetValue = propertiesValue["primaryPeerSubnet"];
-                                if (primaryPeerSubnetValue != null && primaryPeerSubnetValue.Type != JTokenType.Null)
+                                JToken primaryPeerAddressPrefixValue = propertiesValue["primaryPeerAddressPrefix"];
+                                if (primaryPeerAddressPrefixValue != null && primaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                 {
-                                    string primaryPeerSubnetInstance = ((string)primaryPeerSubnetValue);
-                                    peeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
+                                    string primaryPeerAddressPrefixInstance = ((string)primaryPeerAddressPrefixValue);
+                                    peeringInstance.PrimaryPeerAddressPrefix = primaryPeerAddressPrefixInstance;
                                 }
                                 
-                                JToken secondaryPeerSubnetValue = propertiesValue["secondaryPeerSubnet"];
-                                if (secondaryPeerSubnetValue != null && secondaryPeerSubnetValue.Type != JTokenType.Null)
+                                JToken secondaryPeerAddressPrefixValue = propertiesValue["secondaryPeerAddressPrefix"];
+                                if (secondaryPeerAddressPrefixValue != null && secondaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                 {
-                                    string secondaryPeerSubnetInstance = ((string)secondaryPeerSubnetValue);
-                                    peeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
+                                    string secondaryPeerAddressPrefixInstance = ((string)secondaryPeerAddressPrefixValue);
+                                    peeringInstance.SecondaryPeerAddressPrefix = secondaryPeerAddressPrefixInstance;
                                 }
                                 
                                 JToken primaryAzurePortValue = propertiesValue["primaryAzurePort"];
@@ -1125,14 +1133,14 @@ namespace Microsoft.Azure.Management.Network
                                 JToken vlanIdValue = propertiesValue["vlanId"];
                                 if (vlanIdValue != null && vlanIdValue.Type != JTokenType.Null)
                                 {
-                                    string vlanIdInstance = ((string)vlanIdValue);
+                                    int vlanIdInstance = ((int)vlanIdValue);
                                     peeringInstance.VlanId = vlanIdInstance;
                                 }
                                 
                                 JToken microsoftPeeringConfigValue = propertiesValue["microsoftPeeringConfig"];
                                 if (microsoftPeeringConfigValue != null && microsoftPeeringConfigValue.Type != JTokenType.Null)
                                 {
-                                    PeeringConfig microsoftPeeringConfigInstance = new PeeringConfig();
+                                    ExpressRouteCircuitPeeringConfig microsoftPeeringConfigInstance = new ExpressRouteCircuitPeeringConfig();
                                     peeringInstance.MicrosoftPeeringConfig = microsoftPeeringConfigInstance;
                                     
                                     JToken advertisedPublicPrefixesArray = microsoftPeeringConfigValue["advertisedPublicPrefixes"];
@@ -1144,32 +1152,32 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken advertisedPublicPrefixStateValue = microsoftPeeringConfigValue["advertisedPublicPrefixState"];
-                                    if (advertisedPublicPrefixStateValue != null && advertisedPublicPrefixStateValue.Type != JTokenType.Null)
+                                    JToken advertisedPublicPrefixesStateValue = microsoftPeeringConfigValue["advertisedPublicPrefixesState"];
+                                    if (advertisedPublicPrefixesStateValue != null && advertisedPublicPrefixesStateValue.Type != JTokenType.Null)
                                     {
-                                        string advertisedPublicPrefixStateInstance = ((string)advertisedPublicPrefixStateValue);
-                                        microsoftPeeringConfigInstance.AdvertisedPublicPrefixState = advertisedPublicPrefixStateInstance;
+                                        string advertisedPublicPrefixesStateInstance = ((string)advertisedPublicPrefixesStateValue);
+                                        microsoftPeeringConfigInstance.AdvertisedPublicPrefixesState = advertisedPublicPrefixesStateInstance;
                                     }
                                     
-                                    JToken customerAsnValue = microsoftPeeringConfigValue["customerAsn"];
-                                    if (customerAsnValue != null && customerAsnValue.Type != JTokenType.Null)
+                                    JToken customerASNValue = microsoftPeeringConfigValue["customerASN"];
+                                    if (customerASNValue != null && customerASNValue.Type != JTokenType.Null)
                                     {
-                                        string customerAsnInstance = ((string)customerAsnValue);
-                                        microsoftPeeringConfigInstance.CustomerAsn = customerAsnInstance;
+                                        int customerASNInstance = ((int)customerASNValue);
+                                        microsoftPeeringConfigInstance.CustomerASN = customerASNInstance;
                                     }
                                     
-                                    JToken routingIRRNameValue = microsoftPeeringConfigValue["routingIRRName"];
-                                    if (routingIRRNameValue != null && routingIRRNameValue.Type != JTokenType.Null)
+                                    JToken routingRegistryNameValue = microsoftPeeringConfigValue["routingRegistryName"];
+                                    if (routingRegistryNameValue != null && routingRegistryNameValue.Type != JTokenType.Null)
                                     {
-                                        string routingIRRNameInstance = ((string)routingIRRNameValue);
-                                        microsoftPeeringConfigInstance.RoutingIRRName = routingIRRNameInstance;
+                                        string routingRegistryNameInstance = ((string)routingRegistryNameValue);
+                                        microsoftPeeringConfigInstance.RoutingRegistryName = routingRegistryNameInstance;
                                     }
                                 }
                                 
                                 JToken statsValue = propertiesValue["stats"];
                                 if (statsValue != null && statsValue.Type != JTokenType.Null)
                                 {
-                                    PeeringStats statsInstance = new PeeringStats();
+                                    ExpressRouteCircuitStats statsInstance = new ExpressRouteCircuitStats();
                                     peeringInstance.Stats = statsInstance;
                                     
                                     JToken bytesInValue = statsValue["bytesIn"];
@@ -1264,7 +1272,7 @@ namespace Microsoft.Azure.Management.Network
         /// Response for ListPeering Api service callRetrieves all Peerings
         /// that belongs to an ExpressRouteCircuit
         /// </returns>
-        public async Task<PeeringListResponse> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken)
+        public async Task<ExpressRouteCircuitPeeringListResponse> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1362,13 +1370,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    PeeringListResponse result = null;
+                    ExpressRouteCircuitPeeringListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new PeeringListResponse();
+                        result = new ExpressRouteCircuitPeeringListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1382,8 +1390,8 @@ namespace Microsoft.Azure.Management.Network
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Peering peeringJsonFormatInstance = new Peering();
-                                    result.Peerings.Add(peeringJsonFormatInstance);
+                                    ExpressRouteCircuitPeering expressRouteCircuitPeeringJsonFormatInstance = new ExpressRouteCircuitPeering();
+                                    result.Peerings.Add(expressRouteCircuitPeeringJsonFormatInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -1392,70 +1400,77 @@ namespace Microsoft.Azure.Management.Network
                                         if (peeringTypeValue != null && peeringTypeValue.Type != JTokenType.Null)
                                         {
                                             string peeringTypeInstance = ((string)peeringTypeValue);
-                                            peeringJsonFormatInstance.PeeringType = peeringTypeInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.PeeringType = peeringTypeInstance;
                                         }
                                         
                                         JToken stateValue = propertiesValue["state"];
                                         if (stateValue != null && stateValue.Type != JTokenType.Null)
                                         {
                                             string stateInstance = ((string)stateValue);
-                                            peeringJsonFormatInstance.State = stateInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.State = stateInstance;
+                                        }
+                                        
+                                        JToken azureASNValue = propertiesValue["azureASN"];
+                                        if (azureASNValue != null && azureASNValue.Type != JTokenType.Null)
+                                        {
+                                            int azureASNInstance = ((int)azureASNValue);
+                                            expressRouteCircuitPeeringJsonFormatInstance.AzureASN = azureASNInstance;
                                         }
                                         
                                         JToken peerASNValue = propertiesValue["peerASN"];
                                         if (peerASNValue != null && peerASNValue.Type != JTokenType.Null)
                                         {
-                                            string peerASNInstance = ((string)peerASNValue);
-                                            peeringJsonFormatInstance.PeerASN = peerASNInstance;
+                                            int peerASNInstance = ((int)peerASNValue);
+                                            expressRouteCircuitPeeringJsonFormatInstance.PeerASN = peerASNInstance;
                                         }
                                         
-                                        JToken primaryPeerSubnetValue = propertiesValue["primaryPeerSubnet"];
-                                        if (primaryPeerSubnetValue != null && primaryPeerSubnetValue.Type != JTokenType.Null)
+                                        JToken primaryPeerAddressPrefixValue = propertiesValue["primaryPeerAddressPrefix"];
+                                        if (primaryPeerAddressPrefixValue != null && primaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                         {
-                                            string primaryPeerSubnetInstance = ((string)primaryPeerSubnetValue);
-                                            peeringJsonFormatInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
+                                            string primaryPeerAddressPrefixInstance = ((string)primaryPeerAddressPrefixValue);
+                                            expressRouteCircuitPeeringJsonFormatInstance.PrimaryPeerAddressPrefix = primaryPeerAddressPrefixInstance;
                                         }
                                         
-                                        JToken secondaryPeerSubnetValue = propertiesValue["secondaryPeerSubnet"];
-                                        if (secondaryPeerSubnetValue != null && secondaryPeerSubnetValue.Type != JTokenType.Null)
+                                        JToken secondaryPeerAddressPrefixValue = propertiesValue["secondaryPeerAddressPrefix"];
+                                        if (secondaryPeerAddressPrefixValue != null && secondaryPeerAddressPrefixValue.Type != JTokenType.Null)
                                         {
-                                            string secondaryPeerSubnetInstance = ((string)secondaryPeerSubnetValue);
-                                            peeringJsonFormatInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
+                                            string secondaryPeerAddressPrefixInstance = ((string)secondaryPeerAddressPrefixValue);
+                                            expressRouteCircuitPeeringJsonFormatInstance.SecondaryPeerAddressPrefix = secondaryPeerAddressPrefixInstance;
                                         }
                                         
                                         JToken primaryAzurePortValue = propertiesValue["primaryAzurePort"];
                                         if (primaryAzurePortValue != null && primaryAzurePortValue.Type != JTokenType.Null)
                                         {
                                             string primaryAzurePortInstance = ((string)primaryAzurePortValue);
-                                            peeringJsonFormatInstance.PrimaryAzurePort = primaryAzurePortInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.PrimaryAzurePort = primaryAzurePortInstance;
                                         }
                                         
                                         JToken secondaryAzurePortValue = propertiesValue["secondaryAzurePort"];
                                         if (secondaryAzurePortValue != null && secondaryAzurePortValue.Type != JTokenType.Null)
                                         {
                                             string secondaryAzurePortInstance = ((string)secondaryAzurePortValue);
-                                            peeringJsonFormatInstance.SecondaryAzurePort = secondaryAzurePortInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                                         }
                                         
                                         JToken sharedKeyValue = propertiesValue["sharedKey"];
                                         if (sharedKeyValue != null && sharedKeyValue.Type != JTokenType.Null)
                                         {
                                             string sharedKeyInstance = ((string)sharedKeyValue);
-                                            peeringJsonFormatInstance.SharedKey = sharedKeyInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.SharedKey = sharedKeyInstance;
                                         }
                                         
                                         JToken vlanIdValue = propertiesValue["vlanId"];
                                         if (vlanIdValue != null && vlanIdValue.Type != JTokenType.Null)
                                         {
-                                            string vlanIdInstance = ((string)vlanIdValue);
-                                            peeringJsonFormatInstance.VlanId = vlanIdInstance;
+                                            int vlanIdInstance = ((int)vlanIdValue);
+                                            expressRouteCircuitPeeringJsonFormatInstance.VlanId = vlanIdInstance;
                                         }
                                         
                                         JToken microsoftPeeringConfigValue = propertiesValue["microsoftPeeringConfig"];
                                         if (microsoftPeeringConfigValue != null && microsoftPeeringConfigValue.Type != JTokenType.Null)
                                         {
-                                            PeeringConfig microsoftPeeringConfigInstance = new PeeringConfig();
-                                            peeringJsonFormatInstance.MicrosoftPeeringConfig = microsoftPeeringConfigInstance;
+                                            ExpressRouteCircuitPeeringConfig microsoftPeeringConfigInstance = new ExpressRouteCircuitPeeringConfig();
+                                            expressRouteCircuitPeeringJsonFormatInstance.MicrosoftPeeringConfig = microsoftPeeringConfigInstance;
                                             
                                             JToken advertisedPublicPrefixesArray = microsoftPeeringConfigValue["advertisedPublicPrefixes"];
                                             if (advertisedPublicPrefixesArray != null && advertisedPublicPrefixesArray.Type != JTokenType.Null)
@@ -1466,33 +1481,33 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken advertisedPublicPrefixStateValue = microsoftPeeringConfigValue["advertisedPublicPrefixState"];
-                                            if (advertisedPublicPrefixStateValue != null && advertisedPublicPrefixStateValue.Type != JTokenType.Null)
+                                            JToken advertisedPublicPrefixesStateValue = microsoftPeeringConfigValue["advertisedPublicPrefixesState"];
+                                            if (advertisedPublicPrefixesStateValue != null && advertisedPublicPrefixesStateValue.Type != JTokenType.Null)
                                             {
-                                                string advertisedPublicPrefixStateInstance = ((string)advertisedPublicPrefixStateValue);
-                                                microsoftPeeringConfigInstance.AdvertisedPublicPrefixState = advertisedPublicPrefixStateInstance;
+                                                string advertisedPublicPrefixesStateInstance = ((string)advertisedPublicPrefixesStateValue);
+                                                microsoftPeeringConfigInstance.AdvertisedPublicPrefixesState = advertisedPublicPrefixesStateInstance;
                                             }
                                             
-                                            JToken customerAsnValue = microsoftPeeringConfigValue["customerAsn"];
-                                            if (customerAsnValue != null && customerAsnValue.Type != JTokenType.Null)
+                                            JToken customerASNValue = microsoftPeeringConfigValue["customerASN"];
+                                            if (customerASNValue != null && customerASNValue.Type != JTokenType.Null)
                                             {
-                                                string customerAsnInstance = ((string)customerAsnValue);
-                                                microsoftPeeringConfigInstance.CustomerAsn = customerAsnInstance;
+                                                int customerASNInstance = ((int)customerASNValue);
+                                                microsoftPeeringConfigInstance.CustomerASN = customerASNInstance;
                                             }
                                             
-                                            JToken routingIRRNameValue = microsoftPeeringConfigValue["routingIRRName"];
-                                            if (routingIRRNameValue != null && routingIRRNameValue.Type != JTokenType.Null)
+                                            JToken routingRegistryNameValue = microsoftPeeringConfigValue["routingRegistryName"];
+                                            if (routingRegistryNameValue != null && routingRegistryNameValue.Type != JTokenType.Null)
                                             {
-                                                string routingIRRNameInstance = ((string)routingIRRNameValue);
-                                                microsoftPeeringConfigInstance.RoutingIRRName = routingIRRNameInstance;
+                                                string routingRegistryNameInstance = ((string)routingRegistryNameValue);
+                                                microsoftPeeringConfigInstance.RoutingRegistryName = routingRegistryNameInstance;
                                             }
                                         }
                                         
                                         JToken statsValue = propertiesValue["stats"];
                                         if (statsValue != null && statsValue.Type != JTokenType.Null)
                                         {
-                                            PeeringStats statsInstance = new PeeringStats();
-                                            peeringJsonFormatInstance.Stats = statsInstance;
+                                            ExpressRouteCircuitStats statsInstance = new ExpressRouteCircuitStats();
+                                            expressRouteCircuitPeeringJsonFormatInstance.Stats = statsInstance;
                                             
                                             JToken bytesInValue = statsValue["bytesIn"];
                                             if (bytesInValue != null && bytesInValue.Type != JTokenType.Null)
@@ -1513,7 +1528,7 @@ namespace Microsoft.Azure.Management.Network
                                         if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                         {
                                             string provisioningStateInstance = ((string)provisioningStateValue);
-                                            peeringJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                            expressRouteCircuitPeeringJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                     }
                                     
@@ -1521,21 +1536,21 @@ namespace Microsoft.Azure.Management.Network
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        peeringJsonFormatInstance.Name = nameInstance;
+                                        expressRouteCircuitPeeringJsonFormatInstance.Name = nameInstance;
                                     }
                                     
                                     JToken etagValue = valueValue["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
                                         string etagInstance = ((string)etagValue);
-                                        peeringJsonFormatInstance.Etag = etagInstance;
+                                        expressRouteCircuitPeeringJsonFormatInstance.Etag = etagInstance;
                                     }
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        peeringJsonFormatInstance.Id = idInstance;
+                                        expressRouteCircuitPeeringJsonFormatInstance.Id = idInstance;
                                     }
                                 }
                             }

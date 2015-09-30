@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.Network
 {
     /// <summary>
     /// The Network Resource Provider API includes operations for managing the
-    /// Authorizations for your subscription.
+    /// Peerings for your subscription.
     /// </summary>
-    public partial interface IAuthorizationOperations
+    public partial interface IExpressRouteCircuitPeeringOperations
     {
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in the
+        /// specified ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -44,24 +44,24 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// The name of the authorization.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
-        /// Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// <param name='peeringParameters'>
+        /// Parameters supplied to the create/update ExpressRouteCircuit
+        /// Peering operation
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for Put ExpressRouteCircuit Authorization Api service call
+        /// Response for Put ExpressRouteCircuit Peering Api service call
         /// </returns>
-        Task<AuthorizationPutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters, CancellationToken cancellationToken);
+        Task<ExpressRouteCircuitPeeringPutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// The name of the authorization.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -82,11 +82,11 @@ namespace Microsoft.Azure.Management.Network
         /// Accept-Language header specified in the original request such
         /// thatit could be directly be exposed to users
         /// </returns>
-        Task<UpdateOperationResponse> BeginDeletingAsync(string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken);
+        Task<UpdateOperationResponse> BeginDeletingAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Put Authorization operation creates/updates an authorization in
-        /// thespecified ExpressRouteCircuits
+        /// The Put Pering operation creates/updates an peering in thespecified
+        /// ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -94,12 +94,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// The name of the authorization.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='authorizationParameters'>
-        /// Parameters supplied to the create/update
-        /// ExpressRouteCircuitAuthorization operation
+        /// <param name='peeringParameters'>
+        /// Parameters supplied to the create/update ExpressRouteCircuit
+        /// Peering operation
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -115,11 +115,11 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters, CancellationToken cancellationToken);
+        Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The delete authorization operation deletes the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The delete peering operation deletes the specified peering from the
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -127,8 +127,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// The name of the authorization.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -137,11 +137,11 @@ namespace Microsoft.Azure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The GET authorization operation retrieves the specified
-        /// authorization from the specified ExpressRouteCircuit.
+        /// The GET peering operation retrieves the specified authorization
+        /// from the ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -149,20 +149,20 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='circuitName'>
         /// The name of the express route circuit.
         /// </param>
-        /// <param name='authorizationName'>
-        /// The name of the authorization.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for GET ExpressRouteCircuit Authorization Api service call
+        /// Response for GET ExpressRouteCircuit Peering Api service call
         /// </returns>
-        Task<AuthorizationGetResponse> GetAsync(string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken);
+        Task<ExpressRouteCircuitPeeringGetResponse> GetAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The List authorization operation retrieves all the authorizations
-        /// in an ExpressRouteCircuit.
+        /// The List peering operation retrieves all the peerings in an
+        /// ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -174,9 +174,9 @@ namespace Microsoft.Azure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for ListAuthorizations Api service callRetrieves all
-        /// authorizations that belongs to an ExpressRouteCircuit
+        /// Response for ListPeering Api service callRetrieves all Peerings
+        /// that belongs to an ExpressRouteCircuit
         /// </returns>
-        Task<AuthorizationListResponse> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken);
+        Task<ExpressRouteCircuitPeeringListResponse> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken);
     }
 }

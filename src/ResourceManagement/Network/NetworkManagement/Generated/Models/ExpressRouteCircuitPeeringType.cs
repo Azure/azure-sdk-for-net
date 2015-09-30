@@ -21,31 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Response for Put ExpressRouteCircuit Peering Api service call
+    /// Type of the peering
     /// </summary>
-    public partial class PeeringPutResponse : UpdateOperationResponse
+    public static partial class ExpressRouteCircuitPeeringType
     {
-        private Peering _peering;
+        public const string AzurePublicPeering = "AzurePublicPeering";
         
-        /// <summary>
-        /// Optional. Gets the Peering in an ExpressRouteCircuit
-        /// </summary>
-        public Peering Peering
-        {
-            get { return this._peering; }
-            set { this._peering = value; }
-        }
+        public const string AzurePrivatePeering = "AzurePrivatePeering";
         
-        /// <summary>
-        /// Initializes a new instance of the PeeringPutResponse class.
-        /// </summary>
-        public PeeringPutResponse()
-        {
-        }
+        public const string MicrosoftPeering = "MicrosoftPeering";
     }
 }

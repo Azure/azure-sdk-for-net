@@ -28,25 +28,36 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Peering in a ExpressRouteCircuit resource
     /// </summary>
-    public partial class Peering : ChildResource
+    public partial class ExpressRouteCircuitPeering : ChildResource
     {
-        private PeeringConfig _microsoftPeeringConfig;
+        private int _azureASN;
+        
+        /// <summary>
+        /// Optional. Gets or sets the azure ASN
+        /// </summary>
+        public int AzureASN
+        {
+            get { return this._azureASN; }
+            set { this._azureASN = value; }
+        }
+        
+        private ExpressRouteCircuitPeeringConfig _microsoftPeeringConfig;
         
         /// <summary>
         /// Optional. Gets or sets the mircosoft peering config
         /// </summary>
-        public PeeringConfig MicrosoftPeeringConfig
+        public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig
         {
             get { return this._microsoftPeeringConfig; }
             set { this._microsoftPeeringConfig = value; }
         }
         
-        private string _peerASN;
+        private int _peerASN;
         
         /// <summary>
-        /// Optional. Gets or sets the ASN
+        /// Optional. Gets or sets the peer ASN
         /// </summary>
-        public string PeerASN
+        public int PeerASN
         {
             get { return this._peerASN; }
             set { this._peerASN = value; }
@@ -74,15 +85,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._primaryAzurePort = value; }
         }
         
-        private string _primaryPeerSubnet;
+        private string _primaryPeerAddressPrefix;
         
         /// <summary>
-        /// Optional. Gets or sets the primary subnet
+        /// Optional. Gets or sets the primary address prefix
         /// </summary>
-        public string PrimaryPeerSubnet
+        public string PrimaryPeerAddressPrefix
         {
-            get { return this._primaryPeerSubnet; }
-            set { this._primaryPeerSubnet = value; }
+            get { return this._primaryPeerAddressPrefix; }
+            set { this._primaryPeerAddressPrefix = value; }
         }
         
         private string _provisioningState;
@@ -108,15 +119,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._secondaryAzurePort = value; }
         }
         
-        private string _secondaryPeerSubnet;
+        private string _secondaryPeerAddressPrefix;
         
         /// <summary>
-        /// Optional. Gets or sets the secondary subnet
+        /// Optional. Gets or sets the secondary address prefix
         /// </summary>
-        public string SecondaryPeerSubnet
+        public string SecondaryPeerAddressPrefix
         {
-            get { return this._secondaryPeerSubnet; }
-            set { this._secondaryPeerSubnet = value; }
+            get { return this._secondaryPeerAddressPrefix; }
+            set { this._secondaryPeerAddressPrefix = value; }
         }
         
         private string _sharedKey;
@@ -141,32 +152,32 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._state = value; }
         }
         
-        private PeeringStats _stats;
+        private ExpressRouteCircuitStats _stats;
         
         /// <summary>
         /// Optional. Gets or peering stats
         /// </summary>
-        public PeeringStats Stats
+        public ExpressRouteCircuitStats Stats
         {
             get { return this._stats; }
             set { this._stats = value; }
         }
         
-        private string _vlanId;
+        private int _vlanId;
         
         /// <summary>
         /// Optional. Gets or sets the vlan id
         /// </summary>
-        public string VlanId
+        public int VlanId
         {
             get { return this._vlanId; }
             set { this._vlanId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Peering class.
+        /// Initializes a new instance of the ExpressRouteCircuitPeering class.
         /// </summary>
-        public Peering()
+        public ExpressRouteCircuitPeering()
         {
         }
     }
