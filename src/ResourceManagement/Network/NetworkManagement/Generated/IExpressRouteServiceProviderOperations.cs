@@ -21,19 +21,28 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Network.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Network
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// The Network Resource Provider API includes operations for managing the
+    /// ExpressRouteServiceProviders for your subscription.
+    /// </summary>
+    public partial interface IExpressRouteServiceProviderOperations
     {
         /// <summary>
-        /// VPN Gateways
+        /// The List ExpressRouteServiceProvider opertion retrieves all the
+        /// available ExpressRouteServiceProviders.
         /// </summary>
-        public const string Vpn = "Vpn";
-        
-        /// <summary>
-        /// Express Route
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for ListExpressRouteResourceProvider Api service call
+        /// </returns>
+        Task<ExpressRouteResourceProviderListResponse> ListAsync(CancellationToken cancellationToken);
     }
 }

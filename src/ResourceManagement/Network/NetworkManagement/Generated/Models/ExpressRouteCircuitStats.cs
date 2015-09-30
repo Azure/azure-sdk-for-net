@@ -24,16 +24,38 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Contains Stats associated with the peering
+    /// </summary>
+    public partial class ExpressRouteCircuitStats
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private int _bytesIn;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets BytesIn of the peering.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public int BytesIn
+        {
+            get { return this._bytesIn; }
+            set { this._bytesIn = value; }
+        }
+        
+        private int _bytesOut;
+        
+        /// <summary>
+        /// Optional. Gets BytesOut of the peering.
+        /// </summary>
+        public int BytesOut
+        {
+            get { return this._bytesOut; }
+            set { this._bytesOut = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteCircuitStats class.
+        /// </summary>
+        public ExpressRouteCircuitStats()
+        {
+        }
     }
 }

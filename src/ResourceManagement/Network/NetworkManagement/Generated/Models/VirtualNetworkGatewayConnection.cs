@@ -53,6 +53,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._localNetworkGateway2 = value; }
         }
         
+        private ResourceId _peer;
+        
+        /// <summary>
+        /// Optional. The reference to peerings resource.
+        /// </summary>
+        public ResourceId Peer
+        {
+            get { return this._peer; }
+            set { this._peer = value; }
+        }
+        
         private string _provisioningState;
         
         /// <summary>

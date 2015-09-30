@@ -55,10 +55,10 @@ namespace DataFactory.Tests.UnitTests
         [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringDatasetTypeWithReservedNameThrowsException<T>(Type type, T registeredType)
+        public void CanRegisterTableTypeWithReservedName<T>(Type type, T registeredType)
             where T : TypeProperties
         {
-            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+            this.TestCanRegisterTypeWithReservedName<T>();
         }
 
         [Theory]

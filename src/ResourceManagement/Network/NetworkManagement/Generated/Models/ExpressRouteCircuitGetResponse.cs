@@ -21,19 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// Response of a GET ExpressRouteCircuit operation
+    /// </summary>
+    public partial class ExpressRouteCircuitGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        private ExpressRouteCircuit _expressRouteCircuit;
         
         /// <summary>
-        /// Express Route
+        /// Optional. Gets a ExpressRouteCircuit in a resource group
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public ExpressRouteCircuit ExpressRouteCircuit
+        {
+            get { return this._expressRouteCircuit; }
+            set { this._expressRouteCircuit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteCircuitGetResponse
+        /// class.
+        /// </summary>
+        public ExpressRouteCircuitGetResponse()
+        {
+        }
     }
 }

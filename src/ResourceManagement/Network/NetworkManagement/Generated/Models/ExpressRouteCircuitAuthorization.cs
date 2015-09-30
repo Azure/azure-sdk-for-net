@@ -21,15 +21,42 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public partial class ResourceProperties
+    /// <summary>
+    /// Authorization in a ExpressRouteCircuit resource
+    /// </summary>
+    public partial class ExpressRouteCircuitAuthorization : ChildResource
     {
+        private string _authorizationKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the authorization key
+        /// </summary>
+        public string AuthorizationKey
+        {
+            get { return this._authorizationKey; }
+            set { this._authorizationKey = value; }
+        }
+        
+        private string _authorizationUseStatus;
+        
+        /// <summary>
+        /// Optional. Gets or sets AuthorizationUseStatus
+        /// </summary>
+        public string AuthorizationUseStatus
+        {
+            get { return this._authorizationUseStatus; }
+            set { this._authorizationUseStatus = value; }
+        }
+        
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. Gets or sets Provisioning state of the resource
+        /// Optional. Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
         public string ProvisioningState
         {
@@ -38,9 +65,10 @@ namespace Microsoft.Azure.Management.Network.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceProperties class.
+        /// Initializes a new instance of the ExpressRouteCircuitAuthorization
+        /// class.
         /// </summary>
-        public ResourceProperties()
+        public ExpressRouteCircuitAuthorization()
         {
         }
     }

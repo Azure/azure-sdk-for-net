@@ -24,16 +24,17 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// AdvertisedPublicPrefixState of the peering
+    /// </summary>
+    public static partial class ExpressRouteCircuitPeeringAdvertisedPublicPrefixState
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        public const string NotConfigured = "NotConfigured";
         
-        /// <summary>
-        /// Express Route
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public const string Configuring = "Configuring";
+        
+        public const string Configured = "Configured";
+        
+        public const string ValidationNeeded = "ValidationNeeded";
     }
 }

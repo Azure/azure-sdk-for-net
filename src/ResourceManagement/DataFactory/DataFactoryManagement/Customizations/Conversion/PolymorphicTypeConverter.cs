@@ -14,8 +14,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
@@ -26,22 +24,6 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
     internal abstract class PolymorphicTypeConverter<T> : JsonConverter
     {
-        protected static IDictionary<string, Type> ReservedTypes
-        {
-            get
-            {
-                return ReservedTypesList.Value;
-            }
-        }
-
-        private static Lazy<Dictionary<string, Type>> ReservedTypesList { get; set; }
-
-        static PolymorphicTypeConverter()
-        {
-            // Delay evaluation until the user needs to do local type registration or conversion
-            ReservedTypesList = new Lazy<Dictionary<string, Type>>(GetReservedTypes);
-        }
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             try
@@ -81,20 +63,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             return typeof(T).IsAssignableFrom(objectType);
         }
 
-        private static Dictionary<string, Type> GetReservedTypes()
-        {
-            Type rootType = typeof(T);
-            return rootType.Assembly.GetTypes()
-                .Where(rootType.IsAssignableFrom)
-                .ToDictionary(GetTypeName, StringComparer.OrdinalIgnoreCase);
-        }
-
         /// <summary>
         /// Get a name to use during serialization of a type. 
         /// </summary>
         /// <param name="type">The type to get a name for.</param>
         /// <returns>The name to use during serialization for <paramref name="type"/>.</returns>
-        private static string GetTypeName(Type type)
+        protected static string GetTypeName(Type type)
         {
             object typeNameAttribute = type.GetCustomAttributes(typeof(AdfTypeNameAttribute), true).FirstOrDefault();
             if (typeNameAttribute != null)

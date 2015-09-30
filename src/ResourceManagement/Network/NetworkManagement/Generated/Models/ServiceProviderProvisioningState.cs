@@ -24,16 +24,17 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VirtualNetworkGatewayType
+    /// <summary>
+    /// ServiceProvider Provisioning state of the ExpressRoute Circuit
+    /// </summary>
+    public static partial class ServiceProviderProvisioningState
     {
-        /// <summary>
-        /// VPN Gateways
-        /// </summary>
-        public const string Vpn = "Vpn";
+        public const string NotProvisioned = "NotProvisioned";
         
-        /// <summary>
-        /// Express Route
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public const string Provisioning = "Provisioning";
+        
+        public const string Provisioned = "Provisioned";
+        
+        public const string Deprovisioning = "Deprovisioning";
     }
 }
