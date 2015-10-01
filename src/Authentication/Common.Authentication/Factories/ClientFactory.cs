@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
             foreach(DelegatingHandler handler in handlers.Values.ToArray())
             {
-                client = client.WithHandler(handler);
+                client.AddHandlerToPipeline(handler);
             }
 
             return client;
@@ -231,8 +231,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public void AddAction(IClientAction action)
         {
-            action.ClientFactory = this;
-            actions[action.GetType()] = action;
+            if (action != null)
+            {
+                action.ClientFactory = this;
+                actions[action.GetType()] = action;
+            }
         }
 
         public void RemoveAction(Type actionType)
@@ -245,7 +248,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public void AddHandler(DelegatingHandler handler)
         {
-            handlers[handler.GetType()] = handler;
+            if (handler != null)
+            {
+                handlers[handler.GetType()] = handler;
+            }
         }
 
         public void RemoveHandler(Type handlerType)
