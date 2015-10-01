@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='linkedServiceName'>
-        /// Required. The name of the data factory table to be created or
+        /// Required. The name of the data factory dataset to be created or
         /// updated.
         /// </param>
         /// <param name='parameters'>
@@ -898,7 +898,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -929,8 +929,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='linkedServiceName'>
-        /// Required. The name of the data factory table to be created or
-        /// updated.
+        /// Required. The name of the data factory linked service to be created
+        /// or updated.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to create or update a data
@@ -971,7 +971,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1042,7 +1042,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

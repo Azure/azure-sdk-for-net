@@ -300,7 +300,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""SqlDWSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
                     },
                     sink:
                     {
@@ -886,7 +891,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""SqlSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
                     },
                     sink:
                     {

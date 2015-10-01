@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A data slice is subset of table bounded by time.
+    /// A data slice is subset of dataset bounded by time.
     /// </summary>
     public partial class DataSlice
     {

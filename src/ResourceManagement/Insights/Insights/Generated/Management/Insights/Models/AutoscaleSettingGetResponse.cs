@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. The resource identifier of the setting.
+        /// Optional. Gets or sets the resource identifier of the setting.
         /// </summary>
         public string Id
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location of the setting.
+        /// Optional. Gets or sets the location of the setting.
         /// </summary>
         public string Location
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the setting.
+        /// Optional. Gets or sets the name of the setting.
         /// </summary>
         public string Name
         {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private AutoscaleSetting _properties;
         
         /// <summary>
-        /// Optional. The retrieved setting.
+        /// Optional. Gets or sets the retrieved setting.
         /// </summary>
         public AutoscaleSetting Properties
         {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. The tags of the rule.
+        /// Optional. Gets or sets the tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {

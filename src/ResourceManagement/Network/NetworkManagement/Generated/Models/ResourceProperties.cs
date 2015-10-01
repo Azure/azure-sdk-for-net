@@ -29,8 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. Gets or sets Provisioning state of the PublicIP resource
-        /// Updating/Deleting/Failed
+        /// Optional. Gets or sets Provisioning state of the resource
         /// </summary>
         public string ProvisioningState
         {

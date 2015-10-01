@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the dsc node configuration.
     /// </summary>
-    public partial class DscNodeConfiguration : ResourceBase
+    public partial class DscNodeConfiguration
     {
         private DscConfigurationAssociationProperty _configuration;
         

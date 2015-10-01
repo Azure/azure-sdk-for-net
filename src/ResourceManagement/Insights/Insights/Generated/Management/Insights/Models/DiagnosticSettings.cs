@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _description;
         
         /// <summary>
-        /// Optional. The setting description.
+        /// Optional. Gets or sets the setting description.
         /// </summary>
         public string Description
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The setting name.
+        /// Optional. Gets or sets the setting name.
         /// </summary>
         public string Name
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private PublicConfiguration _publicConfiguration;
         
         /// <summary>
-        /// Optional. The public diagnostic configuration.
+        /// Optional. Gets or sets the public diagnostic configuration.
         /// </summary>
         public PublicConfiguration PublicConfiguration
         {

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Storage
         /// same set of properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource
@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.Storage
         /// is already created and subsequent create request is issued with
         /// exact same set of properties, the request succeeds.The max number
         /// of storage accounts that can be created per subscription is
-        /// limited to 20.
+        /// limited to 100.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Deletes a storage account in Microsoft Azure.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Storage
         /// keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Storage
         /// operation for this.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Regenerates the access keys for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource
@@ -203,7 +203,8 @@ namespace Microsoft.Azure.Management.Storage
         /// in length and use numbers and lower-case letters only.
         /// </param>
         /// <param name='regenerateKey'>
-        /// Specifies name of the key which should be regenerated.
+        /// Specifies name of the key which should be regenerated. key1 or key2
+        /// for the default keys
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -211,22 +212,26 @@ namespace Microsoft.Azure.Management.Storage
         /// <returns>
         /// The RegenerateKey operation response.
         /// </returns>
-        Task<StorageAccountRegenerateKeyResponse> RegenerateKeyAsync(string resourceGroupName, string accountName, KeyName regenerateKey, CancellationToken cancellationToken);
+        Task<StorageAccountRegenerateKeyResponse> RegenerateKeyAsync(string resourceGroupName, string accountName, string regenerateKey, CancellationToken cancellationToken);
         
         /// <summary>
         /// Updates the account type or tags for a storage account. It can also
         /// be used to add a custom domain (note that custom domains cannot be
         /// added via the Create operation). Only one custom domain is
-        /// supported per storage account. This API can only be used to update
-        /// one of tags, accountType, or customDomain per call. To update
-        /// multiple of these properties, call the API multiple times with one
-        /// change per call. This call does not change the storage keys for
-        /// the account. If you want to change storage account keys, use the
-        /// RegenerateKey operation. The location and name of the storage
-        /// account cannot be changed after creation.
+        /// supported per storage account. In order to replace a custom
+        /// domain, the old value must be cleared before a new value may be
+        /// set. To clear a custom domain, simply update the custom domain
+        /// with empty string. Then call update again with the new cutsom
+        /// domain name. The update API can only be used to update one of
+        /// tags, accountType, or customDomain per call. To update multiple of
+        /// these properties, call the API multiple times with one change per
+        /// call. This call does not change the storage keys for the account.
+        /// If you want to change storage account keys, use the RegenerateKey
+        /// operation. The location and name of the storage account cannot be
+        /// changed after creation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user’s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource

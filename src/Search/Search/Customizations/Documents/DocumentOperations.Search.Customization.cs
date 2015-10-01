@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Search
         private static DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload) 
             where T : class
         {
-            return JsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
+            return JsonUtility.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
                 payload, 
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
         private static DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
         {
-            return JsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
+            return JsonUtility.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
                 payload, 
                 JsonUtility.DocumentDeserializerSettings);
         }
@@ -160,8 +160,8 @@ namespace Microsoft.Azure.Search
                 // Serialize Request for POST only
                 if (!useGet)
                 {
-                    string requestContent = 
-                        JsonConvert.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
+                    string requestContent =
+                        JsonUtility.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
                     httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                     httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 }

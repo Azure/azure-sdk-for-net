@@ -103,5 +103,45 @@ namespace Microsoft.Azure.Subscriptions
         {
             return operations.ListAsync(CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Gets a list of the subscription locations.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required. Id of the subscription
+        /// </param>
+        /// <returns>
+        /// Location list operation response.
+        /// </returns>
+        public static LocationListResult ListLocations(this ISubscriptionOperations operations, string subscriptionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISubscriptionOperations)s).ListLocationsAsync(subscriptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a list of the subscription locations.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required. Id of the subscription
+        /// </param>
+        /// <returns>
+        /// Location list operation response.
+        /// </returns>
+        public static Task<LocationListResult> ListLocationsAsync(this ISubscriptionOperations operations, string subscriptionId)
+        {
+            return operations.ListLocationsAsync(subscriptionId, CancellationToken.None);
+        }
     }
 }

@@ -16,6 +16,8 @@
 using System;
 using Microsoft.Azure.Management.Search;
 using Microsoft.Azure.Test;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
@@ -37,7 +39,40 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
                 Data = new TTestFixture();
 
-                testBody();
+                Func<JsonSerializerSettings> oldDefault = JsonConvert.DefaultSettings;
+
+                // This should ensure that the SDK doesn't depend on global JSON.NET settings.
+                JsonConvert.DefaultSettings = () =>
+                    new JsonSerializerSettings() { Converters = new[] { new InvalidJsonConverter() } };
+
+                try
+                {
+                    testBody();
+                }
+                finally
+                {
+                    JsonConvert.DefaultSettings = oldDefault;
+                }
+            }
+        }
+
+        private class InvalidJsonConverter : JsonConverter
+        {
+            private const string ErrorMessage = "Some part of the SDK is using JsonConvert.DefaultSettings!";
+
+            public override bool CanConvert(Type objectType)
+            {
+                throw new InvalidOperationException(ErrorMessage);
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                throw new InvalidOperationException(ErrorMessage);
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                throw new InvalidOperationException(ErrorMessage);
             }
         }
     }

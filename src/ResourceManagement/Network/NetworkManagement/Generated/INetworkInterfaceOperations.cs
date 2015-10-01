@@ -140,6 +140,30 @@ namespace Microsoft.Azure.Management.Network
         Task<NetworkInterfaceGetResponse> GetAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get ntework interface operation retreives information about the
+        /// specified network interface in a virtual machine scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualMachineScaleSetName'>
+        /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='virtualmachineIndex'>
+        /// The virtual machine index.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// The name of the network interface.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for GetNetworkInterface Api service call
+        /// </returns>
+        Task<NetworkInterfaceGetResponse> GetVirtualMachineScaleSetNetworkInterfaceAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The List networkInterfaces opertion retrieves all the
         /// networkInterfaces in a resource group.
         /// </summary>
@@ -165,5 +189,23 @@ namespace Microsoft.Azure.Management.Network
         /// Response for ListNetworkInterface Api service call
         /// </returns>
         Task<NetworkInterfaceListResponse> ListAllAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The list network interface operation retrieves information about
+        /// all network interfaces in a virtual machine scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualMachineScaleSetName'>
+        /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for ListNetworkInterface Api service call
+        /// </returns>
+        Task<NetworkInterfaceListResponse> ListVirtualMachineScaleSetNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken);
     }
 }
