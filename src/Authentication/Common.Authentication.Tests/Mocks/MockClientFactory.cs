@@ -79,6 +79,16 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             throw new NotImplementedException();
         }
 
+        public void AddHandler(DelegatingHandler handler)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHandler(Type handlerType)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
         {
             get
