@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
