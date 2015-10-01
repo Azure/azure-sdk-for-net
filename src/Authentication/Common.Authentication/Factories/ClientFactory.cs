@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -28,13 +29,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         private static readonly char[] uriPathSeparator = { '/' };
 
         private Dictionary<Type, IClientAction> actions;
-        private List<DelegatingHandler> handlers;
+        private Dictionary<Type, DelegatingHandler> handlers;
 
         public ClientFactory()
         {
             actions = new Dictionary<Type, IClientAction>();
             UserAgents = new List<ProductInfoHeaderValue>();
-            handlers = new List<DelegatingHandler>();
+            handlers = new Dictionary<Type, DelegatingHandler>();
         }
 
         public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, handlers.ToArray());
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, handlers.Values.ToArray());
 
             var subscriptionId = typeof(TClient).GetProperty("SubscriptionId");
             if (subscriptionId != null && context.Subscription != null)
@@ -92,7 +93,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context, endpoint);
-            TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint), handlers.ToArray());
+            TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
+            foreach(DelegatingHandler handler in handlers.Values.ToArray())
+            {
+                client = client.WithHandler(handler);
+            }
 
             return client;
         }
@@ -230,16 +235,24 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             actions[action.GetType()] = action;
         }
 
-        public void AddHandler(DelegatingHandler handler)
-        {
-            handlers.Add(handler);
-        }
-
         public void RemoveAction(Type actionType)
         {
             if (actions.ContainsKey(actionType))
             {
                 actions.Remove(actionType);
+            }
+        }
+
+        public void AddHandler(DelegatingHandler handler)
+        {
+            handlers[handler.GetType()] = handler;
+        }
+
+        public void RemoveHandler(Type handlerType)
+        {
+            if (handlers.ContainsKey(handlerType))
+            {
+                handlers.Remove(handlerType);
             }
         }
 

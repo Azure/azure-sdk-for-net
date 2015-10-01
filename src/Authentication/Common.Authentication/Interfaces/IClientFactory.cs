@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Common.Authentication
 
         void RemoveAction(Type actionType);
 
-        voic AddHandler(DelegatingHandler handler);
+        void AddHandler(DelegatingHandler handler);
+
+        void RemoveHandler(Type handlerType);
 
         List<ProductInfoHeaderValue> UserAgents { get; set; }
     }
