@@ -28,11 +28,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         private static readonly char[] uriPathSeparator = { '/' };
 
         private Dictionary<Type, IClientAction> actions;
+        private List<DelegatingHandler> handlers;
 
         public ClientFactory()
         {
             actions = new Dictionary<Type, IClientAction>();
             UserAgents = new List<ProductInfoHeaderValue>();
+            handlers = new List<DelegatingHandler>();
         }
 
         public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, handlers.ToArray());
 
             var subscriptionId = typeof(TClient).GetProperty("SubscriptionId");
             if (subscriptionId != null && context.Subscription != null)
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context, endpoint);
-            TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
+            TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint), handlers.ToArray());
 
             return client;
         }
@@ -226,6 +228,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             action.ClientFactory = this;
             actions[action.GetType()] = action;
+        }
+
+        public void AddHandler(DelegatingHandler handler)
+        {
+            handlers.Add(handler);
         }
 
         public void RemoveAction(Type actionType)
