@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         private static IDictionary<string, Type> GetReservedTypesForCopy()
         {
-            return reservedTypesFromAssembly.Value;
+            return new Dictionary<string, Type>(reservedTypesFromAssembly.Value, StringComparer.OrdinalIgnoreCase);
         }
     } 
 }
