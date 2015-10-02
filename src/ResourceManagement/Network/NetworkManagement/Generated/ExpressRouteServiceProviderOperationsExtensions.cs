@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Network
         /// Microsoft.Azure.Management.Network.IExpressRouteServiceProviderOperations.
         /// </param>
         /// <returns>
-        /// Response for ListExpressRouteResourceProvider Api service call
+        /// Response for ListExpressRouteServiceProvider Api service call
         /// </returns>
-        public static ExpressRouteResourceProviderListResponse List(this IExpressRouteServiceProviderOperations operations)
+        public static ExpressRouteServiceProviderListResponse List(this IExpressRouteServiceProviderOperations operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Network
         /// Microsoft.Azure.Management.Network.IExpressRouteServiceProviderOperations.
         /// </param>
         /// <returns>
-        /// Response for ListExpressRouteResourceProvider Api service call
+        /// Response for ListExpressRouteServiceProvider Api service call
         /// </returns>
-        public static Task<ExpressRouteResourceProviderListResponse> ListAsync(this IExpressRouteServiceProviderOperations operations)
+        public static Task<ExpressRouteServiceProviderListResponse> ListAsync(this IExpressRouteServiceProviderOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
         }

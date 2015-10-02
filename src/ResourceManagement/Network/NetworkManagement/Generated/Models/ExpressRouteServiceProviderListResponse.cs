@@ -29,19 +29,19 @@ using Microsoft.Azure.Management.Network.Models;
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Response for ListExpressRouteResourceProvider Api service call
+    /// Response for ListExpressRouteServiceProvider Api service call
     /// </summary>
-    public partial class ExpressRouteResourceProviderListResponse : AzureOperationResponse
+    public partial class ExpressRouteServiceProviderListResponse : AzureOperationResponse
     {
-        private IList<ExpressRouteResourceProvider> _expressRouteResourceProviders;
+        private IList<ExpressRouteServiceProvider> _expressRouteServiceProviders;
         
         /// <summary>
         /// Optional. Gets List of ExpressRouteResourceProvider
         /// </summary>
-        public IList<ExpressRouteResourceProvider> ExpressRouteResourceProviders
+        public IList<ExpressRouteServiceProvider> ExpressRouteServiceProviders
         {
-            get { return this._expressRouteResourceProviders; }
-            set { this._expressRouteResourceProviders = value; }
+            get { return this._expressRouteServiceProviders; }
+            set { this._expressRouteServiceProviders = value; }
         }
         
         private string _nextLink;
@@ -57,11 +57,11 @@ namespace Microsoft.Azure.Management.Network.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// ExpressRouteResourceProviderListResponse class.
+        /// ExpressRouteServiceProviderListResponse class.
         /// </summary>
-        public ExpressRouteResourceProviderListResponse()
+        public ExpressRouteServiceProviderListResponse()
         {
-            this.ExpressRouteResourceProviders = new LazyList<ExpressRouteResourceProvider>();
+            this.ExpressRouteServiceProviders = new LazyList<ExpressRouteServiceProvider>();
         }
     }
 }

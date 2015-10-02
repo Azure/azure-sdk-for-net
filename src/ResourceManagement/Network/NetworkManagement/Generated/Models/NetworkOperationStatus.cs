@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// The status of the asynchronous request.
     /// </summary>
-    public static partial class OperationStatus
+    public static partial class NetworkOperationStatus
     {
         public const string InProgress = "InProgress";
         
