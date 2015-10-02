@@ -30,23 +30,34 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// ExpressRouteResourceProvider object
     /// </summary>
-    public partial class ExpressRouteResourceProvider
+    public partial class ExpressRouteServiceProvider
     {
-        private ExpressRouteServiceProviderBandwidthsOffered _bandwidthsOffered;
+        private IList<ExpressRouteServiceProviderBandwidthsOffered> _bandwidthsOffered;
         
         /// <summary>
         /// Optional. Gets or bandwidths offered
         /// </summary>
-        public ExpressRouteServiceProviderBandwidthsOffered BandwidthsOffered
+        public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered
         {
             get { return this._bandwidthsOffered; }
             set { this._bandwidthsOffered = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the ID of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets name of provider
+        /// Optional. Gets or sets the name of the resource.
         /// </summary>
         public string Name
         {
@@ -65,12 +76,34 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._peeringLocations = value; }
         }
         
+        private string _provisioningState;
+        
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteResourceProvider
-        /// class.
+        /// Optional. Gets or sets Provisioning state of the resource
         /// </summary>
-        public ExpressRouteResourceProvider()
+        public string ProvisioningState
         {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteServiceProvider class.
+        /// </summary>
+        public ExpressRouteServiceProvider()
+        {
+            this.BandwidthsOffered = new LazyList<ExpressRouteServiceProviderBandwidthsOffered>();
             this.PeeringLocations = new LazyList<string>();
         }
     }

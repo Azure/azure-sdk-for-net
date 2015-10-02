@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for ListExpressRouteResourceProvider Api service call
+        /// Response for ListExpressRouteServiceProvider Api service call
         /// </returns>
-        Task<ExpressRouteResourceProviderListResponse> ListAsync(CancellationToken cancellationToken);
+        Task<ExpressRouteServiceProviderListResponse> ListAsync(CancellationToken cancellationToken);
     }
 }

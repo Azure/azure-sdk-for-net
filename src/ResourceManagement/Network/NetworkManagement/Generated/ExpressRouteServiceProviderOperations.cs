@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for ListExpressRouteResourceProvider Api service call
+        /// Response for ListExpressRouteServiceProvider Api service call
         /// </returns>
-        public async Task<ExpressRouteResourceProviderListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<ExpressRouteServiceProviderListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Network
             }
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/expressRouteServiceProvider";
+            url = url + "/expressRouteServiceProviders";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    ExpressRouteResourceProviderListResponse result = null;
+                    ExpressRouteServiceProviderListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ExpressRouteResourceProviderListResponse();
+                        result = new ExpressRouteServiceProviderListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -176,43 +176,71 @@ namespace Microsoft.Azure.Management.Network
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ExpressRouteResourceProvider expressRouteResourceProviderInstance = new ExpressRouteResourceProvider();
-                                    result.ExpressRouteResourceProviders.Add(expressRouteResourceProviderInstance);
+                                    ExpressRouteServiceProvider expressRouteServiceProviderJsonFormatInstance = new ExpressRouteServiceProvider();
+                                    result.ExpressRouteServiceProviders.Add(expressRouteServiceProviderJsonFormatInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        expressRouteServiceProviderJsonFormatInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        expressRouteResourceProviderInstance.Name = nameInstance;
+                                        expressRouteServiceProviderJsonFormatInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken peeringLocationsArray = valueValue["peeringLocations"];
-                                    if (peeringLocationsArray != null && peeringLocationsArray.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken peeringLocationsValue in ((JArray)peeringLocationsArray))
-                                        {
-                                            expressRouteResourceProviderInstance.PeeringLocations.Add(((string)peeringLocationsValue));
-                                        }
+                                        string typeInstance = ((string)typeValue);
+                                        expressRouteServiceProviderJsonFormatInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken bandwidthsOfferedValue = valueValue["bandwidthsOffered"];
-                                    if (bandwidthsOfferedValue != null && bandwidthsOfferedValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ExpressRouteServiceProviderBandwidthsOffered bandwidthsOfferedInstance = new ExpressRouteServiceProviderBandwidthsOffered();
-                                        expressRouteResourceProviderInstance.BandwidthsOffered = bandwidthsOfferedInstance;
-                                        
-                                        JToken offerNameValue = bandwidthsOfferedValue["offerName"];
-                                        if (offerNameValue != null && offerNameValue.Type != JTokenType.Null)
+                                        JToken peeringLocationsArray = propertiesValue["peeringLocations"];
+                                        if (peeringLocationsArray != null && peeringLocationsArray.Type != JTokenType.Null)
                                         {
-                                            string offerNameInstance = ((string)offerNameValue);
-                                            bandwidthsOfferedInstance.OfferName = offerNameInstance;
+                                            foreach (JToken peeringLocationsValue in ((JArray)peeringLocationsArray))
+                                            {
+                                                expressRouteServiceProviderJsonFormatInstance.PeeringLocations.Add(((string)peeringLocationsValue));
+                                            }
                                         }
                                         
-                                        JToken valueInMbpsValue = bandwidthsOfferedValue["valueInMbps"];
-                                        if (valueInMbpsValue != null && valueInMbpsValue.Type != JTokenType.Null)
+                                        JToken bandwidthsOfferedArray = propertiesValue["bandwidthsOffered"];
+                                        if (bandwidthsOfferedArray != null && bandwidthsOfferedArray.Type != JTokenType.Null)
                                         {
-                                            int valueInMbpsInstance = ((int)valueInMbpsValue);
-                                            bandwidthsOfferedInstance.ValueInMbps = valueInMbpsInstance;
+                                            foreach (JToken bandwidthsOfferedValue in ((JArray)bandwidthsOfferedArray))
+                                            {
+                                                ExpressRouteServiceProviderBandwidthsOffered expressRouteServiceProviderBandwidthsOfferedJsonFormatInstance = new ExpressRouteServiceProviderBandwidthsOffered();
+                                                expressRouteServiceProviderJsonFormatInstance.BandwidthsOffered.Add(expressRouteServiceProviderBandwidthsOfferedJsonFormatInstance);
+                                                
+                                                JToken offerNameValue = bandwidthsOfferedValue["offerName"];
+                                                if (offerNameValue != null && offerNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string offerNameInstance = ((string)offerNameValue);
+                                                    expressRouteServiceProviderBandwidthsOfferedJsonFormatInstance.OfferName = offerNameInstance;
+                                                }
+                                                
+                                                JToken valueInMbpsValue = bandwidthsOfferedValue["valueInMbps"];
+                                                if (valueInMbpsValue != null && valueInMbpsValue.Type != JTokenType.Null)
+                                                {
+                                                    int valueInMbpsInstance = ((int)valueInMbpsValue);
+                                                    expressRouteServiceProviderBandwidthsOfferedJsonFormatInstance.ValueInMbps = valueInMbpsInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            expressRouteServiceProviderJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                     }
                                 }
