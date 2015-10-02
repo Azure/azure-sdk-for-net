@@ -1408,9 +1408,9 @@ namespace Microsoft.Azure.Management.HDInsight
                     // Deserialize Response
                     result = new HDInsightOperationResponse();
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("Location"))
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -1840,9 +1840,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<ClusterGetResponse> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        public async Task<OperationResource> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1859,13 +1859,13 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginDeletingAsync(resourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            ClusterGetResponse result = await client.Clusters.GetDeleteStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            OperationResource result = await client.Clusters.GetDeleteStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.StatusCode != System.Net.HttpStatusCode.Accepted) == false)
+            while ((result.State != Microsoft.Azure.Management.HDInsight.Models.AsyncOperationState.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2787,7 +2787,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The name of the cluster.
+        /// Required. The type name of the hadoop congfiguration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3648,9 +3648,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<ClusterGetResponse> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -3704,7 +3704,7 @@ namespace Microsoft.Azure.Management.HDInsight
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -3716,13 +3716,13 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
                     
                     // Create Result
-                    ClusterGetResponse result = null;
+                    OperationResource result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ClusterGetResponse();
+                        result = new OperationResource();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -3731,382 +3731,31 @@ namespace Microsoft.Azure.Management.HDInsight
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Cluster clusterInstance = new Cluster();
-                            result.Cluster = clusterInstance;
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                clusterInstance.Id = idInstance;
+                                AsyncOperationState statusInstance = ((AsyncOperationState)Enum.Parse(typeof(AsyncOperationState), ((string)statusValue), true));
+                                result.State = statusInstance;
                             }
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
                             {
-                                string nameInstance = ((string)nameValue);
-                                clusterInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                clusterInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                clusterInstance.Location = locationInstance;
-                            }
-                            
-                            JToken etagValue = responseDoc["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
-                            {
-                                string etagInstance = ((string)etagValue);
-                                clusterInstance.ETag = etagInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    clusterInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                ClusterGetProperties propertiesInstance = new ClusterGetProperties();
-                                clusterInstance.Properties = propertiesInstance;
+                                ErrorInfo errorInstance = new ErrorInfo();
+                                result.ErrorInfo = errorInstance;
                                 
-                                JToken clusterVersionValue = propertiesValue["clusterVersion"];
-                                if (clusterVersionValue != null && clusterVersionValue.Type != JTokenType.Null)
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
                                 {
-                                    string clusterVersionInstance = ((string)clusterVersionValue);
-                                    propertiesInstance.ClusterVersion = clusterVersionInstance;
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
                                 }
                                 
-                                JToken osTypeValue = propertiesValue["osType"];
-                                if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
-                                    OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
-                                    propertiesInstance.OperatingSystemType = osTypeInstance;
-                                }
-                                
-                                JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
-                                if (clusterDefinitionValue != null && clusterDefinitionValue.Type != JTokenType.Null)
-                                {
-                                    ClusterDefinition clusterDefinitionInstance = new ClusterDefinition();
-                                    propertiesInstance.ClusterDefinition = clusterDefinitionInstance;
-                                    
-                                    JToken blueprintValue = clusterDefinitionValue["blueprint"];
-                                    if (blueprintValue != null && blueprintValue.Type != JTokenType.Null)
-                                    {
-                                        Uri blueprintInstance = TypeConversion.TryParseUri(((string)blueprintValue));
-                                        clusterDefinitionInstance.BlueprintUri = blueprintInstance;
-                                    }
-                                    
-                                    JToken kindValue = clusterDefinitionValue["kind"];
-                                    if (kindValue != null && kindValue.Type != JTokenType.Null)
-                                    {
-                                        HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
-                                        clusterDefinitionInstance.ClusterType = kindInstance;
-                                    }
-                                    
-                                    JToken configurationsValue = clusterDefinitionValue["configurations"];
-                                    if (configurationsValue != null && configurationsValue.Type != JTokenType.Null)
-                                    {
-                                        string configurationsInstance = configurationsValue.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        clusterDefinitionInstance.Configurations = configurationsInstance;
-                                    }
-                                }
-                                
-                                JToken computeProfileValue = propertiesValue["computeProfile"];
-                                if (computeProfileValue != null && computeProfileValue.Type != JTokenType.Null)
-                                {
-                                    ComputeProfile computeProfileInstance = new ComputeProfile();
-                                    propertiesInstance.ComputeProfile = computeProfileInstance;
-                                    
-                                    JToken rolesArray = computeProfileValue["roles"];
-                                    if (rolesArray != null && rolesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken rolesValue in ((JArray)rolesArray))
-                                        {
-                                            Role roleInstance = new Role();
-                                            computeProfileInstance.Roles.Add(roleInstance);
-                                            
-                                            JToken nameValue2 = rolesValue["name"];
-                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                            {
-                                                string nameInstance2 = ((string)nameValue2);
-                                                roleInstance.Name = nameInstance2;
-                                            }
-                                            
-                                            JToken targetInstanceCountValue = rolesValue["targetInstanceCount"];
-                                            if (targetInstanceCountValue != null && targetInstanceCountValue.Type != JTokenType.Null)
-                                            {
-                                                int targetInstanceCountInstance = ((int)targetInstanceCountValue);
-                                                roleInstance.TargetInstanceCount = targetInstanceCountInstance;
-                                            }
-                                            
-                                            JToken hardwareProfileValue = rolesValue["hardwareProfile"];
-                                            if (hardwareProfileValue != null && hardwareProfileValue.Type != JTokenType.Null)
-                                            {
-                                                HardwareProfile hardwareProfileInstance = new HardwareProfile();
-                                                roleInstance.HardwareProfile = hardwareProfileInstance;
-                                                
-                                                JToken vmSizeValue = hardwareProfileValue["vmSize"];
-                                                if (vmSizeValue != null && vmSizeValue.Type != JTokenType.Null)
-                                                {
-                                                    string vmSizeInstance = ((string)vmSizeValue);
-                                                    hardwareProfileInstance.VmSize = vmSizeInstance;
-                                                }
-                                            }
-                                            
-                                            JToken osProfileValue = rolesValue["osProfile"];
-                                            if (osProfileValue != null && osProfileValue.Type != JTokenType.Null)
-                                            {
-                                                OsProfile osProfileInstance = new OsProfile();
-                                                roleInstance.OsProfile = osProfileInstance;
-                                                
-                                                JToken windowsOperatingSystemProfileValue = osProfileValue["windowsOperatingSystemProfile"];
-                                                if (windowsOperatingSystemProfileValue != null && windowsOperatingSystemProfileValue.Type != JTokenType.Null)
-                                                {
-                                                    WindowsOperatingSystemProfile windowsOperatingSystemProfileInstance = new WindowsOperatingSystemProfile();
-                                                    osProfileInstance.WindowsOperatingSystemProfile = windowsOperatingSystemProfileInstance;
-                                                    
-                                                    JToken rdpSettingsValue = windowsOperatingSystemProfileValue["rdpSettings"];
-                                                    if (rdpSettingsValue != null && rdpSettingsValue.Type != JTokenType.Null)
-                                                    {
-                                                        RdpSettings rdpSettingsInstance = new RdpSettings();
-                                                        windowsOperatingSystemProfileInstance.RdpSettings = rdpSettingsInstance;
-                                                        
-                                                        JToken usernameValue = rdpSettingsValue["username"];
-                                                        if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                                        {
-                                                            string usernameInstance = ((string)usernameValue);
-                                                            rdpSettingsInstance.UserName = usernameInstance;
-                                                        }
-                                                        
-                                                        JToken passwordValue = rdpSettingsValue["password"];
-                                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                                        {
-                                                            string passwordInstance = ((string)passwordValue);
-                                                            rdpSettingsInstance.Password = passwordInstance;
-                                                        }
-                                                        
-                                                        JToken expiryDateValue = rdpSettingsValue["expiryDate"];
-                                                        if (expiryDateValue != null && expiryDateValue.Type != JTokenType.Null)
-                                                        {
-                                                            DateTime expiryDateInstance = ((DateTime)expiryDateValue);
-                                                            rdpSettingsInstance.ExpiryDate = expiryDateInstance;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken linuxOperatingSystemProfileValue = osProfileValue["linuxOperatingSystemProfile"];
-                                                if (linuxOperatingSystemProfileValue != null && linuxOperatingSystemProfileValue.Type != JTokenType.Null)
-                                                {
-                                                    LinuxOperatingSystemProfile linuxOperatingSystemProfileInstance = new LinuxOperatingSystemProfile();
-                                                    osProfileInstance.LinuxOperatingSystemProfile = linuxOperatingSystemProfileInstance;
-                                                    
-                                                    JToken usernameValue2 = linuxOperatingSystemProfileValue["username"];
-                                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string usernameInstance2 = ((string)usernameValue2);
-                                                        linuxOperatingSystemProfileInstance.UserName = usernameInstance2;
-                                                    }
-                                                    
-                                                    JToken passwordValue2 = linuxOperatingSystemProfileValue["password"];
-                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance2 = ((string)passwordValue2);
-                                                        linuxOperatingSystemProfileInstance.Password = passwordInstance2;
-                                                    }
-                                                    
-                                                    JToken sshProfileValue = linuxOperatingSystemProfileValue["sshProfile"];
-                                                    if (sshProfileValue != null && sshProfileValue.Type != JTokenType.Null)
-                                                    {
-                                                        SshProfile sshProfileInstance = new SshProfile();
-                                                        linuxOperatingSystemProfileInstance.SshProfile = sshProfileInstance;
-                                                        
-                                                        JToken publicKeysArray = sshProfileValue["publicKeys"];
-                                                        if (publicKeysArray != null && publicKeysArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken publicKeysValue in ((JArray)publicKeysArray))
-                                                            {
-                                                                SshPublicKey sshPublicKeyInstance = new SshPublicKey();
-                                                                sshProfileInstance.SshPublicKeys.Add(sshPublicKeyInstance);
-                                                                
-                                                                JToken certificateDataValue = publicKeysValue["certificateData"];
-                                                                if (certificateDataValue != null && certificateDataValue.Type != JTokenType.Null)
-                                                                {
-                                                                    string certificateDataInstance = ((string)certificateDataValue);
-                                                                    sshPublicKeyInstance.CertificateData = certificateDataInstance;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken virtualNetworkProfileValue = rolesValue["virtualNetworkProfile"];
-                                            if (virtualNetworkProfileValue != null && virtualNetworkProfileValue.Type != JTokenType.Null)
-                                            {
-                                                VirtualNetworkProfile virtualNetworkProfileInstance = new VirtualNetworkProfile();
-                                                roleInstance.VirtualNetworkProfile = virtualNetworkProfileInstance;
-                                                
-                                                JToken idValue2 = virtualNetworkProfileValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    virtualNetworkProfileInstance.Id = idInstance2;
-                                                }
-                                                
-                                                JToken subnetValue = virtualNetworkProfileValue["subnet"];
-                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
-                                                {
-                                                    string subnetInstance = ((string)subnetValue);
-                                                    virtualNetworkProfileInstance.SubnetName = subnetInstance;
-                                                }
-                                            }
-                                            
-                                            JToken scriptActionsArray = rolesValue["scriptActions"];
-                                            if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken scriptActionsValue in ((JArray)scriptActionsArray))
-                                                {
-                                                    ScriptAction scriptActionInstance = new ScriptAction();
-                                                    roleInstance.ScriptActions.Add(scriptActionInstance);
-                                                    
-                                                    JToken nameValue3 = scriptActionsValue["name"];
-                                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance3 = ((string)nameValue3);
-                                                        scriptActionInstance.Name = nameInstance3;
-                                                    }
-                                                    
-                                                    JToken uriValue = scriptActionsValue["uri"];
-                                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                    {
-                                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                                        scriptActionInstance.Uri = uriInstance;
-                                                    }
-                                                    
-                                                    JToken parametersValue = scriptActionsValue["parameters"];
-                                                    if (parametersValue != null && parametersValue.Type != JTokenType.Null)
-                                                    {
-                                                        string parametersInstance = ((string)parametersValue);
-                                                        scriptActionInstance.Parameters = parametersInstance;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    HDInsightClusterProvisioningState provisioningStateInstance = ((HDInsightClusterProvisioningState)Enum.Parse(typeof(HDInsightClusterProvisioningState), ((string)provisioningStateValue), true));
-                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                
-                                JToken createdDateValue = propertiesValue["createdDate"];
-                                if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
-                                {
-                                    DateTime createdDateInstance = ((DateTime)createdDateValue);
-                                    propertiesInstance.CreatedDate = createdDateInstance;
-                                }
-                                
-                                JToken clusterStateValue = propertiesValue["clusterState"];
-                                if (clusterStateValue != null && clusterStateValue.Type != JTokenType.Null)
-                                {
-                                    string clusterStateInstance = ((string)clusterStateValue);
-                                    propertiesInstance.ClusterState = clusterStateInstance;
-                                }
-                                
-                                JToken quotaInfoValue = propertiesValue["quotaInfo"];
-                                if (quotaInfoValue != null && quotaInfoValue.Type != JTokenType.Null)
-                                {
-                                    QuotaInfo quotaInfoInstance = new QuotaInfo();
-                                    propertiesInstance.QuotaInfo = quotaInfoInstance;
-                                    
-                                    JToken coresUsedValue = quotaInfoValue["coresUsed"];
-                                    if (coresUsedValue != null && coresUsedValue.Type != JTokenType.Null)
-                                    {
-                                        int coresUsedInstance = ((int)coresUsedValue);
-                                        quotaInfoInstance.CoresUsed = coresUsedInstance;
-                                    }
-                                }
-                                
-                                JToken errorsArray = propertiesValue["errors"];
-                                if (errorsArray != null && errorsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken errorsValue in ((JArray)errorsArray))
-                                    {
-                                        ErrorInfo errorInfoInstance = new ErrorInfo();
-                                        propertiesInstance.ErrorInfos.Add(errorInfoInstance);
-                                        
-                                        JToken codeValue = errorsValue["code"];
-                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                        {
-                                            string codeInstance = ((string)codeValue);
-                                            errorInfoInstance.Code = codeInstance;
-                                        }
-                                        
-                                        JToken messageValue = errorsValue["message"];
-                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                        {
-                                            string messageInstance = ((string)messageValue);
-                                            errorInfoInstance.Message = messageInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken connectivityEndpointsArray = propertiesValue["connectivityEndpoints"];
-                                if (connectivityEndpointsArray != null && connectivityEndpointsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken connectivityEndpointsValue in ((JArray)connectivityEndpointsArray))
-                                    {
-                                        ConnectivityEndpoint connectivityEndpointInstance = new ConnectivityEndpoint();
-                                        propertiesInstance.ConnectivityEndpoints.Add(connectivityEndpointInstance);
-                                        
-                                        JToken nameValue4 = connectivityEndpointsValue["name"];
-                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance4 = ((string)nameValue4);
-                                            connectivityEndpointInstance.Name = nameInstance4;
-                                        }
-                                        
-                                        JToken protocolValue = connectivityEndpointsValue["protocol"];
-                                        if (protocolValue != null && protocolValue.Type != JTokenType.Null)
-                                        {
-                                            string protocolInstance = ((string)protocolValue);
-                                            connectivityEndpointInstance.Protocol = protocolInstance;
-                                        }
-                                        
-                                        JToken locationValue2 = connectivityEndpointsValue["location"];
-                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance2 = ((string)locationValue2);
-                                            connectivityEndpointInstance.Location = locationInstance2;
-                                        }
-                                        
-                                        JToken portValue = connectivityEndpointsValue["port"];
-                                        if (portValue != null && portValue.Type != JTokenType.Null)
-                                        {
-                                            int portInstance = ((int)portValue);
-                                            connectivityEndpointInstance.Port = portInstance;
-                                        }
-                                    }
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
                                 }
                             }
                         }

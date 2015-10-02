@@ -203,9 +203,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<ClusterGetResponse> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        Task<OperationResource> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the specified cluster.
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the cluster.
+        /// The type name of the hadoop congfiguration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -299,9 +299,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<ClusterGetResponse> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Lists HDInsight clusters under the subscription.

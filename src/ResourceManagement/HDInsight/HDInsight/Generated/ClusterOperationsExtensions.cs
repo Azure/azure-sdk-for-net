@@ -459,9 +459,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static ClusterGetResponse Delete(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        public static OperationResource Delete(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -484,9 +484,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<ClusterGetResponse> DeleteAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        public static Task<OperationResource> DeleteAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return operations.DeleteAsync(resourceGroupName, clusterName, CancellationToken.None);
         }
@@ -591,7 +591,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The name of the cluster.
+        /// Required. The type name of the hadoop congfiguration.
         /// </param>
         /// <returns>
         /// The Cluster Configurations operation response.
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// Required. The name of the cluster.
+        /// Required. The type name of the hadoop congfiguration.
         /// </param>
         /// <returns>
         /// The Cluster Configurations operation response.
@@ -726,9 +726,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static ClusterGetResponse GetDeleteStatus(this IClusterOperations operations, string operationStatusLink)
+        public static OperationResource GetDeleteStatus(this IClusterOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -748,9 +748,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<ClusterGetResponse> GetDeleteStatusAsync(this IClusterOperations operations, string operationStatusLink)
+        public static Task<OperationResource> GetDeleteStatusAsync(this IClusterOperations operations, string operationStatusLink)
         {
             return operations.GetDeleteStatusAsync(operationStatusLink, CancellationToken.None);
         }
