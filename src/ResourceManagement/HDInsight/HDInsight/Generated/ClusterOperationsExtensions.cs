@@ -306,9 +306,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse ConfigureHttpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
+        public static OperationResource ConfigureHttpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -334,9 +334,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ConfigureHttpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
+        public static Task<OperationResource> ConfigureHttpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
         {
             return operations.ConfigureHttpSettingsAsync(resourceGroupName, clusterName, httpSettingsParameters, CancellationToken.None);
         }
@@ -358,9 +358,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The OS profile for RDP. Use null to turn RDP off.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse ConfigureRdpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
+        public static OperationResource ConfigureRdpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -386,9 +386,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The OS profile for RDP. Use null to turn RDP off.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ConfigureRdpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
+        public static Task<OperationResource> ConfigureRdpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
         {
             return operations.ConfigureRdpSettingsAsync(resourceGroupName, clusterName, rdpParameters, CancellationToken.None);
         }
@@ -846,9 +846,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The parameters for the resize operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
+        public static OperationResource Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -874,9 +874,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The parameters for the resize operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
+        public static Task<OperationResource> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
         {
             return operations.ResizeAsync(resourceGroupName, clusterName, resizeParameters, CancellationToken.None);
         }

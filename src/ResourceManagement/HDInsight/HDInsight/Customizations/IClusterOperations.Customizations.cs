@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> EnableHttpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> EnableHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        Task<OperationResource> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Begins disabling HTTP on the specified cluster.
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> EnableRdpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> EnableRdpAsync(string resourceGroupName, string clusterName,
             string rdpUsername, string rdpPassword, DateTime rdpExpiryDate, CancellationToken cancellationToken);
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> DisableRdpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> DisableRdpAsync(string resourceGroupName, string clusterName,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
+        Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
             CancellationToken cancellationToken);
 
         /// <summary>

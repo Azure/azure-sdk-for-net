@@ -31,7 +31,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.HDInsight.Models;
 using Newtonsoft.Json.Linq;
@@ -215,11 +214,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -465,11 +460,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -1584,11 +1575,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -1638,9 +1625,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1658,27 +1645,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginConfiguringHttpSettingsAsync(resourceGroupName, clusterName, httpSettingsParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.State != Microsoft.Azure.Management.HDInsight.Models.AsyncOperationState.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
@@ -1709,9 +1688,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1729,27 +1708,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginConfiguringRdpSettingsAsync(resourceGroupName, clusterName, rdpParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.State != Microsoft.Azure.Management.HDInsight.Models.AsyncOperationState.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
@@ -4866,9 +4837,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -4886,27 +4857,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginResizingAsync(resourceGroupName, clusterName, resizeParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.State != Microsoft.Azure.Management.HDInsight.Models.AsyncOperationState.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
