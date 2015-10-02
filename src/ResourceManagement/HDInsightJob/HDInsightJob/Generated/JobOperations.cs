@@ -95,6 +95,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/jobs/";
             url = url + Uri.EscapeDataString(jobId);
@@ -663,6 +664,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/jobs/";
             url = url + Uri.EscapeDataString(jobId);
@@ -1222,6 +1224,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/jobs";
             List<string> queryParameters = new List<string>();
@@ -1811,6 +1814,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/hive";
             List<string> queryParameters = new List<string>();
@@ -1958,6 +1962,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/mapreduce/jar";
             List<string> queryParameters = new List<string>();
@@ -2105,6 +2110,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/mapreduce/streaming";
             List<string> queryParameters = new List<string>();
@@ -2252,6 +2258,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/pig";
             List<string> queryParameters = new List<string>();
@@ -2399,6 +2406,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             
             // Construct URL
             string url = "";
+            url = url + "https://";
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/sqoop";
             List<string> queryParameters = new List<string>();
