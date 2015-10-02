@@ -57,7 +57,9 @@
     <None Include="SessionRecords\Networks.Tests.ExpressRouteCircuitTests\ExpressRouteCircuitWithPeeringApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Networks.Tests.ExpressRouteServiceProviderTests\ExpressRouteServiceProviderTest.json" />
+    <None Include="SessionRecords\Networks.Tests.ExpressRouteServiceProviderTests\ExpressRouteServiceProviderTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
