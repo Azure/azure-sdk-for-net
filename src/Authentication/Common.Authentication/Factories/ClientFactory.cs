@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,14 +29,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
     {
         private static readonly char[] uriPathSeparator = { '/' };
 
-        private Dictionary<Type, IClientAction> actions;
-        private Dictionary<Type, DelegatingHandler> handlers;
+        private Dictionary<Type, IClientAction> _actions;
+        private OrderedDictionary _handlers;
 
         public ClientFactory()
         {
-            actions = new Dictionary<Type, IClientAction>();
+            _actions = new Dictionary<Type, IClientAction>();
             UserAgents = new List<ProductInfoHeaderValue>();
-            handlers = new Dictionary<Type, DelegatingHandler>();
+            _handlers = new OrderedDictionary();
         }
 
         public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
@@ -109,7 +110,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             TClient client = CreateClient<TClient>(profile.Context, endpoint);
 
-            foreach (IClientAction action in actions.Values)
+            foreach (IClientAction action in _actions.Values)
             {
                 action.Apply<TClient>(client, profile, endpoint);
             }
@@ -146,7 +147,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             TClient client = CreateClient<TClient>(context, endpoint);
 
-            foreach (IClientAction action in actions.Values)
+            foreach (IClientAction action in _actions.Values)
             {
                 action.Apply<TClient>(client, profile, endpoint);
             }
@@ -237,15 +238,15 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             if (action != null)
             {
                 action.ClientFactory = this;
-                actions[action.GetType()] = action;
+                _actions[action.GetType()] = action;
             }
         }
 
         public void RemoveAction(Type actionType)
         {
-            if (actions.ContainsKey(actionType))
+            if (_actions.ContainsKey(actionType))
             {
-                actions.Remove(actionType);
+                _actions.Remove(actionType);
             }
         }
 
@@ -253,15 +254,15 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (handler != null)
             {
-                handlers[handler.GetType()] = handler;
+                _handlers[handler.GetType()] = handler;
             }
         }
 
         public void RemoveHandler(Type handlerType)
         {
-            if (handlers.ContainsKey(handlerType))
+            if (_handlers.Contains(handlerType))
             {
-                handlers.Remove(handlerType);
+                _handlers.Remove(handlerType);
             }
         }
 
@@ -270,8 +271,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         private DelegatingHandler[] GetCustomHandlers()
         {
             List<DelegatingHandler> newHandlers = new List<DelegatingHandler>();
-            foreach (var handler in handlers.Values)
+            var enumerator = _handlers.GetEnumerator();
+            while (enumerator.MoveNext())
             {
+                var handler = enumerator.Value;
                 ICloneable cloneableHandler = handler as ICloneable;
                 if (cloneableHandler != null)
                 {
@@ -283,6 +286,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                     }
                 }
             }
+
             return newHandlers.ToArray();
         }
     }
