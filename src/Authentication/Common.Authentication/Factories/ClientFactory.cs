@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, handlers.Values.ToArray());
+            var newHandlers = GetCustomHandlers();
+            TClient client = (newHandlers == null || newHandlers.Length == 0)
+                ? CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds)
+                : CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, GetCustomHandlers());
 
             var subscriptionId = typeof(TClient).GetProperty("SubscriptionId");
             if (subscriptionId != null && context.Subscription != null)
@@ -94,7 +97,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context, endpoint);
             TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
-            foreach(DelegatingHandler handler in handlers.Values.ToArray())
+            foreach(DelegatingHandler handler in GetCustomHandlers())
             {
                 client.AddHandlerToPipeline(handler);
             }
@@ -246,7 +249,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
         }
 
-        public void AddHandler(DelegatingHandler handler)
+        public void AddHandler<T>(T handler) where T: DelegatingHandler, ICloneable
         {
             if (handler != null)
             {
@@ -263,5 +266,24 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         }
 
         public List<ProductInfoHeaderValue> UserAgents { get; set; }
+
+        private DelegatingHandler[] GetCustomHandlers()
+        {
+            List<DelegatingHandler> newHandlers = new List<DelegatingHandler>();
+            foreach (var handler in handlers.Values)
+            {
+                ICloneable cloneableHandler = handler as ICloneable;
+                if (cloneableHandler != null)
+                {
+                    var newHandler = cloneableHandler.Clone();
+                    DelegatingHandler convertedHandler = newHandler as DelegatingHandler;
+                    if (convertedHandler != null)
+                    {
+                        newHandlers.Add(convertedHandler);
+                    }
+                }
+            }
+            return newHandlers.ToArray();
+        }
     }
 }
