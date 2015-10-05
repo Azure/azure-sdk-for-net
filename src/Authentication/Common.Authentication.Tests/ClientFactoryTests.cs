@@ -17,7 +17,10 @@ using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.WindowsAzure.Management.Storage;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Security;
+using Microsoft.Azure.Common.Authentication.Factories;
+using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
 using Xunit;
 
 namespace Common.Authentication.Test
