@@ -44,6 +44,10 @@ namespace Microsoft.Azure.Common.Authentication
 
         void RemoveAction(Type actionType);
 
+        void AddHandler<T>(T handler) where T: DelegatingHandler, ICloneable;
+
+        void RemoveHandler(Type handlerType);
+
         List<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }
