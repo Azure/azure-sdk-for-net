@@ -20,17 +20,17 @@ namespace Microsoft.Azure.Management.WebSites
     using Models;
 
     /// <summary>
-    /// CertificatesOperations operations.
+    /// CertificateOrdersOperations operations.
     /// </summary>
-    internal partial class CertificatesOperations : IServiceOperations<WebSiteManagementClient>, ICertificatesOperations
+    internal partial class CertificateOrdersOperations : IServiceOperations<WebSiteManagementClient>, ICertificateOrdersOperations
     {
         /// <summary>
-        /// Initializes a new instance of the CertificatesOperations class.
+        /// Initializes a new instance of the CertificateOrdersOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal CertificatesOperations(WebSiteManagementClient client)
+        internal CertificateOrdersOperations(WebSiteManagementClient client)
         {
             if (client == null) 
             {
@@ -45,157 +45,29 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get certificates for a subscription in the specified resource group.
+        /// Get certificate associated with the certificate order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<CertificateCollection>> GetCertificatesWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetCertificates", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<CertificateCollection>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<CertificateCollection>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Get a certificate by certificate name for a subscription in the specified
-        /// resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
+        /// <param name='certificateOrderName'>
+        /// Certificate name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
+        /// Certificate name/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Certificate>> GetCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrderCertificate>> GetCertificateWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (certificateOrderName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
             }
             if (name == null)
             {
@@ -217,13 +89,15 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{certificateOrderName}", Uri.EscapeDataString(certificateOrderName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -299,7 +173,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Certificate>();
+            var result = new AzureOperationResponse<CertificateOrderCertificate>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -310,7 +184,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Certificate>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCertificate>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -320,37 +194,44 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Creates or modifies an existing certificate.
+        /// Associates a Key Vault secret to a certificate store that will be used for
+        /// storing the certificate once it's ready
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
+        /// <param name='certificateOrderName'>
+        /// Certificate name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
-        /// <param name='certificateEnvelope'>
-        /// Details of certificate if it exists already./// </param>
+        /// Certificate name/// </param>
+        /// <param name='keyVaultCertificate'>
+        /// Key Vault secret csm Id/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Certificate>> CreateOrUpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Certificate certificateEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrderCertificate>> CreateOrUpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name, CertificateOrderCertificate keyVaultCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (certificateOrderName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (certificateEnvelope == null)
+            if (keyVaultCertificate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateEnvelope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "keyVaultCertificate");
             }
-            if (certificateEnvelope != null)
+            if (keyVaultCertificate != null)
             {
-                certificateEnvelope.Validate();
+                keyVaultCertificate.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -368,14 +249,16 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("certificateEnvelope", certificateEnvelope);
+                tracingParameters.Add("keyVaultCertificate", keyVaultCertificate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{certificateOrderName}", Uri.EscapeDataString(certificateOrderName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -420,7 +303,7 @@ namespace Microsoft.Azure.Management.WebSites
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(certificateEnvelope, this.Client.SerializationSettings);
+            string requestContent = JsonConvert.SerializeObject(keyVaultCertificate, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
@@ -455,7 +338,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Certificate>();
+            var result = new AzureOperationResponse<CertificateOrderCertificate>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -466,7 +349,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Certificate>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCertificate>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -476,24 +359,29 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Delete a certificate by name in a specificed subscription and
-        /// resourcegroup.
+        /// Deletes the certificate associated with the certificate order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
+        /// <param name='certificateOrderName'>
+        /// Certificate name/// </param>
         /// <param name='name'>
-        /// Name of the certificate to be deleted./// </param>
+        /// Certificate name/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteCertificateWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (certificateOrderName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
             }
             if (name == null)
             {
@@ -515,13 +403,15 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "DeleteCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{certificateOrderName}", Uri.EscapeDataString(certificateOrderName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -618,33 +508,40 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Creates or modifies an existing certificate.
+        /// Associates a Key Vault secret to a certificate store that will be used for
+        /// storing the certificate once it's ready
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
+        /// <param name='certificateOrderName'>
+        /// Certificate name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
-        /// <param name='certificateEnvelope'>
-        /// Details of certificate if it exists already./// </param>
+        /// Certificate name/// </param>
+        /// <param name='keyVaultCertificate'>
+        /// Key Vault secret csm Id/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Certificate>> UpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Certificate certificateEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrderCertificate>> UpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name, CertificateOrderCertificate keyVaultCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (certificateOrderName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (certificateEnvelope == null)
+            if (keyVaultCertificate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateEnvelope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "keyVaultCertificate");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -662,14 +559,16 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("certificateEnvelope", certificateEnvelope);
+                tracingParameters.Add("keyVaultCertificate", keyVaultCertificate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "UpdateCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{certificateOrderName}", Uri.EscapeDataString(certificateOrderName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -714,7 +613,7 @@ namespace Microsoft.Azure.Management.WebSites
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(certificateEnvelope, this.Client.SerializationSettings);
+            string requestContent = JsonConvert.SerializeObject(keyVaultCertificate, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
@@ -749,7 +648,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Certificate>();
+            var result = new AzureOperationResponse<CertificateOrderCertificate>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -760,7 +659,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Certificate>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCertificate>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -770,154 +669,19 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Gets the certificate signing requests for a subscription in the specified
-        /// resource group
+        /// Get a certificate order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<IList<Csr>>> GetCsrsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetCsrs", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<IList<Csr>>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IList<Csr>>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a certificate signing request by certificate name for a subscription
-        /// in the specified resource group
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
+        /// Certificate name/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Csr>> GetCsrWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrder>> GetCertificateOrderWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -945,10 +709,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetCsr", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetCertificateOrder", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1025,7 +789,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Csr>();
+            var result = new AzureOperationResponse<CertificateOrder>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1036,7 +800,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Csr>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrder>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1046,21 +810,21 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Creates or modifies an existing certificate signing request.
+        /// Create or update a certificate purchase order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
-        /// <param name='csrEnvelope'>
-        /// Details of certificate signing request if it exists already./// </param>
+        /// Certificate name/// </param>
+        /// <param name='certificateDistinguishedName'>
+        /// Distinguished name to be used for purchasing certificate/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Csr>> CreateOrUpdateCsrWithHttpMessagesAsync(string resourceGroupName, string name, Csr csrEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrder>> CreateOrUpdateCertificateOrderWithHttpMessagesAsync(string resourceGroupName, string name, CertificateOrder certificateDistinguishedName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1070,13 +834,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (csrEnvelope == null)
+            if (certificateDistinguishedName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "csrEnvelope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateDistinguishedName");
             }
-            if (csrEnvelope != null)
+            if (certificateDistinguishedName != null)
             {
-                csrEnvelope.Validate();
+                certificateDistinguishedName.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1095,12 +859,12 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("csrEnvelope", csrEnvelope);
+                tracingParameters.Add("certificateDistinguishedName", certificateDistinguishedName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateCsr", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateCertificateOrder", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1146,7 +910,7 @@ namespace Microsoft.Azure.Management.WebSites
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(csrEnvelope, this.Client.SerializationSettings);
+            string requestContent = JsonConvert.SerializeObject(certificateDistinguishedName, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
@@ -1181,7 +945,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Csr>();
+            var result = new AzureOperationResponse<CertificateOrder>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1192,7 +956,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Csr>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrder>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1202,19 +966,19 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Delete the certificate signing request.
+        /// Delete an existing certificate order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
         /// <param name='name'>
-        /// Name of the certificate signing request./// </param>
+        /// Certificate name/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteCsrWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteCertificateOrderWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1242,10 +1006,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteCsr", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteCertificateOrder", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1343,21 +1107,21 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Creates or modifies an existing certificate signing request.
+        /// Create or update a certificate purchase order
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group/// </param>
+        /// Azure resource group name/// </param>
         /// <param name='name'>
-        /// Name of the certificate./// </param>
-        /// <param name='csrEnvelope'>
-        /// Details of certificate signing request if it exists already./// </param>
+        /// Certificate name/// </param>
+        /// <param name='certificateDistinguishedName'>
+        /// Distinguished name to be used for purchasing certificate/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Csr>> UpdateCsrWithHttpMessagesAsync(string resourceGroupName, string name, Csr csrEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrder>> UpdateCertificateOrderWithHttpMessagesAsync(string resourceGroupName, string name, CertificateOrder certificateDistinguishedName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1367,9 +1131,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (csrEnvelope == null)
+            if (certificateDistinguishedName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "csrEnvelope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateDistinguishedName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1388,12 +1152,12 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("csrEnvelope", csrEnvelope);
+                tracingParameters.Add("certificateDistinguishedName", certificateDistinguishedName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateCsr", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateCertificateOrder", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1439,7 +1203,7 @@ namespace Microsoft.Azure.Management.WebSites
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(csrEnvelope, this.Client.SerializationSettings);
+            string requestContent = JsonConvert.SerializeObject(certificateDistinguishedName, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
@@ -1474,7 +1238,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Csr>();
+            var result = new AzureOperationResponse<CertificateOrder>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1485,7 +1249,282 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Csr>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrder>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get certificate orders in a resource group
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure resource group name/// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<CertificateOrderCollection>> GetCertificateOrdersWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetCertificateOrders", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<CertificateOrderCollection>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCollection>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// List all certificates associated with a certificate order (only one
+        /// certificate can be associated with an order at a time)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure resource group name/// </param>
+        /// <param name='certificateOrderName'>
+        /// Certificate name/// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<CertificateOrderCertificateCollection>> GetCertificatesWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (certificateOrderName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("certificateOrderName", certificateOrderName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetCertificates", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{certificateOrderName}", Uri.EscapeDataString(certificateOrderName));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<CertificateOrderCertificateCollection>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCertificateCollection>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

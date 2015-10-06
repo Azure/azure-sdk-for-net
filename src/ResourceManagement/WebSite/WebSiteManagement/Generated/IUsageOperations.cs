@@ -19,6 +19,8 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IUsageOperations
     {
         /// <summary>
+        /// Returns usage records for specified subscription and resource
+        /// groups
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group

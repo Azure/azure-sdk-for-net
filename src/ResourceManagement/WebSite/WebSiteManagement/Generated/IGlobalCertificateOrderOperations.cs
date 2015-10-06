@@ -14,20 +14,19 @@ namespace Microsoft.Azure.Management.WebSites
     using Models;
 
     /// <summary>
-    /// GlobalResourceGroupsOperations operations.
+    /// GlobalCertificateOrderOperations operations.
     /// </summary>
-    public partial interface IGlobalResourceGroupsOperations
+    public partial interface IGlobalCertificateOrderOperations
     {
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='moveResourceEnvelope'>
-        /// </param>
+        /// <summary>
+        /// Lists all domains in a subscription
+        /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> MoveResourcesWithHttpMessagesAsync(string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateOrderCollection>> GetAllCertificateOrdersWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

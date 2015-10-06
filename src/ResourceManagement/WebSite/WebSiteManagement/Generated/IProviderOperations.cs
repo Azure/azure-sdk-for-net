@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IProviderOperations
     {
         /// <summary>
+        /// Gets the source controls available for Azure websites
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SourceControlCollection>> GetSourceControlsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets source control token
         /// </summary>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SourceControl>> GetSourceControlWithHttpMessagesAsync(string sourceControlType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates source control token
         /// </summary>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SourceControl>> UpdateSourceControlWithHttpMessagesAsync(string sourceControlType, SourceControl requestMessage, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets publishing user
         /// </summary>
         /// <param name='name'>
         /// Name of user
@@ -67,6 +71,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<User>> GetPublishingUserWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates publishing user
         /// </summary>
         /// <param name='name'>
         /// Name of user

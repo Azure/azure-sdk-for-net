@@ -13,21 +13,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Collection of hosting environments (App Service Environments)
+    /// Name of a metric for any resource
     /// </summary>
-    public partial class HostingEnvironmentCollection
+    public partial class ResourceMetricName
     {
         /// <summary>
-        /// Collection of resources
+        /// metric name value
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<HostingEnvironment> Value { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
-        /// Link to next page of resources
+        /// Localized metric name value
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        [JsonProperty(PropertyName = "localizedValue")]
+        public string LocalizedValue { get; set; }
 
     }
 }

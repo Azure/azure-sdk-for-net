@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Lists all top level domains supported for registration
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetGetTopLevelDomains", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -169,10 +170,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets details of a top level domain
         /// </summary>
         /// <param name='name'>
-        /// Name of the top level domain
-        /// </param>
+        /// Name of the top level domain/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -205,7 +206,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetTopLevelDomain", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}").ToString();
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -302,13 +303,12 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Lists legal agreements that user needs to accept before purchasing domain
         /// </summary>
         /// <param name='name'>
-        /// Name of the top level domain
-        /// </param>
+        /// Name of the top level domain/// </param>
         /// <param name='agreementOption'>
-        /// Domain agreement options
-        /// </param>
+        /// Domain agreement options/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "ListTopLevelDomainAgreements", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements").ToString();
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();

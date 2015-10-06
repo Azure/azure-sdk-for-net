@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Collection of hosting environments (App Service Environments)
+    /// Collection of worker pools
     /// </summary>
-    public partial class HostingEnvironmentCollection
+    public partial class WorkerPoolCollection
     {
         /// <summary>
         /// Collection of resources
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<HostingEnvironment> Value { get; set; }
+        public IList<WorkerPool> Value { get; set; }
 
         /// <summary>
         /// Link to next page of resources

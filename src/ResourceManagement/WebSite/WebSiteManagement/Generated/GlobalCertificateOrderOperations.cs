@@ -20,17 +20,17 @@ namespace Microsoft.Azure.Management.WebSites
     using Models;
 
     /// <summary>
-    /// UsageOperations operations.
+    /// GlobalCertificateOrderOperations operations.
     /// </summary>
-    internal partial class UsageOperations : IServiceOperations<WebSiteManagementClient>, IUsageOperations
+    internal partial class GlobalCertificateOrderOperations : IServiceOperations<WebSiteManagementClient>, IGlobalCertificateOrderOperations
     {
         /// <summary>
-        /// Initializes a new instance of the UsageOperations class.
+        /// Initializes a new instance of the GlobalCertificateOrderOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal UsageOperations(WebSiteManagementClient client)
+        internal GlobalCertificateOrderOperations(WebSiteManagementClient client)
         {
             if (client == null) 
             {
@@ -45,40 +45,16 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Returns usage records for specified subscription and resource groups
+        /// Lists all domains in a subscription
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group/// </param>
-        /// <param name='environmentName'>
-        /// Environment name/// </param>
-        /// <param name='lastId'>
-        /// Last marker that was returned from the batch/// </param>
-        /// <param name='batchSize'>
-        /// size of the batch to be returned./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetUsageWithHttpMessagesAsync(string resourceGroupName, string environmentName, string lastId, int? batchSize, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOrderCollection>> GetAllCertificateOrdersWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (environmentName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
-            }
-            if (lastId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "lastId");
-            }
-            if (batchSize == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "batchSize");
-            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -94,27 +70,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("environmentName", environmentName);
-                tracingParameters.Add("lastId", lastId);
-                tracingParameters.Add("batchSize", batchSize);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUsage", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetAllCertificateOrders", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web.Admin/environments/{environmentName}/usage").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{environmentName}", Uri.EscapeDataString(environmentName));
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (lastId != null)
-            {
-                queryParameters.Add(string.Format("lastId={0}", Uri.EscapeDataString(lastId)));
-            }
-            if (batchSize != null)
-            {
-                queryParameters.Add(string.Format("batchSize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(batchSize, this.Client.SerializationSettings).Trim('"'))));
-            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -187,7 +149,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<object>();
+            var result = new AzureOperationResponse<CertificateOrderCollection>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -198,7 +160,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CertificateOrderCollection>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

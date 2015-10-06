@@ -104,7 +104,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Needs investigation: Http Recorder does not encode single quote character when recording. On playback the URIs do not match")]
+        [Fact]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
@@ -113,14 +113,14 @@ namespace WebSites.Tests.ScenarioTests
                     var endTime = DateTime.Parse("2015-09-04T16:21:34Z");
 
                     var result = webSitesClient.Sites.GetSiteMetrics(resourceGroupName: resourceGroupName,
-                        name: webSiteName, filter: WebSitesHelper.BuildMetricFilter(startTime: endTime.AddHours(-3), endTime: endTime, timeGrain: "PT1H", metricNames: new List<string>{ "Requests" }), details: true);
+                        name: webSiteName, filter: WebSitesHelper.BuildMetricFilter(startTime: endTime.AddHours(-3), endTime: endTime, timeGrain: "PT1H", metricNames: new List<string>{ "Requests" }), details: true, accept: "application/json");
 
                     webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, deleteAllSlots: true.ToString());
 
                     // Validate response
                     Assert.NotNull(result);
-                    var metrics = XDocument.Load(result, LoadOptions.None);
-                    Assert.NotNull(metrics);
+                    //var metrics = XDocument.Load(result, LoadOptions.None);
+                    //Assert.NotNull(metrics);
 
                     // validate metrics only for replay since the metrics will not match
                     if (HttpMockServer.Mode == HttpRecorderMode.Playback)

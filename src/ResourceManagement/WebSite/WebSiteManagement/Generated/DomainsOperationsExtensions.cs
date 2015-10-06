@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class DomainsOperationsExtensions
     {
             /// <summary>
+            /// Lists domains under a resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists domains under a resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets details of a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets details of a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,6 +86,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,6 +106,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,6 +130,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -144,6 +151,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,6 +176,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,6 +196,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,6 +220,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves the latest status of a domain purchase operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -229,6 +240,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves the latest status of a domain purchase operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
