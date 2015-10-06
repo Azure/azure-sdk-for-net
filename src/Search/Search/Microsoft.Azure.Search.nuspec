@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Search</id>
     <title>Microsoft Azure Search Library</title>
-    <releaseNotes>This preview release of the Azure Search .NET SDK raises the limits on the size of Search and Suggest parameters by calling the REST APIs using POST instead of GET.</releaseNotes>
+    <releaseNotes>This preview release of the Azure Search .NET SDK adds constants that make it easy to work with newly released Microsoft language analyzers.</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>

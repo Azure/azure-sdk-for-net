@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Storage/operations?api-version=2015-06-15",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"Create/Update Storage Account\",\r\n        \"description\": \"Creates a storage account with the specified parameters or update the properties or tags or adds custom domain for the specified storage account.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"Delete Storage Account\",\r\n        \"description\": \"Deletes an existing storage account.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/listkeys/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"List Storage Account Keys\",\r\n        \"description\": \"Returns the access keys for the specified storage account.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/regeneratekey/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"Regenerate Storage Account Keys\",\r\n        \"description\": \"Regenerates the access keys for the specified storage account.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/checknameavailability/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"Check Account Name Availability\",\r\n        \"description\": \"Checks that account name is valid and is not in use.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"List/Get Storage Account(s)\",\r\n        \"description\": \"Returns the list of storage accounts or gets the properties for the specified storage account.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Storage/storageAccounts/usages/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Storage\",\r\n        \"resource\": \"Storage Accounts\",\r\n        \"operation\": \"Get Subscription Usages\",\r\n        \"description\": \"Returns the limit and the current usage count for resources in the specified subscription\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2464"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ae3f9d84-ece5-4704-b2e7-ea9509d1f8c1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-Azure-Storage-Resource-Provider/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "ae3f9d84-ece5-4704-b2e7-ea9509d1f8c1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150929T010856Z:ae3f9d84-ece5-4704-b2e7-ea9509d1f8c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Tue, 29 Sep 2015 01:08:56 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a30cdbf0-fdca-455d-aa6e-2e7a52732956"
+  }
+}

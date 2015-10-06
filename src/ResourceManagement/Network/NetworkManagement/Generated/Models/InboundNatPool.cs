@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         private int _backendPort;
         
         /// <summary>
-        /// Optional. Gets or sets a port used for internal connections on the
+        /// Required. Gets or sets a port used for internal connections on the
         /// endpoint. The localPort attribute maps the eternal port of the
         /// endpoint to an internal port on a role. This is useful in
         /// scenarios where a role must communicate to an internal compotnent
@@ -117,22 +117,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public InboundNatPool()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the InboundNatPool class with
-        /// required arguments.
-        /// </summary>
-        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd)
-            : this()
-        {
-            if (protocol == null)
-            {
-                throw new ArgumentNullException("protocol");
-            }
-            this.Protocol = protocol;
-            this.FrontendPortRangeStart = frontendPortRangeStart;
-            this.FrontendPortRangeEnd = frontendPortRangeEnd;
         }
     }
 }

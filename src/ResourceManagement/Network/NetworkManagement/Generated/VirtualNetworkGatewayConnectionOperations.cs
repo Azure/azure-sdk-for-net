@@ -542,6 +542,17 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["sharedKey"] = parameters.SharedKey;
                 }
                 
+                if (parameters.Peer != null)
+                {
+                    JObject peerValue = new JObject();
+                    propertiesValue["peer"] = peerValue;
+                    
+                    if (parameters.Peer.Id != null)
+                    {
+                        peerValue["id"] = parameters.Peer.Id;
+                    }
+                }
+                
                 if (parameters.ResourceGuid != null)
                 {
                     propertiesValue["resourceGuid"] = parameters.ResourceGuid;
@@ -1085,6 +1096,20 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayConnectionInstance.SharedKey = sharedKeyInstance;
                                 }
                                 
+                                JToken peerValue2 = propertiesValue2["peer"];
+                                if (peerValue2 != null && peerValue2.Type != JTokenType.Null)
+                                {
+                                    ResourceId peerInstance = new ResourceId();
+                                    virtualNetworkGatewayConnectionInstance.Peer = peerInstance;
+                                    
+                                    JToken idValue10 = peerValue2["id"];
+                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                    {
+                                        string idInstance10 = ((string)idValue10);
+                                        peerInstance.Id = idInstance10;
+                                    }
+                                }
+                                
                                 JToken resourceGuidValue4 = propertiesValue2["resourceGuid"];
                                 if (resourceGuidValue4 != null && resourceGuidValue4.Type != JTokenType.Null)
                                 {
@@ -1107,11 +1132,11 @@ namespace Microsoft.Azure.Management.Network
                                 virtualNetworkGatewayConnectionInstance.Etag = etagInstance6;
                             }
                             
-                            JToken idValue10 = responseDoc["id"];
-                            if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                            JToken idValue11 = responseDoc["id"];
+                            if (idValue11 != null && idValue11.Type != JTokenType.Null)
                             {
-                                string idInstance10 = ((string)idValue10);
-                                virtualNetworkGatewayConnectionInstance.Id = idInstance10;
+                                string idInstance11 = ((string)idValue11);
+                                virtualNetworkGatewayConnectionInstance.Id = idInstance11;
                             }
                             
                             JToken nameValue6 = responseDoc["name"];
@@ -2026,7 +2051,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2096,7 +2121,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2703,6 +2728,20 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayConnectionInstance.SharedKey = sharedKeyInstance;
                                 }
                                 
+                                JToken peerValue = propertiesValue["peer"];
+                                if (peerValue != null && peerValue.Type != JTokenType.Null)
+                                {
+                                    ResourceId peerInstance = new ResourceId();
+                                    virtualNetworkGatewayConnectionInstance.Peer = peerInstance;
+                                    
+                                    JToken idValue10 = peerValue["id"];
+                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                    {
+                                        string idInstance10 = ((string)idValue10);
+                                        peerInstance.Id = idInstance10;
+                                    }
+                                }
+                                
                                 JToken resourceGuidValue4 = propertiesValue["resourceGuid"];
                                 if (resourceGuidValue4 != null && resourceGuidValue4.Type != JTokenType.Null)
                                 {
@@ -2725,11 +2764,11 @@ namespace Microsoft.Azure.Management.Network
                                 virtualNetworkGatewayConnectionInstance.Etag = etagInstance6;
                             }
                             
-                            JToken idValue10 = responseDoc["id"];
-                            if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                            JToken idValue11 = responseDoc["id"];
+                            if (idValue11 != null && idValue11.Type != JTokenType.Null)
                             {
-                                string idInstance10 = ((string)idValue10);
-                                virtualNetworkGatewayConnectionInstance.Id = idInstance10;
+                                string idInstance11 = ((string)idValue11);
+                                virtualNetworkGatewayConnectionInstance.Id = idInstance11;
                             }
                             
                             JToken nameValue6 = responseDoc["name"];
@@ -3540,6 +3579,20 @@ namespace Microsoft.Azure.Management.Network
                                             virtualNetworkGatewayConnectionJsonFormatInstance.SharedKey = sharedKeyInstance;
                                         }
                                         
+                                        JToken peerValue = propertiesValue["peer"];
+                                        if (peerValue != null && peerValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceId peerInstance = new ResourceId();
+                                            virtualNetworkGatewayConnectionJsonFormatInstance.Peer = peerInstance;
+                                            
+                                            JToken idValue10 = peerValue["id"];
+                                            if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                            {
+                                                string idInstance10 = ((string)idValue10);
+                                                peerInstance.Id = idInstance10;
+                                            }
+                                        }
+                                        
                                         JToken resourceGuidValue4 = propertiesValue["resourceGuid"];
                                         if (resourceGuidValue4 != null && resourceGuidValue4.Type != JTokenType.Null)
                                         {
@@ -3562,11 +3615,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGatewayConnectionJsonFormatInstance.Etag = etagInstance6;
                                     }
                                     
-                                    JToken idValue10 = valueValue["id"];
-                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                    JToken idValue11 = valueValue["id"];
+                                    if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                     {
-                                        string idInstance10 = ((string)idValue10);
-                                        virtualNetworkGatewayConnectionJsonFormatInstance.Id = idInstance10;
+                                        string idInstance11 = ((string)idValue11);
+                                        virtualNetworkGatewayConnectionJsonFormatInstance.Id = idInstance11;
                                     }
                                     
                                     JToken nameValue6 = valueValue["name"];
@@ -3700,7 +3753,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3784,7 +3837,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

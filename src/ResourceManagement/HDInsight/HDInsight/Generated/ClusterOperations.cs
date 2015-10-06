@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -681,7 +681,10 @@ namespace Microsoft.Azure.Management.HDInsight
                             clusterDefinitionValue["blueprint"] = clusterCreateParameters.Properties.ClusterDefinition.BlueprintUri.AbsoluteUri;
                         }
                         
-                        clusterDefinitionValue["kind"] = clusterCreateParameters.Properties.ClusterDefinition.ClusterType.ToString();
+                        if (clusterCreateParameters.Properties.ClusterDefinition.ClusterType != null)
+                        {
+                            clusterDefinitionValue["kind"] = clusterCreateParameters.Properties.ClusterDefinition.ClusterType;
+                        }
                         
                         if (clusterCreateParameters.Properties.ClusterDefinition.Configurations != null)
                         {
@@ -966,7 +969,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                     JToken kindValue = clusterDefinitionValue2["kind"];
                                     if (kindValue != null && kindValue.Type != JTokenType.Null)
                                     {
-                                        HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                        string kindInstance = ((string)kindValue);
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
@@ -1375,7 +1378,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1537,7 +1540,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1971,7 +1974,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2104,7 +2107,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                     JToken kindValue = clusterDefinitionValue["kind"];
                                     if (kindValue != null && kindValue.Type != JTokenType.Null)
                                     {
-                                        HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                        string kindInstance = ((string)kindValue);
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
@@ -2500,7 +2503,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3044,7 +3047,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3189,7 +3192,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3322,7 +3325,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                     JToken kindValue = clusterDefinitionValue["kind"];
                                     if (kindValue != null && kindValue.Type != JTokenType.Null)
                                     {
-                                        HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                        string kindInstance = ((string)kindValue);
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
@@ -3692,7 +3695,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
@@ -3826,7 +3829,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                     JToken kindValue = clusterDefinitionValue["kind"];
                                     if (kindValue != null && kindValue.Type != JTokenType.Null)
                                     {
-                                        HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                        string kindInstance = ((string)kindValue);
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
@@ -4212,7 +4215,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4350,7 +4353,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                             JToken kindValue = clusterDefinitionValue["kind"];
                                             if (kindValue != null && kindValue.Type != JTokenType.Null)
                                             {
-                                                HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                                string kindInstance = ((string)kindValue);
                                                 clusterDefinitionInstance.ClusterType = kindInstance;
                                             }
                                             
@@ -4748,7 +4751,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4886,7 +4889,7 @@ namespace Microsoft.Azure.Management.HDInsight
                                             JToken kindValue = clusterDefinitionValue["kind"];
                                             if (kindValue != null && kindValue.Type != JTokenType.Null)
                                             {
-                                                HDInsightClusterType kindInstance = ((HDInsightClusterType)Enum.Parse(typeof(HDInsightClusterType), ((string)kindValue), true));
+                                                string kindInstance = ((string)kindValue);
                                                 clusterDefinitionInstance.ClusterType = kindInstance;
                                             }
                                             

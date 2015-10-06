@@ -14,69 +14,159 @@
 // limitations under the License.
 // 
 
+using System;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
-using Microsoft.Azure.Management.DataFactories.Conversion;
-using Microsoft.Azure.Management.DataFactories.Runtime;
-using Newtonsoft.Json;
+using Microsoft.Azure.Management.DataFactories;
+using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
+using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
 
 namespace DataFactory.Tests.UnitTests
 {
-    public class DataSetTests : UnitTestBase
+    public class DatasetTests : UnitTestBase
     {
-        private readonly TableConverter tableConverter = new TableConverter();
-        private readonly LinkedServiceConverter linkedServiceConverter = new LinkedServiceConverter();
+        private DatasetOperations Operations
+        {
+            get 
+            {
+                return (DatasetOperations)this.Client.Datasets;
+            }
+        }
 
-        [Theory, ClassData(typeof(LinkedServiceJsonSamples)), ClassData(typeof(CustomLinkedServiceJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void DataSetLinkedServiceJsonConstsTest(JsonSampleInfo sampleInfo)
+        public void DatasetJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJsonSample);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestDatasetJson);
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void DataSetTableJsonConstsTest(JsonSampleInfo sampleInfo)
+        public void DatasetValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJsonSample);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestDatasetValidation);
         }
 
-        private void TestLinkedServiceJsonSample(JsonSampleInfo sampleInfo)
+        [Theory, InlineData(@"{
+    name: ""Test-BYOC-HDInsight-Table"",
+    properties:
+    {
+        type: ""AzureSqlTable"",
+        typeProperties: { }
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void DatasetMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
         {
-            Core.Models.LinkedService linkedService =
-                Core.DataFactoryManagementClient.DeserializeInternalLinkedServiceJson(sampleInfo.Json);
+            // tableName is required
+            InvalidOperationException ex =
+                Assert.Throws<InvalidOperationException>(() => this.TestDatasetValidation(invalidJson));
+            Assert.Contains("is required", ex.Message);
+        }
 
-            var expectedDataSet = new DataSet()
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void DatasetWithExtraPropertiesTest(JsonSampleInfo sampleInfo)
+        {
+            if (sampleInfo.Version != null 
+                && sampleInfo.Version.Equals(JsonSampleType.ExtraProperties, StringComparison.Ordinal))
             {
-                LinkedService = this.linkedServiceConverter.ToWrapperType(linkedService)
-            };
-
-            this.TestDataSetJsonSample("linkedService", expectedDataSet, sampleInfo);
+                JsonSampleCommon.TestJsonSample(sampleInfo, this.TestDatasetJson);
+            }
         }
 
-        private void TestTableJsonSample(JsonSampleInfo sampleInfo)
+        [Theory, InlineData(@"
+{
+    name: ""Test-Unregistered-Table"",
+    properties:
+    {
+        type: ""MyUnregisteredCustomType"",
+        typeProperties:
         {
-            Core.Models.Table table =
-                Core.DataFactoryManagementClient.DeserializeInternalTableJson(sampleInfo.Json);
+            endpoint: ""https://some.endpoint.com/"",
+            apiKey:""testApiKey""
+        }
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void DatasetUnregisteredTypeTest(string unregisteredTypeJson)
+        {
+            // If a Dataset type has not been locally registered, 
+            // typeProperties should be deserialized to a GenericDataset instance
+            Dataset dataset = this.ConvertToWrapper(unregisteredTypeJson);
+            Assert.IsType<GenericDataset>(dataset.Properties.TypeProperties);
+        }
 
-            var expectedDataSet = new DataSet()
+        [Theory]
+        [InlineData(@"{
+    name: ""MyTable"",
+    properties: 
+    {
+        type: ""AzureBlob"", 
+        linkedServiceName: ""MyBlobLinkedService"",
+        typeProperties: {
+            connectionString: null
+        }, 
+        availability: { 
+            frequency: ""Day"", 
+            interval: 1
+        }
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+
+        public void CanConvertDatasetWithNullTypePropertyValuesTest(string json)
+        {
+            JsonSampleInfo sample = new JsonSampleInfo("DatasetWithNullTypePropertyValues", json, null);
+            this.TestDatasetJson(sample);
+        }
+
+        private void TestDatasetJson(JsonSampleInfo info)
+        {
+            string json = info.Json;
+            Dataset dataset = this.ConvertToWrapper(json);
+            CoreModel.Dataset actual = this.Operations.Converter.ToCoreType(dataset);
+            string actualJson = Core.DataFactoryManagementClient.SerializeInternalDatasetToJson(actual);
+            
+            JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
+
+            if (info.Version == null
+                || !info.Version.Equals(JsonSampleType.Unregistered, StringComparison.OrdinalIgnoreCase))
             {
-                Table = this.tableConverter.ToWrapperType(table)
-            };
+                Assert.IsNotType<GenericDataset>(dataset.Properties.TypeProperties);
+            }
 
-            this.TestDataSetJsonSample("table", expectedDataSet, sampleInfo);
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, info.PropertyBagKeys);
         }
 
-        private void TestDataSetJsonSample(string token, DataSet expectedDataSet, JsonSampleInfo sampleInfo)
+        private void TestDatasetValidation(JsonSampleInfo sampleInfo)
         {
-            DataSet actualDataSet =
-                JsonConvert.DeserializeObject<DataSet>(string.Concat("{ \"", token, "\" : ", sampleInfo.Json, "}"));
-            Common.ValidateAreSame(expectedDataSet, actualDataSet); 
+            this.TestDatasetValidation(sampleInfo.Json);
+        }
+        
+        private void TestDatasetValidation(string json)
+        {
+            Dataset dataset = this.ConvertToWrapper(json);
+            this.Operations.ValidateObject(dataset);
+        }
+
+        private Dataset ConvertToWrapper(string json)
+        {
+            CoreModel.Dataset internalDataset =
+                Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(json);
+
+            return this.Operations.Converter.ToWrapperType(internalDataset);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         private string _name;
         
         /// <summary>
-        /// Required. Referenced table name.
+        /// Required. Referenced dataset name.
         /// </summary>
         public string Name
         {

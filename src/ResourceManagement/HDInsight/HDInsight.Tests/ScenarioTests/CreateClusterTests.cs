@@ -59,7 +59,7 @@ namespace HDInsight.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void TestIaasCreateGetDeleteCluster()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

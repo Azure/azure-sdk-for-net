@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(parameters.ComputeType.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -753,7 +753,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1019,7 +1019,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1137,7 +1137,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/computeTypes/";
             url = url + Uri.EscapeDataString(parameters.ComputeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
             if (queryParameters.Count > 0)
             {
@@ -1430,7 +1430,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/computeTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (parameters.ComputeTypeName != null)
             {
                 queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ComputeTypeName));

@@ -201,20 +201,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
 
         /// <summary>
-        /// Serializes the given Core.Models.Table into JSON, by mocking a create or update request to 
+        /// Serializes the given Core.Models.Dataset into JSON, by mocking a create or update request to 
         /// exercise the client's serialization logic.
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        internal static string SerializeInternalTableToJson(Models.Table item)
+        internal static string SerializeInternalDatasetToJson(Models.Dataset item)
         {
-            var createParams = new Models.TableCreateOrUpdateParameters() { Table = item };
+            var createParams = new Models.DatasetCreateOrUpdateParameters() { Dataset = item };
 
             var handler = new MockResourceProviderDelegatingHandler();
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            client.Tables.BeginCreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
+            client.Datasets.BeginCreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
             return handler.Json;
         }
 
@@ -334,21 +334,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
 
         /// <summary>
-        /// Deserializes the given json into an Hydra OM InternalTable instance, by mocking a get request to 
+        /// Deserializes the given json into a <see cref="Core.Models.Dataset"/> instance, by mocking a get request to 
         /// exercise the client's deserialization logic.
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        internal static Models.Table DeserializeInternalTableJson(string json)
+        internal static Models.Dataset DeserializeInternalDatasetJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            string tableName = Guid.NewGuid().ToString("D");
-            Models.TableGetResponse getResponse = client.Tables.Get(resourceGroupName, dataFactoryName, tableName);
-            return getResponse.Table;
+            string datasetName = Guid.NewGuid().ToString("D");
+            Models.DatasetGetResponse getResponse = client.Datasets.Get(resourceGroupName, dataFactoryName, datasetName);
+            return getResponse.Dataset;
         }
 
         /// <summary>

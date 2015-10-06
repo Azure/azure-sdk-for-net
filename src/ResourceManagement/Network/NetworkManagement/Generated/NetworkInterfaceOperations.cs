@@ -1035,7 +1035,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1100,7 +1100,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2922,7 +2922,7 @@ namespace Microsoft.Azure.Management.Network
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/microsoft.compute/virtualMachineScaleSets/";
             url = url + Uri.EscapeDataString(virtualMachineScaleSetName);
-            url = url + "/";
+            url = url + "/networkInterfaces";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)

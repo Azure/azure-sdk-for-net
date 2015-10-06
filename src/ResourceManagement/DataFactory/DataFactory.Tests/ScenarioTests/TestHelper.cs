@@ -44,7 +44,7 @@ namespace DataFactory.Tests.ScenarioTests
         public static string GetDefaultLocation()
         {
             // ADF will always use the below region for http mock test in Dogfood
-            return "East US 2";
+            return "Brazil South";
         }
     }
 }

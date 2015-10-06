@@ -13,10 +13,12 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A copy activity SQL data warehouse source.
+    /// A copy activity SQL Data Warehouse source.
     /// </summary>
     public class SqlDWSource : CopySource
     {
@@ -24,5 +26,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// SQL data warehouse reader query.
         /// </summary>
         public string SqlReaderQuery { get; set; }
+
+        /// <summary>
+        /// Optional. Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery.
+        /// </summary>
+        public string SqlReaderStoredProcedureName { get; set; }
+
+        /// <summary>
+        /// Optional. Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+        /// </summary>
+        public IDictionary<string, IDictionary<string, string>> StoredProcedureParameters { get; set; }
     }
 }
