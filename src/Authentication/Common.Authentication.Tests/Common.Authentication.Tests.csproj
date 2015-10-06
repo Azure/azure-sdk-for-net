@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureRMProfileTests.cs" />
+    <Compile Include="ClientFactoryHandlerTests.cs" />
     <Compile Include="ClientFactoryTests.cs" />
     <Compile Include="AuthenticationFactoryTests.cs" />
     <Compile Include="ConversionUtilitiesTests.cs" />

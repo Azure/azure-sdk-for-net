@@ -31,14 +31,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public Dictionary<string, AzureEnvironment> Environments { get; set; }
 
         /// <summary>
-        /// Gets or sets the token cache contents.
-        /// </summary>
-        public byte[] TokenCache { get; set; }
-
-        /// <summary>
         /// Gets or sets the default azure context object.
         /// </summary>
-        public AzureContext DefaultContext { get; set; }
+        public AzureContext Context { get; set; }
 
         /// <summary>
         /// Gets the path of the profile file. 
@@ -60,9 +55,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                 string contents = AzureSession.DataStore.ReadFileAsText(ProfilePath);
                 AzureRMProfile profile = JsonConvert.DeserializeObject<AzureRMProfile>(contents);
                 Debug.Assert(profile != null);
-                this.DefaultContext = profile.DefaultContext;
+                this.Context = profile.Context;
                 this.Environments = profile.Environments;
-                this.TokenCache = profile.TokenCache;
             }
         }
 

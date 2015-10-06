@@ -142,7 +142,7 @@
     <value>The environment name '{0}' is not found.</value>
   </data>
   <data name="ExpiredRefreshToken" xml:space="preserve">
-    <value>Your Microsoft Azure credential in the Windows PowerShell session has expired. Please use Add-AzureAccount to login again.</value>
+    <value>Your Microsoft Azure credential in the Windows PowerShell session has expired. Please log in again. In PowerShell, execute Login-AzureRMAccount for Azure Resource Manager cmdlets or Add-AzureAccount for service management cmdlets.</value>
   </data>
   <data name="FilePathIsNotValid" xml:space="preserve">
     <value>File path is not valid</value>
@@ -189,14 +189,11 @@
   <data name="PublishSettingsFileRealmFormat" xml:space="preserve">
     <value>&amp;whr={0}</value>
   </data>
-  <data name="RemoveDefaultSubscription" xml:space="preserve">
-    <value>The default subscription is being removed. Use Select-AzureSubscription -Default &lt;subscriptionName&gt; to select a new default subscription.</value>
-  </data>
   <data name="RemovingDefaultEnvironmentsNotSupported" xml:space="preserve">
     <value>Removing public environment is not supported.</value>
   </data>
   <data name="ServiceKeyNotFound" xml:space="preserve">
-    <value>Unable to retrieve service key for ServicePrincipal account {0}. Please run the Add-AzureAccount cmdlet to supply the credentials for this service principal.</value>
+    <value>Unable to retrieve service key for ServicePrincipal account {0}. Please log in again to supply the credentials for this service principal. In PowerShell, execute Login-AzureRMAccount for Azure Resource Manager cmdlets or Add-AzureAccount for service management cmdlets.</value>
   </data>
   <data name="ServiceNameExists" xml:space="preserve">
     <value>The provided service name {0} already exists, please pick another name</value>
@@ -262,7 +259,7 @@
     <value>Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureProfile and try this command again.</value>
   </data>
   <data name="AdalUserInteractionRequired" xml:space="preserve">
-    <value>User Interaction is required to authenticate this user. Please execute Add-AzureAccount without parameters and enter your credentials.</value>
+    <value>User Interaction is required to authenticate this user. Please authenticate using the log in dialog. In PowerShell, execute Login-AzureRMAccount for Azure Resource Manager cmdlets or Add-AzureAccount for service management cmdlets.</value>
   </data>
   <data name="TenantNotFound" xml:space="preserve">
     <value>No tenant was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount.</value>
@@ -284,5 +281,20 @@
   </data>
   <data name="AuthenticatingForSingleTenant" xml:space="preserve">
     <value>[Common.Authentication]: Authenticating for account {0} with single tenant {1}</value>
+  </data>
+  <data name="ArmAccountNotFound" xml:space="preserve">
+    <value>No account found in the context. Please login using Login-AzureRMAccount.</value>
+  </data>
+  <data name="ArmUserInteractionRequired" xml:space="preserve">
+    <value>User Interaction is required to authenticate this user. Please execute Login-AzureRMAccount without parameters and enter your credentials.</value>
+  </data>
+  <data name="InvalidArmContext" xml:space="preserve">
+    <value>Your Azure credentials have not been set up or have expired, please run Login-AzureRMAccount to set up your Azure credentials.</value>
+  </data>
+  <data name="NoSubscriptionInContext" xml:space="preserve">
+    <value>No subscription found in the context.  Please ensure that the credentials you provided are authorized to access an Azure subscription, then run Login-AzureRMAccount to login.</value>
+  </data>
+  <data name="NoTenantInContext" xml:space="preserve">
+    <value>No tenant found in the context.  Please ensure that the credentials you provided are authorized to access an Azure subscription, then run Login-AzureRMAccount to login.</value>
   </data>
 </root>

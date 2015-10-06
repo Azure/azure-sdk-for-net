@@ -56,9 +56,9 @@ namespace Common.Authentication.Test
                 Domain = "contoso.com"
             };
 
-            currentProfile.DefaultContext = new AzureContext(sub, account, environment, tenant);
+            currentProfile.Context = new AzureContext(sub, account, environment, tenant);
             currentProfile.Environments[environment.Name] = environment;
-            currentProfile.TokenCache = new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 };
+            currentProfile.Context.TokenCache = new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 };
 
             AzureRMProfile deserializedProfile;
             // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
@@ -93,8 +93,7 @@ namespace Common.Authentication.Test
       }
     }
   },
-  ""TokenCache"": ""AQIDBAUGCAkA"",
-  ""DefaultContext"": {
+  ""Context"": {
     ""Account"": {
       ""Id"": ""me@contoso.com"",
       ""Type"": 1,
@@ -121,7 +120,8 @@ namespace Common.Authentication.Test
     ""Tenant"": {
       ""Id"": ""3c0ff8a7-e8bb-40e8-ae66-271343379af6"",
       ""Domain"": ""contoso.com""
-    }
+    },
+    ""TokenCache"": ""AQIDBAUGCAkA""
   }
 }";
             string path = Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile);
@@ -153,9 +153,9 @@ namespace Common.Authentication.Test
                 Id = tenantId,
                 Domain = "contoso.com"
             };
-            profile.DefaultContext = new AzureContext(sub, account, environment, tenant);
+            profile.Context = new AzureContext(sub, account, environment, tenant);
             profile.Environments[environment.Name] = environment;
-            profile.TokenCache = new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 };
+            profile.Context.TokenCache = new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 };
             profile.Save();
             string actual = dataStore.ReadFileAsText(path);
             Assert.Equal(expected, actual);
@@ -174,8 +174,8 @@ namespace Common.Authentication.Test
       }
     }
   },
-  ""TokenCache"": ""AQIDBAUGCAkA"",
-  ""DefaultContext"": {
+  ""Context"": {
+    ""TokenCache"": ""AQIDBAUGCAkA"",
     ""Account"": {
       ""Id"": ""me@contoso.com"",
       ""Type"": 1,
@@ -211,12 +211,12 @@ namespace Common.Authentication.Test
             dataStore.WriteFile(path, contents);
             var profile = new AzureRMProfile(path);
             Assert.Equal(3, profile.Environments.Count);
-            Assert.Equal("3c0ff8a7-e8bb-40e8-ae66-271343379af6", profile.DefaultContext.Tenant.Id.ToString());
-            Assert.Equal("contoso.com", profile.DefaultContext.Tenant.Domain);
-            Assert.Equal("00000000-0000-0000-0000-000000000000", profile.DefaultContext.Subscription.Id.ToString());
-            Assert.Equal("testCloud", profile.DefaultContext.Environment.Name);
-            Assert.Equal("me@contoso.com", profile.DefaultContext.Account.Id);
-            Assert.Equal(new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 }, profile.TokenCache);
+            Assert.Equal("3c0ff8a7-e8bb-40e8-ae66-271343379af6", profile.Context.Tenant.Id.ToString());
+            Assert.Equal("contoso.com", profile.Context.Tenant.Domain);
+            Assert.Equal("00000000-0000-0000-0000-000000000000", profile.Context.Subscription.Id.ToString());
+            Assert.Equal("testCloud", profile.Context.Environment.Name);
+            Assert.Equal("me@contoso.com", profile.Context.Account.Id);
+            Assert.Equal(new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 }, profile.Context.TokenCache);
             Assert.Equal(path, profile.ProfilePath);
         }
     }
