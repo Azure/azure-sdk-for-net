@@ -119,6 +119,16 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._providers; }
         }
         
+        private IProviderOperationsMetadataOperations _providerOperationsMetadata;
+        
+        /// <summary>
+        /// Operations for getting provider operations metadata.
+        /// </summary>
+        public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata
+        {
+            get { return this._providerOperationsMetadata; }
+        }
+        
         private IResourceGroupOperations _resourceGroups;
         
         /// <summary>
@@ -168,6 +178,7 @@ namespace Microsoft.Azure.Management.Resources
             this._deploymentOperations = new DeploymentOperationOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._providers = new ProviderOperations(this);
+            this._providerOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
@@ -240,6 +251,7 @@ namespace Microsoft.Azure.Management.Resources
             this._deploymentOperations = new DeploymentOperationOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._providers = new ProviderOperations(this);
+            this._providerOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
@@ -400,7 +412,7 @@ namespace Microsoft.Azure.Management.Resources
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -423,6 +435,10 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     if (statusCode == HttpStatusCode.OK)
                     {

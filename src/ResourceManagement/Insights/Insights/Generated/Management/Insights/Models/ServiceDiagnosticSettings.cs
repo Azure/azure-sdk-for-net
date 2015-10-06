@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
@@ -30,24 +32,44 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// </summary>
     public partial class ServiceDiagnosticSettings
     {
-        private DiagnosticSettingsStatus _status;
+        private IList<LogSettings> _logs;
         
         /// <summary>
-        /// Optional. Indicates the status of the last call to set the
-        /// configuration. Don't need to set this flag when applying
-        /// configuration.
+        /// Optional. Gets or sets the list of logs.
         /// </summary>
-        public DiagnosticSettingsStatus Status
+        public IList<LogSettings> Logs
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._logs; }
+            set { this._logs = value; }
+        }
+        
+        private IList<MetricSettings> _metrics;
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of metrics.
+        /// </summary>
+        public IList<MetricSettings> Metrics
+        {
+            get { return this._metrics; }
+            set { this._metrics = value; }
+        }
+        
+        private string _storageAccountId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource id of the storage account.
+        /// </summary>
+        public string StorageAccountId
+        {
+            get { return this._storageAccountId; }
+            set { this._storageAccountId = value; }
         }
         
         private string _storageAccountName;
         
         /// <summary>
-        /// Optional. The name of the Azure Storage account to store the data
-        /// in.
+        /// Optional. [Deprecated] Use StorageAccountId instead. Gets or sets
+        /// the name of the storage account.
         /// </summary>
         public string StorageAccountName
         {
@@ -60,6 +82,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public ServiceDiagnosticSettings()
         {
+            this.Logs = new LazyList<LogSettings>();
+            this.Metrics = new LazyList<MetricSettings>();
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             CoreRegistrationModel.ComputeTypeListResponse internalResponse,
             DataFactoryManagementClient client)
         {
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.ComputeTypes = internalResponse.ComputeTypes.Select(
                     internalComputeType => ((ComputeTypeOperations)client.ComputeTypes).Converter.ToWrapperType(internalComputeType))

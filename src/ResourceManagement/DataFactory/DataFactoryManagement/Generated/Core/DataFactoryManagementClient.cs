@@ -115,6 +115,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._dataFactories; }
         }
         
+        private IDatasetOperations _datasets;
+        
+        /// <summary>
+        /// Operations for managing datasets.
+        /// </summary>
+        public virtual IDatasetOperations Datasets
+        {
+            get { return this._datasets; }
+        }
+        
         private IDataSliceOperations _dataSlices;
         
         /// <summary>
@@ -165,6 +175,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._linkedServices; }
         }
         
+        private IOAuthOperations _oAuth;
+        
+        /// <summary>
+        /// Operations for OAuth authorizations.
+        /// </summary>
+        public virtual IOAuthOperations OAuth
+        {
+            get { return this._oAuth; }
+        }
+        
         private IPipelineOperations _pipelines;
         
         /// <summary>
@@ -173,16 +193,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         public virtual IPipelineOperations Pipelines
         {
             get { return this._pipelines; }
-        }
-        
-        private ITableOperations _tables;
-        
-        /// <summary>
-        /// Operations for managing tables.
-        /// </summary>
-        public virtual ITableOperations Tables
-        {
-            get { return this._tables; }
         }
         
         /// <summary>
@@ -194,13 +204,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._activityTypes = new ActivityTypeOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
+            this._datasets = new DatasetOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
+            this._oAuth = new OAuthOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
@@ -276,13 +287,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._activityTypes = new ActivityTypeOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
+            this._datasets = new DatasetOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
+            this._oAuth = new OAuthOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
@@ -424,7 +436,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

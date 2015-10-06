@@ -16,9 +16,15 @@
 
 namespace DataFactory.Tests.Framework.JsonSamples
 {
-    public class PipelineJsonSamples
+    public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
-        [JsonSample(JsonSampleType.Unregistered)]
+        [JsonSample(JsonSampleType.Unregistered,
+            propertyBagKeys:
+                new string[]
+                    {
+                        "properties.activities[0].typeProperties.AssemblyName",
+                        "properties.activities[0].typeProperties.SliceStart"
+                    })]
         public const string ActivityTypePipeline = @"
 {
     name: ""activityType pipeline name"",
@@ -36,7 +42,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     AssemblyName: ""foo.dll"",
                     SliceStart: ""$$Text.Format('{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -53,7 +66,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].typeProperties.extendedProperties.PropertyBagPropertyName1"
+                "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"
             }
         )]
         public const string HDInsightPipeline = @"
@@ -120,7 +133,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         ""storageLinkedService2""
                     ]
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -133,7 +153,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-        [JsonSample]
+
+        [JsonSample(propertyBagKeys: new string[]
+                        {
+                            "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"                     
+                        })]
         public const string HDInsightMapReducePipeline = @"
 {
     name: ""My HDInsight MapReduce pipeline"",
@@ -169,7 +193,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         PropertyBagPropertyName1: ""PropertyBagValue1""
 					}
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -234,6 +265,77 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     retry: 3,
                     timeout: ""00:00:05"",
                     delay: ""00:00:01""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopySqlDWToSqlDW = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQLDW to SQLDW"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlDWSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
+                    },
+                    sink:
+                    {
+                        type: ""SqlDWSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        sqlWriterCleanupScript: ""Script"",
+                        sliceIdentifierColumnName: ""SliceID""
+                    },
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDWDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputSqlDWDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
                 }
             }
         ]
@@ -271,7 +373,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchTimeout: ""01:00:00"",
                         sinkRetryCount: 3,
                         sinkRetryWait: ""00:00:01"",
-                        sinkPartitionData: true,
                         sqlWriterStoredProcedureName: ""MySprocName"",
                         sqlWriterTableType: ""MyTableType""
                     }
@@ -285,7 +386,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 outputs: 
                 [ 
                     {
-                        name: ""ProcessedBlob""
+                        name: ""ProcessedSQL""
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName""
@@ -315,9 +416,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""BlobSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
+                        treatEmptyAsNull: ""False""
                     },
                     sink: 
                     {
@@ -325,8 +424,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         sinkRetryCount: 3,
-                        sinkRetryWait: ""00:00:01"",
-                        sinkPartitionData: true
+                        sinkRetryWait: ""00:00:01""
                     }
                 },
                 inputs: 
@@ -424,6 +522,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     executionPriorityOrder: ""NewestFirst"",
                     retry: 2,
                     timeout: ""01:00:00""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
                 }
             },
         ]
@@ -476,7 +581,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[]
                     {
                         "properties.activities[0].typeProperties.webServiceParameters.oNe",
-                        "properties.activities[0].typeProperties.webServiceParameters.two NAME"
+                        "properties.activities[0].typeProperties.webServiceParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceParameters.THREE"
                     })]
         public const string AzureMLPipelineWithWebParams = @"
 {
@@ -517,7 +623,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     webServiceParameters:
                     {
                         ""oNe"": ""one value"",
-                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))"", 
+                        ""THREE"": ""HELLO""
                     }
                 }
             }
@@ -570,10 +677,115 @@ namespace DataFactory.Tests.Framework.JsonSamples
 //    }
 //}";
 
+        [JsonSample(propertyBagKeys: new string[]
+                {
+                        "properties.activities[0].typeProperties.globalParameters.oNe",
+                        "properties.activities[0].typeProperties.globalParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceOutputs.output 1",
+                        "properties.activities[0].typeProperties.webServiceInput"
+                })]
+        public const string AzureMLBatchExecutionPipelineWithAllParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                typeProperties:
+                {
+                    globalParameters:
+                    {
+                        ""oNe"": ""one value"",
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                    },
+                    webServiceOutputs:
+                    {
+                        ""output 1"": ""sasCopyBlob"",
+                    },
+                    webServiceInput: ""csvBlob""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureMLBatchExecutionPipelineWithNoParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].transformation.extendedProperties.PropertyBagPropertyName1",
+                "properties.activities[0].typeproperties.defines.PropertyBagPropertyName1"
             }
 )]
         public const string StreamingWithExtendedProperties = @"
@@ -679,7 +891,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""SqlSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
                     },
                     sink:
                     {
@@ -736,9 +953,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""BlobSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
+                        recursive: true,
+                        treatEmptyAsNull: ""False""
                     },
                     sink: 
                     {
@@ -752,6 +968,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 [ 
                     {
                         name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedFileSink""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyFileSystemSourceToFileSystemSink = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from File to File"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: false
+                    },
+                    sink: 
+                    {
+                        type: ""FileSystemSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawFileSource""
                     }
                 ],
                 outputs: 

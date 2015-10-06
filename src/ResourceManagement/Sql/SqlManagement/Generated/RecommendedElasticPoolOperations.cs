@@ -1072,6 +1072,13 @@ namespace Microsoft.Azure.Management.Sql
                                                     }
                                                 }
                                             }
+                                            
+                                            JToken defaultSecondaryLocationValue = propertiesValue2["defaultSecondaryLocation"];
+                                            if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                            {
+                                                string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                                propertiesInstance2.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                            }
                                         }
                                         
                                         JToken idValue8 = databasesValue["id"];
@@ -2160,6 +2167,13 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
+                                
+                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                {
+                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3236,6 +3250,13 @@ namespace Microsoft.Azure.Management.Sql
                                                                 }
                                                             }
                                                         }
+                                                    }
+                                                    
+                                                    JToken defaultSecondaryLocationValue = propertiesValue2["defaultSecondaryLocation"];
+                                                    if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                                        propertiesInstance2.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                                     }
                                                 }
                                                 
@@ -4322,6 +4343,13 @@ namespace Microsoft.Azure.Management.Sql
                                                     }
                                                 }
                                             }
+                                        }
+                                        
+                                        JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                        if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                            propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                         }
                                     }
                                     
@@ -5411,6 +5439,13 @@ namespace Microsoft.Azure.Management.Sql
                                                                 }
                                                             }
                                                         }
+                                                    }
+                                                    
+                                                    JToken defaultSecondaryLocationValue = propertiesValue2["defaultSecondaryLocation"];
+                                                    if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                                        propertiesInstance2.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                                     }
                                                 }
                                                 

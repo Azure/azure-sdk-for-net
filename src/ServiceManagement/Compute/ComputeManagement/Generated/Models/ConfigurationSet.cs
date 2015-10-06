@@ -32,6 +32,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class ConfigurationSet
     {
+        private AdditionalUnattendContentSettings _additionalUnattendContent;
+        
+        /// <summary>
+        /// Optional. Specifies additional base-64 encoded XML formatted
+        /// information that can be included in the Unattend.xml file, which
+        /// is used by Windows Setup.
+        /// </summary>
+        public AdditionalUnattendContentSettings AdditionalUnattendContent
+        {
+            get { return this._additionalUnattendContent; }
+            set { this._additionalUnattendContent = value; }
+        }
+        
         private string _adminPassword;
         
         /// <summary>
@@ -161,6 +174,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._inputEndpoints; }
             set { this._inputEndpoints = value; }
+        }
+        
+        private string _iPForwarding;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IP Forwarding status for this role.
+        /// Optional
+        /// </summary>
+        public string IPForwarding
+        {
+            get { return this._iPForwarding; }
+            set { this._iPForwarding = value; }
         }
         
         private IList<NetworkInterface> _networkInterfaces;

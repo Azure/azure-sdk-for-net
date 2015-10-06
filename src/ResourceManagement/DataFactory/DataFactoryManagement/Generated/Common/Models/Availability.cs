@@ -21,70 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Common.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// The scheduler definition.
+    /// The availability definition.
     /// </summary>
-    public partial class Availability
+    public partial class Availability : BaseScheduler
     {
-        private System.DateTime? _anchorDateTime;
-        
-        /// <summary>
-        /// Optional. The date used as a reference point for calculating slice
-        /// start and end dates.
-        /// </summary>
-        public System.DateTime? AnchorDateTime
-        {
-            get { return this._anchorDateTime; }
-            set { this._anchorDateTime = value; }
-        }
-        
-        private string _frequency;
-        
-        /// <summary>
-        /// Required. Frequency in terms of minute, hour, day, etc.
-        /// </summary>
-        public string Frequency
-        {
-            get { return this._frequency; }
-            set { this._frequency = value; }
-        }
-        
-        private uint _interval;
-        
-        /// <summary>
-        /// Required. The interval of running the scheduler.
-        /// </summary>
-        public uint Interval
-        {
-            get { return this._interval; }
-            set { this._interval = value; }
-        }
-        
-        private System.TimeSpan? _offset;
-        
-        /// <summary>
-        /// Optional. The offset relative to the anchor time.
-        /// </summary>
-        public System.TimeSpan? Offset
-        {
-            get { return this._offset; }
-            set { this._offset = value; }
-        }
-        
-        private string _style;
-        
-        /// <summary>
-        /// Optional. The scheduler style.
-        /// </summary>
-        public string Style
-        {
-            get { return this._style; }
-            set { this._style = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the Availability class.
         /// </summary>

@@ -13,6 +13,8 @@
     <Compile Include="Helpers\ResourcesManagementTestUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ApplicationGatewayTests.cs" />
+    <Compile Include="Tests\ExpressRouteServiceProviderTests.cs" />
+    <Compile Include="Tests\ExpressRouteCircuitTests.cs" />
     <Compile Include="Tests\GatewayOperationsTests.cs" />
     <Compile Include="Tests\RouteTest.cs" />
     <Compile Include="Tests\RouteTableTest.cs" />
@@ -49,6 +51,15 @@
     <None Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\ApplicationGatewayApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Networks.Tests.ExpressRouteCircuitTests\ExpressRouteCircuitApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.ExpressRouteCircuitTests\ExpressRouteCircuitWithPeeringApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.ExpressRouteServiceProviderTests\ExpressRouteServiceProviderTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -68,6 +79,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithStaticIp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerNatPoolTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerOutboundNatRuleTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\UpdateLoadBalancerRule.json">

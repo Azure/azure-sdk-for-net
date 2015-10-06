@@ -14,8 +14,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
@@ -24,52 +22,24 @@ using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal class PolymorphicTypeConverter<T> : JsonConverter
+    internal abstract class PolymorphicTypeConverter<T> : JsonConverter
     {
-        protected static IDictionary<string, Type> ReservedTypes
-        {
-            get
-            {
-                return ReservedTypesList.Value;
-            }
-        }
-
-        private static Lazy<Dictionary<string, Type>> ReservedTypesList { get; set; }
-
-        static PolymorphicTypeConverter()
-        {
-            // Delay evaluation until the user needs to do local type registration or conversion
-            ReservedTypesList = new Lazy<Dictionary<string, Type>>(GetReservedTypes);
-        }
-        
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            JObject obj = JObject.Load(reader);
-
-            JToken token;
-            if (!obj.TryGetTypeProperty(out token))
+            try
             {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "Could not find a string property '{0}' for the following JSON: {1}",
-                        DataFactoryConstants.KeyPolymorphicType,
-                        obj));
+                return this.ReadJsonWrapper(reader, objectType, existingValue, serializer);
             }
-
-            Type type;
-            if (!ReservedTypes.TryGetValue(token.ToString(), out type))
+            catch (Exception)
             {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "There is no type available with the name '{0}'.",
-                        token));
+                // Suppress any exception during deserialization; 
+                // we should assume that the service sends back valid JSON, 
+                // so return null if there is any problem deserializing.
+                return null;
             }
-
-            T target = (T)Activator.CreateInstance(type);
-            serializer.Populate(obj.CreateReader(), target);
-
-            return target;
         }
+
+        protected abstract object ReadJsonWrapper(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer);
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -93,20 +63,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             return typeof(T).IsAssignableFrom(objectType);
         }
 
-        private static Dictionary<string, Type> GetReservedTypes()
-        {
-            Type rootType = typeof(T);
-            return rootType.Assembly.GetTypes()
-                .Where(rootType.IsAssignableFrom)
-                .ToDictionary(GetTypeName, StringComparer.OrdinalIgnoreCase);
-        }
-
         /// <summary>
         /// Get a name to use during serialization of a type. 
         /// </summary>
         /// <param name="type">The type to get a name for.</param>
         /// <returns>The name to use during serialization for <paramref name="type"/>.</returns>
-        private static string GetTypeName(Type type)
+        protected static string GetTypeName(Type type)
         {
             object typeNameAttribute = type.GetCustomAttributes(typeof(AdfTypeNameAttribute), true).FirstOrDefault();
             if (typeNameAttribute != null)

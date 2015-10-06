@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.DataFactories.Common.Models;
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// Policy of a table.
+    /// Policy of a dataset.
     /// </summary>
     public partial class Policy
     {

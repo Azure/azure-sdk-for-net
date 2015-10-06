@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.InboundNatPools != null)
+            {
+                foreach (InboundNatPool inboundNatPoolsParameterItem in parameters.InboundNatPools)
+                {
+                    if (inboundNatPoolsParameterItem.Protocol == null)
+                    {
+                        throw new ArgumentNullException("parameters.InboundNatPools.Protocol");
+                    }
+                }
+            }
             if (parameters.InboundNatRules != null)
             {
                 foreach (InboundNatRule inboundNatRulesParameterItem in parameters.InboundNatRules)
@@ -127,6 +137,16 @@ namespace Microsoft.Azure.Management.Network
             if (parameters.Location == null)
             {
                 throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.OutboundNatRules != null)
+            {
+                foreach (OutboundNatRule outboundNatRulesParameterItem in parameters.OutboundNatRules)
+                {
+                    if (outboundNatRulesParameterItem.BackendAddressPool == null)
+                    {
+                        throw new ArgumentNullException("parameters.OutboundNatRules.BackendAddressPool");
+                    }
+                }
             }
             if (parameters.Probes != null)
             {
@@ -272,6 +292,44 @@ namespace Microsoft.Azure.Management.Network
                                 }
                             }
                             
+                            if (frontendIPConfigurationsItem.InboundNatPools != null)
+                            {
+                                if (frontendIPConfigurationsItem.InboundNatPools is ILazyCollection == false || ((ILazyCollection)frontendIPConfigurationsItem.InboundNatPools).IsInitialized)
+                                {
+                                    JArray inboundNatPoolsArray = new JArray();
+                                    foreach (ResourceId inboundNatPoolsItem in frontendIPConfigurationsItem.InboundNatPools)
+                                    {
+                                        JObject resourceIdValue2 = new JObject();
+                                        inboundNatPoolsArray.Add(resourceIdValue2);
+                                        
+                                        if (inboundNatPoolsItem.Id != null)
+                                        {
+                                            resourceIdValue2["id"] = inboundNatPoolsItem.Id;
+                                        }
+                                    }
+                                    propertiesValue2["inboundNatPools"] = inboundNatPoolsArray;
+                                }
+                            }
+                            
+                            if (frontendIPConfigurationsItem.OutboundNatRules != null)
+                            {
+                                if (frontendIPConfigurationsItem.OutboundNatRules is ILazyCollection == false || ((ILazyCollection)frontendIPConfigurationsItem.OutboundNatRules).IsInitialized)
+                                {
+                                    JArray outboundNatRulesArray = new JArray();
+                                    foreach (ResourceId outboundNatRulesItem in frontendIPConfigurationsItem.OutboundNatRules)
+                                    {
+                                        JObject resourceIdValue3 = new JObject();
+                                        outboundNatRulesArray.Add(resourceIdValue3);
+                                        
+                                        if (outboundNatRulesItem.Id != null)
+                                        {
+                                            resourceIdValue3["id"] = outboundNatRulesItem.Id;
+                                        }
+                                    }
+                                    propertiesValue2["outboundNatRules"] = outboundNatRulesArray;
+                                }
+                            }
+                            
                             if (frontendIPConfigurationsItem.LoadBalancingRules != null)
                             {
                                 if (frontendIPConfigurationsItem.LoadBalancingRules is ILazyCollection == false || ((ILazyCollection)frontendIPConfigurationsItem.LoadBalancingRules).IsInitialized)
@@ -279,12 +337,12 @@ namespace Microsoft.Azure.Management.Network
                                     JArray loadBalancingRulesArray = new JArray();
                                     foreach (ResourceId loadBalancingRulesItem in frontendIPConfigurationsItem.LoadBalancingRules)
                                     {
-                                        JObject resourceIdValue2 = new JObject();
-                                        loadBalancingRulesArray.Add(resourceIdValue2);
+                                        JObject resourceIdValue4 = new JObject();
+                                        loadBalancingRulesArray.Add(resourceIdValue4);
                                         
                                         if (loadBalancingRulesItem.Id != null)
                                         {
-                                            resourceIdValue2["id"] = loadBalancingRulesItem.Id;
+                                            resourceIdValue4["id"] = loadBalancingRulesItem.Id;
                                         }
                                     }
                                     propertiesValue2["loadBalancingRules"] = loadBalancingRulesArray;
@@ -335,12 +393,12 @@ namespace Microsoft.Azure.Management.Network
                                     JArray backendIPConfigurationsArray = new JArray();
                                     foreach (ResourceId backendIPConfigurationsItem in backendAddressPoolsItem.BackendIpConfigurations)
                                     {
-                                        JObject resourceIdValue3 = new JObject();
-                                        backendIPConfigurationsArray.Add(resourceIdValue3);
+                                        JObject resourceIdValue5 = new JObject();
+                                        backendIPConfigurationsArray.Add(resourceIdValue5);
                                         
                                         if (backendIPConfigurationsItem.Id != null)
                                         {
-                                            resourceIdValue3["id"] = backendIPConfigurationsItem.Id;
+                                            resourceIdValue5["id"] = backendIPConfigurationsItem.Id;
                                         }
                                     }
                                     propertiesValue3["backendIPConfigurations"] = backendIPConfigurationsArray;
@@ -354,15 +412,26 @@ namespace Microsoft.Azure.Management.Network
                                     JArray loadBalancingRulesArray2 = new JArray();
                                     foreach (ResourceId loadBalancingRulesItem2 in backendAddressPoolsItem.LoadBalancingRules)
                                     {
-                                        JObject resourceIdValue4 = new JObject();
-                                        loadBalancingRulesArray2.Add(resourceIdValue4);
+                                        JObject resourceIdValue6 = new JObject();
+                                        loadBalancingRulesArray2.Add(resourceIdValue6);
                                         
                                         if (loadBalancingRulesItem2.Id != null)
                                         {
-                                            resourceIdValue4["id"] = loadBalancingRulesItem2.Id;
+                                            resourceIdValue6["id"] = loadBalancingRulesItem2.Id;
                                         }
                                     }
                                     propertiesValue3["loadBalancingRules"] = loadBalancingRulesArray2;
+                                }
+                            }
+                            
+                            if (backendAddressPoolsItem.OutboundNatRule != null)
+                            {
+                                JObject outboundNatRuleValue = new JObject();
+                                propertiesValue3["outboundNatRule"] = outboundNatRuleValue;
+                                
+                                if (backendAddressPoolsItem.OutboundNatRule.Id != null)
+                                {
+                                    outboundNatRuleValue["id"] = backendAddressPoolsItem.OutboundNatRule.Id;
                                 }
                             }
                             
@@ -495,12 +564,12 @@ namespace Microsoft.Azure.Management.Network
                                     JArray loadBalancingRulesArray4 = new JArray();
                                     foreach (ResourceId loadBalancingRulesItem4 in probesItem.LoadBalancingRules)
                                     {
-                                        JObject resourceIdValue5 = new JObject();
-                                        loadBalancingRulesArray4.Add(resourceIdValue5);
+                                        JObject resourceIdValue7 = new JObject();
+                                        loadBalancingRulesArray4.Add(resourceIdValue7);
                                         
                                         if (loadBalancingRulesItem4.Id != null)
                                         {
-                                            resourceIdValue5["id"] = loadBalancingRulesItem4.Id;
+                                            resourceIdValue7["id"] = loadBalancingRulesItem4.Id;
                                         }
                                     }
                                     propertiesValue5["loadBalancingRules"] = loadBalancingRulesArray4;
@@ -616,6 +685,133 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
+                if (parameters.InboundNatPools != null)
+                {
+                    if (parameters.InboundNatPools is ILazyCollection == false || ((ILazyCollection)parameters.InboundNatPools).IsInitialized)
+                    {
+                        JArray inboundNatPoolsArray2 = new JArray();
+                        foreach (InboundNatPool inboundNatPoolsItem2 in parameters.InboundNatPools)
+                        {
+                            JObject inboundNatPoolJsonFormatValue = new JObject();
+                            inboundNatPoolsArray2.Add(inboundNatPoolJsonFormatValue);
+                            
+                            JObject propertiesValue7 = new JObject();
+                            inboundNatPoolJsonFormatValue["properties"] = propertiesValue7;
+                            
+                            if (inboundNatPoolsItem2.FrontendIPConfiguration != null)
+                            {
+                                JObject frontendIPConfigurationValue3 = new JObject();
+                                propertiesValue7["frontendIPConfiguration"] = frontendIPConfigurationValue3;
+                                
+                                if (inboundNatPoolsItem2.FrontendIPConfiguration.Id != null)
+                                {
+                                    frontendIPConfigurationValue3["id"] = inboundNatPoolsItem2.FrontendIPConfiguration.Id;
+                                }
+                            }
+                            
+                            propertiesValue7["protocol"] = inboundNatPoolsItem2.Protocol;
+                            
+                            propertiesValue7["frontendPortRangeStart"] = inboundNatPoolsItem2.FrontendPortRangeStart;
+                            
+                            propertiesValue7["frontendPortRangeEnd"] = inboundNatPoolsItem2.FrontendPortRangeEnd;
+                            
+                            propertiesValue7["backendPort"] = inboundNatPoolsItem2.BackendPort;
+                            
+                            if (inboundNatPoolsItem2.ProvisioningState != null)
+                            {
+                                propertiesValue7["provisioningState"] = inboundNatPoolsItem2.ProvisioningState;
+                            }
+                            
+                            if (inboundNatPoolsItem2.Name != null)
+                            {
+                                inboundNatPoolJsonFormatValue["name"] = inboundNatPoolsItem2.Name;
+                            }
+                            
+                            if (inboundNatPoolsItem2.Etag != null)
+                            {
+                                inboundNatPoolJsonFormatValue["etag"] = inboundNatPoolsItem2.Etag;
+                            }
+                            
+                            if (inboundNatPoolsItem2.Id != null)
+                            {
+                                inboundNatPoolJsonFormatValue["id"] = inboundNatPoolsItem2.Id;
+                            }
+                        }
+                        propertiesValue["inboundNatPools"] = inboundNatPoolsArray2;
+                    }
+                }
+                
+                if (parameters.OutboundNatRules != null)
+                {
+                    if (parameters.OutboundNatRules is ILazyCollection == false || ((ILazyCollection)parameters.OutboundNatRules).IsInitialized)
+                    {
+                        JArray outboundNatRulesArray2 = new JArray();
+                        foreach (OutboundNatRule outboundNatRulesItem2 in parameters.OutboundNatRules)
+                        {
+                            JObject outboundNatRuleJsonFormatValue = new JObject();
+                            outboundNatRulesArray2.Add(outboundNatRuleJsonFormatValue);
+                            
+                            JObject propertiesValue8 = new JObject();
+                            outboundNatRuleJsonFormatValue["properties"] = propertiesValue8;
+                            
+                            propertiesValue8["allocatedOutboundPorts"] = outboundNatRulesItem2.AllocatedOutboundPorts;
+                            
+                            if (outboundNatRulesItem2.FrontendIpConfigurations != null)
+                            {
+                                if (outboundNatRulesItem2.FrontendIpConfigurations is ILazyCollection == false || ((ILazyCollection)outboundNatRulesItem2.FrontendIpConfigurations).IsInitialized)
+                                {
+                                    JArray frontendIPConfigurationsArray2 = new JArray();
+                                    foreach (ResourceId frontendIPConfigurationsItem2 in outboundNatRulesItem2.FrontendIpConfigurations)
+                                    {
+                                        JObject resourceIdValue8 = new JObject();
+                                        frontendIPConfigurationsArray2.Add(resourceIdValue8);
+                                        
+                                        if (frontendIPConfigurationsItem2.Id != null)
+                                        {
+                                            resourceIdValue8["id"] = frontendIPConfigurationsItem2.Id;
+                                        }
+                                    }
+                                    propertiesValue8["frontendIPConfigurations"] = frontendIPConfigurationsArray2;
+                                }
+                            }
+                            
+                            JObject backendAddressPoolValue2 = new JObject();
+                            propertiesValue8["backendAddressPool"] = backendAddressPoolValue2;
+                            
+                            if (outboundNatRulesItem2.BackendAddressPool.Id != null)
+                            {
+                                backendAddressPoolValue2["id"] = outboundNatRulesItem2.BackendAddressPool.Id;
+                            }
+                            
+                            if (outboundNatRulesItem2.ProvisioningState != null)
+                            {
+                                propertiesValue8["provisioningState"] = outboundNatRulesItem2.ProvisioningState;
+                            }
+                            
+                            if (outboundNatRulesItem2.Name != null)
+                            {
+                                outboundNatRuleJsonFormatValue["name"] = outboundNatRulesItem2.Name;
+                            }
+                            
+                            if (outboundNatRulesItem2.Etag != null)
+                            {
+                                outboundNatRuleJsonFormatValue["etag"] = outboundNatRulesItem2.Etag;
+                            }
+                            
+                            if (outboundNatRulesItem2.Id != null)
+                            {
+                                outboundNatRuleJsonFormatValue["id"] = outboundNatRulesItem2.Id;
+                            }
+                        }
+                        propertiesValue["outboundNatRules"] = outboundNatRulesArray2;
+                    }
+                }
+                
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -704,35 +900,35 @@ namespace Microsoft.Azure.Management.Network
                             LoadBalancer loadBalancerInstance = new LoadBalancer();
                             result.LoadBalancer = loadBalancerInstance;
                             
-                            JToken propertiesValue7 = responseDoc["properties"];
-                            if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                            JToken propertiesValue9 = responseDoc["properties"];
+                            if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                             {
-                                JToken frontendIPConfigurationsArray2 = propertiesValue7["frontendIPConfigurations"];
-                                if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
+                                JToken frontendIPConfigurationsArray3 = propertiesValue9["frontendIPConfigurations"];
+                                if (frontendIPConfigurationsArray3 != null && frontendIPConfigurationsArray3.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray2))
+                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray3))
                                     {
                                         FrontendIpConfiguration frontendIpConfigurationJsonFormatInstance = new FrontendIpConfiguration();
                                         loadBalancerInstance.FrontendIpConfigurations.Add(frontendIpConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue8 = frontendIPConfigurationsValue["properties"];
-                                        if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                        JToken propertiesValue10 = frontendIPConfigurationsValue["properties"];
+                                        if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                                         {
-                                            JToken privateIPAddressValue = propertiesValue8["privateIPAddress"];
+                                            JToken privateIPAddressValue = propertiesValue10["privateIPAddress"];
                                             if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAddressInstance = ((string)privateIPAddressValue);
                                                 frontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
                                             }
                                             
-                                            JToken privateIPAllocationMethodValue = propertiesValue8["privateIPAllocationMethod"];
+                                            JToken privateIPAllocationMethodValue = propertiesValue10["privateIPAllocationMethod"];
                                             if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
                                                 frontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
                                             }
                                             
-                                            JToken subnetValue2 = propertiesValue8["subnet"];
+                                            JToken subnetValue2 = propertiesValue10["subnet"];
                                             if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId subnetInstance = new ResourceId();
@@ -746,7 +942,7 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken publicIPAddressValue2 = propertiesValue8["publicIPAddress"];
+                                            JToken publicIPAddressValue2 = propertiesValue10["publicIPAddress"];
                                             if (publicIPAddressValue2 != null && publicIPAddressValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId publicIPAddressInstance = new ResourceId();
@@ -760,7 +956,7 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken inboundNatRulesArray3 = propertiesValue8["inboundNatRules"];
+                                            JToken inboundNatRulesArray3 = propertiesValue10["inboundNatRules"];
                                             if (inboundNatRulesArray3 != null && inboundNatRulesArray3.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken inboundNatRulesValue in ((JArray)inboundNatRulesArray3))
@@ -777,15 +973,15 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken loadBalancingRulesArray5 = propertiesValue8["loadBalancingRules"];
-                                            if (loadBalancingRulesArray5 != null && loadBalancingRulesArray5.Type != JTokenType.Null)
+                                            JToken inboundNatPoolsArray3 = propertiesValue10["inboundNatPools"];
+                                            if (inboundNatPoolsArray3 != null && inboundNatPoolsArray3.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken loadBalancingRulesValue in ((JArray)loadBalancingRulesArray5))
+                                                foreach (JToken inboundNatPoolsValue in ((JArray)inboundNatPoolsArray3))
                                                 {
                                                     ResourceId resourceIdInstance2 = new ResourceId();
-                                                    frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance2);
+                                                    frontendIpConfigurationJsonFormatInstance.InboundNatPools.Add(resourceIdInstance2);
                                                     
-                                                    JToken idValue4 = loadBalancingRulesValue["id"];
+                                                    JToken idValue4 = inboundNatPoolsValue["id"];
                                                     if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                                     {
                                                         string idInstance4 = ((string)idValue4);
@@ -794,7 +990,41 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken provisioningStateValue = propertiesValue8["provisioningState"];
+                                            JToken outboundNatRulesArray3 = propertiesValue10["outboundNatRules"];
+                                            if (outboundNatRulesArray3 != null && outboundNatRulesArray3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken outboundNatRulesValue in ((JArray)outboundNatRulesArray3))
+                                                {
+                                                    ResourceId resourceIdInstance3 = new ResourceId();
+                                                    frontendIpConfigurationJsonFormatInstance.OutboundNatRules.Add(resourceIdInstance3);
+                                                    
+                                                    JToken idValue5 = outboundNatRulesValue["id"];
+                                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance5 = ((string)idValue5);
+                                                        resourceIdInstance3.Id = idInstance5;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken loadBalancingRulesArray5 = propertiesValue10["loadBalancingRules"];
+                                            if (loadBalancingRulesArray5 != null && loadBalancingRulesArray5.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken loadBalancingRulesValue in ((JArray)loadBalancingRulesArray5))
+                                                {
+                                                    ResourceId resourceIdInstance4 = new ResourceId();
+                                                    frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
+                                                    
+                                                    JToken idValue6 = loadBalancingRulesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance6 = ((string)idValue6);
+                                                        resourceIdInstance4.Id = idInstance6;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken provisioningStateValue = propertiesValue10["provisioningState"];
                                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance = ((string)provisioningStateValue);
@@ -816,16 +1046,16 @@ namespace Microsoft.Azure.Management.Network
                                             frontendIpConfigurationJsonFormatInstance.Etag = etagInstance;
                                         }
                                         
-                                        JToken idValue5 = frontendIPConfigurationsValue["id"];
-                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                        JToken idValue7 = frontendIPConfigurationsValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                         {
-                                            string idInstance5 = ((string)idValue5);
-                                            frontendIpConfigurationJsonFormatInstance.Id = idInstance5;
+                                            string idInstance7 = ((string)idValue7);
+                                            frontendIpConfigurationJsonFormatInstance.Id = idInstance7;
                                         }
                                     }
                                 }
                                 
-                                JToken backendAddressPoolsArray2 = propertiesValue7["backendAddressPools"];
+                                JToken backendAddressPoolsArray2 = propertiesValue9["backendAddressPools"];
                                 if (backendAddressPoolsArray2 != null && backendAddressPoolsArray2.Type != JTokenType.Null)
                                 {
                                     foreach (JToken backendAddressPoolsValue in ((JArray)backendAddressPoolsArray2))
@@ -833,44 +1063,58 @@ namespace Microsoft.Azure.Management.Network
                                         BackendAddressPool backendAddressPoolJsonFormatInstance = new BackendAddressPool();
                                         loadBalancerInstance.BackendAddressPools.Add(backendAddressPoolJsonFormatInstance);
                                         
-                                        JToken propertiesValue9 = backendAddressPoolsValue["properties"];
-                                        if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
+                                        JToken propertiesValue11 = backendAddressPoolsValue["properties"];
+                                        if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                         {
-                                            JToken backendIPConfigurationsArray2 = propertiesValue9["backendIPConfigurations"];
+                                            JToken backendIPConfigurationsArray2 = propertiesValue11["backendIPConfigurations"];
                                             if (backendIPConfigurationsArray2 != null && backendIPConfigurationsArray2.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray2))
                                                 {
-                                                    ResourceId resourceIdInstance3 = new ResourceId();
-                                                    backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance3);
+                                                    ResourceId resourceIdInstance5 = new ResourceId();
+                                                    backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance5);
                                                     
-                                                    JToken idValue6 = backendIPConfigurationsValue["id"];
-                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    JToken idValue8 = backendIPConfigurationsValue["id"];
+                                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance6 = ((string)idValue6);
-                                                        resourceIdInstance3.Id = idInstance6;
+                                                        string idInstance8 = ((string)idValue8);
+                                                        resourceIdInstance5.Id = idInstance8;
                                                     }
                                                 }
                                             }
                                             
-                                            JToken loadBalancingRulesArray6 = propertiesValue9["loadBalancingRules"];
+                                            JToken loadBalancingRulesArray6 = propertiesValue11["loadBalancingRules"];
                                             if (loadBalancingRulesArray6 != null && loadBalancingRulesArray6.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken loadBalancingRulesValue2 in ((JArray)loadBalancingRulesArray6))
                                                 {
-                                                    ResourceId resourceIdInstance4 = new ResourceId();
-                                                    backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
+                                                    ResourceId resourceIdInstance6 = new ResourceId();
+                                                    backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance6);
                                                     
-                                                    JToken idValue7 = loadBalancingRulesValue2["id"];
-                                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                    JToken idValue9 = loadBalancingRulesValue2["id"];
+                                                    if (idValue9 != null && idValue9.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance7 = ((string)idValue7);
-                                                        resourceIdInstance4.Id = idInstance7;
+                                                        string idInstance9 = ((string)idValue9);
+                                                        resourceIdInstance6.Id = idInstance9;
                                                     }
                                                 }
                                             }
                                             
-                                            JToken provisioningStateValue2 = propertiesValue9["provisioningState"];
+                                            JToken outboundNatRuleValue2 = propertiesValue11["outboundNatRule"];
+                                            if (outboundNatRuleValue2 != null && outboundNatRuleValue2.Type != JTokenType.Null)
+                                            {
+                                                ResourceId outboundNatRuleInstance = new ResourceId();
+                                                backendAddressPoolJsonFormatInstance.OutboundNatRule = outboundNatRuleInstance;
+                                                
+                                                JToken idValue10 = outboundNatRuleValue2["id"];
+                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance10 = ((string)idValue10);
+                                                    outboundNatRuleInstance.Id = idInstance10;
+                                                }
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue11["provisioningState"];
                                             if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance2 = ((string)provisioningStateValue2);
@@ -892,16 +1136,16 @@ namespace Microsoft.Azure.Management.Network
                                             backendAddressPoolJsonFormatInstance.Etag = etagInstance2;
                                         }
                                         
-                                        JToken idValue8 = backendAddressPoolsValue["id"];
-                                        if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                        JToken idValue11 = backendAddressPoolsValue["id"];
+                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                         {
-                                            string idInstance8 = ((string)idValue8);
-                                            backendAddressPoolJsonFormatInstance.Id = idInstance8;
+                                            string idInstance11 = ((string)idValue11);
+                                            backendAddressPoolJsonFormatInstance.Id = idInstance11;
                                         }
                                     }
                                 }
                                 
-                                JToken loadBalancingRulesArray7 = propertiesValue7["loadBalancingRules"];
+                                JToken loadBalancingRulesArray7 = propertiesValue9["loadBalancingRules"];
                                 if (loadBalancingRulesArray7 != null && loadBalancingRulesArray7.Type != JTokenType.Null)
                                 {
                                     foreach (JToken loadBalancingRulesValue3 in ((JArray)loadBalancingRulesArray7))
@@ -909,94 +1153,94 @@ namespace Microsoft.Azure.Management.Network
                                         LoadBalancingRule loadBalancingRuleJsonFormatInstance = new LoadBalancingRule();
                                         loadBalancerInstance.LoadBalancingRules.Add(loadBalancingRuleJsonFormatInstance);
                                         
-                                        JToken propertiesValue10 = loadBalancingRulesValue3["properties"];
-                                        if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
+                                        JToken propertiesValue12 = loadBalancingRulesValue3["properties"];
+                                        if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
                                         {
-                                            JToken frontendIPConfigurationValue3 = propertiesValue10["frontendIPConfiguration"];
-                                            if (frontendIPConfigurationValue3 != null && frontendIPConfigurationValue3.Type != JTokenType.Null)
+                                            JToken frontendIPConfigurationValue4 = propertiesValue12["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue4 != null && frontendIPConfigurationValue4.Type != JTokenType.Null)
                                             {
                                                 ResourceId frontendIPConfigurationInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                 
-                                                JToken idValue9 = frontendIPConfigurationValue3["id"];
-                                                if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                JToken idValue12 = frontendIPConfigurationValue4["id"];
+                                                if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance9 = ((string)idValue9);
-                                                    frontendIPConfigurationInstance.Id = idInstance9;
+                                                    string idInstance12 = ((string)idValue12);
+                                                    frontendIPConfigurationInstance.Id = idInstance12;
                                                 }
                                             }
                                             
-                                            JToken backendAddressPoolValue2 = propertiesValue10["backendAddressPool"];
-                                            if (backendAddressPoolValue2 != null && backendAddressPoolValue2.Type != JTokenType.Null)
+                                            JToken backendAddressPoolValue3 = propertiesValue12["backendAddressPool"];
+                                            if (backendAddressPoolValue3 != null && backendAddressPoolValue3.Type != JTokenType.Null)
                                             {
                                                 ResourceId backendAddressPoolInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
                                                 
-                                                JToken idValue10 = backendAddressPoolValue2["id"];
-                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                JToken idValue13 = backendAddressPoolValue3["id"];
+                                                if (idValue13 != null && idValue13.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance10 = ((string)idValue10);
-                                                    backendAddressPoolInstance.Id = idInstance10;
+                                                    string idInstance13 = ((string)idValue13);
+                                                    backendAddressPoolInstance.Id = idInstance13;
                                                 }
                                             }
                                             
-                                            JToken probeValue2 = propertiesValue10["probe"];
+                                            JToken probeValue2 = propertiesValue12["probe"];
                                             if (probeValue2 != null && probeValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId probeInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.Probe = probeInstance;
                                                 
-                                                JToken idValue11 = probeValue2["id"];
-                                                if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                JToken idValue14 = probeValue2["id"];
+                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance11 = ((string)idValue11);
-                                                    probeInstance.Id = idInstance11;
+                                                    string idInstance14 = ((string)idValue14);
+                                                    probeInstance.Id = idInstance14;
                                                 }
                                             }
                                             
-                                            JToken protocolValue = propertiesValue10["protocol"];
+                                            JToken protocolValue = propertiesValue12["protocol"];
                                             if (protocolValue != null && protocolValue.Type != JTokenType.Null)
                                             {
                                                 string protocolInstance = ((string)protocolValue);
                                                 loadBalancingRuleJsonFormatInstance.Protocol = protocolInstance;
                                             }
                                             
-                                            JToken loadDistributionValue = propertiesValue10["loadDistribution"];
+                                            JToken loadDistributionValue = propertiesValue12["loadDistribution"];
                                             if (loadDistributionValue != null && loadDistributionValue.Type != JTokenType.Null)
                                             {
                                                 string loadDistributionInstance = ((string)loadDistributionValue);
                                                 loadBalancingRuleJsonFormatInstance.LoadDistribution = loadDistributionInstance;
                                             }
                                             
-                                            JToken frontendPortValue = propertiesValue10["frontendPort"];
+                                            JToken frontendPortValue = propertiesValue12["frontendPort"];
                                             if (frontendPortValue != null && frontendPortValue.Type != JTokenType.Null)
                                             {
                                                 int frontendPortInstance = ((int)frontendPortValue);
                                                 loadBalancingRuleJsonFormatInstance.FrontendPort = frontendPortInstance;
                                             }
                                             
-                                            JToken backendPortValue = propertiesValue10["backendPort"];
+                                            JToken backendPortValue = propertiesValue12["backendPort"];
                                             if (backendPortValue != null && backendPortValue.Type != JTokenType.Null)
                                             {
                                                 int backendPortInstance = ((int)backendPortValue);
                                                 loadBalancingRuleJsonFormatInstance.BackendPort = backendPortInstance;
                                             }
                                             
-                                            JToken idleTimeoutInMinutesValue = propertiesValue10["idleTimeoutInMinutes"];
+                                            JToken idleTimeoutInMinutesValue = propertiesValue12["idleTimeoutInMinutes"];
                                             if (idleTimeoutInMinutesValue != null && idleTimeoutInMinutesValue.Type != JTokenType.Null)
                                             {
                                                 int idleTimeoutInMinutesInstance = ((int)idleTimeoutInMinutesValue);
                                                 loadBalancingRuleJsonFormatInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance;
                                             }
                                             
-                                            JToken enableFloatingIPValue = propertiesValue10["enableFloatingIP"];
+                                            JToken enableFloatingIPValue = propertiesValue12["enableFloatingIP"];
                                             if (enableFloatingIPValue != null && enableFloatingIPValue.Type != JTokenType.Null)
                                             {
                                                 bool enableFloatingIPInstance = ((bool)enableFloatingIPValue);
                                                 loadBalancingRuleJsonFormatInstance.EnableFloatingIP = enableFloatingIPInstance;
                                             }
                                             
-                                            JToken provisioningStateValue3 = propertiesValue10["provisioningState"];
+                                            JToken provisioningStateValue3 = propertiesValue12["provisioningState"];
                                             if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance3 = ((string)provisioningStateValue3);
@@ -1018,16 +1262,16 @@ namespace Microsoft.Azure.Management.Network
                                             loadBalancingRuleJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue12 = loadBalancingRulesValue3["id"];
-                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                        JToken idValue15 = loadBalancingRulesValue3["id"];
+                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
                                         {
-                                            string idInstance12 = ((string)idValue12);
-                                            loadBalancingRuleJsonFormatInstance.Id = idInstance12;
+                                            string idInstance15 = ((string)idValue15);
+                                            loadBalancingRuleJsonFormatInstance.Id = idInstance15;
                                         }
                                     }
                                 }
                                 
-                                JToken probesArray2 = propertiesValue7["probes"];
+                                JToken probesArray2 = propertiesValue9["probes"];
                                 if (probesArray2 != null && probesArray2.Type != JTokenType.Null)
                                 {
                                     foreach (JToken probesValue in ((JArray)probesArray2))
@@ -1035,62 +1279,62 @@ namespace Microsoft.Azure.Management.Network
                                         Probe probeJsonFormatInstance = new Probe();
                                         loadBalancerInstance.Probes.Add(probeJsonFormatInstance);
                                         
-                                        JToken propertiesValue11 = probesValue["properties"];
-                                        if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
+                                        JToken propertiesValue13 = probesValue["properties"];
+                                        if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                         {
-                                            JToken loadBalancingRulesArray8 = propertiesValue11["loadBalancingRules"];
+                                            JToken loadBalancingRulesArray8 = propertiesValue13["loadBalancingRules"];
                                             if (loadBalancingRulesArray8 != null && loadBalancingRulesArray8.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken loadBalancingRulesValue4 in ((JArray)loadBalancingRulesArray8))
                                                 {
-                                                    ResourceId resourceIdInstance5 = new ResourceId();
-                                                    probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance5);
+                                                    ResourceId resourceIdInstance7 = new ResourceId();
+                                                    probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance7);
                                                     
-                                                    JToken idValue13 = loadBalancingRulesValue4["id"];
-                                                    if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                    JToken idValue16 = loadBalancingRulesValue4["id"];
+                                                    if (idValue16 != null && idValue16.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance13 = ((string)idValue13);
-                                                        resourceIdInstance5.Id = idInstance13;
+                                                        string idInstance16 = ((string)idValue16);
+                                                        resourceIdInstance7.Id = idInstance16;
                                                     }
                                                 }
                                             }
                                             
-                                            JToken protocolValue2 = propertiesValue11["protocol"];
+                                            JToken protocolValue2 = propertiesValue13["protocol"];
                                             if (protocolValue2 != null && protocolValue2.Type != JTokenType.Null)
                                             {
                                                 string protocolInstance2 = ((string)protocolValue2);
                                                 probeJsonFormatInstance.Protocol = protocolInstance2;
                                             }
                                             
-                                            JToken portValue = propertiesValue11["port"];
+                                            JToken portValue = propertiesValue13["port"];
                                             if (portValue != null && portValue.Type != JTokenType.Null)
                                             {
                                                 int portInstance = ((int)portValue);
                                                 probeJsonFormatInstance.Port = portInstance;
                                             }
                                             
-                                            JToken intervalInSecondsValue = propertiesValue11["intervalInSeconds"];
+                                            JToken intervalInSecondsValue = propertiesValue13["intervalInSeconds"];
                                             if (intervalInSecondsValue != null && intervalInSecondsValue.Type != JTokenType.Null)
                                             {
                                                 int intervalInSecondsInstance = ((int)intervalInSecondsValue);
                                                 probeJsonFormatInstance.IntervalInSeconds = intervalInSecondsInstance;
                                             }
                                             
-                                            JToken numberOfProbesValue = propertiesValue11["numberOfProbes"];
+                                            JToken numberOfProbesValue = propertiesValue13["numberOfProbes"];
                                             if (numberOfProbesValue != null && numberOfProbesValue.Type != JTokenType.Null)
                                             {
                                                 int numberOfProbesInstance = ((int)numberOfProbesValue);
                                                 probeJsonFormatInstance.NumberOfProbes = numberOfProbesInstance;
                                             }
                                             
-                                            JToken requestPathValue = propertiesValue11["requestPath"];
+                                            JToken requestPathValue = propertiesValue13["requestPath"];
                                             if (requestPathValue != null && requestPathValue.Type != JTokenType.Null)
                                             {
                                                 string requestPathInstance = ((string)requestPathValue);
                                                 probeJsonFormatInstance.RequestPath = requestPathInstance;
                                             }
                                             
-                                            JToken provisioningStateValue4 = propertiesValue11["provisioningState"];
+                                            JToken provisioningStateValue4 = propertiesValue13["provisioningState"];
                                             if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance4 = ((string)provisioningStateValue4);
@@ -1112,16 +1356,16 @@ namespace Microsoft.Azure.Management.Network
                                             probeJsonFormatInstance.Etag = etagInstance4;
                                         }
                                         
-                                        JToken idValue14 = probesValue["id"];
-                                        if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                        JToken idValue17 = probesValue["id"];
+                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
                                         {
-                                            string idInstance14 = ((string)idValue14);
-                                            probeJsonFormatInstance.Id = idInstance14;
+                                            string idInstance17 = ((string)idValue17);
+                                            probeJsonFormatInstance.Id = idInstance17;
                                         }
                                     }
                                 }
                                 
-                                JToken inboundNatRulesArray4 = propertiesValue7["inboundNatRules"];
+                                JToken inboundNatRulesArray4 = propertiesValue9["inboundNatRules"];
                                 if (inboundNatRulesArray4 != null && inboundNatRulesArray4.Type != JTokenType.Null)
                                 {
                                     foreach (JToken inboundNatRulesValue2 in ((JArray)inboundNatRulesArray4))
@@ -1129,73 +1373,73 @@ namespace Microsoft.Azure.Management.Network
                                         InboundNatRule inboundNatRuleJsonFormatInstance = new InboundNatRule();
                                         loadBalancerInstance.InboundNatRules.Add(inboundNatRuleJsonFormatInstance);
                                         
-                                        JToken propertiesValue12 = inboundNatRulesValue2["properties"];
-                                        if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
+                                        JToken propertiesValue14 = inboundNatRulesValue2["properties"];
+                                        if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
                                         {
-                                            JToken frontendIPConfigurationValue4 = propertiesValue12["frontendIPConfiguration"];
-                                            if (frontendIPConfigurationValue4 != null && frontendIPConfigurationValue4.Type != JTokenType.Null)
+                                            JToken frontendIPConfigurationValue5 = propertiesValue14["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue5 != null && frontendIPConfigurationValue5.Type != JTokenType.Null)
                                             {
                                                 ResourceId frontendIPConfigurationInstance2 = new ResourceId();
                                                 inboundNatRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance2;
                                                 
-                                                JToken idValue15 = frontendIPConfigurationValue4["id"];
-                                                if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                JToken idValue18 = frontendIPConfigurationValue5["id"];
+                                                if (idValue18 != null && idValue18.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance15 = ((string)idValue15);
-                                                    frontendIPConfigurationInstance2.Id = idInstance15;
+                                                    string idInstance18 = ((string)idValue18);
+                                                    frontendIPConfigurationInstance2.Id = idInstance18;
                                                 }
                                             }
                                             
-                                            JToken backendIPConfigurationValue2 = propertiesValue12["backendIPConfiguration"];
+                                            JToken backendIPConfigurationValue2 = propertiesValue14["backendIPConfiguration"];
                                             if (backendIPConfigurationValue2 != null && backendIPConfigurationValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId backendIPConfigurationInstance = new ResourceId();
                                                 inboundNatRuleJsonFormatInstance.BackendIPConfiguration = backendIPConfigurationInstance;
                                                 
-                                                JToken idValue16 = backendIPConfigurationValue2["id"];
-                                                if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                JToken idValue19 = backendIPConfigurationValue2["id"];
+                                                if (idValue19 != null && idValue19.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance16 = ((string)idValue16);
-                                                    backendIPConfigurationInstance.Id = idInstance16;
+                                                    string idInstance19 = ((string)idValue19);
+                                                    backendIPConfigurationInstance.Id = idInstance19;
                                                 }
                                             }
                                             
-                                            JToken protocolValue3 = propertiesValue12["protocol"];
+                                            JToken protocolValue3 = propertiesValue14["protocol"];
                                             if (protocolValue3 != null && protocolValue3.Type != JTokenType.Null)
                                             {
                                                 string protocolInstance3 = ((string)protocolValue3);
                                                 inboundNatRuleJsonFormatInstance.Protocol = protocolInstance3;
                                             }
                                             
-                                            JToken frontendPortValue2 = propertiesValue12["frontendPort"];
+                                            JToken frontendPortValue2 = propertiesValue14["frontendPort"];
                                             if (frontendPortValue2 != null && frontendPortValue2.Type != JTokenType.Null)
                                             {
                                                 int frontendPortInstance2 = ((int)frontendPortValue2);
                                                 inboundNatRuleJsonFormatInstance.FrontendPort = frontendPortInstance2;
                                             }
                                             
-                                            JToken backendPortValue2 = propertiesValue12["backendPort"];
+                                            JToken backendPortValue2 = propertiesValue14["backendPort"];
                                             if (backendPortValue2 != null && backendPortValue2.Type != JTokenType.Null)
                                             {
                                                 int backendPortInstance2 = ((int)backendPortValue2);
                                                 inboundNatRuleJsonFormatInstance.BackendPort = backendPortInstance2;
                                             }
                                             
-                                            JToken idleTimeoutInMinutesValue2 = propertiesValue12["idleTimeoutInMinutes"];
+                                            JToken idleTimeoutInMinutesValue2 = propertiesValue14["idleTimeoutInMinutes"];
                                             if (idleTimeoutInMinutesValue2 != null && idleTimeoutInMinutesValue2.Type != JTokenType.Null)
                                             {
                                                 int idleTimeoutInMinutesInstance2 = ((int)idleTimeoutInMinutesValue2);
                                                 inboundNatRuleJsonFormatInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance2;
                                             }
                                             
-                                            JToken enableFloatingIPValue2 = propertiesValue12["enableFloatingIP"];
+                                            JToken enableFloatingIPValue2 = propertiesValue14["enableFloatingIP"];
                                             if (enableFloatingIPValue2 != null && enableFloatingIPValue2.Type != JTokenType.Null)
                                             {
                                                 bool enableFloatingIPInstance2 = ((bool)enableFloatingIPValue2);
                                                 inboundNatRuleJsonFormatInstance.EnableFloatingIP = enableFloatingIPInstance2;
                                             }
                                             
-                                            JToken provisioningStateValue5 = propertiesValue12["provisioningState"];
+                                            JToken provisioningStateValue5 = propertiesValue14["provisioningState"];
                                             if (provisioningStateValue5 != null && provisioningStateValue5.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance5 = ((string)provisioningStateValue5);
@@ -1217,42 +1461,213 @@ namespace Microsoft.Azure.Management.Network
                                             inboundNatRuleJsonFormatInstance.Etag = etagInstance5;
                                         }
                                         
-                                        JToken idValue17 = inboundNatRulesValue2["id"];
-                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                        JToken idValue20 = inboundNatRulesValue2["id"];
+                                        if (idValue20 != null && idValue20.Type != JTokenType.Null)
                                         {
-                                            string idInstance17 = ((string)idValue17);
-                                            inboundNatRuleJsonFormatInstance.Id = idInstance17;
+                                            string idInstance20 = ((string)idValue20);
+                                            inboundNatRuleJsonFormatInstance.Id = idInstance20;
                                         }
                                     }
                                 }
                                 
-                                JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
-                                if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                JToken inboundNatPoolsArray4 = propertiesValue9["inboundNatPools"];
+                                if (inboundNatPoolsArray4 != null && inboundNatPoolsArray4.Type != JTokenType.Null)
                                 {
-                                    string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                    loadBalancerInstance.ProvisioningState = provisioningStateInstance6;
+                                    foreach (JToken inboundNatPoolsValue2 in ((JArray)inboundNatPoolsArray4))
+                                    {
+                                        InboundNatPool inboundNatPoolJsonFormatInstance = new InboundNatPool();
+                                        loadBalancerInstance.InboundNatPools.Add(inboundNatPoolJsonFormatInstance);
+                                        
+                                        JToken propertiesValue15 = inboundNatPoolsValue2["properties"];
+                                        if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
+                                        {
+                                            JToken frontendIPConfigurationValue6 = propertiesValue15["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue6 != null && frontendIPConfigurationValue6.Type != JTokenType.Null)
+                                            {
+                                                ResourceId frontendIPConfigurationInstance3 = new ResourceId();
+                                                inboundNatPoolJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance3;
+                                                
+                                                JToken idValue21 = frontendIPConfigurationValue6["id"];
+                                                if (idValue21 != null && idValue21.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance21 = ((string)idValue21);
+                                                    frontendIPConfigurationInstance3.Id = idInstance21;
+                                                }
+                                            }
+                                            
+                                            JToken protocolValue4 = propertiesValue15["protocol"];
+                                            if (protocolValue4 != null && protocolValue4.Type != JTokenType.Null)
+                                            {
+                                                string protocolInstance4 = ((string)protocolValue4);
+                                                inboundNatPoolJsonFormatInstance.Protocol = protocolInstance4;
+                                            }
+                                            
+                                            JToken frontendPortRangeStartValue = propertiesValue15["frontendPortRangeStart"];
+                                            if (frontendPortRangeStartValue != null && frontendPortRangeStartValue.Type != JTokenType.Null)
+                                            {
+                                                int frontendPortRangeStartInstance = ((int)frontendPortRangeStartValue);
+                                                inboundNatPoolJsonFormatInstance.FrontendPortRangeStart = frontendPortRangeStartInstance;
+                                            }
+                                            
+                                            JToken frontendPortRangeEndValue = propertiesValue15["frontendPortRangeEnd"];
+                                            if (frontendPortRangeEndValue != null && frontendPortRangeEndValue.Type != JTokenType.Null)
+                                            {
+                                                int frontendPortRangeEndInstance = ((int)frontendPortRangeEndValue);
+                                                inboundNatPoolJsonFormatInstance.FrontendPortRangeEnd = frontendPortRangeEndInstance;
+                                            }
+                                            
+                                            JToken backendPortValue3 = propertiesValue15["backendPort"];
+                                            if (backendPortValue3 != null && backendPortValue3.Type != JTokenType.Null)
+                                            {
+                                                int backendPortInstance3 = ((int)backendPortValue3);
+                                                inboundNatPoolJsonFormatInstance.BackendPort = backendPortInstance3;
+                                            }
+                                            
+                                            JToken provisioningStateValue6 = propertiesValue15["provisioningState"];
+                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                inboundNatPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken nameValue6 = inboundNatPoolsValue2["name"];
+                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance6 = ((string)nameValue6);
+                                            inboundNatPoolJsonFormatInstance.Name = nameInstance6;
+                                        }
+                                        
+                                        JToken etagValue6 = inboundNatPoolsValue2["etag"];
+                                        if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance6 = ((string)etagValue6);
+                                            inboundNatPoolJsonFormatInstance.Etag = etagInstance6;
+                                        }
+                                        
+                                        JToken idValue22 = inboundNatPoolsValue2["id"];
+                                        if (idValue22 != null && idValue22.Type != JTokenType.Null)
+                                        {
+                                            string idInstance22 = ((string)idValue22);
+                                            inboundNatPoolJsonFormatInstance.Id = idInstance22;
+                                        }
+                                    }
+                                }
+                                
+                                JToken outboundNatRulesArray4 = propertiesValue9["outboundNatRules"];
+                                if (outboundNatRulesArray4 != null && outboundNatRulesArray4.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken outboundNatRulesValue2 in ((JArray)outboundNatRulesArray4))
+                                    {
+                                        OutboundNatRule outboundNatRuleJsonFormatInstance = new OutboundNatRule();
+                                        loadBalancerInstance.OutboundNatRules.Add(outboundNatRuleJsonFormatInstance);
+                                        
+                                        JToken propertiesValue16 = outboundNatRulesValue2["properties"];
+                                        if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
+                                        {
+                                            JToken allocatedOutboundPortsValue = propertiesValue16["allocatedOutboundPorts"];
+                                            if (allocatedOutboundPortsValue != null && allocatedOutboundPortsValue.Type != JTokenType.Null)
+                                            {
+                                                int allocatedOutboundPortsInstance = ((int)allocatedOutboundPortsValue);
+                                                outboundNatRuleJsonFormatInstance.AllocatedOutboundPorts = allocatedOutboundPortsInstance;
+                                            }
+                                            
+                                            JToken frontendIPConfigurationsArray4 = propertiesValue16["frontendIPConfigurations"];
+                                            if (frontendIPConfigurationsArray4 != null && frontendIPConfigurationsArray4.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken frontendIPConfigurationsValue2 in ((JArray)frontendIPConfigurationsArray4))
+                                                {
+                                                    ResourceId resourceIdInstance8 = new ResourceId();
+                                                    outboundNatRuleJsonFormatInstance.FrontendIpConfigurations.Add(resourceIdInstance8);
+                                                    
+                                                    JToken idValue23 = frontendIPConfigurationsValue2["id"];
+                                                    if (idValue23 != null && idValue23.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance23 = ((string)idValue23);
+                                                        resourceIdInstance8.Id = idInstance23;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken backendAddressPoolValue4 = propertiesValue16["backendAddressPool"];
+                                            if (backendAddressPoolValue4 != null && backendAddressPoolValue4.Type != JTokenType.Null)
+                                            {
+                                                ResourceId backendAddressPoolInstance2 = new ResourceId();
+                                                outboundNatRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance2;
+                                                
+                                                JToken idValue24 = backendAddressPoolValue4["id"];
+                                                if (idValue24 != null && idValue24.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance24 = ((string)idValue24);
+                                                    backendAddressPoolInstance2.Id = idInstance24;
+                                                }
+                                            }
+                                            
+                                            JToken provisioningStateValue7 = propertiesValue16["provisioningState"];
+                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                outboundNatRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken nameValue7 = outboundNatRulesValue2["name"];
+                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance7 = ((string)nameValue7);
+                                            outboundNatRuleJsonFormatInstance.Name = nameInstance7;
+                                        }
+                                        
+                                        JToken etagValue7 = outboundNatRulesValue2["etag"];
+                                        if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance7 = ((string)etagValue7);
+                                            outboundNatRuleJsonFormatInstance.Etag = etagInstance7;
+                                        }
+                                        
+                                        JToken idValue25 = outboundNatRulesValue2["id"];
+                                        if (idValue25 != null && idValue25.Type != JTokenType.Null)
+                                        {
+                                            string idInstance25 = ((string)idValue25);
+                                            outboundNatRuleJsonFormatInstance.Id = idInstance25;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue9["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    loadBalancerInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
+                                JToken provisioningStateValue8 = propertiesValue9["provisioningState"];
+                                if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                    loadBalancerInstance.ProvisioningState = provisioningStateInstance8;
                                 }
                             }
                             
-                            JToken etagValue6 = responseDoc["etag"];
-                            if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                            JToken etagValue8 = responseDoc["etag"];
+                            if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
                             {
-                                string etagInstance6 = ((string)etagValue6);
-                                loadBalancerInstance.Etag = etagInstance6;
+                                string etagInstance8 = ((string)etagValue8);
+                                loadBalancerInstance.Etag = etagInstance8;
                             }
                             
-                            JToken idValue18 = responseDoc["id"];
-                            if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                            JToken idValue26 = responseDoc["id"];
+                            if (idValue26 != null && idValue26.Type != JTokenType.Null)
                             {
-                                string idInstance18 = ((string)idValue18);
-                                loadBalancerInstance.Id = idInstance18;
+                                string idInstance26 = ((string)idValue26);
+                                loadBalancerInstance.Id = idInstance26;
                             }
                             
-                            JToken nameValue6 = responseDoc["name"];
-                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                            JToken nameValue8 = responseDoc["name"];
+                            if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                             {
-                                string nameInstance6 = ((string)nameValue6);
-                                loadBalancerInstance.Name = nameInstance6;
+                                string nameInstance8 = ((string)nameValue8);
+                                loadBalancerInstance.Name = nameInstance8;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1593,7 +2008,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1658,7 +2073,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1887,19 +2302,53 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
+                                            JToken inboundNatPoolsArray = propertiesValue2["inboundNatPools"];
+                                            if (inboundNatPoolsArray != null && inboundNatPoolsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken inboundNatPoolsValue in ((JArray)inboundNatPoolsArray))
+                                                {
+                                                    ResourceId resourceIdInstance2 = new ResourceId();
+                                                    frontendIpConfigurationJsonFormatInstance.InboundNatPools.Add(resourceIdInstance2);
+                                                    
+                                                    JToken idValue4 = inboundNatPoolsValue["id"];
+                                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance4 = ((string)idValue4);
+                                                        resourceIdInstance2.Id = idInstance4;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken outboundNatRulesArray = propertiesValue2["outboundNatRules"];
+                                            if (outboundNatRulesArray != null && outboundNatRulesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken outboundNatRulesValue in ((JArray)outboundNatRulesArray))
+                                                {
+                                                    ResourceId resourceIdInstance3 = new ResourceId();
+                                                    frontendIpConfigurationJsonFormatInstance.OutboundNatRules.Add(resourceIdInstance3);
+                                                    
+                                                    JToken idValue5 = outboundNatRulesValue["id"];
+                                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance5 = ((string)idValue5);
+                                                        resourceIdInstance3.Id = idInstance5;
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken loadBalancingRulesArray = propertiesValue2["loadBalancingRules"];
                                             if (loadBalancingRulesArray != null && loadBalancingRulesArray.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken loadBalancingRulesValue in ((JArray)loadBalancingRulesArray))
                                                 {
-                                                    ResourceId resourceIdInstance2 = new ResourceId();
-                                                    frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance2);
+                                                    ResourceId resourceIdInstance4 = new ResourceId();
+                                                    frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
                                                     
-                                                    JToken idValue4 = loadBalancingRulesValue["id"];
-                                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                    JToken idValue6 = loadBalancingRulesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance4 = ((string)idValue4);
-                                                        resourceIdInstance2.Id = idInstance4;
+                                                        string idInstance6 = ((string)idValue6);
+                                                        resourceIdInstance4.Id = idInstance6;
                                                     }
                                                 }
                                             }
@@ -1926,11 +2375,11 @@ namespace Microsoft.Azure.Management.Network
                                             frontendIpConfigurationJsonFormatInstance.Etag = etagInstance;
                                         }
                                         
-                                        JToken idValue5 = frontendIPConfigurationsValue["id"];
-                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                        JToken idValue7 = frontendIPConfigurationsValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                         {
-                                            string idInstance5 = ((string)idValue5);
-                                            frontendIpConfigurationJsonFormatInstance.Id = idInstance5;
+                                            string idInstance7 = ((string)idValue7);
+                                            frontendIpConfigurationJsonFormatInstance.Id = idInstance7;
                                         }
                                     }
                                 }
@@ -1951,14 +2400,14 @@ namespace Microsoft.Azure.Management.Network
                                             {
                                                 foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                 {
-                                                    ResourceId resourceIdInstance3 = new ResourceId();
-                                                    backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance3);
+                                                    ResourceId resourceIdInstance5 = new ResourceId();
+                                                    backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance5);
                                                     
-                                                    JToken idValue6 = backendIPConfigurationsValue["id"];
-                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    JToken idValue8 = backendIPConfigurationsValue["id"];
+                                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance6 = ((string)idValue6);
-                                                        resourceIdInstance3.Id = idInstance6;
+                                                        string idInstance8 = ((string)idValue8);
+                                                        resourceIdInstance5.Id = idInstance8;
                                                     }
                                                 }
                                             }
@@ -1968,15 +2417,29 @@ namespace Microsoft.Azure.Management.Network
                                             {
                                                 foreach (JToken loadBalancingRulesValue2 in ((JArray)loadBalancingRulesArray2))
                                                 {
-                                                    ResourceId resourceIdInstance4 = new ResourceId();
-                                                    backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
+                                                    ResourceId resourceIdInstance6 = new ResourceId();
+                                                    backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance6);
                                                     
-                                                    JToken idValue7 = loadBalancingRulesValue2["id"];
-                                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                    JToken idValue9 = loadBalancingRulesValue2["id"];
+                                                    if (idValue9 != null && idValue9.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance7 = ((string)idValue7);
-                                                        resourceIdInstance4.Id = idInstance7;
+                                                        string idInstance9 = ((string)idValue9);
+                                                        resourceIdInstance6.Id = idInstance9;
                                                     }
+                                                }
+                                            }
+                                            
+                                            JToken outboundNatRuleValue = propertiesValue3["outboundNatRule"];
+                                            if (outboundNatRuleValue != null && outboundNatRuleValue.Type != JTokenType.Null)
+                                            {
+                                                ResourceId outboundNatRuleInstance = new ResourceId();
+                                                backendAddressPoolJsonFormatInstance.OutboundNatRule = outboundNatRuleInstance;
+                                                
+                                                JToken idValue10 = outboundNatRuleValue["id"];
+                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance10 = ((string)idValue10);
+                                                    outboundNatRuleInstance.Id = idInstance10;
                                                 }
                                             }
                                             
@@ -2002,11 +2465,11 @@ namespace Microsoft.Azure.Management.Network
                                             backendAddressPoolJsonFormatInstance.Etag = etagInstance2;
                                         }
                                         
-                                        JToken idValue8 = backendAddressPoolsValue["id"];
-                                        if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                        JToken idValue11 = backendAddressPoolsValue["id"];
+                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                         {
-                                            string idInstance8 = ((string)idValue8);
-                                            backendAddressPoolJsonFormatInstance.Id = idInstance8;
+                                            string idInstance11 = ((string)idValue11);
+                                            backendAddressPoolJsonFormatInstance.Id = idInstance11;
                                         }
                                     }
                                 }
@@ -2028,11 +2491,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId frontendIPConfigurationInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                 
-                                                JToken idValue9 = frontendIPConfigurationValue["id"];
-                                                if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                JToken idValue12 = frontendIPConfigurationValue["id"];
+                                                if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance9 = ((string)idValue9);
-                                                    frontendIPConfigurationInstance.Id = idInstance9;
+                                                    string idInstance12 = ((string)idValue12);
+                                                    frontendIPConfigurationInstance.Id = idInstance12;
                                                 }
                                             }
                                             
@@ -2042,11 +2505,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId backendAddressPoolInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
                                                 
-                                                JToken idValue10 = backendAddressPoolValue["id"];
-                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                JToken idValue13 = backendAddressPoolValue["id"];
+                                                if (idValue13 != null && idValue13.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance10 = ((string)idValue10);
-                                                    backendAddressPoolInstance.Id = idInstance10;
+                                                    string idInstance13 = ((string)idValue13);
+                                                    backendAddressPoolInstance.Id = idInstance13;
                                                 }
                                             }
                                             
@@ -2056,11 +2519,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId probeInstance = new ResourceId();
                                                 loadBalancingRuleJsonFormatInstance.Probe = probeInstance;
                                                 
-                                                JToken idValue11 = probeValue["id"];
-                                                if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                JToken idValue14 = probeValue["id"];
+                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance11 = ((string)idValue11);
-                                                    probeInstance.Id = idInstance11;
+                                                    string idInstance14 = ((string)idValue14);
+                                                    probeInstance.Id = idInstance14;
                                                 }
                                             }
                                             
@@ -2128,11 +2591,11 @@ namespace Microsoft.Azure.Management.Network
                                             loadBalancingRuleJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue12 = loadBalancingRulesValue3["id"];
-                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                        JToken idValue15 = loadBalancingRulesValue3["id"];
+                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
                                         {
-                                            string idInstance12 = ((string)idValue12);
-                                            loadBalancingRuleJsonFormatInstance.Id = idInstance12;
+                                            string idInstance15 = ((string)idValue15);
+                                            loadBalancingRuleJsonFormatInstance.Id = idInstance15;
                                         }
                                     }
                                 }
@@ -2153,14 +2616,14 @@ namespace Microsoft.Azure.Management.Network
                                             {
                                                 foreach (JToken loadBalancingRulesValue4 in ((JArray)loadBalancingRulesArray4))
                                                 {
-                                                    ResourceId resourceIdInstance5 = new ResourceId();
-                                                    probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance5);
+                                                    ResourceId resourceIdInstance7 = new ResourceId();
+                                                    probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance7);
                                                     
-                                                    JToken idValue13 = loadBalancingRulesValue4["id"];
-                                                    if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                    JToken idValue16 = loadBalancingRulesValue4["id"];
+                                                    if (idValue16 != null && idValue16.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance13 = ((string)idValue13);
-                                                        resourceIdInstance5.Id = idInstance13;
+                                                        string idInstance16 = ((string)idValue16);
+                                                        resourceIdInstance7.Id = idInstance16;
                                                     }
                                                 }
                                             }
@@ -2222,11 +2685,11 @@ namespace Microsoft.Azure.Management.Network
                                             probeJsonFormatInstance.Etag = etagInstance4;
                                         }
                                         
-                                        JToken idValue14 = probesValue["id"];
-                                        if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                        JToken idValue17 = probesValue["id"];
+                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
                                         {
-                                            string idInstance14 = ((string)idValue14);
-                                            probeJsonFormatInstance.Id = idInstance14;
+                                            string idInstance17 = ((string)idValue17);
+                                            probeJsonFormatInstance.Id = idInstance17;
                                         }
                                     }
                                 }
@@ -2248,11 +2711,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId frontendIPConfigurationInstance2 = new ResourceId();
                                                 inboundNatRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance2;
                                                 
-                                                JToken idValue15 = frontendIPConfigurationValue2["id"];
-                                                if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                JToken idValue18 = frontendIPConfigurationValue2["id"];
+                                                if (idValue18 != null && idValue18.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance15 = ((string)idValue15);
-                                                    frontendIPConfigurationInstance2.Id = idInstance15;
+                                                    string idInstance18 = ((string)idValue18);
+                                                    frontendIPConfigurationInstance2.Id = idInstance18;
                                                 }
                                             }
                                             
@@ -2262,11 +2725,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId backendIPConfigurationInstance = new ResourceId();
                                                 inboundNatRuleJsonFormatInstance.BackendIPConfiguration = backendIPConfigurationInstance;
                                                 
-                                                JToken idValue16 = backendIPConfigurationValue["id"];
-                                                if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                JToken idValue19 = backendIPConfigurationValue["id"];
+                                                if (idValue19 != null && idValue19.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance16 = ((string)idValue16);
-                                                    backendIPConfigurationInstance.Id = idInstance16;
+                                                    string idInstance19 = ((string)idValue19);
+                                                    backendIPConfigurationInstance.Id = idInstance19;
                                                 }
                                             }
                                             
@@ -2327,42 +2790,213 @@ namespace Microsoft.Azure.Management.Network
                                             inboundNatRuleJsonFormatInstance.Etag = etagInstance5;
                                         }
                                         
-                                        JToken idValue17 = inboundNatRulesValue2["id"];
-                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                        JToken idValue20 = inboundNatRulesValue2["id"];
+                                        if (idValue20 != null && idValue20.Type != JTokenType.Null)
                                         {
-                                            string idInstance17 = ((string)idValue17);
-                                            inboundNatRuleJsonFormatInstance.Id = idInstance17;
+                                            string idInstance20 = ((string)idValue20);
+                                            inboundNatRuleJsonFormatInstance.Id = idInstance20;
                                         }
                                     }
                                 }
                                 
-                                JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                JToken inboundNatPoolsArray2 = propertiesValue["inboundNatPools"];
+                                if (inboundNatPoolsArray2 != null && inboundNatPoolsArray2.Type != JTokenType.Null)
                                 {
-                                    string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                    loadBalancerInstance.ProvisioningState = provisioningStateInstance6;
+                                    foreach (JToken inboundNatPoolsValue2 in ((JArray)inboundNatPoolsArray2))
+                                    {
+                                        InboundNatPool inboundNatPoolJsonFormatInstance = new InboundNatPool();
+                                        loadBalancerInstance.InboundNatPools.Add(inboundNatPoolJsonFormatInstance);
+                                        
+                                        JToken propertiesValue7 = inboundNatPoolsValue2["properties"];
+                                        if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                        {
+                                            JToken frontendIPConfigurationValue3 = propertiesValue7["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue3 != null && frontendIPConfigurationValue3.Type != JTokenType.Null)
+                                            {
+                                                ResourceId frontendIPConfigurationInstance3 = new ResourceId();
+                                                inboundNatPoolJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance3;
+                                                
+                                                JToken idValue21 = frontendIPConfigurationValue3["id"];
+                                                if (idValue21 != null && idValue21.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance21 = ((string)idValue21);
+                                                    frontendIPConfigurationInstance3.Id = idInstance21;
+                                                }
+                                            }
+                                            
+                                            JToken protocolValue4 = propertiesValue7["protocol"];
+                                            if (protocolValue4 != null && protocolValue4.Type != JTokenType.Null)
+                                            {
+                                                string protocolInstance4 = ((string)protocolValue4);
+                                                inboundNatPoolJsonFormatInstance.Protocol = protocolInstance4;
+                                            }
+                                            
+                                            JToken frontendPortRangeStartValue = propertiesValue7["frontendPortRangeStart"];
+                                            if (frontendPortRangeStartValue != null && frontendPortRangeStartValue.Type != JTokenType.Null)
+                                            {
+                                                int frontendPortRangeStartInstance = ((int)frontendPortRangeStartValue);
+                                                inboundNatPoolJsonFormatInstance.FrontendPortRangeStart = frontendPortRangeStartInstance;
+                                            }
+                                            
+                                            JToken frontendPortRangeEndValue = propertiesValue7["frontendPortRangeEnd"];
+                                            if (frontendPortRangeEndValue != null && frontendPortRangeEndValue.Type != JTokenType.Null)
+                                            {
+                                                int frontendPortRangeEndInstance = ((int)frontendPortRangeEndValue);
+                                                inboundNatPoolJsonFormatInstance.FrontendPortRangeEnd = frontendPortRangeEndInstance;
+                                            }
+                                            
+                                            JToken backendPortValue3 = propertiesValue7["backendPort"];
+                                            if (backendPortValue3 != null && backendPortValue3.Type != JTokenType.Null)
+                                            {
+                                                int backendPortInstance3 = ((int)backendPortValue3);
+                                                inboundNatPoolJsonFormatInstance.BackendPort = backendPortInstance3;
+                                            }
+                                            
+                                            JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
+                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                inboundNatPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken nameValue6 = inboundNatPoolsValue2["name"];
+                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance6 = ((string)nameValue6);
+                                            inboundNatPoolJsonFormatInstance.Name = nameInstance6;
+                                        }
+                                        
+                                        JToken etagValue6 = inboundNatPoolsValue2["etag"];
+                                        if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance6 = ((string)etagValue6);
+                                            inboundNatPoolJsonFormatInstance.Etag = etagInstance6;
+                                        }
+                                        
+                                        JToken idValue22 = inboundNatPoolsValue2["id"];
+                                        if (idValue22 != null && idValue22.Type != JTokenType.Null)
+                                        {
+                                            string idInstance22 = ((string)idValue22);
+                                            inboundNatPoolJsonFormatInstance.Id = idInstance22;
+                                        }
+                                    }
+                                }
+                                
+                                JToken outboundNatRulesArray2 = propertiesValue["outboundNatRules"];
+                                if (outboundNatRulesArray2 != null && outboundNatRulesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken outboundNatRulesValue2 in ((JArray)outboundNatRulesArray2))
+                                    {
+                                        OutboundNatRule outboundNatRuleJsonFormatInstance = new OutboundNatRule();
+                                        loadBalancerInstance.OutboundNatRules.Add(outboundNatRuleJsonFormatInstance);
+                                        
+                                        JToken propertiesValue8 = outboundNatRulesValue2["properties"];
+                                        if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                        {
+                                            JToken allocatedOutboundPortsValue = propertiesValue8["allocatedOutboundPorts"];
+                                            if (allocatedOutboundPortsValue != null && allocatedOutboundPortsValue.Type != JTokenType.Null)
+                                            {
+                                                int allocatedOutboundPortsInstance = ((int)allocatedOutboundPortsValue);
+                                                outboundNatRuleJsonFormatInstance.AllocatedOutboundPorts = allocatedOutboundPortsInstance;
+                                            }
+                                            
+                                            JToken frontendIPConfigurationsArray2 = propertiesValue8["frontendIPConfigurations"];
+                                            if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken frontendIPConfigurationsValue2 in ((JArray)frontendIPConfigurationsArray2))
+                                                {
+                                                    ResourceId resourceIdInstance8 = new ResourceId();
+                                                    outboundNatRuleJsonFormatInstance.FrontendIpConfigurations.Add(resourceIdInstance8);
+                                                    
+                                                    JToken idValue23 = frontendIPConfigurationsValue2["id"];
+                                                    if (idValue23 != null && idValue23.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance23 = ((string)idValue23);
+                                                        resourceIdInstance8.Id = idInstance23;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken backendAddressPoolValue2 = propertiesValue8["backendAddressPool"];
+                                            if (backendAddressPoolValue2 != null && backendAddressPoolValue2.Type != JTokenType.Null)
+                                            {
+                                                ResourceId backendAddressPoolInstance2 = new ResourceId();
+                                                outboundNatRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance2;
+                                                
+                                                JToken idValue24 = backendAddressPoolValue2["id"];
+                                                if (idValue24 != null && idValue24.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance24 = ((string)idValue24);
+                                                    backendAddressPoolInstance2.Id = idInstance24;
+                                                }
+                                            }
+                                            
+                                            JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
+                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                outboundNatRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken nameValue7 = outboundNatRulesValue2["name"];
+                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance7 = ((string)nameValue7);
+                                            outboundNatRuleJsonFormatInstance.Name = nameInstance7;
+                                        }
+                                        
+                                        JToken etagValue7 = outboundNatRulesValue2["etag"];
+                                        if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance7 = ((string)etagValue7);
+                                            outboundNatRuleJsonFormatInstance.Etag = etagInstance7;
+                                        }
+                                        
+                                        JToken idValue25 = outboundNatRulesValue2["id"];
+                                        if (idValue25 != null && idValue25.Type != JTokenType.Null)
+                                        {
+                                            string idInstance25 = ((string)idValue25);
+                                            outboundNatRuleJsonFormatInstance.Id = idInstance25;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    loadBalancerInstance.ResourceGuid = resourceGuidInstance;
+                                }
+                                
+                                JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                    loadBalancerInstance.ProvisioningState = provisioningStateInstance8;
                                 }
                             }
                             
-                            JToken etagValue6 = responseDoc["etag"];
-                            if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                            JToken etagValue8 = responseDoc["etag"];
+                            if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
                             {
-                                string etagInstance6 = ((string)etagValue6);
-                                loadBalancerInstance.Etag = etagInstance6;
+                                string etagInstance8 = ((string)etagValue8);
+                                loadBalancerInstance.Etag = etagInstance8;
                             }
                             
-                            JToken idValue18 = responseDoc["id"];
-                            if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                            JToken idValue26 = responseDoc["id"];
+                            if (idValue26 != null && idValue26.Type != JTokenType.Null)
                             {
-                                string idInstance18 = ((string)idValue18);
-                                loadBalancerInstance.Id = idInstance18;
+                                string idInstance26 = ((string)idValue26);
+                                loadBalancerInstance.Id = idInstance26;
                             }
                             
-                            JToken nameValue6 = responseDoc["name"];
-                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                            JToken nameValue8 = responseDoc["name"];
+                            if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                             {
-                                string nameInstance6 = ((string)nameValue6);
-                                loadBalancerInstance.Name = nameInstance6;
+                                string nameInstance8 = ((string)nameValue8);
+                                loadBalancerInstance.Name = nameInstance8;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -2621,19 +3255,53 @@ namespace Microsoft.Azure.Management.Network
                                                         }
                                                     }
                                                     
+                                                    JToken inboundNatPoolsArray = propertiesValue2["inboundNatPools"];
+                                                    if (inboundNatPoolsArray != null && inboundNatPoolsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken inboundNatPoolsValue in ((JArray)inboundNatPoolsArray))
+                                                        {
+                                                            ResourceId resourceIdInstance2 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.InboundNatPools.Add(resourceIdInstance2);
+                                                            
+                                                            JToken idValue4 = inboundNatPoolsValue["id"];
+                                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance4 = ((string)idValue4);
+                                                                resourceIdInstance2.Id = idInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken outboundNatRulesArray = propertiesValue2["outboundNatRules"];
+                                                    if (outboundNatRulesArray != null && outboundNatRulesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken outboundNatRulesValue in ((JArray)outboundNatRulesArray))
+                                                        {
+                                                            ResourceId resourceIdInstance3 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.OutboundNatRules.Add(resourceIdInstance3);
+                                                            
+                                                            JToken idValue5 = outboundNatRulesValue["id"];
+                                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance5 = ((string)idValue5);
+                                                                resourceIdInstance3.Id = idInstance5;
+                                                            }
+                                                        }
+                                                    }
+                                                    
                                                     JToken loadBalancingRulesArray = propertiesValue2["loadBalancingRules"];
                                                     if (loadBalancingRulesArray != null && loadBalancingRulesArray.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken loadBalancingRulesValue in ((JArray)loadBalancingRulesArray))
                                                         {
-                                                            ResourceId resourceIdInstance2 = new ResourceId();
-                                                            frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance2);
+                                                            ResourceId resourceIdInstance4 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
                                                             
-                                                            JToken idValue4 = loadBalancingRulesValue["id"];
-                                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                            JToken idValue6 = loadBalancingRulesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance4 = ((string)idValue4);
-                                                                resourceIdInstance2.Id = idInstance4;
+                                                                string idInstance6 = ((string)idValue6);
+                                                                resourceIdInstance4.Id = idInstance6;
                                                             }
                                                         }
                                                     }
@@ -2660,11 +3328,11 @@ namespace Microsoft.Azure.Management.Network
                                                     frontendIpConfigurationJsonFormatInstance.Etag = etagInstance;
                                                 }
                                                 
-                                                JToken idValue5 = frontendIPConfigurationsValue["id"];
-                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                JToken idValue7 = frontendIPConfigurationsValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance5 = ((string)idValue5);
-                                                    frontendIpConfigurationJsonFormatInstance.Id = idInstance5;
+                                                    string idInstance7 = ((string)idValue7);
+                                                    frontendIpConfigurationJsonFormatInstance.Id = idInstance7;
                                                 }
                                             }
                                         }
@@ -2685,14 +3353,14 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                         {
-                                                            ResourceId resourceIdInstance3 = new ResourceId();
-                                                            backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance3);
+                                                            ResourceId resourceIdInstance5 = new ResourceId();
+                                                            backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance5);
                                                             
-                                                            JToken idValue6 = backendIPConfigurationsValue["id"];
-                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            JToken idValue8 = backendIPConfigurationsValue["id"];
+                                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance6 = ((string)idValue6);
-                                                                resourceIdInstance3.Id = idInstance6;
+                                                                string idInstance8 = ((string)idValue8);
+                                                                resourceIdInstance5.Id = idInstance8;
                                                             }
                                                         }
                                                     }
@@ -2702,15 +3370,29 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken loadBalancingRulesValue2 in ((JArray)loadBalancingRulesArray2))
                                                         {
-                                                            ResourceId resourceIdInstance4 = new ResourceId();
-                                                            backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
+                                                            ResourceId resourceIdInstance6 = new ResourceId();
+                                                            backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance6);
                                                             
-                                                            JToken idValue7 = loadBalancingRulesValue2["id"];
-                                                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                            JToken idValue9 = loadBalancingRulesValue2["id"];
+                                                            if (idValue9 != null && idValue9.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance7 = ((string)idValue7);
-                                                                resourceIdInstance4.Id = idInstance7;
+                                                                string idInstance9 = ((string)idValue9);
+                                                                resourceIdInstance6.Id = idInstance9;
                                                             }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken outboundNatRuleValue = propertiesValue3["outboundNatRule"];
+                                                    if (outboundNatRuleValue != null && outboundNatRuleValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId outboundNatRuleInstance = new ResourceId();
+                                                        backendAddressPoolJsonFormatInstance.OutboundNatRule = outboundNatRuleInstance;
+                                                        
+                                                        JToken idValue10 = outboundNatRuleValue["id"];
+                                                        if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance10 = ((string)idValue10);
+                                                            outboundNatRuleInstance.Id = idInstance10;
                                                         }
                                                     }
                                                     
@@ -2736,11 +3418,11 @@ namespace Microsoft.Azure.Management.Network
                                                     backendAddressPoolJsonFormatInstance.Etag = etagInstance2;
                                                 }
                                                 
-                                                JToken idValue8 = backendAddressPoolsValue["id"];
-                                                if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                                JToken idValue11 = backendAddressPoolsValue["id"];
+                                                if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance8 = ((string)idValue8);
-                                                    backendAddressPoolJsonFormatInstance.Id = idInstance8;
+                                                    string idInstance11 = ((string)idValue11);
+                                                    backendAddressPoolJsonFormatInstance.Id = idInstance11;
                                                 }
                                             }
                                         }
@@ -2762,11 +3444,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId frontendIPConfigurationInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                         
-                                                        JToken idValue9 = frontendIPConfigurationValue["id"];
-                                                        if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                        JToken idValue12 = frontendIPConfigurationValue["id"];
+                                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance9 = ((string)idValue9);
-                                                            frontendIPConfigurationInstance.Id = idInstance9;
+                                                            string idInstance12 = ((string)idValue12);
+                                                            frontendIPConfigurationInstance.Id = idInstance12;
                                                         }
                                                     }
                                                     
@@ -2776,11 +3458,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId backendAddressPoolInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
                                                         
-                                                        JToken idValue10 = backendAddressPoolValue["id"];
-                                                        if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                        JToken idValue13 = backendAddressPoolValue["id"];
+                                                        if (idValue13 != null && idValue13.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance10 = ((string)idValue10);
-                                                            backendAddressPoolInstance.Id = idInstance10;
+                                                            string idInstance13 = ((string)idValue13);
+                                                            backendAddressPoolInstance.Id = idInstance13;
                                                         }
                                                     }
                                                     
@@ -2790,11 +3472,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId probeInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.Probe = probeInstance;
                                                         
-                                                        JToken idValue11 = probeValue["id"];
-                                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                        JToken idValue14 = probeValue["id"];
+                                                        if (idValue14 != null && idValue14.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance11 = ((string)idValue11);
-                                                            probeInstance.Id = idInstance11;
+                                                            string idInstance14 = ((string)idValue14);
+                                                            probeInstance.Id = idInstance14;
                                                         }
                                                     }
                                                     
@@ -2862,11 +3544,11 @@ namespace Microsoft.Azure.Management.Network
                                                     loadBalancingRuleJsonFormatInstance.Etag = etagInstance3;
                                                 }
                                                 
-                                                JToken idValue12 = loadBalancingRulesValue3["id"];
-                                                if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                                JToken idValue15 = loadBalancingRulesValue3["id"];
+                                                if (idValue15 != null && idValue15.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance12 = ((string)idValue12);
-                                                    loadBalancingRuleJsonFormatInstance.Id = idInstance12;
+                                                    string idInstance15 = ((string)idValue15);
+                                                    loadBalancingRuleJsonFormatInstance.Id = idInstance15;
                                                 }
                                             }
                                         }
@@ -2887,14 +3569,14 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken loadBalancingRulesValue4 in ((JArray)loadBalancingRulesArray4))
                                                         {
-                                                            ResourceId resourceIdInstance5 = new ResourceId();
-                                                            probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance5);
+                                                            ResourceId resourceIdInstance7 = new ResourceId();
+                                                            probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance7);
                                                             
-                                                            JToken idValue13 = loadBalancingRulesValue4["id"];
-                                                            if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                            JToken idValue16 = loadBalancingRulesValue4["id"];
+                                                            if (idValue16 != null && idValue16.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance13 = ((string)idValue13);
-                                                                resourceIdInstance5.Id = idInstance13;
+                                                                string idInstance16 = ((string)idValue16);
+                                                                resourceIdInstance7.Id = idInstance16;
                                                             }
                                                         }
                                                     }
@@ -2956,11 +3638,11 @@ namespace Microsoft.Azure.Management.Network
                                                     probeJsonFormatInstance.Etag = etagInstance4;
                                                 }
                                                 
-                                                JToken idValue14 = probesValue["id"];
-                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                                JToken idValue17 = probesValue["id"];
+                                                if (idValue17 != null && idValue17.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance14 = ((string)idValue14);
-                                                    probeJsonFormatInstance.Id = idInstance14;
+                                                    string idInstance17 = ((string)idValue17);
+                                                    probeJsonFormatInstance.Id = idInstance17;
                                                 }
                                             }
                                         }
@@ -2982,11 +3664,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId frontendIPConfigurationInstance2 = new ResourceId();
                                                         inboundNatRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance2;
                                                         
-                                                        JToken idValue15 = frontendIPConfigurationValue2["id"];
-                                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                        JToken idValue18 = frontendIPConfigurationValue2["id"];
+                                                        if (idValue18 != null && idValue18.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance15 = ((string)idValue15);
-                                                            frontendIPConfigurationInstance2.Id = idInstance15;
+                                                            string idInstance18 = ((string)idValue18);
+                                                            frontendIPConfigurationInstance2.Id = idInstance18;
                                                         }
                                                     }
                                                     
@@ -2996,11 +3678,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId backendIPConfigurationInstance = new ResourceId();
                                                         inboundNatRuleJsonFormatInstance.BackendIPConfiguration = backendIPConfigurationInstance;
                                                         
-                                                        JToken idValue16 = backendIPConfigurationValue["id"];
-                                                        if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                        JToken idValue19 = backendIPConfigurationValue["id"];
+                                                        if (idValue19 != null && idValue19.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance16 = ((string)idValue16);
-                                                            backendIPConfigurationInstance.Id = idInstance16;
+                                                            string idInstance19 = ((string)idValue19);
+                                                            backendIPConfigurationInstance.Id = idInstance19;
                                                         }
                                                     }
                                                     
@@ -3061,42 +3743,213 @@ namespace Microsoft.Azure.Management.Network
                                                     inboundNatRuleJsonFormatInstance.Etag = etagInstance5;
                                                 }
                                                 
-                                                JToken idValue17 = inboundNatRulesValue2["id"];
-                                                if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                                JToken idValue20 = inboundNatRulesValue2["id"];
+                                                if (idValue20 != null && idValue20.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance17 = ((string)idValue17);
-                                                    inboundNatRuleJsonFormatInstance.Id = idInstance17;
+                                                    string idInstance20 = ((string)idValue20);
+                                                    inboundNatRuleJsonFormatInstance.Id = idInstance20;
                                                 }
                                             }
                                         }
                                         
-                                        JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                        JToken inboundNatPoolsArray2 = propertiesValue["inboundNatPools"];
+                                        if (inboundNatPoolsArray2 != null && inboundNatPoolsArray2.Type != JTokenType.Null)
                                         {
-                                            string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                            loadBalancerJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                            foreach (JToken inboundNatPoolsValue2 in ((JArray)inboundNatPoolsArray2))
+                                            {
+                                                InboundNatPool inboundNatPoolJsonFormatInstance = new InboundNatPool();
+                                                loadBalancerJsonFormatInstance.InboundNatPools.Add(inboundNatPoolJsonFormatInstance);
+                                                
+                                                JToken propertiesValue7 = inboundNatPoolsValue2["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                                {
+                                                    JToken frontendIPConfigurationValue3 = propertiesValue7["frontendIPConfiguration"];
+                                                    if (frontendIPConfigurationValue3 != null && frontendIPConfigurationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendIPConfigurationInstance3 = new ResourceId();
+                                                        inboundNatPoolJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance3;
+                                                        
+                                                        JToken idValue21 = frontendIPConfigurationValue3["id"];
+                                                        if (idValue21 != null && idValue21.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance21 = ((string)idValue21);
+                                                            frontendIPConfigurationInstance3.Id = idInstance21;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken protocolValue4 = propertiesValue7["protocol"];
+                                                    if (protocolValue4 != null && protocolValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance4 = ((string)protocolValue4);
+                                                        inboundNatPoolJsonFormatInstance.Protocol = protocolInstance4;
+                                                    }
+                                                    
+                                                    JToken frontendPortRangeStartValue = propertiesValue7["frontendPortRangeStart"];
+                                                    if (frontendPortRangeStartValue != null && frontendPortRangeStartValue.Type != JTokenType.Null)
+                                                    {
+                                                        int frontendPortRangeStartInstance = ((int)frontendPortRangeStartValue);
+                                                        inboundNatPoolJsonFormatInstance.FrontendPortRangeStart = frontendPortRangeStartInstance;
+                                                    }
+                                                    
+                                                    JToken frontendPortRangeEndValue = propertiesValue7["frontendPortRangeEnd"];
+                                                    if (frontendPortRangeEndValue != null && frontendPortRangeEndValue.Type != JTokenType.Null)
+                                                    {
+                                                        int frontendPortRangeEndInstance = ((int)frontendPortRangeEndValue);
+                                                        inboundNatPoolJsonFormatInstance.FrontendPortRangeEnd = frontendPortRangeEndInstance;
+                                                    }
+                                                    
+                                                    JToken backendPortValue3 = propertiesValue7["backendPort"];
+                                                    if (backendPortValue3 != null && backendPortValue3.Type != JTokenType.Null)
+                                                    {
+                                                        int backendPortInstance3 = ((int)backendPortValue3);
+                                                        inboundNatPoolJsonFormatInstance.BackendPort = backendPortInstance3;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
+                                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                        inboundNatPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue6 = inboundNatPoolsValue2["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    inboundNatPoolJsonFormatInstance.Name = nameInstance6;
+                                                }
+                                                
+                                                JToken etagValue6 = inboundNatPoolsValue2["etag"];
+                                                if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance6 = ((string)etagValue6);
+                                                    inboundNatPoolJsonFormatInstance.Etag = etagInstance6;
+                                                }
+                                                
+                                                JToken idValue22 = inboundNatPoolsValue2["id"];
+                                                if (idValue22 != null && idValue22.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance22 = ((string)idValue22);
+                                                    inboundNatPoolJsonFormatInstance.Id = idInstance22;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken outboundNatRulesArray2 = propertiesValue["outboundNatRules"];
+                                        if (outboundNatRulesArray2 != null && outboundNatRulesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken outboundNatRulesValue2 in ((JArray)outboundNatRulesArray2))
+                                            {
+                                                OutboundNatRule outboundNatRuleJsonFormatInstance = new OutboundNatRule();
+                                                loadBalancerJsonFormatInstance.OutboundNatRules.Add(outboundNatRuleJsonFormatInstance);
+                                                
+                                                JToken propertiesValue8 = outboundNatRulesValue2["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JToken allocatedOutboundPortsValue = propertiesValue8["allocatedOutboundPorts"];
+                                                    if (allocatedOutboundPortsValue != null && allocatedOutboundPortsValue.Type != JTokenType.Null)
+                                                    {
+                                                        int allocatedOutboundPortsInstance = ((int)allocatedOutboundPortsValue);
+                                                        outboundNatRuleJsonFormatInstance.AllocatedOutboundPorts = allocatedOutboundPortsInstance;
+                                                    }
+                                                    
+                                                    JToken frontendIPConfigurationsArray2 = propertiesValue8["frontendIPConfigurations"];
+                                                    if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken frontendIPConfigurationsValue2 in ((JArray)frontendIPConfigurationsArray2))
+                                                        {
+                                                            ResourceId resourceIdInstance8 = new ResourceId();
+                                                            outboundNatRuleJsonFormatInstance.FrontendIpConfigurations.Add(resourceIdInstance8);
+                                                            
+                                                            JToken idValue23 = frontendIPConfigurationsValue2["id"];
+                                                            if (idValue23 != null && idValue23.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance23 = ((string)idValue23);
+                                                                resourceIdInstance8.Id = idInstance23;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendAddressPoolValue2 = propertiesValue8["backendAddressPool"];
+                                                    if (backendAddressPoolValue2 != null && backendAddressPoolValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendAddressPoolInstance2 = new ResourceId();
+                                                        outboundNatRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance2;
+                                                        
+                                                        JToken idValue24 = backendAddressPoolValue2["id"];
+                                                        if (idValue24 != null && idValue24.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance24 = ((string)idValue24);
+                                                            backendAddressPoolInstance2.Id = idInstance24;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
+                                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                        outboundNatRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue7 = outboundNatRulesValue2["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    outboundNatRuleJsonFormatInstance.Name = nameInstance7;
+                                                }
+                                                
+                                                JToken etagValue7 = outboundNatRulesValue2["etag"];
+                                                if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance7 = ((string)etagValue7);
+                                                    outboundNatRuleJsonFormatInstance.Etag = etagInstance7;
+                                                }
+                                                
+                                                JToken idValue25 = outboundNatRulesValue2["id"];
+                                                if (idValue25 != null && idValue25.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance25 = ((string)idValue25);
+                                                    outboundNatRuleJsonFormatInstance.Id = idInstance25;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            loadBalancerJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
+                                        JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                            loadBalancerJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
                                         }
                                     }
                                     
-                                    JToken etagValue6 = valueValue["etag"];
-                                    if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                    JToken etagValue8 = valueValue["etag"];
+                                    if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
                                     {
-                                        string etagInstance6 = ((string)etagValue6);
-                                        loadBalancerJsonFormatInstance.Etag = etagInstance6;
+                                        string etagInstance8 = ((string)etagValue8);
+                                        loadBalancerJsonFormatInstance.Etag = etagInstance8;
                                     }
                                     
-                                    JToken idValue18 = valueValue["id"];
-                                    if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                                    JToken idValue26 = valueValue["id"];
+                                    if (idValue26 != null && idValue26.Type != JTokenType.Null)
                                     {
-                                        string idInstance18 = ((string)idValue18);
-                                        loadBalancerJsonFormatInstance.Id = idInstance18;
+                                        string idInstance26 = ((string)idValue26);
+                                        loadBalancerJsonFormatInstance.Id = idInstance26;
                                     }
                                     
-                                    JToken nameValue6 = valueValue["name"];
-                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                    JToken nameValue8 = valueValue["name"];
+                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                     {
-                                        string nameInstance6 = ((string)nameValue6);
-                                        loadBalancerJsonFormatInstance.Name = nameInstance6;
+                                        string nameInstance8 = ((string)nameValue8);
+                                        loadBalancerJsonFormatInstance.Name = nameInstance8;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -3354,19 +4207,53 @@ namespace Microsoft.Azure.Management.Network
                                                         }
                                                     }
                                                     
+                                                    JToken inboundNatPoolsArray = propertiesValue2["inboundNatPools"];
+                                                    if (inboundNatPoolsArray != null && inboundNatPoolsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken inboundNatPoolsValue in ((JArray)inboundNatPoolsArray))
+                                                        {
+                                                            ResourceId resourceIdInstance2 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.InboundNatPools.Add(resourceIdInstance2);
+                                                            
+                                                            JToken idValue4 = inboundNatPoolsValue["id"];
+                                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance4 = ((string)idValue4);
+                                                                resourceIdInstance2.Id = idInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken outboundNatRulesArray = propertiesValue2["outboundNatRules"];
+                                                    if (outboundNatRulesArray != null && outboundNatRulesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken outboundNatRulesValue in ((JArray)outboundNatRulesArray))
+                                                        {
+                                                            ResourceId resourceIdInstance3 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.OutboundNatRules.Add(resourceIdInstance3);
+                                                            
+                                                            JToken idValue5 = outboundNatRulesValue["id"];
+                                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance5 = ((string)idValue5);
+                                                                resourceIdInstance3.Id = idInstance5;
+                                                            }
+                                                        }
+                                                    }
+                                                    
                                                     JToken loadBalancingRulesArray = propertiesValue2["loadBalancingRules"];
                                                     if (loadBalancingRulesArray != null && loadBalancingRulesArray.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken loadBalancingRulesValue in ((JArray)loadBalancingRulesArray))
                                                         {
-                                                            ResourceId resourceIdInstance2 = new ResourceId();
-                                                            frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance2);
+                                                            ResourceId resourceIdInstance4 = new ResourceId();
+                                                            frontendIpConfigurationJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
                                                             
-                                                            JToken idValue4 = loadBalancingRulesValue["id"];
-                                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                            JToken idValue6 = loadBalancingRulesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance4 = ((string)idValue4);
-                                                                resourceIdInstance2.Id = idInstance4;
+                                                                string idInstance6 = ((string)idValue6);
+                                                                resourceIdInstance4.Id = idInstance6;
                                                             }
                                                         }
                                                     }
@@ -3393,11 +4280,11 @@ namespace Microsoft.Azure.Management.Network
                                                     frontendIpConfigurationJsonFormatInstance.Etag = etagInstance;
                                                 }
                                                 
-                                                JToken idValue5 = frontendIPConfigurationsValue["id"];
-                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                JToken idValue7 = frontendIPConfigurationsValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance5 = ((string)idValue5);
-                                                    frontendIpConfigurationJsonFormatInstance.Id = idInstance5;
+                                                    string idInstance7 = ((string)idValue7);
+                                                    frontendIpConfigurationJsonFormatInstance.Id = idInstance7;
                                                 }
                                             }
                                         }
@@ -3418,14 +4305,14 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                         {
-                                                            ResourceId resourceIdInstance3 = new ResourceId();
-                                                            backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance3);
+                                                            ResourceId resourceIdInstance5 = new ResourceId();
+                                                            backendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance5);
                                                             
-                                                            JToken idValue6 = backendIPConfigurationsValue["id"];
-                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            JToken idValue8 = backendIPConfigurationsValue["id"];
+                                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance6 = ((string)idValue6);
-                                                                resourceIdInstance3.Id = idInstance6;
+                                                                string idInstance8 = ((string)idValue8);
+                                                                resourceIdInstance5.Id = idInstance8;
                                                             }
                                                         }
                                                     }
@@ -3435,15 +4322,29 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken loadBalancingRulesValue2 in ((JArray)loadBalancingRulesArray2))
                                                         {
-                                                            ResourceId resourceIdInstance4 = new ResourceId();
-                                                            backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance4);
+                                                            ResourceId resourceIdInstance6 = new ResourceId();
+                                                            backendAddressPoolJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance6);
                                                             
-                                                            JToken idValue7 = loadBalancingRulesValue2["id"];
-                                                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                            JToken idValue9 = loadBalancingRulesValue2["id"];
+                                                            if (idValue9 != null && idValue9.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance7 = ((string)idValue7);
-                                                                resourceIdInstance4.Id = idInstance7;
+                                                                string idInstance9 = ((string)idValue9);
+                                                                resourceIdInstance6.Id = idInstance9;
                                                             }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken outboundNatRuleValue = propertiesValue3["outboundNatRule"];
+                                                    if (outboundNatRuleValue != null && outboundNatRuleValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId outboundNatRuleInstance = new ResourceId();
+                                                        backendAddressPoolJsonFormatInstance.OutboundNatRule = outboundNatRuleInstance;
+                                                        
+                                                        JToken idValue10 = outboundNatRuleValue["id"];
+                                                        if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance10 = ((string)idValue10);
+                                                            outboundNatRuleInstance.Id = idInstance10;
                                                         }
                                                     }
                                                     
@@ -3469,11 +4370,11 @@ namespace Microsoft.Azure.Management.Network
                                                     backendAddressPoolJsonFormatInstance.Etag = etagInstance2;
                                                 }
                                                 
-                                                JToken idValue8 = backendAddressPoolsValue["id"];
-                                                if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                                JToken idValue11 = backendAddressPoolsValue["id"];
+                                                if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance8 = ((string)idValue8);
-                                                    backendAddressPoolJsonFormatInstance.Id = idInstance8;
+                                                    string idInstance11 = ((string)idValue11);
+                                                    backendAddressPoolJsonFormatInstance.Id = idInstance11;
                                                 }
                                             }
                                         }
@@ -3495,11 +4396,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId frontendIPConfigurationInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                         
-                                                        JToken idValue9 = frontendIPConfigurationValue["id"];
-                                                        if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                        JToken idValue12 = frontendIPConfigurationValue["id"];
+                                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance9 = ((string)idValue9);
-                                                            frontendIPConfigurationInstance.Id = idInstance9;
+                                                            string idInstance12 = ((string)idValue12);
+                                                            frontendIPConfigurationInstance.Id = idInstance12;
                                                         }
                                                     }
                                                     
@@ -3509,11 +4410,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId backendAddressPoolInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
                                                         
-                                                        JToken idValue10 = backendAddressPoolValue["id"];
-                                                        if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                        JToken idValue13 = backendAddressPoolValue["id"];
+                                                        if (idValue13 != null && idValue13.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance10 = ((string)idValue10);
-                                                            backendAddressPoolInstance.Id = idInstance10;
+                                                            string idInstance13 = ((string)idValue13);
+                                                            backendAddressPoolInstance.Id = idInstance13;
                                                         }
                                                     }
                                                     
@@ -3523,11 +4424,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId probeInstance = new ResourceId();
                                                         loadBalancingRuleJsonFormatInstance.Probe = probeInstance;
                                                         
-                                                        JToken idValue11 = probeValue["id"];
-                                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                        JToken idValue14 = probeValue["id"];
+                                                        if (idValue14 != null && idValue14.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance11 = ((string)idValue11);
-                                                            probeInstance.Id = idInstance11;
+                                                            string idInstance14 = ((string)idValue14);
+                                                            probeInstance.Id = idInstance14;
                                                         }
                                                     }
                                                     
@@ -3595,11 +4496,11 @@ namespace Microsoft.Azure.Management.Network
                                                     loadBalancingRuleJsonFormatInstance.Etag = etagInstance3;
                                                 }
                                                 
-                                                JToken idValue12 = loadBalancingRulesValue3["id"];
-                                                if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                                JToken idValue15 = loadBalancingRulesValue3["id"];
+                                                if (idValue15 != null && idValue15.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance12 = ((string)idValue12);
-                                                    loadBalancingRuleJsonFormatInstance.Id = idInstance12;
+                                                    string idInstance15 = ((string)idValue15);
+                                                    loadBalancingRuleJsonFormatInstance.Id = idInstance15;
                                                 }
                                             }
                                         }
@@ -3620,14 +4521,14 @@ namespace Microsoft.Azure.Management.Network
                                                     {
                                                         foreach (JToken loadBalancingRulesValue4 in ((JArray)loadBalancingRulesArray4))
                                                         {
-                                                            ResourceId resourceIdInstance5 = new ResourceId();
-                                                            probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance5);
+                                                            ResourceId resourceIdInstance7 = new ResourceId();
+                                                            probeJsonFormatInstance.LoadBalancingRules.Add(resourceIdInstance7);
                                                             
-                                                            JToken idValue13 = loadBalancingRulesValue4["id"];
-                                                            if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                            JToken idValue16 = loadBalancingRulesValue4["id"];
+                                                            if (idValue16 != null && idValue16.Type != JTokenType.Null)
                                                             {
-                                                                string idInstance13 = ((string)idValue13);
-                                                                resourceIdInstance5.Id = idInstance13;
+                                                                string idInstance16 = ((string)idValue16);
+                                                                resourceIdInstance7.Id = idInstance16;
                                                             }
                                                         }
                                                     }
@@ -3689,11 +4590,11 @@ namespace Microsoft.Azure.Management.Network
                                                     probeJsonFormatInstance.Etag = etagInstance4;
                                                 }
                                                 
-                                                JToken idValue14 = probesValue["id"];
-                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                                JToken idValue17 = probesValue["id"];
+                                                if (idValue17 != null && idValue17.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance14 = ((string)idValue14);
-                                                    probeJsonFormatInstance.Id = idInstance14;
+                                                    string idInstance17 = ((string)idValue17);
+                                                    probeJsonFormatInstance.Id = idInstance17;
                                                 }
                                             }
                                         }
@@ -3715,11 +4616,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId frontendIPConfigurationInstance2 = new ResourceId();
                                                         inboundNatRuleJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance2;
                                                         
-                                                        JToken idValue15 = frontendIPConfigurationValue2["id"];
-                                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                        JToken idValue18 = frontendIPConfigurationValue2["id"];
+                                                        if (idValue18 != null && idValue18.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance15 = ((string)idValue15);
-                                                            frontendIPConfigurationInstance2.Id = idInstance15;
+                                                            string idInstance18 = ((string)idValue18);
+                                                            frontendIPConfigurationInstance2.Id = idInstance18;
                                                         }
                                                     }
                                                     
@@ -3729,11 +4630,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId backendIPConfigurationInstance = new ResourceId();
                                                         inboundNatRuleJsonFormatInstance.BackendIPConfiguration = backendIPConfigurationInstance;
                                                         
-                                                        JToken idValue16 = backendIPConfigurationValue["id"];
-                                                        if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                        JToken idValue19 = backendIPConfigurationValue["id"];
+                                                        if (idValue19 != null && idValue19.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance16 = ((string)idValue16);
-                                                            backendIPConfigurationInstance.Id = idInstance16;
+                                                            string idInstance19 = ((string)idValue19);
+                                                            backendIPConfigurationInstance.Id = idInstance19;
                                                         }
                                                     }
                                                     
@@ -3794,42 +4695,213 @@ namespace Microsoft.Azure.Management.Network
                                                     inboundNatRuleJsonFormatInstance.Etag = etagInstance5;
                                                 }
                                                 
-                                                JToken idValue17 = inboundNatRulesValue2["id"];
-                                                if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                                JToken idValue20 = inboundNatRulesValue2["id"];
+                                                if (idValue20 != null && idValue20.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance17 = ((string)idValue17);
-                                                    inboundNatRuleJsonFormatInstance.Id = idInstance17;
+                                                    string idInstance20 = ((string)idValue20);
+                                                    inboundNatRuleJsonFormatInstance.Id = idInstance20;
                                                 }
                                             }
                                         }
                                         
-                                        JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                        JToken inboundNatPoolsArray2 = propertiesValue["inboundNatPools"];
+                                        if (inboundNatPoolsArray2 != null && inboundNatPoolsArray2.Type != JTokenType.Null)
                                         {
-                                            string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                            loadBalancerJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                            foreach (JToken inboundNatPoolsValue2 in ((JArray)inboundNatPoolsArray2))
+                                            {
+                                                InboundNatPool inboundNatPoolJsonFormatInstance = new InboundNatPool();
+                                                loadBalancerJsonFormatInstance.InboundNatPools.Add(inboundNatPoolJsonFormatInstance);
+                                                
+                                                JToken propertiesValue7 = inboundNatPoolsValue2["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                                {
+                                                    JToken frontendIPConfigurationValue3 = propertiesValue7["frontendIPConfiguration"];
+                                                    if (frontendIPConfigurationValue3 != null && frontendIPConfigurationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendIPConfigurationInstance3 = new ResourceId();
+                                                        inboundNatPoolJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance3;
+                                                        
+                                                        JToken idValue21 = frontendIPConfigurationValue3["id"];
+                                                        if (idValue21 != null && idValue21.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance21 = ((string)idValue21);
+                                                            frontendIPConfigurationInstance3.Id = idInstance21;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken protocolValue4 = propertiesValue7["protocol"];
+                                                    if (protocolValue4 != null && protocolValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance4 = ((string)protocolValue4);
+                                                        inboundNatPoolJsonFormatInstance.Protocol = protocolInstance4;
+                                                    }
+                                                    
+                                                    JToken frontendPortRangeStartValue = propertiesValue7["frontendPortRangeStart"];
+                                                    if (frontendPortRangeStartValue != null && frontendPortRangeStartValue.Type != JTokenType.Null)
+                                                    {
+                                                        int frontendPortRangeStartInstance = ((int)frontendPortRangeStartValue);
+                                                        inboundNatPoolJsonFormatInstance.FrontendPortRangeStart = frontendPortRangeStartInstance;
+                                                    }
+                                                    
+                                                    JToken frontendPortRangeEndValue = propertiesValue7["frontendPortRangeEnd"];
+                                                    if (frontendPortRangeEndValue != null && frontendPortRangeEndValue.Type != JTokenType.Null)
+                                                    {
+                                                        int frontendPortRangeEndInstance = ((int)frontendPortRangeEndValue);
+                                                        inboundNatPoolJsonFormatInstance.FrontendPortRangeEnd = frontendPortRangeEndInstance;
+                                                    }
+                                                    
+                                                    JToken backendPortValue3 = propertiesValue7["backendPort"];
+                                                    if (backendPortValue3 != null && backendPortValue3.Type != JTokenType.Null)
+                                                    {
+                                                        int backendPortInstance3 = ((int)backendPortValue3);
+                                                        inboundNatPoolJsonFormatInstance.BackendPort = backendPortInstance3;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
+                                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                        inboundNatPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue6 = inboundNatPoolsValue2["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    inboundNatPoolJsonFormatInstance.Name = nameInstance6;
+                                                }
+                                                
+                                                JToken etagValue6 = inboundNatPoolsValue2["etag"];
+                                                if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance6 = ((string)etagValue6);
+                                                    inboundNatPoolJsonFormatInstance.Etag = etagInstance6;
+                                                }
+                                                
+                                                JToken idValue22 = inboundNatPoolsValue2["id"];
+                                                if (idValue22 != null && idValue22.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance22 = ((string)idValue22);
+                                                    inboundNatPoolJsonFormatInstance.Id = idInstance22;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken outboundNatRulesArray2 = propertiesValue["outboundNatRules"];
+                                        if (outboundNatRulesArray2 != null && outboundNatRulesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken outboundNatRulesValue2 in ((JArray)outboundNatRulesArray2))
+                                            {
+                                                OutboundNatRule outboundNatRuleJsonFormatInstance = new OutboundNatRule();
+                                                loadBalancerJsonFormatInstance.OutboundNatRules.Add(outboundNatRuleJsonFormatInstance);
+                                                
+                                                JToken propertiesValue8 = outboundNatRulesValue2["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JToken allocatedOutboundPortsValue = propertiesValue8["allocatedOutboundPorts"];
+                                                    if (allocatedOutboundPortsValue != null && allocatedOutboundPortsValue.Type != JTokenType.Null)
+                                                    {
+                                                        int allocatedOutboundPortsInstance = ((int)allocatedOutboundPortsValue);
+                                                        outboundNatRuleJsonFormatInstance.AllocatedOutboundPorts = allocatedOutboundPortsInstance;
+                                                    }
+                                                    
+                                                    JToken frontendIPConfigurationsArray2 = propertiesValue8["frontendIPConfigurations"];
+                                                    if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken frontendIPConfigurationsValue2 in ((JArray)frontendIPConfigurationsArray2))
+                                                        {
+                                                            ResourceId resourceIdInstance8 = new ResourceId();
+                                                            outboundNatRuleJsonFormatInstance.FrontendIpConfigurations.Add(resourceIdInstance8);
+                                                            
+                                                            JToken idValue23 = frontendIPConfigurationsValue2["id"];
+                                                            if (idValue23 != null && idValue23.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance23 = ((string)idValue23);
+                                                                resourceIdInstance8.Id = idInstance23;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendAddressPoolValue2 = propertiesValue8["backendAddressPool"];
+                                                    if (backendAddressPoolValue2 != null && backendAddressPoolValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendAddressPoolInstance2 = new ResourceId();
+                                                        outboundNatRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance2;
+                                                        
+                                                        JToken idValue24 = backendAddressPoolValue2["id"];
+                                                        if (idValue24 != null && idValue24.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance24 = ((string)idValue24);
+                                                            backendAddressPoolInstance2.Id = idInstance24;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
+                                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                        outboundNatRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue7 = outboundNatRulesValue2["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    outboundNatRuleJsonFormatInstance.Name = nameInstance7;
+                                                }
+                                                
+                                                JToken etagValue7 = outboundNatRulesValue2["etag"];
+                                                if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance7 = ((string)etagValue7);
+                                                    outboundNatRuleJsonFormatInstance.Etag = etagInstance7;
+                                                }
+                                                
+                                                JToken idValue25 = outboundNatRulesValue2["id"];
+                                                if (idValue25 != null && idValue25.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance25 = ((string)idValue25);
+                                                    outboundNatRuleJsonFormatInstance.Id = idInstance25;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            loadBalancerJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
+                                        JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                            loadBalancerJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
                                         }
                                     }
                                     
-                                    JToken etagValue6 = valueValue["etag"];
-                                    if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                    JToken etagValue8 = valueValue["etag"];
+                                    if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
                                     {
-                                        string etagInstance6 = ((string)etagValue6);
-                                        loadBalancerJsonFormatInstance.Etag = etagInstance6;
+                                        string etagInstance8 = ((string)etagValue8);
+                                        loadBalancerJsonFormatInstance.Etag = etagInstance8;
                                     }
                                     
-                                    JToken idValue18 = valueValue["id"];
-                                    if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                                    JToken idValue26 = valueValue["id"];
+                                    if (idValue26 != null && idValue26.Type != JTokenType.Null)
                                     {
-                                        string idInstance18 = ((string)idValue18);
-                                        loadBalancerJsonFormatInstance.Id = idInstance18;
+                                        string idInstance26 = ((string)idValue26);
+                                        loadBalancerJsonFormatInstance.Id = idInstance26;
                                     }
                                     
-                                    JToken nameValue6 = valueValue["name"];
-                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                    JToken nameValue8 = valueValue["name"];
+                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                     {
-                                        string nameInstance6 = ((string)nameValue6);
-                                        loadBalancerJsonFormatInstance.Name = nameInstance6;
+                                        string nameInstance8 = ((string)nameValue8);
+                                        loadBalancerJsonFormatInstance.Name = nameInstance8;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

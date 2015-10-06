@@ -29,28 +29,50 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// </summary>
     public partial class Sku
     {
-        private string _name;
-
+        private string _family;
+        
         /// <summary>
-        /// Optional. The name of the sku.
+        /// Optional. Gets or sets the family of the sku e.g. 'A'.
+        /// </summary>
+        public string Family
+        {
+            get { return this._family; }
+            set { this._family = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the unique name of the sku e.g. 'Free_A0'.
         /// </summary>
         public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
-
-        private string _tier;
-
+        
+        private string _size;
+        
         /// <summary>
-        /// Optional. The tier of the sku.
+        /// Optional. Gets or sets the size of the sku e.g. 'A0'.
+        /// </summary>
+        public string Size
+        {
+            get { return this._size; }
+            set { this._size = value; }
+        }
+        
+        private string _tier;
+        
+        /// <summary>
+        /// Optional. Gets or sets the tier of the sku e.g. 'free'.
         /// </summary>
         public string Tier
         {
             get { return this._tier; }
             set { this._tier = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
     /// <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> values.
     /// </summary>
     [JsonConverter(typeof(DataSetConverter))]
-    public class DataSet
+    internal class DataSet
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Microsoft.Azure.Management.DataFactories.Runtime.DataSet"/> class.

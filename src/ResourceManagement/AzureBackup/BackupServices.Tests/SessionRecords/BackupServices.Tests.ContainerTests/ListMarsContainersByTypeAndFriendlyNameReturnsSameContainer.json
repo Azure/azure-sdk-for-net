@@ -13,7 +13,7 @@
           "Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"uniqueName\": \"dpmdrscaleint1.dpmdom02.selfhost.corp.microsoft.com\",\r\n      \"containerType\": \"Machine\",\r\n      \"properties\": {\r\n        \"containerId\": 33,\r\n        \"friendlyName\": \"DPMDRSCALEINT1.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"containerStampId\": \"eaf33dbc-a5b5-411a-a6af-1976a3f94602\",\r\n        \"containerStampUri\": \"https://sea-dev01-prot-4bodw.ext.trafficmanager.net\",\r\n        \"canReRegister\": false,\r\n        \"customerType\": \"OBS\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"uniqueName\": \"dpmdrscaleint1.dpmdom02.selfhost.corp.microsoft.com\",\r\n      \"containerType\": \"Machine\",\r\n      \"properties\": {\r\n        \"containerId\": 33,\r\n        \"friendlyName\": \"DPMDRSCALEINT1.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"containerStampId\": \"0f2ec04e-7bc1-4d24-af43-caa10134def7\",\r\n        \"containerStampUri\": \"https://sea-bvtd-prot1-b6vas.ext.trafficmanager.net\",\r\n        \"canReRegister\": false,\r\n        \"customerType\": \"OBS\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "398"

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _partitionKey;
         
         /// <summary>
-        /// Optional. The partition key inside the tables that contains the
-        /// metrics.
+        /// Optional. Gets or sets the partition key inside the tables that
+        /// contains the metrics.
         /// </summary>
         public string PartitionKey
         {
@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableEndpoint;
         
         /// <summary>
-        /// Optional. The REST endpoint of the tables that contains the metrics.
+        /// Optional. Gets or sets the REST endpoint of the tables that
+        /// contains the metrics.
         /// </summary>
         public string TableEndpoint
         {
@@ -58,7 +59,8 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricTableInfo> _tableInfo;
         
         /// <summary>
-        /// Optional. The list of tables that contain the metric data.
+        /// Optional. Gets or sets the list of tables that contain the metric
+        /// data.
         /// </summary>
         public IList<MetricTableInfo> TableInfo
         {

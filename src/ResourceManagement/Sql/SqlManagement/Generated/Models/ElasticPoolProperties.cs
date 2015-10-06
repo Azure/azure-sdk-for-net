@@ -41,37 +41,37 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._creationDate = value; }
         }
         
-        private long _databaseDtuMax;
+        private int _databaseDtuMax;
         
         /// <summary>
         /// Optional. Gets the maximum DTU any one Sql Azure Database can
         /// consume.
         /// </summary>
-        public long DatabaseDtuMax
+        public int DatabaseDtuMax
         {
             get { return this._databaseDtuMax; }
             set { this._databaseDtuMax = value; }
         }
         
-        private long _databaseDtuMin;
+        private int _databaseDtuMin;
         
         /// <summary>
         /// Optional. Gets the minimum DTU all Sql Azure Databases are
         /// guaranteed.
         /// </summary>
-        public long DatabaseDtuMin
+        public int DatabaseDtuMin
         {
             get { return this._databaseDtuMin; }
             set { this._databaseDtuMin = value; }
         }
         
-        private long _dtu;
+        private int _dtu;
         
         /// <summary>
         /// Optional. Gets the total shared DTU for the Sql Azure Database
         /// Elastic Pool.
         /// </summary>
-        public long Dtu
+        public int Dtu
         {
             get { return this._dtu; }
             set { this._dtu = value; }
@@ -100,13 +100,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._state = value; }
         }
         
-        private long _storageMB;
+        private int _storageMB;
         
         /// <summary>
         /// Optional. Gets storage limit for the Sql Azure Database Elastic
         /// Pool in MB.
         /// </summary>
-        public long StorageMB
+        public int StorageMB
         {
             get { return this._storageMB; }
             set { this._storageMB = value; }

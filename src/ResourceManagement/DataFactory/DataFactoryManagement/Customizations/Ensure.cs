@@ -24,41 +24,57 @@ namespace Microsoft.Azure.Management.DataFactories
     {
 #if PORTABLE
 
-        public static void IsNotNull<T>(T value, string name)
+        public static void IsNotNull<T>(T value, string name, string msg = null)
         {
             if (value == null)
             {
-                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null", name);
+                if (msg == null)
+                {
+                    msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null", name);
+                }
+
                 throw new ArgumentNullException(name, msg);
             }
         }
 
-        public static void IsNotNullOrEmpty(string value, string name)
+        public static void IsNotNullOrEmpty(string value, string name, string msg = null)
         {
             if (string.IsNullOrEmpty(value))
             {
-                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null or empty", name);
-                throw new ArgumentNullException(name, msg);
+                if (msg == null)
+                {
+                    msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null or empty", name);
+                }
+
+                throw new ArgumentException(name, msg);
             }
         }
 #else
-        public static void IsNotNull<T>(T value, string name)
+        public static void IsNotNull<T>(T value, string name, string msg = null)
         {
             if (value == null)
             {
                 string method = GetFirstForeignMethodOnStack();
-                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
+                if (msg == null)
+                {
+                    msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
+                }
+
                 throw new ArgumentNullException(name, msg);
             }
         }
 
-        public static void IsNotNullOrEmpty(string value, string name)
+        public static void IsNotNullOrEmpty(string value, string name, string msg = null)
         {
-            if (value == null)
+            if (string.IsNullOrEmpty(value))
             {
                 string method = GetFirstForeignMethodOnStack();
-                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
-                throw new ArgumentNullException(name, msg);
+                if (msg == null)
+                {
+                    msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null or empty in {1}", name, method);
+                }
+
+                throw new ArgumentException(name, msg);
             }
         }
 #endif

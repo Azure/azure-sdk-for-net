@@ -40,6 +40,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._iPConfigurations = value; }
         }
         
+        private string _iPForwarding;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IP Forwarding status for this network
+        /// interface. Optional
+        /// </summary>
+        public string IPForwarding
+        {
+            get { return this._iPForwarding; }
+            set { this._iPForwarding = value; }
+        }
+        
         private string _name;
         
         /// <summary>
@@ -49,6 +61,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private string _networkSecurityGroup;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Network Security Group associated with
+        /// this network interface. Optional
+        /// </summary>
+        public string NetworkSecurityGroup
+        {
+            get { return this._networkSecurityGroup; }
+            set { this._networkSecurityGroup = value; }
         }
         
         /// <summary>

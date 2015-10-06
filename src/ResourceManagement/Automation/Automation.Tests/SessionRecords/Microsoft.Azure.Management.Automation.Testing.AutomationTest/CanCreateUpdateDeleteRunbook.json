@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourcegroups/SDKTestResourceGroup?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlZ3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourcegroups/SDKTestResourceGroup?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlZ3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East Us\"\r\n}",
       "RequestHeaders": {
@@ -13,10 +13,10 @@
           "29"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup\",\r\n  \"name\": \"SDKTestResourceGroup\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup\",\r\n  \"name\": \"SDKTestResourceGroup\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "193"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1136"
+          "1193"
         ],
         "x-ms-request-id": [
-          "e30d2551-73eb-4248-a836-af0030f9fbc2"
+          "d2fe5fe3-1f0f-4774-9710-f1ef3e356454"
         ],
         "x-ms-correlation-request-id": [
-          "e30d2551-73eb-4248-a836-af0030f9fbc2"
+          "d2fe5fe3-1f0f-4774-9710-f1ef3e356454"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043723Z:e30d2551-73eb-4248-a836-af0030f9fbc2"
+          "CENTRALUS:20150923T045329Z:d2fe5fe3-1f0f-4774-9710-f1ef3e356454"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,14 +49,14 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:22 GMT"
+          "Wed, 23 Sep 2015 04:53:29 GMT"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": \"Test\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"name\": \"SDKTestAccount\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
@@ -70,13 +70,13 @@
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"SDKTestAccount\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"creationTime\": \"2015-04-15T21:35:48.38-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad105.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:24.37-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"SDKTestAccount\",\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"creationTime\": \"2015-09-22T21:53:30.367-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad290.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:30.367-07:00\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "345"
+          "500"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -86,27 +86,36 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount?api-version=2015-01-01-preview"
+        ],
+        "ocp-location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount?api-version=2015-01-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1135"
+          "1196"
         ],
         "x-ms-request-id": [
-          "f98bd3a9-915d-4fe4-9ff5-7a9fe9172ef6"
+          "5b203d4e-9b9b-4391-959f-3686f5f93837"
         ],
         "x-ms-correlation-request-id": [
-          "f98bd3a9-915d-4fe4-9ff5-7a9fe9172ef6"
+          "5b203d4e-9b9b-4391-959f-3686f5f93837"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043724Z:f98bd3a9-915d-4fe4-9ff5-7a9fe9172ef6"
+          "CENTRALUS:20150923T045331Z:5b203d4e-9b9b-4391-959f-3686f5f93837"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:24 GMT"
+          "Wed, 23 Sep 2015 04:53:30 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount?api-version=2015-01-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -118,11 +127,11 @@
           "ASP.NET"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/credentials?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvY3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/credentials?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvY3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -130,13 +139,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/credentials?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/credentials?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -157,22 +166,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31921"
+          "14995"
         ],
         "x-ms-request-id": [
-          "47fab2dd-3832-40cb-be59-6d95964ba24d"
+          "38b0ab95-08b6-4738-92cc-36ce30dd2c3e"
         ],
         "x-ms-correlation-request-id": [
-          "47fab2dd-3832-40cb-be59-6d95964ba24d"
+          "38b0ab95-08b6-4738-92cc-36ce30dd2c3e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043725Z:47fab2dd-3832-40cb-be59-6d95964ba24d"
+          "CENTRALUS:20150923T045331Z:38b0ab95-08b6-4738-92cc-36ce30dd2c3e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:25 GMT"
+          "Wed, 23 Sep 2015 04:53:31 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -187,8 +196,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3M/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3M/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -196,13 +205,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -223,22 +232,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31920"
+          "14994"
         ],
         "x-ms-request-id": [
-          "f05cbc2f-9562-4899-bae8-58d6633b27b6"
+          "4b81f681-95ca-45b6-a884-0acb03a45671"
         ],
         "x-ms-correlation-request-id": [
-          "f05cbc2f-9562-4899-bae8-58d6633b27b6"
+          "4b81f681-95ca-45b6-a884-0acb03a45671"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043725Z:f05cbc2f-9562-4899-bae8-58d6633b27b6"
+          "CENTRALUS:20150923T045332Z:4b81f681-95ca-45b6-a884-0acb03a45671"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:25 GMT"
+          "Wed, 23 Sep 2015 04:53:31 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -253,8 +262,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvc2NoZWR1bGVzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvc2NoZWR1bGVzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -262,13 +271,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -289,22 +298,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31919"
+          "14993"
         ],
         "x-ms-request-id": [
-          "3acd5aab-1a94-4f23-89e2-8b13e6916a64"
+          "48f55ee6-e9bf-4a0c-83a6-8c2b8617581b"
         ],
         "x-ms-correlation-request-id": [
-          "3acd5aab-1a94-4f23-89e2-8b13e6916a64"
+          "48f55ee6-e9bf-4a0c-83a6-8c2b8617581b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043726Z:3acd5aab-1a94-4f23-89e2-8b13e6916a64"
+          "CENTRALUS:20150923T045332Z:48f55ee6-e9bf-4a0c-83a6-8c2b8617581b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:25 GMT"
+          "Wed, 23 Sep 2015 04:53:32 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -319,8 +328,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/variables?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/variables?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -328,13 +337,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/variables?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/variables?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -355,22 +364,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31918"
+          "14992"
         ],
         "x-ms-request-id": [
-          "eecc47ae-3a61-4923-94e0-32c80de32d7f"
+          "8e6a53af-a431-4bbd-8c25-58272f664e71"
         ],
         "x-ms-correlation-request-id": [
-          "eecc47ae-3a61-4923-94e0-32c80de32d7f"
+          "8e6a53af-a431-4bbd-8c25-58272f664e71"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043726Z:eecc47ae-3a61-4923-94e0-32c80de32d7f"
+          "CENTRALUS:20150923T045332Z:8e6a53af-a431-4bbd-8c25-58272f664e71"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:25 GMT"
+          "Wed, 23 Sep 2015 04:53:32 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -385,8 +394,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/webhooks?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvd2ViaG9va3M/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/webhooks?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvd2ViaG9va3M/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -394,13 +403,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/webhooks?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/webhooks?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -421,22 +430,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31917"
+          "14991"
         ],
         "x-ms-request-id": [
-          "9fda1c35-8adb-48f7-9591-01014542cbc5"
+          "a0d74da6-bd21-4740-83e1-d1b35c2ca772"
         ],
         "x-ms-correlation-request-id": [
-          "9fda1c35-8adb-48f7-9591-01014542cbc5"
+          "a0d74da6-bd21-4740-83e1-d1b35c2ca772"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043726Z:9fda1c35-8adb-48f7-9591-01014542cbc5"
+          "CENTRALUS:20150923T045332Z:a0d74da6-bd21-4740-83e1-d1b35c2ca772"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:25 GMT"
+          "Wed, 23 Sep 2015 04:53:32 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -451,8 +460,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"draft\": {\r\n      \"inEdit\": false,\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    }\r\n  },\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
@@ -469,13 +478,13 @@
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635647558467900000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-15T21:37:26.79-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad105.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:26.79-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635785808127800000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-09-22T21:53:32.78-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad290.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:32.78-07:00\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "675"
+          "700"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -487,37 +496,37 @@
           "no-cache"
         ],
         "x-ms-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
         ],
         "ocp-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1134"
+          "1195"
         ],
         "x-ms-request-id": [
-          "cc23f8b7-06b4-4fca-bbf4-ec0e23008050"
+          "dd774f40-397c-409d-a136-dd6a1836a9f8"
         ],
         "x-ms-correlation-request-id": [
-          "cc23f8b7-06b4-4fca-bbf4-ec0e23008050"
+          "dd774f40-397c-409d-a136-dd6a1836a9f8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043726Z:cc23f8b7-06b4-4fca-bbf4-ec0e23008050"
+          "CENTRALUS:20150923T045333Z:dd774f40-397c-409d-a136-dd6a1836a9f8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:26 GMT"
+          "Wed, 23 Sep 2015 04:53:33 GMT"
         ],
         "ETag": [
-          "\"635647558467900000\""
+          "\"635785808127800000\""
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -532,8 +541,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n            }",
       "RequestHeaders": {
@@ -547,13 +556,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "",
@@ -571,38 +580,38 @@
           "30"
         ],
         "ocp-automation-operationresultid": [
-          "bef14dfe-5e36-4e32-92a7-5146552831e4",
-          "bef14dfe-5e36-4e32-92a7-5146552831e4"
+          "295e87cb-678e-47ce-a105-bb9d3decd7d8",
+          "295e87cb-678e-47ce-a105-bb9d3decd7d8"
         ],
         "x-ms-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/bef14dfe-5e36-4e32-92a7-5146552831e4?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/295e87cb-678e-47ce-a105-bb9d3decd7d8?api-version=2015-01-01-preview"
         ],
         "ocp-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/bef14dfe-5e36-4e32-92a7-5146552831e4?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/295e87cb-678e-47ce-a105-bb9d3decd7d8?api-version=2015-01-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1133"
+          "1194"
         ],
         "x-ms-request-id": [
-          "a87f7513-42ac-4985-9358-7a1ae07b276f"
+          "df014144-02b4-4c9d-a834-2c4da054b75c"
         ],
         "x-ms-correlation-request-id": [
-          "a87f7513-42ac-4985-9358-7a1ae07b276f"
+          "df014144-02b4-4c9d-a834-2c4da054b75c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043727Z:a87f7513-42ac-4985-9358-7a1ae07b276f"
+          "CENTRALUS:20150923T045334Z:df014144-02b4-4c9d-a834-2c4da054b75c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:26 GMT"
+          "Wed, 23 Sep 2015 04:53:33 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/bef14dfe-5e36-4e32-92a7-5146552831e4?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/295e87cb-678e-47ce-a105-bb9d3decd7d8?api-version=2015-01-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -617,8 +626,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n                start-sleep -s 10\r\n            }",
       "RequestHeaders": {
@@ -632,13 +641,13 @@
           "application/json"
         ],
         "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview"
         ],
         "x-ms-version": [
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "",
@@ -656,38 +665,38 @@
           "30"
         ],
         "ocp-automation-operationresultid": [
-          "82406b66-8007-4762-8909-9cc875b9208f",
-          "82406b66-8007-4762-8909-9cc875b9208f"
+          "b6a5e119-146e-44f2-a46a-8d10e8b4fcbd",
+          "b6a5e119-146e-44f2-a46a-8d10e8b4fcbd"
         ],
         "x-ms-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/82406b66-8007-4762-8909-9cc875b9208f?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/b6a5e119-146e-44f2-a46a-8d10e8b4fcbd?api-version=2015-01-01-preview"
         ],
         "ocp-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/82406b66-8007-4762-8909-9cc875b9208f?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/b6a5e119-146e-44f2-a46a-8d10e8b4fcbd?api-version=2015-01-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1130"
+          "1191"
         ],
         "x-ms-request-id": [
-          "065c3c00-dbb1-4370-bbe6-e136f5d039f8"
+          "34238634-afbe-4e50-8f7c-250c6c9ae8c5"
         ],
         "x-ms-correlation-request-id": [
-          "065c3c00-dbb1-4370-bbe6-e136f5d039f8"
+          "34238634-afbe-4e50-8f7c-250c6c9ae8c5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043729Z:065c3c00-dbb1-4370-bbe6-e136f5d039f8"
+          "CENTRALUS:20150923T045336Z:34238634-afbe-4e50-8f7c-250c6c9ae8c5"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:29 GMT"
+          "Wed, 23 Sep 2015 04:53:35 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/82406b66-8007-4762-8909-9cc875b9208f?api-version=2015-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/b6a5e119-146e-44f2-a46a-8d10e8b4fcbd?api-version=2015-01-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -702,8 +711,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -714,356 +723,10 @@
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635647558467900000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-15T21:37:26.79-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad105.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:26.79-07:00\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "668"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31916"
-        ],
-        "x-ms-request-id": [
-          "61e9eb8e-f670-448f-877d-1cc7f3ef6725"
-        ],
-        "x-ms-correlation-request-id": [
-          "61e9eb8e-f670-448f-877d-1cc7f3ef6725"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043727Z:61e9eb8e-f670-448f-877d-1cc7f3ef6725"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Apr 2015 04:37:26 GMT"
-        ],
-        "ETag": [
-          "\"635647558467900000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json"
-        ],
-        "x-ms-version": [
-          "2014-06-01"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635647558477030000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-15T21:37:26.79-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad105.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:27.703-07:00\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "675"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31915"
-        ],
-        "x-ms-request-id": [
-          "daa6f3c2-ac62-49f7-b120-55978a21166f"
-        ],
-        "x-ms-correlation-request-id": [
-          "daa6f3c2-ac62-49f7-b120-55978a21166f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043727Z:daa6f3c2-ac62-49f7-b120-55978a21166f"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Apr 2015 04:37:27 GMT"
-        ],
-        "ETag": [
-          "\"635647558477030000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json"
-        ],
-        "x-ms-version": [
-          "2014-06-01"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635647558482900000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-15T21:37:26.79-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:28.29-07:00\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "672"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31914"
-        ],
-        "x-ms-request-id": [
-          "72cc0453-5490-43b4-80b7-9d2fb0849a18"
-        ],
-        "x-ms-correlation-request-id": [
-          "72cc0453-5490-43b4-80b7-9d2fb0849a18"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043728Z:72cc0453-5490-43b4-80b7-9d2fb0849a18"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Apr 2015 04:37:27 GMT"
-        ],
-        "ETag": [
-          "\"635647558482900000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json"
-        ],
-        "x-ms-version": [
-          "2014-06-01"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Runbook not found.\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "50"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31912"
-        ],
-        "x-ms-request-id": [
-          "bf89a2a2-450e-46ad-8e0e-90110c2594bc"
-        ],
-        "x-ms-correlation-request-id": [
-          "bf89a2a2-450e-46ad-8e0e-90110c2594bc"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043730Z:bf89a2a2-450e-46ad-8e0e-90110c2594bc"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Apr 2015 04:37:29 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L3B1Ymxpc2g/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json"
-        ],
-        "ocp-referer": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2015-01-01-preview"
-        ],
-        "x-ms-version": [
-          "2014-06-01"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "30"
-        ],
-        "ocp-automation-operationresultid": [
-          "45a9f10b-08a6-4c46-ae54-29e86c44c977",
-          "45a9f10b-08a6-4c46-ae54-29e86c44c977"
-        ],
-        "x-ms-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/45a9f10b-08a6-4c46-ae54-29e86c44c977?api-version=2015-01-01-preview"
-        ],
-        "ocp-location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/45a9f10b-08a6-4c46-ae54-29e86c44c977?api-version=2015-01-01-preview"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1132"
-        ],
-        "x-ms-request-id": [
-          "54f37435-99bf-486c-8d15-43feef6e8617"
-        ],
-        "x-ms-correlation-request-id": [
-          "54f37435-99bf-486c-8d15-43feef6e8617"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043727Z:54f37435-99bf-486c-8d15-43feef6e8617"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Apr 2015 04:37:26 GMT"
-        ],
-        "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/45a9f10b-08a6-4c46-ae54-29e86c44c977?api-version=2015-01-01-preview"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true\r\n  },\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {}\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "173"
-        ],
-        "Accept": [
-          "application/json"
-        ],
-        "x-ms-version": [
-          "2014-06-01"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East Us\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635647558482900000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-15T21:37:26.79-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad105.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-04-15T21:37:28.29-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635785808127800000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-09-22T21:53:32.78-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad290.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:32.78-07:00\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "693"
@@ -1080,26 +743,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1131"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
         ],
         "x-ms-request-id": [
-          "095c487c-7002-44be-aa74-90b8708ae01f"
+          "0a408323-e013-4bb1-978d-4eb9def1ad28"
         ],
         "x-ms-correlation-request-id": [
-          "095c487c-7002-44be-aa74-90b8708ae01f"
+          "0a408323-e013-4bb1-978d-4eb9def1ad28"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043728Z:095c487c-7002-44be-aa74-90b8708ae01f"
+          "CENTRALUS:20150923T045334Z:0a408323-e013-4bb1-978d-4eb9def1ad28"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:27 GMT"
+          "Wed, 23 Sep 2015 04:53:33 GMT"
         ],
         "ETag": [
-          "\"635647558482900000\""
+          "\"635785808127800000\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1114,8 +777,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1126,7 +789,344 @@
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635785808138400000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-09-22T21:53:32.78-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad290.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:33.84-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "699"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-request-id": [
+          "23da38df-d20b-4cd4-80db-2745c67cdd6a"
+        ],
+        "x-ms-correlation-request-id": [
+          "23da38df-d20b-4cd4-80db-2745c67cdd6a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150923T045334Z:23da38df-d20b-4cd4-80db-2745c67cdd6a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Sep 2015 04:53:34 GMT"
+        ],
+        "ETag": [
+          "\"635785808138400000\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635785808146700000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-09-22T21:53:32.78-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:34.67-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "697"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-request-id": [
+          "a8f75b86-9a3c-4587-b94a-377fc0a8b210"
+        ],
+        "x-ms-correlation-request-id": [
+          "a8f75b86-9a3c-4587-b94a-377fc0a8b210"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150923T045335Z:a8f75b86-9a3c-4587-b94a-377fc0a8b210"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Sep 2015 04:53:35 GMT"
+        ],
+        "ETag": [
+          "\"635785808146700000\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow' under resource group 'SDKTestResourceGroup' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "206"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "a103ab55-026f-4cf9-8af5-c278d68a54e9"
+        ],
+        "x-ms-correlation-request-id": [
+          "a103ab55-026f-4cf9-8af5-c278d68a54e9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150923T045337Z:a103ab55-026f-4cf9-8af5-c278d68a54e9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Sep 2015 04:53:36 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L3B1Ymxpc2g/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2015-01-01-preview"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "ocp-automation-operationresultid": [
+          "8b58b392-5803-460b-ac03-3a00ccc69742",
+          "8b58b392-5803-460b-ac03-3a00ccc69742"
+        ],
+        "x-ms-location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/8b58b392-5803-460b-ac03-3a00ccc69742?api-version=2015-01-01-preview"
+        ],
+        "ocp-location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/8b58b392-5803-460b-ac03-3a00ccc69742?api-version=2015-01-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-request-id": [
+          "f1c2cafb-38f4-4c61-9a4b-ee8dd4468016"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1c2cafb-38f4-4c61-9a4b-ee8dd4468016"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150923T045334Z:f1c2cafb-38f4-4c61-9a4b-ee8dd4468016"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Sep 2015 04:53:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/8b58b392-5803-460b-ac03-3a00ccc69742?api-version=2015-01-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0\r\n  },\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "201"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635785808146700000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-09-22T21:53:32.78-07:00\",\r\n    \"lastModifiedBy\": \"admin@aad290.ccsctp.net\",\r\n    \"lastModifiedTime\": \"2015-09-22T21:53:34.67-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "718"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "a94e9d65-45dd-4a38-bf4d-3febad46488a"
+        ],
+        "x-ms-correlation-request-id": [
+          "a94e9d65-45dd-4a38-bf4d-3febad46488a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150923T045335Z:a94e9d65-45dd-4a38-bf4d-3febad46488a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Sep 2015 04:53:34 GMT"
+        ],
+        "ETag": [
+          "\"635785808146700000\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n                start-sleep -s 10\r\n            }",
@@ -1147,28 +1147,28 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31913"
+          "14987"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a03ecff1-60fb-47cb-b937-2985db48ae42"
+          "1d228cf1-6d71-4b50-8006-67c8132954f6"
         ],
         "x-ms-correlation-request-id": [
-          "a03ecff1-60fb-47cb-b937-2985db48ae42"
+          "1d228cf1-6d71-4b50-8006-67c8132954f6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043729Z:a03ecff1-60fb-47cb-b937-2985db48ae42"
+          "CENTRALUS:20150923T045336Z:1d228cf1-6d71-4b50-8006-67c8132954f6"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:29 GMT"
+          "Wed, 23 Sep 2015 04:53:35 GMT"
         ],
         "ETag": [
-          "\"635647558491830000\""
+          "\"635785808157500000\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1183,8 +1183,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8da0c0bc-9385-44e3-90cd-732b4268735d/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGRhMGMwYmMtOTM4NS00NGUzLTkwY2QtNzMyYjQyNjg3MzVkL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6ac99ff4-5347-484d-a64a-d4e6281bc365/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/runbooks/TestFasterWorkflow?api-version=2015-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmFjOTlmZjQtNTM0Ny00ODRkLWE2NGEtZDRlNjI4MWJjMzY1L3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTUtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1195,7 +1195,7 @@
           "2014-06-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Automation.AutomationManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1213,22 +1213,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1129"
+          "1190"
         ],
         "x-ms-request-id": [
-          "f0104e8f-200c-4343-8d9b-9a19b0138dac"
+          "88bb3a1d-6e97-4f42-949a-65f41ca30348"
         ],
         "x-ms-correlation-request-id": [
-          "f0104e8f-200c-4343-8d9b-9a19b0138dac"
+          "88bb3a1d-6e97-4f42-949a-65f41ca30348"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150416T043729Z:f0104e8f-200c-4343-8d9b-9a19b0138dac"
+          "CENTRALUS:20150923T045337Z:88bb3a1d-6e97-4f42-949a-65f41ca30348"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Apr 2015 04:37:29 GMT"
+          "Wed, 23 Sep 2015 04:53:36 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1245,6 +1245,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8da0c0bc-9385-44e3-90cd-732b4268735d"
+    "SubscriptionId": "6ac99ff4-5347-484d-a64a-d4e6281bc365"
   }
 }
