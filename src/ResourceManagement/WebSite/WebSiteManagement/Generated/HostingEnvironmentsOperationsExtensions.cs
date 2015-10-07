@@ -570,17 +570,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static ResourceMetricCollection GetHostingEnvironmentMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string accept = default(string), string filter = default(string))
+            public static ResourceMetricCollection GetHostingEnvironmentMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMetricsAsync(resourceGroupName, name, details, accept, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -598,8 +596,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
@@ -609,9 +605,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceMetricCollection> GetHostingEnvironmentMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string accept = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetHostingEnvironmentMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentMetricsWithHttpMessagesAsync(resourceGroupName, name, details, accept, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -730,17 +726,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static ResourceMetricCollection GetHostingEnvironmentMultiRoleMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string accept = default(string), string filter = default(string))
+            public static ResourceMetricCollection GetHostingEnvironmentMultiRoleMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleMetricsAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, accept, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleMetricsAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -768,8 +762,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
@@ -779,9 +771,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceMetricCollection> GetHostingEnvironmentMultiRoleMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string accept = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetHostingEnvironmentMultiRoleMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, accept, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -804,17 +796,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static ResourceMetricCollection GetHostingEnvironmentWebWorkerMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string accept = default(string), string filter = default(string))
+            public static ResourceMetricCollection GetHostingEnvironmentWebWorkerMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerMetricsAsync(resourceGroupName, name, workerPoolName, details, accept, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerMetricsAsync(resourceGroupName, name, workerPoolName, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -836,8 +826,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
@@ -847,9 +835,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceMetricCollection> GetHostingEnvironmentWebWorkerMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string accept = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetHostingEnvironmentWebWorkerMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(resourceGroupName, name, workerPoolName, details, accept, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(resourceGroupName, name, workerPoolName, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1082,46 +1070,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            public static ServerFarmCollection GetHostingEnvironmentWebHostingPlans(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebHostingPlansAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
-            /// Service Environment).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetHostingEnvironmentWebHostingPlansAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
-            /// Service Environment).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
             public static ServerFarmCollection GetHostingEnvironmentServerFarms(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentServerFarmsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -1146,6 +1094,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ServerFarmCollection> GetHostingEnvironmentServerFarmsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
+            /// Service Environment).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            public static ServerFarmCollection GetHostingEnvironmentWebHostingPlans(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebHostingPlansAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
+            /// Service Environment).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetHostingEnvironmentWebHostingPlansAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

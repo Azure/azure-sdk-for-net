@@ -4374,17 +4374,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static ResourceMetricCollection GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string accept = default(string), string filter = default(string))
+            public static ResourceMetricCollection GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsAsync(resourceGroupName, name, details, accept, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4402,8 +4400,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
@@ -4413,9 +4409,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceMetricCollection> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string accept = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, details, accept, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4438,17 +4434,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static ResourceMetricCollection GetSiteMetricsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string accept = default(string), string filter = default(string))
+            public static ResourceMetricCollection GetSiteMetricsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsSlotAsync(resourceGroupName, name, slot, details, accept, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsSlotAsync(resourceGroupName, name, slot, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4470,8 +4464,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='accept'>
-            /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
@@ -4481,9 +4473,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceMetricCollection> GetSiteMetricsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string accept = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetSiteMetricsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, accept, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

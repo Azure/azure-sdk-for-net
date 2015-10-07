@@ -53,5 +53,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
 
+        /// <summary>
+        /// Metric values
+        /// </summary>
+        [JsonProperty(PropertyName = "metricValues")]
+        public IList<ResourceMetricValue> MetricValues { get; set; }
+
+        /// <summary>
+        /// Properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public IList<KeyValuePairStringString> Properties { get; set; }
+
     }
 }

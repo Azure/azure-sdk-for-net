@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,6 +22,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
 using WebSites.Tests.Helpers;
 using Xunit;
 
@@ -212,6 +214,78 @@ namespace WebSites.Tests.ScenarioTests
                 Assert.Equal("S1", webHostingPlanResponse.Sku.Name);
                 Assert.Equal("Standard", webHostingPlanResponse.Sku.Tier);
                 Assert.Equal(webSiteName, webHostingPlanResponse.AdminSiteName);
+            }
+        }
+
+        [Fact]
+        public void GetWebHostingPlanMetrics()
+        {
+            using (var context = MockContext.Start())
+            {
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
+
+                string whpName = TestUtilities.GenerateName("csmsf");
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                var webSiteName = TestUtilities.GenerateName("csmws");
+                var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
+                    resourceGroupName, whpName);
+                var location = ResourceGroupHelper.GetResourceLocation(resourcesClient, "Microsoft.Web/sites");
+
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName,
+                    new ServerFarmWithRichSku()
+                    {
+                        ServerFarmWithRichSkuName = whpName,
+                        Location = location,
+                        Sku = new SkuDescription
+                        {
+                            Name = "S1",
+                            Capacity = 1,
+                            Tier = "Standard"
+                        }
+                    });
+
+                var webSite = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                {
+                    SiteName = webSiteName,
+                    Location = location,
+                    Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
+                    ServerFarmId = serverfarmId
+                });
+
+                var endTime = DateTime.UtcNow;
+                var metricNames = new List<string> { "MemoryPercentage", "CpuPercentage", "DiskQueueLength", "HttpQueueLength", "BytesReceived", "BytesSent" };
+                metricNames.Sort();
+                var result = webSitesClient.ServerFarms.GetServerFarmMetrics(resourceGroupName: resourceGroupName,
+                    name: whpName,
+                    filter:
+                        WebSitesHelper.BuildMetricFilter(startTime: endTime.AddDays(-1), endTime: endTime,
+                            timeGrain: "PT1H", metricNames: metricNames), details: true);
+
+                webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, deleteAllSlots: true.ToString(), deleteEmptyServerFarm: true.ToString());
+
+                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
+
+                Assert.Equal(0, webHostingPlanResponse.Value.Count);
+
+                // Validate response
+                Assert.NotNull(result);
+                var actualmetricNames =
+                    result.Value.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+                actualmetricNames.Sort();
+                Assert.Equal(metricNames, actualmetricNames, StringComparer.OrdinalIgnoreCase);
+
+                // validate metrics only for replay since the metrics will not match
+                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    // TODO: Add playback mode assertions. 
+                }
             }
         }
     }

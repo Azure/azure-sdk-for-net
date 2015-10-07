@@ -245,7 +245,8 @@ namespace Microsoft.Azure.Management.WebSites
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+            this.HttpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
         }    
     }
 }

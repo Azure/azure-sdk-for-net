@@ -1930,8 +1930,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='details'>
         /// If true, metric details are included in response
         /// </param>
-        /// <param name='accept'>
-        /// </param>
         /// <param name='filter'>
         /// Return only usages/metrics specified in the filter. Filter
         /// conforms to odata syntax. Example: $filter=(name.value eq
@@ -1945,7 +1943,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ResourceMetricCollection>> GetSiteMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string accept = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceMetricCollection>> GetSiteMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets metrics for web app
         /// </summary>
@@ -1962,8 +1960,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='details'>
         /// If true, metric details are included in response
         /// </param>
-        /// <param name='accept'>
-        /// </param>
         /// <param name='filter'>
         /// Return only usages/metrics specified in the filter. Filter
         /// conforms to odata syntax. Example: $filter=(name.value eq
@@ -1977,7 +1973,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ResourceMetricCollection>> GetSiteMetricsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, bool? details = default(bool?), string accept = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceMetricCollection>> GetSiteMetricsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets metric definitions for web app
         /// </summary>
