@@ -105,7 +105,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact]
+        [Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
