@@ -407,8 +407,8 @@ namespace WebSites.Tests.ScenarioTests
                     Location = locationName,
                     Sku = new SkuDescription
                     {
-                        Name = "F1",
-                        Tier = "Free",
+                        Name = "D1",
+                        Tier = "Shared",
                         Capacity = 1
                     }
                 });

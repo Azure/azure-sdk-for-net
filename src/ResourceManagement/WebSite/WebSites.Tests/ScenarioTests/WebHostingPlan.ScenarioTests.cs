@@ -149,9 +149,9 @@ namespace WebSites.Tests.ScenarioTests
                     Location = location,
                     Sku = new SkuDescription
                     {
-                        Name = "F1",
+                        Name = "D1",
                         Capacity = 1,
-                        Tier = "Free"
+                        Tier = "Shared"
                     }
                 });
 
