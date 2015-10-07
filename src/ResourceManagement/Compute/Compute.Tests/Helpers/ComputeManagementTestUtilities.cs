@@ -66,5 +66,10 @@ namespace Compute.Tests
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
             }
         }
+
+        public static string GenerateName(string prefix = null)
+        {
+            return HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(2), prefix);
+        }
     }
 }

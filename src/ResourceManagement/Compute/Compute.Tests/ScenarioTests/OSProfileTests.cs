@@ -13,21 +13,15 @@
 // limitations under the License.
 //
 
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -181,8 +175,8 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                string rgName = TestUtilities.GenerateName(TestPrefix);
-                string keyVaultName = TestUtilities.GenerateName(TestPrefix);
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string keyVaultName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
 
                 string winRMCertificateBase64 = Convert.ToBase64String(
                                                   Encoding.UTF8.GetBytes(
@@ -220,7 +214,7 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                string rgName = TestUtilities.GenerateName(TestPrefix);
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string sshPath = null;
 
                 Action<VirtualMachine> enableSSHAndCustomData = customizedVM =>
@@ -278,8 +272,8 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             Action<VirtualMachine> vmValidator = null)
         {
-            string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-            string asName = TestUtilities.GenerateName("as");
+            string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+            string asName = ComputeManagementTestUtilities.GenerateName("as");
 
             ImageReference imageRef = GetPlatformVMImage(useWindowsProfile);
 

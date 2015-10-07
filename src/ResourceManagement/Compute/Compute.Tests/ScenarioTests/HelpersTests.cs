@@ -13,28 +13,18 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.Compute.Models;
-using System.Collections.Generic;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Compute.Tests
 {
-    class VaultCertComparer : IEqualityComparer<VaultCertificate>
+    public class HelpersTests
     {
-        public bool Equals(VaultCertificate cert1, VaultCertificate cert2)
+        [Fact]
+        public void TestUtilityFunctions()
         {
-            if (cert1.CertificateStore == cert2.CertificateStore && cert1.CertificateUrl == cert2.CertificateUrl)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public int GetHashCode(VaultCertificate Cert)
-        {
-            return Cert.CertificateUrl.ToLower().GetHashCode();
+            Assert.True(string.Equals("Compute.Tests.HelpersTests", TestUtilities.GetCallingClass()));
+            Assert.True(string.Equals("TestUtilityFunctions", TestUtilities.GetCurrentMethodName()));
         }
     }
 }

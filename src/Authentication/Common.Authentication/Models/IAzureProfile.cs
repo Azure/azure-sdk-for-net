@@ -22,6 +22,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Gets the default azure context object.
         /// </summary>
-        AzureContext DefaultContext { get; }
+        AzureContext Context { get; }
     }
 }

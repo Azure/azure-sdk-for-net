@@ -14,7 +14,6 @@
 //
 
 using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Xunit;

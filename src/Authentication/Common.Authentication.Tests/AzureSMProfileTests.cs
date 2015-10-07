@@ -153,12 +153,12 @@ namespace Common.Authentication.Test
             subscription.SetProperty(AzureSubscription.Property.Tenants, tenantId.ToString());
             profile.Accounts.Add(accountName, account);
             profile.Subscriptions.Add(subscriptionId, subscription);
-            Assert.NotNull(profile.DefaultContext);
-            Assert.NotNull(profile.DefaultContext.Account);
-            Assert.NotNull(profile.DefaultContext.Environment);
-            Assert.NotNull(profile.DefaultContext.Subscription);
-            Assert.Equal(account, profile.DefaultContext.Account);
-            Assert.Equal(subscription, profile.DefaultContext.Subscription);
+            Assert.NotNull(profile.Context);
+            Assert.NotNull(profile.Context.Account);
+            Assert.NotNull(profile.Context.Environment);
+            Assert.NotNull(profile.Context.Subscription);
+            Assert.Equal(account, profile.Context.Account);
+            Assert.Equal(subscription, profile.Context.Subscription);
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace Common.Authentication.Test
                 Id = subscriptionId
             });
             profile.DefaultSubscription = profile.Subscriptions[subscriptionId];
-            AzureContext context = profile.DefaultContext;
+            AzureContext context = profile.Context;
 
             Assert.Equal(accountId, context.Account.Id);
             Assert.Equal(subscriptionId, context.Subscription.Id);

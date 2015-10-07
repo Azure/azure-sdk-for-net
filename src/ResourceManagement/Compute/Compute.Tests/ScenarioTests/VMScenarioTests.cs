@@ -13,14 +13,12 @@
 // limitations under the License.
 //
 
-using System.Linq;
-using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -50,9 +48,9 @@ namespace Compute.Tests
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
                 try
                 {

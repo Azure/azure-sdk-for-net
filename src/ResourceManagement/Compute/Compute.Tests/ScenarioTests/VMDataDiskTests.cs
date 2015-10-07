@@ -13,16 +13,12 @@
 // limitations under the License.
 //
 
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -38,9 +34,9 @@ namespace Compute.Tests
 
                 ImageReference imgageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
                 bool passed = false;
 
@@ -51,16 +47,16 @@ namespace Compute.Tests
 
                     Action<VirtualMachine> addDataDiskToVM = vm =>
                     {
-                        string containerName = TestUtilities.GenerateName(TestPrefix);
+                        string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                         var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
-                        var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
+                        var vhduri = vhdContainer + string.Format("/{0}.vhd", ComputeManagementTestUtilities.GenerateName(TestPrefix));
 
                         vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
                         vm.StorageProfile.DataDisks = new List<DataDisk>();
                         foreach (int index in new int[] {1, 2})
                         {
                             var diskName = "dataDisk" + index;
-                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, TestUtilities.GenerateName(TestPrefix));
+                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, ComputeManagementTestUtilities.GenerateName(TestPrefix));
                             var dd = new DataDisk
                             {
                                 Caching = CachingTypes.None,

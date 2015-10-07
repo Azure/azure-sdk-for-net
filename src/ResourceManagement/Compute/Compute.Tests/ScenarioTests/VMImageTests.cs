@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.Compute;
+using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Compute.Models;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {

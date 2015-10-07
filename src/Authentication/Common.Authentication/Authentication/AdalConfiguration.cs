@@ -12,6 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 
 namespace Microsoft.Azure.Common.Authentication
@@ -47,6 +48,8 @@ namespace Microsoft.Azure.Common.Authentication
         public Uri ClientRedirectUri { get; set; }
 
         public string ResourceClientUri { get; set; }
+
+        public TokenCache TokenCache { get; set; }
 
         public AdalConfiguration()
         {
