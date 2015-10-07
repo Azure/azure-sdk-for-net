@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy key.
+        /// Optional. Gets or sets the shared access policy key for the
+        /// specified shared access policy.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy name.
+        /// Optional. Gets or sets the shared access policy name for the
+        /// Service Bus Queue.
         /// </summary>
         public string SharedAccessPolicyName
         {

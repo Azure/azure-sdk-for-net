@@ -24,18 +24,24 @@ namespace StreamAnalytics.Tests.OperationTests
     class TestHelper
     {
         // Azure Storage secrets
-        public const string AccountName = "$EncryptedStringForTesting";
-        public const string AccountKey = "$EncryptedStringForTesting";
+        public const string AccountName = "exchangeevent";
+        public const string AccountKey = @"zuk+Je2WFoTd9e+v4spbJtPN20x59U+oHFrG5G56Y+ptMajlxJIyqeppYqg/VQVeXe6Dey0odhXjgeCUh9koFQ==";
 
-        // Event Hub secrets
-        public const string SharedAccessPolicyName = "$EncryptedStringForTesting";
-        public const string SharedAccessPolicyKey = "$EncryptedStringForTesting";
+        // Event Hub/Service Bus secrets
+        public const string SharedAccessPolicyName = "RootManageSharedAccessKey";
+        public const string SharedAccessPolicyKey = @"ZfMWjrB+9mcZinxEr65Au32FFC+IhqPOHvfjjp3F8j8=";
+
+        // IoT Hub secrets
+        public const string IotHubSharedAccessPolicyKey = @"tyH/60RpS5Uzi0fPhhF3jjtj9QoQiia9SUzTarx75bE=";
+        
+        // DocumentDB secrets
+        public const string DocDbAccountKey = @"zFcg/W6vxQY8oYdeA831NHPbezuvwFZ07zNgc0ta1hu+CunCoYDB69SXgOkDNl36JEPxiwi91dYLmMTrfXOVfA==";
 
         // SQL Azure secrets
-        public const string Server = "$EncryptedStringForTesting";
-        public const string Database = "$EncryptedStringForTesting";
-        public const string User = "$EncryptedStringForTesting";
-        public const string Password = "$EncryptedStringForTesting";
+        public const string Server = "z102fk12be";
+        public const string Database = "HydraSdkTest";
+        public const string User = "customersolution";
+        public const string Password = "n9#kOa8!";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.

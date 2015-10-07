@@ -25,18 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The properties of the Event Hub data source as stream input.
+    /// The properties of the IoT Hub data source as stream input.
     /// </summary>
-    public partial class EventHubStreamInputDataSourceProperties
+    public partial class IoTHubStreamInputDataSourceProperties
     {
         private string _consumerGroupName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of an Event Hub Consumer Group by
-        /// which to identify this input. Specifying distinct consumer group
-        /// names for multiple inputs allows each of those inputs to receive
-        /// the same events from the Event Hub. If not specified, the input
-        /// uses the Event Hub’s default consumer group.
+        /// Optional. Gets or sets the name of an IoT Hub Consumer Group by
+        /// which to identify this input. If not specified, the input uses the
+        /// Iot Hub’s default consumer group.
         /// </summary>
         public string ConsumerGroupName
         {
@@ -44,26 +42,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._consumerGroupName = value; }
         }
         
-        private string _eventHubName;
+        private string _iotHubNamespace;
         
         /// <summary>
-        /// Optional. Gets or sets the Event Hub name.
+        /// Optional. Gets or sets the namespace of the IoT Hub (the URI of the
+        /// IoT Hub).
         /// </summary>
-        public string EventHubName
+        public string IotHubNamespace
         {
-            get { return this._eventHubName; }
-            set { this._eventHubName = value; }
-        }
-        
-        private string _serviceBusNamespace;
-        
-        /// <summary>
-        /// Optional. Gets or sets the service bus namespace of the Event Hub.
-        /// </summary>
-        public string ServiceBusNamespace
-        {
-            get { return this._serviceBusNamespace; }
-            set { this._serviceBusNamespace = value; }
+            get { return this._iotHubNamespace; }
+            set { this._iotHubNamespace = value; }
         }
         
         private string _sharedAccessPolicyKey;
@@ -81,8 +69,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy name for the Event
-        /// Hub.
+        /// Optional. Gets or sets the shared access policy name for the IoT
+        /// Hub with Service connect permission.
         /// </summary>
         public string SharedAccessPolicyName
         {
@@ -92,9 +80,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// EventHubStreamInputDataSourceProperties class.
+        /// IoTHubStreamInputDataSourceProperties class.
         /// </summary>
-        public EventHubStreamInputDataSourceProperties()
+        public IoTHubStreamInputDataSourceProperties()
         {
         }
     }

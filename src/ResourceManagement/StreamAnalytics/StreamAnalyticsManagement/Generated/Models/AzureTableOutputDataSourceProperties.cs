@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
@@ -118,7 +117,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public AzureTableOutputDataSourceProperties()
         {
-            this.ColumnsToRemove = new LazyList<string>();
         }
     }
 }
