@@ -25,13 +25,13 @@
           "uswest"
         ],
         "x-ms-request-id": [
-          "1c222b808507176fba596803d54aebab"
+          "f61b55b6d1c51786ba6694e0541518b7"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:29 GMT"
+          "Wed, 07 Oct 2015 01:41:16 GMT"
         ],
         "Server": [
           "1.0.6198.270",
@@ -42,8 +42,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169\",\r\n  \"name\": \"StreamAnalytics169\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382\",\r\n  \"name\": \"StreamAnalytics2382\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "189"
+          "191"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -72,16 +72,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1166"
+          "1185"
         ],
         "x-ms-request-id": [
-          "7518c9c4-c075-4f90-81b4-28f301f141cc"
+          "2c5cba98-6480-4b3d-9825-c63d6b282525"
         ],
         "x-ms-correlation-request-id": [
-          "7518c9c4-c075-4f90-81b4-28f301f141cc"
+          "2c5cba98-6480-4b3d-9825-c63d6b282525"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015032Z:7518c9c4-c075-4f90-81b4-28f301f141cc"
+          "CENTRALUS:20151007T014119Z:2c5cba98-6480-4b3d-9825-c63d6b282525"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -90,16 +90,16 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:31 GMT"
+          "Wed, 07 Oct 2015 01:41:18 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0P2FwaS12ZXJzaW9uPTIwMTUtMDktMDE=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNz9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"MyStreamingJobSubmittedBySDK7954\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    },\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"MyStreamingJobSubmittedBySDK5017\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    },\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
@@ -108,16 +108,16 @@
           "232"
         ],
         "x-ms-client-request-id": [
-          "ca853cb7-2197-4576-b05c-30b73fd8e1c4"
+          "87058e2a-7a1c-4cb4-956f-64f8be9be581"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK7954\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"cde30437-95cd-4063-b906-f67a4616d829\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:50:32.077Z\",\r\n    \"inputs\": [],\r\n    \"functions\": [],\r\n    \"outputs\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK5017\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"5f48d0b5-8b3e-4267-996b-2837c486b706\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:41:18.717Z\",\r\n    \"inputs\": [],\r\n    \"functions\": [],\r\n    \"outputs\": []\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "641"
+          "642"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -132,16 +132,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "8a61d039-893a-49e6-b57f-eaae6cc47ee1"
+          "68b14b93-8922-454a-a870-638cc6193e1d"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1165"
+          "1184"
         ],
         "x-ms-correlation-request-id": [
-          "a945c444-6ab6-49d3-9b9e-cd2dd03e405c"
+          "ac38b331-4e9a-42e6-833f-d9cfd1cfefed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015032Z:a945c444-6ab6-49d3-9b9e-cd2dd03e405c"
+          "CENTRALUS:20151007T014119Z:ac38b331-4e9a-42e6-833f-d9cfd1cfefed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -150,10 +150,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:32 GMT"
+          "Wed, 07 Oct 2015 01:41:19 GMT"
         ],
         "ETag": [
-          "9daf47a3-befa-4624-8d77-196c57a78bca"
+          "25079b28-2679-4632-b80a-ce47325bbbb7"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -165,22 +165,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954?$expand=&api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0PyRleHBhbmQ9JmFwaS12ZXJzaW9uPTIwMTUtMDktMDE=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017?$expand=&api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNz8kZXhwYW5kPSZhcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "66812e38-ea08-4169-b2d5-881b0e913748"
+          "5fe87831-6d79-4fa3-a6bb-ed708d82a258"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK7954\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"cde30437-95cd-4063-b906-f67a4616d829\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:50:32.077Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK5017\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"5f48d0b5-8b3e-4267-996b-2837c486b706\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:41:18.717Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "601"
+          "602"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,16 +195,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "66812e38-ea08-4169-b2d5-881b0e913748"
+          "5fe87831-6d79-4fa3-a6bb-ed708d82a258"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14890"
+          "14904"
         ],
         "x-ms-correlation-request-id": [
-          "c76b6ab1-86e5-46d9-9caa-111a6b59994c"
+          "c4fe5dbd-599a-4f21-a1a5-5a23e9e25e2b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015033Z:c76b6ab1-86e5-46d9-9caa-111a6b59994c"
+          "CENTRALUS:20151007T014119Z:c4fe5dbd-599a-4f21-a1a5-5a23e9e25e2b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -213,10 +213,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:32 GMT"
+          "Wed, 07 Oct 2015 01:41:19 GMT"
         ],
         "ETag": [
-          "9daf47a3-befa-4624-8d77-196c57a78bca"
+          "25079b28-2679-4632-b80a-ce47325bbbb7"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -228,28 +228,28 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTA/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3ND9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"outputtest5110\",\r\n  \"properties\": {\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.ServiceBus/EventHub\",\r\n      \"properties\": {\r\n        \"serviceBusNamespace\": \"sdktest\",\r\n        \"sharedAccessPolicyName\": \"RootManageSharedAccessKey\",\r\n        \"sharedAccessPolicyKey\": \"ZfMWjrB+9mcZinxEr65Au32FFC+IhqPOHvfjjp3F8j8=\",\r\n        \"eventHubName\": \"sdkeventhub\",\r\n        \"partitionKey\": \"partitionKey\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Json\",\r\n      \"properties\": {\r\n        \"encoding\": \"UTF8\",\r\n        \"format\": \"LineSeparated\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"inputtest7974\",\r\n  \"properties\": {\r\n    \"type\": \"Stream\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"properties\": {\r\n        \"iotHubNamespace\": \"ZivIoTHub\",\r\n        \"sharedAccessPolicyName\": \"owner\",\r\n        \"sharedAccessPolicyKey\": \"tyH/60RpS5Uzi0fPhhF3jjtj9QoQiia9SUzTarx75bE=\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Csv\",\r\n      \"properties\": {\r\n        \"fieldDelimiter\": \",\",\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "585"
+          "495"
         ],
         "x-ms-client-request-id": [
-          "56377b38-a0d4-4dca-823d-2e40b1097b4a"
+          "b2c79314-ab81-493e-a2a2-dad92040a336"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110\",\r\n  \"name\": \"outputtest5110\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/outputs\",\r\n  \"properties\": {\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.ServiceBus/EventHub\",\r\n      \"properties\": {\r\n        \"eventHubName\": \"sdkeventhub\",\r\n        \"partitionKey\": \"partitionKey\",\r\n        \"serviceBusNamespace\": \"sdktest\",\r\n        \"sharedAccessPolicyName\": \"RootManageSharedAccessKey\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Json\",\r\n      \"properties\": {\r\n        \"encoding\": \"UTF8\",\r\n        \"format\": \"LineSeparated\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974\",\r\n  \"name\": \"inputtest7974\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/inputs\",\r\n  \"properties\": {\r\n    \"type\": \"Stream\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"properties\": {\r\n        \"iotHubNamespace\": \"ZivIoTHub\",\r\n        \"sharedAccessPolicyName\": \"owner\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Csv\",\r\n      \"properties\": {\r\n        \"fieldDelimiter\": \",\",\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "599"
+          "522"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,16 +264,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "e80d5cda-910a-4161-8a08-1a376c144228"
+          "0c4295cc-33ba-4b66-b0c5-4072dcdb71e1"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1164"
+          "1183"
         ],
         "x-ms-correlation-request-id": [
-          "3b3062db-07d3-4098-9d96-466eef077980"
+          "43dc8dad-341d-4f17-9f47-10801a4efb0e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015033Z:3b3062db-07d3-4098-9d96-466eef077980"
+          "CENTRALUS:20151007T014120Z:43dc8dad-341d-4f17-9f47-10801a4efb0e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -282,10 +282,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:32 GMT"
+          "Wed, 07 Oct 2015 01:41:19 GMT"
         ],
         "ETag": [
-          "112a01eb-126f-4e61-ada1-900d98447539"
+          "576c6aef-12fb-4354-9c43-34d6e85b8d40"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -297,22 +297,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTA/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3ND9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9e49bada-8281-4ced-b19d-238098355da1"
+          "798a8cfd-3cd4-489e-ab23-25f2bfd51bf1"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110\",\r\n  \"name\": \"outputtest5110\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/outputs\",\r\n  \"properties\": {\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.ServiceBus/EventHub\",\r\n      \"properties\": {\r\n        \"eventHubName\": \"sdkeventhub\",\r\n        \"partitionKey\": \"partitionKey\",\r\n        \"serviceBusNamespace\": \"sdktest\",\r\n        \"sharedAccessPolicyName\": \"RootManageSharedAccessKey\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Json\",\r\n      \"properties\": {\r\n        \"encoding\": \"UTF8\",\r\n        \"format\": \"LineSeparated\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974\",\r\n  \"name\": \"inputtest7974\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/inputs\",\r\n  \"properties\": {\r\n    \"type\": \"Stream\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"properties\": {\r\n        \"iotHubNamespace\": \"ZivIoTHub\",\r\n        \"sharedAccessPolicyName\": \"owner\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Csv\",\r\n      \"properties\": {\r\n        \"fieldDelimiter\": \",\",\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "599"
+          "522"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -327,16 +327,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "9e49bada-8281-4ced-b19d-238098355da1"
+          "798a8cfd-3cd4-489e-ab23-25f2bfd51bf1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14889"
+          "14903"
         ],
         "x-ms-correlation-request-id": [
-          "cfad1e1c-a3d3-42a6-9ca2-44dd71163323"
+          "18d47737-8881-49d4-b5b6-61848f96f1ef"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015033Z:cfad1e1c-a3d3-42a6-9ca2-44dd71163323"
+          "CENTRALUS:20151007T014120Z:18d47737-8881-49d4-b5b6-61848f96f1ef"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -345,10 +345,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:32 GMT"
+          "Wed, 07 Oct 2015 01:41:19 GMT"
         ],
         "ETag": [
-          "112a01eb-126f-4e61-ada1-900d98447539"
+          "576c6aef-12fb-4354-9c43-34d6e85b8d40"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -360,13 +360,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110/test?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTAvdGVzdD9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974/test?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3NC90ZXN0P2FwaS12ZXJzaW9uPTIwMTUtMDktMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6cc06076-cf9b-4a17-937e-e06bd15ec5ef"
+          "7b6d5224-1f16-4b0f-a4d2-a48d00c40b90"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
@@ -393,16 +393,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "6cc06076-cf9b-4a17-937e-e06bd15ec5ef"
+          "7b6d5224-1f16-4b0f-a4d2-a48d00c40b90"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1163"
+          "1182"
         ],
         "x-ms-correlation-request-id": [
-          "5020b93c-560a-49e9-957d-d4fbd02e76f0"
+          "45555bb8-2d0e-4bed-a581-17ac77cd5df6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015033Z:5020b93c-560a-49e9-957d-d4fbd02e76f0"
+          "CENTRALUS:20151007T014120Z:45555bb8-2d0e-4bed-a581-17ac77cd5df6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -411,10 +411,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:33 GMT"
+          "Wed, 07 Oct 2015 01:41:20 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110/OperationResults/01ecfd92-1354-4bd0-9741-a02f0529e3c6?api-version=2015-09-01"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974/OperationResults/9192cf9f-a4ad-488e-838d-411661210402?api-version=2015-09-01"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -426,13 +426,13 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110/OperationResults/01ecfd92-1354-4bd0-9741-a02f0529e3c6?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTAvT3BlcmF0aW9uUmVzdWx0cy8wMWVjZmQ5Mi0xMzU0LTRiZDAtOTc0MS1hMDJmMDUyOWUzYzY/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974/OperationResults/9192cf9f-a4ad-488e-838d-411661210402?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3NC9PcGVyYXRpb25SZXN1bHRzLzkxOTJjZjlmLWE0YWQtNDg4ZS04MzhkLTQxMTY2MTIxMDQwMj9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0cfee20a-984b-487a-88d9-2e3b7c2ef17a"
+          "f4ff8dc8-2b55-4442-80ff-577c6516f2e1"
         ],
         "x-ms-version": [
           "2015-09-01"
@@ -462,16 +462,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "0cfee20a-984b-487a-88d9-2e3b7c2ef17a"
+          "f4ff8dc8-2b55-4442-80ff-577c6516f2e1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14888"
+          "14902"
         ],
         "x-ms-correlation-request-id": [
-          "6d7c203f-96c0-4d0d-979f-f92d06385ff6"
+          "75988e25-2a1e-484b-8fa3-ed459c36e244"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015034Z:6d7c203f-96c0-4d0d-979f-f92d06385ff6"
+          "CENTRALUS:20151007T014122Z:75988e25-2a1e-484b-8fa3-ed459c36e244"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -480,10 +480,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:33 GMT"
+          "Wed, 07 Oct 2015 01:41:22 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110/OperationResults/01ecfd92-1354-4bd0-9741-a02f0529e3c6?api-version=2015-09-01"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974/OperationResults/9192cf9f-a4ad-488e-838d-411661210402?api-version=2015-09-01"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -495,13 +495,13 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110/OperationResults/01ecfd92-1354-4bd0-9741-a02f0529e3c6?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTAvT3BlcmF0aW9uUmVzdWx0cy8wMWVjZmQ5Mi0xMzU0LTRiZDAtOTc0MS1hMDJmMDUyOWUzYzY/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974/OperationResults/9192cf9f-a4ad-488e-838d-411661210402?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3NC9PcGVyYXRpb25SZXN1bHRzLzkxOTJjZjlmLWE0YWQtNDg4ZS04MzhkLTQxMTY2MTIxMDQwMj9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7e784c86-520c-4c6c-9255-b65a711a0e17"
+          "d08974a0-550e-4b7d-b266-f76b3698cb16"
         ],
         "x-ms-version": [
           "2015-09-01"
@@ -528,16 +528,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "7e784c86-520c-4c6c-9255-b65a711a0e17"
+          "d08974a0-550e-4b7d-b266-f76b3698cb16"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14887"
+          "14901"
         ],
         "x-ms-correlation-request-id": [
-          "8c02086c-468e-4eec-bb0d-7d9e2f6279f5"
+          "726a0e71-44d9-4bc6-a9aa-e359af4f7399"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015045Z:8c02086c-468e-4eec-bb0d-7d9e2f6279f5"
+          "CENTRALUS:20151007T014134Z:726a0e71-44d9-4bc6-a9aa-e359af4f7399"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -546,7 +546,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:45 GMT"
+          "Wed, 07 Oct 2015 01:41:34 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -558,28 +558,28 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTA/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3ND9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"etag\": \"112a01eb-126f-4e61-ada1-900d98447539\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.ServiceBus/EventHub\",\r\n      \"properties\": {\r\n        \"serviceBusNamespace\": \"sdktest\",\r\n        \"sharedAccessPolicyName\": \"RootManageSharedAccessKey\",\r\n        \"sharedAccessPolicyKey\": \"ZfMWjrB+9mcZinxEr65Au32FFC+IhqPOHvfjjp3F8j8=\",\r\n        \"eventHubName\": \"sdkeventhub\",\r\n        \"partitionKey\": \"NewPartitionKey2815\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Json\",\r\n      \"properties\": {\r\n        \"encoding\": \"UTF8\",\r\n        \"format\": \"Array\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"Stream\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"properties\": {\r\n        \"iotHubNamespace\": \"ZivIoTHub\",\r\n        \"sharedAccessPolicyName\": \"owner453\",\r\n        \"sharedAccessPolicyKey\": \"tyH/60RpS5Uzi0fPhhF3jjtj9QoQiia9SUzTarx75bE=\"\r\n      }\r\n    },\r\n    \"etag\": \"576c6aef-12fb-4354-9c43-34d6e85b8d40\",\r\n    \"serialization\": {\r\n      \"type\": \"Csv\",\r\n      \"properties\": {\r\n        \"fieldDelimiter\": \"|\",\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "608"
+          "523"
         ],
         "x-ms-client-request-id": [
-          "af2483c1-6839-43b1-9ad9-af05b80b20c5"
+          "ba9967d2-2893-409e-8b9d-4fd97b421b62"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110\",\r\n  \"name\": \"outputtest5110\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/outputs\",\r\n  \"properties\": {\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.ServiceBus/EventHub\",\r\n      \"properties\": {\r\n        \"eventHubName\": \"sdkeventhub\",\r\n        \"partitionKey\": \"NewPartitionKey2815\",\r\n        \"serviceBusNamespace\": \"sdktest\",\r\n        \"sharedAccessPolicyName\": \"RootManageSharedAccessKey\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Json\",\r\n      \"properties\": {\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974\",\r\n  \"name\": \"inputtest7974\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs/inputs\",\r\n  \"properties\": {\r\n    \"type\": \"Stream\",\r\n    \"datasource\": {\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"properties\": {\r\n        \"iotHubNamespace\": \"ZivIoTHub\",\r\n        \"sharedAccessPolicyName\": \"owner453\"\r\n      }\r\n    },\r\n    \"serialization\": {\r\n      \"type\": \"Csv\",\r\n      \"properties\": {\r\n        \"fieldDelimiter\": \"|\",\r\n        \"encoding\": \"UTF8\"\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "581"
+          "525"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -594,16 +594,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "ecd229cc-3baf-4f3d-a0e1-bf41e585a40d"
+          "9a21a72f-678a-4df1-b739-67e8d1fa0959"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1162"
+          "1181"
         ],
         "x-ms-correlation-request-id": [
-          "704ae91d-a7e7-46f4-a780-52caa42cde4f"
+          "f98da6c9-dacb-4dc2-be0c-5efc86ef338e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015045Z:704ae91d-a7e7-46f4-a780-52caa42cde4f"
+          "CENTRALUS:20151007T014135Z:f98da6c9-dacb-4dc2-be0c-5efc86ef338e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -612,10 +612,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:45 GMT"
+          "Wed, 07 Oct 2015 01:41:34 GMT"
         ],
         "ETag": [
-          "4b28a709-c71c-4fb0-9254-e727d0ab3d05"
+          "b117aa55-45a9-48be-a5d3-10b9f1a9fc25"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -627,13 +627,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954/outputs/outputtest5110?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0L291dHB1dHMvb3V0cHV0dGVzdDUxMTA/YXBpLXZlcnNpb249MjAxNS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017/inputs/inputtest7974?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNy9pbnB1dHMvaW5wdXR0ZXN0Nzk3ND9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "709a0836-ff62-4dfe-b243-ce653e262908"
+          "64133654-cda8-402d-bc66-7fdd235f36aa"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
@@ -657,16 +657,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "709a0836-ff62-4dfe-b243-ce653e262908"
+          "64133654-cda8-402d-bc66-7fdd235f36aa"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1161"
+          "1180"
         ],
         "x-ms-correlation-request-id": [
-          "efd0437f-e7c5-4e19-9c6a-d1a3b20cb0ef"
+          "7de7aa7b-3cc7-468b-8244-9a6105ca747f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015045Z:efd0437f-e7c5-4e19-9c6a-d1a3b20cb0ef"
+          "CENTRALUS:20151007T014135Z:7de7aa7b-3cc7-468b-8244-9a6105ca747f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -675,7 +675,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:45 GMT"
+          "Wed, 07 Oct 2015 01:41:34 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -687,19 +687,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954?$expand=outputs&api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0PyRleHBhbmQ9b3V0cHV0cyZhcGktdmVyc2lvbj0yMDE1LTA5LTAx",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017?$expand=inputs&api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNz8kZXhwYW5kPWlucHV0cyZhcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fa259a1f-a8c3-4df4-9d56-f597d81f6a49"
+          "f14ac7dc-ad26-4424-868c-3d40db5eaf05"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK7954\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"cde30437-95cd-4063-b906-f67a4616d829\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:50:32.077Z\",\r\n    \"outputs\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017\",\r\n  \"name\": \"MyStreamingJobSubmittedBySDK5017\",\r\n  \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"jobId\": \"5f48d0b5-8b3e-4267-996b-2837c486b706\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"jobState\": \"Created\",\r\n    \"eventsOutOfOrderPolicy\": \"Drop\",\r\n    \"eventsOutOfOrderMaxDelayInSeconds\": 0,\r\n    \"eventsLateArrivalMaxDelayInSeconds\": 5,\r\n    \"dataLocale\": \"en-US\",\r\n    \"createdDate\": \"2015-10-07T01:41:18.717Z\",\r\n    \"inputs\": []\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "614"
@@ -717,16 +717,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "fa259a1f-a8c3-4df4-9d56-f597d81f6a49"
+          "f14ac7dc-ad26-4424-868c-3d40db5eaf05"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14886"
+          "14898"
         ],
         "x-ms-correlation-request-id": [
-          "c6e00fc6-7063-4fb4-be44-35791f93ce60"
+          "38a6472e-ec72-405e-804d-8ecabce56d0c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015046Z:c6e00fc6-7063-4fb4-be44-35791f93ce60"
+          "CENTRALUS:20151007T014135Z:38a6472e-ec72-405e-804d-8ecabce56d0c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -735,10 +735,10 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:45 GMT"
+          "Wed, 07 Oct 2015 01:41:34 GMT"
         ],
         "ETag": [
-          "b183f27e-a9c1-424d-aa59-713f4e2dd79b"
+          "f52a3ef9-4f21-4d4e-8b2a-6b1fc9fc31b7"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -750,13 +750,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK7954?api-version=2015-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0cmVhbUFuYWx5dGljcy9zdHJlYW1pbmdqb2JzL015U3RyZWFtaW5nSm9iU3VibWl0dGVkQnlTREs3OTU0P2FwaS12ZXJzaW9uPTIwMTUtMDktMDE=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382/providers/Microsoft.StreamAnalytics/streamingjobs/MyStreamingJobSubmittedBySDK5017?api-version=2015-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODIvcHJvdmlkZXJzL01pY3Jvc29mdC5TdHJlYW1BbmFseXRpY3Mvc3RyZWFtaW5nam9icy9NeVN0cmVhbWluZ0pvYlN1Ym1pdHRlZEJ5U0RLNTAxNz9hcGktdmVyc2lvbj0yMDE1LTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f206122f-177d-4e23-8195-7f0915e7bdc9"
+          "4f5ea216-9e26-4331-8028-accb6c49c6e1"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
@@ -780,16 +780,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "f206122f-177d-4e23-8195-7f0915e7bdc9"
+          "4f5ea216-9e26-4331-8028-accb6c49c6e1"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1160"
+          "1179"
         ],
         "x-ms-correlation-request-id": [
-          "8b288ca4-b844-4a7a-b974-f95efe868601"
+          "ce9a0d6e-f3e6-446f-9b74-75ddb9476dbc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015046Z:8b288ca4-b844-4a7a-b974-f95efe868601"
+          "CENTRALUS:20151007T014136Z:ce9a0d6e-f3e6-446f-9b74-75ddb9476dbc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -798,7 +798,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:46 GMT"
+          "Wed, 07 Oct 2015 01:41:35 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -810,8 +810,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics169?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczE2OT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics2382?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczIzODI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -834,16 +834,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1159"
+          "1178"
         ],
         "x-ms-request-id": [
-          "21953583-48be-4d15-8d64-9c7c4137f24f"
+          "7607c759-d6b1-45c1-ae33-bded1026fe78"
         ],
         "x-ms-correlation-request-id": [
-          "21953583-48be-4d15-8d64-9c7c4137f24f"
+          "7607c759-d6b1-45c1-ae33-bded1026fe78"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015046Z:21953583-48be-4d15-8d64-9c7c4137f24f"
+          "CENTRALUS:20151007T014136Z:7607c759-d6b1-45c1-ae33-bded1026fe78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -852,17 +852,17 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:46 GMT"
+          "Wed, 07 Oct 2015 01:41:35 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhOamt0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXlNemd5TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -888,16 +888,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14885"
+          "14897"
         ],
         "x-ms-request-id": [
-          "bf0780cd-9c83-440a-864d-f9c21f0b068b"
+          "46a33d3c-be59-4c22-a2da-cdd419d902ce"
         ],
         "x-ms-correlation-request-id": [
-          "bf0780cd-9c83-440a-864d-f9c21f0b068b"
+          "46a33d3c-be59-4c22-a2da-cdd419d902ce"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015046Z:bf0780cd-9c83-440a-864d-f9c21f0b068b"
+          "CENTRALUS:20151007T014136Z:46a33d3c-be59-4c22-a2da-cdd419d902ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -906,17 +906,17 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:50:46 GMT"
+          "Wed, 07 Oct 2015 01:41:35 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhOamt0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXlNemd5TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -942,16 +942,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14884"
+          "14896"
         ],
         "x-ms-request-id": [
-          "60d9c799-c5b4-4d1c-9a60-f72c1fac64bb"
+          "e538bfce-b829-4e11-aa05-030bfc83a014"
         ],
         "x-ms-correlation-request-id": [
-          "60d9c799-c5b4-4d1c-9a60-f72c1fac64bb"
+          "e538bfce-b829-4e11-aa05-030bfc83a014"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015101Z:60d9c799-c5b4-4d1c-9a60-f72c1fac64bb"
+          "CENTRALUS:20151007T014151Z:e538bfce-b829-4e11-aa05-030bfc83a014"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -960,17 +960,17 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:51:00 GMT"
+          "Wed, 07 Oct 2015 01:41:50 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhOamt0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXlNemd5TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -996,16 +996,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14882"
+          "14895"
         ],
         "x-ms-request-id": [
-          "eac85acc-a922-4fe5-b2da-c951ea26f51a"
+          "0d9b7dea-91e7-497e-9cdb-6505d0f5cca2"
         ],
         "x-ms-correlation-request-id": [
-          "eac85acc-a922-4fe5-b2da-c951ea26f51a"
+          "0d9b7dea-91e7-497e-9cdb-6505d0f5cca2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015116Z:eac85acc-a922-4fe5-b2da-c951ea26f51a"
+          "CENTRALUS:20151007T014206Z:0d9b7dea-91e7-497e-9cdb-6505d0f5cca2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1014,17 +1014,17 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:51:16 GMT"
+          "Wed, 07 Oct 2015 01:42:06 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxNjktV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhOamt0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MyMzgyLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXlNemd5TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1047,16 +1047,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14881"
+          "14894"
         ],
         "x-ms-request-id": [
-          "0308925d-4c1c-4928-b73d-2402f6efe570"
+          "985273fb-e997-4196-b091-993f097c4e0d"
         ],
         "x-ms-correlation-request-id": [
-          "0308925d-4c1c-4928-b73d-2402f6efe570"
+          "985273fb-e997-4196-b091-993f097c4e0d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151007T015131Z:0308925d-4c1c-4928-b73d-2402f6efe570"
+          "CENTRALUS:20151007T014221Z:985273fb-e997-4196-b091-993f097c4e0d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1065,18 +1065,18 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 07 Oct 2015 01:51:31 GMT"
+          "Wed, 07 Oct 2015 01:42:20 GMT"
         ]
       },
       "StatusCode": 200
     }
   ],
   "Names": {
-    "Test_OutputOperations_EventHub": [
-      "StreamAnalytics169",
-      "MyStreamingJobSubmittedBySDK7954",
-      "outputtest5110",
-      "NewPartitionKey2815"
+    "Test_InputOperations_IoTHub": [
+      "StreamAnalytics2382",
+      "MyStreamingJobSubmittedBySDK5017",
+      "inputtest7974",
+      "owner453"
     ]
   },
   "Variables": {

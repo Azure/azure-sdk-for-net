@@ -26,26 +26,26 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The Event Hub data source as output.
+    /// The definition of the IoT Hub data source as stream input.
     /// </summary>
-    public partial class EventHubOutputDataSource : OutputDataSource
+    public partial class IoTHubStreamInputDataSource : StreamInputDataSource
     {
-        private EventHubOutputDataSourceProperties _properties;
+        private IoTHubStreamInputDataSourceProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the Event Hub data source
-        /// as output.
+        /// Optional. Gets or sets the properties of the IoT Hub data source as
+        /// stream input.
         /// </summary>
-        public EventHubOutputDataSourceProperties Properties
+        public IoTHubStreamInputDataSourceProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventHubOutputDataSource class.
+        /// Initializes a new instance of the IoTHubStreamInputDataSource class.
         /// </summary>
-        public EventHubOutputDataSource()
+        public IoTHubStreamInputDataSource()
         {
         }
     }
