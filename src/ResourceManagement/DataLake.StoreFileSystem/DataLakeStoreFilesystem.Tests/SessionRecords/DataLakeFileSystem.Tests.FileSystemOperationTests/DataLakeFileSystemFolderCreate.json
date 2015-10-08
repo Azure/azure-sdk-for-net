@@ -1,0 +1,122 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder012998?op=MKDIRS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMjk5OD9vcD1NS0RJUlMmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "DataLakeFileSystem SDK -  Mkdirs Put Request"
+        ],
+        "User-Agent": [
+          "DataLakeFileSystem",
+          "SDK",
+          "-",
+          "Mkdirs",
+          "Put",
+          "Request"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"boolean\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "16"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f917b8a8-61ba-4a9e-ba23-4b68cedcc907"
+        ],
+        "x-origin-server": [
+          "bn4sch103190734"
+        ],
+        "Server-Perf": [
+          "[f917b8a861ba4a9eba234b68cedcc907][ AuthTime::1751.80783489211::PostAuthTime::21790.2483837691 ][Open :: 00:00:000 ms]%0a[Mkdir :: 00:00:000 ms]%0a[Close :: 00:00:001 ms]%0a[MKDIRS :: 00:00:289 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Jul 2015 21:36:55 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=10b554d5-8dd0-40b9-80aa-69d951dab141; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder012998?op=GETFILESTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMjk5OD9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTQtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "DataLakeFileSystem SDK - File Status Get Request"
+        ],
+        "User-Agent": [
+          "DataLakeFileSystem",
+          "SDK",
+          "-",
+          "File",
+          "Status",
+          "Get",
+          "Request"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"childrenNum\": 1,\r\n    \"fileId\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"DIRECTORY\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1435873016101,\r\n    \"modificationTime\": 1435873016101,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "254"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f51fa187-1551-4f3f-924a-d5b79d33d2ce"
+        ],
+        "x-origin-server": [
+          "bn4sch103190734"
+        ],
+        "Server-Perf": [
+          "[f51fa18715514f3f924ad5b79d33d2ce][ AuthTime::760.000615869942::PostAuthTime::139.853799318779 ][SS Response Process :: 00:00:000 ms]%0a[IsExist :: 00:00:046 ms]%0a[GETFILESTATUS :: 00:00:046 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Jul 2015 21:36:55 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
