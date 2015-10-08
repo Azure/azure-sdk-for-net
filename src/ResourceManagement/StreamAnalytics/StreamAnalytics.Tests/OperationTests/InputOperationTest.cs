@@ -47,25 +47,10 @@ namespace StreamAnalytics.Tests.OperationTests
                 {
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
-                    
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
 
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -228,24 +213,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -274,8 +244,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         {
                             Properties = new EventHubStreamInputDataSourceProperties()
                             {
-                                ServiceBusNamespace = "sdktest",
-                                EventHubName = "sdkeventhub",
+                                ServiceBusNamespace = TestHelper.ServiceBusNamespace,
+                                EventHubName = TestHelper.EventHubName,
                                 SharedAccessPolicyName = TestHelper.SharedAccessPolicyName,
                                 SharedAccessPolicyKey = TestHelper.SharedAccessPolicyKey,
                                 ConsumerGroupName = "sdkconsumergroup"
@@ -375,24 +345,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -538,24 +493,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -584,7 +524,7 @@ namespace StreamAnalytics.Tests.OperationTests
                         {
                             Properties = new IoTHubStreamInputDataSourceProperties()
                             {
-                                IotHubNamespace = "ZivIoTHub",
+                                IotHubNamespace = TestHelper.IoTHubNamespace,
                                 SharedAccessPolicyName = sharedAccessPolicyName,
                                 SharedAccessPolicyKey = TestHelper.IotHubSharedAccessPolicyKey
                             }
@@ -645,7 +585,7 @@ namespace StreamAnalytics.Tests.OperationTests
                         {
                             Properties = new IoTHubStreamInputDataSourceProperties()
                             {
-                                IotHubNamespace = "ZivIoTHub",
+                                IotHubNamespace = TestHelper.IoTHubNamespace,
                                 SharedAccessPolicyName = newSharedPolicyName,
                                 SharedAccessPolicyKey = TestHelper.IotHubSharedAccessPolicyKey
                             }

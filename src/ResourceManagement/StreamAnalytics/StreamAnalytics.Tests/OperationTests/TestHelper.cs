@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.StreamAnalytics;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.Azure.Test;
 
@@ -25,23 +26,27 @@ namespace StreamAnalytics.Tests.OperationTests
     {
         // Azure Storage secrets
         public const string AccountName = "exchangeevent";
-        public const string AccountKey = @"zuk+Je2WFoTd9e+v4spbJtPN20x59U+oHFrG5G56Y+ptMajlxJIyqeppYqg/VQVeXe6Dey0odhXjgeCUh9koFQ==";
+        public const string AccountKey = @"LVn3eQSK8GoBkPG4zpHEESzaoI3L2HnzuWIm2rkEA9ybnxlA1EJ3VeB6kld4OH+aR1COn0/aeZz+ynldcgMJSg==";
 
         // Event Hub/Service Bus secrets
+        public const string EventHubName = "sdkeventhub";
+        public const string ServiceBusNamespace = "sdktest";
         public const string SharedAccessPolicyName = "RootManageSharedAccessKey";
-        public const string SharedAccessPolicyKey = @"ZfMWjrB+9mcZinxEr65Au32FFC+IhqPOHvfjjp3F8j8=";
+        public const string SharedAccessPolicyKey = @"CnZzqHjkAx2HKXVtnmMvCtbFGq+iFyvzhjO7rBAEaOE=";
 
         // IoT Hub secrets
-        public const string IotHubSharedAccessPolicyKey = @"tyH/60RpS5Uzi0fPhhF3jjtj9QoQiia9SUzTarx75bE=";
+        public const string IoTHubNamespace = "ZivIoTHub";
+        public const string IotHubSharedAccessPolicyKey = @"caL8uCB0BxnPUnbmACgENpuqdyGLig5P5IoJLT4pIQ9=";
         
         // DocumentDB secrets
-        public const string DocDbAccountKey = @"zFcg/W6vxQY8oYdeA831NHPbezuvwFZ07zNgc0ta1hu+CunCoYDB69SXgOkDNl36JEPxiwi91dYLmMTrfXOVfA==";
+        public const string DocDbAccountId = "ibizaloctest001docdb";
+        public const string DocDbAccountKey = @"0slkXPyx4q97Q+QxCtT1TnvP+XEfbfVG3qG+1B+uzD0TA+IQ5/VSi49y2gS4pRrqe+hXj704zvTR5x59R3H0Hg==";
 
         // SQL Azure secrets
         public const string Server = "z102fk12be";
         public const string Database = "HydraSdkTest";
         public const string User = "customersolution";
-        public const string Password = "n9#kOa8!";
+        public const string Password = "y3%rNk9*";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
@@ -69,6 +74,27 @@ namespace StreamAnalytics.Tests.OperationTests
             return serviceLocations.Any(l => l.Name.Equals("West US"))
                 ? "West US"
                 : serviceLocations.FirstOrDefault().Name;
+        }
+
+        // Construct the general Job object
+        public static Job GetDefaultJob(string resourceName, string serviceLocation)
+        {
+            Job job = new Job
+            {
+                Name = resourceName,
+                Location = serviceLocation,
+                Properties = new JobProperties
+                {
+                    Sku = new Sku()
+                    {
+                        Name = "standard"
+                    },
+                    EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop,
+                    EventsOutOfOrderMaxDelayInSeconds = 0
+                } 
+            };
+
+            return job;
         }
     }
 }
