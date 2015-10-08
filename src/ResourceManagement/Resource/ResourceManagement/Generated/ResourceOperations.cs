@@ -234,6 +234,10 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.Status = OperationStatus.Failed;
                     }
+                    if (statusCode == HttpStatusCode.BadRequest)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Accepted)
                     {
                         result.Status = OperationStatus.InProgress;
