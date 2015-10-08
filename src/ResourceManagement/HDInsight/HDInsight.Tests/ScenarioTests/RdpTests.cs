@@ -65,7 +65,7 @@ namespace HDInsight.Tests
                         {
                             RdpSettings = new RdpSettings
                             {
-                                ExpiryDate = new DateTime(2015,6,12),
+                                ExpiryDate = new DateTime(2015, 10, 20),
                                 Password = "Password1!",
                                 UserName = "rdpuser"
                             }
@@ -112,7 +112,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 //set variables
-                const string dnsname = "hdisdk-rdp1";
+                const string dnsname = "hdisdk-rdp0";
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 

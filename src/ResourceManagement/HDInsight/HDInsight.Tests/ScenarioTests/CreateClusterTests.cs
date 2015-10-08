@@ -167,7 +167,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
-                const string dnsname = "hdisdk-cluster";
+                const string dnsname = "hdisdk-cluster1";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
