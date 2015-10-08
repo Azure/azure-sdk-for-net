@@ -36,9 +36,6 @@ using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using Newtonsoft.Json.Linq;
 
-/// <summary>
-/// Provides classes used to define and manage Data Lake Store accounts.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>

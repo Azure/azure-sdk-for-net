@@ -24,9 +24,6 @@ using System.Linq;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 
-/// <summary>
-/// Provides the object model used for Data Lake Store account management.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
     /// <summary>

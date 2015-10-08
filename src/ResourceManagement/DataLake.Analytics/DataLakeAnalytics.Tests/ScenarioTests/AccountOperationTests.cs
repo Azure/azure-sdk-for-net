@@ -46,7 +46,7 @@ namespace DataLakeAnalytics.Tests
                                 Properties = new DataLakeAnalyticsAccountProperties
                                 {
                                     DefaultDataLakeAccount = commonData.DataLakeAccountName,
-                                    DataLakeAccounts = new List<DataLakeStoreAccount>
+                                    DataLakeStoreAccounts = new List<DataLakeStoreAccount>
                                     {
                                         new DataLakeStoreAccount
                                         {
@@ -87,8 +87,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(commonData.DataLakeAnalyticsAccountName, responseGet.DataLakeAnalyticsAccount.Name);
                 Assert.Equal("Microsoft.BigAnalytics/accounts", responseGet.DataLakeAnalyticsAccount.Type);
 
-                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeAccounts.Count == 2);
-                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeAccounts.ToList()[1].Name.Equals(commonData.SecondDataLakeAccountName));
+                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 2);
+                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[1].Name.Equals(commonData.SecondDataLakeAccountName));
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -106,14 +106,14 @@ namespace DataLakeAnalytics.Tests
 
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet.DataLakeAnalyticsAccount;
-                var firstStorageAccountName = newAccount.Properties.DataLakeAccounts.ToList()[0].Name;
+                var firstStorageAccountName = newAccount.Properties.DataLakeStoreAccounts.ToList()[0].Name;
                 newAccount.Tags = new Dictionary<string, string>
                 {
                     {"updatedKey", "updatedValue"}
                 };
 
                 // need to null out deep properties to prevent an error
-                newAccount.Properties.DataLakeAccounts = null;
+                newAccount.Properties.DataLakeStoreAccounts = null;
                 newAccount.Properties.DefaultDataLakeAccount = null;
                 newAccount.Properties.StorageAccounts = null;
 
@@ -136,8 +136,8 @@ namespace DataLakeAnalytics.Tests
 
                 // verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
                 Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Tags.SequenceEqual(newAccount.Tags));
-                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeAccounts.Count == 2);
-                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
+                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 2);
+                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
 
                 // Create another account and ensure that list account returns both
                 var accountToChange = responseGet.DataLakeAnalyticsAccount;

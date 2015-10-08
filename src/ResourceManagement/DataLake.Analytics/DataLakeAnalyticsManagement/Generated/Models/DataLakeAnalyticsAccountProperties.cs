@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             set { this._creationTime = value; }
         }
         
-        private IList<DataLakeStoreAccount> _dataLakeAccounts;
+        private IList<DataLakeStoreAccount> _dataLakeStoreAccounts;
         
         /// <summary>
         /// Optional. Gets or sets the list of Data Lake storage accounts
         /// associated with this account.
         /// </summary>
-        public IList<DataLakeStoreAccount> DataLakeAccounts
+        public IList<DataLakeStoreAccount> DataLakeStoreAccounts
         {
-            get { return this._dataLakeAccounts; }
-            set { this._dataLakeAccounts = value; }
+            get { return this._dataLakeStoreAccounts; }
+            set { this._dataLakeStoreAccounts = value; }
         }
         
         private string _defaultDataLakeAccount;
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         public DataLakeAnalyticsAccountProperties()
         {
-            this.DataLakeAccounts = new LazyList<DataLakeStoreAccount>();
+            this.DataLakeStoreAccounts = new LazyList<DataLakeStoreAccount>();
             this.StorageAccounts = new LazyList<StorageAccount>();
         }
     }

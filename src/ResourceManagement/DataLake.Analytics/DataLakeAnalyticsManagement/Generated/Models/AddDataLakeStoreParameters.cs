@@ -23,9 +23,6 @@ using System;
 using System.Linq;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 
-/// <summary>
-/// Provides the object model used for Data Lake Analytics accounts.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     /// <summary>
