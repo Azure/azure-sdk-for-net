@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Common.OData
                     {
                         format = DefaultDateTimeFormat;
                     }
-                    val = ((DateTime) val).ToUniversalTime(); // TODO
+                    val = ((DateTime) val).ToUniversalTime();
                 }
 
                 string formattedString;

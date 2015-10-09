@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Common.Test
         Debug = 4,
         Analytics = 8,
     }
-    public class ListEventsParameters
+    public class Parameters
     {
         [FilterParameter("startTime", "O")]
         public DateTime? StartTime { get; set; }
@@ -51,9 +51,8 @@ namespace Microsoft.Azure.Common.Test
         public void FilterStringDateTime()
         {
             var startTime = DateTime.Parse("2015-10-09T00:00:00.0000000Z");
-            var filterString = FilterString.Generate<ListEventsParameters>(parameters => parameters.StartTime >= startTime);
+            var filterString = FilterString.Generate<Parameters>(parameters => parameters.StartTime >= startTime);
 
-            // Console.WriteLine(filterString);
             Assert.Equal(filterString, "startTime ge '2015-10-09T00:00:00.0000000Z'");
         }
 
@@ -62,11 +61,21 @@ namespace Microsoft.Azure.Common.Test
         public void FilterStringTimeSpan()
         {
             var timeSpan = TimeSpan.FromMinutes(5);
-            var filterString = FilterString.Generate<ListEventsParameters>(parameters => parameters.TimeGrain == timeSpan);
+            var filterString = FilterString.Generate<Parameters>(parameters => parameters.TimeGrain == timeSpan);
 
-//            Console.WriteLine(filterString);
             Assert.Equal(filterString, "timeGrain eq duration'PT5M'");
         }
+
+        [Fact]
+        public void FilterStringEnum()
+        {
+            var timeSpan = TimeSpan.FromMinutes(5);
+            var filterString = FilterString.Generate<Parameters>(parameters => parameters.EventChannels == EventChannels.Admin);
+            Console.WriteLine(filterString);
+
+//            Assert.Equal(filterString, "timeGrain eq duration'PT5M'");
+        }
+
 
     }
 }
