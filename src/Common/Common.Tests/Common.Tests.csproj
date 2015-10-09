@@ -36,6 +36,7 @@
     <Compile Include="Internals\LazyDictionaryTest.cs" />
     <Compile Include="Internals\LazyListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FilterStringTest.cs" />
     <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
     <Compile Include="Tracing\CloudTracingExtensionsTest.cs" />

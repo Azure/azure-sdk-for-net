@@ -18,6 +18,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace Microsoft.Azure.Common.OData
 {
@@ -243,11 +244,15 @@ namespace Microsoft.Azure.Common.OData
                     {
                         format = DefaultDateTimeFormat;
                     }
-                    val = ((DateTime) val).ToUniversalTime();
+                    val = ((DateTime) val).ToUniversalTime(); // TODO
                 }
 
                 string formattedString;
-                if (!string.IsNullOrEmpty(format))
+                if (val is TimeSpan)
+                {
+                    formattedString = string.Format("duration'{0}'", XmlConvert.ToString((TimeSpan)val));
+                }
+                else if (!string.IsNullOrEmpty(format))
                 {
                     formattedString = string.Format("{0:" + format + "}", val);
                 }
@@ -262,6 +267,10 @@ namespace Microsoft.Azure.Common.OData
                     val is short)
                 {
                     _generatedUrl.Append(formattedString.ToLowerInvariant());
+                }
+                else if (val is TimeSpan)
+                {
+                    _generatedUrl.Append(formattedString);
                 }
                 else
                 {
