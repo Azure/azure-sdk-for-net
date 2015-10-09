@@ -33,9 +33,6 @@ using Microsoft.Azure.Management.DataLake.AnalyticsCatalog;
 using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 using Newtonsoft.Json.Linq;
 
-/// <summary>
-/// Provides classes used to define and manage Data Lake Analytics catalogs.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
 {
     /// <summary>

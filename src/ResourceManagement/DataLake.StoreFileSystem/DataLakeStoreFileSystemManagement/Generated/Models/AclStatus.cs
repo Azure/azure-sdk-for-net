@@ -24,9 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 
-/// <summary>
-/// Provides the object model used for Data Lake Store filesystems.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.StoreFileSystem.Models
 {
     /// <summary>

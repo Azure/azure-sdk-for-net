@@ -24,9 +24,6 @@ using System.Linq;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
-/// <summary>
-/// Provides the object model used for Data Lake Analytics catalogs.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>

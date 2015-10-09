@@ -21,9 +21,6 @@ using System.Threading;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 
-/// <summary>
-/// Provides classes used to rapidly and scalably upload data to a Data Lake filesystem
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
     /// <summary>

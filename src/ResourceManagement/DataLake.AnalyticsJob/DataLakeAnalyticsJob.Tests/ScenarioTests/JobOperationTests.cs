@@ -48,7 +48,7 @@ namespace DataLakeAnalyticsJob.Tests
                                 Properties = new DataLakeAnalyticsAccountProperties
                                 {
                                     DefaultDataLakeAccount = commonData.DataLakeAccountName,
-                                    DataLakeAccounts = new List<DataLakeStoreAccount>
+                                    DataLakeStoreAccounts = new List<DataLakeStoreAccount>
                                     {
                                         {
                                             new DataLakeStoreAccount

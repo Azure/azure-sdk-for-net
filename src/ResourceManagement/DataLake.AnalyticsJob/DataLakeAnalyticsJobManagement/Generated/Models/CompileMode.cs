@@ -22,9 +22,6 @@
 using System;
 using System.Linq;
 
-/// <summary>
-/// Provides the object model used for Data Lake Analytics job management.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
 {
     public static partial class CompileMode

@@ -27,9 +27,6 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.AnalyticsJob;
 using Microsoft.Azure.Management.DataLake.AnalyticsJob.Models;
 
-/// <summary>
-/// Provides classes used to define and manage Data Lake Analytics jobs.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
 {
     /// <summary>

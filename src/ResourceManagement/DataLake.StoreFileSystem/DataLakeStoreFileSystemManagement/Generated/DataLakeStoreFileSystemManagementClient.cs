@@ -27,9 +27,6 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 
-/// <summary>
-/// Provides classes used to define and manage Data Lake Store filesystems.
-/// </summary>
 namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
 {
     /// <summary>
