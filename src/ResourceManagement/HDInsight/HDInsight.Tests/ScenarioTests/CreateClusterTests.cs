@@ -153,7 +153,7 @@ namespace HDInsight.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void TestCustomCreateEnableDisableConnectivity()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -167,7 +167,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
-                const string dnsname = "hdisdk-cluster1";
+                const string dnsname = "hdisdk-testcluster1";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
