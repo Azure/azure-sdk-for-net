@@ -114,7 +114,6 @@ namespace DataLakeAnalytics.Tests
 
                 // need to null out deep properties to prevent an error
                 newAccount.Properties.DataLakeStoreAccounts = null;
-                newAccount.Properties.DefaultDataLakeAccount = null;
                 newAccount.Properties.StorageAccounts = null;
 
                 var updateResponse = clientToUse.DataLakeAnalyticsAccount.Update(commonData.ResourceGroupName, new DataLakeAnalyticsAccountCreateOrUpdateParameters
