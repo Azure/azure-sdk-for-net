@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class CertificatesOperationsExtensions
     {
             /// <summary>
+            /// Get certificates for a subscription in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get certificates for a subscription in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,6 +48,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get a certificate by certificate name for a subscription in the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,6 +66,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get a certificate by certificate name for a subscription in the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,6 +88,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,6 +108,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,6 +132,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete a certificate by name in a specificed subscription and
+            /// resourcegroup.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -140,6 +150,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete a certificate by name in a specificed subscription and
+            /// resourcegroup.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,6 +172,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,6 +192,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -202,6 +216,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the certificate signing requests for a subscription in the specified
+            /// resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,6 +231,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the certificate signing requests for a subscription in the specified
+            /// resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,6 +250,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a certificate signing request by certificate name for a subscription
+            /// in the specified resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -248,6 +268,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a certificate signing request by certificate name for a subscription
+            /// in the specified resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -268,6 +290,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,6 +310,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -310,6 +334,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete the certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -326,6 +351,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete the certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,6 +372,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -365,6 +392,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or modifies an existing certificate signing request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

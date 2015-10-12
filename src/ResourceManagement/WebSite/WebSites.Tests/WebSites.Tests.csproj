@@ -50,6 +50,7 @@
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\GetAndSetAdminSiteWebHostingPlan.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\GetWebHostingPlanMetrics.json" />
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\CloneSite.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

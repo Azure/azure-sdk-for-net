@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        JsonSerializerSettings DeserializationSettings { get; }        
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// The management credentials for Azure.
@@ -67,6 +67,8 @@ namespace Microsoft.Azure.Management.WebSites
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
+        ICertificateOrdersOperations CertificateOrders { get; }
+
         ICertificatesOperations Certificates { get; }
 
         IClassicMobileServicesOperations ClassicMobileServices { get; }
@@ -74,6 +76,8 @@ namespace Microsoft.Azure.Management.WebSites
         IDomainsOperations Domains { get; }
 
         IGlobalModelOperations GlobalModel { get; }
+
+        IGlobalCertificateOrderOperations GlobalCertificateOrder { get; }
 
         IGlobalDomainRegistrationOperations GlobalDomainRegistration { get; }
 

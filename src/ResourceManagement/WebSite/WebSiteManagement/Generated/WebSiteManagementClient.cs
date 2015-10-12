@@ -73,6 +73,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
+        public virtual ICertificateOrdersOperations CertificateOrders { get; private set; }
+
         public virtual ICertificatesOperations Certificates { get; private set; }
 
         public virtual IClassicMobileServicesOperations ClassicMobileServices { get; private set; }
@@ -80,6 +82,8 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IDomainsOperations Domains { get; private set; }
 
         public virtual IGlobalModelOperations GlobalModel { get; private set; }
+
+        public virtual IGlobalCertificateOrderOperations GlobalCertificateOrder { get; private set; }
 
         public virtual IGlobalDomainRegistrationOperations GlobalDomainRegistration { get; private set; }
 
@@ -202,10 +206,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         private void Initialize()
         {
+            this.CertificateOrders = new CertificateOrdersOperations(this);
             this.Certificates = new CertificatesOperations(this);
             this.ClassicMobileServices = new ClassicMobileServicesOperations(this);
             this.Domains = new DomainsOperations(this);
             this.GlobalModel = new GlobalModelOperations(this);
+            this.GlobalCertificateOrder = new GlobalCertificateOrderOperations(this);
             this.GlobalDomainRegistration = new GlobalDomainRegistrationOperations(this);
             this.GlobalResourceGroups = new GlobalResourceGroupsOperations(this);
             this.HostingEnvironments = new HostingEnvironmentsOperations(this);
@@ -214,7 +220,7 @@ namespace Microsoft.Azure.Management.WebSites
             this.Sites = new SitesOperations(this);
             this.TopLevelDomains = new TopLevelDomainsOperations(this);
             this.Usage = new UsageOperations(this);
-            this.BaseUri = new Uri("https://management.azure.com:443");
+            this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-08-01";
             this.AcceptLanguage = "en-US";
             if (this.Credentials != null)
@@ -239,7 +245,8 @@ namespace Microsoft.Azure.Management.WebSites
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+            this.HttpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
         }    
     }
 }

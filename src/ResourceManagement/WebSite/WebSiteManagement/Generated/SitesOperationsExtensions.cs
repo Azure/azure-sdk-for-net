@@ -16,6 +16,51 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class SitesOperationsExtensions
     {
             /// <summary>
+            /// Gets all the slots for a web apps
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='propertiesToInclude'>
+            /// List of app properties to include in the response
+            /// </param>
+            public static SiteCollection GetSiteSlots(this ISitesOperations operations, string resourceGroupName, string name, string propertiesToInclude = default(string))
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotsAsync(resourceGroupName, name, propertiesToInclude), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the slots for a web apps
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='propertiesToInclude'>
+            /// List of app properties to include in the response
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteCollection> GetSiteSlotsAsync( this ISitesOperations operations, string resourceGroupName, string name, string propertiesToInclude = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<SiteCollection> result = await operations.GetSiteSlotsWithHttpMessagesAsync(resourceGroupName, name, propertiesToInclude, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the web apps for a subscription in the specified resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,6 +80,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web apps for a subscription in the specified resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,6 +104,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get details of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,6 +124,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get details of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -100,6 +148,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,6 +183,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,6 +222,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -206,6 +257,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -244,6 +296,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -273,6 +326,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -306,6 +360,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get details of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -329,6 +384,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get details of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,6 +412,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -394,6 +451,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -436,6 +494,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -474,6 +533,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new web app or modifies an existing web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -516,6 +576,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -549,6 +610,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -586,6 +648,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Recovers a deleted web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -606,6 +669,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Recovers a deleted web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -630,6 +694,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Recovers a deleted web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -654,6 +719,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Recovers a deleted web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -682,6 +748,55 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns Snapshots to the user based on their SKU.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            public static object GetSiteSnapshotsOnSku(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsOnSkuAsync(subscriptionName, webspaceName, name, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Snapshots to the user based on their SKU.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteSnapshotsOnSkuAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsOnSkuWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Snapshots to the user based on their SKU.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -705,6 +820,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns Snapshots to the user based on their SKU.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -732,52 +848,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionName'>
-            /// Azure subscription
-            /// </param>
-            /// <param name='webspaceName'>
-            /// Webspace
-            /// </param>
-            /// <param name='name'>
-            /// Website Name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            public static object GetSiteSnapshotsOnSku(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsOnSkuAsync(subscriptionName, webspaceName, name, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionName'>
-            /// Azure subscription
-            /// </param>
-            /// <param name='webspaceName'>
-            /// Webspace
-            /// </param>
-            /// <param name='name'>
-            /// Website Name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetSiteSnapshotsOnSkuAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsOnSkuWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Returns all Snapshots to the user.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -799,6 +870,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -824,6 +896,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -847,6 +920,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -874,6 +948,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets deleted web apps in subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -893,6 +968,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets deleted web apps in subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -916,6 +992,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all instance of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -932,6 +1009,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all instance of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -952,6 +1030,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all instance of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -972,6 +1051,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all instance of a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -996,6 +1076,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app hostname bindings
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1016,6 +1097,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app hostname bindings
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1040,6 +1122,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app hostname bindings
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1056,6 +1139,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app hostname bindings
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1076,6 +1160,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app binding for a hostname
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1095,6 +1180,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app binding for a hostname
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1118,6 +1204,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a web app hostname binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1140,6 +1227,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a web app hostname binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1166,6 +1254,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a host name binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1185,6 +1274,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a host name binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1208,6 +1298,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app binding for a hostname
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1231,6 +1322,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get web app binding for a hostname
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1258,6 +1350,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a web app hostname binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1284,6 +1377,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a web app hostname binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1314,6 +1408,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a host name binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1337,6 +1432,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Deletes a host name binding
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1364,6 +1460,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the configuration of the web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1380,6 +1477,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the configuration of the web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1400,6 +1498,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1419,6 +1518,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1442,6 +1542,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1461,6 +1562,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1484,6 +1586,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the configuration of the web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1504,6 +1607,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the configuration of the web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1528,6 +1632,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1551,6 +1656,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1578,6 +1684,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1601,6 +1708,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1628,6 +1736,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1644,6 +1753,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1664,6 +1774,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1683,6 +1794,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1706,6 +1818,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1722,6 +1835,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1742,6 +1856,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1761,6 +1876,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1784,6 +1900,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1804,6 +1921,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1828,6 +1946,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1851,6 +1970,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1878,6 +1998,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1898,6 +2019,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1922,6 +2044,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1945,6 +2068,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Update the source control configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1972,6 +2096,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1988,6 +2113,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2008,6 +2134,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2028,6 +2155,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2052,6 +2180,51 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the application settings of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='appSettings'>
+            /// Application settings of web app
+            /// </param>
+            public static StringDictionary UpdateSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteAppSettingsAsync(resourceGroupName, name, appSettings), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the application settings of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='appSettings'>
+            /// Application settings of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> UpdateSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Updates the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2075,6 +2248,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the application settings of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2102,6 +2276,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2112,15 +2287,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='appSettings'>
-            /// Application settings of web app
-            /// </param>
-            public static StringDictionary UpdateSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings)
+            public static ConnectionStringDictionary ListSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteAppSettingsAsync(resourceGroupName, name, appSettings), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteConnectionStringsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Gets the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2130,20 +2303,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='name'>
             /// Name of web app
-            /// </param>
-            /// <param name='appSettings'>
-            /// Application settings of web app
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StringDictionary> UpdateSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionStringDictionary> ListSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionStringDictionary> result = await operations.ListSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Gets the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2164,6 +2335,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2188,42 +2360,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static ConnectionStringDictionary ListSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteConnectionStringsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ConnectionStringDictionary> ListSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ConnectionStringDictionary> result = await operations.ListSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Updates the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2243,6 +2380,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2266,6 +2404,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2289,6 +2428,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the connection strings associated with web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2316,6 +2456,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2332,6 +2473,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2352,6 +2494,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2368,6 +2511,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2388,6 +2532,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2408,6 +2553,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2432,6 +2578,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2452,6 +2599,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app publishing credentials
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2476,6 +2624,45 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app meta data.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static StringDictionary ListSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteMetadataAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the web app meta data.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> ListSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<StringDictionary> result = await operations.ListSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the web app meta data.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2496,6 +2683,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app meta data.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2520,42 +2708,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static StringDictionary ListSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteMetadataAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<StringDictionary> ListSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<StringDictionary> result = await operations.ListSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2575,6 +2728,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2598,6 +2752,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2621,6 +2776,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2648,6 +2804,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app logs configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2664,6 +2821,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app logs configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2684,6 +2842,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2703,6 +2862,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2726,6 +2886,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app logs configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2746,6 +2907,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the web app logs configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2770,6 +2932,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2793,6 +2956,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the meta data for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2819,8 +2983,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -2833,8 +2995,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePremierAddOnsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -2851,8 +3011,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -2867,8 +3025,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePremierAddOnsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -2887,120 +3043,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            public static object GetSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.GetSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            /// <param name='premierAddOn'>
-            /// </param>
-            public static object AddSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).AddSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName, premierAddOn), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            /// <param name='premierAddOn'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> AddSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.AddSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            public static object DeleteSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.DeleteSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3017,8 +3059,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3039,8 +3079,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3059,8 +3097,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).AddSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3083,8 +3119,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3101,8 +3135,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -3123,165 +3155,108 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
-            public static BackupRequest GetSiteBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name)
+            /// <param name='premierAddOnName'>
+            /// </param>
+            public static object GetSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
+            /// </param>
+            /// <param name='premierAddOnName'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> GetSiteBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
-            /// <param name='request'>
-            /// Information on backup request
+            /// <param name='premierAddOnName'>
             /// </param>
-            public static BackupRequest UpdateSiteBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            /// <param name='premierAddOn'>
+            /// </param>
+            public static object AddSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteBackupConfigurationAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).AddSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName, premierAddOn), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
-            /// <param name='request'>
-            /// Information on backup request
+            /// <param name='premierAddOnName'>
+            /// </param>
+            /// <param name='premierAddOn'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> UpdateSiteBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> AddSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.AddSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
-            public static BackupRequest ListSiteBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name)
+            /// <param name='premierAddOnName'>
+            /// </param>
+            public static object DeleteSitePremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupConfigurationAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSitePremierAddOnAsync(resourceGroupName, name, premierAddOnName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
+            /// </param>
+            /// <param name='premierAddOnName'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> ListSiteBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteSitePremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.ListSiteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.DeleteSitePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static BackupRequest GetSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BackupRequest> GetSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Updates backup configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3305,6 +3280,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates backup configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3332,6 +3308,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the backup configuration for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3346,12 +3323,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static BackupRequest ListSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static BackupRequest GetSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupConfigurationSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Gets the backup configuration for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3369,13 +3347,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> ListSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> GetSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.ListSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Updates backup configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3389,12 +3368,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='request'>
             /// Information on backup request
             /// </param>
-            public static BackupItem BackupSite(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            public static BackupRequest UpdateSiteBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteBackupConfigurationAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Updates backup configuration of web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3411,13 +3391,104 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupItem> BackupSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> UpdateSiteBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupItem> result = await operations.BackupSiteWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Gets the backup configuration for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static BackupRequest GetSiteBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the backup configuration for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> GetSiteBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupItem BackupSiteDeprecatedSlot(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteDeprecatedSlotAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItem> BackupSiteDeprecatedSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItem> result = await operations.BackupSiteDeprecatedSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Creates web app backup
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3441,6 +3512,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates web app backup
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3468,6 +3540,95 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            public static BackupItem BackupSiteDeprecated(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteDeprecatedAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItem> BackupSiteDeprecatedAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItem> result = await operations.BackupSiteDeprecatedWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            public static BackupItem BackupSite(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates web app backup
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItem> BackupSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItem> result = await operations.BackupSiteWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Discovers existing web app backups that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3487,6 +3648,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Discovers existing web app backups that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3510,6 +3672,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Discovers existing web app backups that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3533,6 +3696,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Discovers existing web app backups that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3560,6 +3724,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all available backups for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3580,6 +3745,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all available backups for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3604,6 +3770,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all available backups for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3620,6 +3787,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all available backups for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3640,6 +3808,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets status on a web app backup that may be in progress
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3659,6 +3828,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets status on a web app backup that may be in progress
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3682,6 +3852,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets status on a web app backup that may be in progress
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3705,6 +3876,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets status on a web app backup that may be in progress
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3732,6 +3904,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the backup configuration for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3742,18 +3915,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='filter'>
-            /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static CsmUsageQuotaCollection GetSiteUsages(this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string))
+            public static BackupRequest GetSiteBackupConfigurationDeprecated(this ISitesOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteUsagesAsync(resourceGroupName, name, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationDeprecatedAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Gets the backup configuration for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3763,23 +3931,328 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='name'>
             /// Name of web app
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CsmUsageQuotaCollection> GetSiteUsagesAsync( this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> GetSiteBackupConfigurationDeprecatedAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteUsagesWithHttpMessagesAsync(resourceGroupName, name, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Updates backup configuration of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            public static BackupRequest UpdateSiteBackupConfigurationDeprecated(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteBackupConfigurationDeprecatedAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates backup configuration of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> UpdateSiteBackupConfigurationDeprecatedAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Lists all backup configurations for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static BackupRequest ListSiteBackupConfigurationDeprecated(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupConfigurationDeprecatedAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all backup configurations for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> ListSiteBackupConfigurationDeprecatedAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.ListSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the backup configuration for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupRequest GetSiteBackupConfigurationDeprecatedSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationDeprecatedSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the backup configuration for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> GetSiteBackupConfigurationDeprecatedSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Updates backup configuration of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupRequest UpdateSiteBackupConfigurationDeprecatedSlot(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteBackupConfigurationDeprecatedSlotAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates backup configuration of web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> UpdateSiteBackupConfigurationDeprecatedSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Lists all backup configurations for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupRequest ListSiteBackupConfigurationDeprecatedSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupConfigurationDeprecatedSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all backup configurations for a web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupRequest> ListSiteBackupConfigurationDeprecatedSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupRequest> result = await operations.ListSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Lists all available backups for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupItemCollection ListSiteBackupsDeprecatedSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupsDeprecatedSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available backups for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItemCollection> ListSiteBackupsDeprecatedSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItemCollection> result = await operations.ListSiteBackupsDeprecatedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Lists all available backups for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static BackupItemCollection ListSiteBackupsDeprecated(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupsDeprecatedAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available backups for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItemCollection> ListSiteBackupsDeprecatedAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItemCollection> result = await operations.ListSiteBackupsDeprecatedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the quota usage numbers for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3806,6 +4279,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the quota usage numbers for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3836,6 +4310,57 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the quota usage numbers for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static CsmUsageQuotaCollection GetSiteUsages(this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string))
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteUsagesAsync(resourceGroupName, name, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the quota usage numbers for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmUsageQuotaCollection> GetSiteUsagesAsync( this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteUsagesWithHttpMessagesAsync(resourceGroupName, name, filter, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets metrics for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3855,12 +4380,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static System.IO.Stream GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
+            public static ResourceMetricCollection GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Gets metrics for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3883,13 +4409,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<System.IO.Stream> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Gets metrics for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3913,12 +4440,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static System.IO.Stream GetSiteMetricsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
+            public static ResourceMetricCollection GetSiteMetricsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsSlotAsync(resourceGroupName, name, slot, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Gets metrics for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3945,13 +4473,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> GetSiteMetricsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceMetricCollection> GetSiteMetricsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<System.IO.Stream> result = await operations.GetSiteMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceMetricCollection> result = await operations.GetSiteMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Gets metric definitions for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3968,6 +4497,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets metric definitions for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3988,6 +4518,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets metric definitions for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4008,6 +4539,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets metric definitions for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4032,6 +4564,53 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the publishing profile for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='options'>
+            /// Specifies options for publishing profile. Pass
+            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
+            /// </param>
+            public static System.IO.Stream ListSitePublishingProfileXml(this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePublishingProfileXmlAsync(resourceGroupName, name, options), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the publishing profile for web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='options'>
+            /// Specifies options for publishing profile. Pass
+            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.IO.Stream> ListSitePublishingProfileXmlAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<System.IO.Stream> result = await operations.ListSitePublishingProfileXmlWithHttpMessagesAsync(resourceGroupName, name, options, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the publishing profile for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4056,6 +4635,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the publishing profile for web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4084,50 +4664,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='options'>
-            /// Specifies options for publishing profile. Pass
-            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
-            /// </param>
-            public static System.IO.Stream ListSitePublishingProfileXml(this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePublishingProfileXmlAsync(resourceGroupName, name, options), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='options'>
-            /// Specifies options for publishing profile. Pass
-            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<System.IO.Stream> ListSitePublishingProfileXmlAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<System.IO.Stream> result = await operations.ListSitePublishingProfileXmlWithHttpMessagesAsync(resourceGroupName, name, options, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Restarts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4151,6 +4688,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Restarts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4178,6 +4716,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Restarts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4205,6 +4744,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Restarts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4236,6 +4776,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Starts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4252,6 +4793,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Starts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4272,6 +4814,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Starts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4292,6 +4835,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Starts web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4316,6 +4860,45 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Stops web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static object StopSite(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).StopSiteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops web app
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> StopSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.StopSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Stops web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4336,6 +4919,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Stops web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4359,76 +4943,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static object StopSite(this ISitesOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).StopSiteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> StopSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.StopSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            public static object SyncSiteRepository(this ISitesOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).SyncSiteRepositoryAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> SyncSiteRepositoryAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.SyncSiteRepositoryWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -4443,8 +4957,6 @@ namespace Microsoft.Azure.Management.WebSites
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).SyncSiteRepositorySlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -4463,43 +4975,36 @@ namespace Microsoft.Azure.Management.WebSites
                 return result.Body;
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
-            public static object GenerateNewSitePublishingPassword(this ISitesOperations operations, string resourceGroupName, string name)
+            public static object SyncSiteRepository(this ISitesOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GenerateNewSitePublishingPasswordAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).SyncSiteRepositoryAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of web app
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GenerateNewSitePublishingPasswordAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> SyncSiteRepositoryAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GenerateNewSitePublishingPasswordWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.SyncSiteRepositoryWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Generates new random app publishing password
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4520,6 +5025,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Generates new random app publishing password
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4544,6 +5050,45 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Generates new random app publishing password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static object GenerateNewSitePublishingPassword(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GenerateNewSitePublishingPasswordAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates new random app publishing password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GenerateNewSitePublishingPasswordAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GenerateNewSitePublishingPasswordWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4563,6 +5108,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4586,6 +5132,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4608,6 +5156,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4634,6 +5184,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the association to a Biztalk Hybrid Connection, identified by its
+            /// entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4653,6 +5205,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the association to a Biztalk Hybrid Connection, identified by its
+            /// entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4676,6 +5230,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4698,6 +5254,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4724,6 +5282,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4746,6 +5305,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4772,6 +5332,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4797,6 +5359,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4826,6 +5390,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the association to a Biztalk Hybrid Connection, identified by its
+            /// entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4848,6 +5414,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the association to a Biztalk Hybrid Connection, identified by its
+            /// entity name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4874,6 +5442,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4899,6 +5469,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+            /// existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4928,6 +5500,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves all Biztalk Hybrid Connections associated with this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4944,6 +5517,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves all Biztalk Hybrid Connections associated with this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4964,6 +5538,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves all Biztalk Hybrid Connections associated with this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4983,6 +5558,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves all Biztalk Hybrid Connections associated with this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5006,6 +5582,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Virtual Network connection gateway associated with this web
+            /// app and virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5029,6 +5607,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Virtual Network connection gateway associated with this web
+            /// app and virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5056,6 +5636,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5082,6 +5663,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5112,6 +5694,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5138,6 +5721,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5168,6 +5752,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Virtual Network connection gateway associated with this web
+            /// app and virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5194,6 +5780,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a Virtual Network connection gateway associated with this web
+            /// app and virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5224,6 +5812,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5253,6 +5842,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5286,6 +5876,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5315,6 +5906,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the Virtual Network Gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5348,6 +5940,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a specific Virtual Network Connection associated with this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5367,6 +5961,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a specific Virtual Network Connection associated with this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5390,6 +5986,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5412,6 +6009,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5438,6 +6036,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the specified Virtual Network Connection association from this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5457,6 +6057,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the specified Virtual Network Connection association from this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5480,6 +6082,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5502,6 +6105,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5528,6 +6132,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a specific Virtual Network Connection associated with this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5550,6 +6156,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a specific Virtual Network Connection associated with this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5576,6 +6184,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5601,6 +6210,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5630,6 +6240,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the specified Virtual Network Connection association from this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5652,6 +6264,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Removes the specified Virtual Network Connection association from this web
+            /// app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5678,6 +6292,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5703,6 +6318,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Adds a Virtual Network Connection or updates it's properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5732,6 +6348,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a list of all Virtual Network Connections associated with this
+            /// web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5748,6 +6366,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a list of all Virtual Network Connections associated with this
+            /// web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5768,6 +6388,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a list of all Virtual Network Connections associated with this
+            /// web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5787,6 +6409,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a list of all Virtual Network Connections associated with this
+            /// web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5810,6 +6434,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a view of all network features in use on this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5829,6 +6454,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a view of all network features in use on this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5852,6 +6478,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a view of all network features in use on this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5874,6 +6501,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves a view of all network features in use on this web app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5900,6 +6528,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the operation for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5919,6 +6548,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the operation for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5942,6 +6572,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the operation for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5965,6 +6596,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the operation for a web app
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5992,6 +6624,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Swaps web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6011,6 +6644,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Swaps web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6034,6 +6668,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Swaps web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6056,6 +6691,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Swaps web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6082,6 +6718,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the difference in configuration settings between two web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6101,6 +6738,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the difference in configuration settings between two web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6124,6 +6762,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the difference in configuration settings between two web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6146,6 +6785,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get the difference in configuration settings between two web app slots
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6172,50 +6812,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// Request body that contains the target slot name. Settings from that slot
-            /// will be applied on the source slot
-            /// </param>
-            public static object ApplySlotConfigToProduction(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ApplySlotConfigToProductionAsync(resourceGroupName, name, slotSwapEntity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// Request body that contains the target slot name. Settings from that slot
-            /// will be applied on the source slot
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> ApplySlotConfigToProductionAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.ApplySlotConfigToProductionWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Applies the configuration settings from the target slot onto the current
+            /// slot
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6240,6 +6838,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Applies the configuration settings from the target slot onto the current
+            /// slot
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6268,6 +6868,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Applies the configuration settings from the target slot onto the current
+            /// slot
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6278,12 +6880,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static object ResetProductionSlotConfig(this ISitesOperations operations, string resourceGroupName, string name)
+            /// <param name='slotSwapEntity'>
+            /// Request body that contains the target slot name. Settings from that slot
+            /// will be applied on the source slot
+            /// </param>
+            public static object ApplySlotConfigToProduction(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ResetProductionSlotConfigAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ApplySlotConfigToProductionAsync(resourceGroupName, name, slotSwapEntity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Applies the configuration settings from the target slot onto the current
+            /// slot
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6293,17 +6901,23 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='name'>
             /// Name of web app
+            /// </param>
+            /// <param name='slotSwapEntity'>
+            /// Request body that contains the target slot name. Settings from that slot
+            /// will be applied on the source slot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> ResetProductionSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ApplySlotConfigToProductionAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.ResetProductionSlotConfigWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.ApplySlotConfigToProductionWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
+            /// Resets the configuration settings of the current slot if they were
+            /// previously modified by calling ApplySlotConfig API
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6324,6 +6938,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Resets the configuration settings of the current slot if they were
+            /// previously modified by calling ApplySlotConfig API
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6348,6 +6964,48 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Resets the configuration settings of the current slot if they were
+            /// previously modified by calling ApplySlotConfig API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static object ResetProductionSlotConfig(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ResetProductionSlotConfigAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resets the configuration settings of the current slot if they were
+            /// previously modified by calling ApplySlotConfig API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> ResetProductionSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.ResetProductionSlotConfigWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets the names of application settings and connection string that remain
+            /// with the slot during swap operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6364,6 +7022,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the names of application settings and connection string that remain
+            /// with the slot during swap operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6384,6 +7044,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the names of application settings and connection string that
+            /// remain with the slot during swap operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6404,6 +7066,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates the names of application settings and connection string that
+            /// remain with the slot during swap operation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6424,48 +7088,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<SlotConfigNamesResource> UpdateSlotConfigNamesAsync( this ISitesOperations operations, string resourceGroupName, string name, SlotConfigNamesResource slotConfigNames, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<SlotConfigNamesResource> result = await operations.UpdateSlotConfigNamesWithHttpMessagesAsync(resourceGroupName, name, slotConfigNames, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='propertiesToInclude'>
-            /// List of app properties to include in the response
-            /// </param>
-            public static SiteCollection GetSiteSlots(this ISitesOperations operations, string resourceGroupName, string name, string propertiesToInclude = default(string))
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotsAsync(resourceGroupName, name, propertiesToInclude), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='propertiesToInclude'>
-            /// List of app properties to include in the response
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SiteCollection> GetSiteSlotsAsync( this ISitesOperations operations, string resourceGroupName, string name, string propertiesToInclude = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<SiteCollection> result = await operations.GetSiteSlotsWithHttpMessagesAsync(resourceGroupName, name, propertiesToInclude, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
