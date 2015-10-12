@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             throw new NotImplementedException();
         }
 
-        public List<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
+        public HashSet<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
         {
             get
             {
