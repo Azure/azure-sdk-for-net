@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface ITopLevelDomainsOperations
     {
         /// <summary>
+        /// Lists all top level domains supported for registration
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<TopLevelDomainCollection>> GetGetTopLevelDomainsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets details of a top level domain
         /// </summary>
         /// <param name='name'>
         /// Name of the top level domain
@@ -40,6 +42,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<TopLevelDomain>> GetTopLevelDomainWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists legal agreements that user needs to accept before purchasing
+        /// domain
         /// </summary>
         /// <param name='name'>
         /// Name of the top level domain

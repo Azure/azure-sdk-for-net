@@ -19,6 +19,8 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface ICertificatesOperations
     {
         /// <summary>
+        /// Get certificates for a subscription in the specified resource
+        /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -31,6 +33,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<CertificateCollection>> GetCertificatesWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get a certificate by certificate name for a subscription in the
+        /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -46,6 +50,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Certificate>> GetCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates or modifies an existing certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -64,6 +69,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Certificate>> CreateOrUpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Certificate certificateEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete a certificate by name in a specificed subscription and
+        /// resourcegroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -79,6 +86,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> DeleteCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates or modifies an existing certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -97,6 +105,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Certificate>> UpdateCertificateWithHttpMessagesAsync(string resourceGroupName, string name, Certificate certificateEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets the certificate signing requests for a subscription in the
+        /// specified resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -109,6 +119,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<IList<Csr>>> GetCsrsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a certificate signing request by certificate name for a
+        /// subscription in the specified resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -124,6 +136,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Csr>> GetCsrWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates or modifies an existing certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -142,6 +155,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Csr>> CreateOrUpdateCsrWithHttpMessagesAsync(string resourceGroupName, string name, Csr csrEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete the certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -157,6 +171,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> DeleteCsrWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates or modifies an existing certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group

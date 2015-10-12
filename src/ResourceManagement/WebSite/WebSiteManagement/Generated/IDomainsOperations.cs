@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IDomainsOperations
     {
         /// <summary>
+        /// Lists domains under a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<DomainCollection>> GetDomainsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets details of a domain
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Domain>> GetDomainWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates a domain
         /// </summary>
         /// <param name='resourceGroupName'>
         /// &amp;gt;Name of the resource group
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Domain>> CreateOrUpdateDomainWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domain, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes a domain
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group
@@ -83,6 +87,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> DeleteDomainWithHttpMessagesAsync(string resourceGroupName, string domainName, bool? forceHardDeleteDomain = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates a domain
         /// </summary>
         /// <param name='resourceGroupName'>
         /// &amp;gt;Name of the resource group
@@ -101,6 +106,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<Domain>> UpdateDomainWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domain, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves the latest status of a domain purchase operation
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group

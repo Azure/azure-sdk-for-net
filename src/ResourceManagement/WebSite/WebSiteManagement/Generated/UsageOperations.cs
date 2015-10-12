@@ -45,19 +45,16 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Returns usage records for specified subscription and resource groups
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
+        /// Name of resource group/// </param>
         /// <param name='environmentName'>
-        /// Environment name
-        /// </param>
+        /// Environment name/// </param>
         /// <param name='lastId'>
-        /// Last marker that was returned from the batch
-        /// </param>
+        /// Last marker that was returned from the batch/// </param>
         /// <param name='batchSize'>
-        /// size of the batch to be returned.
-        /// </param>
+        /// size of the batch to be returned./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -105,7 +102,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetUsage", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web.Admin/environments/{environmentName}/usage").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web.Admin/environments/{environmentName}/usage").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{environmentName}", Uri.EscapeDataString(environmentName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));

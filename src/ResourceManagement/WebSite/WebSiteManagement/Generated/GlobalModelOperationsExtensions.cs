@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class GlobalModelOperationsExtensions
     {
             /// <summary>
+            /// Gets publishing credentials for the subscription owner
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets publishing credentials for the subscription owner
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates publishing credentials for the subscription owner
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates publishing credentials for the subscription owner
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets list of available geo regions
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,6 +85,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets list of available geo regions
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,40 +100,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='detailed'>
-            /// False to return a subset of App Service Plan properties, true to return
-            /// all of the properties.
-            /// Retrieval of all properties may increase the API latency.
-            /// </param>
-            public static ServerFarmCollection GetAllServerFarms(this IGlobalModelOperations operations, bool? detailed = default(bool?))
-            {
-                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetAllServerFarmsAsync(detailed), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='detailed'>
-            /// False to return a subset of App Service Plan properties, true to return
-            /// all of the properties.
-            /// Retrieval of all properties may increase the API latency.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetAllServerFarmsAsync( this IGlobalModelOperations operations, bool? detailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ServerFarmCollection> result = await operations.GetAllServerFarmsWithHttpMessagesAsync(detailed, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
+            /// Gets all App Service Plans for a subcription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,6 +116,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all App Service Plans for a subcription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,6 +136,43 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all App Service Plans for a subcription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='detailed'>
+            /// False to return a subset of App Service Plan properties, true to return
+            /// all of the properties.
+            /// Retrieval of all properties may increase the API latency.
+            /// </param>
+            public static ServerFarmCollection GetAllServerFarms(this IGlobalModelOperations operations, bool? detailed = default(bool?))
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetAllServerFarmsAsync(detailed), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all App Service Plans for a subcription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='detailed'>
+            /// False to return a subset of App Service Plan properties, true to return
+            /// all of the properties.
+            /// Retrieval of all properties may increase the API latency.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetAllServerFarmsAsync( this IGlobalModelOperations operations, bool? detailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ServerFarmCollection> result = await operations.GetAllServerFarmsWithHttpMessagesAsync(detailed, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets all Web Apps for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,6 +183,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all Web Apps for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,6 +198,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all hostingEnvironments (App Service Environment) for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -196,6 +209,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all hostingEnvironments (App Service Environment) for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,6 +224,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all mobile services for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -220,6 +235,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets all mobile services for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -234,6 +250,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// List premier add on offers
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -244,6 +261,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// List premier add on offers
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -258,6 +276,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Whether hosting environment name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -271,6 +290,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Whether hosting environment name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -288,6 +308,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Whether hosting environment name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,6 +322,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Whether hosting environment name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -318,6 +340,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Check if resource name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -331,6 +354,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Check if resource name is available
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

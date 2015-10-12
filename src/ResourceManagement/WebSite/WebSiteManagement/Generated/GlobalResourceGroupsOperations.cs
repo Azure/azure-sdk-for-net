@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         public WebSiteManagementClient Client { get; private set; }
 
-        /// <summary>
-        /// </summary>
         /// <param name='resourceGroupName'>
         /// </param>
         /// <param name='moveResourceEnvelope'>
@@ -87,7 +85,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "MoveResources", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();

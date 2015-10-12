@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Management.WebSites
     /// </summary>
     public partial interface IGlobalResourceGroupsOperations
     {
-        /// <summary>
-        /// </summary>
         /// <param name='resourceGroupName'>
         /// </param>
         /// <param name='moveResourceEnvelope'>

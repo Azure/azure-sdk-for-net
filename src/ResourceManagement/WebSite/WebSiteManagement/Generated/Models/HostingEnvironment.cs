@@ -209,6 +209,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ResourceGroup { get; set; }
 
         /// <summary>
+        /// Api Management Account associated with this Hosting Environment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiManagementAccountId")]
+        public string ApiManagementAccountId { get; set; }
+
+        /// <summary>
         /// True/false indicating whether the hostingEnvironment is suspended.
         /// The environment can be suspended e.g. when the management
         /// endpoint is no longer available

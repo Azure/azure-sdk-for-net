@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IHostingEnvironmentsOperations
     {
         /// <summary>
+        /// Get properties of hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -34,6 +35,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<HostingEnvironment>> GetHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<HostingEnvironment>> CreateOrUpdateHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, HostingEnvironment hostingEnvironmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -70,6 +73,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<HostingEnvironment>> BeginCreateOrUpdateHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, HostingEnvironment hostingEnvironmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -89,6 +93,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> DeleteHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -108,6 +113,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> BeginDeleteHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get diagnostic information for hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -123,6 +130,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<IList<HostingEnvironmentDiagnostics>>> GetHostingEnvironmentDiagnosticsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get diagnostic information for hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -141,6 +150,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<HostingEnvironmentDiagnostics>> GetHostingEnvironmentDiagnosticsItemWithHttpMessagesAsync(string resourceGroupName, string name, string diagnosticsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get used, available, and total worker capacity for
+        /// hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -156,6 +167,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<StampCapacityCollection>> GetHostingEnvironmentCapacitiesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get IP addresses assigned to the hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -171,6 +184,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<AddressResponse>> GetHostingEnvironmentVipsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all hostingEnvironments (App Service Environments) in a
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -183,6 +198,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<HostingEnvironmentCollection>> GetHostingEnvironmentsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Reboots all machines in a hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -198,6 +215,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> RebootHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List all currently running operations on the hostingEnvironment
+        /// (App Service Environment)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of hostingEnvironment (App Service Environment)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetHostingEnvironmentOperationsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get status of an operation on a hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -216,6 +252,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> GetHostingEnvironmentOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get global metrics of hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -239,8 +276,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceMetricCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get global metric definitions of hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -256,6 +295,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<MetricDefinition>> GetHostingEnvironmentMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get global usages of hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -278,6 +318,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetHostingEnvironmentUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metrics for a multiRole pool of a hostingEnvironment (App
+        /// Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -310,8 +352,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceMetricCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metrics for a worker pool of a hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -319,8 +363,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='details'>
         /// Include instance details
@@ -338,8 +382,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceMetricCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metric definitions for a multiRole pool of a
+        /// hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -355,6 +401,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<MetricDefinitionCollection>> GetHostingEnvironmentMultiRoleMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metric definitions for a worker pool of a hostingEnvironment
+        /// (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -362,8 +410,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -371,8 +419,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricDefinitionCollection>> GetHostingEnvironmentWebWorkerMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricDefinitionCollection>> GetHostingEnvironmentWebWorkerMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get usages for a multiRole pool of a hostingEnvironment (App
+        /// Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -388,6 +438,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get usages for a worker pool of a hostingEnvironment (App Service
+        /// Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -395,8 +447,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -404,8 +456,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all sites on the hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -424,6 +477,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SiteCollection>> GetHostingEnvironmentSitesWithHttpMessagesAsync(string resourceGroupName, string name, string propertiesToInclude = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all serverfarms (App Service Plans) on the hostingEnvironment
+        /// (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -439,6 +494,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all serverfarms (App Service Plans) on the hostingEnvironment
+        /// (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -454,6 +511,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all multi role pools
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of hostingEnvironment (App Service Environment)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<WorkerPoolCollection>> GetMultiRolePoolsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get properties of a multiRool pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -469,6 +543,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<WorkerPool>> GetMultiRolePoolWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update a multiRole pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -487,6 +562,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<WorkerPool>> CreateOrUpdateMultiRolePoolWithHttpMessagesAsync(string resourceGroupName, string name, WorkerPool multiRolePoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update a multiRole pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -505,6 +581,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<WorkerPool>> BeginCreateOrUpdateMultiRolePoolWithHttpMessagesAsync(string resourceGroupName, string name, WorkerPool multiRolePoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get available skus for scaling a multiRole pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -520,15 +597,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SkuInfoCollection>> GetMultiRolePoolSkusWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all worker pools
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
         /// </param>
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
-        /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -536,8 +611,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WorkerPool>> GetWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WorkerPoolCollection>> GetWorkerPoolsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get properties of a worker pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -545,8 +621,27 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<WorkerPool>> GetWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a worker pool.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of hostingEnvironment (App Service Environment)
+        /// </param>
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='workerPoolEnvelope'>
         /// Properties of worker pool
@@ -557,8 +652,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WorkerPool>> CreateOrUpdateWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, WorkerPool workerPoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WorkerPool>> CreateOrUpdateWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, WorkerPool workerPoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update a worker pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -566,8 +662,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='workerPoolEnvelope'>
         /// Properties of worker pool
@@ -578,8 +674,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WorkerPool>> BeginCreateOrUpdateWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, WorkerPool workerPoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WorkerPool>> BeginCreateOrUpdateWorkerPoolWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, WorkerPool workerPoolEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get available skus for scaling a worker pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -587,8 +684,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -596,8 +693,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SkuInfoCollection>> GetWorkerPoolSkusWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SkuInfoCollection>> GetWorkerPoolSkusWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metrics for a specific instance of a worker pool of a
+        /// hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -605,8 +704,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='instance'>
         /// Name of instance in the worker pool
@@ -627,8 +726,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, string instance, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metric definitions for a specific instance of a worker pool of
+        /// a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -636,8 +737,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='workerSizeId'>
-        /// Id of worker pool
+        /// <param name='workerPoolName'>
+        /// Name of worker pool
         /// </param>
         /// <param name='instance'>
         /// Name of instance in the worker pool
@@ -648,8 +749,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, string instance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metrics for a specific instance of a multiRole pool of a
+        /// hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -671,6 +774,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get metric definitions for a specific instance of a multiRole pool
+        /// of a hostingEnvironment (App Service Environment).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -689,6 +794,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Suspends the hostingEnvironment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -704,6 +810,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SiteCollection>> SuspendHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Suspends the hostingEnvironment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -719,6 +826,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SiteCollection>> BeginSuspendHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Resumes the hostingEnvironment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -734,6 +842,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<SiteCollection>> ResumeHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Resumes the hostingEnvironment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group

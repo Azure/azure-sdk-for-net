@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Collection of hosting environment
+    /// Collection of hosting environments (App Service Environments)
     /// </summary>
     public partial class HostingEnvironmentCollection
     {

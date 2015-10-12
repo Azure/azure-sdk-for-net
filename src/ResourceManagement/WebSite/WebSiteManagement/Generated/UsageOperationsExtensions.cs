@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class UsageOperationsExtensions
     {
             /// <summary>
+            /// Returns usage records for specified subscription and resource groups
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns usage records for specified subscription and resource groups
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
