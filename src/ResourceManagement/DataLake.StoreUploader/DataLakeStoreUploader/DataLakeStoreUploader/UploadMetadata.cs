@@ -60,18 +60,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.UploadId = Guid.NewGuid().ToString("N");
             this.InputFilePath = uploadParameters.InputFilePath;
             this.TargetStreamPath = uploadParameters.TargetStreamPath;
-            var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
-            if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
+
+            string streamDirectory;
+            var streamName = SplitTargetStreamPathByName(out streamDirectory);
+            
+            if (string.IsNullOrEmpty(streamDirectory))
             {
                 // the scenario where the file is being uploaded at the root
-                this.SegmentStreamDirectory = string.Format("{0}.segments.{1}", this.TargetStreamPath, Guid.NewGuid());
+                this.SegmentStreamDirectory = string.Format("/{0}.segments.{1}", streamName, Guid.NewGuid());
             }
             else
             {
                 // the scenario where the file is being uploaded in a sub folder
                 this.SegmentStreamDirectory = string.Format("{0}/{1}.segments.{2}",
-                    this.TargetStreamPath.Substring(0, this.TargetStreamPath.LastIndexOf('/')),
-                    this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1), Guid.NewGuid());
+                    streamDirectory,
+                    streamName, Guid.NewGuid());
             }
 
             this.IsBinary = uploadParameters.IsBinary;
@@ -318,6 +321,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             if (sum != this.FileLength)
             {
                 throw new InvalidMetadataException("The individual segment lengths do not add up to the input File Length");
+            }
+        }
+
+        /// <summary>
+        /// Splits the target stream path, returning the name of the stream and storing the full directory path (if any) in an out variable.
+        /// </summary>
+        /// <param name="targetStreamDirectory">The target stream directory, or null of the stream is at the root.</param>
+        /// <returns></returns>
+        internal string SplitTargetStreamPathByName(out string targetStreamDirectory)
+        {
+            var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
+            if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
+            {
+                // the scenario where the file is being uploaded at the root
+                targetStreamDirectory = null;
+                return this.TargetStreamPath.TrimStart('/');
+            }
+            else
+            {
+                // the scenario where the file is being uploaded in a sub folder
+                targetStreamDirectory = this.TargetStreamPath.Substring(0,
+                    this.TargetStreamPath.LastIndexOf('/'));
+                return this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1);
             }
         }
 
