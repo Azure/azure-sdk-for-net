@@ -3137,10 +3137,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new FileOpenResponse();
-                        result.FileContents = Encoding.UTF8.GetBytes(responseContent);
-                        
+                        result = new FileOpenResponse
+                        {
+                            FileContents = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
+                        };
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))

@@ -4195,7 +4195,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             List<string> queryParameters = new List<string>();
             if (queryString != null)
             {
-                queryParameters.Add(Uri.EscapeDataString(queryString));
+                queryParameters.Add(queryString);
             }
             queryParameters.Add("api-version=2015-09-13-preview");
             if (queryParameters.Count > 0)
