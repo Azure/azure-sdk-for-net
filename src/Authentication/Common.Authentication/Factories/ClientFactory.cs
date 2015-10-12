@@ -253,6 +253,25 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
         }
 
+        /// <summary>
+        /// Adds user agent to UserAgents collection.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        /// <param name="productVersion">Product version.</param>
+        public void AddUserAgent(string productName, string productVersion)
+        {
+            UserAgents.Add(new ProductInfoHeaderValue(productName, productVersion));
+        }
+
+        /// <summary>
+        /// Adds user agent to UserAgents collection with empty version.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        public void AddUserAgent(string productName)
+        {
+            AddUserAgent(productName, "");
+        }
+
         public List<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }

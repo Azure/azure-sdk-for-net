@@ -92,6 +92,7 @@ namespace Common.Authentication.Test
             // Authenticate!
             AzureSession.AuthenticationFactory.Authenticate(context.Account, context.Environment, "common", password, ShowDialog.Always);
             
+            AzureSession.ClientFactory.AddUserAgent("TestUserAgent", "1.0");
             // Create the client
             var client = AzureSession.ClientFactory.CreateClient<StorageManagementClient>(context, AzureEnvironment.Endpoint.ServiceManagement);
 
