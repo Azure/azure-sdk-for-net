@@ -21,13 +21,11 @@ namespace DataLakeAnalytics.Tests
     {
         public string ResourceGroupName { set; get; }
         public string DataLakeAnalyticsAccountName { get; set; }
-        public string SecondDataLakeAccountName { get; set; }
+        public string SecondDataLakeStoreAccountName { get; set; }
         public string StorageAccountAccessKey { get; set; }
-        public string SecondDataLakeAccountSuffix { get; set; }
-        public string DataLakeAccountName { get; set; }
-        public string DataLakeAccountSuffix { get; set; }
-        public string StorageAccountType = "AzureBlob";
-        public string DataLakeAccountType = "DataLake";
+        public string SecondDataLakeStoreAccountSuffix { get; set; }
+        public string DataLakeStoreAccountName { get; set; }
+        public string DataLakeStoreAccountSuffix { get; set; }
         public string Location = "South Central US";
 
         public CommonTestFixture()
@@ -38,9 +36,9 @@ namespace DataLakeAnalytics.Tests
             bigAnalyticsManagementHelper.TryRegisterSubscriptionForResource("Microsoft.DataLake");
             ResourceGroupName = TestUtilities.GenerateName("rgaba1");
             DataLakeAnalyticsAccountName = TestUtilities.GenerateName("testaba1");
-            SecondDataLakeAccountName = TestUtilities.GenerateName("teststorage1");
-            DataLakeAccountName = TestUtilities.GenerateName("testdatalake1");
-            SecondDataLakeAccountName = TestUtilities.GenerateName("testdatalake2");
+            SecondDataLakeStoreAccountName = TestUtilities.GenerateName("teststorage1");
+            DataLakeStoreAccountName = TestUtilities.GenerateName("testdatalake1");
+            SecondDataLakeStoreAccountName = TestUtilities.GenerateName("testdatalake2");
             bigAnalyticsManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
             
             // TODO: Add these when storage accounts (WASB) issues are resolved
@@ -48,8 +46,8 @@ namespace DataLakeAnalytics.Tests
             // this.StorageAccountAccessKey = bigAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
             // this.StorageAccountSuffix = storageSuffix;
 
-            this.DataLakeAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.DataLakeAccountName, this.Location);
-            this.SecondDataLakeAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.SecondDataLakeAccountName, this.Location);
+            this.DataLakeStoreAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.DataLakeStoreAccountName, this.Location);
+            this.SecondDataLakeStoreAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.SecondDataLakeStoreAccountName, this.Location);
         }
     }
 }

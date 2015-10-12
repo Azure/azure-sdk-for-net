@@ -45,23 +45,23 @@ namespace DataLakeAnalytics.Tests
                                 Location = commonData.Location,
                                 Properties = new DataLakeAnalyticsAccountProperties
                                 {
-                                    DefaultDataLakeAccount = commonData.DataLakeAccountName,
+                                    DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
                                     DataLakeStoreAccounts = new List<DataLakeStoreAccount>
                                     {
                                         new DataLakeStoreAccount
                                         {
-                                            Name = commonData.DataLakeAccountName,
+                                            Name = commonData.DataLakeStoreAccountName,
                                             Properties = new DataLakeStoreAccountProperties
                                             {
-                                                Suffix = commonData.DataLakeAccountSuffix
+                                                Suffix = commonData.DataLakeStoreAccountSuffix
                                             }
                                         },
                                         new DataLakeStoreAccount
                                         {
-                                            Name = commonData.SecondDataLakeAccountName,
+                                            Name = commonData.SecondDataLakeStoreAccountName,
                                             Properties = new DataLakeStoreAccountProperties
                                             {
-                                                Suffix = commonData.SecondDataLakeAccountSuffix
+                                                Suffix = commonData.SecondDataLakeStoreAccountSuffix
                                             }
                                         }
                                     }
@@ -85,10 +85,10 @@ namespace DataLakeAnalytics.Tests
                 Assert.Contains(commonData.DataLakeAnalyticsAccountName, responseGet.DataLakeAnalyticsAccount.Id);
                 Assert.Equal(commonData.Location, responseGet.DataLakeAnalyticsAccount.Location);
                 Assert.Equal(commonData.DataLakeAnalyticsAccountName, responseGet.DataLakeAnalyticsAccount.Name);
-                Assert.Equal("Microsoft.BigAnalytics/accounts", responseGet.DataLakeAnalyticsAccount.Type);
+                Assert.Equal("Microsoft.DataLakeAnalytics/accounts", responseGet.DataLakeAnalyticsAccount.Type);
 
                 Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 2);
-                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[1].Name.Equals(commonData.SecondDataLakeAccountName));
+                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[1].Name.Equals(commonData.SecondDataLakeStoreAccountName));
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures

@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             //create a mock front end which doesn't do anything
             var fe = new MockableFrontEnd();
             fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount) => { };
-            fe.DeleteStreamImplementation = (streamPath) => { };
+            fe.DeleteStreamImplementation = (streamPath, recurse) => { };
             fe.StreamExistsImplementation = (streamPath) => { return true; };
             fe.AppendToStreamImplementation = (streamPath, data, offset, byteCount) => { };
             fe.GetStreamLengthImplementation = (streamPath) => { return 0; };

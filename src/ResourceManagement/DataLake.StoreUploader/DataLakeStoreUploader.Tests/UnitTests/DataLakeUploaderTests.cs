@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
     {
         #region Private
 
-        private const int LargeFileLength = 50 * 1024 * 1024; // 50MB
+        private const int LargeFileLength = 50 * 1024 * 1024; // 50mb
         private readonly byte[] _largeFileData = new byte[LargeFileLength];
         private string _largeFilePath;
         private const int SmallFileLength = 128; 
@@ -80,27 +80,27 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             Assert.Throws<FileNotFoundException>(
                 () =>
                 {
-                    new DataLakeStoreUploader(new UploadParameters(invalidFilePath, "1", "foo"), new InMemoryFrontEnd());
+                    new DataLakeStoreUploader(new UploadParameters(invalidFilePath, "1", "foo", maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd());
                 });
 
             //no target stream
             Assert.Throws<ArgumentNullException>(
-                () => {new DataLakeStoreUploader(new UploadParameters(_largeFilePath, null, "foo"), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, null, "foo", maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             //target stream ends in '/'
             Assert.Throws<ArgumentException>(
-                () => {new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1/", "foo"), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1/", "foo", maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             //no account name
             Assert.Throws<ArgumentNullException>(
-                () => {new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", null), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", null, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             //bad thread count
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => {new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: 0), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => {new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: DataLakeStoreUploader.MaxAllowedThreads + 1), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
         }
 
         /// <summary>
@@ -306,6 +306,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 threadCount: ThreadCount,
                 accountName: "foo",
                 isResume: false,
+                maxSegmentLength: 4 * 1024 * 1024,
                 localMetadataLocation: Path.GetTempPath());
 
             File.WriteAllBytes(_smallFilePath, _smallFileData);
@@ -341,6 +342,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 threadCount: ThreadCount,
                 isOverwrite: isOverwrite,
                 isResume: isResume,
+                maxSegmentLength: 4 * 1024 * 1024,
                 localMetadataLocation: Path.GetTempPath());
         }
 

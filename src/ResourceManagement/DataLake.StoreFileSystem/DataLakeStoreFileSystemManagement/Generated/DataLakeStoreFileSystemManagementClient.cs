@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._dataLakeServiceUri = "azuredatalake.net";
+            this._dataLakeServiceUri = "azuredatalakestore.net";
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._dataLakeServiceUri = "azuredatalake.net";
+            this._dataLakeServiceUri = "azuredatalakestore.net";
             
             this.Credentials.InitializeServiceClient(this);
         }

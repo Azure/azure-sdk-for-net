@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
+        /// <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, string localMetadataLocation = null)
+        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null)
         {
             this.InputFilePath = inputFilePath;
             this.TargetStreamPath = targetStreamPath;
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.IsOverwrite = isOverwrite;
             this.IsResume = isResume;
             this.IsBinary = isBinary;
+            this.MaxSegementLength = maxSegmentLength;
 
             if (string.IsNullOrWhiteSpace(localMetadataLocation))
             {
@@ -65,8 +67,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, string localMetadataLocation = null) :
-            this(inputFilePath, targetStreamPath, accountName, threadCount, isOverwrite, isResume, isBinary, localMetadataLocation)
+        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null) :
+            this(inputFilePath, targetStreamPath, accountName, threadCount, isOverwrite, isResume, isBinary, maxSegmentLength, localMetadataLocation)
         {
             this.UseSegmentBlockBackOffRetryStrategy = useSegmentBlockBackOffRetryStrategy;
         }
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The thread count.
         /// </value>
-        public int ThreadCount { get; private set; }
+        public int ThreadCount { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether to overwrite the target stream if it already exists.
@@ -134,6 +136,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         ///   <c>true</c> if this instance is binary; otherwise, <c>false</c>.
         /// </value>
         public bool IsBinary { get; private set; }
+
+        /// <summary>
+        /// Gets the maximum length of each segement.
+        /// </summary>
+        /// <value>
+        /// The maximum length of each segement.
+        /// </value>
+        public long MaxSegementLength { get; private set; }
 
         /// <summary>
         /// Gets a value indicating the directory path where to store the metadata for the upload.

@@ -129,16 +129,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             if (parameters.DataLakeStoreAccount.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.DataLakeStoreAccount.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -165,8 +165,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -379,13 +379,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -412,8 +412,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -562,16 +562,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             if (parameters.DataLakeStoreAccount.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.DataLakeStoreAccount.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -598,8 +598,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -896,9 +896,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/firewallRules/";
@@ -907,7 +907,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 url = url + Uri.EscapeDataString(parameters.FirewallRule.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -934,8 +934,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1252,15 +1252,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/firewallRules/";
             url = url + Uri.EscapeDataString(firewallRuleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1287,8 +1287,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1399,8 +1399,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1602,13 +1602,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1635,8 +1635,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1863,15 +1863,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/firewallRules/";
             url = url + Uri.EscapeDataString(firewallRuleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1898,8 +1898,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2076,9 +2076,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 url = url + "resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
             }
             url = url + "providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             List<string> queryParameters = new List<string>();
             if (parameters != null && parameters.Filter != null)
             {
@@ -2116,7 +2116,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 queryParameters.Add("$format=" + Uri.EscapeDataString(parameters.Format));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2143,8 +2143,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2384,14 +2384,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 url = url + "resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
             }
             url = url + "providers/";
-            url = url + "Microsoft.DataLake";
+            url = url + "Microsoft.DataLakeStore";
             url = url + "/";
-            url = url + "dataLakeAccounts";
+            url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/firewallRules";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2418,8 +2418,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2618,8 +2618,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

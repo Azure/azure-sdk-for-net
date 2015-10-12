@@ -162,8 +162,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1006,8 +1006,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1174,8 +1174,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2016,8 +2016,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2566,8 +2566,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2747,8 +2747,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3083,8 +3083,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3636,8 +3636,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4195,7 +4195,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             List<string> queryParameters = new List<string>();
             if (queryString != null)
             {
-                queryParameters.Add(queryString);
+                queryParameters.Add(Uri.EscapeDataString(queryString));
             }
             queryParameters.Add("api-version=2015-09-13-preview");
             if (queryParameters.Count > 0)
@@ -4213,8 +4213,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.0-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.1-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 

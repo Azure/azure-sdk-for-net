@@ -56,16 +56,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             set { this._dataLakeStoreAccounts = value; }
         }
         
-        private string _defaultDataLakeAccount;
+        private string _defaultDataLakeStoreAccount;
         
         /// <summary>
-        /// Optional. Gets or sets the default data lake account associated
-        /// with this Data Lake Analytics account.
+        /// Optional. Gets or sets the default data lake storage account
+        /// associated with this Data Lake Analytics account.
         /// </summary>
-        public string DefaultDataLakeAccount
+        public string DefaultDataLakeStoreAccount
         {
-            get { return this._defaultDataLakeAccount; }
-            set { this._defaultDataLakeAccount = value; }
+            get { return this._defaultDataLakeStoreAccount; }
+            set { this._defaultDataLakeStoreAccount = value; }
         }
         
         private string _endpoint;

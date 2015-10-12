@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 AppendToFile(filePath, appendLength, rnd, 0, MaxAppendLength);
                 string metadataFilePath = filePath + ".metadata.txt";
 
-                var up = new UploadParameters(filePath, filePath, null, isBinary: false);
+                var up = new UploadParameters(filePath, filePath, null, isBinary: false, maxSegmentLength: 4 * 1024 * 1024);
                 var mg = new UploadMetadataGenerator(up, MaxAppendLength);
                 var metadata = mg.CreateNewMetadata(metadataFilePath);
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 AppendToFile(filePath, length, rnd, MaxAppendLength + 1, MaxAppendLength + 10);
                 string metadataFilePath = filePath + ".metadata.txt";
 
-                var up = new UploadParameters(filePath, filePath, null, isBinary: false);
+                var up = new UploadParameters(filePath, filePath, null, isBinary: false, maxSegmentLength: 4 * 1024 * 1024);
                 var mg = new UploadMetadataGenerator(up, MaxAppendLength);
 
                 Assert.Throws<Exception>(() => mg.CreateNewMetadata(metadataFilePath));

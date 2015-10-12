@@ -54,12 +54,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         public Action<string, bool, byte[], int> CreateStreamImplementation { get; set; }
 
 
-        public void DeleteStream(string streamPath)
+        public void DeleteStream(string streamPath, bool recurse = false)
         {
-            this.DeleteStreamImplementation(streamPath);
+            this.DeleteStreamImplementation(streamPath, recurse);
         }
 
-        public Action<string> DeleteStreamImplementation { get; set; }
+        public Action<string, bool> DeleteStreamImplementation { get; set; }
 
         public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {

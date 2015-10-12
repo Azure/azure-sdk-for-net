@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
         }
 
-        public void DeleteStream(string streamPath)
+        public void DeleteStream(string streamPath, bool recurse = false)
         {
             if (!StreamExists(streamPath))
             {

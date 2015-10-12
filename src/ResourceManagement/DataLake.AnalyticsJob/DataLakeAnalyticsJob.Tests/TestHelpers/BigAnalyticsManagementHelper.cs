@@ -36,7 +36,7 @@ namespace DataLakeAnalyticsJob.Tests
             dataLakeManagementClient = ClientManagementUtilities.GetDataLakeManagementClient(this.testBase);
         }
 
-        public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.BigAnalytics")
+        public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLakeAnalytics")
         {
             var reg = resourceManagementClient.Providers.Register(providerName);
             ThrowIfTrue(reg == null, "resourceManagementClient.Providers.Register returned null.");

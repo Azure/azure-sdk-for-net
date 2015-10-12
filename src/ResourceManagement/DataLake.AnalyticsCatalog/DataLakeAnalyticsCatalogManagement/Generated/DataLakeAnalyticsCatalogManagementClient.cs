@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._catalogServiceUri = "azurebiganalytics.net";
+            this._catalogServiceUri = "azuredatalakeanalytics.net";
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._catalogServiceUri = "azurebiganalytics.net";
+            this._catalogServiceUri = "azuredatalakeanalytics.net";
             
             this.Credentials.InitializeServiceClient(this);
         }

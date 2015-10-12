@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             this.SegmentNumber = segmentNumber;
             this.Status = SegmentUploadStatus.Pending;
-            this.Path = string.Format("{0}.{1}.segment{2}", metadata.TargetStreamPath, metadata.UploadId, this.SegmentNumber);
+            this.Path = string.Format("{0}/{1}.{2}.segment{3}", metadata.SegmentStreamDirectory, metadata.TargetStreamPath, metadata.UploadId, this.SegmentNumber);
             this.Offset = this.SegmentNumber * metadata.SegmentLength; // segment number is zero-based
             this.Length = CalculateSegmentLength(this.SegmentNumber, metadata);
         }

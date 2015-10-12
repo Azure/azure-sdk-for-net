@@ -18,6 +18,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -59,11 +60,31 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.UploadId = Guid.NewGuid().ToString("N");
             this.InputFilePath = uploadParameters.InputFilePath;
             this.TargetStreamPath = uploadParameters.TargetStreamPath;
+            var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
+            if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
+            {
+                // the scenario where the file is being uploaded at the root
+                this.SegmentStreamDirectory = string.Format("{0}.segments.{1}", this.TargetStreamPath, Guid.NewGuid());
+            }
+            else
+            {
+                // the scenario where the file is being uploaded in a sub folder
+                this.SegmentStreamDirectory = string.Format("{0}/{1}.segments.{2}",
+                    this.TargetStreamPath.Substring(0, this.TargetStreamPath.LastIndexOf('/')),
+                    this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1), Guid.NewGuid());
+            }
+
             this.IsBinary = uploadParameters.IsBinary;
 
             var fileInfo = new FileInfo(uploadParameters.InputFilePath);
             this.FileLength = fileInfo.Length;
-            this.SegmentCount = UploadSegmentMetadata.CalculateSegmentCount(fileInfo.Length);
+            
+            // we are taking the smaller number of segments between segment lengths of 256 and the segment growth logic.
+            // this protects us against agressive increase of thread count resulting in far more segments than
+            // is reasonable for a given file size. We also ensure that each segment is at least 256mb in size.
+            // This is the size that ensures we have the optimal storage creation in the store.
+            var preliminarySegmentCount = (int)Math.Ceiling((double) fileInfo.Length/uploadParameters.MaxSegementLength);
+            this.SegmentCount = Math.Min(preliminarySegmentCount, UploadSegmentMetadata.CalculateSegmentCount(fileInfo.Length));
             this.SegmentLength = UploadSegmentMetadata.CalculateSegmentLength(fileInfo.Length, this.SegmentCount);
 
             this.Segments = new UploadSegmentMetadata[this.SegmentCount];
@@ -112,6 +133,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </value>
         [DataMember(Name = "TargetStreamPath")]
         public string TargetStreamPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the directory path where intermediate segment streams will be stored.
+        /// </summary>
+        /// <value>
+        /// The target stream path.
+        /// </value>
+        [DataMember(Name = "SegmentStreamDirectory")]
+        public string SegmentStreamDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of segments this file is split into for purposes of uploading it.

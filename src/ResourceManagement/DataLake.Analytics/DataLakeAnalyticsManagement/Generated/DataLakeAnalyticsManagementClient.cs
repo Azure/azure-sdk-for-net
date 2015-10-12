@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this._dataLakeAnalyticsAccount = new DataLakeAnalyticsAccountOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2015-08-01-preview";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this._dataLakeAnalyticsAccount = new DataLakeAnalyticsAccountOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2015-08-01-preview";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-08-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

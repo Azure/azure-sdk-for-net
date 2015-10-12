@@ -102,8 +102,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             //load up existing metadata or create a fresh one
             var metadata = GetMetadata();
 
+            if (metadata.SegmentCount < this.Parameters.ThreadCount)
+            {
+                // reducing the thread count to make it equal to the segment count
+                // if it is larger, since those extra threads will not be used.
+                this.Parameters.ThreadCount = metadata.SegmentCount;
+            }
+
             //begin (or resume) uploading the file
             UploadFile(metadata);
+
+            if (_frontEnd.StreamExists(metadata.SegmentStreamDirectory))
+            {
+                // delete the folder that contained the intermediate segments, if there was one (for single segment uploads there will not be)
+                _frontEnd.DeleteStream(metadata.SegmentStreamDirectory, true);
+            }
 
             //clean up metadata after a successful upload
             metadata.DeleteFile();

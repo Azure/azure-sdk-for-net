@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._jobServiceUri = "azurebiganalytics.net";
+            this._jobServiceUri = "azuredatalakeanalytics.net";
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._jobServiceUri = "azurebiganalytics.net";
+            this._jobServiceUri = "azuredatalakeanalytics.net";
             
             this.Credentials.InitializeServiceClient(this);
         }

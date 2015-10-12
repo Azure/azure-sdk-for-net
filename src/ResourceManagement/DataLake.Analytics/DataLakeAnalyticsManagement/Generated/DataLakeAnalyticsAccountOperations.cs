@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/DataLakeAccounts/";
             url = url + Uri.EscapeDataString(dataLakeStoreAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/StorageAccounts/";
             url = url + Uri.EscapeDataString(storageAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -362,8 +362,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 url = url + Uri.EscapeDataString(parameters.DataLakeAnalyticsAccount.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -621,9 +621,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         propertiesValue["state"] = DataLakeAnalyticsManagementClient.DataLakeAnalyticsAccountStateToString(parameters.DataLakeAnalyticsAccount.Properties.State.Value);
                     }
                     
-                    if (parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeAccount != null)
+                    if (parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeStoreAccount != null)
                     {
-                        propertiesValue["defaultDataLakeAccount"] = parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeAccount;
+                        propertiesValue["defaultDataLakeStoreAccount"] = parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeStoreAccount;
                     }
                     
                     if (parameters.DataLakeAnalyticsAccount.Properties.MaxDegreeOfParallelism != null)
@@ -640,29 +640,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         if (parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts is ILazyCollection == false || ((ILazyCollection)parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts).IsInitialized)
                         {
-                            JArray dataLakeAccountsArray = new JArray();
-                            foreach (DataLakeStoreAccount dataLakeAccountsItem in parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts)
+                            JArray dataLakeStoreAccountsArray = new JArray();
+                            foreach (DataLakeStoreAccount dataLakeStoreAccountsItem in parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts)
                             {
                                 JObject dataLakeStoreAccountValue = new JObject();
-                                dataLakeAccountsArray.Add(dataLakeStoreAccountValue);
+                                dataLakeStoreAccountsArray.Add(dataLakeStoreAccountValue);
                                 
-                                if (dataLakeAccountsItem.Name != null)
+                                if (dataLakeStoreAccountsItem.Name != null)
                                 {
-                                    dataLakeStoreAccountValue["name"] = dataLakeAccountsItem.Name;
+                                    dataLakeStoreAccountValue["name"] = dataLakeStoreAccountsItem.Name;
                                 }
                                 
-                                if (dataLakeAccountsItem.Properties != null)
+                                if (dataLakeStoreAccountsItem.Properties != null)
                                 {
                                     JObject propertiesValue2 = new JObject();
                                     dataLakeStoreAccountValue["properties"] = propertiesValue2;
                                     
-                                    if (dataLakeAccountsItem.Properties.Suffix != null)
+                                    if (dataLakeStoreAccountsItem.Properties.Suffix != null)
                                     {
-                                        propertiesValue2["suffix"] = dataLakeAccountsItem.Properties.Suffix;
+                                        propertiesValue2["suffix"] = dataLakeStoreAccountsItem.Properties.Suffix;
                                     }
                                 }
                             }
-                            propertiesValue["dataLakeAccounts"] = dataLakeAccountsArray;
+                            propertiesValue["dataLakeStoreAccounts"] = dataLakeStoreAccountsArray;
                         }
                     }
                     
@@ -845,13 +845,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -878,8 +878,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1028,7 +1028,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -1037,7 +1037,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 url = url + Uri.EscapeDataString(parameters.DataLakeAnalyticsAccount.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1064,8 +1064,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -1129,9 +1129,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         propertiesValue["state"] = DataLakeAnalyticsManagementClient.DataLakeAnalyticsAccountStateToString(parameters.DataLakeAnalyticsAccount.Properties.State.Value);
                     }
                     
-                    if (parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeAccount != null)
+                    if (parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeStoreAccount != null)
                     {
-                        propertiesValue["defaultDataLakeAccount"] = parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeAccount;
+                        propertiesValue["defaultDataLakeStoreAccount"] = parameters.DataLakeAnalyticsAccount.Properties.DefaultDataLakeStoreAccount;
                     }
                     
                     if (parameters.DataLakeAnalyticsAccount.Properties.MaxDegreeOfParallelism != null)
@@ -1148,29 +1148,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         if (parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts is ILazyCollection == false || ((ILazyCollection)parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts).IsInitialized)
                         {
-                            JArray dataLakeAccountsArray = new JArray();
-                            foreach (DataLakeStoreAccount dataLakeAccountsItem in parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts)
+                            JArray dataLakeStoreAccountsArray = new JArray();
+                            foreach (DataLakeStoreAccount dataLakeStoreAccountsItem in parameters.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts)
                             {
                                 JObject dataLakeStoreAccountValue = new JObject();
-                                dataLakeAccountsArray.Add(dataLakeStoreAccountValue);
+                                dataLakeStoreAccountsArray.Add(dataLakeStoreAccountValue);
                                 
-                                if (dataLakeAccountsItem.Name != null)
+                                if (dataLakeStoreAccountsItem.Name != null)
                                 {
-                                    dataLakeStoreAccountValue["name"] = dataLakeAccountsItem.Name;
+                                    dataLakeStoreAccountValue["name"] = dataLakeStoreAccountsItem.Name;
                                 }
                                 
-                                if (dataLakeAccountsItem.Properties != null)
+                                if (dataLakeStoreAccountsItem.Properties != null)
                                 {
                                     JObject propertiesValue2 = new JObject();
                                     dataLakeStoreAccountValue["properties"] = propertiesValue2;
                                     
-                                    if (dataLakeAccountsItem.Properties.Suffix != null)
+                                    if (dataLakeStoreAccountsItem.Properties.Suffix != null)
                                     {
-                                        propertiesValue2["suffix"] = dataLakeAccountsItem.Properties.Suffix;
+                                        propertiesValue2["suffix"] = dataLakeStoreAccountsItem.Properties.Suffix;
                                     }
                                 }
                             }
-                            propertiesValue["dataLakeAccounts"] = dataLakeAccountsArray;
+                            propertiesValue["dataLakeStoreAccounts"] = dataLakeStoreAccountsArray;
                         }
                     }
                     
@@ -1423,8 +1423,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1688,7 +1688,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -1696,7 +1696,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/DataLakeAccounts/";
             url = url + Uri.EscapeDataString(dataLakeStoreAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1723,8 +1723,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -1850,7 +1850,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -1858,7 +1858,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/StorageAccounts/";
             url = url + Uri.EscapeDataString(storageAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1885,8 +1885,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -2002,13 +2002,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2035,8 +2035,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2146,11 +2146,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                     propertiesInstance.State = stateInstance;
                                 }
                                 
-                                JToken defaultDataLakeAccountValue = propertiesValue["defaultDataLakeAccount"];
-                                if (defaultDataLakeAccountValue != null && defaultDataLakeAccountValue.Type != JTokenType.Null)
+                                JToken defaultDataLakeStoreAccountValue = propertiesValue["defaultDataLakeStoreAccount"];
+                                if (defaultDataLakeStoreAccountValue != null && defaultDataLakeStoreAccountValue.Type != JTokenType.Null)
                                 {
-                                    string defaultDataLakeAccountInstance = ((string)defaultDataLakeAccountValue);
-                                    propertiesInstance.DefaultDataLakeAccount = defaultDataLakeAccountInstance;
+                                    string defaultDataLakeStoreAccountInstance = ((string)defaultDataLakeStoreAccountValue);
+                                    propertiesInstance.DefaultDataLakeStoreAccount = defaultDataLakeStoreAccountInstance;
                                 }
                                 
                                 JToken maxDegreeOfParallelismValue = propertiesValue["maxDegreeOfParallelism"];
@@ -2167,22 +2167,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                     propertiesInstance.MaxJobCount = maxJobCountInstance;
                                 }
                                 
-                                JToken dataLakeAccountsArray = propertiesValue["dataLakeAccounts"];
-                                if (dataLakeAccountsArray != null && dataLakeAccountsArray.Type != JTokenType.Null)
+                                JToken dataLakeStoreAccountsArray = propertiesValue["dataLakeStoreAccounts"];
+                                if (dataLakeStoreAccountsArray != null && dataLakeStoreAccountsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken dataLakeAccountsValue in ((JArray)dataLakeAccountsArray))
+                                    foreach (JToken dataLakeStoreAccountsValue in ((JArray)dataLakeStoreAccountsArray))
                                     {
                                         DataLakeStoreAccount dataLakeStoreAccountInstance = new DataLakeStoreAccount();
                                         propertiesInstance.DataLakeStoreAccounts.Add(dataLakeStoreAccountInstance);
                                         
-                                        JToken nameValue2 = dataLakeAccountsValue["name"];
+                                        JToken nameValue2 = dataLakeStoreAccountsValue["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
                                             string nameInstance2 = ((string)nameValue2);
                                             dataLakeStoreAccountInstance.Name = nameInstance2;
                                         }
                                         
-                                        JToken propertiesValue2 = dataLakeAccountsValue["properties"];
+                                        JToken propertiesValue2 = dataLakeStoreAccountsValue["properties"];
                                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                         {
                                             DataLakeStoreAccountProperties propertiesInstance2 = new DataLakeStoreAccountProperties();
@@ -2348,7 +2348,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -2356,7 +2356,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/DataLakeAccounts/";
             url = url + Uri.EscapeDataString(dataLakeStoreAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2383,8 +2383,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2546,7 +2546,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -2554,7 +2554,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/StorageAccounts/";
             url = url + Uri.EscapeDataString(storageAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2581,8 +2581,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2760,7 +2760,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -2770,7 +2770,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/Containers/";
             url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2797,8 +2797,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2962,7 +2962,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 url = url + "resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
             }
             url = url + "providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             List<string> queryParameters = new List<string>();
@@ -3002,7 +3002,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 queryParameters.Add("$format=" + Uri.EscapeDataString(parameters.Format));
             }
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3029,8 +3029,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3145,11 +3145,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                             propertiesInstance.State = stateInstance;
                                         }
                                         
-                                        JToken defaultDataLakeAccountValue = propertiesValue["defaultDataLakeAccount"];
-                                        if (defaultDataLakeAccountValue != null && defaultDataLakeAccountValue.Type != JTokenType.Null)
+                                        JToken defaultDataLakeStoreAccountValue = propertiesValue["defaultDataLakeStoreAccount"];
+                                        if (defaultDataLakeStoreAccountValue != null && defaultDataLakeStoreAccountValue.Type != JTokenType.Null)
                                         {
-                                            string defaultDataLakeAccountInstance = ((string)defaultDataLakeAccountValue);
-                                            propertiesInstance.DefaultDataLakeAccount = defaultDataLakeAccountInstance;
+                                            string defaultDataLakeStoreAccountInstance = ((string)defaultDataLakeStoreAccountValue);
+                                            propertiesInstance.DefaultDataLakeStoreAccount = defaultDataLakeStoreAccountInstance;
                                         }
                                         
                                         JToken maxDegreeOfParallelismValue = propertiesValue["maxDegreeOfParallelism"];
@@ -3166,22 +3166,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                             propertiesInstance.MaxJobCount = maxJobCountInstance;
                                         }
                                         
-                                        JToken dataLakeAccountsArray = propertiesValue["dataLakeAccounts"];
-                                        if (dataLakeAccountsArray != null && dataLakeAccountsArray.Type != JTokenType.Null)
+                                        JToken dataLakeStoreAccountsArray = propertiesValue["dataLakeStoreAccounts"];
+                                        if (dataLakeStoreAccountsArray != null && dataLakeStoreAccountsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken dataLakeAccountsValue in ((JArray)dataLakeAccountsArray))
+                                            foreach (JToken dataLakeStoreAccountsValue in ((JArray)dataLakeStoreAccountsArray))
                                             {
                                                 DataLakeStoreAccount dataLakeStoreAccountInstance = new DataLakeStoreAccount();
                                                 propertiesInstance.DataLakeStoreAccounts.Add(dataLakeStoreAccountInstance);
                                                 
-                                                JToken nameValue2 = dataLakeAccountsValue["name"];
+                                                JToken nameValue2 = dataLakeStoreAccountsValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance2 = ((string)nameValue2);
                                                     dataLakeStoreAccountInstance.Name = nameInstance2;
                                                 }
                                                 
-                                                JToken propertiesValue2 = dataLakeAccountsValue["properties"];
+                                                JToken propertiesValue2 = dataLakeStoreAccountsValue["properties"];
                                                 if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
                                                     DataLakeStoreAccountProperties propertiesInstance2 = new DataLakeStoreAccountProperties();
@@ -3354,7 +3354,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -3397,7 +3397,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 queryParameters.Add("$format=" + Uri.EscapeDataString(parameters.Format));
             }
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3424,8 +3424,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3596,8 +3596,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3712,11 +3712,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                             propertiesInstance.State = stateInstance;
                                         }
                                         
-                                        JToken defaultDataLakeAccountValue = propertiesValue["defaultDataLakeAccount"];
-                                        if (defaultDataLakeAccountValue != null && defaultDataLakeAccountValue.Type != JTokenType.Null)
+                                        JToken defaultDataLakeStoreAccountValue = propertiesValue["defaultDataLakeStoreAccount"];
+                                        if (defaultDataLakeStoreAccountValue != null && defaultDataLakeStoreAccountValue.Type != JTokenType.Null)
                                         {
-                                            string defaultDataLakeAccountInstance = ((string)defaultDataLakeAccountValue);
-                                            propertiesInstance.DefaultDataLakeAccount = defaultDataLakeAccountInstance;
+                                            string defaultDataLakeStoreAccountInstance = ((string)defaultDataLakeStoreAccountValue);
+                                            propertiesInstance.DefaultDataLakeStoreAccount = defaultDataLakeStoreAccountInstance;
                                         }
                                         
                                         JToken maxDegreeOfParallelismValue = propertiesValue["maxDegreeOfParallelism"];
@@ -3733,22 +3733,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                             propertiesInstance.MaxJobCount = maxJobCountInstance;
                                         }
                                         
-                                        JToken dataLakeAccountsArray = propertiesValue["dataLakeAccounts"];
-                                        if (dataLakeAccountsArray != null && dataLakeAccountsArray.Type != JTokenType.Null)
+                                        JToken dataLakeStoreAccountsArray = propertiesValue["dataLakeStoreAccounts"];
+                                        if (dataLakeStoreAccountsArray != null && dataLakeStoreAccountsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken dataLakeAccountsValue in ((JArray)dataLakeAccountsArray))
+                                            foreach (JToken dataLakeStoreAccountsValue in ((JArray)dataLakeStoreAccountsArray))
                                             {
                                                 DataLakeStoreAccount dataLakeStoreAccountInstance = new DataLakeStoreAccount();
                                                 propertiesInstance.DataLakeStoreAccounts.Add(dataLakeStoreAccountInstance);
                                                 
-                                                JToken nameValue2 = dataLakeAccountsValue["name"];
+                                                JToken nameValue2 = dataLakeStoreAccountsValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance2 = ((string)nameValue2);
                                                     dataLakeStoreAccountInstance.Name = nameInstance2;
                                                 }
                                                 
-                                                JToken propertiesValue2 = dataLakeAccountsValue["properties"];
+                                                JToken propertiesValue2 = dataLakeStoreAccountsValue["properties"];
                                                 if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
                                                     DataLakeStoreAccountProperties propertiesInstance2 = new DataLakeStoreAccountProperties();
@@ -3933,7 +3933,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -3944,7 +3944,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + Uri.EscapeDataString(containerName);
             url = url + "/listSasTokens";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3971,8 +3971,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4132,7 +4132,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -4175,7 +4175,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 queryParameters.Add("$format=" + Uri.EscapeDataString(parameters.Format));
             }
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4202,8 +4202,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4395,7 +4395,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -4404,7 +4404,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + Uri.EscapeDataString(storageAccountName);
             url = url + "/Containers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4431,8 +4431,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4611,8 +4611,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4762,8 +4762,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4941,8 +4941,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5224,7 +5224,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.BigAnalytics";
+            url = url + "Microsoft.DataLakeAnalytics";
             url = url + "/";
             url = url + "accounts";
             url = url + "/";
@@ -5232,7 +5232,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url + "/StorageAccounts/";
             url = url + Uri.EscapeDataString(storageAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5259,8 +5259,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials

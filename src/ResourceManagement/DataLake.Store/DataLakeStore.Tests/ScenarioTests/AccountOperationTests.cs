@@ -66,7 +66,7 @@ namespace DataLakeStore.Tests
             Assert.Contains(commonData.DataLakeAccountName, responseGet.DataLakeStoreAccount.Properties.Endpoint);
             Assert.Equal(commonData.Location, responseGet.DataLakeStoreAccount.Location);
             Assert.Equal(commonData.DataLakeAccountName, responseGet.DataLakeStoreAccount.Name);
-            Assert.Equal("Microsoft.DataLake/dataLakeAccounts", responseGet.DataLakeStoreAccount.Type);
+            Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.DataLakeStoreAccount.Type);
 
             // wait for provisioning state to be Succeeded
             // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -91,7 +91,14 @@ namespace DataLakeStore.Tests
 
             var updateResponse = clientToUse.DataLakeStoreAccount.Update(commonData.ResourceGroupName, new DataLakeStoreAccountCreateOrUpdateParameters
                 {
-                    DataLakeStoreAccount = newAccount,
+                    DataLakeStoreAccount = new DataLakeStoreAccount
+                    {
+                        Name = newAccount.Name,
+                        Tags = new Dictionary<string, string>
+                        {
+                            {"updatedKey", "updatedValue"}
+                        }
+                    }
                 });
 
             Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);

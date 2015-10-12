@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Deletes an existing stream at the given path.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
-        void DeleteStream(string streamPath);
+        /// <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
+        void DeleteStream(string streamPath, bool recurse = false);
 
         /// <summary>
         /// Appends the given byte array to the end of a given stream.
