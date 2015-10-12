@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Lists domains under a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetDomains", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -178,13 +178,12 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets details of a domain
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='domainName'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -222,7 +221,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetDomain", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{domainName}", Uri.EscapeDataString(domainName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -320,16 +319,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates a domain
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// &amp;gt;Name of the resource group
-        /// </param>
+        /// &amp;gt;Name of the resource group/// </param>
         /// <param name='domainName'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='domain'>
-        /// Domain registration information
-        /// </param>
+        /// Domain registration information/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -376,7 +373,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateDomain", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{domainName}", Uri.EscapeDataString(domainName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -484,17 +481,15 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Deletes a domain
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='domainName'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='forceHardDeleteDomain'>
         /// If true then the domain will be deleted immediately instead of after 24
-        /// hours
-        /// </param>
+        /// hours/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -533,7 +528,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "DeleteDomain", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{domainName}", Uri.EscapeDataString(domainName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -635,16 +630,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates a domain
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// &amp;gt;Name of the resource group
-        /// </param>
+        /// &amp;gt;Name of the resource group/// </param>
         /// <param name='domainName'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='domain'>
-        /// Domain registration information
-        /// </param>
+        /// Domain registration information/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -687,7 +680,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "UpdateDomain", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{domainName}", Uri.EscapeDataString(domainName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -795,16 +788,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Retrieves the latest status of a domain purchase operation
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='domainName'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='operationId'>
-        /// Domain purchase operation Id
-        /// </param>
+        /// Domain purchase operation Id/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -847,7 +838,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetDomainOperation", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/operationresults/{operationId}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/operationresults/{operationId}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{domainName}", Uri.EscapeDataString(domainName));
             url = url.Replace("{operationId}", Uri.EscapeDataString(operationId));

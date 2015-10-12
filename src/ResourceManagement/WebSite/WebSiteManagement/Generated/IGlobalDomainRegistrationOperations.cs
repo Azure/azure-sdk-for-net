@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IGlobalDomainRegistrationOperations
     {
         /// <summary>
+        /// Lists all domains in a subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<DomainCollection>> GetAllDomainsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Generates a single sign on request for domain management portal
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -37,6 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<DomainControlCenterSsoRequest>> GetDomainControlCenterSsoRequestWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Validates domain registration information
         /// </summary>
         /// <param name='domainRegistrationInput'>
         /// Domain registration information
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> ValidateDomainPurchaseInformationWithHttpMessagesAsync(DomainRegistrationInput domainRegistrationInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Checks if a domain is available for registration
         /// </summary>
         /// <param name='identifier'>
         /// Name of the domain
@@ -61,6 +65,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<DomainAvailablilityCheckResult>> CheckDomainAvailabilityWithHttpMessagesAsync(NameIdentifier identifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists domain recommendations based on keywords
         /// </summary>
         /// <param name='parameters'>
         /// Domain recommendation search parameters

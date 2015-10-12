@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class GlobalDomainRegistrationOperationsExtensions
     {
             /// <summary>
+            /// Lists all domains in a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all domains in a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Generates a single sign on request for domain management portal
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,6 +53,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Generates a single sign on request for domain management portal
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,6 +68,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Validates domain registration information
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,6 +82,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Validates domain registration information
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,6 +100,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Checks if a domain is available for registration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,6 +114,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Checks if a domain is available for registration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,6 +132,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists domain recommendations based on keywords
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,6 +146,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists domain recommendations based on keywords
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

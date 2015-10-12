@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class ProviderOperationsExtensions
     {
             /// <summary>
+            /// Gets the source controls available for Azure websites
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the source controls available for Azure websites
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets source control token
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets source control token
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates source control token
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,6 +91,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates source control token
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,6 +112,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets publishing user
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,6 +126,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets publishing user
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,6 +144,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates publishing user
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,6 +161,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates publishing user
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

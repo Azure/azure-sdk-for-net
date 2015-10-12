@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IClassicMobileServicesOperations
     {
         /// <summary>
+        /// Get all mobile services in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<ClassicMobileServiceCollection>> GetClassicMobileServicesWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get a mobile service.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<ClassicMobileService>> GetClassicMobileServiceWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete a mobile service.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group

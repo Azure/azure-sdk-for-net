@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Lists all domains in a subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetAllDomains", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -169,6 +170,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Generates a single sign on request for domain management portal
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -197,7 +199,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetDomainControlCenterSsoRequest", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -293,10 +295,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Validates domain registration information
         /// </summary>
         /// <param name='domainRegistrationInput'>
-        /// Domain registration information
-        /// </param>
+        /// Domain registration information/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -333,7 +335,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "ValidateDomainPurchaseInformation", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/validateDomainRegistrationInformation").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/validateDomainRegistrationInformation").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -433,10 +435,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Checks if a domain is available for registration
         /// </summary>
         /// <param name='identifier'>
-        /// Name of the domain
-        /// </param>
+        /// Name of the domain/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -469,7 +471,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "CheckDomainAvailability", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -569,10 +571,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Lists domain recommendations based on keywords
         /// </summary>
         /// <param name='parameters'>
-        /// Domain recommendation search parameters
-        /// </param>
+        /// Domain recommendation search parameters/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -605,7 +607,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "ListDomainRecommendations", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

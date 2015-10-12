@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Gets the source controls available for Azure websites
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetSourceControls", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/providers/Microsoft.Web/sourcecontrols").ToString();
+            var url = new Uri(this.Client.BaseUri, "providers/Microsoft.Web/sourcecontrols").ToString();
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -164,10 +165,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets source control token
         /// </summary>
         /// <param name='sourceControlType'>
-        /// Type of source control
-        /// </param>
+        /// Type of source control/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -196,7 +197,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetSourceControl", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
+            var url = new Uri(this.Client.BaseUri, "providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
             url = url.Replace("{sourceControlType}", Uri.EscapeDataString(sourceControlType));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -292,13 +293,12 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Updates source control token
         /// </summary>
         /// <param name='sourceControlType'>
-        /// Type of source control
-        /// </param>
+        /// Type of source control/// </param>
         /// <param name='requestMessage'>
-        /// Source control token information
-        /// </param>
+        /// Source control token information/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "UpdateSourceControl", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
+            var url = new Uri(this.Client.BaseUri, "providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
             url = url.Replace("{sourceControlType}", Uri.EscapeDataString(sourceControlType));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -436,10 +436,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets publishing user
         /// </summary>
         /// <param name='name'>
-        /// Name of user
-        /// </param>
+        /// Name of user/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetPublishingUser", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/providers/Microsoft.Web/publishingUsers/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "providers/Microsoft.Web/publishingUsers/{name}").ToString();
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -564,13 +564,12 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Updates publishing user
         /// </summary>
         /// <param name='name'>
-        /// Name of user
-        /// </param>
+        /// Name of user/// </param>
         /// <param name='requestMessage'>
-        /// Details of publishing user
-        /// </param>
+        /// Details of publishing user/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -608,7 +607,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "UpdatePublishingUser", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/providers/Microsoft.Web/publishingUsers/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "providers/Microsoft.Web/publishingUsers/{name}").ToString();
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

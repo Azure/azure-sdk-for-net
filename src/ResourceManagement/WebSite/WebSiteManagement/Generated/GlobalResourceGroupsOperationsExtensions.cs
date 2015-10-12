@@ -15,8 +15,6 @@ namespace Microsoft.Azure.Management.WebSites
 
     public static partial class GlobalResourceGroupsOperationsExtensions
     {
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -29,8 +27,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Task.Factory.StartNew(s => ((IGlobalResourceGroupsOperations)s).MoveResourcesAsync(resourceGroupName, moveResourceEnvelope), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

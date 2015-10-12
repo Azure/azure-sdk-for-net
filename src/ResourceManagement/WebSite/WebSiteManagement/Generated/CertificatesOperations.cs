@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Get certificates for a subscription in the specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetCertificates", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -178,13 +178,13 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Get a certificate by certificate name for a subscription in the specified
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -320,16 +320,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates or modifies an existing certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='certificateEnvelope'>
-        /// Details of certificate if it exists already.
-        /// </param>
+        /// Details of certificate if it exists already./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -376,7 +374,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -478,13 +476,13 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Delete a certificate by name in a specificed subscription and
+        /// resourcegroup.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate to be deleted.
-        /// </param>
+        /// Name of the certificate to be deleted./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -522,7 +520,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "DeleteCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -620,16 +618,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates or modifies an existing certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='certificateEnvelope'>
-        /// Details of certificate if it exists already.
-        /// </param>
+        /// Details of certificate if it exists already./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -672,7 +668,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "UpdateCertificate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -774,10 +770,11 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets the certificate signing requests for a subscription in the specified
+        /// resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -810,7 +807,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetCsrs", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -907,13 +904,13 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets a certificate signing request by certificate name for a subscription
+        /// in the specified resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -951,7 +948,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetCsr", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1049,16 +1046,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates or modifies an existing certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='csrEnvelope'>
-        /// Details of certificate signing request if it exists already.
-        /// </param>
+        /// Details of certificate signing request if it exists already./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1105,7 +1100,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateCsr", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1207,13 +1202,12 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Delete the certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate signing request.
-        /// </param>
+        /// Name of the certificate signing request./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1251,7 +1245,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "DeleteCsr", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -1349,16 +1343,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Creates or modifies an existing certificate signing request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group
-        /// </param>
+        /// Name of the resource group/// </param>
         /// <param name='name'>
-        /// Name of the certificate.
-        /// </param>
+        /// Name of the certificate./// </param>
         /// <param name='csrEnvelope'>
-        /// Details of certificate signing request if it exists already.
-        /// </param>
+        /// Details of certificate signing request if it exists already./// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1401,7 +1393,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "UpdateCsr", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/csrs/{name}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));

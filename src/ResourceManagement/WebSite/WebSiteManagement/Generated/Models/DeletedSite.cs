@@ -166,13 +166,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? ClientCertEnabled { get; set; }
 
         /// <summary>
-        /// List of identifiers that verify the custom domains assigned to the
-        /// web app (e.g. to a CA for purchasing SSL certificate).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.domainVerificationIdentifiers")]
-        public IList<string> DomainVerificationIdentifiers { get; private set; }
-
-        /// <summary>
         /// List of comma separated IP addresses that this web app uses for
         /// outbound connections. Those can be used when configuring firewall
         /// rules for databases accessed by this web app.

@@ -109,6 +109,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
 
         /// <summary>
+        /// Key Vault Csm resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultCsmId")]
+        public string KeyVaultCsmId { get; set; }
+
+        /// <summary>
+        /// Key Vault secret name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultSecretName")]
+        public string KeyVaultSecretName { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public override void Validate()

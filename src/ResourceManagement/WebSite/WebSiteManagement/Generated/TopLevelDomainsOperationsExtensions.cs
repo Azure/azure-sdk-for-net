@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class TopLevelDomainsOperationsExtensions
     {
             /// <summary>
+            /// Lists all top level domains supported for registration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists all top level domains supported for registration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets details of a top level domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets details of a top level domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists legal agreements that user needs to accept before purchasing domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,6 +91,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Lists legal agreements that user needs to accept before purchasing domain
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

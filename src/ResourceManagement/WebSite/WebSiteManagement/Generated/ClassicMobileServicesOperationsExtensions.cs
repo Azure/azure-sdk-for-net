@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class ClassicMobileServicesOperationsExtensions
     {
             /// <summary>
+            /// Get all mobile services in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get all mobile services in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get a mobile service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get a mobile service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,6 +86,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete a mobile service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,6 +103,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Delete a mobile service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
