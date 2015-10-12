@@ -56,6 +56,6 @@ namespace Microsoft.Azure.Common.Authentication
         /// <param name="productName">Product name.</param>
         /// <param name="productVersion">Product version.</param>
         void AddUserAgent(string productName, string productVersion);
-        List<ProductInfoHeaderValue> UserAgents { get; set; }
+        HashSet<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }

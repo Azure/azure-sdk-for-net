@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public ClientFactory()
         {
             actions = new Dictionary<Type, IClientAction>();
-            UserAgents = new List<ProductInfoHeaderValue>();
+            UserAgents = new HashSet<ProductInfoHeaderValue>();
         }
 
         /// <summary>
@@ -272,6 +272,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             AddUserAgent(productName, "");
         }
 
-        public List<ProductInfoHeaderValue> UserAgents { get; set; }
+        public HashSet<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }
