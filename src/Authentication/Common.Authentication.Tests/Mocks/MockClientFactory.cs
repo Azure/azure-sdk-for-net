@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
@@ -79,7 +80,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             throw new NotImplementedException();
         }
 
-        public List<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
+        public HashSet<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
         {
             get
             {
@@ -100,6 +101,17 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
         public TClient CreateCustomArmClient<TClient>(params object[] parameters) where TClient : Rest.ServiceClient<TClient>
         {
             return ManagementClients.FirstOrDefault(o => o is TClient) as TClient;
+        }
+
+
+        public void AddUserAgent(string productName)
+        {
+            AddUserAgent(productName, "");
+        }
+
+        public void AddUserAgent(string productName, string productVersion)
+        {
+            this.UserAgents.Add(new ProductInfoHeaderValue(productName, productVersion));
         }
     }
 }
