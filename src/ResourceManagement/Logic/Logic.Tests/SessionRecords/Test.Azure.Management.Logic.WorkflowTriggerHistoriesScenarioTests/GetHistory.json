@@ -19,7 +19,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2015-07-29T05:15:00.0044966Z\",\r\n    \"changedTime\": \"2015-07-29T05:15:00.0044966Z\",\r\n    \"state\": \"Enabled\",\r\n    \"version\": \"08587634599855974347\",\r\n    \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7692\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\"\r\n    },\r\n    \"definition\": {\r\n      \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {},\r\n      \"triggers\": {\r\n        \"httpTrigger\": {\r\n          \"recurrence\": {\r\n            \"frequency\": \"Minute\",\r\n            \"interval\": 60\r\n          },\r\n          \"type\": \"Http\",\r\n          \"inputs\": {\r\n            \"method\": \"GET\",\r\n            \"uri\": \"invalidUri\"\r\n          }\r\n        }\r\n      },\r\n      \"actions\": {},\r\n      \"outputs\": {}\r\n    },\r\n    \"parameters\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7692\",\r\n  \"name\": \"logicwf7692\",\r\n  \"type\": \"Microsoft.Logic/workflows\",\r\n  \"location\": \"westus\"\r\n}",
@@ -73,7 +73,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "",
@@ -124,7 +124,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-29T05:15:01.0319956Z\",\r\n        \"endTime\": \"2015-07-29T05:15:01.1130449Z\",\r\n        \"status\": \"Failed\",\r\n        \"code\": \"BadRequest\",\r\n        \"error\": {\r\n          \"code\": \"BadRequest\",\r\n          \"message\": \"The provided http trigger URI 'invalidUri' is not valid. The URI must be a well formed absolute URI not referencing local host or UNC path.\"\r\n        },\r\n        \"trackingId\": \"ee915d68-ca8e-4d44-baa2-1f37b911bac0\",\r\n        \"inputsLink\": {\r\n          \"uri\": \"https://flowprodcu06by01.blob.core.windows.net/flow9265348ef65b4b0994c9e025480cab1320150729t000000zcontent/07D34_a000c5daa0e54dd68f8fd67724609ab1_httpTrigger:5Finputs:2Ejson?sv=2014-02-14&sr=b&sig=t%2FSpYRB65F4OhNBHSG6SjqXomJOm469uP5Cp6F2zlZM%3D&se=2015-07-29T09%3A15%3A01Z&sp=r\",\r\n          \"contentVersion\": \"\\\"0x8D297D4A78428D0\\\"\",\r\n          \"contentSize\": 35,\r\n          \"contentHash\": {\r\n            \"algorithm\": \"md5\",\r\n            \"value\": \"mvjBdQPV3500O+iSJ4rDcg==\"\r\n          }\r\n        },\r\n        \"fired\": false\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7692/triggers/httpTrigger/histories/08587634599844311050\",\r\n      \"name\": \"08587634599844311050\",\r\n      \"type\": \"Microsoft.Logic/workflows/triggers/histories\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-29T05:15:00.379258Z\",\r\n        \"endTime\": \"2015-07-29T05:15:00.5075977Z\",\r\n        \"status\": \"Failed\",\r\n        \"code\": \"BadRequest\",\r\n        \"error\": {\r\n          \"code\": \"BadRequest\",\r\n          \"message\": \"The provided http trigger URI 'invalidUri' is not valid. The URI must be a well formed absolute URI not referencing local host or UNC path.\"\r\n        },\r\n        \"trackingId\": \"444478af-84b1-43e2-a21a-7ad2ff874ea9\",\r\n        \"inputsLink\": {\r\n          \"uri\": \"https://flowprodcu06by01.blob.core.windows.net/flow9265348ef65b4b0994c9e025480cab1320150729t000000zcontent/70785_bfabc34727064bf5927729a8819c3455_httpTrigger:5Finputs:2Ejson?sv=2014-02-14&sr=b&sig=FAW0ivh1ATgdtYs9k8hflZDYdIUzoNWuY2a0cY9CajI%3D&se=2015-07-29T09%3A15%3A01Z&sp=r\",\r\n          \"contentVersion\": \"\\\"0x8D297D4A71DEA26\\\"\",\r\n          \"contentSize\": 35,\r\n          \"contentHash\": {\r\n            \"algorithm\": \"md5\",\r\n            \"value\": \"mvjBdQPV3500O+iSJ4rDcg==\"\r\n          }\r\n        },\r\n        \"fired\": false\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7692/triggers/httpTrigger/histories/08587634599850885520\",\r\n      \"name\": \"08587634599850885520\",\r\n      \"type\": \"Microsoft.Logic/workflows/triggers/histories\"\r\n    }\r\n  ]\r\n}",
@@ -181,7 +181,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T05:15:01.0319956Z\",\r\n    \"endTime\": \"2015-07-29T05:15:01.1130449Z\",\r\n    \"status\": \"Failed\",\r\n    \"code\": \"BadRequest\",\r\n    \"error\": {\r\n      \"code\": \"BadRequest\",\r\n      \"message\": \"The provided http trigger URI 'invalidUri' is not valid. The URI must be a well formed absolute URI not referencing local host or UNC path.\"\r\n    },\r\n    \"trackingId\": \"ee915d68-ca8e-4d44-baa2-1f37b911bac0\",\r\n    \"inputsLink\": {\r\n      \"uri\": \"https://flowprodcu06by01.blob.core.windows.net/flow9265348ef65b4b0994c9e025480cab1320150729t000000zcontent/07D34_a000c5daa0e54dd68f8fd67724609ab1_httpTrigger:5Finputs:2Ejson?sv=2014-02-14&sr=b&sig=t%2FSpYRB65F4OhNBHSG6SjqXomJOm469uP5Cp6F2zlZM%3D&se=2015-07-29T09%3A15%3A01Z&sp=r\",\r\n      \"contentVersion\": \"\\\"0x8D297D4A78428D0\\\"\",\r\n      \"contentSize\": 35,\r\n      \"contentHash\": {\r\n        \"algorithm\": \"md5\",\r\n        \"value\": \"mvjBdQPV3500O+iSJ4rDcg==\"\r\n      }\r\n    },\r\n    \"fired\": false\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7692/triggers/httpTrigger/histories/08587634599844311050\",\r\n  \"name\": \"08587634599844311050\",\r\n  \"type\": \"Microsoft.Logic/workflows/triggers/histories\"\r\n}",
@@ -238,7 +238,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "",

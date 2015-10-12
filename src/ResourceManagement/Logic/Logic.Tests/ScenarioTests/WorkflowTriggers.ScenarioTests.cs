@@ -20,7 +20,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
@@ -52,7 +52,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
@@ -89,7 +89,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(

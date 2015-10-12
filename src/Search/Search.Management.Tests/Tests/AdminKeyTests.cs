@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Search.Tests
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
                 // List admin keys
-                AdminKeyResponse adminKeyResponse = 
+                AdminKeyResult adminKeyResult = 
                     searchMgmt.AdminKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
 
-                Assert.Equal(HttpStatusCode.OK, adminKeyResponse.StatusCode);
-                Assert.NotNull(adminKeyResponse.PrimaryKey);
-                Assert.NotNull(adminKeyResponse.SecondaryKey);
-                Assert.NotEmpty(adminKeyResponse.PrimaryKey);
-                Assert.NotEmpty(adminKeyResponse.SecondaryKey);
+                Assert.NotNull(adminKeyResult);
+                Assert.NotNull(adminKeyResult.PrimaryKey);
+                Assert.NotNull(adminKeyResult.SecondaryKey);
+                Assert.NotEmpty(adminKeyResult.PrimaryKey);
+                Assert.NotEmpty(adminKeyResult.SecondaryKey);
             });
         }
     }

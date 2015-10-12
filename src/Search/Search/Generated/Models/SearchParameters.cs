@@ -217,10 +217,14 @@ namespace Microsoft.Azure.Search.Models
         
         /// <summary>
         /// Optional. Gets or sets the number of search results to retrieve.
-        /// This defaults to 50. If you specify a value greater than 1000 for
-        /// Top and there are more than 1000 results, only the first 1000
-        /// results will be returned, along with a continuation token. See
-        /// DocumentSearchResponse.ContinuationToken for more information.
+        /// This can be used in conjunction with Skip to implement client-side
+        /// paging of search results. If results are truncated due to
+        /// server-side paging, the response will include a continuation token
+        /// that can be passed to ContinueSearch to retrieve the next page of
+        /// results. See DocumentSearchResponse.ContinuationToken for more
+        /// information.  (see
+        /// https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx for
+        /// more information)
         /// </summary>
         public int? Top
         {

@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Common.Authentication
 
         TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
 
-        TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
+        TClient CreateClient<TClient>(AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
 
-        TClient CreateClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
+        TClient CreateClient<TClient>(AzureSMProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
 
         TClient CreateCustomClient<TClient>(params object[] parameters) where TClient : ServiceClient<TClient>;
 
@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Common.Authentication
         void AddAction(IClientAction action);
 
         void RemoveAction(Type actionType);
+
+        void AddHandler<T>(T handler) where T: DelegatingHandler, ICloneable;
+
+        void RemoveHandler(Type handlerType);
 
         /// <summary>
         /// Adds user agent to UserAgents collection with empty version.
@@ -56,6 +60,7 @@ namespace Microsoft.Azure.Common.Authentication
         /// <param name="productName">Product name.</param>
         /// <param name="productVersion">Product version.</param>
         void AddUserAgent(string productName, string productVersion);
+
         List<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }

@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Management.Search.Tests
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
-                ListQueryKeysResponse queryKeyResponse =
+                ListQueryKeysResult queryKeyResult =
                     searchMgmt.QueryKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
 
-                Assert.Equal(HttpStatusCode.OK, queryKeyResponse.StatusCode);
-                Assert.Equal(1, queryKeyResponse.QueryKeys.Count);
-                Assert.Null(queryKeyResponse.QueryKeys[0].Name);   // Default key has no name.
-                Assert.NotNull(queryKeyResponse.QueryKeys[0].Key);
-                Assert.NotEmpty(queryKeyResponse.QueryKeys[0].Key);
+                Assert.NotNull(queryKeyResult);
+                Assert.Equal(1, queryKeyResult.Value.Count);
+                Assert.Null(queryKeyResult.Value[0].Name);   // Default key has no name.
+                Assert.NotNull(queryKeyResult.Value[0].Key);
+                Assert.NotEmpty(queryKeyResult.Value[0].Key);
             });
         }
     }

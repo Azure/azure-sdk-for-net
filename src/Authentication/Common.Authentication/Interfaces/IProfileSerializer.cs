@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Common.Authentication
 {
     public interface IProfileSerializer
     {
-        string Serialize(AzureProfile profile);
+        string Serialize(AzureSMProfile profile);
 
-        bool Deserialize(string contents, AzureProfile profile);
+        bool Deserialize(string contents, AzureSMProfile profile);
 
         IList<string> DeserializeErrors { get; }
     }

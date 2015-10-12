@@ -96,6 +96,12 @@
     <ProjectTypeGuids />
   </PropertyGroup>
 
+  <ItemGroup Condition=" '$(SDKTestProject)' == 'true' and '$(AutoRestProjects)' == 'true' ">
+    <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs">
+      <Link>DisableTestRunParallel.cs</Link>
+    </Compile>
+  </ItemGroup>   
+  
   <Target Name="InformationAboutThisBuild" BeforeTargets="BeforeBuild">
     <Error Text="The current build type has not been defined." Condition=" '$(LibraryFxTarget)' == '' " />
     <Message Text="Current build type:            $(LibraryFxTarget)" />

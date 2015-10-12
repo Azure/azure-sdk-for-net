@@ -13,20 +13,20 @@
 // limitations under the License. 
 // 
 
-using System.Net;
 using Microsoft.Azure.Management.Search;
 using Microsoft.Azure.Management.Search.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     public class SearchServiceFixture : ResourceGroupFixture
     {
-        public SearchServiceFixture()
+        public override void Initialize(MockContext context)
         {
-            SearchManagementClient client = 
-                TestBase.GetServiceClient<SearchManagementClient>(new CSMTestEnvironmentFactory());
+            base.Initialize(context);
+
+            SearchManagementClient client = context.GetServiceClient<SearchManagementClient>();
 
             SearchServiceName = SearchTestUtilities.GenerateServiceName();
 
@@ -34,23 +34,23 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new SearchServiceCreateOrUpdateParameters()
                 {
                     Location = Location,
-                    Properties = new SearchServiceProperties() { Sku = new Sku(SkuType.Free) }
+                    Properties = new SearchServiceProperties() { Sku = new Sku() { Name = SkuType.Free } }
                 };
 
-            SearchServiceCreateOrUpdateResponse createServiceResponse =
+            SearchServiceResource service =
                 client.Services.CreateOrUpdate(ResourceGroupName, SearchServiceName, createServiceParameters);
-            Assert.Equal(HttpStatusCode.Created, createServiceResponse.StatusCode);
+            Assert.NotNull(service);
 
-            AdminKeyResponse adminKeyResponse = client.AdminKeys.List(ResourceGroupName, SearchServiceName);
-            Assert.Equal(HttpStatusCode.OK, adminKeyResponse.StatusCode);
+            AdminKeyResult adminKeyResult = client.AdminKeys.List(ResourceGroupName, SearchServiceName);
+            Assert.NotNull(adminKeyResult);
 
-            PrimaryApiKey = adminKeyResponse.PrimaryKey;
+            PrimaryApiKey = adminKeyResult.PrimaryKey;
 
-            ListQueryKeysResponse queryKeyResponse = client.QueryKeys.List(ResourceGroupName, SearchServiceName);
-            Assert.Equal(HttpStatusCode.OK, queryKeyResponse.StatusCode);
-            Assert.Equal(1, queryKeyResponse.QueryKeys.Count);
+            ListQueryKeysResult queryKeyResult = client.QueryKeys.List(ResourceGroupName, SearchServiceName);
+            Assert.NotNull(queryKeyResult);
+            Assert.Equal(1, queryKeyResult.Value.Count);
 
-            QueryApiKey = queryKeyResponse.QueryKeys[0].Key;
+            QueryApiKey = queryKeyResult.Value[0].Key;
         }
 
         public string SearchServiceName { get; private set; }

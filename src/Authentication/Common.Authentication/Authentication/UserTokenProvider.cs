@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Security.Cryptography;
 using Hyak.Common;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
@@ -20,6 +19,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Authentication;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Common.Authentication
 
                 if (result == null)
                 {
-                    throw new Exception(Resources.ExpiredRefreshToken);
+                    throw new AuthenticationException(Resources.ExpiredRefreshToken);
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         private AuthenticationContext CreateContext(AdalConfiguration config)
         {
-            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, AzureSession.TokenCache)
+            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, config.TokenCache)
             {
                 OwnerWindow = parentWindow
             };

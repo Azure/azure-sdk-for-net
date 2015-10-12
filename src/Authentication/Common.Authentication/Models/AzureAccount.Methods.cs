@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             return Properties.IsPropertySet(property);
         }
 
-        public List<AzureSubscription> GetSubscriptions(AzureProfile profile)
+        public List<AzureSubscription> GetSubscriptions(AzureSMProfile profile)
         {
             string subscriptions = string.Empty;
             List<AzureSubscription> subscriptionsList = new List<AzureSubscription>();

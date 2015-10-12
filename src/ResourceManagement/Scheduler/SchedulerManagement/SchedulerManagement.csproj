@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{241FDB3F-CA94-42B3-AD19-D4CD7FF02D59}</ProjectGuid>
+    <AutoRestProjects>true</AutoRestProjects>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.Scheduler</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.Scheduler</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.2.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.20\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\IJobCollectionsOperations.cs" />
+    <Compile Include="Generated\IJobsOperations.cs" />
+    <Compile Include="Generated\ISchedulerManagementClient.cs" />
+    <Compile Include="Generated\JobCollectionsOperations.cs" />
+    <Compile Include="Generated\JobCollectionsOperationsExtensions.cs" />
+    <Compile Include="Generated\JobsOperations.cs" />
+    <Compile Include="Generated\JobsOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\BasicAuthentication.cs" />
+    <Compile Include="Generated\Models\ClientCertAuthentication.cs" />
+    <Compile Include="Generated\Models\DayOfWeek.cs" />
+    <Compile Include="Generated\Models\HttpAuthentication.cs" />
+    <Compile Include="Generated\Models\HttpAuthenticationType.cs" />
+    <Compile Include="Generated\Models\HttpRequest.cs" />
+    <Compile Include="Generated\Models\JobAction.cs" />
+    <Compile Include="Generated\Models\JobActionType.cs" />
+    <Compile Include="Generated\Models\JobCollectionDefinition.cs" />
+    <Compile Include="Generated\Models\JobCollectionListResult.cs" />
+    <Compile Include="Generated\Models\JobCollectionProperties.cs" />
+    <Compile Include="Generated\Models\JobCollectionQuota.cs" />
+    <Compile Include="Generated\Models\JobCollectionState.cs" />
+    <Compile Include="Generated\Models\JobDefinition.cs" />
+    <Compile Include="Generated\Models\JobErrorAction.cs" />
+    <Compile Include="Generated\Models\JobExecutionStatus.cs" />
+    <Compile Include="Generated\Models\JobHistoryActionName.cs" />
+    <Compile Include="Generated\Models\JobHistoryDefinition.cs" />
+    <Compile Include="Generated\Models\JobHistoryDefinitionProperties.cs" />
+    <Compile Include="Generated\Models\JobHistoryListResult.cs" />
+    <Compile Include="Generated\Models\JobListResult.cs" />
+    <Compile Include="Generated\Models\JobMaxRecurrence.cs" />
+    <Compile Include="Generated\Models\JobProperties.cs" />
+    <Compile Include="Generated\Models\JobRecurrence.cs" />
+    <Compile Include="Generated\Models\JobRecurrenceSchedule.cs" />
+    <Compile Include="Generated\Models\JobRecurrenceScheduleMonthlyOccurrence.cs" />
+    <Compile Include="Generated\Models\JobScheduleDay.cs" />
+    <Compile Include="Generated\Models\JobState.cs" />
+    <Compile Include="Generated\Models\JobStatus.cs" />
+    <Compile Include="Generated\Models\OAuthAuthentication.cs" />
+    <Compile Include="Generated\Models\RecurrenceFrequency.cs" />
+    <Compile Include="Generated\Models\RetryPolicy.cs" />
+    <Compile Include="Generated\Models\RetryType.cs" />
+    <Compile Include="Generated\Models\Sku.cs" />
+    <Compile Include="Generated\Models\SkuDefinition.cs" />
+    <Compile Include="Generated\Models\StorageQueueMessage.cs" />
+    <Compile Include="Generated\SchedulerManagementClient.cs" />
+    <Compile Include="Generated\SchedulerManagementClientExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.Scheduler.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.Scheduler.nuspec" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+</Project>

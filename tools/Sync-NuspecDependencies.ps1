@@ -37,12 +37,6 @@ function SyncNuspecFile([string]$FolderPath)
         $assemblyFileVersion = "$packageVersion.0" 
         $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
 
-        #Updating AssemblyVersion
-        $assemblyVersion = "$majorVersion.0.0.0"
-        if ($majorVersion -eq "0") {
-            $assemblyVersion = "0.9.0.0"
-        }
-        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"       
         $newContent = $assemblyContent | Out-String
 
         if ($currentContent.CompareTo($newContent)  -ne 0) {

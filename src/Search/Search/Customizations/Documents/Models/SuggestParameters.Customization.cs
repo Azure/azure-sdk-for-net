@@ -31,6 +31,24 @@ namespace Microsoft.Azure.Search.Models
             return String.Join("&", GetAllOptions());
         }
 
+        internal SuggestParametersPayload ToPayload(string searchText, string suggesterName)
+        {
+            return new SuggestParametersPayload()
+            {
+                Filter = Filter,
+                Fuzzy = UseFuzzyMatching,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                OrderBy = OrderBy.ToCommaSeparatedString(),
+                Search = searchText,
+                SearchFields = SearchFields.ToCommaSeparatedString(),
+                Select = Select.Any() ? Select.ToCommaSeparatedString() : "*",
+                SuggesterName = suggesterName,
+                Top = Top
+            };
+        }
+
         private IEnumerable<QueryOption> GetAllOptions()
         {
             if (Filter != null)

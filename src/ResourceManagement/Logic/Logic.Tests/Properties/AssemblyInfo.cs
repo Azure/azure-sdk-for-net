@@ -20,5 +20,3 @@ using Xunit;
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: ComVisible(false)]
-
-[assembly: CollectionBehavior(DisableTestParallelization = true, MaxParallelThreads = 1)]

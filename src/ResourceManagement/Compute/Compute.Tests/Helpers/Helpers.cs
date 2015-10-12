@@ -13,12 +13,11 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest.Azure;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Compute.Tests

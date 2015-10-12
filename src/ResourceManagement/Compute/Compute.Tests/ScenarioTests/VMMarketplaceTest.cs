@@ -13,16 +13,11 @@
 // limitations under the License.
 //
 
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -40,7 +35,7 @@ namespace Compute.Tests
             return m_CrpClient.VirtualMachineImages.Get(m_location, vmmPublisherName, vmmOfferName, vmmSku, imageRef.Version);
         }
 
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestVMMarketplace()
         {
             using (MockContext context = MockContext.Start())
@@ -49,9 +44,9 @@ namespace Compute.Tests
 
                 ImageReference dummyImageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
                 try
                 {
@@ -80,7 +75,19 @@ namespace Compute.Tests
                         }; 
                     };
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    VirtualMachine vm1 = null;
+                    inputVM = null;
+                    try
+                    {
+                        vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Legal terms have not been accepted for this item on this subscription."))
+                        {
+                            return;
+                        }
+                    }
 
                     // Validate the VMM Plan field
                     ValidateMarketplaceVMPlanField(vm1, img);

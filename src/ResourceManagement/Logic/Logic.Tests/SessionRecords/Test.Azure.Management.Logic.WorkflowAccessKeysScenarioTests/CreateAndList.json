@@ -19,7 +19,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2015-07-29T05:14:26.1569447Z\",\r\n    \"changedTime\": \"2015-07-29T05:14:26.1569447Z\",\r\n    \"state\": \"Enabled\",\r\n    \"version\": \"08587634600194724697\",\r\n    \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf3826\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\"\r\n    },\r\n    \"definition\": {\r\n      \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {},\r\n      \"triggers\": {},\r\n      \"actions\": {\r\n        \"httpAction\": {\r\n          \"type\": \"Http\",\r\n          \"inputs\": {\r\n            \"method\": \"GET\",\r\n            \"uri\": \"invalidUri\"\r\n          },\r\n          \"conditions\": []\r\n        }\r\n      },\r\n      \"outputs\": {}\r\n    },\r\n    \"parameters\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf3826\",\r\n  \"name\": \"logicwf3826\",\r\n  \"type\": \"Microsoft.Logic/workflows\",\r\n  \"location\": \"westus\"\r\n}",
@@ -79,7 +79,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"notBefore\": \"2015-07-30T05:14:27.1496635Z\",\r\n    \"notAfter\": \"2015-08-05T05:14:27.1496635Z\"\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf3826/accessKeys/accesskey5611\",\r\n  \"name\": \"accesskey5611\",\r\n  \"type\": \"Microsoft.Logic/workflows/accessKeys\"\r\n}",
@@ -133,7 +133,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"notBefore\": \"2015-07-30T05:14:27.1496635Z\",\r\n        \"notAfter\": \"2015-08-05T05:14:27.1496635Z\"\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf3826/accessKeys/accesskey5611\",\r\n      \"name\": \"accesskey5611\",\r\n      \"type\": \"Microsoft.Logic/workflows/accessKeys\"\r\n    },\r\n    {\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf3826/accessKeys/default\",\r\n      \"name\": \"default\",\r\n      \"type\": \"Microsoft.Logic/workflows/accessKeys\"\r\n    }\r\n  ]\r\n}",

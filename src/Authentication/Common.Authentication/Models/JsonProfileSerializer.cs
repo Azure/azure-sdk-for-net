@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 {
     public class JsonProfileSerializer : IProfileSerializer
     {
-        public string Serialize(AzureProfile profile)
+        public string Serialize(AzureSMProfile profile)
         {
             return JsonConvert.SerializeObject(new
             {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }, Formatting.Indented);
         }
 
-        public bool Deserialize(string contents, AzureProfile profile)
+        public bool Deserialize(string contents, AzureSMProfile profile)
         {
             DeserializeErrors = new List<string>();
 

@@ -33,11 +33,11 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             ManagementClients = clients.ToList();
         }
 
-        public TClient CreateClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) 
+        public TClient CreateClient<TClient>(AzureSMProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) 
             where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = new TokenCloudCredentials(subscription.Id.ToString(), "fake_token");
-            Uri endpointUri = (new ProfileClient(profile)).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
+            Uri endpointUri = profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
             return CreateCustomClient<TClient>(creds, endpointUri);
         }
 
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             return CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
         }
 
-        public TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) 
+        public TClient CreateClient<TClient>(AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) 
             where TClient : ServiceClient<TClient>
         {
             return CreateClient<TClient>(profile.Context, endpoint);
@@ -76,6 +76,16 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
         }
 
         public void RemoveAction(Type actionType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddHandler<T>(T handler) where T : DelegatingHandler, ICloneable
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHandler(Type handlerType)
         {
             throw new NotImplementedException();
         }
