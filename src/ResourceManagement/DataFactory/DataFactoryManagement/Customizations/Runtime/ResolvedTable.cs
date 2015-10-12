@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
     internal class ResolvedTable
     {
-        public Table Table { get; internal set; }
+        public Dataset Dataset { get; internal set; }
         public LinkedService LinkedService { get; internal set; }
     }
 }

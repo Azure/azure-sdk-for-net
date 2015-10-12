@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string HcatalogLinkedServiceName { get; set; }
 
         /// <summary>
-        /// Define what options to use for generating/altering an input and output tables for an HDInsight activity
+        /// Define what options to use for generating/altering an input and output Datasets for an HDInsight activity
         /// </summary>
         public HDInsightSchemaGenerationProperties SchemaGeneration { get; set; }
 

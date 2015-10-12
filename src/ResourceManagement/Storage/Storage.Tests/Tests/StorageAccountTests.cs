@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
@@ -74,6 +75,51 @@ namespace Storage.Tests
                 Assert.Equal(createRequest.StorageAccount.Location, StorageManagementTestUtilities.DefaultLocation);
                 Assert.Equal(createRequest.StorageAccount.AccountType, AccountType.StandardGRS);
                 Assert.Empty(createRequest.StorageAccount.Tags);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountBeginCreateTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                StorageAccountCreateParameters parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                StorageAccountCreateResponse response = storageMgmtClient.StorageAccounts.BeginCreate(rgname, accountName, parameters);
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+
+                // Poll for creation
+                while (response.StatusCode == HttpStatusCode.Accepted)
+                {
+                    TestUtilities.Wait(response.RetryAfter * 1000);
+                    response = storageMgmtClient.GetCreateOperationStatus(response.OperationStatusLink);
+                }
+
+                // Verify create succeeded
+                StorageAccount result = response.StorageAccount;
+                Assert.Equal(result.Location, StorageManagementTestUtilities.DefaultLocation);
+                Assert.Equal(result.AccountType, AccountType.StandardGRS);
+                Assert.Equal(result.Tags.Count, 2);
+
+                // Make sure a second create returns immediately
+                response = storageMgmtClient.StorageAccounts.BeginCreate(rgname, accountName, parameters);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                // Verify create succeeded
+                Assert.Equal(result.Location, StorageManagementTestUtilities.DefaultLocation);
+                Assert.Equal(result.AccountType, AccountType.StandardGRS);
+                Assert.Equal(result.Tags.Count, 2);
             }
         }
 
@@ -203,7 +249,6 @@ namespace Storage.Tests
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
 
-
                 // Create resource group and storage account
                 var rgname1 = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
                 string accountName1 = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname1);
@@ -248,8 +293,8 @@ namespace Storage.Tests
                 Assert.NotNull(listKeysRequest.StorageAccountKeys.Key2);
 
                 // Regenerate keys
-                var regenRequest1 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, KeyName.Key1);
-                var regenRequest2 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, KeyName.Key2);
+                var regenRequest1 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key1");
+                var regenRequest2 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key2");
 
                 // Verify listed keys are the same as keys returned by the regenerate request
                 listKeysRequest = storageMgmtClient.StorageAccounts.ListKeys(rgname, accountName);
@@ -277,7 +322,7 @@ namespace Storage.Tests
                 string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
 
                 // Regenerate keys
-                var regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, KeyName.Key1);
+                var regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key1");
                 Assert.NotNull(regenRequest.StorageAccountKeys.Key1);
                 Assert.NotNull(regenRequest.StorageAccountKeys.Key2);
 
@@ -287,14 +332,13 @@ namespace Storage.Tests
                 Assert.Equal(regenRequest.StorageAccountKeys.Key2, listKeysRequest.StorageAccountKeys.Key2);
 
                 // Regenerate keys and verify that keys change
-                regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, KeyName.Key2);
+                regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key2");
                 Assert.Equal(regenRequest.StorageAccountKeys.Key1, listKeysRequest.StorageAccountKeys.Key1);
                 Assert.NotEqual(regenRequest.StorageAccountKeys.Key2, listKeysRequest.StorageAccountKeys.Key2);
             }
         }
 
-        // [Fact]
-        // TODO: Uncomment out test when CSM bug is fixed. Right now all will return ResourceNotFound
+        [Fact]
         public void StorageAccountCheckNameTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -304,7 +348,11 @@ namespace Storage.Tests
                 context.Start();
 
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
-                
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
+
+                // Create resource group
+                string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
                 var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
@@ -321,9 +369,6 @@ namespace Storage.Tests
                     + "characters in length and use numbers and lower-case letters only.", checkNameRequest.Message);
                 
                 // Check name of account that already exists
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
-
                 accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
                 checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
                 Assert.Equal(false, checkNameRequest.NameAvailable);
@@ -350,20 +395,18 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
 
-                // TODO: Remove wait when CSM is fixed
-                TestUtilities.Wait(30000);
-
                 // Update storage account type
                 var parameters = new StorageAccountUpdateParameters
                 {
                     AccountType = AccountType.StandardLRS
                 };
+                
                 var updateAccountTypeRequest = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
                 Assert.Equal(updateAccountTypeRequest.StorageAccount.AccountType, AccountType.StandardLRS);
 
                 var getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(getRequest.StorageAccount.AccountType, AccountType.StandardLRS);
-
+                
                 // Update storage tags
                 parameters = new StorageAccountUpdateParameters
                 {
@@ -399,11 +442,57 @@ namespace Storage.Tests
                     Assert.True(false, "This request should fail with the below code."); 
                 } catch (Hyak.Common.CloudException ex)
                 {
-                    Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.Conflict, ex.Response.StatusCode);
                     Assert.Equal("StorageDomainNameCouldNotVerify", ex.Error.Code);
                     Assert.True(ex.Error.Message != null && ex.Error.Message.StartsWith("The custom domain " + 
                         "name could not be verified. CNAME mapping from foo.example.com to "));
                 }
+            }
+        }
+
+        [Fact]
+        public void StorageAccountUsageTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+
+                // Query usage
+                var usages = storageMgmtClient.Usage.List();
+                Assert.Equal(1, usages.Count());
+                Assert.Equal(UsageUnit.Count, usages.First().Unit);
+                Assert.NotNull(usages.First().CurrentValue);
+                Assert.Equal(100, usages.First().Limit);
+                Assert.NotNull(usages.First().Name);
+                Assert.Equal("StorageAccounts", usages.First().Name.Value);
+                Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountGetOperationsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
+
+                var resource = new ResourceIdentity();
+                resource.ResourceProviderNamespace = "Microsoft.Storage";
+                resource.ResourceProviderApiVersion = "2015-06-15";
+                resource.ResourceName = "";
+                resource.ResourceType = "";
+                var ops = resourcesClient.ResourceProviderOperationDetails.List(resource);
+
+                Assert.Equal(ops.ResourceProviderOperationDetails.Count, 7);
             }
         }
     }

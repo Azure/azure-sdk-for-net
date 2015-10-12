@@ -282,7 +282,7 @@ namespace ResourceGroups.Tests
                       }
                     } 
                 ], 
-                '@odata.nextLink': 'https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk',
+                'nextLink': 'https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk',
                 }")
             };
             response.Headers.Add("x-ms-request-id", "1");
@@ -368,7 +368,7 @@ namespace ResourceGroups.Tests
                     'locked': 'false' 
                     } 
                 ], 
-                '@odata.nextLink': 'https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk',
+                'nextLink': 'https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk',
                 }")
             };
             response.Headers.Add("x-ms-request-id", "1");

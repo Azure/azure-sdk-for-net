@@ -53,8 +53,7 @@
         },
         "typeProperties": {
           "source": {
-            "type": "BlobSource",
-            "blobColumnSeparators": ","
+            "type": "BlobSource"
           },
           "sink": {
             "type": "SqlSink",

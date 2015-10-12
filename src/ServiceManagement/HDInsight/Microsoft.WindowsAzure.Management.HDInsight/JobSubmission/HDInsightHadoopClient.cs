@@ -366,8 +366,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission
                 // create local file in the targetdirectory.
                 var localFilePath = Path.Combine(targetDirectory, taskLogFilePath.Segments.Last());
                 var fileContentStream = await storageClient.Read(taskLogFilePath);
-                var fileContents = new StreamReader(fileContentStream).ReadToEnd();
-                File.WriteAllText(localFilePath, fileContents);
+                using (var localFileStream = File.Create(localFilePath))
+                {
+                    await fileContentStream.CopyToAsync(localFileStream);
+                }
             }
         }
 

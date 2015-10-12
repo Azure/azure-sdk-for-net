@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _customEmails;
         
         /// <summary>
-        /// Optional. A list of administrator's custom email addresses notifiy
-        /// of the activation of the alert.
+        /// Optional. Gets or sets the list of administrator's custom email
+        /// addresses notifiy of the activation of the alert.
         /// </summary>
         public IList<string> CustomEmails
         {
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _sendToServiceOwners;
         
         /// <summary>
-        /// Optional. Whether the administrators (service and
-        /// co-adiminstrators) of the service should be notified when the
-        /// alert is activated.
+        /// Optional. Gets or sets the flag to send e-mails to the service
+        /// owners. Whether the administrators (service and co-adiminstrators)
+        /// of the service should be notified when the alert is activated.
         /// </summary>
         public bool SendToServiceOwners
         {

@@ -83,6 +83,8 @@ namespace Authorization.Tests
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
+
+                TestUtilities.Wait(1000*10);
             }
         }
         
@@ -138,6 +140,11 @@ namespace Authorization.Tests
                 var objectId = this.GraphClient.CreateGroup("testGroup" + i);
                 this.createdGroups.Add(objectId);
             }
+        }
+
+        internal void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            this.GraphClient.AddMemberToGroup(groupId, memberObjectId);
         }
 
         private void CleanupTestData()

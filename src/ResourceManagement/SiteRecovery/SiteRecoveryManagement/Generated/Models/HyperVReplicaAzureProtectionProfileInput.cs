@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class HyperVReplicaAzureProtectionProfileInput : ProtectionProfileProviderSpecificInput
     {
-        private int _appConsistencyFreq;
+        private int _applicationConsistentSnapshotFrequencyInHours;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public int AppConsistencyFreq
+        public int ApplicationConsistentSnapshotFrequencyInHours
         {
-            get { return this._appConsistencyFreq; }
-            set { this._appConsistencyFreq = value; }
+            get { return this._applicationConsistentSnapshotFrequencyInHours; }
+            set { this._applicationConsistentSnapshotFrequencyInHours = value; }
         }
         
         private string _encryption;
@@ -54,15 +54,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._encryption = value; }
         }
         
-        private System.TimeSpan? _onlineIrStartTime;
+        private System.TimeSpan? _onlineReplicationStartTime;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public System.TimeSpan? OnlineIrStartTime
+        public System.TimeSpan? OnlineReplicationStartTime
         {
-            get { return this._onlineIrStartTime; }
-            set { this._onlineIrStartTime = value; }
+            get { return this._onlineReplicationStartTime; }
+            set { this._onlineReplicationStartTime = value; }
         }
         
         private int _recoveryPointHistoryDuration;

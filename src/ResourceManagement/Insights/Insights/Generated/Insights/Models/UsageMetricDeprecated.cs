@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Insights.Models
         private double _currentValue;
         
         /// <summary>
-        /// Optional. The current value for the usage metric.
+        /// Optional. Gets or sets the current value for the usage metric.
         /// </summary>
         public double CurrentValue
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Get the usage display name.
+        /// Optional. Gets or sets the usage display name.
         /// </summary>
         public string DisplayName
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Insights.Models
         private double _limit;
         
         /// <summary>
-        /// Optional. The quota limit the usage metric.
+        /// Optional. Gets or sets the quota limit the usage metric.
         /// </summary>
         public double Limit
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Get the usage metric name.
+        /// Optional. Gets or sets the usage metric name.
         /// </summary>
         public string Name
         {
@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _nextResetTime;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// Optional. Gets or sets the next reset date/time for the current
+        /// value.
         /// </summary>
         public string NextResetTime
         {
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.Insights.Models
         private System.TimeSpan? _quotaPeriod;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// Optional. Gets or sets the duration of the quota period.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {
@@ -98,7 +99,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. The unit for the usage metric.
+        /// Optional. Gets or sets the unit for the usage metric.
         /// </summary>
         public string Unit
         {

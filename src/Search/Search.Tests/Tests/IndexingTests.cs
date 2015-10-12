@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
 
-                DateTime localDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Local);
+                // Can't test local date time since we might be testing against a pre-recorded mock response.
                 DateTime utcDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 DateTime unspecifiedDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
@@ -284,21 +284,17 @@ namespace Microsoft.Azure.Search.Tests
                     IndexBatch.Create(
                         new[] 
                         { 
-                            IndexAction.Create(new Book() { ISBN = "1", PublishDate = localDateTime }),
-                            IndexAction.Create(new Book() { ISBN = "2", PublishDate = utcDateTime }),
-                            IndexAction.Create(new Book() { ISBN = "3", PublishDate = unspecifiedDateTime })
+                            IndexAction.Create(new Book() { ISBN = "1", PublishDate = utcDateTime }),
+                            IndexAction.Create(new Book() { ISBN = "2", PublishDate = unspecifiedDateTime })
                         });
 
                 indexClient.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
                 DocumentGetResponse<Book> getResponse = indexClient.Documents.Get<Book>("1");
-                Assert.Equal(localDateTime.ToUniversalTime(), getResponse.Document.PublishDate);
-
-                getResponse = indexClient.Documents.Get<Book>("2");
                 Assert.Equal(utcDateTime, getResponse.Document.PublishDate);
 
-                getResponse = indexClient.Documents.Get<Book>("3");
+                getResponse = indexClient.Documents.Get<Book>("2");
                 Assert.Equal(utcDateTime, getResponse.Document.PublishDate);
             });
         }
@@ -326,7 +322,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
 
-                DateTime localDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Local);
+                // Can't test local date time since we might be testing against a pre-recorded mock response.
                 DateTime utcDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 DateTime unspecifiedDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
@@ -334,21 +330,17 @@ namespace Microsoft.Azure.Search.Tests
                     new IndexBatch(
                         new[] 
                         { 
-                            new IndexAction(new Document() { { "ISBN", "1" }, { "PublishDate", localDateTime } }),
-                            new IndexAction(new Document() { { "ISBN", "2" }, { "PublishDate", utcDateTime } }),
-                            new IndexAction(new Document() { { "ISBN", "3" }, { "PublishDate", unspecifiedDateTime } })
+                            new IndexAction(new Document() { { "ISBN", "1" }, { "PublishDate", utcDateTime } }),
+                            new IndexAction(new Document() { { "ISBN", "2" }, { "PublishDate", unspecifiedDateTime } })
                         });
 
                 indexClient.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
                 DocumentGetResponse getResponse = indexClient.Documents.Get("1");
-                Assert.Equal(new DateTimeOffset(localDateTime), getResponse.Document["PublishDate"]);
-
-                getResponse = indexClient.Documents.Get("2");
                 Assert.Equal(new DateTimeOffset(utcDateTime), getResponse.Document["PublishDate"]);
 
-                getResponse = indexClient.Documents.Get("3");
+                getResponse = indexClient.Documents.Get("2");
                 Assert.Equal(new DateTimeOffset(utcDateTime), getResponse.Document["PublishDate"]);
             });
         }

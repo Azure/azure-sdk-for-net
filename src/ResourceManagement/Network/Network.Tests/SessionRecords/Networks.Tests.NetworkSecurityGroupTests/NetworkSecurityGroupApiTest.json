@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network\",\r\n  \"namespace\": \"Microsoft.Network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"routeTables\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkTrafficManagerNameAvailability\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network\",\r\n  \"namespace\": \"Microsoft.Network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"routeTables\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkTrafficManagerNameAvailability\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "4068"
+          "4888"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14990"
         ],
         "x-ms-request-id": [
-          "b458270b-1b70-4d58-81b1-b9ec23684c81"
+          "c165a7b1-ba7b-4e1d-8b86-fe3d08028ff1"
         ],
         "x-ms-correlation-request-id": [
-          "b458270b-1b70-4d58-81b1-b9ec23684c81"
+          "c165a7b1-ba7b-4e1d-8b86-fe3d08028ff1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211914Z:b458270b-1b70-4d58-81b1-b9ec23684c81"
+          "WESTUS:20150916T000656Z:c165a7b1-ba7b-4e1d-8b86-fe3d08028ff1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,31 +43,31 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:14 GMT"
+          "Wed, 16 Sep 2015 00:06:56 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourcegroups/csmrg871?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlZ3JvdXBzL2NzbXJnODcxP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourcegroups/csmrg5373?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlZ3JvdXBzL2NzbXJnNTM3Mz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "33"
+          "29"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871\",\r\n  \"name\": \"csmrg871\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373\",\r\n  \"name\": \"csmrg5373\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "173"
+          "171"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -79,16 +79,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-request-id": [
-          "8b57f3b4-4d56-4178-8309-5fab3f733d06"
+          "9983227c-8f79-4014-8f87-8e42b87b3913"
         ],
         "x-ms-correlation-request-id": [
-          "8b57f3b4-4d56-4178-8309-5fab3f733d06"
+          "9983227c-8f79-4014-8f87-8e42b87b3913"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211916Z:8b57f3b4-4d56-4178-8309-5fab3f733d06"
+          "WESTUS:20150916T000656Z:9983227c-8f79-4014-8f87-8e42b87b3913"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -97,31 +97,31 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:16 GMT"
+          "Wed, 16 Sep 2015 00:06:56 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlR3JvdXBzL2NzbXJnODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHMvYXpzbW5ldDg0ODE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNTM3My9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya1NlY3VyaXR5R3JvdXBzL2F6c21uZXQxODIyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"securityRules\": [],\r\n    \"defaultSecurityRules\": []\r\n  },\r\n  \"location\": \"West Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"securityRules\": [],\r\n    \"defaultSecurityRules\": []\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "131"
+          "127"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet8481\",\r\n  \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481\",\r\n  \"etag\": \"W/\\\"1ef3379f-2ad7-4fd9-ae52-dc67caa3f75d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"0032cd8f-c440-4323-a243-84555a511b12\",\r\n    \"defaultSecurityRules\": [\r\n      {\r\n        \"name\": \"AllowVnetInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all inbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowVnetOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowInternetOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowInternetOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"Internet\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all outbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet1822\",\r\n  \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822\",\r\n  \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"d1e6f3bd-0cc5-48e9-9f4d-949cc40bc766\",\r\n    \"securityRules\": [],\r\n    \"defaultSecurityRules\": [\r\n      {\r\n        \"name\": \"AllowVnetInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetInBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllInBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Deny all inbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowVnetOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetOutBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowInternetOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowInternetOutBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"Internet\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllOutBound\",\r\n        \"etag\": \"W/\\\"86dfb1de-6319-469d-b55f-b36cf7a64f81\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"description\": \"Deny all outbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "4618"
+          "5034"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -136,10 +136,10 @@
           "10"
         ],
         "x-ms-request-id": [
-          "e4568098-a619-45d7-ab1e-0a306e165002"
+          "ec5ef948-a223-4086-a24d-28f704739b19"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/locations/nrp7/operations/e4568098-a619-45d7-ab1e-0a306e165002?api-version=2015-05-01-preview"
+          "https://management.azure.com/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operations/ec5ef948-a223-4086-a24d-28f704739b19?api-version=2015-05-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -152,23 +152,23 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "6cd867b8-0d27-42d4-9e19-d0032aedc44f"
+          "b4491145-2e37-4c6f-9581-8a0cb5dc7eaa"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211919Z:6cd867b8-0d27-42d4-9e19-d0032aedc44f"
+          "WESTUS:20150916T000658Z:b4491145-2e37-4c6f-9581-8a0cb5dc7eaa"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:19 GMT"
+          "Wed, 16 Sep 2015 00:06:58 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/locations/nrp7/operations/e4568098-a619-45d7-ab1e-0a306e165002?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwNy9vcGVyYXRpb25zL2U0NTY4MDk4LWE2MTktNDVkNy1hYjFlLTBhMzA2ZTE2NTAwMj9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operations/ec5ef948-a223-4086-a24d-28f704739b19?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvbnMvZWM1ZWY5NDgtYTIyMy00MDg2LWEyNGQtMjhmNzA0NzM5YjE5P2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -194,7 +194,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "71c16ff1-5e13-4d07-beac-2bcabcc00aa0"
+          "7f29e26f-401a-4ab6-ac47-8855f81b3cd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -207,23 +207,23 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14989"
         ],
         "x-ms-correlation-request-id": [
-          "eaffc6c9-c364-4419-ae69-9f9eb2c91bdb"
+          "2ac9df14-b638-46c6-ba39-b11313db1144"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211920Z:eaffc6c9-c364-4419-ae69-9f9eb2c91bdb"
+          "WESTUS:20150916T000658Z:2ac9df14-b638-46c6-ba39-b11313db1144"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:20 GMT"
+          "Wed, 16 Sep 2015 00:06:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlR3JvdXBzL2NzbXJnODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHMvYXpzbW5ldDg0ODE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNTM3My9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya1NlY3VyaXR5R3JvdXBzL2F6c21uZXQxODIyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -231,10 +231,10 @@
           "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet8481\",\r\n  \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481\",\r\n  \"etag\": \"W/\\\"bb6f996a-2dea-47e0-abd2-39610446a77c\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"0032cd8f-c440-4323-a243-84555a511b12\",\r\n    \"defaultSecurityRules\": [\r\n      {\r\n        \"name\": \"AllowVnetInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllInBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllInBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all inbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowVnetOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowInternetOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowInternetOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"Internet\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllOutBound\",\r\n        \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllOutBound\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all outbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet1822\",\r\n  \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822\",\r\n  \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"d1e6f3bd-0cc5-48e9-9f4d-949cc40bc766\",\r\n    \"securityRules\": [],\r\n    \"defaultSecurityRules\": [\r\n      {\r\n        \"name\": \"AllowVnetInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetInBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllInBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllInBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all inbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Inbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowVnetOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetOutBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65000,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"AllowInternetOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowInternetOutBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"Internet\",\r\n          \"access\": \"Allow\",\r\n          \"priority\": 65001,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"DenyAllOutBound\",\r\n        \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllOutBound\",\r\n        \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"description\": \"Deny all outbound traffic\",\r\n          \"protocol\": \"*\",\r\n          \"sourcePortRange\": \"*\",\r\n          \"destinationPortRange\": \"*\",\r\n          \"sourceAddressPrefix\": \"*\",\r\n          \"destinationAddressPrefix\": \"*\",\r\n          \"access\": \"Deny\",\r\n          \"priority\": 65500,\r\n          \"direction\": \"Outbound\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "4619"
+          "5041"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -246,7 +246,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "72d8f09e-a50d-498f-b583-875b53b537a5"
+          "c6eb6a1e-b4ed-4295-8c11-40be1bb461a8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -255,30 +255,30 @@
           "no-cache"
         ],
         "ETag": [
-          "W/\"bb6f996a-2dea-47e0-abd2-39610446a77c\""
+          "W/\"6348c990-cf27-49ba-9a46-9e55cc9ac345\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14988"
         ],
         "x-ms-correlation-request-id": [
-          "e36ee8bc-fb8a-4752-9e6d-0dacc9ad2391"
+          "311d8272-0175-4396-a78d-8d78693defc5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211920Z:e36ee8bc-fb8a-4752-9e6d-0dacc9ad2391"
+          "WESTUS:20150916T000659Z:311d8272-0175-4396-a78d-8d78693defc5"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:20 GMT"
+          "Wed, 16 Sep 2015 00:06:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlR3JvdXBzL2NzbXJnODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNTM3My9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya1NlY3VyaXR5R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -286,10 +286,10 @@
           "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet8481\",\r\n      \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481\",\r\n      \"etag\": \"W/\\\"bb6f996a-2dea-47e0-abd2-39610446a77c\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"0032cd8f-c440-4323-a243-84555a511b12\",\r\n        \"defaultSecurityRules\": [\r\n          {\r\n            \"name\": \"AllowVnetInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowAzureLoadBalancerInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from azure load balancer\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all inbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowVnetOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowInternetOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowInternetOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"Internet\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all outbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"location\": \"westeurope\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet1822\",\r\n      \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822\",\r\n      \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d1e6f3bd-0cc5-48e9-9f4d-949cc40bc766\",\r\n        \"securityRules\": [],\r\n        \"defaultSecurityRules\": [\r\n          {\r\n            \"name\": \"AllowVnetInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowAzureLoadBalancerInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from azure load balancer\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all inbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowVnetOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowInternetOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowInternetOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"Internet\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all outbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "5095"
+          "5549"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -301,7 +301,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e8120105-7619-4562-bf21-772f5f2da8ae"
+          "17aa3b63-95cd-4ee8-bae8-5e6601e36175"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -314,23 +314,23 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14987"
         ],
         "x-ms-correlation-request-id": [
-          "ac76bf3e-f6b0-4ff7-a3a7-ff2c42f9cbed"
+          "5acfbda8-3596-409a-9e89-8ded091f6903"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211920Z:ac76bf3e-f6b0-4ff7-a3a7-ff2c42f9cbed"
+          "WESTUS:20150916T000659Z:5acfbda8-3596-409a-9e89-8ded091f6903"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:20 GMT"
+          "Wed, 16 Sep 2015 00:06:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlR3JvdXBzL2NzbXJnODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNTM3My9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya1NlY3VyaXR5R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -353,7 +353,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4b60796d-5fc4-45d9-925b-fc36bc1c9b2c"
+          "11a0c3ff-bfcf-4999-bc06-76a4479afa35"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -366,23 +366,23 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "d03cf2dd-7b73-4be3-97c4-ef4763b10cfe"
+          "70918b94-6f09-4a5e-bee9-6769e1ed2df3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211923Z:d03cf2dd-7b73-4be3-97c4-ef4763b10cfe"
+          "WESTUS:20150916T000709Z:70918b94-6f09-4a5e-bee9-6769e1ed2df3"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:22 GMT"
+          "Wed, 16 Sep 2015 00:07:09 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/networkSecurityGroups?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -390,10 +390,10 @@
           "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet8481\",\r\n      \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481\",\r\n      \"etag\": \"W/\\\"bb6f996a-2dea-47e0-abd2-39610446a77c\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"0032cd8f-c440-4323-a243-84555a511b12\",\r\n        \"defaultSecurityRules\": [\r\n          {\r\n            \"name\": \"AllowVnetInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowAzureLoadBalancerInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from azure load balancer\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllInBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllInBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all inbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowVnetOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowVnetOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowInternetOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/AllowInternetOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"Internet\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllOutBound\",\r\n            \"id\": \"/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481/defaultSecurityRules/DenyAllOutBound\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all outbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"location\": \"westeurope\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet1822\",\r\n      \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822\",\r\n      \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d1e6f3bd-0cc5-48e9-9f4d-949cc40bc766\",\r\n        \"securityRules\": [],\r\n        \"defaultSecurityRules\": [\r\n          {\r\n            \"name\": \"AllowVnetInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowAzureLoadBalancerInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow inbound traffic from azure load balancer\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllInBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllInBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all inbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Inbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowVnetOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowVnetOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n              \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65000,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"AllowInternetOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/AllowInternetOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"Internet\",\r\n              \"access\": \"Allow\",\r\n              \"priority\": 65001,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          },\r\n          {\r\n            \"name\": \"DenyAllOutBound\",\r\n            \"id\": \"/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822/defaultSecurityRules/DenyAllOutBound\",\r\n            \"etag\": \"W/\\\"6348c990-cf27-49ba-9a46-9e55cc9ac345\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"description\": \"Deny all outbound traffic\",\r\n              \"protocol\": \"*\",\r\n              \"sourcePortRange\": \"*\",\r\n              \"destinationPortRange\": \"*\",\r\n              \"sourceAddressPrefix\": \"*\",\r\n              \"destinationAddressPrefix\": \"*\",\r\n              \"access\": \"Deny\",\r\n              \"priority\": 65500,\r\n              \"direction\": \"Outbound\"\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "5095"
+          "5549"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -405,7 +405,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3fc5d5f6-3b92-454f-b16b-7f642b0a9244"
+          "0c4483a5-b866-46a1-8f56-2e256341ec7c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -418,23 +418,23 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14986"
         ],
         "x-ms-correlation-request-id": [
-          "2e93ed6d-2322-46d1-83a8-9fc335889c62"
+          "f9ac19b9-bfa3-414e-933d-678889574cb9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211920Z:2e93ed6d-2322-46d1-83a8-9fc335889c62"
+          "WESTUS:20150916T000659Z:f9ac19b9-bfa3-414e-933d-678889574cb9"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:20 GMT"
+          "Wed, 16 Sep 2015 00:06:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/resourceGroups/csmrg871/providers/Microsoft.Network/networkSecurityGroups/azsmnet8481?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Jlc291cmNlR3JvdXBzL2NzbXJnODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrU2VjdXJpdHlHcm91cHMvYXpzbW5ldDg0ODE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/resourceGroups/csmrg5373/providers/Microsoft.Network/networkSecurityGroups/azsmnet1822?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNTM3My9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya1NlY3VyaXR5R3JvdXBzL2F6c21uZXQxODIyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -457,10 +457,10 @@
           "10"
         ],
         "x-ms-request-id": [
-          "c8403373-1e4f-476d-9edf-50f218d54a4a"
+          "bec135a7-de41-42bd-8e01-d561b431260e"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/locations/nrp7/operations/c8403373-1e4f-476d-9edf-50f218d54a4a?api-version=2015-05-01-preview"
+          "https://management.azure.com/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operations/bec135a7-de41-42bd-8e01-d561b431260e?api-version=2015-05-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -469,30 +469,85 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/locations/nrp7/operationResults/c8403373-1e4f-476d-9edf-50f218d54a4a?api-version=2015-05-01-preview"
+          "https://management.azure.com/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operationResults/bec135a7-de41-42bd-8e01-d561b431260e?api-version=2015-05-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "8e91feb7-19bb-490d-a926-ea1d90694739"
+          "7d5c1390-e78d-4fe3-b05e-84d90e684aac"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211922Z:8e91feb7-19bb-490d-a926-ea1d90694739"
+          "WESTUS:20150916T000659Z:7d5c1390-e78d-4fe3-b05e-84d90e684aac"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:22 GMT"
+          "Wed, 16 Sep 2015 00:06:59 GMT"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/6dfcf2d3-8682-4606-943d-29b694b4c8c4/providers/Microsoft.Network/locations/nrp7/operations/c8403373-1e4f-476d-9edf-50f218d54a4a?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmRmY2YyZDMtODY4Mi00NjA2LTk0M2QtMjliNjk0YjRjOGM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwNy9vcGVyYXRpb25zL2M4NDAzMzczLTFlNGYtNDc2ZC05ZWRmLTUwZjIxOGQ1NGE0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operations/bec135a7-de41-42bd-8e01-d561b431260e?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvbnMvYmVjMTM1YTctZGU0MS00MmJkLThlMDEtZDU2MWI0MzEyNjBlP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-05-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "30"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0abb0162-e740-4cd9-a2c5-08c68827514c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "e1fec1e9-6d17-4a89-af0d-1871d71a486e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150916T000659Z:e1fec1e9-6d17-4a89-af0d-1871d71a486e"
+        ],
+        "Date": [
+          "Wed, 16 Sep 2015 00:06:59 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3b2305ad-4c50-4c78-ba0f-08eeae863789/providers/Microsoft.Network/locations/westus/operations/bec135a7-de41-42bd-8e01-d561b431260e?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2IyMzA1YWQtNGM1MC00Yzc4LWJhMGYtMDhlZWFlODYzNzg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvbnMvYmVjMTM1YTctZGU0MS00MmJkLThlMDEtZDU2MWI0MzEyNjBlP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -518,7 +573,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "efe66d8b-d9e0-473a-b78f-09e5f050f714"
+          "859fead3-6109-4e82-ae78-47e1c9594071"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -531,16 +586,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14984"
         ],
         "x-ms-correlation-request-id": [
-          "1c8b969a-f1c0-40f9-a2b5-fad0e0e68e0a"
+          "687de9fc-f300-4353-99f0-c06eb88ceea0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150717T211922Z:1c8b969a-f1c0-40f9-a2b5-fad0e0e68e0a"
+          "WESTUS:20150916T000709Z:687de9fc-f300-4353-99f0-c06eb88ceea0"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 21:19:22 GMT"
+          "Wed, 16 Sep 2015 00:07:09 GMT"
         ]
       },
       "StatusCode": 200
@@ -548,11 +603,11 @@
   ],
   "Names": {
     "NetworkSecurityGroupApiTest": [
-      "csmrg871",
-      "azsmnet8481"
+      "csmrg5373",
+      "azsmnet1822"
     ]
   },
   "Variables": {
-    "SubscriptionId": "6dfcf2d3-8682-4606-943d-29b694b4c8c4"
+    "SubscriptionId": "3b2305ad-4c50-4c78-ba0f-08eeae863789"
   }
 }

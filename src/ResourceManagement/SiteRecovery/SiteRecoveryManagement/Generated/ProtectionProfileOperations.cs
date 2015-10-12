@@ -30,6 +30,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Management.SiteRecovery.Models;
@@ -193,7 +194,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -369,7 +370,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -489,18 +490,37 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         
                         replicationProviderSettingsValue["recoveryPointHistoryDuration"] = derived2.RecoveryPointHistoryDuration;
                         
-                        replicationProviderSettingsValue["appConsistencyFreq"] = derived2.AppConsistencyFreq;
+                        replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"] = derived2.ApplicationConsistentSnapshotFrequencyInHours;
                         
                         replicationProviderSettingsValue["replicationInterval"] = derived2.ReplicationInterval;
                         
-                        if (derived2.OnlineIrStartTime != null)
+                        if (derived2.OnlineReplicationStartTime != null)
                         {
-                            replicationProviderSettingsValue["onlineIrStartTime"] = derived2.OnlineIrStartTime.Value.ToString();
+                            replicationProviderSettingsValue["onlineReplicationStartTime"] = derived2.OnlineReplicationStartTime.Value.ToString();
                         }
                         
                         if (derived2.StorageAccounts != null)
                         {
-                            replicationProviderSettingsValue["storageAccounts"] = derived2.StorageAccounts.ToString();
+                            if (derived2.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.StorageAccounts).IsInitialized)
+                            {
+                                JArray storageAccountsArray = new JArray();
+                                foreach (CustomerStorageAccount storageAccountsItem in derived2.StorageAccounts)
+                                {
+                                    JObject customerStorageAccountValue = new JObject();
+                                    storageAccountsArray.Add(customerStorageAccountValue);
+                                    
+                                    if (storageAccountsItem.StorageAccountName != null)
+                                    {
+                                        customerStorageAccountValue["storageAccountName"] = storageAccountsItem.StorageAccountName;
+                                    }
+                                    
+                                    if (storageAccountsItem.SubscriptionId != null)
+                                    {
+                                        customerStorageAccountValue["subscriptionId"] = storageAccountsItem.SubscriptionId;
+                                    }
+                                }
+                                replicationProviderSettingsValue["storageAccounts"] = storageAccountsArray;
+                            }
                         }
                         
                         if (derived2.Encryption != null)
@@ -655,7 +675,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -831,7 +851,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -890,7 +910,123 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (input.ReplicationProviderSettings != null)
                 {
-                    disassociateProtectionProfileInputValue["replicationProviderSettings"] = input.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    disassociateProtectionProfileInputValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (input.ReplicationProviderSettings is HyperVReplicaProtectionProfileInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "HyperVReplicaProtectionProfileInput";
+                        HyperVReplicaProtectionProfileInput derived = ((HyperVReplicaProtectionProfileInput)input.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["replicationFrequencyInSeconds"] = derived.ReplicationFrequencyInSeconds;
+                        
+                        replicationProviderSettingsValue["recoveryPoints"] = derived.RecoveryPoints;
+                        
+                        replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"] = derived.ApplicationConsistentSnapshotFrequencyInHours;
+                        
+                        if (derived.Compression != null)
+                        {
+                            replicationProviderSettingsValue["compression"] = derived.Compression;
+                        }
+                        
+                        if (derived.InitialReplicationMethod != null)
+                        {
+                            replicationProviderSettingsValue["initialReplicationMethod"] = derived.InitialReplicationMethod;
+                        }
+                        
+                        if (derived.OnlineReplicationStartTime != null)
+                        {
+                            replicationProviderSettingsValue["onlineReplicationStartTime"] = derived.OnlineReplicationStartTime.Value.ToString();
+                        }
+                        
+                        if (derived.OfflineReplicationImportPath != null)
+                        {
+                            replicationProviderSettingsValue["offlineReplicationImportPath"] = derived.OfflineReplicationImportPath;
+                        }
+                        
+                        if (derived.OfflineReplicationExportPath != null)
+                        {
+                            replicationProviderSettingsValue["offlineReplicationExportPath"] = derived.OfflineReplicationExportPath;
+                        }
+                        
+                        replicationProviderSettingsValue["replicationPort"] = derived.ReplicationPort;
+                        
+                        replicationProviderSettingsValue["allowedAuthenticationType"] = derived.AllowedAuthenticationType;
+                        
+                        if (derived.ReplicaDeletion != null)
+                        {
+                            replicationProviderSettingsValue["replicaDeletion"] = derived.ReplicaDeletion;
+                        }
+                    }
+                    if (input.ReplicationProviderSettings is HyperVReplicaAzureProtectionProfileInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "HyperVReplicaAzureProtectionProfileInput";
+                        HyperVReplicaAzureProtectionProfileInput derived2 = ((HyperVReplicaAzureProtectionProfileInput)input.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["recoveryPointHistoryDuration"] = derived2.RecoveryPointHistoryDuration;
+                        
+                        replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"] = derived2.ApplicationConsistentSnapshotFrequencyInHours;
+                        
+                        replicationProviderSettingsValue["replicationInterval"] = derived2.ReplicationInterval;
+                        
+                        if (derived2.OnlineReplicationStartTime != null)
+                        {
+                            replicationProviderSettingsValue["onlineReplicationStartTime"] = derived2.OnlineReplicationStartTime.Value.ToString();
+                        }
+                        
+                        if (derived2.StorageAccounts != null)
+                        {
+                            if (derived2.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.StorageAccounts).IsInitialized)
+                            {
+                                JArray storageAccountsArray = new JArray();
+                                foreach (CustomerStorageAccount storageAccountsItem in derived2.StorageAccounts)
+                                {
+                                    JObject customerStorageAccountValue = new JObject();
+                                    storageAccountsArray.Add(customerStorageAccountValue);
+                                    
+                                    if (storageAccountsItem.StorageAccountName != null)
+                                    {
+                                        customerStorageAccountValue["storageAccountName"] = storageAccountsItem.StorageAccountName;
+                                    }
+                                    
+                                    if (storageAccountsItem.SubscriptionId != null)
+                                    {
+                                        customerStorageAccountValue["subscriptionId"] = storageAccountsItem.SubscriptionId;
+                                    }
+                                }
+                                replicationProviderSettingsValue["storageAccounts"] = storageAccountsArray;
+                            }
+                        }
+                        
+                        if (derived2.Encryption != null)
+                        {
+                            replicationProviderSettingsValue["encryption"] = derived2.Encryption;
+                        }
+                    }
+                    if (input.ReplicationProviderSettings is SanProtectionProfileInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "SanProtectionProfileInput";
+                        SanProtectionProfileInput derived3 = ((SanProtectionProfileInput)input.ReplicationProviderSettings);
+                        
+                        if (derived3.CloudId != null)
+                        {
+                            replicationProviderSettingsValue["cloudId"] = derived3.CloudId;
+                        }
+                        
+                        if (derived3.RemoteCloudId != null)
+                        {
+                            replicationProviderSettingsValue["remoteCloudId"] = derived3.RemoteCloudId;
+                        }
+                        
+                        if (derived3.ArrayUniqueId != null)
+                        {
+                            replicationProviderSettingsValue["arrayUniqueId"] = derived3.ArrayUniqueId;
+                        }
+                        
+                        if (derived3.RemoteArrayUniqueId != null)
+                        {
+                            replicationProviderSettingsValue["remoteArrayUniqueId"] = derived3.RemoteArrayUniqueId;
+                        }
+                    }
                 }
                 
                 disassociateProtectionProfileInputValue["primaryProtectionContainerId"] = input.PrimaryProtectionContainerId;
@@ -1029,7 +1165,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1134,18 +1270,37 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     
                     replicationProviderSettingsValue["recoveryPointHistoryDuration"] = derived2.RecoveryPointHistoryDuration;
                     
-                    replicationProviderSettingsValue["appConsistencyFreq"] = derived2.AppConsistencyFreq;
+                    replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"] = derived2.ApplicationConsistentSnapshotFrequencyInHours;
                     
                     replicationProviderSettingsValue["replicationInterval"] = derived2.ReplicationInterval;
                     
-                    if (derived2.OnlineIrStartTime != null)
+                    if (derived2.OnlineReplicationStartTime != null)
                     {
-                        replicationProviderSettingsValue["onlineIrStartTime"] = derived2.OnlineIrStartTime.Value.ToString();
+                        replicationProviderSettingsValue["onlineReplicationStartTime"] = derived2.OnlineReplicationStartTime.Value.ToString();
                     }
                     
                     if (derived2.StorageAccounts != null)
                     {
-                        replicationProviderSettingsValue["storageAccounts"] = derived2.StorageAccounts.ToString();
+                        if (derived2.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.StorageAccounts).IsInitialized)
+                        {
+                            JArray storageAccountsArray = new JArray();
+                            foreach (CustomerStorageAccount storageAccountsItem in derived2.StorageAccounts)
+                            {
+                                JObject customerStorageAccountValue = new JObject();
+                                storageAccountsArray.Add(customerStorageAccountValue);
+                                
+                                if (storageAccountsItem.StorageAccountName != null)
+                                {
+                                    customerStorageAccountValue["storageAccountName"] = storageAccountsItem.StorageAccountName;
+                                }
+                                
+                                if (storageAccountsItem.SubscriptionId != null)
+                                {
+                                    customerStorageAccountValue["subscriptionId"] = storageAccountsItem.SubscriptionId;
+                                }
+                            }
+                            replicationProviderSettingsValue["storageAccounts"] = storageAccountsArray;
+                        }
                     }
                     
                     if (derived2.Encryption != null)
@@ -1492,7 +1647,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -4091,7 +4246,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";

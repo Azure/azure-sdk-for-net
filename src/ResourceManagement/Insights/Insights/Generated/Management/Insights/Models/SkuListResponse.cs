@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuListResponse : AzureOperationResponse, IEnumerable<SkuDefinition>
     {
         private IList<SkuDefinition> _value;
-
+        
         /// <summary>
-        /// Optional. The values for the sku definition.
+        /// Optional. Gets or sets the values for the sku definition.
         /// </summary>
         public IList<SkuDefinition> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the SkuListResponse class.
         /// </summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         {
             this.Value = new LazyList<SkuDefinition>();
         }
-
+        
         /// <summary>
         /// Gets the sequence of Value.
         /// </summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         {
             return this.Value.GetEnumerator();
         }
-
+        
         /// <summary>
         /// Gets the sequence of Value.
         /// </summary>

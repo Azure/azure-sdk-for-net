@@ -90,6 +90,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private string _resourceNamespace;
+        
+        public string ResourceNamespace
+        {
+            get { return this._resourceNamespace; }
+            set { this._resourceNamespace = value; }
+        }
+        
         private IResourceGroupsOperations _resourceGroup;
         
         /// <summary>
@@ -142,6 +150,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -151,9 +162,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public RecoveryServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public RecoveryServicesManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -162,6 +177,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ArgumentNullException("baseUri");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -172,18 +188,26 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public RecoveryServicesManagementClient(SubscriptionCloudCredentials credentials)
+        public RecoveryServicesManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials)
             : this()
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -213,6 +237,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -225,9 +252,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public RecoveryServicesManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -236,6 +267,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ArgumentNullException("baseUri");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -246,6 +278,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -254,13 +289,18 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public RecoveryServicesManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -282,6 +322,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 RecoveryServicesManagementClient clonedClient = ((RecoveryServicesManagementClient)client);
                 
+                clonedClient._resourceNamespace = this._resourceNamespace;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;

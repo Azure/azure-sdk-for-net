@@ -11,9 +11,8 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for Storage services.</summary>
+    <summary>Provides management capabilities for Storage services.</summary>
     <description>
-      DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL.
       CSM/Resource Groups-compatible library.
       Provides management capabilities for Storage services.
     </description>

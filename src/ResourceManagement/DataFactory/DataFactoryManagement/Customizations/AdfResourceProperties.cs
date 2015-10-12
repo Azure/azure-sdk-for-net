@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                 Ensure.IsNotNullOrEmpty(typeName, "typeName", string.Format(
                             CultureInfo.InvariantCulture,
                             "'typeName' cannot be null if 'properties' is a {0} instance. The setter "
-                            + "for 'typeProperties' cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity.",
+                            + "for 'typeProperties' cannot be used if its value is GenericLinkedService, GenericDataset or GenericActivity.",
                             genericTypePropertiesType.Name));
 
                 this.Type = typeName;

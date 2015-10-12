@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    /// <summary>
+    /// The state of the storage account at the time the operation was called.
+    /// </summary>
     public enum ProvisioningState
     {
         /// <summary>

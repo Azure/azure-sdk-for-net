@@ -64,23 +64,6 @@ namespace Microsoft.Azure.Management.Insights
         Task<ServiceDiagnosticSettingsGetResponse> GetAsync(string resourceUri, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the status of the diagnostic settings being applied. Once it
-        /// is successfull, it will replace the current diagnostic settings.
-        /// To get the active one, use Get.
-        /// </summary>
-        /// <param name='resourceUri'>
-        /// The resource identifier of the configuration.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<ServiceDiagnosticSettingsGetResponse> GetStatusAsync(string resourceUri, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Create or update new diagnostic settings for the specified
         /// resource. This operation is long running. Use GetStatus to check
         /// the status of this operation.

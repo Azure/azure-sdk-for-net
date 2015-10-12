@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Optional. The resource from which the rule collects its data.
+        /// Optional. Gets or sets the resource from which the rule collects
+        /// its data.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -44,8 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _failedLocationCount;
         
         /// <summary>
-        /// Optional. The number of locations that must fail to activate the
-        /// alert.
+        /// Optional. Gets or sets the number of locations that must fail to
+        /// activate the alert.
         /// </summary>
         public int FailedLocationCount
         {
@@ -56,8 +57,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// Optional. The period of time that is used to monitor alert activity
-        /// based on the threshold. Must be between 5 minutes and 1 day.
+        /// Optional. Gets or sets the period of time that is used to monitor
+        /// alert activity based on the threshold. Must be between 5 minutes
+        /// and 1 day.
         /// </summary>
         public TimeSpan WindowSize
         {

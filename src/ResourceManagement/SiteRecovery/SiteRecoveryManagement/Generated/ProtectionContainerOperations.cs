@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -608,7 +608,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";

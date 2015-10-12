@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class SearchContinuationToken
     {
-        internal SearchContinuationToken(string nextLink)
+        internal SearchContinuationToken(string nextLink, SearchParametersPayload nextPageParameters)
         {
             if (String.IsNullOrEmpty(nextLink))
             {
@@ -31,8 +31,11 @@ namespace Microsoft.Azure.Search.Models
             }
 
             NextLink = nextLink;
+            NextPageParameters = nextPageParameters;    // Will be null for GET responses.
         }
 
         internal string NextLink { get; private set; }
+
+        internal SearchParametersPayload NextPageParameters { get; private set; }
     }
 }

@@ -56,6 +56,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._caller = value; }
         }
         
+        private LocalizableString _category;
+        
+        /// <summary>
+        /// Optional. Gets or sets the event category.
+        /// </summary>
+        public LocalizableString Category
+        {
+            get { return this._category; }
+            set { this._category = value; }
+        }
+        
         private IDictionary<string, string> _claims;
         
         /// <summary>
@@ -126,18 +137,6 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._eventName; }
             set { this._eventName = value; }
-        }
-        
-        private LocalizableString _eventSource;
-        
-        /// <summary>
-        /// Optional. Gets or sets the event source.This value indicates the
-        /// source that generated the event.
-        /// </summary>
-        public LocalizableString EventSource
-        {
-            get { return this._eventSource; }
-            set { this._eventSource = value; }
         }
         
         private DateTime _eventTimestamp;
@@ -233,6 +232,19 @@ namespace Microsoft.Azure.Insights.Models
             set { this._resourceGroupName = value; }
         }
         
+        private string _resourceId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource uri  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn790569.aspx for
+        /// more information)
+        /// </summary>
+        public string ResourceId
+        {
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
+        }
+        
         private LocalizableString _resourceProviderName;
         
         /// <summary>
@@ -246,17 +258,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._resourceProviderName = value; }
         }
         
-        private string _resourceUri;
+        private LocalizableString _resourceType;
         
         /// <summary>
-        /// Optional. Gets or sets the resource uri  (see
+        /// Optional. Gets or sets the resource type  (see
         /// http://msdn.microsoft.com/en-us/library/azure/dn790569.aspx for
         /// more information)
         /// </summary>
-        public string ResourceUri
+        public LocalizableString ResourceType
         {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
         }
         
         private LocalizableString _status;
@@ -306,6 +318,17 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._subStatus; }
             set { this._subStatus = value; }
+        }
+        
+        private string _tenantId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Azure tenant Id
+        /// </summary>
+        public string TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
         }
         
         /// <summary>

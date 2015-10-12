@@ -61,6 +61,7 @@ namespace Networks.Tests
                 var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
                 Assert.Equal(HttpStatusCode.OK, getPublicIpAddressResponse.StatusCode);
                 Assert.Equal(4, getPublicIpAddressResponse.PublicIpAddress.IdleTimeoutInMinutes);
+                Assert.NotNull(getPublicIpAddressResponse.PublicIpAddress.ResourceGuid);
 
                 // Get List of PublicIpAddress 
                 var getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);

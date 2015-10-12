@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Test
             }
 
             return new RecoveryServicesManagementClient(
+                "Microsoft.SiteRecovery",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }
@@ -101,9 +102,9 @@ namespace Microsoft.Azure.Test
             }
 
             return new SiteRecoveryManagementClient(
-                SiteRecoveryTestsBase.MyCloudService,
                 SiteRecoveryTestsBase.MyVaultName,
                 SiteRecoveryTestsBase.MyResourceGroupName,
+                "Microsoft.SiteRecovery",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }

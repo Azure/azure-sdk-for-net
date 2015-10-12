@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        ClusterType = clusterCreateParameters.ClusterType
+                        ClusterType = clusterCreateParameters.ClusterType.ToString()
                     },
                     ClusterVersion = clusterCreateParameters.Version,
                     OperatingSystemType = clusterCreateParameters.OSType
@@ -458,14 +458,25 @@ namespace Microsoft.Azure.Management.HDInsight
             };
             roles.Add(workerNode);
 
-            if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+            if (clusterCreateParameters.OSType == OSType.Windows)
             {
-                return roles;
+                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                {
+                    return roles;
+                }                
+            }
+
+            if (clusterCreateParameters.OSType == OSType.Linux)
+            {
+                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                {
+                    clusterCreateParameters.ZookeeperNodeSize = "Small";
+                }
             }
 
             string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "Medium";
-
             var zookeepernode = new Role
             {
                 Name = "zookeepernode",
@@ -477,6 +488,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     VmSize = zookeeperNodeSize
                 }
             };
+            
             roles.Add(zookeepernode);
 
             return roles;
@@ -491,10 +503,18 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                headNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                               clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
-                    ? "Standard_D12"
-                    : "Large";
+                switch (clusterCreateParameters.ClusterType)
+                {
+                    case HDInsightClusterType.Hadoop:
+                        headNodeSize = "Standard_D3";
+                        break;
+                    case HDInsightClusterType.Spark:
+                        headNodeSize = "Standard_D12";
+                        break;
+                    default:
+                        headNodeSize = "Large";
+                        break;
+                }
             }
             return headNodeSize;
         }
@@ -508,8 +528,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                                 clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
+                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
                     ? "Standard_D12"
                     : "Standard_D3";
             }

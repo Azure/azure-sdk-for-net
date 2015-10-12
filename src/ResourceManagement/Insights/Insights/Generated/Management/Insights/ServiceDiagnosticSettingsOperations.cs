@@ -28,7 +28,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
 using Newtonsoft.Json.Linq;
@@ -99,9 +101,9 @@ namespace Microsoft.Azure.Management.Insights
             string url = "";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/service";
+            url = url + "/providers/microsoft.insights/diagnosticSettings/service";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -245,9 +247,9 @@ namespace Microsoft.Azure.Management.Insights
             string url = "";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/service";
+            url = url + "/providers/microsoft.insights/diagnosticSettings/service";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -342,186 +344,12 @@ namespace Microsoft.Azure.Management.Insights
                                 ServiceDiagnosticSettings propertiesInstance = new ServiceDiagnosticSettings();
                                 result.Properties = propertiesInstance;
                                 
-                                JToken storageAccountNameValue = propertiesValue["storageAccountName"];
-                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                JToken storageAccountIdValue = propertiesValue["storageAccountId"];
+                                if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
                                 {
-                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
-                                    propertiesInstance.StorageAccountName = storageAccountNameInstance;
+                                    string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                    propertiesInstance.StorageAccountId = storageAccountIdInstance;
                                 }
-                                
-                                JToken statusValue = propertiesValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    DiagnosticSettingsStatus statusInstance = ((DiagnosticSettingsStatus)Enum.Parse(typeof(DiagnosticSettingsStatus), ((string)statusValue), true));
-                                    propertiesInstance.Status = statusInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets the status of the diagnostic settings being applied. Once it
-        /// is successfull, it will replace the current diagnostic settings.
-        /// To get the active one, use Get.
-        /// </summary>
-        /// <param name='resourceUri'>
-        /// Required. The resource identifier of the configuration.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<ServiceDiagnosticSettingsGetResponse> GetStatusAsync(string resourceUri, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException("resourceUri");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceUri", resourceUri);
-                TracingAdapter.Enter(invocationId, this, "GetStatusAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/service/poll";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ServiceDiagnosticSettingsGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ServiceDiagnosticSettingsGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                result.Name = nameInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                result.Location = locationInstance;
-                            }
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                ServiceDiagnosticSettings propertiesInstance = new ServiceDiagnosticSettings();
-                                result.Properties = propertiesInstance;
                                 
                                 JToken storageAccountNameValue = propertiesValue["storageAccountName"];
                                 if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
@@ -530,11 +358,94 @@ namespace Microsoft.Azure.Management.Insights
                                     propertiesInstance.StorageAccountName = storageAccountNameInstance;
                                 }
                                 
-                                JToken statusValue = propertiesValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                JToken metricsArray = propertiesValue["metrics"];
+                                if (metricsArray != null && metricsArray.Type != JTokenType.Null)
                                 {
-                                    DiagnosticSettingsStatus statusInstance = ((DiagnosticSettingsStatus)Enum.Parse(typeof(DiagnosticSettingsStatus), ((string)statusValue), true));
-                                    propertiesInstance.Status = statusInstance;
+                                    foreach (JToken metricsValue in ((JArray)metricsArray))
+                                    {
+                                        MetricSettings metricSettingsInstance = new MetricSettings();
+                                        propertiesInstance.Metrics.Add(metricSettingsInstance);
+                                        
+                                        JToken timeGrainValue = metricsValue["timeGrain"];
+                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                            metricSettingsInstance.TimeGrain = timeGrainInstance;
+                                        }
+                                        
+                                        JToken enabledValue = metricsValue["enabled"];
+                                        if (enabledValue != null && enabledValue.Type != JTokenType.Null)
+                                        {
+                                            bool enabledInstance = ((bool)enabledValue);
+                                            metricSettingsInstance.Enabled = enabledInstance;
+                                        }
+                                        
+                                        JToken retentionPolicyValue = metricsValue["retentionPolicy"];
+                                        if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
+                                        {
+                                            RetentionPolicy retentionPolicyInstance = new RetentionPolicy();
+                                            metricSettingsInstance.RetentionPolicy = retentionPolicyInstance;
+                                            
+                                            JToken enabledValue2 = retentionPolicyValue["enabled"];
+                                            if (enabledValue2 != null && enabledValue2.Type != JTokenType.Null)
+                                            {
+                                                bool enabledInstance2 = ((bool)enabledValue2);
+                                                retentionPolicyInstance.Enabled = enabledInstance2;
+                                            }
+                                            
+                                            JToken daysValue = retentionPolicyValue["days"];
+                                            if (daysValue != null && daysValue.Type != JTokenType.Null)
+                                            {
+                                                int daysInstance = ((int)daysValue);
+                                                retentionPolicyInstance.Days = daysInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken logsArray = propertiesValue["logs"];
+                                if (logsArray != null && logsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken logsValue in ((JArray)logsArray))
+                                    {
+                                        LogSettings logSettingsInstance = new LogSettings();
+                                        propertiesInstance.Logs.Add(logSettingsInstance);
+                                        
+                                        JToken categoryValue = logsValue["category"];
+                                        if (categoryValue != null && categoryValue.Type != JTokenType.Null)
+                                        {
+                                            string categoryInstance = ((string)categoryValue);
+                                            logSettingsInstance.Category = categoryInstance;
+                                        }
+                                        
+                                        JToken enabledValue3 = logsValue["enabled"];
+                                        if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
+                                        {
+                                            bool enabledInstance3 = ((bool)enabledValue3);
+                                            logSettingsInstance.Enabled = enabledInstance3;
+                                        }
+                                        
+                                        JToken retentionPolicyValue2 = logsValue["retentionPolicy"];
+                                        if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                        {
+                                            RetentionPolicy retentionPolicyInstance2 = new RetentionPolicy();
+                                            logSettingsInstance.RetentionPolicy = retentionPolicyInstance2;
+                                            
+                                            JToken enabledValue4 = retentionPolicyValue2["enabled"];
+                                            if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
+                                            {
+                                                bool enabledInstance4 = ((bool)enabledValue4);
+                                                retentionPolicyInstance2.Enabled = enabledInstance4;
+                                            }
+                                            
+                                            JToken daysValue2 = retentionPolicyValue2["days"];
+                                            if (daysValue2 != null && daysValue2.Type != JTokenType.Null)
+                                            {
+                                                int daysInstance2 = ((int)daysValue2);
+                                                retentionPolicyInstance2.Days = daysInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -615,9 +526,9 @@ namespace Microsoft.Azure.Management.Insights
             string url = "";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/service";
+            url = url + "/providers/microsoft.insights/diagnosticSettings/service";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -662,12 +573,74 @@ namespace Microsoft.Azure.Management.Insights
                     JObject propertiesValue = new JObject();
                     serviceDiagnosticSettingsPutParametersValue["properties"] = propertiesValue;
                     
+                    if (parameters.Properties.StorageAccountId != null)
+                    {
+                        propertiesValue["storageAccountId"] = parameters.Properties.StorageAccountId;
+                    }
+                    
                     if (parameters.Properties.StorageAccountName != null)
                     {
                         propertiesValue["storageAccountName"] = parameters.Properties.StorageAccountName;
                     }
                     
-                    propertiesValue["status"] = parameters.Properties.Status.ToString();
+                    if (parameters.Properties.Metrics != null)
+                    {
+                        if (parameters.Properties.Metrics is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Metrics).IsInitialized)
+                        {
+                            JArray metricsArray = new JArray();
+                            foreach (MetricSettings metricsItem in parameters.Properties.Metrics)
+                            {
+                                JObject metricSettingsValue = new JObject();
+                                metricsArray.Add(metricSettingsValue);
+                                
+                                metricSettingsValue["timeGrain"] = XmlConvert.ToString(metricsItem.TimeGrain);
+                                
+                                metricSettingsValue["enabled"] = metricsItem.Enabled;
+                                
+                                if (metricsItem.RetentionPolicy != null)
+                                {
+                                    JObject retentionPolicyValue = new JObject();
+                                    metricSettingsValue["retentionPolicy"] = retentionPolicyValue;
+                                    
+                                    retentionPolicyValue["enabled"] = metricsItem.RetentionPolicy.Enabled;
+                                    
+                                    retentionPolicyValue["days"] = metricsItem.RetentionPolicy.Days;
+                                }
+                            }
+                            propertiesValue["metrics"] = metricsArray;
+                        }
+                    }
+                    
+                    if (parameters.Properties.Logs != null)
+                    {
+                        if (parameters.Properties.Logs is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Logs).IsInitialized)
+                        {
+                            JArray logsArray = new JArray();
+                            foreach (LogSettings logsItem in parameters.Properties.Logs)
+                            {
+                                JObject logSettingsValue = new JObject();
+                                logsArray.Add(logSettingsValue);
+                                
+                                if (logsItem.Category != null)
+                                {
+                                    logSettingsValue["category"] = logsItem.Category;
+                                }
+                                
+                                logSettingsValue["enabled"] = logsItem.Enabled;
+                                
+                                if (logsItem.RetentionPolicy != null)
+                                {
+                                    JObject retentionPolicyValue2 = new JObject();
+                                    logSettingsValue["retentionPolicy"] = retentionPolicyValue2;
+                                    
+                                    retentionPolicyValue2["enabled"] = logsItem.RetentionPolicy.Enabled;
+                                    
+                                    retentionPolicyValue2["days"] = logsItem.RetentionPolicy.Days;
+                                }
+                            }
+                            propertiesValue["logs"] = logsArray;
+                        }
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

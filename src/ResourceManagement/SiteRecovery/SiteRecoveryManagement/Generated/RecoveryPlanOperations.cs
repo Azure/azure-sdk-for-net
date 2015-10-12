@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -615,7 +615,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -679,7 +679,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (input.ReplicationProviderSettings != null)
                 {
-                    rpPlannedFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings;
+                    rpPlannedFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings.ToString();
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -818,7 +818,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -882,7 +882,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (input.ReplicationProviderSettings != null)
                 {
-                    rpTestFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings;
+                    rpTestFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings.ToString();
                 }
                 
                 rpTestFailoverRequestValue["networkType"] = input.NetworkType;
@@ -1021,7 +1021,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1085,7 +1085,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (input.ReplicationProviderSettings != null)
                 {
-                    rpUnplannedFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings;
+                    rpUnplannedFailoverRequestValue["replicationProviderSettings"] = input.ReplicationProviderSettings.ToString();
                 }
                 
                 rpUnplannedFailoverRequestValue["sourceSiteOperations"] = input.SourceSiteOperations;
@@ -1210,7 +1210,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1375,7 +1375,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1736,7 +1736,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -3724,7 +3724,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -4133,7 +4133,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
