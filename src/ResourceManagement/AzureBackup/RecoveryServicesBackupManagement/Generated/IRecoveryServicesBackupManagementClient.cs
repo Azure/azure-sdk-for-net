@@ -74,6 +74,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Definition of Protectable Object operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IProtectableObjectOperations ProtectableObject
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
         /// </summary>
