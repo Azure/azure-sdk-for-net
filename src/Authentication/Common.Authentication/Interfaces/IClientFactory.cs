@@ -48,6 +48,19 @@ namespace Microsoft.Azure.Common.Authentication
 
         void RemoveHandler(Type handlerType);
 
-        List<ProductInfoHeaderValue> UserAgents { get; set; }
+        /// <summary>
+        /// Adds user agent to UserAgents collection with empty version.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        void AddUserAgent(string productName);
+
+        /// <summary>
+        /// Adds user agent to UserAgents collection.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        /// <param name="productVersion">Product version.</param>
+        void AddUserAgent(string productName, string productVersion);
+
+        HashSet<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }
