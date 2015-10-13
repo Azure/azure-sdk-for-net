@@ -115,30 +115,30 @@ namespace DataFactory.Tests.ScenarioTests
                     new Microsoft.Azure.Management.DataFactories.Core.Models.
                         LinkedServiceCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
 
-                // Create Tables
+                // Create Datasets
                 content = File.ReadAllText(@"Resources\DA_WikiAggregatedData.json");
-                client.Tables.CreateOrUpdateWithRawJsonContent(
+                client.Datasets.CreateOrUpdateWithRawJsonContent(
                     resourceGroupName,
                     factoryName,
                     TableNameAggregatedData,
                     new Microsoft.Azure.Management.DataFactories.Core.Models.
-                        TableCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
+                        DatasetCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
 
                 content = File.ReadAllText(@"Resources\DA_CuratedWikiData.json");
-                client.Tables.CreateOrUpdateWithRawJsonContent(
+                client.Datasets.CreateOrUpdateWithRawJsonContent(
                     resourceGroupName,
                     factoryName,
                     TableNameCuratedWikiData,
                     new Microsoft.Azure.Management.DataFactories.Core.Models.
-                        TableCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
+                        DatasetCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
 
                 content = File.ReadAllText(@"Resources\DA_WikipediaClickEvents.json");
-                client.Tables.CreateOrUpdateWithRawJsonContent(
+                client.Datasets.CreateOrUpdateWithRawJsonContent(
                     resourceGroupName,
                     factoryName,
                     TableNameClickEvents,
                     new Microsoft.Azure.Management.DataFactories.Core.Models.
-                        TableCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
+                        DatasetCreateOrUpdateWithRawJsonContentParameters() { Content = content, });
 
                 // create pipeline
                 content = File.ReadAllText(@"Resources\DP_Wikisamplev2json.json");
@@ -179,9 +179,9 @@ namespace DataFactory.Tests.ScenarioTests
                 string[] tableNames = new string[] { TableNameClickEvents, TableNameCuratedWikiData, TableNameAggregatedData };
                 foreach (string tableName in tableNames)
                 {
-                    var tResponse = client.Tables.Get(resourceGroupName, factoryName, tableName);
+                    var tResponse = client.Datasets.Get(resourceGroupName, factoryName, tableName);
                     Assert.True(tResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(tResponse.Table.Name == tableName);
+                    Assert.True(tResponse.Dataset.Name == tableName);
                 }
 
                 // verify slice

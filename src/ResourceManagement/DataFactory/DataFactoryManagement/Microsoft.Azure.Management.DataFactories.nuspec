@@ -22,6 +22,9 @@
       <group targetFramework="net40">
         <reference file="Microsoft.Azure.Management.DataFactories.dll" />
       </group>
+      <group targetFramework="net45">
+        <reference file="Microsoft.Azure.Management.DataFactories.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.0.4,3.0)" />

@@ -28,6 +28,9 @@
     <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\GetPigJob.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\GetSqoopJob.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\ListJobs.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

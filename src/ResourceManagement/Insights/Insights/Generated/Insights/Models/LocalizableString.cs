@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _localizedValue;
         
         /// <summary>
-        /// Optional. The locale specific value.
+        /// Optional. Gets or sets the locale specific value.
         /// </summary>
         public string LocalizedValue
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _value;
         
         /// <summary>
-        /// Optional. The invariant value.
+        /// Optional. Gets or sets the invariant value.
         /// </summary>
         public string Value
         {

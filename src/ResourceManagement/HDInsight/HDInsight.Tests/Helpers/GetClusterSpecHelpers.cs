@@ -42,7 +42,7 @@ namespace HDInsight.Tests.Helpers
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        ClusterType = HDInsightClusterType.Hadoop
+                        ClusterType = "Hadoop"
                     },
                     ClusterVersion = "3.2",
                     OperatingSystemType = OSType.Linux
@@ -143,7 +143,7 @@ namespace HDInsight.Tests.Helpers
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        ClusterType = HDInsightClusterType.Hadoop
+                        ClusterType = "Hadoop"
                     },
                     ClusterVersion = "3.1",
                     OperatingSystemType = OSType.Windows

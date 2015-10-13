@@ -306,5 +306,45 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         {
             return operations.SubmitPigJobAsync(parameters, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).SubmitSqoopJobAsync(parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        {
+            return operations.SubmitSqoopJobAsync(parameters, CancellationToken.None);
+        }
     }
 }

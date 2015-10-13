@@ -13,57 +13,79 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
     <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
-    <Compile Include="Customizations\InsightsClient.ListStatusCountSummaryItemsParameters.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
+    <Compile Include="Customizations\LogOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperationsExtensions.Customization.cs" />
-    <Compile Include="Customizations\Shoebox\FilterDimension.cs" />
+    <Compile Include="Customizations\Shoebox\BlobShoeboxMetricRetriever.cs" />
+    <Compile Include="Customizations\Shoebox\MetricWrap.cs" />
+    <Compile Include="Customizations\Shoebox\StorageConstants.cs" />
+    <Compile Include="Customizations\Shoebox\EmptyMetricRetriever.cs" />
+    <Compile Include="Customizations\Shoebox\MetricFilterDimension.cs" />
+    <Compile Include="Customizations\Shoebox\IMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\MetricDefinitionFilterParser.cs" />
     <Compile Include="Customizations\Shoebox\MetricDimension.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilter.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterExpressionParser.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterRegexParser.cs" />
+    <Compile Include="Customizations\Shoebox\ProxyMetricRetriever.cs" />
+    <Compile Include="Customizations\Shoebox\SasMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxClient.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
+    <Compile Include="Customizations\Shoebox\ShoeboxMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
+    <Compile Include="Customizations\Shoebox\StorageMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
-    <Compile Include="Customizations\Sku\SkuOperations.Antares.Customizations.cs" />
-    <Compile Include="Customizations\Sku\ISkuOperations.Customizations.cs" />
-    <Compile Include="Customizations\Sku\SkuOperations.Customizations.cs" />
+    <Compile Include="Customizations\Util.cs" />
+    <Compile Include="Generated\Insights\ILogDefinitionOperations.cs" />
+    <Compile Include="Generated\Insights\ILogOperations.cs" />
+    <Compile Include="Generated\Insights\LogDefinitionOperations.cs" />
+    <Compile Include="Generated\Insights\LogDefinitionOperationsExtensions.cs" />
+    <Compile Include="Generated\Insights\LogOperationsExtensions.cs" />
+    <Compile Include="Generated\Insights\Models\BlobInfo.cs" />
+    <Compile Include="Generated\Insights\Models\BlobLocation.cs" />
+    <Compile Include="Generated\Insights\Models\EventCategoryCollection.cs" />
+    <Compile Include="Generated\Insights\Models\EventCategoryListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\Log.cs" />
+    <Compile Include="Generated\Insights\Models\LogCollection.cs" />
+    <Compile Include="Generated\Insights\Models\LogDefinition.cs" />
+    <Compile Include="Generated\Insights\Models\LogDefinitionCollection.cs" />
+    <Compile Include="Generated\Insights\Models\LogDefinitionListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\LogListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\LogValue.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAutomatedExportOperations.cs" />
+    <Compile Include="Generated\Management\Insights\ISkuOperations.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSetting.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\BackupLocationProfile.cs" />
     <Compile Include="Generated\Management\Insights\Models\Capacity.cs" />
     <Compile Include="Generated\Insights\Models\Dimension.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItem.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\CurrentSku.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseBackupOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
-    <Compile Include="Generated\Management\Insights\Models\Display.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
+    <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
+    <Compile Include="Generated\Management\Insights\Models\RetentionPolicy.cs" />
+    <Compile Include="Generated\Management\Insights\Models\RuleWebhookAction.cs" />
     <Compile Include="Generated\Management\Insights\Models\Sku.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuDefinition.cs" />
-    <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetResponse.cs" />
-    <Compile Include="Generated\Insights\Models\StatusCount.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\SupportedScaleType.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
-    <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperations.cs" />
+    <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
+    <Compile Include="OnetimeGenerated\Management\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\IServiceDiagnosticSettingsOperations.cs" />
@@ -72,7 +94,6 @@
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettingsGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\CreateOrUpdateStorageConfigurationParameters.cs" />
-    <Compile Include="Generated\Management\Insights\Models\DiagnosticSettingsStatus.cs" />
     <Compile Include="Generated\Management\Insights\Models\EmptyResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\MonitoringConfigurationCreateOrUpdateResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\ServiceDiagnosticSettings.cs" />
@@ -96,17 +117,14 @@
     <Compile Include="Generated\Management\Insights\Models\TimeAggregationOperator.cs" />
     <Compile Include="Generated\Management\Insights\ServiceDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\ServiceDiagnosticSettingsOperationsExtensions.cs" />
-    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperations.cs" />
+    <Compile Include="OnetimeGenerated\Management\StorageDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
-    <Compile Include="Customizations\Sku\SkuOperationsExtensions.Customizations.cs" />
-    <Compile Include="OnetimeGenerated\Sku\AntaresSku.cs" />
-    <Compile Include="OnetimeGenerated\Sku\AntaresSkuGetResponse.cs" />
-    <Compile Include="OnetimeGenerated\Sku\AntaresSkuUpdateRequest.cs" />
-    <Compile Include="OnetimeGenerated\Sku\SkuOperations.cs" />
+    <Compile Include="Generated\Management\Insights\SkuOperations.cs" />
+    <Compile Include="Generated\Management\Insights\SkuOperationsExtensions.cs" />
+    <Compile Include="OnetimeGenerated\Insights\MetricDefinitionOperations.cs" />
+    <Compile Include="OnetimeGenerated\Insights\MetricOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OnetimeGenerated\MetricDefinitionOperations.cs" />
-    <Compile Include="OnetimeGenerated\MetricOperations.cs" />
     <Compile Include="Generated\Insights\EventOperations.cs" />
     <Compile Include="Generated\Insights\EventOperationsExtensions.cs" />
     <Compile Include="Generated\Insights\IEventOperations.cs" />
@@ -255,6 +273,9 @@
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="OnetimeGenerated\Management\Insights\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />

@@ -20,7 +20,6 @@
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.Sql.nuget.proj" />
     <None Include="Microsoft.Azure.Management.Sql.nuspec" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">

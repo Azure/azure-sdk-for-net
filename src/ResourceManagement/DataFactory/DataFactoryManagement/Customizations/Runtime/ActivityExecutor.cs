@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             ActivityLogger logger = new ActivityLogger(logAction);
 
             Collection<LinkedService> linkedServices = new Collection<LinkedService>();
-            Collection<Table> tables = new Collection<Table>();
+            Collection<Dataset> datasets = new Collection<Dataset>();
 
-            PopulateCollections(activityConfiguration.Inputs, linkedServices, tables);
-            PopulateCollections(activityConfiguration.Outputs, linkedServices, tables);
+            PopulateCollections(activityConfiguration.Inputs, linkedServices, datasets);
+            PopulateCollections(activityConfiguration.Outputs, linkedServices, datasets);
 
             Activity activity = null;
             
@@ -54,12 +54,12 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 
             return activityImplementation.Execute(
                 linkedServices,
-                tables,
+                datasets,
                 activity,
                 logger);
         }
 
-        private static void PopulateCollections(IEnumerable<ResolvedTable> resolvedTables, ICollection<LinkedService> linkedServices, ICollection<Table> tables)
+        private static void PopulateCollections(IEnumerable<ResolvedTable> resolvedTables, ICollection<LinkedService> linkedServices, ICollection<Dataset> datasets)
         {
             if (resolvedTables == null)
             {
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
                     linkedServices.Add(resolvedTable.LinkedService);
                 }
 
-                if (resolvedTable.Table != null)
+                if (resolvedTable.Dataset != null)
                 {
-                    tables.Add(resolvedTable.Table);
+                    datasets.Add(resolvedTable.Dataset);
                 }
             }
         }

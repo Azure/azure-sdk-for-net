@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _storageAccount;
         
         /// <summary>
-        /// Optional. The name of the storage account.
+        /// Optional. Gets or sets the name of the storage account.
         /// </summary>
         public string StorageAccount
         {
