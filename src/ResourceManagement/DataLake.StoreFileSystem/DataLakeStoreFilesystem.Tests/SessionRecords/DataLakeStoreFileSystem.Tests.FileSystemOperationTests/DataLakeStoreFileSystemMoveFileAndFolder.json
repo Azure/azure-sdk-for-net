@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt7555?op=RENAME&destination=SDKTestFolder010032%2FSDKTestMoveFile01.txt&api-version=2014-10-01",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQ3NTU1P29wPVJFTkFNRSZkZXN0aW5hdGlvbj1TREtUZXN0Rm9sZGVyMDEwMDMyJTJGU0RLVGVzdE1vdmVGaWxlMDEudHh0JmFwaS12ZXJzaW9uPTIwMTQtMTAtMDE=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt0434?op=RENAME&destination=SDKTestFolder017370%2FSDKTestMoveFile01.txt&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQwNDM0P29wPVJFTkFNRSZkZXN0aW5hdGlvbj1TREtUZXN0Rm9sZGVyMDE3MzcwJTJGU0RLVGVzdE1vdmVGaWxlMDEudHh0JmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.1-preview"
+          "0.9.2-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"boolean\": true\r\n}",
@@ -32,13 +32,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "00c3e787-6f12-41d2-b360-2d46dc57f99e"
+          "f6160324-3e38-48f2-a0b4-ad31cd98d49e"
         ],
         "x-origin-server": [
-          "bn4sch103201525"
+          "bn4sch103201234"
         ],
         "Server-Perf": [
-          "[00c3e7876f1241d2b3602d46dc57f99e][ AuthTime::1854.0536841565::PostAuthTime::16869.108514533 ][IsExist :: 00:00:001 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:720 ms]%0a"
+          "[f61603243e3848f2a0b4ad31cd98d49e][ AuthTime::1724.46607630506::PostAuthTime::16360.1875870092 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:622 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -50,32 +50,32 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 18:05:44 GMT"
+          "Tue, 13 Oct 2015 21:02:20 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=0b55f566-7bd3-4cbf-be93-b01d61d75862; path=/; secure; HttpOnly"
+          "UserPrincipalSession=3e163e30-bfec-476f-a727-a3ab2245d343; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt7555?op=GETFILESTATUS&api-version=2014-10-01",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQ3NTU1P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt0434?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQwNDM0P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.1-preview"
+          "0.9.2-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile02.txt7555 [1adcaf8ceb0b46e4a8ce04bb92bd38e9]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile02.txt0434 [1f00a199b0c74d078572cb2188a5412a]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "219"
@@ -90,13 +90,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1adcaf8c-eb0b-46e4-a8ce-04bb92bd38e9"
+          "1f00a199-b0c7-4d07-8572-cb2188a5412a"
         ],
         "x-origin-server": [
-          "bn4sch103201525"
+          "bn4sch103201234"
         ],
         "Server-Perf": [
-          "[1adcaf8ceb0b46e4a8ce04bb92bd38e9][ AuthTime::789.52320667887::PostAuthTime::180.059192855799 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:095 ms]%0a"
+          "[1f00a199b0c74d078572cb2188a5412a][ AuthTime::771.989401718906::PostAuthTime::182.19805270485 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:239 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -108,26 +108,26 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 18:05:44 GMT"
+          "Tue, 13 Oct 2015 21:02:20 GMT"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder010032?op=RENAME&destination=SDKTestMoveFolder018570&api-version=2014-10-01",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMDAzMj9vcD1SRU5BTUUmZGVzdGluYXRpb249U0RLVGVzdE1vdmVGb2xkZXIwMTg1NzAmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder017370?op=RENAME&destination=SDKTestMoveFolder019529&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNzM3MD9vcD1SRU5BTUUmZGVzdGluYXRpb249U0RLVGVzdE1vdmVGb2xkZXIwMTk1MjkmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.1-preview"
+          "0.9.2-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"boolean\": true\r\n}",
@@ -145,13 +145,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "76035a1a-d8f7-413e-a6f8-880d9fbe2fb8"
+          "eeac5954-75ee-4454-a223-5b5f6365b714"
         ],
         "x-origin-server": [
-          "bn4sch103201525"
+          "bn4sch103201234"
         ],
         "Server-Perf": [
-          "[76035a1ad8f7413ea6f8880d9fbe2fb8][ AuthTime::1697.51766376405::PostAuthTime::17348.5535387405 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:408 ms]%0a"
+          "[eeac595475ee4454a2235b5f6365b714][ AuthTime::1658.60105255729::PostAuthTime::16228.4575395137 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:417 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -163,32 +163,32 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 18:05:45 GMT"
+          "Tue, 13 Oct 2015 21:02:21 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=0b55f566-7bd3-4cbf-be93-b01d61d75862; path=/; secure; HttpOnly"
+          "UserPrincipalSession=3e163e30-bfec-476f-a727-a3ab2245d343; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestMoveFolder018570?op=LISTSTATUS&api-version=2014-10-01",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdE1vdmVGb2xkZXIwMTg1NzA/b3A9TElTVFNUQVRVUyZhcGktdmVyc2lvbj0yMDE0LTEwLTAx",
+      "RequestUri": "/webhdfs/v1/SDKTestMoveFolder019529?op=LISTSTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdE1vdmVGb2xkZXIwMTk1Mjk/b3A9TElTVFNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.1-preview"
+          "0.9.2-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatuses\": {\r\n    \"FileStatus\": [\r\n      {\r\n        \"length\": 42,\r\n        \"pathSuffix\": \"SDKTestMoveFile01.txt\",\r\n        \"type\": \"FILE\",\r\n        \"blockSize\": 268435456,\r\n        \"accessTime\": 1444759542630,\r\n        \"modificationTime\": 1444759543087,\r\n        \"replication\": 0,\r\n        \"permission\": \"777\",\r\n        \"owner\": \"NotSupportYet\",\r\n        \"group\": \"NotSupportYet\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatuses\": {\r\n    \"FileStatus\": [\r\n      {\r\n        \"length\": 42,\r\n        \"pathSuffix\": \"SDKTestMoveFile01.txt\",\r\n        \"type\": \"FILE\",\r\n        \"blockSize\": 268435456,\r\n        \"accessTime\": 1444770138907,\r\n        \"modificationTime\": 1444770139390,\r\n        \"replication\": 0,\r\n        \"permission\": \"777\",\r\n        \"owner\": \"NotSupportYet\",\r\n        \"group\": \"NotSupportYet\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "263"
@@ -203,13 +203,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fea14079-d4d9-42f1-b2fd-b69906640c64"
+          "d5334972-33e6-4b94-9a3c-0ae7c992cdb7"
         ],
         "x-origin-server": [
-          "bn4sch103201525"
+          "bn4sch103201234"
         ],
         "Server-Perf": [
-          "[fea14079d4d942f1b2fdb69906640c64][ AuthTime::867.363522830308::PostAuthTime::213.419328349272 ][FsEnumerateDirectory :: 00:00:127 ms]%0a[ListDirectory :: 00:00:127 ms]%0a[LISTSTATUS :: 00:00:127 ms]%0a"
+          "[d533497233e64b949a3c0ae7c992cdb7][ AuthTime::808.771168227397::PostAuthTime::192.462731730475 ][FsEnumerateDirectory :: 00:00:173 ms]%0a[ListDirectory :: 00:00:173 ms]%0a[LISTSTATUS :: 00:00:173 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -221,29 +221,29 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 18:05:45 GMT"
+          "Tue, 13 Oct 2015 21:02:21 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder010032?op=GETFILESTATUS&api-version=2014-10-01",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMDAzMj9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTQtMTAtMDE=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder017370?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNzM3MD9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.1-preview"
+          "0.9.2-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder010032 [5c6d3d1428dd45bf95ac64ea6c0e268d]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder017370 [3e1a8895189645c9ab4b73f5c19e9705]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "201"
@@ -258,13 +258,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5c6d3d14-28dd-45bf-95ac-64ea6c0e268d"
+          "3e1a8895-1896-45c9-ab4b-73f5c19e9705"
         ],
         "x-origin-server": [
-          "bn4sch103201525"
+          "bn4sch103201234"
         ],
         "Server-Perf": [
-          "[5c6d3d1428dd45bf95ac64ea6c0e268d][ AuthTime::849.400372949207::PostAuthTime::183.908439258892 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:032 ms]%0a"
+          "[3e1a8895189645c9ab4b73f5c19e9705][ AuthTime::798.934184161173::PostAuthTime::180.487272867246 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:139 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -276,7 +276,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 18:05:45 GMT"
+          "Tue, 13 Oct 2015 21:02:21 GMT"
         ]
       },
       "StatusCode": 404
