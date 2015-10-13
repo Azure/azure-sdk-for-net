@@ -38,16 +38,15 @@ namespace Microsoft.Azure.Management.Sql
     /// Represents all the operations for determining the set of capabilites
     /// available in a specified region.
     /// </summary>
-    internal partial class LocationCapabilitiesOperations : IServiceOperations<SqlManagementClient>, ILocationCapabilitiesOperations
+    internal partial class CapabilitiesOperations : IServiceOperations<SqlManagementClient>, ICapabilitiesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the LocationCapabilitiesOperations
-        /// class.
+        /// Initializes a new instance of the CapabilitiesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal LocationCapabilitiesOperations(SqlManagementClient client)
+        internal CapabilitiesOperations(SqlManagementClient client)
         {
             this._client = client;
         }
