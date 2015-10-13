@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The Azure table storage.
     /// </summary>
     [AdfTypeName("AzureTable")]
-    public class AzureDataset : DatasetTypeProperties
+    public class AzureTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// The table name of the Azure table storage.
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string TableName { get; set; }
 
-        public AzureDataset()
+        public AzureTableDataset()
         {
         }
 
-        public AzureDataset(string tableName)
+        public AzureTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");
