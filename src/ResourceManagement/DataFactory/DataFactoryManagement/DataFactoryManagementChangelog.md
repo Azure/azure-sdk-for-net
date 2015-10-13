@@ -5,6 +5,12 @@ _Release date: 2015.10.13_
 
 ## Bug Fixes
 * Fix Dataset class names which had "Table" removed from them. 
+    * AzureSqlDataWarehouseDataset → AzureSqlDataWarehouseTableDataset
+    * AzureSqlDataset → AzureSqlTableDataset
+    * AzureDataset → AzureTableDataset
+    * OracleDatabaseDataset → OracleTableDataset
+    * RelationalDataset → RelationalTableDataset
+    * SqlServerDataset → SqlServerTableDataset
     * For types such as AzureSqlTable, "AzureSqlTableDataset" is the correct naming, not "AzureSqlDataset". These were the names prior to 4.0.0 and this restores those names. 
 
 ## Version 4.0.0
