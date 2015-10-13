@@ -1,0 +1,174 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder015980%2FSDKTestConcatFile01.txt?op=CONCAT&sources=SDKTestFolder01%2FSDKTestFile02.txt2142%2CSDKTestFolder01%2FSDKTestFile02.txt4759&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNTk4MCUyRlNES1Rlc3RDb25jYXRGaWxlMDEudHh0P29wPUNPTkNBVCZzb3VyY2VzPVNES1Rlc3RGb2xkZXIwMSUyRlNES1Rlc3RGaWxlMDIudHh0MjE0MiUyQ1NES1Rlc3RGb2xkZXIwMSUyRlNES1Rlc3RGaWxlMDIudHh0NDc1OSZhcGktdmVyc2lvbj0yMDE0LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "31977183-6b4a-49bf-a4b8-a8d58c974b43"
+        ],
+        "x-origin-server": [
+          "bn4sch103201423"
+        ],
+        "Server-Perf": [
+          "[319771836b4a49bfa4b8a8d58c974b43][ AuthTime::1777.06951613669::PostAuthTime::16876.8142254522 ][IsExist :: 00:00:001 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CONCAT :: 00:02:108 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:06:27 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=3efcf7e2-2a78-487c-be83-bfb6870064ae; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt2142?op=GETFILESTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQyMTQyP29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile02.txt2142 [ad78fc5695bd4418affc75eb5509cc34]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "219"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ad78fc56-95bd-4418-affc-75eb5509cc34"
+        ],
+        "x-origin-server": [
+          "bn4sch103201423"
+        ],
+        "Server-Perf": [
+          "[ad78fc5695bd4418affc75eb5509cc34][ AuthTime::841.274545906346::PostAuthTime::182.625435232338 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:052 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:06:27 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt4759?op=GETFILESTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQ0NzU5P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile02.txt4759 [5a027a42a88046018f8cea6e9d9194eb]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "219"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5a027a42-a880-4601-8f8c-ea6e9d9194eb"
+        ],
+        "x-origin-server": [
+          "bn4sch103201423"
+        ],
+        "Server-Perf": [
+          "[5a027a42a88046018f8cea6e9d9194eb][ AuthTime::1712.05999352471::PostAuthTime::17105.2029430495 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:239 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:06:28 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=3efcf7e2-2a78-487c-be83-bfb6870064ae; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

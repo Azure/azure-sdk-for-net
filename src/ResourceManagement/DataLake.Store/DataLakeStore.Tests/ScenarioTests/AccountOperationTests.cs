@@ -34,7 +34,7 @@ namespace DataLakeStore.Tests
         public void CreateGetUpdateDeleteTest()
         {
             TestUtilities.StartTest();
-            var clientToUse = this.GetDataLakeManagementClient();
+            var clientToUse = this.GetDataLakeStoreManagementClient();
 
             // Create a test account
             var responseCreate =
@@ -43,7 +43,7 @@ namespace DataLakeStore.Tests
                     {
                         DataLakeStoreAccount = new DataLakeStoreAccount
                         {
-                            Name = commonData.DataLakeAccountName,
+                            Name = commonData.DataLakeStoreAccountName,
                             Location = commonData.Location,
                             Tags = new Dictionary<string, string>
                             {
@@ -56,16 +56,16 @@ namespace DataLakeStore.Tests
             Assert.Equal(OperationStatus.Succeeded, responseCreate.Status);
             
             // get the account and ensure that all the values are properly set.
-            var responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeAccountName);
+            var responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
             // validate the account creation process
             Assert.True(responseGet.DataLakeStoreAccount.Properties.ProvisioningState == DataLakeStoreAccountStatus.Creating || responseGet.DataLakeStoreAccount.Properties.ProvisioningState == DataLakeStoreAccountStatus.Succeeded);
             Assert.NotNull(responseCreate.RequestId);
             Assert.NotNull(responseGet.RequestId);
-            Assert.Contains(commonData.DataLakeAccountName, responseGet.DataLakeStoreAccount.Id);
-            Assert.Contains(commonData.DataLakeAccountName, responseGet.DataLakeStoreAccount.Properties.Endpoint);
+            Assert.Contains(commonData.DataLakeStoreAccountName, responseGet.DataLakeStoreAccount.Id);
+            Assert.Contains(commonData.DataLakeStoreAccountName, responseGet.DataLakeStoreAccount.Properties.Endpoint);
             Assert.Equal(commonData.Location, responseGet.DataLakeStoreAccount.Location);
-            Assert.Equal(commonData.DataLakeAccountName, responseGet.DataLakeStoreAccount.Name);
+            Assert.Equal(commonData.DataLakeStoreAccountName, responseGet.DataLakeStoreAccount.Name);
             Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.DataLakeStoreAccount.Type);
 
             // wait for provisioning state to be Succeeded
@@ -76,7 +76,7 @@ namespace DataLakeStore.Tests
             {
                 TestUtilities.Wait(60000); // Wait for one minute and then go again.
                 minutesWaited++;
-                responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeAccountName);
+                responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
             }
 
             // Confirm that the account creation did succeed
@@ -104,7 +104,7 @@ namespace DataLakeStore.Tests
             Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
             Assert.Equal(OperationStatus.Succeeded, updateResponse.Status);
 
-            var updateResponseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeAccountName);
+            var updateResponseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
             Assert.NotNull(updateResponse.RequestId);
             Assert.Contains(responseGet.DataLakeStoreAccount.Id, updateResponseGet.DataLakeStoreAccount.Id);
@@ -150,7 +150,7 @@ namespace DataLakeStore.Tests
             Assert.Contains<HttpStatusCode>(deleteResponse.StatusCode, acceptedStatusCodes);
 
             // delete the account with its old name, which should also succeed.
-            deleteResponse = clientToUse.DataLakeStoreAccount.Delete(commonData.ResourceGroupName, commonData.DataLakeAccountName);
+            deleteResponse = clientToUse.DataLakeStoreAccount.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
             Assert.Contains<HttpStatusCode>(deleteResponse.StatusCode, acceptedStatusCodes);
 
             TestUtilities.EndTest();

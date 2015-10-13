@@ -1,0 +1,287 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt7555?op=RENAME&destination=SDKTestFolder010032%2FSDKTestMoveFile01.txt&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQ3NTU1P29wPVJFTkFNRSZkZXN0aW5hdGlvbj1TREtUZXN0Rm9sZGVyMDEwMDMyJTJGU0RLVGVzdE1vdmVGaWxlMDEudHh0JmFwaS12ZXJzaW9uPTIwMTQtMTAtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"boolean\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "16"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "00c3e787-6f12-41d2-b360-2d46dc57f99e"
+        ],
+        "x-origin-server": [
+          "bn4sch103201525"
+        ],
+        "Server-Perf": [
+          "[00c3e7876f1241d2b3602d46dc57f99e][ AuthTime::1854.0536841565::PostAuthTime::16869.108514533 ][IsExist :: 00:00:001 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:720 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:05:44 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=0b55f566-7bd3-4cbf-be93-b01d61d75862; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile02.txt7555?op=GETFILESTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMi50eHQ3NTU1P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile02.txt7555 [1adcaf8ceb0b46e4a8ce04bb92bd38e9]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "219"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1adcaf8c-eb0b-46e4-a8ce-04bb92bd38e9"
+        ],
+        "x-origin-server": [
+          "bn4sch103201525"
+        ],
+        "Server-Perf": [
+          "[1adcaf8ceb0b46e4a8ce04bb92bd38e9][ AuthTime::789.52320667887::PostAuthTime::180.059192855799 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:095 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:05:44 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder010032?op=RENAME&destination=SDKTestMoveFolder018570&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMDAzMj9vcD1SRU5BTUUmZGVzdGluYXRpb249U0RLVGVzdE1vdmVGb2xkZXIwMTg1NzAmYXBpLXZlcnNpb249MjAxNC0xMC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"boolean\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "16"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "76035a1a-d8f7-413e-a6f8-880d9fbe2fb8"
+        ],
+        "x-origin-server": [
+          "bn4sch103201525"
+        ],
+        "Server-Perf": [
+          "[76035a1ad8f7413ea6f8880d9fbe2fb8][ AuthTime::1697.51766376405::PostAuthTime::17348.5535387405 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:408 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:05:45 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=0b55f566-7bd3-4cbf-be93-b01d61d75862; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestMoveFolder018570?op=LISTSTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdE1vdmVGb2xkZXIwMTg1NzA/b3A9TElTVFNUQVRVUyZhcGktdmVyc2lvbj0yMDE0LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"FileStatuses\": {\r\n    \"FileStatus\": [\r\n      {\r\n        \"length\": 42,\r\n        \"pathSuffix\": \"SDKTestMoveFile01.txt\",\r\n        \"type\": \"FILE\",\r\n        \"blockSize\": 268435456,\r\n        \"accessTime\": 1444759542630,\r\n        \"modificationTime\": 1444759543087,\r\n        \"replication\": 0,\r\n        \"permission\": \"777\",\r\n        \"owner\": \"NotSupportYet\",\r\n        \"group\": \"NotSupportYet\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "263"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fea14079-d4d9-42f1-b2fd-b69906640c64"
+        ],
+        "x-origin-server": [
+          "bn4sch103201525"
+        ],
+        "Server-Perf": [
+          "[fea14079d4d942f1b2fdb69906640c64][ AuthTime::867.363522830308::PostAuthTime::213.419328349272 ][FsEnumerateDirectory :: 00:00:127 ms]%0a[ListDirectory :: 00:00:127 ms]%0a[LISTSTATUS :: 00:00:127 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:05:45 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder010032?op=GETFILESTATUS&api-version=2014-10-01",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMDAzMj9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTQtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder010032 [5c6d3d1428dd45bf95ac64ea6c0e268d]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "201"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5c6d3d14-28dd-45bf-95ac-64ea6c0e268d"
+        ],
+        "x-origin-server": [
+          "bn4sch103201525"
+        ],
+        "Server-Perf": [
+          "[5c6d3d1428dd45bf95ac64ea6c0e268d][ AuthTime::849.400372949207::PostAuthTime::183.908439258892 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:032 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 18:05:45 GMT"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -21,17 +21,17 @@ using Microsoft.Azure;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 
-namespace DataLakeFileSystem.Tests
+namespace DataLakeStoreFileSystem.Tests
 {
-    public class DataLakeFileSystemTestBase : TestBase
+    public class DataLakeStoreFileSystemTestBase : TestBase
     {
         /// <summary>
-        /// Gets DataLakeFileSystem client for the current test environment 
+        /// Gets DataLakeStoreFileSystem client for the current test environment 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="factory"></param>
         /// <returns></returns>
-        public static T GetDataLakeFileSystemServiceClient<T>(
+        public static T GetDataLakeStoreFileSystemServiceClient<T>(
             TestEnvironmentFactory factory)
             where T : class
         {

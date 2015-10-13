@@ -27,9 +27,9 @@ using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 using Xunit;
 
-namespace DataLakeFileSystem.Tests
+namespace DataLakeStoreFileSystem.Tests
 {
-    public class DataLakeFileSystemManagementHelper
+    public class DataLakeStoreFileSystemManagementHelper
     {
         internal const string folderToCreate = "SDKTestFolder01";
         internal const string folderToMove = "SDKTestMoveFolder01";
@@ -43,16 +43,16 @@ namespace DataLakeFileSystem.Tests
         internal const string fileContentsToAppend = "More test contents, that were appended!";
 
         internal readonly ResourceManagementClient resourceManagementClient;
-        internal readonly DataLakeStoreManagementClient dataLakeManagementClient;
-        internal readonly DataLakeStoreFileSystemManagementClient dataLakeFileSystemClient;
+        internal readonly DataLakeStoreManagementClient dataLakeStoreManagementClient;
+        internal readonly DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient;
         internal readonly TestBase testBase;
 
-        public DataLakeFileSystemManagementHelper(TestBase testBase)
+        public DataLakeStoreFileSystemManagementHelper(TestBase testBase)
         {
             this.testBase = testBase;
             resourceManagementClient = this.testBase.GetResourceManagementClient();
-            dataLakeManagementClient = this.testBase.GetDataLakeStoreManagementClient();
-            dataLakeFileSystemClient = this.testBase.GetDataLakeStoreFileSystemManagementClient();
+            dataLakeStoreManagementClient = this.testBase.GetDataLakeStoreManagementClient();
+            dataLakeStoreFileSystemClient = this.testBase.GetDataLakeStoreFileSystemManagementClient();
         }
 
         public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLake")
@@ -80,10 +80,10 @@ namespace DataLakeFileSystem.Tests
             ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.ResourceGroup.Name), string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
         }
 
-        public string TryCreateDataLakeAccount(string resourceGroupName, string location, string accountName)
+        public string TryCreateDataLakeStoreAccount(string resourceGroupName, string location, string accountName)
         {
-            var accountCreateResponse = dataLakeManagementClient.DataLakeStoreAccount.Create(resourceGroupName, new DataLakeStoreAccountCreateOrUpdateParameters { DataLakeStoreAccount = new DataLakeStoreAccount { Location = location, Name = accountName } });
-            var accountGetResponse = dataLakeManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
+            dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName, new DataLakeStoreAccountCreateOrUpdateParameters { DataLakeStoreAccount = new DataLakeStoreAccount { Location = location, Name = accountName } });
+            var accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
             
             // wait for provisioning state to be Succeeded
             // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -93,7 +93,7 @@ namespace DataLakeFileSystem.Tests
             {
                 TestUtilities.Wait(60000); // Wait for one minute and then go again.
                 minutesWaited++;
-                accountGetResponse = dataLakeManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
+                accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
             }
 
             // Confirm that the account creation did succeed
@@ -119,7 +119,7 @@ namespace DataLakeFileSystem.Tests
                 ? string.Format("{0}{1}", folderToCreate, random.Next(1, 10000).ToString("D4"))
                 : folderToCreate;
 
-            var response = dataLakeFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
+            var response = dataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
             Assert.True(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created);
             Assert.True(response.OperationResult);
 
@@ -135,11 +135,11 @@ namespace DataLakeFileSystem.Tests
                 filePath = string.Format("{0}/{1}{2}", folderName, fileToCreate, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
 
                 // Create an empty file
-                var beginCreateFileResponse = dataLakeFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
+                var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
                 Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
                 Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
 
-                var createFileResponse = dataLakeFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream());
+                var createFileResponse = dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream());
                 Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK || createFileResponse.StatusCode == HttpStatusCode.Created);
                 Assert.True(!string.IsNullOrEmpty(createFileResponse.Location));
             }
@@ -147,11 +147,11 @@ namespace DataLakeFileSystem.Tests
             {
                 filePath = string.Format("{0}/{1}{2}", folderName, fileToCreateWithContents, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
                 // create a file with content
-                var beginCreateFileResponse = dataLakeFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
+                var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
                 Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
                 Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
 
-                var createFileResponse = dataLakeFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
+                var createFileResponse = dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
                 Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK || createFileResponse.StatusCode == HttpStatusCode.Created);
                 Assert.True(!string.IsNullOrEmpty(createFileResponse.Location));
             }
@@ -161,7 +161,7 @@ namespace DataLakeFileSystem.Tests
 
         internal FileStatusResponse GetAndCompareFileOrFolder(string caboAccountName, string fileOrFolderPath, FileType expectedType, long expectedLength)
         {
-            var getResponse = dataLakeFileSystemClient.FileSystem.GetFileStatus(fileOrFolderPath, caboAccountName);
+            var getResponse = dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(fileOrFolderPath, caboAccountName);
             Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
             Assert.Equal(expectedLength, getResponse.FileStatus.Length);
             Assert.Equal(expectedType, getResponse.FileStatus.Type);
@@ -172,11 +172,11 @@ namespace DataLakeFileSystem.Tests
         internal void CompareFileContents(string caboAccountName, string filePath, string expectedContents)
         {
             // download a file and ensure they are equal
-            var beginOpenResponse = dataLakeFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
+            var beginOpenResponse = dataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
             Assert.Equal(HttpStatusCode.TemporaryRedirect, beginOpenResponse.StatusCode);
             Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
 
-            var openResponse = dataLakeFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
+            var openResponse = dataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
             string toCompare = Encoding.UTF8.GetString(openResponse.FileContents);
             Assert.Equal(expectedContents, toCompare);
         }
@@ -188,7 +188,7 @@ namespace DataLakeFileSystem.Tests
                 // try to delete a folder that doesn't exist or should fail
                 try
                 {
-                    var deleteFolderResponse = dataLakeFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
+                    var deleteFolderResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
                     Assert.Equal(HttpStatusCode.OK, deleteFolderResponse.StatusCode);
                     Assert.True(!deleteFolderResponse.OperationResult);
                 }
@@ -200,7 +200,7 @@ namespace DataLakeFileSystem.Tests
             else
             {
                 // Delete a folder
-                var deleteFolderResponse = dataLakeFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
+                var deleteFolderResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
                 Assert.Equal(HttpStatusCode.OK, deleteFolderResponse.StatusCode);
                 Assert.True(deleteFolderResponse.OperationResult);
             }
@@ -213,7 +213,7 @@ namespace DataLakeFileSystem.Tests
                 // try to delete a file that doesn't exist
                 try
                 {
-                    var deleteFileResponse = dataLakeFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
+                    var deleteFileResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
                     Assert.Equal(HttpStatusCode.OK, deleteFileResponse.StatusCode);
                     Assert.True(!deleteFileResponse.OperationResult);
                 }
@@ -225,7 +225,7 @@ namespace DataLakeFileSystem.Tests
             else
             {
                 // Delete a file
-                var deleteFileResponse = dataLakeFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
+                var deleteFileResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
                 Assert.Equal(HttpStatusCode.OK, deleteFileResponse.StatusCode);
                 Assert.True(deleteFileResponse.OperationResult);
             }

@@ -10,8 +10,8 @@
     <Compile Include="ScenarioTests\FileSystemOperationTests.cs" />
     <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
     <Compile Include="TestHelpers\CommonTestFixture.cs" />
-    <Compile Include="TestHelpers\DataLakeFileSystemTestBase.cs" />
-    <Compile Include="TestHelpers\DataLakeManagementHelper.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreFileSystemTestBase.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreFileSystemManagementHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
@@ -31,11 +31,12 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DataLakeFileSystemConcatenateFiles.json" />
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DataLakeFileSystemDeleteFolder.json" />
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DataLakeFileSystemFolderCreate.json" />
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DataLakeFileSystemGetAndSetAcl.json" />
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DataLakeFileSystemListFolderContents.json" />
-    <None Include="SessionRecords\DataLakeFileSystem.Tests.FileSystemOperationTests\DateLakeFileSystemMoveFileAndFolder.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemConcatenateFiles.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDeleteFolder.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFolderCreate.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemGetAndSetAcl.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemListFolderContents.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMoveFileAndFolder.json" />
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetFileProperties.json" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 
-namespace DataLakeFileSystem.Tests
+namespace DataLakeStoreFileSystem.Tests
 {
     public static class ClientManagementUtilities
     {
@@ -28,7 +28,7 @@ namespace DataLakeFileSystem.Tests
         /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
         public static DataLakeStoreFileSystemManagementClient GetDataLakeStoreFileSystemManagementClient(this TestBase testBase)
         {
-            return DataLakeFileSystemTestBase.GetDataLakeFileSystemServiceClient<DataLakeStoreFileSystemManagementClient>(new CSMTestEnvironmentFactory());
+            return DataLakeStoreFileSystemTestBase.GetDataLakeStoreFileSystemServiceClient<DataLakeStoreFileSystemManagementClient>(new CSMTestEnvironmentFactory());
         }
 
         /// <summary>

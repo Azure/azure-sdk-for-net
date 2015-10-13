@@ -21,12 +21,12 @@ using System.Net;
 
 namespace DataLakeStore.Tests
 {
-    public class DataLakeManagementHelper
+    public class DataLakeStoreManagementHelper
     {
         private ResourceManagementClient resourceManagementClient;
         private TestBase testBase;
 
-        public DataLakeManagementHelper(TestBase testBase)
+        public DataLakeStoreManagementHelper(TestBase testBase)
         {
             this.testBase = testBase;
             resourceManagementClient = ClientManagementUtilities.GetResourceManagementClient(this.testBase);

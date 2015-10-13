@@ -15,12 +15,12 @@
 using Microsoft.Azure.Test;
 using System;
 
-namespace DataLakeFileSystem.Tests
+namespace DataLakeStoreFileSystem.Tests
 {
     public class CommonTestFixture : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
-        public string DataLakeFileSystemAccountName { get; set; }
+        public string DataLakeStoreFileSystemAccountName { get; set; }
         public string HostUrl { get; set; }
         public string Location = "West US";
         
@@ -30,14 +30,14 @@ namespace DataLakeFileSystem.Tests
             {
                 UndoContext.Current.Start();
 
-                var dataLakeFilesystemManagementHelper = new DataLakeFileSystemManagementHelper(this);
-                dataLakeFilesystemManagementHelper.TryRegisterSubscriptionForResource();
+                var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
+                dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
-                DataLakeFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
-                dataLakeFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                DataLakeStoreFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
+                dataLakeStoreFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
 
                 // create the DataLake account in the resource group and establish the host URL to use.
-                this.HostUrl = dataLakeFilesystemManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.Location, this.DataLakeFileSystemAccountName);
+                this.HostUrl = dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreFileSystemAccountName);
             }
             catch (Exception)
             {

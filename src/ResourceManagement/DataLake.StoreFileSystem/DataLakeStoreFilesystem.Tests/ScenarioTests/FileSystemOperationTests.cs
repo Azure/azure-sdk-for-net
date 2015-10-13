@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Hyak.Common;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
@@ -25,24 +24,24 @@ using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 using Microsoft.Azure.Test;
 using Xunit;
 
-namespace DataLakeFileSystem.Tests
+namespace DataLakeStoreFileSystem.Tests
 {
     public class FileSystemOperationTests : TestBase, IUseFixture<CommonTestFixture>
     {
         private CommonTestFixture commonData;
-        private DataLakeStoreFileSystemManagementClient dataLakeFileSystemClient;
-        private DataLakeFileSystemManagementHelper helper;
+        private DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient;
+        private DataLakeStoreFileSystemManagementHelper helper;
 
         #region SDK Tests
 
         [Fact]
-        public void DataLakeFileSystemFolderCreate()
+        public void DataLakeStoreFileSystemFolderCreate()
         {
             try
             {
                 TestUtilities.StartTest();
-                var folderPath = helper.CreateFolder(commonData.DataLakeFileSystemAccountName, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, folderPath, FileType.Directory, 0);
+                var folderPath = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, FileType.Directory, 0);
             }
             finally
             {
@@ -52,21 +51,21 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemListFolderContents()
+        public void DataLakeStoreFileSystemListFolderContents()
         {
             try
             {
                 TestUtilities.StartTest();
-                var folderPath = helper.CreateFolder(commonData.DataLakeFileSystemAccountName, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, folderPath,
+                var folderPath = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath,
                     FileType.Directory, 0);
 
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, false, true, folderPath);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File, 0);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, false, true, folderPath);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
                 // List all the contents in the folder
-                var listFolderResponse = dataLakeFileSystemClient.FileSystem.ListFileStatus(folderPath,
-                    commonData.DataLakeFileSystemAccountName, null);
+                var listFolderResponse = dataLakeStoreFileSystemClient.FileSystem.ListFileStatus(folderPath,
+                    commonData.DataLakeStoreFileSystemAccountName, null);
                 Assert.Equal(HttpStatusCode.OK, listFolderResponse.StatusCode);
 
                 // We know that this directory is brand new, so the contents should only be the one file.
@@ -80,13 +79,13 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemEmptyFileCreate()
+        public void DataLakeStoreFileSystemEmptyFileCreate()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, false, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File, 0);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, false, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
             }
             finally
             {
@@ -95,16 +94,16 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemFileCreateWithContents()
+        public void DataLakeStoreFileSystemFileCreateWithContents()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
-                helper.CompareFileContents(commonData.DataLakeFileSystemAccountName, filePath,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+                helper.CompareFileContents(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd);
             }
             finally
             {
@@ -113,25 +112,25 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemAppendToFile()
+        public void DataLakeStoreFileSystemAppendToFile()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, false, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File, 0);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, false, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
                 // Append to the file that we created
-                var beginAppendResponse = dataLakeFileSystemClient.FileSystem.BeginAppend(filePath,
-                    commonData.DataLakeFileSystemAccountName, null);
+                var beginAppendResponse = dataLakeStoreFileSystemClient.FileSystem.BeginAppend(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName, null);
                 Assert.Equal(HttpStatusCode.TemporaryRedirect, beginAppendResponse.StatusCode);
                 Assert.True(!string.IsNullOrEmpty(beginAppendResponse.Location));
 
-                var appendResponse = dataLakeFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
-                    new MemoryStream(Encoding.UTF8.GetBytes(DataLakeFileSystemManagementHelper.fileContentsToAppend)));
+                var appendResponse = dataLakeStoreFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
+                    new MemoryStream(Encoding.UTF8.GetBytes(DataLakeStoreFileSystemManagementHelper.fileContentsToAppend)));
                 Assert.Equal(HttpStatusCode.OK, appendResponse.StatusCode);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAppend.Length);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAppend.Length);
             }
             finally
             {
@@ -140,41 +139,41 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemConcatenateFiles()
+        public void DataLakeStoreFileSystemConcatenateFiles()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath1 = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath1, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
+                var filePath1 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
-                var filePath2 = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath2, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
+                var filePath2 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
-                var targetFolder = helper.CreateFolder(commonData.DataLakeFileSystemAccountName, true);
+                var targetFolder = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
 
                 var concatResponse =
-                    dataLakeFileSystemClient.FileSystem.Concat(
-                        string.Format("{0}/{1}", targetFolder, DataLakeFileSystemManagementHelper.fileToConcatTo),
-                        commonData.DataLakeFileSystemAccountName, string.Format("{0},{1}", filePath1, filePath2));
+                    dataLakeStoreFileSystemClient.FileSystem.Concat(
+                        string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
+                        commonData.DataLakeStoreFileSystemAccountName, string.Format("{0},{1}", filePath1, filePath2));
                 Assert.Equal(HttpStatusCode.OK, concatResponse.StatusCode);
 
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName,
-                    string.Format("{0}/{1}", targetFolder, DataLakeFileSystemManagementHelper.fileToConcatTo),
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName,
+                    string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
                     FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length*2);
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length*2);
 
                 // Attempt to get the files that were concatted together, which should fail and throw
                 Assert.Throws(typeof (CloudException),
                     () =>
-                        dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath1,
-                            commonData.DataLakeFileSystemAccountName));
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath1,
+                            commonData.DataLakeStoreFileSystemAccountName));
                 Assert.Throws(typeof (CloudException),
                     () =>
-                        dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath2,
-                            commonData.DataLakeFileSystemAccountName));
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath2,
+                            commonData.DataLakeStoreFileSystemAccountName));
             }
             finally
             {
@@ -183,49 +182,49 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DateLakeFileSystemMoveFileAndFolder()
+        public void DataLakeStoreFileSystemMoveFileAndFolder()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
-                var targetFolder1 = helper.CreateFolder(commonData.DataLakeFileSystemAccountName, true);
-                var targetFolder2 = string.Format("{0}{1}", DataLakeFileSystemManagementHelper.folderToMove,
+                var targetFolder1 = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+                var targetFolder2 = string.Format("{0}{1}", DataLakeStoreFileSystemManagementHelper.folderToMove,
                     new Random().Next(0, 10000).ToString("D4"));
 
                 // Move file first
-                var moveFileResponse = dataLakeFileSystemClient.FileSystem.Rename(filePath,
-                    commonData.DataLakeFileSystemAccountName,
-                    string.Format("{0}/{1}", targetFolder1, DataLakeFileSystemManagementHelper.fileToMove));
+                var moveFileResponse = dataLakeStoreFileSystemClient.FileSystem.Rename(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName,
+                    string.Format("{0}/{1}", targetFolder1, DataLakeStoreFileSystemManagementHelper.fileToMove));
                 Assert.Equal(HttpStatusCode.OK, moveFileResponse.StatusCode);
                 Assert.True(moveFileResponse.OperationResult);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName,
-                    string.Format("{0}/{1}", targetFolder1, DataLakeFileSystemManagementHelper.fileToMove),
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName,
+                    string.Format("{0}/{1}", targetFolder1, DataLakeStoreFileSystemManagementHelper.fileToMove),
                     FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
                 // Ensure the old file is gone
                 Assert.Throws(typeof (CloudException),
                     () =>
-                        dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath,
-                            commonData.DataLakeFileSystemAccountName));
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath,
+                            commonData.DataLakeStoreFileSystemAccountName));
 
                 // Now move folder completely.
-                var moveFolderResponse = dataLakeFileSystemClient.FileSystem.Rename(targetFolder1,
-                    commonData.DataLakeFileSystemAccountName, targetFolder2);
+                var moveFolderResponse = dataLakeStoreFileSystemClient.FileSystem.Rename(targetFolder1,
+                    commonData.DataLakeStoreFileSystemAccountName, targetFolder2);
                 Assert.Equal(HttpStatusCode.OK, moveFolderResponse.StatusCode);
                 Assert.True(moveFolderResponse.OperationResult);
 
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, targetFolder2,
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, targetFolder2,
                     FileType.Directory, 0);
 
                 // ensure all the contents of the folder moved
                 // List all the contents in the folder
-                var listFolderResponse = dataLakeFileSystemClient.FileSystem.ListFileStatus(targetFolder2,
-                    commonData.DataLakeFileSystemAccountName, null);
+                var listFolderResponse = dataLakeStoreFileSystemClient.FileSystem.ListFileStatus(targetFolder2,
+                    commonData.DataLakeStoreFileSystemAccountName, null);
                 Assert.Equal(HttpStatusCode.OK, listFolderResponse.StatusCode);
 
                 // We know that this directory is brand new, so the contents should only be the one file.
@@ -234,8 +233,8 @@ namespace DataLakeFileSystem.Tests
 
                 Assert.Throws(typeof (CloudException),
                     () =>
-                        dataLakeFileSystemClient.FileSystem.GetFileStatus(targetFolder1,
-                            commonData.DataLakeFileSystemAccountName));
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(targetFolder1,
+                            commonData.DataLakeStoreFileSystemAccountName));
             }
             finally
             {
@@ -244,33 +243,33 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemDeleteFolder()
+        public void DataLakeStoreFileSystemDeleteFolder()
         {
             try
             {
                 TestUtilities.StartTest();
-                var folderPath = helper.CreateFolder(commonData.DataLakeFileSystemAccountName, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, folderPath,
+                var folderPath = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath,
                     FileType.Directory, 0);
-                helper.DeleteFolder(commonData.DataLakeFileSystemAccountName, folderPath, true, false);
+                helper.DeleteFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, true, false);
                 //WORK AROUND: Bug 4717659 makes it so even empty folders have contents.
 
                 // delete again expecting failure.
-                helper.DeleteFolder(commonData.DataLakeFileSystemAccountName, folderPath, false, true);
+                helper.DeleteFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, false, true);
 
                 // delete a folder with contents
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true, folderPath);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true, folderPath);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
                 // should fail if recurse is not set
-                helper.DeleteFolder(commonData.DataLakeFileSystemAccountName, folderPath, false, true);
+                helper.DeleteFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, false, true);
 
                 // Now actually delete
-                helper.DeleteFolder(commonData.DataLakeFileSystemAccountName, folderPath, true, false);
+                helper.DeleteFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, true, false);
 
                 // delete again expecting failure.
-                helper.DeleteFolder(commonData.DataLakeFileSystemAccountName, folderPath, true, true);
+                helper.DeleteFolder(commonData.DataLakeStoreFileSystemAccountName, folderPath, true, true);
             }
             finally
             {
@@ -279,18 +278,18 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemDeleteFile()
+        public void DataLakeStoreFileSystemDeleteFile()
         {
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
-                helper.GetAndCompareFileOrFolder(commonData.DataLakeFileSystemAccountName, filePath, FileType.File,
-                    DataLakeFileSystemManagementHelper.fileContentsToAdd.Length);
-                helper.DeleteFile(commonData.DataLakeFileSystemAccountName, filePath, false);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+                helper.DeleteFile(commonData.DataLakeStoreFileSystemAccountName, filePath, false);
 
                 // try to delete it again, which should fail
-                helper.DeleteFile(commonData.DataLakeFileSystemAccountName, filePath, true);
+                helper.DeleteFile(commonData.DataLakeStoreFileSystemAccountName, filePath, true);
             }
             finally
             {
@@ -299,13 +298,13 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemGetAndSetAcl()
+        public void DataLakeStoreFileSystemGetAndSetAcl()
         {
             try
             {
                 TestUtilities.StartTest();
-                var currentAcl = dataLakeFileSystemClient.FileSystem.GetAclStatus("/",
-                    commonData.DataLakeFileSystemAccountName);
+                var currentAcl = dataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                    commonData.DataLakeStoreFileSystemAccountName);
 
                 Assert.True(currentAcl.StatusCode == HttpStatusCode.OK);
 
@@ -325,17 +324,17 @@ namespace DataLakeFileSystem.Tests
                 Assert.False(string.IsNullOrEmpty(originalOther));
 
                 // Set the other acl to RWX
-                var setAclResponse = dataLakeFileSystemClient.FileSystem.SetAcl("/", commonData.DataLakeFileSystemAccountName,
+                var setAclResponse = dataLakeStoreFileSystemClient.FileSystem.SetAcl("/", commonData.DataLakeStoreFileSystemAccountName,
                     string.Join(",", aclToReplaceWith));
 
                 Assert.True(setAclResponse.StatusCode == HttpStatusCode.OK);
-                var newAcl = dataLakeFileSystemClient.FileSystem.GetAclStatus("/",
-                    commonData.DataLakeFileSystemAccountName);
+                var newAcl = dataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                    commonData.DataLakeStoreFileSystemAccountName);
                 // verify the ACL actually changed
                 
                 // Check the access first and assert that it returns OK (note: this is currently only for the user making the request, so it is not testing "other")
-                var accessCheckResponse = dataLakeFileSystemClient.FileSystem.CheckAccess("/",
-                    commonData.DataLakeFileSystemAccountName, "rwx");
+                var accessCheckResponse = dataLakeStoreFileSystemClient.FileSystem.CheckAccess("/",
+                    commonData.DataLakeStoreFileSystemAccountName, "rwx");
 
                 Assert.True(accessCheckResponse.StatusCode == HttpStatusCode.OK);
 
@@ -350,13 +349,13 @@ namespace DataLakeFileSystem.Tests
                 Assert.True(foundIt);
 
                 // Set it back using specific entry
-                var setAclEntryResponse = dataLakeFileSystemClient.FileSystem.ModifyAclEntries("/",
-                    commonData.DataLakeFileSystemAccountName, originalOther);
+                var setAclEntryResponse = dataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
+                    commonData.DataLakeStoreFileSystemAccountName, originalOther);
                 Assert.True(setAclEntryResponse.StatusCode == HttpStatusCode.OK);
 
                 // Now confirm that it equals the original ACL
-                var finalEntries = dataLakeFileSystemClient.FileSystem.GetAclStatus("/",
-                    commonData.DataLakeFileSystemAccountName)
+                var finalEntries = dataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                    commonData.DataLakeStoreFileSystemAccountName)
                     .AclStatus.Entries;
                 foreach (var entry in finalEntries)
                 {
@@ -374,45 +373,53 @@ namespace DataLakeFileSystem.Tests
         }
 
         [Fact]
-        public void DataLakeFileSystemSetFileProperties()
+        public void DataLakeStoreFileSystemSetFileProperties()
         {
             // This test simply tests that all bool/empty return actions return successfully
             try
             {
                 TestUtilities.StartTest();
-                var filePath = helper.CreateFile(commonData.DataLakeFileSystemAccountName, true, true);
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
                 var originalFileStatus =
-                    dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeFileSystemAccountName)
+                    dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeStoreFileSystemAccountName)
                         .FileStatus;
                 // Set replication on file
-                var replicationResponse = dataLakeFileSystemClient.FileSystem.SetReplication(filePath,
-                    commonData.DataLakeFileSystemAccountName, 3);
+                var replicationResponse = dataLakeStoreFileSystemClient.FileSystem.SetReplication(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName, 3);
                 Assert.True(replicationResponse.StatusCode == HttpStatusCode.OK && replicationResponse.OperationResult);
 
+                /*
+                 * This API is available but all values put into it are ignored. Commenting this out until this API is fully functional.
                 Assert.Equal(3,
-                    dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeFileSystemAccountName)
+                    dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeStoreFileSystemAccountName)
                         .FileStatus.Replication);
-                
+                */
+
                 // set the time on the file
                 var timeToSet = DateTime.UtcNow.Ticks + 2;
-                var timeResponse = dataLakeFileSystemClient.FileSystem.SetTimes(filePath,
-                    commonData.DataLakeFileSystemAccountName, timeToSet, timeToSet);
+                var timeResponse = dataLakeStoreFileSystemClient.FileSystem.SetTimes(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName, timeToSet, timeToSet);
                 Assert.True(timeResponse.StatusCode == HttpStatusCode.OK);
 
                 var fileStatusAfterTime =
-                    dataLakeFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeFileSystemAccountName)
+                    dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath, commonData.DataLakeStoreFileSystemAccountName)
                         .FileStatus;
 
+                /*
+                 * This API is available but all values put into it are ignored. Commenting this out until this API is fully functional.
                 Assert.True(
                     fileStatusAfterTime.ModificationTime == timeToSet && fileStatusAfterTime.AccessTime == timeToSet);
-                
+                */
+
+                // Symlink creation is explicitly not supported.
                 var symLinkName = TestUtilities.GenerateName("testPath/symlinktest1");
-                var createSymLinkResponse = dataLakeFileSystemClient.FileSystem.CreateSymLink(filePath,
-                    commonData.DataLakeFileSystemAccountName, symLinkName, true);
+                Assert.Throws<CloudException>(() => dataLakeStoreFileSystemClient.FileSystem.CreateSymLink(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName, symLinkName, true));
 
-                Assert.True(createSymLinkResponse.StatusCode == HttpStatusCode.OK);
-
-                Assert.DoesNotThrow(() => dataLakeFileSystemClient.FileSystem.GetFileStatus(symLinkName, commonData.DataLakeFileSystemAccountName));
+                // Once symlinks are available, remove the throws test and uncomment out this code.
+                // Assert.True(createSymLinkResponse.StatusCode == HttpStatusCode.OK);
+                // Assert.DoesNotThrow(() => dataLakeFileSystemClient.FileSystem.GetFileStatus(symLinkName, commonData.DataLakeStoreFileSystemAccountName));
+                
             }
             finally
             {
@@ -425,8 +432,8 @@ namespace DataLakeFileSystem.Tests
         public void SetFixture(CommonTestFixture data)
         {
             commonData = data;
-            dataLakeFileSystemClient = this.GetDataLakeStoreFileSystemManagementClient();
-            helper = new DataLakeFileSystemManagementHelper(this);
+            dataLakeStoreFileSystemClient = this.GetDataLakeStoreFileSystemManagementClient();
+            helper = new DataLakeStoreFileSystemManagementHelper(this);
         }
     }
 }

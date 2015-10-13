@@ -14,12 +14,9 @@
 //
 
 using System;
-using System.Net.Http;
 using System.Reflection;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace DataLakeAnalyticsJob.Tests
 {

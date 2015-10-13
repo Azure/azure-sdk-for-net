@@ -10,7 +10,7 @@
     <Compile Include="ScenarioTests\AccountOperationTests.cs" />
     <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
     <Compile Include="TestHelpers\CommonTestFixture.cs" />
-    <Compile Include="TestHelpers\DataLakeManagementHelper.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreManagementHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">

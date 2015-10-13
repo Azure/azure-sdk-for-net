@@ -20,7 +20,7 @@ namespace DataLakeStore.Tests
     public class CommonTestFixture : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
-        public string DataLakeAccountName { get; set; }
+        public string DataLakeStoreAccountName { get; set; }
         public string Location = "West US";
         
         public CommonTestFixture()
@@ -30,12 +30,12 @@ namespace DataLakeStore.Tests
             {
                 UndoContext.Current.Start();
 
-                var dataLakeManagementHelper = new DataLakeManagementHelper(this);
-                dataLakeManagementHelper.TryRegisterSubscriptionForResource();
-                dataLakeManagementHelper.TryRegisterSubscriptionForResource("Microsoft.Storage");
+                var dataLakeStoreManagementHelper = new DataLakeStoreManagementHelper(this);
+                dataLakeStoreManagementHelper.TryRegisterSubscriptionForResource();
+                dataLakeStoreManagementHelper.TryRegisterSubscriptionForResource("Microsoft.Storage");
                 ResourceGroupName = TestUtilities.GenerateName("datalakerg1");
-                DataLakeAccountName = TestUtilities.GenerateName("testdatalake1");
-                dataLakeManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                DataLakeStoreAccountName = TestUtilities.GenerateName("testdatalake1");
+                dataLakeStoreManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
             }
             catch (Exception)
             {
