@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.RecoveryServicesBackupManagement</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.RecoveryServicesBackupManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
+    <DocumentationFile>bin\Net45-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
+    <DocumentationFile>bin\Net40-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Release'">
+    <DocumentationFile>bin\Net40-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Debug'">
+    <DocumentationFile>bin\Portable-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Release'">
+    <DocumentationFile>bin\Portable-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\packages\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\packages\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\IProtectableObjectOperations.cs" />
+    <Compile Include="Generated\IProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\IRecoveryServicesBackupManagementClient.cs" />
+    <Compile Include="Generated\IRecoveryServicesBackupVaultManagementClient.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\DailyRetentionFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\DailyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\Day.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\LongTermRetentionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\LongTermSchedulePolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\Month.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ProtectableObject.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectQueryParameters.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ProtectionPolicyBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyRequest.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResource.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResponse.cs" />
+    <Compile Include="Generated\Models\Resource.cs" />
+    <Compile Include="Generated\Models\RetentionDuration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RetentionDurationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RetentionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RetentionScheduleBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RetentionScheduleFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\SchedulePolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\SimpleRetentionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\SimpleSchedulePolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\WeeklyRetentionFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\WeekNumber.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\YearlyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\ProtectableObjectOperations.cs" />
+    <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupManagementClient.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupManagementClientExtensions.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClient.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClientExtensions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+</Project>
