@@ -48,6 +48,42 @@ namespace Microsoft.Azure.Management.Compute.Models
         StandardA8,
         [EnumMember(Value = "Standard_A9")]
         StandardA9,
+        [EnumMember(Value = "Standard_A10")]
+        StandardA10,
+        [EnumMember(Value = "Standard_A11")]
+        StandardA11,
+        [EnumMember(Value = "Standard_D1")]
+        StandardD1,
+        [EnumMember(Value = "Standard_D2")]
+        StandardD2,
+        [EnumMember(Value = "Standard_D3")]
+        StandardD3,
+        [EnumMember(Value = "Standard_D4")]
+        StandardD4,
+        [EnumMember(Value = "Standard_DS1")]
+        StandardDS1,
+        [EnumMember(Value = "Standard_DS2")]
+        StandardDS2,
+        [EnumMember(Value = "Standard_DS3")]
+        StandardDS3,
+        [EnumMember(Value = "Standard_DS4")]
+        StandardDS4,
+        [EnumMember(Value = "Standard_D11")]
+        StandardD11,
+        [EnumMember(Value = "Standard_D12")]
+        StandardD12,
+        [EnumMember(Value = "Standard_D13")]
+        StandardD13,
+        [EnumMember(Value = "Standard_D14")]
+        StandardD14,
+        [EnumMember(Value = "Standard_DS11")]
+        StandardDS11,
+        [EnumMember(Value = "Standard_DS12")]
+        StandardDS12,
+        [EnumMember(Value = "Standard_DS13")]
+        StandardDS13,
+        [EnumMember(Value = "Standard_DS14")]
+        StandardDS14,
         [EnumMember(Value = "Standard_G1")]
         StandardG1,
         [EnumMember(Value = "Standard_G2")]
@@ -57,6 +93,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         [EnumMember(Value = "Standard_G4")]
         StandardG4,
         [EnumMember(Value = "Standard_G5")]
-        StandardG5
+        StandardG5,
+        [EnumMember(Value = "Standard_GS1")]
+        StandardGS1,
+        [EnumMember(Value = "Standard_GS2")]
+        StandardGS2,
+        [EnumMember(Value = "Standard_GS3")]
+        StandardGS3,
+        [EnumMember(Value = "Standard_GS4")]
+        StandardGS4,
+        [EnumMember(Value = "Standard_GS5")]
+        StandardGS5
     }
 }

@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}").ToString();
             url = url.Replace("{location}", Uri.EscapeDataString(location));
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
             url = url.Replace("{type}", Uri.EscapeDataString(type));
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "ListVersions", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions").ToString();
             url = url.Replace("{location}", Uri.EscapeDataString(location));
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
             url = url.Replace("{type}", Uri.EscapeDataString(type));
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "ListTypes", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types").ToString();
             url = url.Replace("{location}", Uri.EscapeDataString(location));
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
