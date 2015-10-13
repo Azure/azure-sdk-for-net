@@ -3,6 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>DataLakeAnalyticsCatalog.Tests</RootNamespace>
+  </PropertyGroup>
   <Import Project="..\..\packages\xunit.runner.visualstudio.2.0.0-rc1-build1030\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.0.0-rc1-build1030\build\net20\xunit.runner.visualstudio.props')" />
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />

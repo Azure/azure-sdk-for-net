@@ -2,8 +2,26 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}</ProjectGuid>
-    <RootNamespace>BigAnalytics.Tests</RootNamespace>
-    <AssemblyName>BigAnalytics.Tests</AssemblyName>
+    <RootNamespace>DataLakeAnalytics.Tests</RootNamespace>
+    <AssemblyName>DataLakeAnalytics.Tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\DataLakeAnalytics.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
+    <DocumentationFile>bin\Net45-Release\DataLakeAnalytics.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
+    <DocumentationFile>bin\Net40-Debug\DataLakeAnalytics.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Release'">
+    <DocumentationFile>bin\Net40-Release\DataLakeAnalytics.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Debug'">
+    <DocumentationFile>bin\Portable-Debug\DataLakeAnalytics.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Release'">
+    <DocumentationFile>bin\Portable-Release\DataLakeAnalytics.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
