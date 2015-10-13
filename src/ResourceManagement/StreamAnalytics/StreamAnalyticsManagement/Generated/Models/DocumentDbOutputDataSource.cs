@@ -21,18 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// The DocumentDB data source as output.
     /// </summary>
-    public static partial class OperationStatus
+    public partial class DocumentDbOutputDataSource : OutputDataSource
     {
-        public const string InProgress = "InProgress";
+        private DocumentDbOutputDataSourceProperties _properties;
         
-        public const string Succeeded = "Succeeded";
+        /// <summary>
+        /// Optional. Gets or sets the properties of the DocumentDB data source
+        /// as output.
+        /// </summary>
+        public DocumentDbOutputDataSourceProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
         
-        public const string Failed = "Failed";
+        /// <summary>
+        /// Initializes a new instance of the DocumentDbOutputDataSource class.
+        /// </summary>
+        public DocumentDbOutputDataSource()
+        {
+        }
     }
 }

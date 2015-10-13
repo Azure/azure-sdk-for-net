@@ -21,32 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.StreamAnalytics.Models;
 
-namespace Microsoft.Azure.Management.StreamAnalytics.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// The Event Hub data source as output.
+    /// The status of the asynchronous request.
     /// </summary>
-    public partial class EventHubOutputDataSource : OutputDataSource
+    public static partial class NetworkOperationStatus
     {
-        private EventHubOutputDataSourceProperties _properties;
+        public const string InProgress = "InProgress";
         
-        /// <summary>
-        /// Optional. Gets or sets the properties of the Event Hub data source
-        /// as output.
-        /// </summary>
-        public EventHubOutputDataSourceProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
+        public const string Succeeded = "Succeeded";
         
-        /// <summary>
-        /// Initializes a new instance of the EventHubOutputDataSource class.
-        /// </summary>
-        public EventHubOutputDataSource()
-        {
-        }
+        public const string Failed = "Failed";
     }
 }

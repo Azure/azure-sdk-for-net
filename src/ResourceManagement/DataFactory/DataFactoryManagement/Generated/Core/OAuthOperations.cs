@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/oauth/authorizationsession/";
             url = url + Uri.EscapeDataString(linkedServiceType);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

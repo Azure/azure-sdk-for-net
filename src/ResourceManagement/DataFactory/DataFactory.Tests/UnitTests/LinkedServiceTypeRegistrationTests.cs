@@ -98,6 +98,23 @@ namespace DataFactory.Tests.UnitTests
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
+        public void ClientsDoNotShareTypeMap()
+        {
+            var client = new DataFactoryManagementClient();
+            Assert.False(client.TypeIsRegistered<MyLinkedServiceType>());
+
+            client.RegisterType<MyLinkedServiceType>();
+            Assert.True(client.TypeIsRegistered<MyLinkedServiceType>());
+
+            // Ensure that the backing type map is not static/shared; 
+            // MyLinkedServiceType should not be registered on a second client
+            var client2 = new DataFactoryManagementClient();
+            Assert.False(client2.TypeIsRegistered<MyLinkedServiceType>());
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
         public void CanGetUserRegisteredLinkedServiceCaseInsensitive()
         {
             this.Client.RegisterType<MyLinkedServiceType>(true);

@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/providers/Microsoft.Network/expressRouteServiceProviders?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTUzMmE2M2UtZjJlYi00NjQ5LWJiMjMtNWVkMDEwNzdjZTgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9leHByZXNzUm91dGVTZXJ2aWNlUHJvdmlkZXJzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Equinix\",\r\n      \"id\": \"/subscriptions//resourceGroups//providers/Microsoft.Network/expressRouteServiceProviders/\",\r\n      \"type\": \"Microsoft.Network/expressRouteServiceProviders\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"peeringLocations\": [\r\n          \"Amsterdam\",\r\n          \"Atlanta\",\r\n          \"Chicago\",\r\n          \"Dallas\",\r\n          \"Hong Kong\",\r\n          \"London\",\r\n          \"Los Angeles\",\r\n          \"Melbourne\",\r\n          \"New York\",\r\n          \"Sao Paulo\",\r\n          \"Seattle\",\r\n          \"Silicon Valley\",\r\n          \"Singapore\",\r\n          \"Sydney\",\r\n          \"Tokyo\",\r\n          \"Washington DC\"\r\n        ],\r\n        \"bandwidthsOffered\": [\r\n          {\r\n            \"offerName\": \"200Mbps\",\r\n            \"valueInMbps\": 200\r\n          },\r\n          {\r\n            \"offerName\": \"500Mbps\",\r\n            \"valueInMbps\": 500\r\n          },\r\n          {\r\n            \"offerName\": \"1Gbps\",\r\n            \"valueInMbps\": 1000\r\n          },\r\n          {\r\n            \"offerName\": \"10Gbps\",\r\n            \"valueInMbps\": 10000\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1152"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b3da87ca-19e8-4cbf-854d-770116e1e401"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14969"
+        ],
+        "x-ms-correlation-request-id": [
+          "df7ab8a4-1cd8-4689-b2e3-3ec79eb0b4c4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151002T061407Z:df7ab8a4-1cd8-4689-b2e3-3ec79eb0b4c4"
+        ],
+        "Date": [
+          "Fri, 02 Oct 2015 06:14:07 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9532a63e-f2eb-4649-bb23-5ed01077ce80"
+  }
+}

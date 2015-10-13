@@ -1,26 +1,26 @@
-For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
-## \[Major.Minor.Patch\]
-_Release date:_
+## Version 4.0.0
+_Release date: 2015.10.02_
 
 ### Breaking Changes
-* Rename Table to Dataset.
-    * ITableOperations → IDatasetOperations 
-    * Models.Table → Models.Dataset
-    * Models.TableProperties → Models.DatasetProperties
-    * Models.TableTypeProprerties → Models.DatasetTypeProperties
-    * Models.TableCreateOrUpdateParameters → Models.DatasetCreateOrUpdateParameters
-    * Models.TableCreateOrUpdateResponse → Models.DatasetCreateOrUpdateResponse
-    * Models.TableGetResponse → Models.DatasetGetResponse
-    * Models.TableListResponse → Models.DatasetListResponse
-    * Models.CreateOrUpdateWithRawJsonContentParameters.cs → Models.DatasetCreateOrUpdateWithRawJsonContentParameters.cs
+    
+* Send requests with API version 2015-10-01.
+    * List API calls return paged results. If the response contains a non-empty NextLink property, the client application needs to continue fetching the next page until all pages are returned.
+    * List pipeline API call returns only the summary of a pipeline instead of full details. For instance, activities in a pipeline summary only contain name and type.
+* ITableOperations → IDatasetOperations 
+* Models.Table → Models.Dataset
+* Models.TableProperties → Models.DatasetProperties
+* Models.TableTypeProprerties → Models.DatasetTypeProperties
+* Models.TableCreateOrUpdateParameters → Models.DatasetCreateOrUpdateParameters
+* Models.TableCreateOrUpdateResponse → Models.DatasetCreateOrUpdateResponse
+* Models.TableGetResponse → Models.DatasetGetResponse
+* Models.TableListResponse → Models.DatasetListResponse
+* Models.CreateOrUpdateWithRawJsonContentParameters.cs → Models.DatasetCreateOrUpdateWithRawJsonContentParameters.cs
 
 ### Feature Additions
 * Add SliceIdentifierColumnName and SqlWriterCleanupScript to support idempotent copy to SQL Data Warehouse.
 * Add stored procedure support for both SQL and SQL Data Warehouse source. 
-
-### Bug Fixes
-
 
 
 ## Version 3.0.0

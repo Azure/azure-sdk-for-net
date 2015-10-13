@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             this._outputs = new OutputOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this._transformations = new TransformationOperations(this);
-            this._apiVersion = "2015-06-01";
+            this._apiVersion = "2015-09-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             this._outputs = new OutputOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this._transformations = new TransformationOperations(this);
-            this._apiVersion = "2015-06-01";
+            this._apiVersion = "2015-09-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
