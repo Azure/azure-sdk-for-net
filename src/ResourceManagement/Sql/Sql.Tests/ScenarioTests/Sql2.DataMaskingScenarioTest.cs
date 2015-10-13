@@ -93,10 +93,13 @@ namespace Sql2.Tests.ScenarioTests
         /// <summary>
         /// Create a data masking rule
         /// </summary>
-        private DataMaskingRuleProperties MakeRuleProperties(string schema, string table, string column)
+        /// <param name="uniqueId">A unique id to act as a seed for the ruleId, the masked table name and the masked column name</param>
+        /// <returns>A DataMaskingRuleProperties describing the rule</returns>
+        private DataMaskingRuleProperties MakeRuleProperties(int uniqueId, string table, string column)
         {
             DataMaskingRuleProperties props = new DataMaskingRuleProperties();
-            props.SchemaName = schema;
+            props.Id = "ruleId" + uniqueId;
+            props.SchemaName = "DBO";
             props.TableName = table;
             props.ColumnName = column;
             props.MaskingFunction = "Default";
@@ -115,6 +118,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="expected">The expected value of the properties object</param>
         private static void VerifyDataMaskingRuleInformation(DataMaskingRuleProperties actual, DataMaskingRuleProperties expected)
         {
+            Assert.Equal(expected.Id, actual.Id);
             Assert.Equal(expected.TableName, actual.TableName);
             Assert.Equal(expected.ColumnName, actual.ColumnName);   
             Assert.Equal(expected.MaskingFunction, actual.MaskingFunction);
@@ -163,7 +167,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="database">The database to use in this test</param>
         private void TestDataMaskingRuleAPIs(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database database)
         {
-            DataMaskingPolicyCreateParameters policyParams = new DataMaskingPolicyCreateParameters();
+            DataMaskingPolicyCreateOrUpdateParameters policyParams = new DataMaskingPolicyCreateOrUpdateParameters();
             policyParams.Properties = MakeDefaultDataMaskingPolicyProperties();
             policyParams.Properties.DataMaskingState = "Enabled";
             sqlClient.DataMasking.CreateOrUpdatePolicy(resourceGroupName, server.Name, database.Name, policyParams);
@@ -177,9 +181,7 @@ namespace Sql2.Tests.ScenarioTests
             string connString = string.Format("Server={0};uid={1}; pwd={2};Database={3};Integrated Security=False;", serverName, uid, pwd, dbName);
             var conn = new SqlConnection();
             conn.ConnectionString = connString;
-            string schemaName = "DBO";
             string tableName = "table1", columnName = "column1";
-
             string firewallRuleName = TestUtilities.GenerateName("all");
             string startIp1 = "1.1.1.1";
             string endIp1 = "255.255.255.255";
@@ -193,66 +195,51 @@ namespace Sql2.Tests.ScenarioTests
                 }
             });
             CreateDatabaseContents(conn, tableName, columnName);
-
-            Func<DataMaskingRuleCreateOrUpdateParameters, Predicate<DataMaskingRule>> isRuleOnColumn = (DataMaskingRuleCreateOrUpdateParameters parms) =>
-            {
-                return (DataMaskingRule r1) =>
-                {
-                    return parms.Properties.ColumnName == r1.Properties.ColumnName &&
-                   parms.Properties.TableName == r1.Properties.TableName &&
-                   parms.Properties.SchemaName == r1.Properties.SchemaName;
-                };
-            };
-
-            ruleParams.Properties = MakeRuleProperties(schemaName, tableName, columnName);
-            var createRuleResponse = sqlClient.DataMasking.CreateRule(resourceGroupName, server.Name, database.Name, ruleParams);
+            ruleParams.Properties = MakeRuleProperties(ruleCounter++ ,tableName, columnName);
+            string rule1Name = ruleParams.Properties.Id;
+            var createRuleResponse = sqlClient.DataMasking.CreateOrUpdateRule(resourceGroupName, server.Name, database.Name, rule1Name, ruleParams);
 
             // Verify that the initial create request went well.
             TestUtilities.ValidateOperationResponse(createRuleResponse, HttpStatusCode.OK);
             
-            var listAfterCreateResponse = sqlClient.DataMasking.List(resourceGroupName, server.Name, database.Name);
-            TestUtilities.ValidateOperationResponse(listAfterCreateResponse, HttpStatusCode.OK);
+            var getAfterCreateResponse = sqlClient.DataMasking.GetRule(resourceGroupName, server.Name, database.Name, rule1Name);
 
-            var onColumnOfFirstCreatedRule = isRuleOnColumn(ruleParams);
-           // VerifyDataMaskingRuleInformation((listAfterCreateResponse.DataMaskingRules.FirstOrDefault(r => onColumnOfFirstCreatedRule(r)).Properties, ruleParams.Properties);
+            TestUtilities.ValidateOperationResponse(getAfterCreateResponse, HttpStatusCode.OK);
+            VerifyDataMaskingRuleInformation(getAfterCreateResponse.DataMaskingRule.Properties, ruleParams.Properties);
 
             // Modify the policy properties, send and receive, see it its still ok
             string updatedTableName = "tbl2";
             CreateDatabaseContents(conn, updatedTableName, columnName);
-            
             ruleParams.Properties.TableName = updatedTableName;
-            var updateResponse = sqlClient.DataMasking.CreateRule(resourceGroupName, server.Name, database.Name, ruleParams);
+
+            var updateResponse = sqlClient.DataMasking.CreateOrUpdateRule(resourceGroupName, server.Name, database.Name, rule1Name, ruleParams);
+
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
 
-                        
-            var getAfterUpdateResponse = sqlClient.DataMasking.List(resourceGroupName, server.Name, database.Name);
-            var onColumnOfFirstCreatedRule = isRuleOnColumn(ruleParams);
+            var getAfterUpdateResponse = sqlClient.DataMasking.GetRule(resourceGroupName, server.Name, database.Name, rule1Name);
+
             TestUtilities.ValidateOperationResponse(getAfterUpdateResponse, HttpStatusCode.OK);
-
-
             VerifyDataMaskingRuleInformation(getAfterUpdateResponse.DataMaskingRule.Properties, ruleParams.Properties);
 
             DataMaskingRuleCreateOrUpdateParameters ruleParams2 = new DataMaskingRuleCreateOrUpdateParameters();
             tableName = "table2";
             columnName = "column2";
             CreateDatabaseContents(conn, tableName, columnName);
-            ruleParams2.Properties = MakeRuleProperties(schemaName, tableName, columnName);
+            ruleParams2.Properties = MakeRuleProperties(ruleCounter++, tableName, columnName);
+            string rule2Name = ruleParams2.Properties.Id;
 
-            createRuleResponse = sqlClient.DataMasking.CreateOrUpdateRule(resourceGroupName, server.Name, database.Name, ruleParams2);
+            createRuleResponse = sqlClient.DataMasking.CreateOrUpdateRule(resourceGroupName, server.Name, database.Name, rule2Name, ruleParams2);
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
 
             DataMaskingRuleListResponse listResponse = sqlClient.DataMasking.List(resourceGroupName, server.Name, database.Name);
             TestUtilities.ValidateOperationResponse(listResponse, HttpStatusCode.OK);
 
             Assert.Equal(2, listResponse.DataMaskingRules.Count);
- 
 
-            var onColumnOfFirstRule = isRuleOnColumn(ruleParams);
-            VerifyDataMaskingRuleInformation(listResponse.DataMaskingRules.FirstOrDefault(r => onColumnOfFirstRule(r)).Properties, ruleParams.Properties);
-            var onColumnOfSecondRule = isRuleOnColumn(ruleParams2);
-            VerifyDataMaskingRuleInformation(listResponse.DataMaskingRules.FirstOrDefault(r => onColumnOfSecondRule(r)).Properties, ruleParams2.Properties);
+            VerifyDataMaskingRuleInformation(listResponse.DataMaskingRules.FirstOrDefault(r => r.Properties.Id == rule1Name).Properties, ruleParams.Properties);
+            VerifyDataMaskingRuleInformation(listResponse.DataMaskingRules.FirstOrDefault(r => r.Properties.Id == rule2Name).Properties, ruleParams2.Properties);
 
-            AzureOperationResponse deleteResponse = sqlClient.DataMasking.Delete(resourceGroupName, server.Name, database.Name);
+            AzureOperationResponse deleteResponse = sqlClient.DataMasking.Delete(resourceGroupName, server.Name, database.Name, rule1Name);
             TestUtilities.ValidateOperationResponse(deleteResponse, HttpStatusCode.OK);
 
             DataMaskingRuleListResponse listAfterDeleteResponse = sqlClient.DataMasking.List(resourceGroupName, server.Name, database.Name);
