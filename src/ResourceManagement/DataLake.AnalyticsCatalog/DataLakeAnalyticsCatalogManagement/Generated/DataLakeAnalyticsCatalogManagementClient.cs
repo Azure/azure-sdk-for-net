@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         {
             this._catalog = new CatalogOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2015-09-13-preview";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         {
             this._catalog = new CatalogOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2015-09-13-preview";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

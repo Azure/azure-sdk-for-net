@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/secrets/";
             url = url + Uri.EscapeDataString(parameters.SecretName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -158,8 +158,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 url = url + "/" + Uri.EscapeDataString(secretName);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -388,8 +388,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -527,7 +527,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/assemblies/";
             url = url + Uri.EscapeDataString(assemblyName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -543,8 +543,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -828,7 +828,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/catalog/usql/databases/";
             url = url + Uri.EscapeDataString(databaseName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -844,8 +844,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1022,7 +1022,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/externaldatasources/";
             url = url + Uri.EscapeDataString(externalDataSourceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1038,8 +1038,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1245,7 +1245,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/schemas/";
             url = url + Uri.EscapeDataString(schemaName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1261,8 +1261,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1455,7 +1455,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1471,8 +1471,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1919,7 +1919,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/statistics/";
             url = url + Uri.EscapeDataString(statisticsName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1935,8 +1935,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2210,7 +2210,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/tablevaluedfunctions/";
             url = url + Uri.EscapeDataString(tableValuedFunctionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2226,8 +2226,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2415,7 +2415,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(databaseName);
             url = url + "/assemblies";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2431,8 +2431,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2634,7 +2634,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             }
             url = url + "/catalog/usql/databases";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2650,8 +2650,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2850,7 +2850,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(databaseName);
             url = url + "/externaldatasources";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2866,8 +2866,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3095,7 +3095,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(databaseName);
             url = url + "/schemas";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3111,8 +3111,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3327,7 +3327,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(schemaName);
             url = url + "/tables";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3343,8 +3343,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3813,7 +3813,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/statistics";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3829,8 +3829,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4126,7 +4126,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + Uri.EscapeDataString(schemaName);
             url = url + "/tablevaluedfunctions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4142,8 +4142,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4380,7 +4380,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
             url = url + "/secrets/";
             url = url + Uri.EscapeDataString(parameters.SecretName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-13-preview");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4396,8 +4396,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.1-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 

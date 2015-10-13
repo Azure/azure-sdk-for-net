@@ -87,16 +87,16 @@ namespace DataLakeAnalyticsJob.Tests
                 Assert.True(getResponse.DataLakeAnalyticsAccount.Properties.ProvisioningState == DataLakeAnalyticsAccountStatus.Succeeded);
 
                 // TODO: Remove this sleep once defect 5022906 is fixed
-                TestUtilities.Wait(120000); // Wait for two minutes to submit the job, which gives the CJS queue a chance to create.
+                TestUtilities.Wait(60000); // Wait for one minutes to submit the job, which gives the CJS queue a chance to create.
 
                 // We need to hardcode the job ID to use for the mocks.
                 // TODO: come up with some way to re-generate this when necessary (i.e. re-running/running the test against the server).
-                Guid jobId = new Guid("183f6f4a-30a5-4fae-99bc-7d16a23a81b8");
-                var secondId = new Guid("e76cc51f-a911-4e20-8b56-ce333a56b881");
+                Guid jobId = new Guid("3c68ef94-c2ea-4be8-8684-9d5196961a10");
+                var secondId = new Guid("d016d907-48b2-4f20-9ee6-30300020c39b");
                 // Submit a job to the account
                 var jobToSubmit = new JobInformation
                 {
-                    Name = "azure sdk bigAnalytics job",
+                    Name = "azure sdk data lake analytics job",
                     JobId = jobId,
                     DegreeOfParallelism = 2,
                     Type = JobType.USql,
