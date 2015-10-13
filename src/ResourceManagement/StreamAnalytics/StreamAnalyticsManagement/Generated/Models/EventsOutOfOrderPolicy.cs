@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <summary>
         /// Adjust the event's time to current.
         /// </summary>
-        public const string Adjust = "adjust";
+        public const string Adjust = "Adjust";
         
         /// <summary>
         /// Drop the event which is out of order.
         /// </summary>
-        public const string Drop = "drop";
+        public const string Drop = "Drop";
     }
 }

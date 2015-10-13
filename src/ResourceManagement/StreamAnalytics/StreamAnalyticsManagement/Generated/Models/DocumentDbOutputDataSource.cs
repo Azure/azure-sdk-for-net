@@ -26,26 +26,26 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The Event Hub data source as output.
+    /// The DocumentDB data source as output.
     /// </summary>
-    public partial class EventHubOutputDataSource : OutputDataSource
+    public partial class DocumentDbOutputDataSource : OutputDataSource
     {
-        private EventHubOutputDataSourceProperties _properties;
+        private DocumentDbOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the Event Hub data source
+        /// Optional. Gets or sets the properties of the DocumentDB data source
         /// as output.
         /// </summary>
-        public EventHubOutputDataSourceProperties Properties
+        public DocumentDbOutputDataSourceProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventHubOutputDataSource class.
+        /// Initializes a new instance of the DocumentDbOutputDataSource class.
         /// </summary>
-        public EventHubOutputDataSource()
+        public DocumentDbOutputDataSource()
         {
         }
     }

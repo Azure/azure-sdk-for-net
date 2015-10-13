@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The properties of EventHub data source as output.
+    /// The properties of Event Hub data source as output.
     /// </summary>
     public partial class EventHubOutputDataSourceProperties
     {
         private string _eventHubName;
         
         /// <summary>
-        /// Optional. Gets or sets the EventHub name.
+        /// Optional. Gets or sets the Event Hub name.
         /// </summary>
         public string EventHubName
         {
@@ -65,7 +65,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy key.
+        /// Optional. Gets or sets the shared access policy key for the
+        /// specified shared access policy.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -76,7 +77,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy name.
+        /// Optional. Gets or sets the shared access policy name for the Event
+        /// Hub.
         /// </summary>
         public string SharedAccessPolicyName
         {

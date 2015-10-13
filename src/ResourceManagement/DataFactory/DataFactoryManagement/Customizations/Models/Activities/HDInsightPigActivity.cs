@@ -38,11 +38,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string ScriptLinkedService { get; set; }
 
-
         /// <summary>
-        /// User specified property bag used in Pig scripts. There is no restriction on the
-        /// keys or values that can be used. User needs to consume and interpret the content accordingly in
-        /// their customized Pig script.
+        /// Allows user to specify defines for the Pig job request.
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
 

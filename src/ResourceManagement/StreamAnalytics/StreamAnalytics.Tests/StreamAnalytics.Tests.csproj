@@ -36,6 +36,9 @@
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_EventHub.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_IoTHub.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_ReferenceBlob.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -49,6 +52,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.OutputOperationsTest\Test_OutputOperations_Blob.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.OutputOperationsTest\Test_OutputOperations_DocumentDB.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.OutputOperationsTest\Test_OutputOperations_E2E.json">
