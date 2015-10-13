@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=CHECKACCESS");
             queryParameters.Add("fsaction=" + Uri.EscapeDataString(fsAction));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=CONCAT");
             queryParameters.Add("sources=" + Uri.EscapeDataString(paths));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -417,8 +417,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=concurrentappend");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -565,8 +565,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -695,8 +695,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("createParent=" + Uri.EscapeDataString(createParent.Value.ToString().ToLower()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -857,8 +857,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -981,7 +981,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=DELETE");
             queryParameters.Add("recursive=" + Uri.EscapeDataString(recursive.ToString().ToLower()));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -997,8 +997,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1136,7 +1136,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=GETACLSTATUS");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1152,8 +1152,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1321,7 +1321,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=GETCONTENTSUMMARY");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1337,8 +1337,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1518,7 +1518,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=GETFILESTATUS");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1534,8 +1534,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1748,7 +1748,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + "/webhdfs/v1/";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=GETHOMEDIRECTORY");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1764,8 +1764,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1916,7 +1916,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("buffersize=" + Uri.EscapeDataString(bufferSize.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1932,8 +1932,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2083,7 +2083,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("buffersize=" + Uri.EscapeDataString(parameters.BufferSize.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2099,8 +2099,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2242,7 +2242,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("buffersize=" + Uri.EscapeDataString(parameters.BufferSize.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2258,8 +2258,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2393,7 +2393,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2409,8 +2409,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2650,7 +2650,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("permission=" + Uri.EscapeDataString(permission));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2666,8 +2666,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2816,7 +2816,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=MODIFYACLENTRIES");
             queryParameters.Add("aclspec=" + Uri.EscapeDataString(aclSpec));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2832,8 +2832,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2964,7 +2964,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(destinationPath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=MSCONCAT");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2980,8 +2980,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3098,8 +3098,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3224,7 +3224,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=REMOVEACL");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3240,8 +3240,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3369,7 +3369,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=REMOVEACLENTRIES");
             queryParameters.Add("aclspec=" + Uri.EscapeDataString(aclSpec));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3385,8 +3385,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3505,7 +3505,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(filePath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=REMOVEDEFAULTACL");
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3521,8 +3521,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3648,7 +3648,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=RENAME");
             queryParameters.Add("destination=" + Uri.EscapeDataString(destinationPath));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3664,8 +3664,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3814,7 +3814,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=SETACL");
             queryParameters.Add("aclspec=" + Uri.EscapeDataString(aclSpec));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3830,8 +3830,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3966,7 +3966,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("group=" + Uri.EscapeDataString(group));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3982,8 +3982,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4110,7 +4110,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("permission=" + Uri.EscapeDataString(permission));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4126,8 +4126,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4253,7 +4253,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             {
                 queryParameters.Add("replication=" + Uri.EscapeDataString(replication.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4269,8 +4269,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4421,7 +4421,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             queryParameters.Add("op=SETTIMES");
             queryParameters.Add("modificationtime=" + Uri.EscapeDataString(modificationTime.ToString()));
             queryParameters.Add("accesstime=" + Uri.EscapeDataString(accessTime.ToString()));
-            queryParameters.Add("api-version=2014-10-01");
+            queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4437,8 +4437,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.1-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

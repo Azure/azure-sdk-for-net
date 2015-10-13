@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         {
             this._fileSystem = new FileSystemOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2014-10-01";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         {
             this._fileSystem = new FileSystemOperations(this);
             this._userAgentSuffix = "";
-            this._apiVersion = "2014-10-01";
+            this._apiVersion = "2015-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
