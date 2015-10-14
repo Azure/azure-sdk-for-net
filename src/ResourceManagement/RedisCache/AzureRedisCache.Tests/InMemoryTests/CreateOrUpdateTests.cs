@@ -201,22 +201,6 @@ namespace AzureRedisCache.Tests
                                                                                 Location = "North Europe",
                                                                                 Properties = new RedisProperties
                                                                                 {
-                                                                                    RedisVersion = null,
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
-                                                                                }
-                                                                            }));
-            Assert.Contains("parameters.Properties.RedisVersion", e.Message);
-            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
-                                                                            parameters: new RedisCreateOrUpdateParameters
-                                                                            {
-                                                                                Location = "North Europe",
-                                                                                Properties = new RedisProperties
-                                                                                {
                                                                                     RedisVersion = "2.8",
                                                                                     Sku = null
                                                                                 }
