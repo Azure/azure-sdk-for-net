@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder014505?op=MKDIRS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNDUwNT9vcD1NS0RJUlMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder015480?op=MKDIRS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNTQ4MD9vcD1NS0RJUlMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -32,13 +32,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1e1d6205-5a6f-4bfb-a558-bf882a016acb"
+          "aab7a590-5ff1-4a2b-a040-1748bfae981f"
         ],
         "x-origin-server": [
-          "bn4sch103190224"
+          "bn4sch103201324"
         ],
         "Server-Perf": [
-          "[1e1d62055a6f4bfba558bf882a016acb][ AuthTime::1706.92693274939::PostAuthTime::16631.7383196756 ][MKDIRS :: 00:00:184 ms]%0a"
+          "[aab7a5905ff14a2ba0401748bfae981f][ AuthTime::1840.36668760941::PostAuthTime::16766.8824667329 ][MKDIRS :: 00:00:279 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -50,17 +50,17 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 23:02:11 GMT"
+          "Wed, 14 Oct 2015 18:32:10 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=7c9ad103-64ee-42f8-a929-ad9697b47d3f; path=/; secure; HttpOnly"
+          "UserPrincipalSession=6b571109-5234-4c3c-9514-b0ff94eef91c; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder014505?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNDUwNT9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder015480?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNTQ4MD9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -75,7 +75,7 @@
           "0.9.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"DIRECTORY\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1444777332542,\r\n    \"modificationTime\": 1444777332542,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"DIRECTORY\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1444847531536,\r\n    \"modificationTime\": 1444847531536,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "227"
@@ -90,13 +90,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e2e13d1d-678b-42da-ae4f-29c4dbc92277"
+          "18e68177-9cf7-46d1-86c4-c6d5a461fe87"
         ],
         "x-origin-server": [
-          "bn4sch103190224"
+          "bn4sch103201324"
         ],
         "Server-Perf": [
-          "[e2e13d1d678b42daae4f29c4dbc92277][ AuthTime::776.692385335227::PostAuthTime::181.342274990163 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:061 ms]%0a"
+          "[18e681779cf746d186c4c6d5a461fe87][ AuthTime::791.233644452105::PostAuthTime::185.619136049845 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:166 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -108,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 23:02:11 GMT"
+          "Wed, 14 Oct 2015 18:32:11 GMT"
         ]
       },
       "StatusCode": 200

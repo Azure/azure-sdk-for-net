@@ -26,24 +26,14 @@ namespace DataLakeStoreFileSystem.Tests
         
         public CommonTestFixture()
         {
-            try
-            {
-                UndoContext.Current.Start();
+            var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
+            dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
+            ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
+            DataLakeStoreFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
+            dataLakeStoreFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
 
-                var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
-                dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
-                ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
-                DataLakeStoreFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
-                dataLakeStoreFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
-
-                // create the DataLake account in the resource group and establish the host URL to use.
-                this.HostUrl = dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreFileSystemAccountName);
-            }
-            catch (Exception)
-            {
-                Cleanup();
-                throw;
-            }
+            // create the DataLake account in the resource group and establish the host URL to use.
+            this.HostUrl = dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreFileSystemAccountName);
         }
 
         public void Dispose()
