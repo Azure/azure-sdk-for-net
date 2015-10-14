@@ -28,10 +28,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c35e0ed1-34d2-48c5-8611-08ba475e7369"
+          "08a484a0-871f-4148-bffd-ca33a96b873d"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -40,19 +40,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14923"
         ],
         "x-ms-correlation-request-id": [
-          "48eed77d-9717-4a60-b6fb-0d33df44b4e8"
+          "b2ee3f09-33b1-4967-a3b3-3eabb5d1d343"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:48eed77d-9717-4a60-b6fb-0d33df44b4e8"
+          "WESTUS:20151014T210748Z:b2ee3f09-33b1-4967-a3b3-3eabb5d1d343"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:35 GMT"
+          "Wed, 14 Oct 2015 21:07:48 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -79,10 +79,10 @@
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T00:02:57.7942323Z\",\r\n        \"updatedOn\": \"2015-08-25T00:02:57.7942323Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial123\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T00:08:27.7350717Z\",\r\n        \"updatedOn\": \"2015-08-25T00:08:27.7350717Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/a0ebae26-1ac3-4e09-942a-e759c3244724\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"a0ebae26-1ac3-4e09-942a-e759c3244724\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial123456\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:02:19.2480279Z\",\r\n        \"updatedOn\": \"2015-08-26T00:02:19.2480279Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b211d3b3-7be0-43c2-ae4c-8662bfb7f0b4\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b211d3b3-7be0-43c2-ae4c-8662bfb7f0b4\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial1234567\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:01:40.5766365Z\",\r\n        \"updatedOn\": \"2015-08-26T00:01:40.5766365Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/568b2974-56ee-42a7-9f6f-d508e9d8779a\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"568b2974-56ee-42a7-9f6f-d508e9d8779a\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"TestRole_e2fad2ef-e138-4433-8f71-0250fd3d28ed\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Custom Role Test Desc\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:03:19.9489872Z\",\r\n        \"updatedOn\": \"2015-08-26T00:03:19.9489872Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/f8fc760a-af64-46f2-ba4a-0060d664b5a3\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"f8fc760a-af64-46f2-ba4a-0060d664b5a3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"TestRole_fc6a4521-36b3-4aff-bf1d-60c02fee92cb\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Custom Role Test Desc\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T23:11:40.741685Z\",\r\n        \"updatedOn\": \"2015-08-25T23:11:40.741685Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/ea31f5d5-569f-473d-aed6-df72ff2cab70\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"ea31f5d5-569f-473d-aed6-df72ff2cab70\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"my role\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Lets you manage classic virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/disks/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/images/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/read\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/join/action\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/link/action\",\r\n              \"Microsoft.ClassicCompute/domainNames/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/restart/action\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-10-03T01:44:14.6506988Z\",\r\n        \"updatedOn\": \"2015-10-03T02:04:16.9375453Z\",\r\n        \"createdBy\": \"cdf8528e-d940-48b2-aec8-f8737a6ec387\",\r\n        \"updatedBy\": \"cdf8528e-d940-48b2-aec8-f8737a6ec387\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5537e2c7-c701-4b13-a1ea-9a92d45ad7c2\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5537e2c7-c701-4b13-a1ea-9a92d45ad7c2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"API Management Service Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage API Management services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ApiManagement/Services/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/312a565d-c81f-4fd8-895a-4e21e48d571c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"312a565d-c81f-4fd8-895a-4e21e48d571c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Application Insights Component Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Application Insights components, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Insights/components/*\",\r\n              \"Microsoft.Insights/webtests/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/ae349356-3a1b-4a5e-921d-050484c6347e\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"ae349356-3a1b-4a5e-921d-050484c6347e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Automation Operator\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Automation Operators are able to start, stop, suspend, and resume jobs\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Automation/automationAccounts/read\",\r\n              \"Microsoft.Automation/automationAccounts/runbooks/read\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/read\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/write\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/write\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/stop/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/suspend/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/resume/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/write\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/delete\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/streams/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/delete\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-18T01:05:03.391613Z\",\r\n        \"updatedOn\": \"2015-08-19T20:38:00.8333871Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/d3881f73-407a-4167-8283-e981cbba0404\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"d3881f73-407a-4167-8283-e981cbba0404\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"BizTalk Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage BizTalk services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.BizTalkServices/BizTalk/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5e3c6656-6cfa-4708-81fe-0de47ac73342\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5e3c6656-6cfa-4708-81fe-0de47ac73342\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Network Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic networks, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicNetwork/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:39:28.5862817Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b34d265f-36f7-4a0d-a4d4-e158ca92e90f\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b34d265f-36f7-4a0d-a4d4-e158ca92e90f\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Storage Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic storage accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:16:13.3583006Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/86e8f5dc-a6e9-4c67-9d15-de283e8eac25\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"86e8f5dc-a6e9-4c67-9d15-de283e8eac25\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Virtual Machine Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/disks/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/images/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/read\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/join/action\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/link/action\",\r\n              \"Microsoft.ClassicCompute/domainNames/*\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:13:53.8853286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/d73bb868-a0df-4d4d-bd69-98a00b01fccb\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"d73bb868-a0df-4d4d-bd69-98a00b01fccb\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"ClearDB MySQL DB Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage ClearDB MySQL databases, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"successbricks.cleardb/databases/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9106cda0-8a86-4e81-b686-29a22c54effe\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9106cda0-8a86-4e81-b686-29a22c54effe\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything except access to resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Authorization/*/Write\",\r\n              \"Microsoft.Authorization/*/Delete\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b24988ac-6180-42a0-ab88-20f7382dd24c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Data Factory Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage data factories, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.DataFactory/dataFactories/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/673868aa-7521-48a0-acc6-0f60742d39f5\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"673868aa-7521-48a0-acc6-0f60742d39f5\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"DevTest Lab User\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you view everything, and connect, start, restart, and shutdown virtual machines.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Compute/availabilitySets/read\",\r\n              \"Microsoft.Compute/virtualMachines/read\",\r\n              \"Microsoft.Network/networkInterfaces/read\",\r\n              \"Microsoft.Network/publicIPAddresses/read\",\r\n              \"Microsoft.DevTestLab/labs/read\",\r\n              \"Microsoft.DevTestLab/labs/vmtemplates/read\",\r\n              \"Microsoft.DevTestLab/labs/listArtifacts/action\",\r\n              \"Microsoft.DevTestLab/labs/labStats/action\",\r\n              \"Microsoft.DevTestLab/Environments/*\",\r\n              \"Microsoft.DevTestLab/labs/createEnvironment/action\",\r\n              \"Microsoft.Compute/virtualMachines/start/action\",\r\n              \"Microsoft.Compute/virtualMachines/restart/action\",\r\n              \"Microsoft.Compute/virtualMachines/deallocate/action\",\r\n              \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.Network/virtualNetworks/join/action\",\r\n              \"Microsoft.Network/loadBalancers/join/action\",\r\n              \"Microsoft.Network/publicIPAddresses/link/action\",\r\n              \"Microsoft.Network/networkInterfaces/link/action\",\r\n              \"Microsoft.Network/networkInterfaces/write\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-08T21:52:45.0657582Z\",\r\n        \"updatedOn\": \"2015-10-01T02:27:03.7360723Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/76283e04-6283-4c54-8f91-bcf1374a3c64\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"76283e04-6283-4c54-8f91-bcf1374a3c64\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"DocumentDB Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage DocumentDB accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.DocumentDb/databaseAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5bd9cd88-fe45-4216-938b-f97437e15450\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5bd9cd88-fe45-4216-938b-f97437e15450\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Intelligent Systems Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Intelligent Systems accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.IntelligentSystems/accounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/03a6d094-3444-4b3d-88af-7477090a9e5e\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"03a6d094-3444-4b3d-88af-7477090a9e5e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Network Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage networks, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Network/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-08-14T20:48:18.7675062Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"4d97b98b-1d4f-4787-a291-c67834d212e7\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"New Relic APM Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage New Relic Application Performance Management accounts and applications, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"NewRelic.APM/accounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5d28c62d-5b37-4476-8438-e587778df237\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5d28c62d-5b37-4476-8438-e587778df237\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Owner\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything, including access to resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"8e3af657-a8ff-443c-a75c-2fe8c4bcb635\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Reader\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you view everything, but not make any changes.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"acdd72a7-3385-48ef-bd42-f606fba81ae7\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Redis Cache Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Redis caches, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Cache/redis/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/e0f68234-74aa-48ed-b826-c38b57376e17\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"e0f68234-74aa-48ed-b826-c38b57376e17\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL DB Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage SQL databases, but not access to them. Also, you can’t manage their security-related policies or their parent SQL servers.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/read\",\r\n              \"Microsoft.Sql/servers/databases/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9b7fa17d-e63e-47b0-bb0a-15c516ac86ec\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9b7fa17d-e63e-47b0-bb0a-15c516ac86ec\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL Security Manager\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage the security-related policies of SQL servers and databases, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/read\",\r\n              \"Microsoft.Sql/servers/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/read\",\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.Sql/servers/databases/schemas/read\",\r\n              \"Microsoft.Sql/servers/databases/schemas/tables/read\",\r\n              \"Microsoft.Sql/servers/databases/schemas/tables/columns/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/056cd41c-7e88-42e1-933e-88ba6a50c9c3\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"056cd41c-7e88-42e1-933e-88ba6a50c9c3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL Server Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage SQL servers and databases, but not access to them, and not their security -related policies.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Sql/servers/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Scheduler Job Collections Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Scheduler job collections, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Scheduler/jobcollections/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/188a0f2f-5c9e-469b-ae67-2aa5ce574b94\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"188a0f2f-5c9e-469b-ae67-2aa5ce574b94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Search Service Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Search services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Search/searchServices/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/7ca78c08-252a-4471-8644-bb5ff32d4ba0\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"7ca78c08-252a-4471-8644-bb5ff32d4ba0\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Security Manager\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage security components, security policies and virtual machines\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicNetwork/*/read\",\r\n              \"Microsoft.ClassicCompute/*/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*/write\",\r\n              \"Microsoft.Security/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-22T17:45:15.8986455Z\",\r\n        \"updatedOn\": \"2015-07-13T23:45:43.2708314Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/e3d13bf0-dd5a-482e-ba6b-9b8433878d10\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"e3d13bf0-dd5a-482e-ba6b-9b8433878d10\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Storage Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage storage accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Storage/storageAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-08-14T21:03:54.4429915Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"17d1049b-9a84-46fb-8f53-869881c3d3ab\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"User Access Administrator\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage user access to Azure resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\",\r\n              \"Microsoft.Authorization/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/18d7d88d-d35e-4fb5-a5c3-7773c20a72d9\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"18d7d88d-d35e-4fb5-a5c3-7773c20a72d9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Virtual Machine Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Storage/storageAccounts/read\",\r\n              \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.Network/virtualNetworks/read\",\r\n              \"Microsoft.Network/virtualNetworks/subnets/join/action\",\r\n              \"Microsoft.Network/loadBalancers/read\",\r\n              \"Microsoft.Network/loadBalancers/backendAddressPools/join/action\",\r\n              \"Microsoft.Network/loadBalancers/inboundNatRules/join/action\",\r\n              \"Microsoft.Network/loadBalancers/inboundNatPools/join/action\",\r\n              \"Microsoft.Network/publicIPAddresses/read\",\r\n              \"Microsoft.Network/publicIPAddresses/join/action\",\r\n              \"Microsoft.Network/networkSecurityGroups/read\",\r\n              \"Microsoft.Network/networkSecurityGroups/join/action\",\r\n              \"Microsoft.Network/networkInterfaces/*\",\r\n              \"Microsoft.Network/locations/*\",\r\n              \"Microsoft.Network/applicationGateways/backendAddressPools/join/action\",\r\n              \"Microsoft.Compute/virtualMachines/*\",\r\n              \"Microsoft.Compute/virtualMachineScaleSets/*\",\r\n              \"Microsoft.Compute/availabilitySets/*\",\r\n              \"Microsoft.Compute/locations/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-09-18T00:51:57.8666162Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9980e02c-c2be-4d73-94e8-173b1dc7cf3c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Web Plan Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage the web plans for websites, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Web/serverFarms/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Website Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage websites (not web plans), but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Web/serverFarms/read\",\r\n              \"Microsoft.Web/serverFarms/join/action\",\r\n              \"Microsoft.Web/sites/*\",\r\n              \"Microsoft.Web/certificates/*\",\r\n              \"Microsoft.Web/listSitesAssignedToHostName/read\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.Insights/components/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/de139f84-1756-47ae-9be6-808fbbe84772\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"de139f84-1756-47ae-9be6-808fbbe84772\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T00:02:57.7942323Z\",\r\n        \"updatedOn\": \"2015-08-25T00:02:57.7942323Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial123\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T00:08:27.7350717Z\",\r\n        \"updatedOn\": \"2015-08-25T00:08:27.7350717Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/a0ebae26-1ac3-4e09-942a-e759c3244724\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"a0ebae26-1ac3-4e09-942a-e759c3244724\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial123456\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:02:19.2480279Z\",\r\n        \"updatedOn\": \"2015-08-26T00:02:19.2480279Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b211d3b3-7be0-43c2-ae4c-8662bfb7f0b4\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b211d3b3-7be0-43c2-ae4c-8662bfb7f0b4\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"CustomRole2FreeTrial1234567\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Can do eveything2\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:01:40.5766365Z\",\r\n        \"updatedOn\": \"2015-08-26T00:01:40.5766365Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/568b2974-56ee-42a7-9f6f-d508e9d8779a\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"568b2974-56ee-42a7-9f6f-d508e9d8779a\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"TestRole_e2fad2ef-e138-4433-8f71-0250fd3d28ed\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Custom Role Test Desc\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-26T00:03:19.9489872Z\",\r\n        \"updatedOn\": \"2015-08-26T00:03:19.9489872Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/f8fc760a-af64-46f2-ba4a-0060d664b5a3\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"f8fc760a-af64-46f2-ba4a-0060d664b5a3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"TestRole_fc6a4521-36b3-4aff-bf1d-60c02fee92cb\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Custom Role Test Desc\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-25T23:11:40.741685Z\",\r\n        \"updatedOn\": \"2015-08-25T23:11:40.741685Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/ea31f5d5-569f-473d-aed6-df72ff2cab70\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"ea31f5d5-569f-473d-aed6-df72ff2cab70\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"my role\",\r\n        \"type\": \"CustomRole\",\r\n        \"description\": \"Lets you manage classic virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/disks/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/images/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/read\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/join/action\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/link/action\",\r\n              \"Microsoft.ClassicCompute/domainNames/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/restart/action\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-10-03T01:44:14.6506988Z\",\r\n        \"updatedOn\": \"2015-10-03T02:04:16.9375453Z\",\r\n        \"createdBy\": \"cdf8528e-d940-48b2-aec8-f8737a6ec387\",\r\n        \"updatedBy\": \"cdf8528e-d940-48b2-aec8-f8737a6ec387\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5537e2c7-c701-4b13-a1ea-9a92d45ad7c2\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5537e2c7-c701-4b13-a1ea-9a92d45ad7c2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"API Management Service Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage API Management services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ApiManagement/service/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-10-12T21:43:13.2211265Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/312a565d-c81f-4fd8-895a-4e21e48d571c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"312a565d-c81f-4fd8-895a-4e21e48d571c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Application Insights Component Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Application Insights components, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Insights/components/*\",\r\n              \"Microsoft.Insights/webtests/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/ae349356-3a1b-4a5e-921d-050484c6347e\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"ae349356-3a1b-4a5e-921d-050484c6347e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Automation Operator\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Automation Operators are able to start, stop, suspend, and resume jobs\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Automation/automationAccounts/read\",\r\n              \"Microsoft.Automation/automationAccounts/runbooks/read\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/read\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/write\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/write\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/stop/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/suspend/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/resume/action\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/write\",\r\n              \"Microsoft.Automation/automationAccounts/schedules/delete\",\r\n              \"Microsoft.Automation/automationAccounts/jobs/streams/read\",\r\n              \"Microsoft.Automation/automationAccounts/jobSchedules/delete\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-08-18T01:05:03.391613Z\",\r\n        \"updatedOn\": \"2015-08-19T20:38:00.8333871Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/d3881f73-407a-4167-8283-e981cbba0404\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"d3881f73-407a-4167-8283-e981cbba0404\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"BizTalk Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage BizTalk services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.BizTalkServices/BizTalk/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5e3c6656-6cfa-4708-81fe-0de47ac73342\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5e3c6656-6cfa-4708-81fe-0de47ac73342\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Network Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic networks, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicNetwork/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:39:28.5862817Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b34d265f-36f7-4a0d-a4d4-e158ca92e90f\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b34d265f-36f7-4a0d-a4d4-e158ca92e90f\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Storage Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic storage accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:16:13.3583006Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/86e8f5dc-a6e9-4c67-9d15-de283e8eac25\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"86e8f5dc-a6e9-4c67-9d15-de283e8eac25\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Classic Virtual Machine Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage classic virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicStorage/storageAccounts/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/disks/read\",\r\n              \"Microsoft.ClassicStorage/storageAccounts/images/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/read\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/read\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks/join/action\",\r\n              \"Microsoft.ClassicNetwork/reservedIps/link/action\",\r\n              \"Microsoft.ClassicCompute/domainNames/*\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"2015-08-11T23:13:53.8853286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/d73bb868-a0df-4d4d-bd69-98a00b01fccb\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"d73bb868-a0df-4d4d-bd69-98a00b01fccb\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"ClearDB MySQL DB Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage ClearDB MySQL databases, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"successbricks.cleardb/databases/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9106cda0-8a86-4e81-b686-29a22c54effe\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9106cda0-8a86-4e81-b686-29a22c54effe\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything except access to resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Authorization/*/Write\",\r\n              \"Microsoft.Authorization/*/Delete\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b24988ac-6180-42a0-ab88-20f7382dd24c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Data Factory Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage data factories, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.DataFactory/dataFactories/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/673868aa-7521-48a0-acc6-0f60742d39f5\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"673868aa-7521-48a0-acc6-0f60742d39f5\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"DevTest Lab User\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you view everything, and connect, start, restart, and shutdown virtual machines.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/events/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourcegroups/deployments/*/read\",\r\n              \"Microsoft.Compute/virtualMachines/*/read\",\r\n              \"Microsoft.Network/networkInterfaces/*/read\",\r\n              \"Microsoft.Network/publicIPAddresses/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Compute/availabilitySets/read\",\r\n              \"Microsoft.Compute/virtualMachines/read\",\r\n              \"Microsoft.Network/networkInterfaces/read\",\r\n              \"Microsoft.Network/publicIPAddresses/read\",\r\n              \"Microsoft.DevTestLab/labs/read\",\r\n              \"Microsoft.DevTestLab/labs/vmtemplates/read\",\r\n              \"Microsoft.DevTestLab/labs/listArtifacts/action\",\r\n              \"Microsoft.DevTestLab/labs/labStats/action\",\r\n              \"Microsoft.DevTestLab/Environments/*\",\r\n              \"Microsoft.DevTestLab/labs/createEnvironment/action\",\r\n              \"Microsoft.Compute/virtualMachines/start/action\",\r\n              \"Microsoft.Compute/virtualMachines/restart/action\",\r\n              \"Microsoft.Compute/virtualMachines/deallocate/action\",\r\n              \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.Network/virtualNetworks/join/action\",\r\n              \"Microsoft.Network/loadBalancers/join/action\",\r\n              \"Microsoft.Network/publicIPAddresses/link/action\",\r\n              \"Microsoft.Network/networkInterfaces/link/action\",\r\n              \"Microsoft.Network/networkInterfaces/write\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-08T21:52:45.0657582Z\",\r\n        \"updatedOn\": \"2015-10-12T20:23:04.0674332Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/76283e04-6283-4c54-8f91-bcf1374a3c64\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"76283e04-6283-4c54-8f91-bcf1374a3c64\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"DocumentDB Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage DocumentDB accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.DocumentDb/databaseAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5bd9cd88-fe45-4216-938b-f97437e15450\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5bd9cd88-fe45-4216-938b-f97437e15450\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Intelligent Systems Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Intelligent Systems accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.IntelligentSystems/accounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/03a6d094-3444-4b3d-88af-7477090a9e5e\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"03a6d094-3444-4b3d-88af-7477090a9e5e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Network Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage networks, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Network/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-08-14T20:48:18.7675062Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"4d97b98b-1d4f-4787-a291-c67834d212e7\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"New Relic APM Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage New Relic Application Performance Management accounts and applications, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"NewRelic.APM/accounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/5d28c62d-5b37-4476-8438-e587778df237\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"5d28c62d-5b37-4476-8438-e587778df237\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Owner\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything, including access to resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"8e3af657-a8ff-443c-a75c-2fe8c4bcb635\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Reader\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you view everything, but not make any changes.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"acdd72a7-3385-48ef-bd42-f606fba81ae7\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Redis Cache Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Redis caches, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Cache/redis/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/e0f68234-74aa-48ed-b826-c38b57376e17\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"e0f68234-74aa-48ed-b826-c38b57376e17\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL DB Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage SQL databases, but not access to them. Also, you can’t manage their security-related policies or their parent SQL servers.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/read\",\r\n              \"Microsoft.Sql/servers/databases/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9b7fa17d-e63e-47b0-bb0a-15c516ac86ec\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9b7fa17d-e63e-47b0-bb0a-15c516ac86ec\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL Security Manager\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage the security-related policies of SQL servers and databases, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/read\",\r\n              \"Microsoft.Sql/servers/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/read\",\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.Sql/servers/databases/schemas/read\",\r\n              \"Microsoft.Sql/servers/databases/schemas/tables/read\",\r\n              \"Microsoft.Sql/servers/databases/schemas/tables/columns/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/056cd41c-7e88-42e1-933e-88ba6a50c9c3\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"056cd41c-7e88-42e1-933e-88ba6a50c9c3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"SQL Server Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage SQL servers and databases, but not access to them, and not their security -related policies.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Sql/servers/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Sql/servers/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/auditingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/connectionPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/dataMaskingPolicies/*\",\r\n              \"Microsoft.Sql/servers/databases/securityMetrics/*\"\r\n            ]\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Scheduler Job Collections Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Scheduler job collections, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Scheduler/jobcollections/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/188a0f2f-5c9e-469b-ae67-2aa5ce574b94\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"188a0f2f-5c9e-469b-ae67-2aa5ce574b94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Search Service Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage Search services, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Search/searchServices/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/7ca78c08-252a-4471-8644-bb5ff32d4ba0\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"7ca78c08-252a-4471-8644-bb5ff32d4ba0\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Security Manager\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage security components, security policies and virtual machines\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.ClassicNetwork/*/read\",\r\n              \"Microsoft.ClassicCompute/*/read\",\r\n              \"Microsoft.ClassicCompute/virtualMachines/*/write\",\r\n              \"Microsoft.Security/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-22T17:45:15.8986455Z\",\r\n        \"updatedOn\": \"2015-07-13T23:45:43.2708314Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/e3d13bf0-dd5a-482e-ba6b-9b8433878d10\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"e3d13bf0-dd5a-482e-ba6b-9b8433878d10\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Storage Account Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage storage accounts, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Storage/storageAccounts/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-08-14T21:03:54.4429915Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"17d1049b-9a84-46fb-8f53-869881c3d3ab\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"User Access Administrator\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage user access to Azure resources.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\",\r\n              \"Microsoft.Authorization/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T00:00:00\",\r\n        \"updatedOn\": \"0001-01-01T00:00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/18d7d88d-d35e-4fb5-a5c3-7773c20a72d9\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"18d7d88d-d35e-4fb5-a5c3-7773c20a72d9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Virtual Machine Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage virtual machines, but not access to them, and not the virtual network or storage account they’re connected to.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Storage/storageAccounts/read\",\r\n              \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n              \"Microsoft.Network/virtualNetworks/read\",\r\n              \"Microsoft.Network/virtualNetworks/subnets/join/action\",\r\n              \"Microsoft.Network/loadBalancers/read\",\r\n              \"Microsoft.Network/loadBalancers/backendAddressPools/join/action\",\r\n              \"Microsoft.Network/loadBalancers/inboundNatRules/join/action\",\r\n              \"Microsoft.Network/loadBalancers/inboundNatPools/join/action\",\r\n              \"Microsoft.Network/publicIPAddresses/read\",\r\n              \"Microsoft.Network/publicIPAddresses/join/action\",\r\n              \"Microsoft.Network/networkSecurityGroups/read\",\r\n              \"Microsoft.Network/networkSecurityGroups/join/action\",\r\n              \"Microsoft.Network/networkInterfaces/*\",\r\n              \"Microsoft.Network/locations/*\",\r\n              \"Microsoft.Network/applicationGateways/backendAddressPools/join/action\",\r\n              \"Microsoft.Compute/virtualMachines/*\",\r\n              \"Microsoft.Compute/virtualMachineScaleSets/*\",\r\n              \"Microsoft.Compute/availabilitySets/*\",\r\n              \"Microsoft.Compute/locations/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"2015-06-02T00:18:27.3542698Z\",\r\n        \"updatedOn\": \"2015-09-18T00:51:57.8666162Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"9980e02c-c2be-4d73-94e8-173b1dc7cf3c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Web Plan Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage the web plans for websites, but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Web/serverFarms/*\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Website Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage websites (not web plans), but not access to them.\",\r\n        \"scope\": null,\r\n        \"assignableScopes\": [\r\n          \"/\"\r\n        ],\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"Microsoft.Web/serverFarms/read\",\r\n              \"Microsoft.Web/serverFarms/join/action\",\r\n              \"Microsoft.Web/sites/*\",\r\n              \"Microsoft.Web/certificates/*\",\r\n              \"Microsoft.Web/listSitesAssignedToHostName/read\",\r\n              \"Microsoft.Authorization/*/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n              \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n              \"Microsoft.Insights/alertRules/*\",\r\n              \"Microsoft.Support/*\",\r\n              \"Microsoft.Insights/components/*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ],\r\n        \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n        \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/de139f84-1756-47ae-9be6-808fbbe84772\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"de139f84-1756-47ae-9be6-808fbbe84772\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "35308"
+          "35631"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -94,7 +94,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ad12617d-2add-49da-8c4f-bb0c1448195c"
+          "7b64b63e-cc94-431a-8d2a-6ce50dbf2b0a"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -106,19 +106,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14922"
         ],
         "x-ms-correlation-request-id": [
-          "72678ccc-5177-4b92-8dc5-ab7419e32af6"
+          "b01ceefc-2b7c-4f91-9540-a84da76107e0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:72678ccc-5177-4b92-8dc5-ab7419e32af6"
+          "WESTUS:20151014T210749Z:b01ceefc-2b7c-4f91-9540-a84da76107e0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:35 GMT"
+          "Wed, 14 Oct 2015 21:07:48 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -160,10 +160,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1c96dac2-60df-4871-b997-8564e2eb92d9"
+          "92ff304c-98db-4070-8f25-1e18b4d1fb89"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -172,19 +172,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14921"
         ],
         "x-ms-correlation-request-id": [
-          "560d25a8-257e-4231-a379-cfce09bc04dc"
+          "342c0ffe-5702-4d3c-b78e-15962d9f4516"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:560d25a8-257e-4231-a379-cfce09bc04dc"
+          "WESTUS:20151014T210749Z:342c0ffe-5702-4d3c-b78e-15962d9f4516"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:35 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -226,10 +226,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "92e7aa0c-8b74-464c-b6c6-cf9ad4ba1755"
+          "5b984f85-a323-49b2-8ed1-723d1ac1d504"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -238,19 +238,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14920"
         ],
         "x-ms-correlation-request-id": [
-          "980cde38-ba2b-4742-ae90-90fc4ed889c7"
+          "9bf82d44-366e-48e0-a35c-6b5e8a781598"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:980cde38-ba2b-4742-ae90-90fc4ed889c7"
+          "WESTUS:20151014T210749Z:9bf82d44-366e-48e0-a35c-6b5e8a781598"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -292,10 +292,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "30a76215-0516-4a6c-971a-59847e075b5d"
+          "8a47ce94-075c-4126-a07d-bbf512d7332f"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -304,19 +304,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14919"
         ],
         "x-ms-correlation-request-id": [
-          "3667b84f-10da-452d-b237-9e2d00ea06d0"
+          "8efe505b-2d6c-419a-90dd-4c2ca04f28ae"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:3667b84f-10da-452d-b237-9e2d00ea06d0"
+          "WESTUS:20151014T210749Z:8efe505b-2d6c-419a-90dd-4c2ca04f28ae"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -358,10 +358,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1b7c6a42-f644-4e38-9b36-616c0da538fb"
+          "644e2d52-1aa7-4898-89c7-82ab33ab9f52"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -370,19 +370,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14918"
         ],
         "x-ms-correlation-request-id": [
-          "cf68db7e-d41a-4bed-85eb-dfd0cea8446f"
+          "e9452e86-dc67-4666-b408-56d9d395659c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:cf68db7e-d41a-4bed-85eb-dfd0cea8446f"
+          "WESTUS:20151014T210749Z:e9452e86-dc67-4666-b408-56d9d395659c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -424,7 +424,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bd470e4f-7614-45c0-a3ae-ca81caf4bd17"
+          "c6790500-631c-4b63-8133-e821287ff352"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -436,19 +436,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14917"
         ],
         "x-ms-correlation-request-id": [
-          "f1b701c5-8675-424c-99a9-06545eecdc5b"
+          "dc672f48-0b29-45ad-a2a1-f25c36e54db3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:f1b701c5-8675-424c-99a9-06545eecdc5b"
+          "WESTUS:20151014T210749Z:dc672f48-0b29-45ad-a2a1-f25c36e54db3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -490,10 +490,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "960f5471-06fa-4da1-a4f0-cd91418213ab"
+          "cc555b4a-004f-4672-82c8-5e415ced086c"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -502,19 +502,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14916"
         ],
         "x-ms-correlation-request-id": [
-          "34ccc4df-d791-4587-8eca-bf21fb39d009"
+          "d6aea656-dcac-454b-a80d-239c0dd52d0e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:34ccc4df-d791-4587-8eca-bf21fb39d009"
+          "WESTUS:20151014T210749Z:d6aea656-dcac-454b-a80d-239c0dd52d0e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -556,7 +556,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d52bb732-59ff-46f5-a4a8-58948b06b72d"
+          "0381eaa4-47b9-4955-9439-c9119d963a8b"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -568,19 +568,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14915"
         ],
         "x-ms-correlation-request-id": [
-          "af7a0c2f-30f9-4d4b-b20c-9366849b6cbc"
+          "4d708203-e3e1-4b68-aef3-774415b0afb6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172936Z:af7a0c2f-30f9-4d4b-b20c-9366849b6cbc"
+          "WESTUS:20151014T210749Z:4d708203-e3e1-4b68-aef3-774415b0afb6"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -607,10 +607,10 @@
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleName\": \"API Management Service Contributor\",\r\n    \"type\": \"BuiltInRole\",\r\n    \"description\": \"Lets you manage API Management services, but not access to them.\",\r\n    \"scope\": null,\r\n    \"assignableScopes\": [\r\n      \"/\"\r\n    ],\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"Microsoft.ApiManagement/Services/*\",\r\n          \"Microsoft.Authorization/*/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n          \"Microsoft.Insights/alertRules/*\",\r\n          \"Microsoft.Support/*\"\r\n        ],\r\n        \"notActions\": []\r\n      }\r\n    ],\r\n    \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n    \"updatedOn\": \"0001-01-01T08:00:00Z\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n  },\r\n  \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/312a565d-c81f-4fd8-895a-4e21e48d571c\",\r\n  \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n  \"name\": \"312a565d-c81f-4fd8-895a-4e21e48d571c\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleName\": \"API Management Service Contributor\",\r\n    \"type\": \"BuiltInRole\",\r\n    \"description\": \"Lets you manage API Management services, but not access to them.\",\r\n    \"scope\": null,\r\n    \"assignableScopes\": [\r\n      \"/\"\r\n    ],\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"Microsoft.ApiManagement/service/*\",\r\n          \"Microsoft.Authorization/*/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/resources/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/deployments/*\",\r\n          \"Microsoft.Insights/alertRules/*\",\r\n          \"Microsoft.Support/*\"\r\n        ],\r\n        \"notActions\": []\r\n      }\r\n    ],\r\n    \"createdOn\": \"0001-01-01T08:00:00Z\",\r\n    \"updatedOn\": \"2015-10-12T21:43:13.2211265Z\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n  },\r\n  \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/312a565d-c81f-4fd8-895a-4e21e48d571c\",\r\n  \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n  \"name\": \"312a565d-c81f-4fd8-895a-4e21e48d571c\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "924"
+          "923"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -622,10 +622,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3d44e18c-ab89-4c68-9bb0-a255fdbef9f7"
+          "98186431-da45-4590-94c0-aa95dc2853e5"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -634,19 +634,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14914"
         ],
         "x-ms-correlation-request-id": [
-          "d7b51259-b8a4-4eda-b67d-df1d025b2ae1"
+          "a4d39ff6-8009-4a01-9ef0-639481be74e2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:d7b51259-b8a4-4eda-b67d-df1d025b2ae1"
+          "WESTUS:20151014T210749Z:a4d39ff6-8009-4a01-9ef0-639481be74e2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -688,7 +688,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3df98c3f-d73c-4dd6-b2e2-40529ee2abc2"
+          "63ab4967-a661-4241-9ecc-ccd029910e3d"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -700,19 +700,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14913"
         ],
         "x-ms-correlation-request-id": [
-          "c872d881-8de2-4b77-8b32-f304c005b939"
+          "c0a00d49-440e-4114-a98e-8751d18a1650"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:c872d881-8de2-4b77-8b32-f304c005b939"
+          "WESTUS:20151014T210749Z:c0a00d49-440e-4114-a98e-8751d18a1650"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -754,10 +754,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fb33ed93-a0a2-43d0-816f-e26c04c523dc"
+          "d1b40de6-8870-47e2-a924-b9e25402adac"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -766,19 +766,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14912"
         ],
         "x-ms-correlation-request-id": [
-          "a82c5e3d-77e1-4e78-b2c6-3eae0f066ad1"
+          "9a65a43f-695a-4b75-bcb4-aedb6b27aed3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:a82c5e3d-77e1-4e78-b2c6-3eae0f066ad1"
+          "WESTUS:20151014T210749Z:9a65a43f-695a-4b75-bcb4-aedb6b27aed3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -820,7 +820,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a94e46d1-a012-43df-9331-197d0afbf199"
+          "884493e8-13bd-42f3-8fbe-8d4caf9ed226"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -832,19 +832,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14911"
         ],
         "x-ms-correlation-request-id": [
-          "281264fa-b2c7-442d-9c5d-f57d826d0635"
+          "dc3661bc-b618-4e47-a1ee-e57719cc8612"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:281264fa-b2c7-442d-9c5d-f57d826d0635"
+          "WESTUS:20151014T210749Z:dc3661bc-b618-4e47-a1ee-e57719cc8612"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -886,10 +886,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cb33917a-9b4d-43ad-b6cf-f467af3c630c"
+          "1f5b961d-ef1c-462d-b20a-51ba9a1349d2"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -898,19 +898,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "14910"
         ],
         "x-ms-correlation-request-id": [
-          "3a35cdcd-f93c-402e-9f76-c3caab3f61ec"
+          "ad8f7464-f9f6-436f-826d-c100661b1883"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:3a35cdcd-f93c-402e-9f76-c3caab3f61ec"
+          "WESTUS:20151014T210749Z:ad8f7464-f9f6-436f-826d-c100661b1883"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -952,10 +952,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3fb5897c-897d-4842-9918-95e986a08034"
+          "7cc7975b-24b5-4e51-90fa-3488ac95f38a"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -964,19 +964,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14909"
         ],
         "x-ms-correlation-request-id": [
-          "15f67864-a248-40ca-8b51-b76d8765ab92"
+          "6f72c7d2-d612-4ac1-bf86-535009fa6fbf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:15f67864-a248-40ca-8b51-b76d8765ab92"
+          "WESTUS:20151014T210750Z:6f72c7d2-d612-4ac1-bf86-535009fa6fbf"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1018,7 +1018,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "50227649-83fd-4ff6-9f0a-48bb7668f9d7"
+          "d3ac4d78-cf1c-4123-b970-56e92c04e2b6"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_3"
@@ -1030,19 +1030,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
+          "14908"
         ],
         "x-ms-correlation-request-id": [
-          "055683ca-0563-4b87-af08-db79511d4bf4"
+          "3450c99d-170e-4dcc-b4f9-799698cbd86b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:055683ca-0563-4b87-af08-db79511d4bf4"
+          "WESTUS:20151014T210750Z:3450c99d-170e-4dcc-b4f9-799698cbd86b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1084,7 +1084,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fddff553-ce3a-4e45-9b7c-cd152126a3cf"
+          "9940c064-8cb0-408a-ac3d-9c0b5e3cbe8d"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -1096,19 +1096,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
+          "14907"
         ],
         "x-ms-correlation-request-id": [
-          "6eaaad65-42d7-4a54-a896-f8fc21f0b3d1"
+          "74cbb482-f85c-409b-b190-82e3d8c57bb1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:6eaaad65-42d7-4a54-a896-f8fc21f0b3d1"
+          "WESTUS:20151014T210750Z:74cbb482-f85c-409b-b190-82e3d8c57bb1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1150,10 +1150,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6398cd3f-b3a6-425a-a725-3c90fe86fcad"
+          "79dab645-645c-4f55-8e3a-0a1e605b5182"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1162,19 +1162,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
+          "14906"
         ],
         "x-ms-correlation-request-id": [
-          "0a711788-5158-42bc-99a9-8a34a48adbf2"
+          "3d144613-3198-4a16-8d2f-4fe9e64cf7a3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:0a711788-5158-42bc-99a9-8a34a48adbf2"
+          "WESTUS:20151014T210750Z:3d144613-3198-4a16-8d2f-4fe9e64cf7a3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:49 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1216,7 +1216,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "df9f0d06-b2cf-4139-adc9-765839455548"
+          "656415a5-da3f-4dd7-b65c-ed93cff725d4"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_3"
@@ -1228,19 +1228,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14905"
         ],
         "x-ms-correlation-request-id": [
-          "13bc138b-04c1-47dc-a9f1-02c8b62015b3"
+          "19caf1be-2b93-4e8d-84c1-911fe3a26878"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:13bc138b-04c1-47dc-a9f1-02c8b62015b3"
+          "WESTUS:20151014T210750Z:19caf1be-2b93-4e8d-84c1-911fe3a26878"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1267,10 +1267,10 @@
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleName\": \"DevTest Lab User\",\r\n    \"type\": \"BuiltInRole\",\r\n    \"description\": \"Lets you view everything, and connect, start, restart, and shutdown virtual machines.\",\r\n    \"scope\": null,\r\n    \"assignableScopes\": [\r\n      \"/\"\r\n    ],\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"Microsoft.Authorization/*/read\",\r\n          \"Microsoft.Compute/availabilitySets/read\",\r\n          \"Microsoft.Compute/virtualMachines/read\",\r\n          \"Microsoft.Network/networkInterfaces/read\",\r\n          \"Microsoft.Network/publicIPAddresses/read\",\r\n          \"Microsoft.DevTestLab/labs/read\",\r\n          \"Microsoft.DevTestLab/labs/vmtemplates/read\",\r\n          \"Microsoft.DevTestLab/labs/listArtifacts/action\",\r\n          \"Microsoft.DevTestLab/labs/labStats/action\",\r\n          \"Microsoft.DevTestLab/Environments/*\",\r\n          \"Microsoft.DevTestLab/labs/createEnvironment/action\",\r\n          \"Microsoft.Compute/virtualMachines/start/action\",\r\n          \"Microsoft.Compute/virtualMachines/restart/action\",\r\n          \"Microsoft.Compute/virtualMachines/deallocate/action\",\r\n          \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n          \"Microsoft.Network/virtualNetworks/join/action\",\r\n          \"Microsoft.Network/loadBalancers/join/action\",\r\n          \"Microsoft.Network/publicIPAddresses/link/action\",\r\n          \"Microsoft.Network/networkInterfaces/link/action\",\r\n          \"Microsoft.Network/networkInterfaces/write\"\r\n        ],\r\n        \"notActions\": []\r\n      }\r\n    ],\r\n    \"createdOn\": \"2015-06-08T21:52:45.0657582Z\",\r\n    \"updatedOn\": \"2015-10-01T02:27:03.7360723Z\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n  },\r\n  \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/76283e04-6283-4c54-8f91-bcf1374a3c64\",\r\n  \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n  \"name\": \"76283e04-6283-4c54-8f91-bcf1374a3c64\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleName\": \"DevTest Lab User\",\r\n    \"type\": \"BuiltInRole\",\r\n    \"description\": \"Lets you view everything, and connect, start, restart, and shutdown virtual machines.\",\r\n    \"scope\": null,\r\n    \"assignableScopes\": [\r\n      \"/\"\r\n    ],\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/events/*/read\",\r\n          \"Microsoft.Resources/subscriptions/resourcegroups/deployments/*/read\",\r\n          \"Microsoft.Compute/virtualMachines/*/read\",\r\n          \"Microsoft.Network/networkInterfaces/*/read\",\r\n          \"Microsoft.Network/publicIPAddresses/*/read\",\r\n          \"Microsoft.Resources/subscriptions/resourceGroups/read\",\r\n          \"Microsoft.Authorization/*/read\",\r\n          \"Microsoft.Compute/availabilitySets/read\",\r\n          \"Microsoft.Compute/virtualMachines/read\",\r\n          \"Microsoft.Network/networkInterfaces/read\",\r\n          \"Microsoft.Network/publicIPAddresses/read\",\r\n          \"Microsoft.DevTestLab/labs/read\",\r\n          \"Microsoft.DevTestLab/labs/vmtemplates/read\",\r\n          \"Microsoft.DevTestLab/labs/listArtifacts/action\",\r\n          \"Microsoft.DevTestLab/labs/labStats/action\",\r\n          \"Microsoft.DevTestLab/Environments/*\",\r\n          \"Microsoft.DevTestLab/labs/createEnvironment/action\",\r\n          \"Microsoft.Compute/virtualMachines/start/action\",\r\n          \"Microsoft.Compute/virtualMachines/restart/action\",\r\n          \"Microsoft.Compute/virtualMachines/deallocate/action\",\r\n          \"Microsoft.Storage/storageAccounts/listKeys/action\",\r\n          \"Microsoft.Network/virtualNetworks/join/action\",\r\n          \"Microsoft.Network/loadBalancers/join/action\",\r\n          \"Microsoft.Network/publicIPAddresses/link/action\",\r\n          \"Microsoft.Network/networkInterfaces/link/action\",\r\n          \"Microsoft.Network/networkInterfaces/write\"\r\n        ],\r\n        \"notActions\": []\r\n      }\r\n    ],\r\n    \"createdOn\": \"2015-06-08T21:52:45.0657582Z\",\r\n    \"updatedOn\": \"2015-10-12T20:23:04.0674332Z\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n  },\r\n  \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/76283e04-6283-4c54-8f91-bcf1374a3c64\",\r\n  \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n  \"name\": \"76283e04-6283-4c54-8f91-bcf1374a3c64\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1522"
+          "1846"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1282,10 +1282,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ba8fcf3b-4cf1-443a-bae4-3696600712c8"
+          "2916ba2f-dae0-4195-81f6-158e9162cf4b"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1294,19 +1294,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14980"
+          "14904"
         ],
         "x-ms-correlation-request-id": [
-          "f225b9ae-b703-488c-8023-b4217dc0926e"
+          "19c196cb-bd98-45ff-9d3d-4e620e6a1358"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:f225b9ae-b703-488c-8023-b4217dc0926e"
+          "WESTUS:20151014T210750Z:19c196cb-bd98-45ff-9d3d-4e620e6a1358"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:36 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1348,7 +1348,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ef18ed7c-de76-4c31-ba0f-a8a1d57f172a"
+          "c50c9e7a-f7d0-4a36-bc88-52fe9d94f4f8"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_3"
@@ -1360,19 +1360,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14903"
         ],
         "x-ms-correlation-request-id": [
-          "64b986c1-7bb1-4ce0-aa95-fdf5e5c0d1d9"
+          "426ae9fa-702c-4a95-b957-a563a5786c8d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:64b986c1-7bb1-4ce0-aa95-fdf5e5c0d1d9"
+          "WESTUS:20151014T210750Z:426ae9fa-702c-4a95-b957-a563a5786c8d"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1414,7 +1414,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f4942ad5-8b81-4b37-b9c6-bf456251b435"
+          "8aeba184-0f4e-4ed8-aedf-4b407a373d1d"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -1426,19 +1426,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14902"
         ],
         "x-ms-correlation-request-id": [
-          "daf3ca61-1a2e-4877-8958-5f10eee6bc23"
+          "dc982ccf-35c1-47b1-972c-b416f3c1f469"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:daf3ca61-1a2e-4877-8958-5f10eee6bc23"
+          "WESTUS:20151014T210750Z:dc982ccf-35c1-47b1-972c-b416f3c1f469"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1480,10 +1480,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "320bc801-7ff8-439c-9416-49248a3fe938"
+          "6cbd11d2-8792-4e55-8f7f-604f1d360477"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1492,19 +1492,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14977"
+          "14901"
         ],
         "x-ms-correlation-request-id": [
-          "446a856d-238c-42a2-9acf-3035773a15e1"
+          "f3c9fab6-e63f-4f9d-97f9-dc06cac35ef8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:446a856d-238c-42a2-9acf-3035773a15e1"
+          "WESTUS:20151014T210750Z:f3c9fab6-e63f-4f9d-97f9-dc06cac35ef8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1546,7 +1546,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9dd07d5c-6d00-4a14-926e-b5e75bd62f17"
+          "2a9a5d9d-5ccb-4414-b378-a4ddc2842774"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -1558,19 +1558,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14976"
+          "14900"
         ],
         "x-ms-correlation-request-id": [
-          "40a498d3-c831-40f2-a7b3-b5e444a1c498"
+          "ebef6cd3-dd2b-4727-a64c-a75896e8dafb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:40a498d3-c831-40f2-a7b3-b5e444a1c498"
+          "WESTUS:20151014T210750Z:ebef6cd3-dd2b-4727-a64c-a75896e8dafb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1612,7 +1612,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c6a43f1e-32ef-43ca-97e4-6e4c883a8d79"
+          "88680394-c304-4077-84e3-fffe5434aafe"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -1624,19 +1624,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "14899"
         ],
         "x-ms-correlation-request-id": [
-          "a82bcd97-eb17-4344-90cc-e234de06f257"
+          "51566c0d-ee68-460e-bb1e-718e94b2dad2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:a82bcd97-eb17-4344-90cc-e234de06f257"
+          "WESTUS:20151014T210750Z:51566c0d-ee68-460e-bb1e-718e94b2dad2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1678,10 +1678,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "01777ede-a4e7-476b-b88b-bf486b2cf79d"
+          "f8ee7664-16a2-401d-9c7b-67dc47f95afd"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1690,19 +1690,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
+          "14898"
         ],
         "x-ms-correlation-request-id": [
-          "74f37970-1dc6-413f-bf6a-64812ce424fb"
+          "cab593ad-7e54-47e3-abaa-2985c3c017a2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172937Z:74f37970-1dc6-413f-bf6a-64812ce424fb"
+          "WESTUS:20151014T210750Z:cab593ad-7e54-47e3-abaa-2985c3c017a2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1744,10 +1744,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "8b85c2f1-5523-4cc2-80e4-0f81b82098a5"
+          "bd231230-f4d4-4fc5-ad07-a4dca492b736"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1756,19 +1756,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14973"
+          "14897"
         ],
         "x-ms-correlation-request-id": [
-          "159e4807-8c9d-46ea-b965-634cb188efb9"
+          "d15c1c2b-d82f-4458-9ce2-a5587284d2b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:159e4807-8c9d-46ea-b965-634cb188efb9"
+          "WESTUS:20151014T210750Z:d15c1c2b-d82f-4458-9ce2-a5587284d2b8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1810,10 +1810,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2c37854b-ab7f-4793-a331-9780231da352"
+          "d92f8cc4-e5f8-4a5d-98c5-6beda0a391cf"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1822,19 +1822,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14972"
+          "14896"
         ],
         "x-ms-correlation-request-id": [
-          "adf27d1e-81b8-47f5-829e-a3f3a5245a75"
+          "113b376b-d414-485a-a8b3-fa33788633d8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:adf27d1e-81b8-47f5-829e-a3f3a5245a75"
+          "WESTUS:20151014T210751Z:113b376b-d414-485a-a8b3-fa33788633d8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1876,10 +1876,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bc90a354-01ce-45ec-8dea-36bd74f5ec3e"
+          "70cf71d4-d504-4e2d-9f2f-9db458751d8a"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1888,19 +1888,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14971"
+          "14895"
         ],
         "x-ms-correlation-request-id": [
-          "e1159102-1203-40ff-8f3e-a3581d5afe74"
+          "753c3e39-d5d0-4a80-8674-2208b7e35757"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:e1159102-1203-40ff-8f3e-a3581d5afe74"
+          "WESTUS:20151014T210751Z:753c3e39-d5d0-4a80-8674-2208b7e35757"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:50 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -1942,10 +1942,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5997c5cd-9263-4386-865c-dc1f622622b8"
+          "c9880eac-125a-4ccc-bf87-d6460f5f8759"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1954,19 +1954,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14970"
+          "14894"
         ],
         "x-ms-correlation-request-id": [
-          "8eb10d73-c8e7-47eb-86fe-b3f9ac9ac043"
+          "a0cfdb89-9abc-412b-a582-5586f51983fb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:8eb10d73-c8e7-47eb-86fe-b3f9ac9ac043"
+          "WESTUS:20151014T210751Z:a0cfdb89-9abc-412b-a582-5586f51983fb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2008,10 +2008,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2680961c-d20e-41ca-905b-e368c00c5929"
+          "eb10d776-4058-4c63-bdf7-361fa367138a"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2020,19 +2020,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14969"
+          "14893"
         ],
         "x-ms-correlation-request-id": [
-          "e958b328-f02e-4d6c-bfbd-31aca8f5df77"
+          "10e00bbf-41e9-4d56-8a28-317c82ad76e2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:e958b328-f02e-4d6c-bfbd-31aca8f5df77"
+          "WESTUS:20151014T210751Z:10e00bbf-41e9-4d56-8a28-317c82ad76e2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2074,10 +2074,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cd0cbb9f-399b-4041-af71-595464ce655a"
+          "7009079b-8094-44f5-ad4b-f8d1169fda8d"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2086,19 +2086,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14968"
+          "14892"
         ],
         "x-ms-correlation-request-id": [
-          "13011b6d-9b67-49f3-a184-a44cf4c0abe8"
+          "2dfe38f5-253b-4c84-b858-1dd93ce7689d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:13011b6d-9b67-49f3-a184-a44cf4c0abe8"
+          "WESTUS:20151014T210751Z:2dfe38f5-253b-4c84-b858-1dd93ce7689d"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2140,7 +2140,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b59bf53b-04d8-49f8-9696-2a53ee2aa16a"
+          "887ab071-ac2f-47ee-8b80-bd44ccfb0237"
         ],
         "x-ms-gateway-service-instanceid": [
           "PASFE_IN_1"
@@ -2152,19 +2152,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14967"
+          "14891"
         ],
         "x-ms-correlation-request-id": [
-          "17828009-4e10-4510-b9ac-818d064e5be1"
+          "dcdffc98-dc65-4a02-b4b3-67da253ec0b1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:17828009-4e10-4510-b9ac-818d064e5be1"
+          "WESTUS:20151014T210751Z:dcdffc98-dc65-4a02-b4b3-67da253ec0b1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2206,10 +2206,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c0a9bfda-479c-43f2-a628-87065d912ea4"
+          "b11f2bc6-4886-410b-9d5e-a3b3eaddcde1"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2218,19 +2218,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14966"
+          "14890"
         ],
         "x-ms-correlation-request-id": [
-          "dacbc5a3-c7ea-4d6d-80c0-aaea8264a431"
+          "1e5e588a-1ec5-4dfb-8675-ddd179b96f7b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:dacbc5a3-c7ea-4d6d-80c0-aaea8264a431"
+          "WESTUS:20151014T210751Z:1e5e588a-1ec5-4dfb-8675-ddd179b96f7b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2272,10 +2272,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "593d00c6-40cc-4e20-ab1c-e1b8ef0ca220"
+          "8aeaa1cc-5ac6-4355-8286-9ca7fe30f5bc"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2284,19 +2284,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14965"
+          "14889"
         ],
         "x-ms-correlation-request-id": [
-          "16c0db0b-eca4-4899-9b02-b2886ce87fdf"
+          "ec78d457-ee9e-4dfd-98c1-e3b602791904"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:16c0db0b-eca4-4899-9b02-b2886ce87fdf"
+          "WESTUS:20151014T210751Z:ec78d457-ee9e-4dfd-98c1-e3b602791904"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2338,10 +2338,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0cd86732-4636-4c89-ab3d-25efc0c40ac8"
+          "7c2bf437-abda-4e11-8059-c02b3122fa7e"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2350,19 +2350,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14964"
+          "14888"
         ],
         "x-ms-correlation-request-id": [
-          "fa363197-d5f9-4feb-8fcf-b6c96e4d9ba7"
+          "488ac06b-f2a6-44f4-adcb-a400cd8c5ebc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:fa363197-d5f9-4feb-8fcf-b6c96e4d9ba7"
+          "WESTUS:20151014T210751Z:488ac06b-f2a6-44f4-adcb-a400cd8c5ebc"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2404,10 +2404,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9673e44c-73d7-4568-9ef4-778ad106b2b1"
+          "561df4d4-70fd-42c5-9a29-43ce45503548"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_1"
+          "PASFE_IN_3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2416,19 +2416,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14963"
+          "14887"
         ],
         "x-ms-correlation-request-id": [
-          "7be5e50c-6206-4b96-9d3e-7463a7dbe789"
+          "f5024ce9-e1b6-4e8e-b6b3-a68f00fece1c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:7be5e50c-6206-4b96-9d3e-7463a7dbe789"
+          "WESTUS:20151014T210751Z:f5024ce9-e1b6-4e8e-b6b3-a68f00fece1c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
@@ -2470,10 +2470,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b2802046-c347-4360-9bc1-ffe09f9645f7"
+          "e78ca605-af9c-4c32-84ca-a1d01c8ceef2"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2482,19 +2482,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14962"
+          "14886"
         ],
         "x-ms-correlation-request-id": [
-          "a8771839-bd5e-4e05-bfa0-661913a9f6c6"
+          "9128747b-06fc-4084-b13a-c176b7701122"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151012T172938Z:a8771839-bd5e-4e05-bfa0-661913a9f6c6"
+          "WESTUS:20151014T210751Z:9128747b-06fc-4084-b13a-c176b7701122"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Oct 2015 17:29:37 GMT"
+          "Wed, 14 Oct 2015 21:07:51 GMT"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/"
