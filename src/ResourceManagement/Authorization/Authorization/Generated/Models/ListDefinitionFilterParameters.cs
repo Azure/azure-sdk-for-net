@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Authorization
+namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// List role definitions filter.

@@ -442,16 +442,6 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var ownerRoleDefinition = client.RoleDefinitions.ListWithFilters(
-                    new ListDefinitionFilterParameters
-                    {
-                        RoleName = "Owner"
-                    });
-
-                Assert.NotNull(ownerRoleDefinition);
-                Assert.NotNull(ownerRoleDefinition.RoleDefinitions);
-                Assert.Equal(1, ownerRoleDefinition.RoleDefinitions.Count);
-
                 var allRoleDefinitions = client.RoleDefinitions.List();
                 
                 Assert.NotNull(allRoleDefinitions);
@@ -490,6 +480,44 @@ namespace Authorization.Tests
                         }
                     }
                 }
+            }
+        }
+
+        [Fact]
+        public void RoleDefinitionsListWithFilterTests()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var ownerRoleDefinition = client.RoleDefinitions.ListWithFilters(
+                    new ListDefinitionFilterParameters
+                    {
+                        RoleName = "Owner"
+                    });
+
+                Assert.NotNull(ownerRoleDefinition);
+                Assert.NotNull(ownerRoleDefinition.RoleDefinitions);
+                Assert.Equal(1, ownerRoleDefinition.RoleDefinitions.Count);
+
+                // Passsing name as null
+                var allRoleDefinition = client.RoleDefinitions.ListWithFilters(
+                    new ListDefinitionFilterParameters
+                    {
+                        RoleName = null
+                    });
+
+                var allRoleDefinitionsByList = client.RoleDefinitions.List();
+
+                Assert.NotNull(allRoleDefinition);
+                Assert.NotNull(allRoleDefinition.RoleDefinitions);
+                Assert.Equal(allRoleDefinitionsByList.RoleDefinitions.Count, allRoleDefinition.RoleDefinitions.Count);
+
+                Assert.Throws<ArgumentNullException>(() => client.RoleDefinitions.ListWithFilters(null));
             }
         }
 
