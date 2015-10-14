@@ -126,36 +126,62 @@ namespace DataLakeStoreFileSystem.Tests
             return folderPath;
         }
 
-        internal string CreateFile(string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate)
+        internal string CreateFile(string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate, bool useDirectCreate = false)
         {
-            string filePath;
             var random = new Random();
+            var filePath = string.Format("{0}/{1}{2}", folderName, fileToCreate, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
+
+            if (useDirectCreate)
+            {
+                if (!withContents)
+                {
+                    var createFileResponse =
+                        dataLakeStoreFileSystemClient.FileSystem.DirectCreate(
+                            filePath,
+                            caboAccountName,
+                            new MemoryStream(),
+                            null);
+
+                    Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
+                                createFileResponse.StatusCode == HttpStatusCode.Created);
+                }
+                else
+                {
+                    var createFileResponse =
+                        dataLakeStoreFileSystemClient.FileSystem.DirectCreate(
+                            filePath,
+                            caboAccountName,
+                            new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)),
+                            null);
+
+                    Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
+                                createFileResponse.StatusCode == HttpStatusCode.Created);
+                }
+
+                return filePath;
+            }
+
+            var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath,
+                caboAccountName, null);
+            Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
+            Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
+
             if (!withContents)
             {
-                filePath = string.Format("{0}/{1}{2}", folderName, fileToCreate, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
-
-                // Create an empty file
-                var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
-                Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
-                Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
-
-                var createFileResponse = dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream());
-                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK || createFileResponse.StatusCode == HttpStatusCode.Created);
-                Assert.True(!string.IsNullOrEmpty(createFileResponse.Location));
+                var createFileResponse =
+                    dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
+                        new MemoryStream());
+                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
+                            createFileResponse.StatusCode == HttpStatusCode.Created);
             }
             else
             {
-                filePath = string.Format("{0}/{1}{2}", folderName, fileToCreateWithContents, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
-                // create a file with content
-                var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath, caboAccountName, null);
-                Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
-                Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
-
-                var createFileResponse = dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location, new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
-                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK || createFileResponse.StatusCode == HttpStatusCode.Created);
-                Assert.True(!string.IsNullOrEmpty(createFileResponse.Location));
+                var createFileResponse =
+                    dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
+                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
+                            createFileResponse.StatusCode == HttpStatusCode.Created);
             }
-
             return filePath;
         }
 
@@ -169,14 +195,26 @@ namespace DataLakeStoreFileSystem.Tests
             return getResponse;
         }
 
-        internal void CompareFileContents(string caboAccountName, string filePath, string expectedContents)
+        internal void CompareFileContents(string caboAccountName, string filePath, string expectedContents, bool useDirectOpen = false)
         {
             // download a file and ensure they are equal
-            var beginOpenResponse = dataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
-            Assert.Equal(HttpStatusCode.TemporaryRedirect, beginOpenResponse.StatusCode);
-            Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
+            FileOpenResponse openResponse;
+            if (useDirectOpen)
+            {
+                openResponse = dataLakeStoreFileSystemClient.FileSystem.DirectOpen(filePath, caboAccountName, null);
+                Assert.Equal(HttpStatusCode.OK, openResponse.StatusCode);
+            }
+            else
+            {
+                var beginOpenResponse = dataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
+                Assert.Equal(HttpStatusCode.TemporaryRedirect, beginOpenResponse.StatusCode);
+                Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
 
-            var openResponse = dataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
+                openResponse = dataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
+                Assert.Equal(HttpStatusCode.OK, openResponse.StatusCode);
+                
+            }
+
             string toCompare = Encoding.UTF8.GetString(openResponse.FileContents);
             Assert.Equal(expectedContents, toCompare);
         }

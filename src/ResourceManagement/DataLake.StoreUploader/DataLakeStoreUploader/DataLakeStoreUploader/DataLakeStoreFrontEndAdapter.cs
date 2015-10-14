@@ -16,8 +16,10 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
+using Hyak.Common;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 
@@ -81,11 +83,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="byteCount"></param>
         public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
-            var response = _client.FileSystem.BeginCreateAsync(streamPath, _accountName, new FileCreateParameters { Overwrite = overwrite }, _token).Result;
-
             using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
             {
-                _client.FileSystem.CreateAsync(response.Location, toAppend, _token).GetAwaiter().GetResult();
+                _client.FileSystem.DirectCreateAsync(streamPath, _accountName, toAppend, new FileCreateParameters { Overwrite = overwrite }, _token).GetAwaiter().GetResult();
             }
         }
 
@@ -118,8 +118,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                var response = _client.FileSystem.BeginAppendAsync(streamPath, _accountName, null, _token).Result;
-                _client.FileSystem.AppendAsync(response.Location, stream, _token).GetAwaiter().GetResult();
+                _client.FileSystem.DirectAppendAsync(streamPath, _accountName, stream, null, _token).GetAwaiter().GetResult();
             }
         }
 
@@ -136,10 +135,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 _client.FileSystem.GetFileStatusAsync(streamPath, _accountName, _token).GetAwaiter().GetResult();
             }
-            catch (Exception)
+            catch (CloudException ex)
             {
-                // TODO: implement logic to check for specific exceptions to return false
-                return false;
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return false;
+                }
+
+                throw;
             }
 
             return true;

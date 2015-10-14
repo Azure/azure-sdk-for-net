@@ -94,6 +94,21 @@ namespace DataLakeStoreFileSystem.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemEmptyFileDirectCreate()
+        {
+            try
+            {
+                TestUtilities.StartTest();
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, false, true, useDirectCreate: true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemFileCreateWithContents()
         {
             try
@@ -104,6 +119,24 @@ namespace DataLakeStoreFileSystem.Tests
                     DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
                 helper.CompareFileContents(commonData.DataLakeStoreFileSystemAccountName, filePath,
                     DataLakeStoreFileSystemManagementHelper.fileContentsToAdd);
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemFileDirectCreateWithContents()
+        {
+            try
+            {
+                TestUtilities.StartTest();
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true, useDirectCreate: true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+                helper.CompareFileContents(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd, true);
             }
             finally
             {
@@ -128,6 +161,28 @@ namespace DataLakeStoreFileSystem.Tests
 
                 var appendResponse = dataLakeStoreFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
                     new MemoryStream(Encoding.UTF8.GetBytes(DataLakeStoreFileSystemManagementHelper.fileContentsToAppend)));
+                Assert.Equal(HttpStatusCode.OK, appendResponse.StatusCode);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAppend.Length);
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemDirectAppendToFile()
+        {
+            try
+            {
+                TestUtilities.StartTest();
+                var filePath = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, false, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+
+                // Append to the file that we created
+                var appendResponse = dataLakeStoreFileSystemClient.FileSystem.DirectAppend(filePath,
+                    commonData.DataLakeStoreFileSystemAccountName, new MemoryStream(Encoding.UTF8.GetBytes(DataLakeStoreFileSystemManagementHelper.fileContentsToAppend)), null);
                 Assert.Equal(HttpStatusCode.OK, appendResponse.StatusCode);
                 helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
                     DataLakeStoreFileSystemManagementHelper.fileContentsToAppend.Length);

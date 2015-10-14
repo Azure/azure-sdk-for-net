@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
@@ -32,13 +32,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0c73b9bf-3c16-412c-a7d2-7ffaf6f160c9"
+          "b169db8c-784d-4f89-8a84-499a67803988"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "Server-Perf": [
-          "[0c73b9bf3c16412ca7d27ffaf6f160c9][ AuthTime::1727.03224606146::PostAuthTime::16405.9509476651 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:158 ms]%0a"
+          "[b169db8c784d4f898a84499a67803988][ AuthTime::1717.19526199524::PostAuthTime::16753.6669496582 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:006 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -50,10 +50,10 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:52 GMT"
+          "Tue, 13 Oct 2015 23:02:06 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=74ca03ef-409c-43ab-8e8f-a4bb74462b5d; path=/; secure; HttpOnly"
+          "UserPrincipalSession=82790c83-fa6a-41ca-a2df-c3805dd9beed; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
@@ -65,14 +65,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::rwx\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
@@ -90,13 +90,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1cae6055-5092-4b1a-bb06-2280281fcaee"
+          "b69abf6f-8efd-4197-bbf6-693b3f8550c8"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "Server-Perf": [
-          "[1cae605550924b1abb062280281fcaee][ AuthTime::789.95259001375::PostAuthTime::178.34879807024 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:023 ms]%0a"
+          "[b69abf6f8efd4197bbf6693b3f8550c8][ AuthTime::810.909643024402::PostAuthTime::184.336527501855 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:043 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -108,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:54 GMT"
+          "Tue, 13 Oct 2015 23:02:07 GMT"
         ]
       },
       "StatusCode": 200
@@ -120,14 +120,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
@@ -145,13 +145,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "dd6f9940-22de-4faa-9c11-72b497dfb4b3"
+          "cdeb49be-9b4c-439f-a0d2-7aec547ddbab"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "Server-Perf": [
-          "[dd6f994022de4faa9c1172b497dfb4b3][ AuthTime::742.478449520233::PostAuthTime::173.644153516829 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:186 ms]%0a"
+          "[cdeb49be9b4c439fa0d27aec547ddbab][ AuthTime::791.663369851355::PostAuthTime::177.065713192037 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:137 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -163,7 +163,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:55 GMT"
+          "Tue, 13 Oct 2015 23:02:08 GMT"
         ]
       },
       "StatusCode": 200
@@ -175,14 +175,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "",
@@ -197,16 +197,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f6f5bdfa-ce89-482b-8c7f-8e121e14a06d"
+          "bade593c-8b20-412e-ac52-821ca904c914"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[f6f5bdface89482b8c7f8e121e14a06d][ AuthTime::786.103335379141::PostAuthTime::174.927238395032 ][SETACL :: 00:02:276 ms]%0a"
+          "[bade593c8b20412eac52821ca904c914][ AuthTime::1005.08315459248::PostAuthTime::179.631882948443 ][SETACL :: 00:01:312 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -218,7 +218,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:54 GMT"
+          "Tue, 13 Oct 2015 23:02:07 GMT"
         ]
       },
       "StatusCode": 200
@@ -230,14 +230,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "",
@@ -252,16 +252,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1e80e285-9011-4bcb-8532-03be9911d71b"
+          "94079994-5986-4a83-a1e8-81a227412a5d"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[1e80e28590114bcb853203be9911d71b][ AuthTime::780.115605947526::PostAuthTime::180.487272867246 ][CHECKACCESS :: 00:00:041 ms]%0a"
+          "[9407999459864a83a1e881a227412a5d][ AuthTime::779.687910988125::PostAuthTime::174.927238395032 ][CHECKACCESS :: 00:00:040 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -273,7 +273,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:54 GMT"
+          "Tue, 13 Oct 2015 23:02:08 GMT"
         ]
       },
       "StatusCode": 200
@@ -285,14 +285,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.2-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.2-preview"
+          "0.9.3-preview"
         ]
       },
       "ResponseBody": "",
@@ -307,16 +307,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "8553765a-0091-4ee8-9c83-9221cb0eae1b"
+          "22b52638-9386-4210-a210-752bf6b60026"
         ],
         "x-origin-server": [
-          "bn4sch103201234"
+          "bn4sch103190324"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[8553765a00914ee89c839221cb0eae1b][ AuthTime::855.389918802112::PostAuthTime::184.336527501855 ][MODIFYACLENTRIES :: 00:00:120 ms]%0a"
+          "[22b5263893864210a210752bf6b60026][ AuthTime::754.881603342864::PostAuthTime::168.084119044615 ][MODIFYACLENTRIES :: 00:00:156 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -328,7 +328,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Oct 2015 21:01:54 GMT"
+          "Tue, 13 Oct 2015 23:02:08 GMT"
         ]
       },
       "StatusCode": 200

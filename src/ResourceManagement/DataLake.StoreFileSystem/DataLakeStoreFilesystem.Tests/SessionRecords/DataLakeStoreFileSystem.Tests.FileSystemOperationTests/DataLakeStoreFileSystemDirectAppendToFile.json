@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt8863?op=APPEND&append=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ4ODYzP29wPUFQUEVORCZhcHBlbmQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "More test contents, that were appended!",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/octet-stream"
+        ],
+        "Content-Length": [
+          "39"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.StoreFileSystem",
+          "0.9.3-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6f408f42-66bc-4cc4-90a4-8a9a6b52bf3f"
+        ],
+        "x-origin-server": [
+          "bn4sch103201424"
+        ],
+        "Server-Perf": [
+          "[6f408f4266bc4cc490a48a9a6b52bf3f][ AuthTime::1699.20591099548::PostAuthTime::16747.8490482437 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:00:011 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:00:012 ms]%0a[Open :: 00:00:012 ms]%0a[GetLength :: 00:00:008 ms]%0a[Write :: 00:00:169 ms]%0a[FlushWrite :: 00:00:068 ms]%0a[APPEND :: 00:00:261 ms]%0a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2015 23:01:44 GMT"
+        ],
+        "Set-Cookie": [
+          "UserPrincipalSession=bc134224-4705-46e2-8d86-fb5744ab24b4; path=/; secure; HttpOnly"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         private string _algebraFilePath;
         
         /// <summary>
-        /// Optional. Gets or sets the SQL-IP algebra file path after the job
+        /// Optional. Gets or sets the U-SQL algebra file path after the job
         /// has completed
         /// </summary>
         public string AlgebraFilePath

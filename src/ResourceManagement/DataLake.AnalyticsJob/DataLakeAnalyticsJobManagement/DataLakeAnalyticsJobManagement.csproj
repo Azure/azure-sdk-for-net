@@ -27,6 +27,7 @@
     <Compile Include="Generated\Models\HiveProperties.cs" />
     <Compile Include="Generated\Models\JobDataPath.cs" />
     <Compile Include="Generated\Models\JobDataPathGetResponse.cs" />
+    <Compile Include="Generated\Models\JobErrorDetails.cs" />
     <Compile Include="Generated\Models\JobInfoBuildOrCreateParameters.cs" />
     <Compile Include="Generated\Models\JobInfoBuildOrCreateResponse.cs" />
     <Compile Include="Generated\Models\JobInfoGetResponse.cs" />

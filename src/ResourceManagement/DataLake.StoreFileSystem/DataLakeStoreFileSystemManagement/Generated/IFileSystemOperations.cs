@@ -137,10 +137,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<FileCreateOpenAndAppendResponse> CreateAsync(string fileCreateRequestLink, Stream streamContents, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(string fileCreateRequestLink, Stream streamContents, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a symbolic link.
@@ -186,6 +186,81 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// The result of the request or operation.
         /// </returns>
         Task<FileOperationResultResponse> DeleteAsync(string filePath, string accountName, bool recursive, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Directly appends to a file with the specified content, without
+        /// requiring a redirect. This API is NOT webhdfs compliant. It should
+        /// be used only by tools that do not rely on webhdfs interoperability.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to append to.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to append to the file in
+        /// </param>
+        /// <param name='streamContents'>
+        /// The file contents to include when appending to the file.
+        /// </param>
+        /// <param name='bufferSize'>
+        /// The optional buffer size to use when appending data
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DirectAppendAsync(string filePath, string accountName, Stream streamContents, long? bufferSize, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Directly creates a file with the specified content, without
+        /// requiring a redirect. This API is NOT webhdfs compliant. It should
+        /// be used only by tools that do not rely on webhdfs interoperability.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to create.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to create the file in
+        /// </param>
+        /// <param name='streamContents'>
+        /// The file contents to include when creating the file. This parameter
+        /// is required, however it can be an empty stream. Just not null.
+        /// </param>
+        /// <param name='parameters'>
+        /// The optional parameters to use when creating the file
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DirectCreateAsync(string filePath, string accountName, Stream streamContents, FileCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Directly opens and reads from the specified file, without requiring
+        /// a redirect. This API is NOT webhdfs compliant. It should be used
+        /// only by tools that do not rely on webhdfs interoperability.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to open.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='parameters'>
+        /// The optional parameters to pass to the open operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The data from the file requested.
+        /// </returns>
+        Task<FileOpenResponse> DirectOpenAsync(string filePath, string accountName, FileOpenParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets ACL entries on a file or folder.
@@ -263,7 +338,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// The path to the file to append to.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to use
+        /// The name of the Data Lake Store account to append to the file in
         /// </param>
         /// <param name='bufferSize'>
         /// The optional buffer size to use when appending data
@@ -288,7 +363,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// The path to the file to create.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to use
+        /// The name of the Data Lake Store account to create the file in
         /// </param>
         /// <param name='parameters'>
         /// The optional parameters to use when creating the file

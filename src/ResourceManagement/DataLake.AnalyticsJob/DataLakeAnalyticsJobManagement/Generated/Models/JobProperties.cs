@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         private string _runtimeVersion;
         
         /// <summary>
-        /// Optional. Gets or sets the runtime version of the SQL-IP engine to
+        /// Optional. Gets or sets the runtime version of the U-SQL engine to
         /// use
         /// </summary>
         public string RuntimeVersion
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         private string _script;
         
         /// <summary>
-        /// Required. Gets or sets the SQL-IP script to run
+        /// Required. Gets or sets the U-SQL script to run
         /// </summary>
         public string Script
         {
