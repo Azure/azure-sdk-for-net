@@ -58,6 +58,8 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SessionRecords\DataLakeAnalytics.Tests.AccountOperationTests\CreateGetUpdateDeleteTest.json" />
+    <None Include="SessionRecords\DataLakeAnalytics.Tests.AccountOperationTests\CreateGetUpdateDeleteTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
