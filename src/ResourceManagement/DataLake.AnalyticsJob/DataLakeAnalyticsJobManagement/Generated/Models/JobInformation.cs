@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
             set { this._endTime = value; }
         }
         
-        private JobErrorDetails _errorMessage;
+        private string _errorMessage;
         
         /// <summary>
         /// Optional. Gets or sets the error message details for the job, if it
         /// failed.
         /// </summary>
-        public JobErrorDetails ErrorMessage
+        public string ErrorMessage
         {
             get { return this._errorMessage; }
             set { this._errorMessage = value; }
