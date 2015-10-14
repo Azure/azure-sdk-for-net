@@ -4,10 +4,10 @@
     "datasource": {
       "type": "Microsoft.Sql/Server/Database",
       "properties": {
-        "server": "$EncryptedStringForTesting",
-        "database": "$EncryptedStringForTesting",
-        "user": "$EncryptedStringForTesting",
-        "password": "$EncryptedStringForTesting",
+        "server": "z102fk12be",
+        "database": "HydraSdkTest",
+        "user": "customersolution",
+        "password": "y3%rNk9*",
         "table": "StateInfo"
       }
     }

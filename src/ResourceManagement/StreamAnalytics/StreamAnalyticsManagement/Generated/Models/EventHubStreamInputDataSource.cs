@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The definition of the EventHub data source as stream input.
+    /// The definition of the Event Hub data source as stream input.
     /// </summary>
     public partial class EventHubStreamInputDataSource : StreamInputDataSource
     {
         private EventHubStreamInputDataSourceProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the EventHub data source
+        /// Optional. Gets or sets the properties of the Event Hub data source
         /// as stream input.
         /// </summary>
         public EventHubStreamInputDataSourceProperties Properties

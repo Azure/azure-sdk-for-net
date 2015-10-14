@@ -117,9 +117,9 @@
     <Compile Include="Generated\Models\ExpressRouteCircuitsRoutesTableListResponse.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitsStatsListResponse.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitStats.cs" />
-    <Compile Include="Generated\Models\ExpressRouteResourceProvider.cs" />
-    <Compile Include="Generated\Models\ExpressRouteResourceProviderListResponse.cs" />
+    <Compile Include="Generated\Models\ExpressRouteServiceProvider.cs" />
     <Compile Include="Generated\Models\ExpressRouteServiceProviderBandwidthsOffered.cs" />
+    <Compile Include="Generated\Models\ExpressRouteServiceProviderListResponse.cs" />
     <Compile Include="Generated\Models\FrontendIpConfiguration.cs" />
     <Compile Include="Generated\Models\InboundNatPool.cs" />
     <Compile Include="Generated\Models\InboundNatRule.cs" />
@@ -140,11 +140,11 @@
     <Compile Include="Generated\Models\NetworkInterfaceIpConfiguration.cs" />
     <Compile Include="Generated\Models\NetworkInterfaceListResponse.cs" />
     <Compile Include="Generated\Models\NetworkInterfacePutResponse.cs" />
+    <Compile Include="Generated\Models\NetworkOperationStatus.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroup.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroupGetResponse.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroupListResponse.cs" />
     <Compile Include="Generated\Models\NetworkSecurityGroupPutResponse.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\OutboundNatRule.cs" />
     <Compile Include="Generated\Models\Probe.cs" />
     <Compile Include="Generated\Models\ProbeProtocol.cs" />

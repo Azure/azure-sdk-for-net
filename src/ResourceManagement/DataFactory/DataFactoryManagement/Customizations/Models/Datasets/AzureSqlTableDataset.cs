@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The Azure SQL Server database.
     /// </summary>
     [AdfTypeName("AzureSqlTable")]
-    public class AzureSqlDataset : DatasetTypeProperties
+    public class AzureSqlTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// The table name of the Azure SQL database.
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string TableName { get; set; }
 
-        public AzureSqlDataset()
+        public AzureSqlTableDataset()
         {
         }
 
-        public AzureSqlDataset(string tableName)
+        public AzureSqlTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");

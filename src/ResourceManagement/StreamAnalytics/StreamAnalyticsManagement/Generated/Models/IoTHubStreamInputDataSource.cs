@@ -21,18 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// The definition of the IoT Hub data source as stream input.
     /// </summary>
-    public static partial class OperationStatus
+    public partial class IoTHubStreamInputDataSource : StreamInputDataSource
     {
-        public const string InProgress = "InProgress";
+        private IoTHubStreamInputDataSourceProperties _properties;
         
-        public const string Succeeded = "Succeeded";
+        /// <summary>
+        /// Optional. Gets or sets the properties of the IoT Hub data source as
+        /// stream input.
+        /// </summary>
+        public IoTHubStreamInputDataSourceProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
         
-        public const string Failed = "Failed";
+        /// <summary>
+        /// Initializes a new instance of the IoTHubStreamInputDataSource class.
+        /// </summary>
+        public IoTHubStreamInputDataSource()
+        {
+        }
     }
 }

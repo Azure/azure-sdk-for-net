@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The Azure SQL data warehouse dataset.
     /// </summary>
     [AdfTypeName("AzureSqlDWTable")]
-    public class AzureSqlDataWarehouseDataset : DatasetTypeProperties
+    public class AzureSqlDataWarehouseTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// Required. The table name of the Azure SQL data warehouse dataset.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Initializes a new instance of the AzureSqlDataWarehouseTableDataset class.
         /// </summary>
-        public AzureSqlDataWarehouseDataset()
+        public AzureSqlDataWarehouseTableDataset()
         {
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Initializes a new instance of the AzureSqlDataWarehouseTableDataset class with
         /// required arguments.
         /// </summary>
-        public AzureSqlDataWarehouseDataset(string tableName)
+        public AzureSqlDataWarehouseTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");
