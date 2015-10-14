@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
 
 namespace Microsoft.Azure.Management.Authorization
@@ -94,12 +95,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Get all role definitions.
         /// </summary>
+        /// <param name='parameters'>
+        /// List operation filters. If null will return all role definitions
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        Task<RoleDefinitionListResult> ListAsync(CancellationToken cancellationToken);
+        Task<RoleDefinitionListResult> ListAsync(ListDefinitionFilterParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -82,7 +82,7 @@ namespace Authorization.Tests
                 
                 var principalId = testContext.Users.ElementAt(4);
 
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.ElementAt(1);
+                var roleDefinition = client.RoleDefinitions.List(null).RoleDefinitions.ElementAt(1);
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     Properties = new RoleAssignmentProperties()
@@ -150,7 +150,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.Where(r => r.Properties.Type == "BuiltInRole").Last();
+                var roleDefinition = client.RoleDefinitions.List(null).RoleDefinitions.Where(r => r.Properties.Type == "BuiltInRole").Last();
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     Properties = new RoleAssignmentProperties()
@@ -206,7 +206,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.Last();
+                var roleDefinition = client.RoleDefinitions.List(null).RoleDefinitions.Last();
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     Properties = new RoleAssignmentProperties()
@@ -283,7 +283,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId;
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
+                var roleDefinition = client.RoleDefinitions.List(null).RoleDefinitions.First();
 
                 for(int i=0; i<testContext.Users.Count; i++)
                 {
@@ -372,7 +372,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId;
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
+                var roleDefinition = client.RoleDefinitions.List(null).RoleDefinitions.First();
                 
                 // Get user and group and add the user to the group
                 var userId = testContext.Users.First();
@@ -442,7 +442,17 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var allRoleDefinitions = client.RoleDefinitions.List();
+                var ownerRoleDefinition = client.RoleDefinitions.List(
+                    new ListDefinitionFilterParameters
+                    {
+                        RoleName = "Owner"
+                    });
+
+                Assert.NotNull(ownerRoleDefinition);
+                Assert.NotNull(ownerRoleDefinition.RoleDefinitions);
+                Assert.Equal(1, ownerRoleDefinition.RoleDefinitions.Count);
+
+                var allRoleDefinitions = client.RoleDefinitions.List(null);
                 
                 Assert.NotNull(allRoleDefinitions);
                 Assert.NotNull(allRoleDefinitions.RoleDefinitions);
@@ -494,7 +504,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var allRoleDefinitions = client.RoleDefinitions.List();
+                var allRoleDefinitions = client.RoleDefinitions.List(null);
 
                 Assert.NotNull(allRoleDefinitions);
                 Assert.NotNull(allRoleDefinitions.RoleDefinitions);
@@ -686,7 +696,7 @@ namespace Authorization.Tests
                 // Negative test - create a roledefinition with same id as a built-in role
                 try
                 {
-                    var allRoleDefinitions = client.RoleDefinitions.List();
+                    var allRoleDefinitions = client.RoleDefinitions.List(null);
                     Assert.NotNull(allRoleDefinitions);
                     Assert.NotNull(allRoleDefinitions.RoleDefinitions);
                     RoleDefinition builtInRole = allRoleDefinitions.RoleDefinitions.First(x => x.Properties.Type == "BuiltInRole");

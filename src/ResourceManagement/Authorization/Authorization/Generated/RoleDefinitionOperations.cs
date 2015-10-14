@@ -1100,13 +1100,17 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Get all role definitions.
         /// </summary>
+        /// <param name='parameters'>
+        /// Optional. List operation filters. If null will return all role
+        /// definitions
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        public async Task<RoleDefinitionListResult> ListAsync(CancellationToken cancellationToken)
+        public async Task<RoleDefinitionListResult> ListAsync(ListDefinitionFilterParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1117,6 +1121,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -1129,6 +1134,15 @@ namespace Microsoft.Azure.Management.Authorization
             }
             url = url + "/providers/Microsoft.Authorization/roleDefinitions";
             List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            if (parameters != null && parameters.RoleName != null)
+            {
+                odataFilter.Add("roleName eq '" + Uri.EscapeDataString(parameters.RoleName) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {

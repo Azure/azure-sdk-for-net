@@ -203,14 +203,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// Reference to the
         /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. List operation filters. If null will return all role
+        /// definitions
+        /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        public static RoleDefinitionListResult List(this IRoleDefinitionOperations operations)
+        public static RoleDefinitionListResult List(this IRoleDefinitionOperations operations, ListDefinitionFilterParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRoleDefinitionOperations)s).ListAsync();
+                return ((IRoleDefinitionOperations)s).ListAsync(parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -222,12 +226,16 @@ namespace Microsoft.Azure.Management.Authorization
         /// Reference to the
         /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. List operation filters. If null will return all role
+        /// definitions
+        /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        public static Task<RoleDefinitionListResult> ListAsync(this IRoleDefinitionOperations operations)
+        public static Task<RoleDefinitionListResult> ListAsync(this IRoleDefinitionOperations operations, ListDefinitionFilterParameters parameters)
         {
-            return operations.ListAsync(CancellationToken.None);
+            return operations.ListAsync(parameters, CancellationToken.None);
         }
     }
 }
