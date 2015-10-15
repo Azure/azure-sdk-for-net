@@ -615,6 +615,9 @@
     <Reference Include="Microsoft.WindowsAzure.Management.Compute">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Compute.12.2.0-preview\lib\net40\Microsoft.WindowsAzure.Management.Compute.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Management.Network">
+      <HintPath>..\NetworkManagement\bin\Net40-Debug\Microsoft.WindowsAzure.Management.Network.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
