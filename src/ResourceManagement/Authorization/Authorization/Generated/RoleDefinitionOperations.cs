@@ -1330,5 +1330,256 @@ namespace Microsoft.Azure.Management.Authorization
                 }
             }
         }
+        
+        /// <summary>
+        /// Get role definitions.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. List role definitions filters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role definition list operation result.
+        /// </returns>
+        public async Task<RoleDefinitionListResult> ListWithFiltersAsync(ListDefinitionFilterParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ListWithFiltersAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Authorization/roleDefinitions";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            if (parameters.RoleName != null)
+            {
+                odataFilter.Add("roleName eq '" + Uri.EscapeDataString(parameters.RoleName) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            queryParameters.Add("api-version=2015-07-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RoleDefinitionListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleDefinitionListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RoleDefinition roleDefinitionInstance = new RoleDefinition();
+                                    result.RoleDefinitions.Add(roleDefinitionInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        roleDefinitionInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleDefinitionInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        roleDefinitionInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
+                                        roleDefinitionInstance.Properties = propertiesInstance;
+                                        
+                                        JToken roleNameValue = propertiesValue["roleName"];
+                                        if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
+                                        {
+                                            string roleNameInstance = ((string)roleNameValue);
+                                            propertiesInstance.RoleName = roleNameInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken typeValue2 = propertiesValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            propertiesInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken permissionsArray = propertiesValue["permissions"];
+                                        if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken permissionsValue in ((JArray)permissionsArray))
+                                            {
+                                                Permission permissionInstance = new Permission();
+                                                propertiesInstance.Permissions.Add(permissionInstance);
+                                                
+                                                JToken actionsArray = permissionsValue["actions"];
+                                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                                    {
+                                                        permissionInstance.Actions.Add(((string)actionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken notActionsArray = permissionsValue["notActions"];
+                                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                                    {
+                                                        permissionInstance.NotActions.Add(((string)notActionsValue));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken assignableScopesArray = propertiesValue["assignableScopes"];
+                                        if (assignableScopesArray != null && assignableScopesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray))
+                                            {
+                                                propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
     }
 }
