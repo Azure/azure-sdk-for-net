@@ -249,7 +249,7 @@ namespace Authorization.Tests
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
                 this.testEnvironment.AuthorizationContext == null ?
                 GraphManagementClient.DefaultTenantId :
-                    this.testEnvironment.AuthorizationContext.TenatId,
+                    this.testEnvironment.AuthorizationContext.TenantId,
                 suffix,
                 GraphManagementClient.GraphApiVersion);
         }
