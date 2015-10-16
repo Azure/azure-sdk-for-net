@@ -17,7 +17,7 @@
     <tags>Microsoft Azure resource management "resource management" "resource groups" REST HTTP client azureofficial windowsazureofficial</tags>
     <dependencies>
       <group>
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.21,2.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.1.0,2.0)" />
       </group>
       <group targetFramework="dnxcore50">
         <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
