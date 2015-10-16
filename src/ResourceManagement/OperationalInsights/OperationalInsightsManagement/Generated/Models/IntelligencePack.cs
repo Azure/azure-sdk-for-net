@@ -25,10 +25,10 @@ using System.Linq;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Metadata for an Operational Insights account that isn't linked to a
-    /// workspace.
+    /// Intelligence Pack containing a string name and boolean indicating if
+    /// it's enabled.
     /// </summary>
-    public partial class AzureIntelligencePack
+    public partial class IntelligencePack
     {
         private bool _enabled;
         
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AzureIntelligencePack class.
+        /// Initializes a new instance of the IntelligencePack class.
         /// </summary>
-        public AzureIntelligencePack()
+        public IntelligencePack()
         {
         }
     }

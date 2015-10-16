@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// <summary>
     /// The list intelligence packs operation response.
     /// </summary>
-    public partial class WorkspaceListIntelligencePacksResponse : AzureOperationResponse, IEnumerable<AzureIntelligencePack>
+    public partial class WorkspaceListIntelligencePacksResponse : AzureOperationResponse, IEnumerable<IntelligencePack>
     {
-        private IList<AzureIntelligencePack> _intelligencePacks;
+        private IList<IntelligencePack> _intelligencePacks;
         
         /// <summary>
         /// Optional. Gets or sets a list of intelligence packs that can be
         /// enabled or disabled for a workspace.
         /// </summary>
-        public IList<AzureIntelligencePack> IntelligencePacks
+        public IList<IntelligencePack> IntelligencePacks
         {
             get { return this._intelligencePacks; }
             set { this._intelligencePacks = value; }
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         public WorkspaceListIntelligencePacksResponse()
         {
-            this.IntelligencePacks = new LazyList<AzureIntelligencePack>();
+            this.IntelligencePacks = new LazyList<IntelligencePack>();
         }
         
         /// <summary>
         /// Gets the sequence of IntelligencePacks.
         /// </summary>
-        public IEnumerator<AzureIntelligencePack> GetEnumerator()
+        public IEnumerator<IntelligencePack> GetEnumerator()
         {
             return this.IntelligencePacks.GetEnumerator();
         }
