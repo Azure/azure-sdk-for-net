@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "Microsoft.Azure.Management.Resources\ResourceManagement.csproj", "{165EF660-235B-45AF-83CB-0D32BEF4C1A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "ResourceManagement\ResourceManagement.csproj", "{165EF660-235B-45AF-83CB-0D32BEF4C1A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources.Tests", "Resources.Tests\Resources.Tests.csproj", "{BE9D7270-27CB-45EB-BD26-FEA68087E835}"
 EndProject

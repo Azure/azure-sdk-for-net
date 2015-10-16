@@ -203,7 +203,7 @@
       <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
       <Name>ClientRuntime.Azure.TestFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Resources\ResourceManagement.csproj">
+    <ProjectReference Include="..\ResourceManagement\ResourceManagement.csproj">
       <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
       <Name>ResourceManagement</Name>
       <Properties>SkipValidatePackageReferences=true</Properties>
