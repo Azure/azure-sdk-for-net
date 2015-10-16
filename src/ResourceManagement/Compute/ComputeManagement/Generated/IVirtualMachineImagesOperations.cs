@@ -45,6 +45,27 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse<VirtualMachineImage>> GetWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a list of virtual machine images.
+        /// </summary>
+        /// <param name='location'>
+        /// </param>
+        /// <param name='publisherName'>
+        /// </param>
+        /// <param name='offer'>
+        /// </param>
+        /// <param name='skus'>
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a list of virtual machine image offers.
         /// </summary>
         /// <param name='location'>
@@ -86,30 +107,5 @@ namespace Microsoft.Azure.Management.Compute
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListSkusWithHttpMessagesAsync(string location, string publisherName, string offer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a list of virtual machine images.
-        /// </summary>
-        /// <param name='location'>
-        /// </param>
-        /// <param name='publisherName'>
-        /// </param>
-        /// <param name='offer'>
-        /// </param>
-        /// <param name='skus'>
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// </param>
-        /// <param name='orderby'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

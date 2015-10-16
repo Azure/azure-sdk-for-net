@@ -19,8 +19,14 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Virtual machine image resource information.
     /// </summary>
-    public partial class VirtualMachineImageResource : SubResource
+    public partial class VirtualMachineImageResource
     {
+        /// <summary>
+        /// Gets or sets the ID of the artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
         /// <summary>
         /// Gets or sets the name of the resource.
         /// </summary>
@@ -32,12 +38,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

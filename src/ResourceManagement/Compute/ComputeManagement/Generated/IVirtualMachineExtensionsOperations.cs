@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine where the extension should be
         /// create or updated.
         /// </param>
-        /// <param name='vmExtensionName'>
-        /// The name of the virtual machine extension.
+        /// <param name='name'>
+        /// Parameters supplied to the Create Virtual Machine Extension
+        /// operation.
         /// </param>
         /// <param name='extensionParameters'>
         /// Parameters supplied to the Create Virtual Machine Extension
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineExtension>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineExtension>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to create or update the extension.
         /// </summary>
@@ -58,8 +59,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine where the extension should be
         /// create or updated.
         /// </param>
-        /// <param name='vmExtensionName'>
-        /// The name of the virtual machine extension.
+        /// <param name='name'>
+        /// Parameters supplied to the Create Virtual Machine Extension
+        /// operation.
         /// </param>
         /// <param name='extensionParameters'>
         /// Parameters supplied to the Create Virtual Machine Extension
@@ -71,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineExtension>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineExtension>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete the extension.
         /// </summary>
@@ -124,16 +126,12 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmExtensionName'>
         /// The name of the virtual machine extension.
         /// </param>
-        /// <param name='expand'>
-        /// Name of the property to expand. Allowed value is null or
-        /// 'instanceView'.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineExtension>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineExtension>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

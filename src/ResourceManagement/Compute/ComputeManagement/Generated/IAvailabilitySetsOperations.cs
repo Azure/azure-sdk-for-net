@@ -25,6 +25,25 @@ namespace Microsoft.Azure.Management.Compute
     public partial interface IAvailabilitySetsOperations
     {
         /// <summary>
+        /// The operation to create or update the availability set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='name'>
+        /// Parameters supplied to the Create Availability Set operation.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Availability Set operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<AvailabilitySet>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, AvailabilitySet parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The operation to delete the availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -86,24 +105,5 @@ namespace Microsoft.Azure.Management.Compute
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<VirtualMachineSizeListResult>> ListAvailableSizesWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// The operation to create or update the availability set.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Parameters supplied to the Create Availability Set operation.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Availability Set operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AvailabilitySet>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, AvailabilitySet parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

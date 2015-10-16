@@ -59,6 +59,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets the diagnostics profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
+        public DiagnosticsProfile DiagnosticsProfile { get; set; }
+
+        /// <summary>
         /// Gets or sets the reference Id of the availailbity set to which
         /// this virtual machine belongs.
         /// </summary>

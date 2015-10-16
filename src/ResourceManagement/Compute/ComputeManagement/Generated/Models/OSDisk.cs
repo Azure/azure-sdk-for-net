@@ -63,5 +63,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "createOption")]
         public DiskCreateOptionTypes? CreateOption { get; set; }
 
+        /// <summary>
+        /// Gets or sets the initial disk size in GB for blank data disks, and
+        /// the new desired size for existing OS and Data disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
+
     }
 }

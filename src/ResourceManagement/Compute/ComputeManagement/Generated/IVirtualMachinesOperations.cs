@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ComputeLongRunningOperationResult>> CaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Captures the VM by copying VirtualHardDisks of the VM and outputs
         /// a template that can be used to create similar VMs.
@@ -63,15 +63,15 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ComputeLongRunningOperationResult>> BeginCaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginCaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to create or update a virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
+        /// <param name='name'>
+        /// Parameters supplied to the Create Virtual Machine operation.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine operation.
@@ -82,15 +82,15 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachine>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachine parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachine>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, VirtualMachine parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to create or update a virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
+        /// <param name='name'>
+        /// Parameters supplied to the Create Virtual Machine operation.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine operation.
@@ -101,7 +101,43 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachine>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachine parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachine>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, VirtualMachine parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Shuts down the Virtual Machine and releases the compute resources.
+        /// You are not billed for the compute resources that this Virtual
+        /// Machine uses.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmName'>
+        /// The name of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Shuts down the Virtual Machine and releases the compute resources.
+        /// You are not billed for the compute resources that this Virtual
+        /// Machine uses.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmName'>
+        /// The name of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete a virtual machine.
         /// </summary>
@@ -143,53 +179,13 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
-        /// <param name='expand'>
-        /// Name of the property to expand. Allowed value is null or
-        /// 'instanceView'.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachine>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources.
-        /// You are not billed for the compute resources that this Virtual
-        /// Machine uses.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources.
-        /// You are not billed for the compute resources that this Virtual
-        /// Machine uses.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachine>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Sets the state of the VM as Generalized.
         /// </summary>

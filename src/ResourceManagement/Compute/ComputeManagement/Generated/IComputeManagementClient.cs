@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Compute
     using Models;
 
     /// <summary>
+    /// The Compute Management Client.
     /// </summary>
     public partial interface IComputeManagementClient
     {
@@ -69,17 +70,21 @@ namespace Microsoft.Azure.Management.Compute
 
         IAvailabilitySetsOperations AvailabilitySets { get; }
 
-        IVirtualMachineImagesOperations VirtualMachineImages { get; }
-
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
 
         IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
+
+        IVirtualMachineImagesOperations VirtualMachineImages { get; }
 
         IUsageOperations Usage { get; }
 
         IVirtualMachineSizesOperations VirtualMachineSizes { get; }
 
         IVirtualMachinesOperations VirtualMachines { get; }
+
+        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
+
+        IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
     }
 }

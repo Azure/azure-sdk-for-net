@@ -58,6 +58,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
 
         /// <summary>
+        /// Gets or sets the boot diagnostics.
+        /// </summary>
+        [JsonProperty(PropertyName = "bootDiagnostics")]
+        public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
+
+        /// <summary>
         /// Gets or sets the resource status information.
         /// </summary>
         [JsonProperty(PropertyName = "statuses")]

@@ -21,6 +21,50 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class AvailabilitySetsOperationsExtensions
     {
             /// <summary>
+            /// The operation to create or update the availability set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the Create Availability Set operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create Availability Set operation.
+            /// </param>
+            public static AvailabilitySet CreateOrUpdate(this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters)
+            {
+                return Task.Factory.StartNew(s => ((IAvailabilitySetsOperations)s).CreateOrUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to create or update the availability set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the Create Availability Set operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create Availability Set operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AvailabilitySet> CreateOrUpdateAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<AvailabilitySet> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// The operation to delete the availability set.
             /// </summary>
             /// <param name='operations'>
@@ -162,50 +206,6 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<VirtualMachineSizeListResult> ListAvailableSizesAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<VirtualMachineSizeListResult> result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// The operation to create or update the availability set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Availability Set operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Availability Set operation.
-            /// </param>
-            public static AvailabilitySet CreateOrUpdate(this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters)
-            {
-                return Task.Factory.StartNew(s => ((IAvailabilitySetsOperations)s).CreateOrUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create or update the availability set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Availability Set operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Availability Set operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AvailabilitySet> CreateOrUpdateAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<AvailabilitySet> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
