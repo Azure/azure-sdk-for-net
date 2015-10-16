@@ -72,13 +72,13 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/6.0.4": {
+      "Newtonsoft.Json/6.0.8": {
         "type": "package",
         "compile": {
-          "lib/portable-net45+dnxcore50+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+dnxcore50+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/Newtonsoft.Json.dll": {}
+          "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.dll": {}
         }
       },
       "System.Collections/4.0.10": {
@@ -788,9 +788,9 @@
         "ref/xamarinmac20/_._"
       ]
     },
-    "Newtonsoft.Json/6.0.4": {
+    "Newtonsoft.Json/6.0.8": {
       "type": "package",
-      "sha512": "FyQLmEpjsCrEP+znauLDGAi+h6i9YnaMkITlfIoiM4RYyX3nki306bTHsr/0okiIvIc7BJhQTbOAIZVocccFUw==",
+      "sha512": "7ut47NDedTW19EbL0JpFDYUP62fcuz27hJrehCDNajdCS5NtqL+E39+7Um3OkNc2wl2ym7K8Ln5eNuLus6mVGQ==",
       "files": [
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -804,10 +804,10 @@
         "lib/netcore45/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+dnxcore50+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/Newtonsoft.Json.dll",
-        "lib/portable-net45+dnxcore50+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/Newtonsoft.Json.xml",
-        "Newtonsoft.Json.6.0.4.nupkg",
-        "Newtonsoft.Json.6.0.4.nupkg.sha512",
+        "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.xml",
+        "Newtonsoft.Json.6.0.8.nupkg",
+        "Newtonsoft.Json.6.0.8.nupkg.sha512",
         "Newtonsoft.Json.nuspec",
         "tools/install.ps1"
       ]
@@ -2047,10 +2047,16 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.Rest.ClientRuntime.Azure >= 1.1.0"
+      "Microsoft.Rest.ClientRuntime.Azure >= 1.1.0",
+      "Newtonsoft.Json >= 6.0.8"
     ],
     "DNXCore,Version=v5.0": [
-      "System.Runtime.Serialization.Primitives >= 4.0.10"
+      "System.Diagnostics.Tools >= 4.0.0",
+      "System.Net.Http >= 4.0.0",
+      "System.Runtime.Serialization.Primitives >= 4.0.10",
+      "System.Threading.Tasks >= 4.0.10",
+      "System.Xml.ReaderWriter >= 4.0.10",
+      "Microsoft.CSharp >= 4.0.0"
     ]
   }
 }
