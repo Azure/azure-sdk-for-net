@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt6502?op=CREATE&write=true&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ2NTAyP29wPUNSRUFURSZ3cml0ZT10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt0054?op=CREATE&write=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQwMDU0P29wPUNSRUFURSZ3cml0ZT10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "These are some random test contents 1234!@",
       "RequestHeaders": {
@@ -16,14 +16,14 @@
           "chunked"
         ],
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.3-preview"
+          "0.9.4-preview"
         ]
       },
       "ResponseBody": "",
@@ -38,16 +38,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4376e65f-7e1c-4637-82a2-591a8ae3f853"
+          "9e022429-24de-4979-82e6-8622a0853b5b"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190225"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[4376e65f7e1c463782a2591a8ae3f853][ AuthTime::1769.3710200379::PostAuthTime::16912.7405405798 ][Open :: 00:00:820 ms]%0a[Write :: 00:00:121 ms]%0a[FlushWrite :: 00:00:050 ms]%0a[CREATE :: 00:00:994 ms]%0a"
+          "[9e02242924de497982e68622a0853b5b][ AuthTime::1801.02193346184::PostAuthTime::31671.6400419654 ][Open :: 00:00:457 ms]%0a[Write :: 00:00:136 ms]%0a[FlushWrite :: 00:00:073 ms]%0a[CREATE :: 00:00:670 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -59,35 +59,35 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 15 Oct 2015 00:01:41 GMT"
+          "Fri, 16 Oct 2015 18:04:27 GMT"
         ],
         "Location": [
-          "https://testadlfs17606.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt6502?op=CREATE&write=true&api-version=2015-10-01-preview"
+          "https://testadlfs11551.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt0054?op=CREATE&write=true&api-version=2015-10-01-preview"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=18ea3494-6f36-4e18-938d-2cc87d9c61d2; path=/; secure; HttpOnly"
+          "UserPrincipalSession=978edcdb-15d3-4851-b930-e113e7447639; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt6502?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ2NTAyP29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt0054?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQwMDU0P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.3-preview"
+          "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 42,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1444867302180,\r\n    \"modificationTime\": 1444867302410,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 42,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1445018667533,\r\n    \"modificationTime\": 1445018667967,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "223"
@@ -102,13 +102,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "acec75c5-f472-436f-913c-4420fe349e9d"
+          "cedcb0ce-f9f8-4e9e-af2f-7ad927c5b84b"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190225"
         ],
         "Server-Perf": [
-          "[acec75c5f472436f913c4420fe349e9d][ AuthTime::914.837953072534::PostAuthTime::181.770046776918 ][IsExist :: 00:00:001 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:037 ms]%0a"
+          "[cedcb0cef9f84e9eaf2f7ad927c5b84b][ AuthTime::825.450565561946::PostAuthTime::183.908675228827 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:059 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -120,26 +120,26 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 15 Oct 2015 00:01:41 GMT"
+          "Fri, 16 Oct 2015 18:04:27 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt6502?op=OPEN&read=true&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ2NTAyP29wPU9QRU4mcmVhZD10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt0054?op=OPEN&read=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQwMDU0P29wPU9QRU4mcmVhZD10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.3-preview"
+          "0.9.4-preview"
         ]
       },
       "ResponseBody": "These are some random test contents 1234!@",
@@ -157,13 +157,13 @@
           "chunked"
         ],
         "x-ms-request-id": [
-          "6fd601df-9367-4e61-b992-9fbe18317ac4"
+          "5c2963fd-28ce-48c2-a907-f506ba69ce16"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190225"
         ],
         "Server-Perf": [
-          "[6fd601df93674e61b9929fbe18317ac4][ AuthTime::848.545347777423::PostAuthTime::190.751625558836 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:00:332 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:00:332 ms]%0a[Open :: 00:00:332 ms]%0a[OPEN :: 00:00:351 ms]%0a"
+          "[5c2963fd28ce48c2a907f506ba69ce16][ AuthTime::779.687244051517::PostAuthTime::178.348645512607 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:00:200 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:00:201 ms]%0a[Open :: 00:00:201 ms]%0a[OPEN :: 00:00:216 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -175,7 +175,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 15 Oct 2015 00:01:42 GMT"
+          "Fri, 16 Oct 2015 18:04:28 GMT"
         ]
       },
       "StatusCode": 200

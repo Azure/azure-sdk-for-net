@@ -26,14 +26,26 @@ namespace DataLakeStoreFileSystem.Tests
         
         public CommonTestFixture()
         {
-            var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
-            dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
-            ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
-            DataLakeStoreFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
-            dataLakeStoreFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+            TestUtilities.StartTest();
+            try
+            {
+                UndoContext.Current.Start();
+                var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
+                dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
+                ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
+                DataLakeStoreFileSystemAccountName = TestUtilities.GenerateName("testadlfs1");
+                dataLakeStoreFilesystemManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
 
-            // create the DataLake account in the resource group and establish the host URL to use.
-            this.HostUrl = dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreFileSystemAccountName);
+                // create the DataLake account in the resource group and establish the host URL to use.
+                this.HostUrl =
+                    dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName,
+                        this.Location, this.DataLakeStoreFileSystemAccountName);
+            }
+            catch
+            {
+                Cleanup();
+                throw;
+            }
         }
 
         public void Dispose()
@@ -43,6 +55,7 @@ namespace DataLakeStoreFileSystem.Tests
         private static void Cleanup()
         {
             UndoContext.Current.UndoAll();
+            TestUtilities.EndTest();
         }
     }
 }

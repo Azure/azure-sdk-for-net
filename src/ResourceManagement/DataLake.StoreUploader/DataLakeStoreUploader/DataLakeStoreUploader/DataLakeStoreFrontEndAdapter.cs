@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // For the current implementation, we require UTF8 encoding.
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(paths)))
             {
-                _client.FileSystem.MsConcatAsync(targetStreamPath, _accountName, stream, _token)
+                _client.FileSystem.MsConcatAsync(targetStreamPath, _accountName, stream, true, _token)
                     .GetAwaiter()
                     .GetResult();
             }

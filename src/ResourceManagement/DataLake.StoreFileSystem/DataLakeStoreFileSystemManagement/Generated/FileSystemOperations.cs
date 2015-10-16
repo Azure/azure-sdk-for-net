@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -417,8 +417,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -565,8 +565,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -695,8 +695,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -853,8 +853,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -993,8 +993,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1170,8 +1170,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1349,8 +1349,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1507,8 +1507,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1648,8 +1648,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1833,8 +1833,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2030,8 +2030,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2260,8 +2260,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2429,8 +2429,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2597,8 +2597,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2756,8 +2756,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2907,8 +2907,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3164,8 +3164,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3330,8 +3330,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3413,6 +3413,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// without scheme and authority. In the format: 'sources=<comma
         /// separated list>'
         /// </param>
+        /// <param name='deleteSourceDirectory'>
+        /// Required. Indicates two things to the system which allow for
+        /// optimizations and increased concatenate performance. First, that
+        /// all the streams being concatenated are in the same source
+        /// directory. Second, that the source directory ONLY has streams in
+        /// it that are being concatenated into the destination stream. Note
+        /// that only the first requirement is strictly enforced (concatenate
+        /// will ignore the flag and only delete the source streams, not the
+        /// folder). If the first option is met, ALL data that was not part of
+        /// the set of streams being concatenated WILL BE LOST.It is critical
+        /// to only use this option if you are certain the two requirements
+        /// are met.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -3420,7 +3433,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> MsConcatAsync(string destinationPath, string accountName, Stream streamContents, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> MsConcatAsync(string destinationPath, string accountName, Stream streamContents, bool? deleteSourceDirectory, CancellationToken cancellationToken)
         {
             // Validate
             if (destinationPath == null)
@@ -3446,6 +3459,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 tracingParameters.Add("destinationPath", destinationPath);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamContents", streamContents);
+                tracingParameters.Add("deleteSourceDirectory", deleteSourceDirectory);
                 TracingAdapter.Enter(invocationId, this, "MsConcatAsync", tracingParameters);
             }
             
@@ -3462,6 +3476,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
             url = url + Uri.EscapeDataString(destinationPath);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("op=MSCONCAT");
+            if (deleteSourceDirectory != null)
+            {
+                queryParameters.Add("deletesourcedirectory=" + Uri.EscapeDataString(deleteSourceDirectory.Value.ToString().ToLower()));
+            }
             queryParameters.Add("api-version=2015-10-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -3478,8 +3496,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3596,8 +3614,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 
                 // Set Headers
                 httpRequest.Headers.Add("Transfer-Encoding", "chunked");
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3738,8 +3756,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3883,8 +3901,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4019,8 +4037,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4162,8 +4180,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4328,8 +4346,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4480,8 +4498,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4624,8 +4642,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4767,8 +4785,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4935,8 +4953,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.3-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview " + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

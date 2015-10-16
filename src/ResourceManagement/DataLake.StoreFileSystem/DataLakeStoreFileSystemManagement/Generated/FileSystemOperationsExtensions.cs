@@ -1178,15 +1178,28 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// without scheme and authority. In the format: 'sources=<comma
         /// separated list>'
         /// </param>
+        /// <param name='deleteSourceDirectory'>
+        /// Required. Indicates two things to the system which allow for
+        /// optimizations and increased concatenate performance. First, that
+        /// all the streams being concatenated are in the same source
+        /// directory. Second, that the source directory ONLY has streams in
+        /// it that are being concatenated into the destination stream. Note
+        /// that only the first requirement is strictly enforced (concatenate
+        /// will ignore the flag and only delete the source streams, not the
+        /// folder). If the first option is met, ALL data that was not part of
+        /// the set of streams being concatenated WILL BE LOST.It is critical
+        /// to only use this option if you are certain the two requirements
+        /// are met.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse MsConcat(this IFileSystemOperations operations, string destinationPath, string accountName, Stream streamContents)
+        public static AzureOperationResponse MsConcat(this IFileSystemOperations operations, string destinationPath, string accountName, Stream streamContents, bool? deleteSourceDirectory)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IFileSystemOperations)s).MsConcatAsync(destinationPath, accountName, streamContents);
+                return ((IFileSystemOperations)s).MsConcatAsync(destinationPath, accountName, streamContents, deleteSourceDirectory);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1212,13 +1225,26 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// without scheme and authority. In the format: 'sources=<comma
         /// separated list>'
         /// </param>
+        /// <param name='deleteSourceDirectory'>
+        /// Required. Indicates two things to the system which allow for
+        /// optimizations and increased concatenate performance. First, that
+        /// all the streams being concatenated are in the same source
+        /// directory. Second, that the source directory ONLY has streams in
+        /// it that are being concatenated into the destination stream. Note
+        /// that only the first requirement is strictly enforced (concatenate
+        /// will ignore the flag and only delete the source streams, not the
+        /// folder). If the first option is met, ALL data that was not part of
+        /// the set of streams being concatenated WILL BE LOST.It is critical
+        /// to only use this option if you are certain the two requirements
+        /// are met.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> MsConcatAsync(this IFileSystemOperations operations, string destinationPath, string accountName, Stream streamContents)
+        public static Task<AzureOperationResponse> MsConcatAsync(this IFileSystemOperations operations, string destinationPath, string accountName, Stream streamContents, bool? deleteSourceDirectory)
         {
-            return operations.MsConcatAsync(destinationPath, accountName, streamContents, CancellationToken.None);
+            return operations.MsConcatAsync(destinationPath, accountName, streamContents, deleteSourceDirectory, CancellationToken.None);
         }
         
         /// <summary>

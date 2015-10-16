@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -362,8 +362,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -878,8 +878,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1064,8 +1064,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -1423,8 +1423,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1723,8 +1723,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -1885,8 +1885,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials
@@ -2035,8 +2035,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2383,8 +2383,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2581,8 +2581,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2797,8 +2797,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3029,8 +3029,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3259,11 +3259,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                 }
                             }
                             
-                            JToken nextlinkValue = responseDoc["nextlink"];
-                            if (nextlinkValue != null && nextlinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string nextlinkInstance = ((string)nextlinkValue);
-                                result.NextLink = nextlinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -3424,8 +3424,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3596,8 +3596,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3826,11 +3826,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                                 }
                             }
                             
-                            JToken nextlinkValue = responseDoc["nextlink"];
-                            if (nextlinkValue != null && nextlinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string nextlinkInstance = ((string)nextlinkValue);
-                                result.NextLink = nextlinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -3971,8 +3971,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4202,8 +4202,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4431,8 +4431,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4611,8 +4611,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4762,8 +4762,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4941,8 +4941,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5259,8 +5259,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 
                 // Set Credentials

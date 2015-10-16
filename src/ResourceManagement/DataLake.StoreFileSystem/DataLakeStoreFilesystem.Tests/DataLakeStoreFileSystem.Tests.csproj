@@ -34,10 +34,22 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.CommonTestFixture\.ctor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemConcatenateFiles.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDeleteFolder.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDirectAppendToFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemEmptyFileDirectCreate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFileDirectCreateWithContents.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFolderCreate.json">
@@ -50,6 +62,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMoveFileAndFolder.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMsConcatDeleteDir.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMsConcatenateFiles.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetFileProperties.json">

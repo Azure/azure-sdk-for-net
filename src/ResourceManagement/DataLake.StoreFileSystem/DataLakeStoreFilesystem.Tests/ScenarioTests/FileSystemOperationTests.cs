@@ -237,6 +237,100 @@ namespace DataLakeStoreFileSystem.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemMsConcatenateFiles()
+        {
+            try
+            {
+                TestUtilities.StartTest();
+                var filePath1 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+
+                var filePath2 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+
+                var targetFolder = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+
+                var concatResponse =
+                    dataLakeStoreFileSystemClient.FileSystem.MsConcat(
+                        string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
+                        commonData.DataLakeStoreFileSystemAccountName, new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))), null);
+                Assert.Equal(HttpStatusCode.OK, concatResponse.StatusCode);
+
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName,
+                    string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
+                    FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length * 2);
+
+                // Attempt to get the files that were concatted together, which should fail and throw
+                Assert.Throws(typeof(CloudException),
+                    () =>
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath1,
+                            commonData.DataLakeStoreFileSystemAccountName));
+                Assert.Throws(typeof(CloudException),
+                    () =>
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath2,
+                            commonData.DataLakeStoreFileSystemAccountName));
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemMsConcatDeleteDir()
+        {
+            try
+            {
+                TestUtilities.StartTest();
+                var concatFolderPath = string.Format("{0}/{1}", DataLakeStoreFileSystemManagementHelper.folderToCreate,
+                    "msconcatFolder");
+                var filePath1 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true, concatFolderPath);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+
+                var filePath2 = helper.CreateFile(commonData.DataLakeStoreFileSystemAccountName, true, true, concatFolderPath);
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
+
+                var targetFolder = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
+
+                var concatResponse =
+                    dataLakeStoreFileSystemClient.FileSystem.MsConcat(
+                        string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
+                        commonData.DataLakeStoreFileSystemAccountName, new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))), true);
+                Assert.Equal(HttpStatusCode.OK, concatResponse.StatusCode);
+
+                helper.GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemAccountName,
+                    string.Format("{0}/{1}", targetFolder, DataLakeStoreFileSystemManagementHelper.fileToConcatTo),
+                    FileType.File,
+                    DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length * 2);
+
+                // Attempt to get the files that were concatted together, which should fail and throw
+                Assert.Throws(typeof(CloudException),
+                    () =>
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath1,
+                            commonData.DataLakeStoreFileSystemAccountName));
+                Assert.Throws(typeof(CloudException),
+                    () =>
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath2,
+                            commonData.DataLakeStoreFileSystemAccountName));
+                
+                // Attempt to get the folder that was created for concat, which should fail and be deleted.
+                Assert.Throws(typeof(CloudException),
+                    () =>
+                        dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(concatFolderPath,
+                            commonData.DataLakeStoreFileSystemAccountName));
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemMoveFileAndFolder()
         {
             try

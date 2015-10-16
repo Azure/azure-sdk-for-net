@@ -479,6 +479,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A list of comma seperated absolute FileSystem paths without scheme
         /// and authority. In the format: 'sources=<comma separated list>'
         /// </param>
+        /// <param name='deleteSourceDirectory'>
+        /// Indicates two things to the system which allow for optimizations
+        /// and increased concatenate performance. First, that all the streams
+        /// being concatenated are in the same source directory. Second, that
+        /// the source directory ONLY has streams in it that are being
+        /// concatenated into the destination stream. Note that only the first
+        /// requirement is strictly enforced (concatenate will ignore the flag
+        /// and only delete the source streams, not the folder). If the first
+        /// option is met, ALL data that was not part of the set of streams
+        /// being concatenated WILL BE LOST.It is critical to only use this
+        /// option if you are certain the two requirements are met.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -486,7 +498,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> MsConcatAsync(string destinationPath, string accountName, Stream streamContents, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> MsConcatAsync(string destinationPath, string accountName, Stream streamContents, bool? deleteSourceDirectory, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the data associated with the file handle requested.
