@@ -69,6 +69,7 @@
                       Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
                       Condition=" '$(Scope)' == 'all'  " />
     <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\project.json" Condition=" '$(Scope)' != 'all'  " />
+    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\**\project.json" Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
