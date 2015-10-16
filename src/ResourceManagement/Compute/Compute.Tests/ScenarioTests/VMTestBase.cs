@@ -71,7 +71,8 @@ namespace Compute.Tests
         {
             var images = m_CrpClient.VirtualMachineImages.List(
                 location: m_location, publisherName: publisher, offer: offer, skus: sku,
-                top: 1);
+                //top: 1);
+                filter : null);
             var image = images.First();
             return new ImageReference
             {

@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             if (filter != null)
             {
-                filter.Validate();
+                //filter.Validate();
             }
             if (this.Client.ApiVersion == null)
             {

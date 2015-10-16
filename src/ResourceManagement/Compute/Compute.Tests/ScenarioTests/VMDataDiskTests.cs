@@ -119,7 +119,8 @@ namespace Compute.Tests
 
                     var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                    //var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
