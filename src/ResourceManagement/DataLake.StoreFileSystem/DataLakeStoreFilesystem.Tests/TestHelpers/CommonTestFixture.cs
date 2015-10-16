@@ -26,9 +26,10 @@ namespace DataLakeStoreFileSystem.Tests
         
         public CommonTestFixture()
         {
-            TestUtilities.StartTest();
+            
             try
             {
+                TestUtilities.StartTest();
                 UndoContext.Current.Start();
                 var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
                 dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
@@ -46,6 +47,10 @@ namespace DataLakeStoreFileSystem.Tests
                 Cleanup();
                 throw;
             }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
         }
 
         public void Dispose()
@@ -55,7 +60,7 @@ namespace DataLakeStoreFileSystem.Tests
         private static void Cleanup()
         {
             UndoContext.Current.UndoAll();
-            TestUtilities.EndTest();
+            
         }
     }
 }
