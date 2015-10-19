@@ -757,8 +757,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleAssignments?$filter=principalId%20eq%20'cc9c345a-5f86-4d15-8012-20aecbf23d06'&api-version=2015-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9yb2xlQXNzaWdubWVudHM/JGZpbHRlcj1wcmluY2lwYWxJZCUyMGVxJTIwJ2NjOWMzNDVhLTVmODYtNGQxNS04MDEyLTIwYWVjYmYyM2QwNicmYXBpLXZlcnNpb249MjAxNS0wNy0wMQ==",
+      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleAssignments?$filter=principalId%20eq%20'9a9e7693-d3a9-48c8-a574-1e77ce003bef'&api-version=2015-07-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -769,7 +768,7 @@
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleDefinitionId\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\",\r\n        \"principalId\": \"cc9c345a-5f86-4d15-8012-20aecbf23d06\",\r\n        \"scope\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\",\r\n        \"createdOn\": \"2015-10-14T22:42:23.2547075Z\",\r\n        \"updatedOn\": \"2015-10-14T22:42:23.2547075Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleAssignments/713efa16-0499-49ab-8310-30ce211c05b2\",\r\n      \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n      \"name\": \"713efa16-0499-49ab-8310-30ce211c05b2\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleDefinitionId\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/6bfdc1b8-769d-48b3-9a84-ab2dbd41bfec\",\r\n        \"principalId\": \"9a9e7693-d3a9-48c8-a574-1e77ce003bef\",\r\n        \"scope\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\",\r\n        \"createdOn\": \"2015-10-14T22:42:23.2547075Z\",\r\n        \"updatedOn\": \"2015-10-14T22:42:23.2547075Z\",\r\n        \"createdBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n        \"updatedBy\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleAssignments/713efa16-0499-49ab-8310-30ce211c05b2\",\r\n      \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n      \"name\": \"713efa16-0499-49ab-8310-30ce211c05b2\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "748"

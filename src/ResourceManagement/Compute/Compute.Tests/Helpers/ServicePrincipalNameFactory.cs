@@ -42,12 +42,12 @@ namespace Compute.Tests
             IDictionary<string, string> parsedConnection = TestUtilities.ParseConnectionString(connectionString);
             TestEnvironment testEnv = new TestEnvironment(parsedConnection, ExecutionMode.CSM);
             string token = null;
+            testEnv.SubscriptionId = TestEnvironmentHelpers.GetSubscriptionIdFromMocksOrProperties(parsedConnection);
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 token = TestEnvironment.RawTokenDefault;
                 testEnv.UserName = TestEnvironment.UserIdDefault;
-                SetEnvironmentSubscriptionId(testEnv, connectionString);
                 testEnv.Credentials = new TokenCloudCredentials(testEnv.SubscriptionId, token);
             }
             else //Record or None
@@ -74,12 +74,10 @@ namespace Compute.Tests
                     throw new InvalidOperationException(string.Format("{0} Must Contain {1} to use SPN Credentials in tests", envVariableName, ClientSecretKey));
                 }
 
-                SetEnvironmentSubscriptionId(testEnv, connectionString);
-
                 if (testEnv.SubscriptionId == null)
                 {
                     throw new Exception("Subscription Id was not provided in environment variable. " + "Please set " +
-                                        "the envt. variable - TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>");
+                                        "the envt. variable - TEST_CSM_SPN_AUTHENTICATION=SubscriptionId=<subscription-id>");
                 }
 
                 testEnv.Credentials = new TokenCloudCredentials(testEnv.SubscriptionId, token);

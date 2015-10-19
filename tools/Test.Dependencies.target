@@ -47,10 +47,10 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Test.Framework">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.Framework.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.Framework.1.0.5714.35539-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Test.HttpRecorder">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.HttpRecorder.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.HttpRecorder.1.0.5714.35539-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,10 +69,10 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
