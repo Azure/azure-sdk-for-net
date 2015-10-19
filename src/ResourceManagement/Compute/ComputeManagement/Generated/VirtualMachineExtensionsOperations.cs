@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));
