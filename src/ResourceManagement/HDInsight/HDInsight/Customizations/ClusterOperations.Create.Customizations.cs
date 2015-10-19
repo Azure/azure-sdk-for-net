@@ -308,11 +308,10 @@ namespace Microsoft.Azure.Management.HDInsight
             Dictionary<string, string> gatewayConfig;
             configurations.TryGetValue(ConfigurationKey.Gateway, out gatewayConfig);
 
-            if (gatewayConfig != null)
+            if (gatewayConfig == null)
             {
-                return configurations;
+                gatewayConfig = new Dictionary<string, string>();
             }
-            gatewayConfig = new Dictionary<string, string>();
 
             if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
             {
