@@ -4028,7 +4028,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "SubResource"
         }
       ],
       "description": "Describes a virtual machine scale set virtual machine."
