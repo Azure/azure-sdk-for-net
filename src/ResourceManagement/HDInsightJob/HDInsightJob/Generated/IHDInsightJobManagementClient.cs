@@ -49,6 +49,16 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
+        /// Gets or sets the additional UserAgent text to be added to the user
+        /// agent header. This is used to further differentiate using
+        /// applications.
+        /// </summary>
+        string UserAgentSuffix
+        {
+            get; set; 
+        }
+        
+        /// <summary>
         /// Operations for managing jobs against HDInsight clusters.
         /// </summary>
         IJobOperations JobManagement
