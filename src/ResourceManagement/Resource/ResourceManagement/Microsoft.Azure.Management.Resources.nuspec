@@ -17,9 +17,9 @@
     <tags>Microsoft Azure resource management "resource management" "resource groups" REST HTTP client azureofficial windowsazureofficial</tags>
     <dependencies>
       <group>
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.1.0,2.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.1.1,2.0)" />
       </group>
-      <group targetFramework="dnxcore50">
+      <group targetFramework="dotnet">
         <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
       </group>
     </dependencies>
@@ -32,8 +32,8 @@
     <file src="..\binaries\net45\Microsoft.Azure.ResourceManager.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.ResourceManager.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.ResourceManager.xml" target="lib\net45" />
-    <file src="..\binaries\dnxcore50\Microsoft.Azure.ResourceManager.dll" target="lib\dnxcore50" />
-    <file src="..\binaries\dnxcore50\Microsoft.Azure.ResourceManager.pdb" target="lib\dnxcore50" />
-    <file src="..\binaries\dnxcore50\Microsoft.Azure.ResourceManager.xml" target="lib\dnxcore50" />
+    <file src="..\binaries\portable\Microsoft.Azure.ResourceManager.dll" target="lib\dotnet" />
+    <file src="..\binaries\portable\Microsoft.Azure.ResourceManager.pdb" target="lib\dotnet" />
+    <file src="..\binaries\portable\Microsoft.Azure.ResourceManager.xml" target="lib\dotnet" />
   </files>
 </package>

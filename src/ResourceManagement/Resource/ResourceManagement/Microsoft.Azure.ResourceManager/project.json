@@ -7,8 +7,7 @@
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
     "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "1.1.0",
-        "Newtonsoft.Json": "6.0.8"  
+        "Microsoft.Rest.ClientRuntime.Azure": "1.1.1" 
     },
 
     "commands": {
@@ -27,6 +26,9 @@
         }
     },
     "compile": [
-      "../**/*.cs"
-    ]
+      "../*.cs",
+      "../Properties/*.cs",
+      "../Generated/**/*.cs"
+    ],
+    "resource": ["../Properties/*.resx"]
 }

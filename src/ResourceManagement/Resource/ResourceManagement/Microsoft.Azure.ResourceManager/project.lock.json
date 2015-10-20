@@ -30,33 +30,33 @@
           "lib/dotnet/Microsoft.CSharp.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime/1.4.0": {
+      "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.0",
-          "Newtonsoft.Json": "6.0.4",
+          "Newtonsoft.Json": "6.0.8",
           "System.Diagnostics.Tools": "4.0.0",
           "System.Net.Http": "4.0.0",
           "System.Threading.Tasks": "4.0.10",
           "System.Xml.ReaderWriter": "4.0.10"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime.Azure/1.1.0": {
+      "Microsoft.Rest.ClientRuntime.Azure/1.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Rest.ClientRuntime": "[1.4.0, 2.0)"
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0)"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.0.0": {
@@ -663,18 +663,18 @@
         "ref/xamarinmac20/_._"
       ]
     },
-    "Microsoft.Rest.ClientRuntime/1.4.0": {
+    "Microsoft.Rest.ClientRuntime/1.4.1": {
       "type": "package",
-      "sha512": "N2YRLUoO5MXNKkKMT7cuqJHlrUzsfxRdnwt9L8rcZimLpsw8WF6W1s1z/SEHo85dhxi7VYLPZq/WYeIMmqyvSA==",
+      "sha512": "kNZsurU1KvPnpSs4SlLmT8/V01/V7JjkpJtbe6YrC/xBZHAQuEqEGslB7fVhWggBPCZDrx5rEWn0Hd3qrAo59g==",
       "files": [
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll",
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.xml",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.dll",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.xml",
         "lib/net45/Microsoft.Rest.ClientRuntime.dll",
         "lib/net45/Microsoft.Rest.ClientRuntime.xml",
         "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.dll",
         "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.xml",
-        "Microsoft.Rest.ClientRuntime.1.4.0.nupkg",
-        "Microsoft.Rest.ClientRuntime.1.4.0.nupkg.sha512",
+        "Microsoft.Rest.ClientRuntime.1.4.1.nupkg",
+        "Microsoft.Rest.ClientRuntime.1.4.1.nupkg.sha512",
         "Microsoft.Rest.ClientRuntime.nuspec",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/BasicAuthenticationCredentials.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/CertificateCredentials.cs",
@@ -691,6 +691,7 @@
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/RestException.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/RetryDelegatingHandler.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/DateJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/DateTimeRfc1123JsonConverter.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/Iso8601TimeSpanConverter.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/JsonConverterHelper.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/PolymorphicDeserializeJsonConverter.cs",
@@ -722,18 +723,18 @@
         "src/Common/ClientRuntimes/CSharp/ClientRuntime/ValidationRules.cs"
       ]
     },
-    "Microsoft.Rest.ClientRuntime.Azure/1.1.0": {
+    "Microsoft.Rest.ClientRuntime.Azure/1.1.1": {
       "type": "package",
-      "sha512": "H+yzBhPe3GV4Y/GPVa/SDOnTjlm8dvMfByBfRMKzeSQq3KMBJW+/Iboa7lOg538t+0bi2bDZi4rRnYpFxSMZlQ==",
+      "sha512": "7RbcXD8k2D00PhLeyxmZS+itFu6GuCdJ17kbDjEa0mqpZR/KOdfkIi+LcwI4AydUyEWDDk2Q+lUHs/KqKj6f+A==",
       "files": [
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll",
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.xml",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.xml",
         "lib/net45/Microsoft.Rest.ClientRuntime.Azure.dll",
         "lib/net45/Microsoft.Rest.ClientRuntime.Azure.xml",
         "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.dll",
         "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "Microsoft.Rest.ClientRuntime.Azure.1.1.0.nupkg",
-        "Microsoft.Rest.ClientRuntime.Azure.1.1.0.nupkg.sha512",
+        "Microsoft.Rest.ClientRuntime.Azure.1.1.1.nupkg",
+        "Microsoft.Rest.ClientRuntime.Azure.1.1.1.nupkg.sha512",
         "Microsoft.Rest.ClientRuntime.Azure.nuspec",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/AzureAsyncOperation.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/AzureClientExtensions.cs",
@@ -2047,8 +2048,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.Rest.ClientRuntime.Azure >= 1.1.0",
-      "Newtonsoft.Json >= 6.0.8"
+      "Microsoft.Rest.ClientRuntime.Azure >= 1.1.1"
     ],
     "DNXCore,Version=v5.0": [
       "System.Diagnostics.Tools >= 4.0.0",

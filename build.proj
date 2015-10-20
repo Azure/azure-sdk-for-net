@@ -131,12 +131,6 @@
   <Target Name="BuildDnx">
     <Exec Command="dnu restore &quot;%(DnxLibrariesToBuild.FullPath)&quot;"/>
     <Exec Command="dnu build &quot;%(DnxLibrariesToBuild.FullPath)&quot; --configuration $(Configuration) --out $(LibraryRoot)dnx"/>
-    <MakeDir Directories="$(BinariesFolder)\dnxcore50"/>
-    <ItemGroup>
-      <DnxBinaries Include="$(LibraryRoot)dnx\$(Configuration)\dnxcore50\*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(DnxBinaries)" 
-      DestinationFolder="$(BinariesFolder)\dnxcore50" />
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
