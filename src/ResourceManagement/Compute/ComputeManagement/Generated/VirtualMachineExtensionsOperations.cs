@@ -55,20 +55,20 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
-        /// </param>    
+        /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine where the extension should be create or
         /// updated.
-        /// </param>    
+        /// </param>
         /// <param name='vmExtensionName'>
         /// The name of the virtual machine extension.
-        /// </param>    
+        /// </param>
         /// <param name='extensionParameters'>
         /// Parameters supplied to the Create Virtual Machine Extension operation.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
-        /// </param>    
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
@@ -77,8 +77,8 @@ namespace Microsoft.Azure.Management.Compute
             // Send Request
             AzureOperationResponse<VirtualMachineExtension> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
                 resourceGroupName, vmName, vmExtensionName, extensionParameters, customHeaders, cancellationToken);
-            return await this.Client.GetPutOrPatchOperationResultAsync<VirtualMachineExtension>(response, 
-                customHeaders, 
+            return await this.Client.GetPutOrPatchOperationResultAsync<VirtualMachineExtension>(response,
+                customHeaders,
                 cancellationToken);
         }
 
@@ -149,7 +149,8 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));
@@ -262,13 +263,13 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
-        /// </param>    
+        /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine where the extension should be deleted.
-        /// </param>    
+        /// </param>
         /// <param name='vmExtensionName'>
         /// The name of the virtual machine extension.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -337,7 +338,8 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));
@@ -480,7 +482,8 @@ namespace Microsoft.Azure.Management.Compute
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{vmName}", Uri.EscapeDataString(vmName));
             url = url.Replace("{vmExtensionName}", Uri.EscapeDataString(vmExtensionName));

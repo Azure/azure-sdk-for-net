@@ -2256,7 +2256,9 @@
             "Warning",
             "Error"
           ],
-          "x-ms-enum": "StatusLevelTypes"
+          "x-ms-enum": {
+            "name": "StatusLevelTypes"
+          }
         },
         "displayStatus": {
           "type": "string",
@@ -2559,7 +2561,9 @@
             "Windows",
             "Linux"
           ],
-          "x-ms-enum": "OperatingSystemTypes"
+          "x-ms-enum": {
+            "name": "OperatingSystemTypes"
+          }
         }
       },
       "description": "Contains the os disk image information."
@@ -2640,7 +2644,10 @@
           "enum": [
             "Count"
           ],
-          "x-ms-enum": "UsageUnit"
+          "x-ms-enum": {
+            "name": "UsageUnit",
+            "modelAsString": "False"
+          }
         },
         "currentValue": {
           "type": "integer",
@@ -2770,7 +2777,10 @@
             "Succeeded",
             "Preempted"
           ],
-          "x-ms-enum": "ComputeOperationStatus"
+          "x-ms-enum": {
+            "name": "ComputeOperationStatus",
+            "modelAsString": "False"
+          }
         },
         "startTime": {
           "type": "string",
@@ -2840,7 +2850,9 @@
             "Standard_G4",
             "Standard_G5"
           ],
-          "x-ms-enum": "VirtualMachineSizeTypes"
+          "x-ms-enum": {
+            "name": "VirtualMachineSizeTypes"
+          }
         }
       },
       "description": "Describes a hardware profile."
@@ -2923,7 +2935,9 @@
             "Windows",
             "Linux"
           ],
-          "x-ms-enum": "OperatingSystemTypes"
+          "x-ms-enum": {
+            "name": "OperatingSystemTypes"
+          }
         },
         "encryptionSettings": {
           "$ref": "#/definitions/DiskEncryptionSettings",
@@ -2949,7 +2963,9 @@
             "ReadOnly",
             "ReadWrite"
           ],
-          "x-ms-enum": "CachingTypes"
+          "x-ms-enum": {
+            "name": "CachingTypes"
+          }
         },
         "createOption": {
           "type": "string",
@@ -2959,7 +2975,9 @@
             "empty",
             "attach"
           ],
-          "x-ms-enum": "DiskCreateOptionTypes"
+          "x-ms-enum": {
+            "name": "DiskCreateOptionTypes"
+          }
         },
         "diskSizeGB": {
           "type": "integer",
@@ -2996,7 +3014,9 @@
             "ReadOnly",
             "ReadWrite"
           ],
-          "x-ms-enum": "CachingTypes"
+          "x-ms-enum": {
+            "name": "CachingTypes"
+          }
         },
         "createOption": {
           "type": "string",
@@ -3006,7 +3026,9 @@
             "empty",
             "attach"
           ],
-          "x-ms-enum": "DiskCreateOptionTypes"
+          "x-ms-enum": {
+            "name": "DiskCreateOptionTypes"
+          }
         },
         "diskSizeGB": {
           "type": "integer",
@@ -3044,7 +3066,9 @@
           "enum": [
             "oobeSystem"
           ],
-          "x-ms-enum": "PassNames"
+          "x-ms-enum": {
+            "name": "PassNames"
+          }
         },
         "componentName": {
           "type": "string",
@@ -3052,7 +3076,9 @@
           "enum": [
             "Microsoft-Windows-Shell-Setup"
           ],
-          "x-ms-enum": "ComponentNames"
+          "x-ms-enum": {
+            "name": "ComponentNames"
+          }
         },
         "settingName": {
           "type": "string",
@@ -3061,7 +3087,9 @@
             "AutoLogon",
             "FirstLogonCommands"
           ],
-          "x-ms-enum": "SettingNames"
+          "x-ms-enum": {
+            "name": "SettingNames"
+          }
         },
         "content": {
           "type": "string",
@@ -3079,7 +3107,9 @@
             "Http",
             "Https"
           ],
-          "x-ms-enum": "ProtocolTypes"
+          "x-ms-enum": {
+            "name": "ProtocolTypes"
+          }
         },
         "certificateUrl": {
           "type": "string",
@@ -3508,7 +3538,9 @@
             "Automatic",
             "Manual"
           ],
-          "x-ms-enum": "UpgradeMode"
+          "x-ms-enum": {
+            "name": "UpgradeMode"
+          }
         }
       },
       "description": "Describes an upgrade policy - automatic or manual."
@@ -3563,7 +3595,9 @@
             "ReadOnly",
             "ReadWrite"
           ],
-          "x-ms-enum": "CachingTypes"
+          "x-ms-enum": {
+            "name": "CachingTypes"
+          }
         },
         "createOption": {
           "type": "string",
@@ -3573,7 +3607,9 @@
             "empty",
             "attach"
           ],
-          "x-ms-enum": "DiskCreateOptionTypes"
+          "x-ms-enum": {
+            "name": "DiskCreateOptionTypes"
+          }
         },
         "osType": {
           "type": "string",
@@ -3582,7 +3618,9 @@
             "Windows",
             "Linux"
           ],
-          "x-ms-enum": "OperatingSystemTypes"
+          "x-ms-enum": {
+            "name": "OperatingSystemTypes"
+          }
         },
         "image": {
           "$ref": "#/definitions/VirtualHardDisk",
@@ -3926,7 +3964,9 @@
             "Automatic",
             "None"
           ],
-          "x-ms-enum": "VirtualMachineScaleSetSkuScaleType"
+          "x-ms-enum": {
+            "name": "VirtualMachineScaleSetSkuScaleType"
+          }
         }
       },
       "description": "Describes scaling information of a sku."
@@ -4028,7 +4068,7 @@
       },
       "allOf": [
         {
-          "$ref": "SubResource"
+          "$ref": "Resource"
         }
       ],
       "description": "Describes a virtual machine scale set virtual machine."
@@ -4107,7 +4147,10 @@
             "Succeeded",
             "Failed"
           ],
-          "x-ms-enum": "OperationStatus"
+          "x-ms-enum": {
+            "name": "OperationStatus",
+            "modelAsString": "False"
+          }
         },
         "startTime": {
           "type": "string",

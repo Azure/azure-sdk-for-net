@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a virtual machine scale set virtual machine.
     /// </summary>
-    public partial class VirtualMachineScaleSetVM : SubResource
+    public partial class VirtualMachineScaleSetVM : Resource
     {
         /// <summary>
         /// Gets the virtual machine instance id.
@@ -103,5 +103,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.Resources != null)
+            {
+                foreach (var element in this.Resources)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
