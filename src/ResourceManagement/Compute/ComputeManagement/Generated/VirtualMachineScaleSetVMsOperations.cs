@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -688,17 +688,19 @@ namespace Microsoft.Azure.Management.Compute
         /// The operation to list virtual machine scale sets VMs.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
         /// <param name='virtualMachineScaleSetName'>
+        /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='select'>
-        /// The select expression to apply on the operation.
+        /// The list parameters.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation.
+        /// The list parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

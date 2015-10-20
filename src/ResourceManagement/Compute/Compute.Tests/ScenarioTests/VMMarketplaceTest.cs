@@ -68,10 +68,10 @@ namespace Compute.Tests
 
                         vm.Plan = new Plan
                         {
-                            Name = img.Properties.Plan.Name,
-                            Product = img.Properties.Plan.Product,
+                            Name = img.Plan.Name,
+                            Product = img.Plan.Product,
                             PromotionCode = null,
-                            Publisher = img.Properties.Plan.Publisher
+                            Publisher = img.Plan.Publisher
                         }; 
                     };
 
@@ -106,9 +106,9 @@ namespace Compute.Tests
         private void ValidateMarketplaceVMPlanField(VirtualMachine vm, VirtualMachineImage img)
         {
             Assert.NotNull(vm.Plan);
-            Assert.Equal(img.Properties.Plan.Publisher, vm.Plan.Publisher);
-            Assert.Equal(img.Properties.Plan.Product, vm.Plan.Product);
-            Assert.Equal(img.Properties.Plan.Name, vm.Plan.Name);
+            Assert.Equal(img.Plan.Publisher, vm.Plan.Publisher);
+            Assert.Equal(img.Plan.Product, vm.Plan.Product);
+            Assert.Equal(img.Plan.Name, vm.Plan.Name);
         }
     }
 }

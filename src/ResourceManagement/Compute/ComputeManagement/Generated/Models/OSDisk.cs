@@ -29,6 +29,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
+        /// Gets or sets the disk encryption settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionSettings")]
+        public DiskEncryptionSettings EncryptionSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets the disk name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]

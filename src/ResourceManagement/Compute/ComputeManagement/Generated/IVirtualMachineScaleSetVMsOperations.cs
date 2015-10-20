@@ -142,17 +142,19 @@ namespace Microsoft.Azure.Management.Compute
         /// The operation to list virtual machine scale sets VMs.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
         /// <param name='virtualMachineScaleSetName'>
+        /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='select'>
-        /// The select expression to apply on the operation.
+        /// The list parameters.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation.
+        /// The list parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -19,19 +19,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Image.
     /// </summary>
-    public partial class VirtualMachineImage
+    public partial class VirtualMachineImage : SubResource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VirtualMachineImageProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the artifact.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
         /// <summary>
         /// Gets or sets the name of the resource.
         /// </summary>
@@ -43,6 +32,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.plan")]
+        public PurchasePlan Plan { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osDiskImage")]
+        public OSDiskImage OsDiskImage { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataDiskImages")]
+        public IList<DataDiskImage> DataDiskImages { get; set; }
 
     }
 }

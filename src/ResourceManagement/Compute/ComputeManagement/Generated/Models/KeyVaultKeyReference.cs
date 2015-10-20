@@ -17,27 +17,21 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Virtual machine image resource information.
+    /// Describes a reference to Key Vault Key
     /// </summary>
-    public partial class VirtualMachineImageResource : SubResource
+    public partial class KeyVaultKeyReference
     {
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// Gets or sets the URL referencing a key in a Key Vault.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "keyUrl")]
+        public string KeyUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the resource.
+        /// Gets or sets the Relative URL of the Key Vault containing the key
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "sourceVault")]
+        public SubResource SourceVault { get; set; }
 
     }
 }

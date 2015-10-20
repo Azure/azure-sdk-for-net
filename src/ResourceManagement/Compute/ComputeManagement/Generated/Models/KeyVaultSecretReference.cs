@@ -17,24 +17,22 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Describes the properties of a Virtual Machine Image.
+    /// Describes a reference to Key Vault Secret
     /// </summary>
-    public partial class VirtualMachineImageProperties
+    public partial class KeyVaultSecretReference
     {
         /// <summary>
+        /// Gets or sets the URL referencing a secret in a Key Vault.
         /// </summary>
-        [JsonProperty(PropertyName = "plan")]
-        public PurchasePlan Plan { get; set; }
+        [JsonProperty(PropertyName = "secretUrl")]
+        public string SecretUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the Relative URL of the Key Vault containing the
+        /// secret.
         /// </summary>
-        [JsonProperty(PropertyName = "osDiskImage")]
-        public OSDiskImage OsDiskImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
+        [JsonProperty(PropertyName = "sourceVault")]
+        public SubResource SourceVault { get; set; }
 
     }
 }

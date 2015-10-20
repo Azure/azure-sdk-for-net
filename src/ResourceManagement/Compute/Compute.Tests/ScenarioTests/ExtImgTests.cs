@@ -98,11 +98,11 @@ namespace Compute.Tests
                 Assert.True(vmimageext.Name == "2.0");
                 Assert.True(vmimageext.Location == "westus");
 
-                Assert.True(vmimageext.Properties.OperatingSystem == "Windows");
-                Assert.True(vmimageext.Properties.ComputeRole == "IaaS");
-                Assert.True(vmimageext.Properties.HandlerSchema == null);
-                Assert.True(vmimageext.Properties.VmScaleSetEnabled == false);
-                Assert.True(vmimageext.Properties.SupportsMultipleExtensions == false);
+                Assert.True(vmimageext.OperatingSystem == "Windows");
+                Assert.True(vmimageext.ComputeRole == "IaaS");
+                Assert.True(vmimageext.HandlerSchema == null);
+                Assert.True(vmimageext.VmScaleSetEnabled == false);
+                Assert.True(vmimageext.SupportsMultipleExtensions == false);
             }
         }
 
@@ -187,7 +187,7 @@ namespace Compute.Tests
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    null);
+                    top: 1);
                 Assert.True(vmextimg.Count == 1);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
@@ -197,7 +197,7 @@ namespace Compute.Tests
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    null);
+                    top: 0);
                 Assert.True(vmextimg.Count == 0);
             }
         }

@@ -17,27 +17,21 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Virtual machine image resource information.
+    /// Describes a Encryption Settings for a Disk
     /// </summary>
-    public partial class VirtualMachineImageResource : SubResource
+    public partial class DiskEncryptionSettings
     {
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// Gets or sets the disk encryption key which is a KeyVault Secret.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "diskEncryptionKey")]
+        public KeyVaultSecretReference DiskEncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the resource.
+        /// Gets or sets the key encryption key which is KeyVault Key.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "keyEncryptionKey")]
+        public KeyVaultKeyReference KeyEncryptionKey { get; set; }
 
     }
 }

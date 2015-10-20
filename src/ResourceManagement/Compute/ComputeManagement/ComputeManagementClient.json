@@ -96,10 +96,10 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           }
         }
@@ -336,6 +336,19 @@
             "description": "The filter to apply on the operation."
           },
           {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
@@ -356,7 +369,7 @@
         "x-ms-odata": "#/definitions/VirtualMachineImageResource"
       }
     },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{name}": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}": {
       "put": {
         "tags": [
           "VirtualMachineExtensions"
@@ -379,11 +392,11 @@
             "description": "The name of the virtual machine where the extension should be create or updated."
           },
           {
-            "name": "name",
+            "name": "vmExtensionName",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Parameters supplied to the Create Virtual Machine Extension operation."
+            "description": "The name of the virtual machine extension."
           },
           {
             "name": "extensionParameters",
@@ -402,13 +415,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
@@ -416,9 +429,7 @@
           }
         },
         "x-ms-long-running-operation": true
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}": {
+      },
       "delete": {
         "tags": [
           "VirtualMachineExtensions"
@@ -455,10 +466,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
@@ -494,6 +505,13 @@
             "required": true,
             "type": "string",
             "description": "The name of the virtual machine extension."
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -605,6 +623,19 @@
             "required": false,
             "type": "string",
             "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -850,6 +881,12 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ComputeLongRunningOperationResult"
+            }
+          },
           "202": {
             "description": ""
           }
@@ -857,7 +894,7 @@
         "x-ms-long-running-operation": true
       }
     },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{name}": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}": {
       "put": {
         "tags": [
           "VirtualMachines"
@@ -873,11 +910,11 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "name",
+            "name": "vmName",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Parameters supplied to the Create Virtual Machine operation."
+            "description": "The name of the virtual machine."
           },
           {
             "name": "parameters",
@@ -910,6 +947,91 @@
           }
         },
         "x-ms-long-running-operation": true
+      },
+      "delete": {
+        "tags": [
+          "VirtualMachines"
+        ],
+        "operationId": "VirtualMachines_Delete",
+        "description": "The operation to delete a virtual machine.",
+        "parameters": [
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "vmName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the virtual machine."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "202": {
+            "description": ""
+          },
+          "204": {
+            "description": ""
+          }
+        },
+        "x-ms-long-running-operation": true
+      },
+      "get": {
+        "tags": [
+          "VirtualMachines"
+        ],
+        "operationId": "VirtualMachines_Get",
+        "description": "The operation to get a virtual machine.",
+        "parameters": [
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "vmName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the virtual machine."
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/VirtualMachine"
+            }
+          }
+        }
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate": {
@@ -947,86 +1069,6 @@
           }
         },
         "x-ms-long-running-operation": true
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}": {
-      "delete": {
-        "tags": [
-          "VirtualMachines"
-        ],
-        "operationId": "VirtualMachines_Delete",
-        "description": "The operation to delete a virtual machine.",
-        "parameters": [
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group."
-          },
-          {
-            "name": "vmName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the virtual machine."
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          },
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          },
-          "202": {
-            "description": ""
-          },
-          "200": {
-            "description": ""
-          }
-        },
-        "x-ms-long-running-operation": true
-      },
-      "get": {
-        "tags": [
-          "VirtualMachines"
-        ],
-        "operationId": "VirtualMachines_Get",
-        "description": "The operation to get a virtual machine.",
-        "parameters": [
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group."
-          },
-          {
-            "name": "vmName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the virtual machine."
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          },
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/VirtualMachine"
-            }
-          }
-        }
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize": {
@@ -1313,13 +1355,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
@@ -1405,13 +1447,13 @@
           }
         ],
         "responses": {
-          "202": {
+          "204": {
             "description": ""
           },
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         },
@@ -1905,10 +1947,10 @@
           "204": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           }
         },
@@ -2017,13 +2059,15 @@
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The name of the resource group."
           },
           {
             "name": "virtualMachineScaleSetName",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The name of the virtual machine scale set."
           },
           {
             "name": "$filter",
@@ -2037,14 +2081,14 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The select expression to apply on the operation."
+            "description": "The list parameters."
           },
           {
             "name": "$expand",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The expand expression to apply on the operation."
+            "description": "The list parameters."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -2360,10 +2404,6 @@
         "properties": {
           "$ref": "#/definitions/VirtualMachineExtensionImageProperties"
         },
-        "id": {
-          "type": "string",
-          "description": "Gets or sets the ID of the artifact."
-        },
         "name": {
           "type": "string",
           "description": "Gets or sets the name of the resource."
@@ -2371,16 +2411,24 @@
         "location": {
           "type": "string",
           "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Describes a Virtual Machine Extension Image."
     },
     "VirtualMachineImageResource": {
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Gets or sets the ID of the artifact."
-        },
         "name": {
           "type": "string",
           "description": "Gets or sets the name of the resource."
@@ -2388,8 +2436,20 @@
         "location": {
           "type": "string",
           "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Virtual machine image resource information."
     },
     "VirtualMachineExtensionInstanceView": {
@@ -2536,10 +2596,6 @@
         "properties": {
           "$ref": "#/definitions/VirtualMachineImageProperties"
         },
-        "id": {
-          "type": "string",
-          "description": "Gets or sets the ID of the artifact."
-        },
         "name": {
           "type": "string",
           "description": "Gets or sets the name of the resource."
@@ -2547,8 +2603,20 @@
         "location": {
           "type": "string",
           "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Describes a Virtual Machine Image."
     },
     "UsageName": {
@@ -2619,6 +2687,110 @@
         }
       },
       "description": "Capture Virtual Machine parameters."
+    },
+    "ComputeLongRunningOperationProperties": {
+      "properties": {
+        "output": {
+          "type": "object",
+          "description": "Operation output data (raw JSON)"
+        }
+      },
+      "description": "Compute-specific operation properties, including output"
+    },
+    "ApiErrorBase": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the particular error."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message."
+        }
+      },
+      "description": "Api error base."
+    },
+    "InnerError": {
+      "properties": {
+        "exceptiontype": {
+          "type": "string",
+          "description": "Gets or sets the exception type."
+        },
+        "errordetail": {
+          "type": "string",
+          "description": "Gets or sets the internal error message or exception dump."
+        }
+      },
+      "description": "Inner error details."
+    },
+    "ApiError": {
+      "properties": {
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiErrorBase"
+          },
+          "description": "Gets or sets the Api error details"
+        },
+        "innererror": {
+          "$ref": "#/definitions/InnerError",
+          "description": "Gets or sets the Api inner error"
+        },
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the particular error."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message."
+        }
+      },
+      "description": "Api error."
+    },
+    "ComputeLongRunningOperationResult": {
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "description": "Gets the operation identifier."
+        },
+        "status": {
+          "type": "string",
+          "description": "Gets the operation status.",
+          "enum": [
+            "InProgress",
+            "Failed",
+            "Succeeded",
+            "Preempted"
+          ],
+          "x-ms-enum": "ComputeOperationStatus"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets the operation start time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets the operation end time"
+        },
+        "properties": {
+          "$ref": "#/definitions/ComputeLongRunningOperationProperties"
+        },
+        "error": {
+          "$ref": "#/definitions/ApiError",
+          "description": "Gets the operation error, if any occurred."
+        }
+      },
+      "description": "The Compute service response for long-running operations."
     },
     "Plan": {
       "properties": {
@@ -2694,6 +2866,45 @@
       },
       "description": "The image reference."
     },
+    "KeyVaultSecretReference": {
+      "properties": {
+        "secretUrl": {
+          "type": "string",
+          "description": "Gets or sets the URL referencing a secret in a Key Vault."
+        },
+        "sourceVault": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets the Relative URL of the Key Vault containing the secret."
+        }
+      },
+      "description": "Describes a reference to Key Vault Secret"
+    },
+    "KeyVaultKeyReference": {
+      "properties": {
+        "keyUrl": {
+          "type": "string",
+          "description": "Gets or sets the URL referencing a key in a Key Vault."
+        },
+        "sourceVault": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets the Relative URL of the Key Vault containing the key"
+        }
+      },
+      "description": "Describes a reference to Key Vault Key"
+    },
+    "DiskEncryptionSettings": {
+      "properties": {
+        "diskEncryptionKey": {
+          "$ref": "#/definitions/KeyVaultSecretReference",
+          "description": "Gets or sets the disk encryption key which is a KeyVault Secret."
+        },
+        "keyEncryptionKey": {
+          "$ref": "#/definitions/KeyVaultKeyReference",
+          "description": "Gets or sets the key encryption key which is KeyVault Key."
+        }
+      },
+      "description": "Describes a Encryption Settings for a Disk"
+    },
     "VirtualHardDisk": {
       "properties": {
         "uri": {
@@ -2713,6 +2924,10 @@
             "Linux"
           ],
           "x-ms-enum": "OperatingSystemTypes"
+        },
+        "encryptionSettings": {
+          "$ref": "#/definitions/DiskEncryptionSettings",
+          "description": "Gets or sets the disk encryption settings."
         },
         "name": {
           "type": "string",
@@ -3878,64 +4093,6 @@
       },
       "description": "The List Virtual Machine Scale Set VMs operation response."
     },
-    "ApiErrorBase": {
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "Gets or sets the error code."
-        },
-        "target": {
-          "type": "string",
-          "description": "Gets or sets the target of the particular error."
-        },
-        "message": {
-          "type": "string",
-          "description": "Gets or sets the error message."
-        }
-      },
-      "description": "Api error base."
-    },
-    "InnerError": {
-      "properties": {
-        "exceptiontype": {
-          "type": "string",
-          "description": "Gets or sets the exception type."
-        },
-        "errordetail": {
-          "type": "string",
-          "description": "Gets or sets the internal error message or exception dump."
-        }
-      },
-      "description": "Inner error details."
-    },
-    "ApiError": {
-      "properties": {
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApiErrorBase"
-          },
-          "description": "Gets or sets the Api error details"
-        },
-        "innererror": {
-          "$ref": "#/definitions/InnerError",
-          "description": "Gets or sets the Api inner error"
-        },
-        "code": {
-          "type": "string",
-          "description": "Gets or sets the error code."
-        },
-        "target": {
-          "type": "string",
-          "description": "Gets or sets the target of the particular error."
-        },
-        "message": {
-          "type": "string",
-          "description": "Gets or sets the error message."
-        }
-      },
-      "description": "Api error."
-    },
     "DeleteOperationResult": {
       "properties": {
         "operationId": {
@@ -3968,52 +4125,6 @@
         }
       },
       "description": "The compute long running operation response."
-    },
-    "ComputeLongRunningOperationProperties": {
-      "properties": {
-        "output": {
-          "type": "object",
-          "description": "Operation output data (raw JSON)"
-        }
-      },
-      "description": "Compute-specific operation properties, including output"
-    },
-    "ComputeLongRunningOperationResult": {
-      "properties": {
-        "operationId": {
-          "type": "string",
-          "description": "Gets the operation identifier."
-        },
-        "status": {
-          "type": "string",
-          "description": "Gets the operation status.",
-          "enum": [
-            "InProgress",
-            "Failed",
-            "Succeeded",
-            "Preempted"
-          ],
-          "x-ms-enum": "ComputeOperationStatus"
-        },
-        "startTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Gets the operation start time"
-        },
-        "endTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Gets the operation end time"
-        },
-        "properties": {
-          "$ref": "#/definitions/ComputeLongRunningOperationProperties"
-        },
-        "error": {
-          "$ref": "#/definitions/ApiError",
-          "description": "Gets the operation error, if any occurred."
-        }
-      },
-      "description": "The Compute service response for long-running operations."
     },
     "Resource": {
       "properties": {

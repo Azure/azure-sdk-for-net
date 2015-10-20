@@ -55,9 +55,6 @@ namespace Compute.Tests
                     while (queue.Count > 0)
                     {
                         newRecord.Enqueue(queue.Dequeue());
-                        //queue.Dequeue();
-                        //queue.Dequeue();
-                        //queue.Dequeue();
                     }
 
                     newRecords[key] = newRecord;
@@ -71,6 +68,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
+                // Mark provided this function to fix tests problem in Record/Playback modes,
+                // but it doesn't seem we need it anymore. Keep it for record, until GA.
                 //FixRecords();
                 EnsureClientsInitialized(context);
 

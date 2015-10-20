@@ -18,7 +18,6 @@ using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using Xunit;
 
@@ -54,7 +53,7 @@ namespace Compute.Tests
                 Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Product == "product");
                 */
 
-                Assert.Equal(OperatingSystemTypes.Windows, vmimage.Properties.OsDiskImage.OperatingSystem);
+                Assert.Equal(OperatingSystemTypes.Windows, vmimage.OsDiskImage.OperatingSystem);
 
                 //Assert.True(vmimage.VirtualMachineImage.DataDiskImages.Count(ddi => ddi.Lun == 123456789) != 0);
             }
@@ -89,14 +88,12 @@ namespace Compute.Tests
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: top - Negative Test
-                Expression<Func<VirtualMachineImageResource, bool>> filter = null;
-
                 var vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 0);
                 Assert.True(vmimages.Count == 0);
 
                 // Filter: top - Positive Test
@@ -105,7 +102,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 1);
                 Assert.True(vmimages.Count == 1);
 
                 // Filter: top - Positive Test
@@ -114,7 +111,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 2);
                 Assert.True(vmimages.Count == 2);
                 //Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
@@ -124,7 +121,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    orderby:"name desc");
                 //Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Count);
                 for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
                 {
@@ -137,7 +134,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 2,
+                    orderby: "name asc");
                 Assert.True(vmimages.Count == 2);
                 //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
                 //Assert.True(vmimages[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
@@ -148,7 +146,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 1,
+                    orderby: "name desc");
                 Assert.True(vmimages.Count == 1);
                 //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions[0]);
 
@@ -158,7 +157,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    filter);
+                    top: 1, 
+                    orderby: "name asc");
                 Assert.True(vmimages.Count == 1);
                 //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
             }

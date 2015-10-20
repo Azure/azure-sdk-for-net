@@ -111,9 +111,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IList<VirtualMachineImageResource> ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>))
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderBy'>
+            /// </param>
+            public static IList<VirtualMachineImageResource> ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderBy = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionImagesOperations)s).ListVersionsAsync(location, publisherName, type, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionImagesOperations)s).ListVersionsAsync(location, publisherName, type, filter, top, orderBy), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,12 +135,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderBy'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResource>> ListVersionsAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VirtualMachineImageResource>> ListVersionsAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderBy = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IList<VirtualMachineImageResource>> result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IList<VirtualMachineImageResource>> result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, filter, top, orderBy, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

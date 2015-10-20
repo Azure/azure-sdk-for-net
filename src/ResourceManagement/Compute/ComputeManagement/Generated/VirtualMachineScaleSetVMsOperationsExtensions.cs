@@ -287,17 +287,19 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The name of the resource group.
             /// </param>
             /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='select'>
-            /// The select expression to apply on the operation.
+            /// The list parameters.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation.
+            /// The list parameters.
             /// </param>
             public static VirtualMachineScaleSetVMListResult List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string))
             {
@@ -311,17 +313,19 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The name of the resource group.
             /// </param>
             /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='select'>
-            /// The select expression to apply on the operation.
+            /// The list parameters.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation.
+            /// The list parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

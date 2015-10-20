@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine where the extension should be create or
             /// updated.
             /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Virtual Machine Extension operation.
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
             /// </param>
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension CreateOrUpdate(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters)
+            public static VirtualMachineExtension CreateOrUpdate(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).CreateOrUpdateAsync(resourceGroupName, vmName, name, extensionParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).CreateOrUpdateAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine where the extension should be create or
             /// updated.
             /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Virtual Machine Extension operation.
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
             /// </param>
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> CreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineExtension> CreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, name, extensionParameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -85,15 +85,15 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine where the extension should be create or
             /// updated.
             /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Virtual Machine Extension operation.
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
             /// </param>
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension BeginCreateOrUpdate(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters)
+            public static VirtualMachineExtension BeginCreateOrUpdate(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, vmName, name, extensionParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine where the extension should be create or
             /// updated.
             /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the Create Virtual Machine Extension operation.
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
             /// </param>
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> BeginCreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string name, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineExtension> BeginCreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, name, extensionParameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -225,9 +225,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
-            public static VirtualMachineExtension Get(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+            /// <param name='expand'>
+            /// Name of the property to expand. Allowed value is null or 'instanceView'.
+            /// </param>
+            public static VirtualMachineExtension Get(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).GetAsync(resourceGroupName, vmName, vmExtensionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).GetAsync(resourceGroupName, vmName, vmExtensionName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -245,12 +248,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
+            /// <param name='expand'>
+            /// Name of the property to expand. Allowed value is null or 'instanceView'.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> GetAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineExtension> GetAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
