@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public ClientFactory()
         {
             _actions = new Dictionary<Type, IClientAction>();
-            UserAgents = new HashSet<ProductInfoHeaderValue>();
+            UserAgents = new List<ProductInfoHeaderValue>();
             _handlers = new OrderedDictionary();
         }
 
@@ -266,26 +266,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
         }
 
-        /// <summary>
-        /// Adds user agent to UserAgents collection.
-        /// </summary>
-        /// <param name="productName">Product name.</param>
-        /// <param name="productVersion">Product version.</param>
-        public void AddUserAgent(string productName, string productVersion)
-        {
-            UserAgents.Add(new ProductInfoHeaderValue(productName, productVersion));
-        }
-
-        /// <summary>
-        /// Adds user agent to UserAgents collection with empty version.
-        /// </summary>
-        /// <param name="productName">Product name.</param>
-        public void AddUserAgent(string productName)
-        {
-            AddUserAgent(productName, "");
-        }
-
-        public HashSet<ProductInfoHeaderValue> UserAgents { get; set; }
+        public List<ProductInfoHeaderValue> UserAgents { get; set; }
 
         private DelegatingHandler[] GetCustomHandlers()
         {
