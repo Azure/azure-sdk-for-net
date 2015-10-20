@@ -23,10 +23,12 @@ namespace DataLakeAnalytics.Tests
         public string DataLakeAnalyticsAccountName { get; set; }
         public string SecondDataLakeStoreAccountName { get; set; }
         public string StorageAccountAccessKey { get; set; }
+        public string StorageAccountSuffix { get; set; }
+        public string StorageAccountName { get; set; }
         public string SecondDataLakeStoreAccountSuffix { get; set; }
         public string DataLakeStoreAccountName { get; set; }
         public string DataLakeStoreAccountSuffix { get; set; }
-        public string Location = "South Central US";
+        public string Location = "westus";
 
         public CommonTestFixture()
         {
@@ -39,9 +41,10 @@ namespace DataLakeAnalytics.Tests
             SecondDataLakeStoreAccountName = TestUtilities.GenerateName("teststorage1");
             DataLakeStoreAccountName = TestUtilities.GenerateName("testdatalake1");
             SecondDataLakeStoreAccountName = TestUtilities.GenerateName("testdatalake2");
+            StorageAccountName = TestUtilities.GenerateName("testazureblob1");
             bigAnalyticsManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
             
-            // TODO: Add these when storage accounts (WASB) issues are resolved
+            // TODO: uncomment when we can use it.
             // string storageSuffix;
             // this.StorageAccountAccessKey = bigAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
             // this.StorageAccountSuffix = storageSuffix;

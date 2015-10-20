@@ -36,7 +36,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Create a test account
                 AzureAsyncOperationResponse responseCreate =
-                    clientToUse.DataLakeAnalyticsAccount.Create(resourceGroupName: commonData.ResourceGroupName,
+                    clientToUse.DataLakeAnalyticsAccount.Create(commonData.ResourceGroupName,
                         parameters: new DataLakeAnalyticsAccountCreateOrUpdateParameters
                         {
                             DataLakeAnalyticsAccount = new DataLakeAnalyticsAccount
@@ -54,14 +54,6 @@ namespace DataLakeAnalytics.Tests
                                             Properties = new DataLakeStoreAccountProperties
                                             {
                                                 Suffix = commonData.DataLakeStoreAccountSuffix
-                                            }
-                                        },
-                                        new DataLakeStoreAccount
-                                        {
-                                            Name = commonData.SecondDataLakeStoreAccountName,
-                                            Properties = new DataLakeStoreAccountProperties
-                                            {
-                                                Suffix = commonData.SecondDataLakeStoreAccountSuffix
                                             }
                                         }
                                     }
@@ -87,8 +79,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(commonData.DataLakeAnalyticsAccountName, responseGet.DataLakeAnalyticsAccount.Name);
                 Assert.Equal("Microsoft.DataLakeAnalytics/accounts", responseGet.DataLakeAnalyticsAccount.Type);
 
-                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 2);
-                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[1].Name.Equals(commonData.SecondDataLakeStoreAccountName));
+                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 1);
+                Assert.True(responseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[0].Name.Equals(commonData.DataLakeStoreAccountName));
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -135,7 +127,7 @@ namespace DataLakeAnalytics.Tests
 
                 // verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
                 Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Tags.SequenceEqual(newAccount.Tags));
-                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 2);
+                Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.Count == 1);
                 Assert.True(updateResponseGet.DataLakeAnalyticsAccount.Properties.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
 
                 // Create another account and ensure that list account returns both
@@ -152,6 +144,101 @@ namespace DataLakeAnalytics.Tests
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Value.Count > 1);
+
+                // Add, list and remove a data source to the first account
+                var addDataSourceResponse =
+                    clientToUse.DataLakeAnalyticsAccount.AddDataLakeStoreAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName,
+                        new AddDataLakeStoreParameters
+                        {
+                            Properties =
+                                new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
+                        });
+
+                Assert.Equal(HttpStatusCode.OK, addDataSourceResponse.StatusCode);
+
+                // Get the data sources and confirm there are 2
+                var getDataSourceResponse =
+                    clientToUse.DataLakeAnalyticsAccount.ListDataLakeStoreAccounts(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, null);
+
+                Assert.Equal(HttpStatusCode.OK, getDataSourceResponse.StatusCode);
+                Assert.Equal(2, getDataSourceResponse.Value.Count);
+
+                // get the specific data source
+                var getSingleDataSourceResponse =
+                    clientToUse.DataLakeAnalyticsAccount.GetDataLakeStoreAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName);
+
+                Assert.Equal(HttpStatusCode.OK, getSingleDataSourceResponse.StatusCode);
+                Assert.Equal(commonData.SecondDataLakeStoreAccountName, getSingleDataSourceResponse.DataLakeStoreAccount.Name);
+                Assert.Equal(commonData.SecondDataLakeStoreAccountSuffix, getSingleDataSourceResponse.DataLakeStoreAccount.Properties.Suffix);
+
+                // Remove the data source we added
+                var removeDataSourceResponse =
+                    clientToUse.DataLakeAnalyticsAccount.DeleteDataLakeStoreAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName);
+
+                Assert.Equal(HttpStatusCode.OK, removeDataSourceResponse.StatusCode);
+
+                // Confirm that there is now only one data source.
+                getDataSourceResponse =
+                    clientToUse.DataLakeAnalyticsAccount.ListDataLakeStoreAccounts(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, null);
+
+                Assert.Equal(HttpStatusCode.OK, getDataSourceResponse.StatusCode);
+                Assert.Equal(1, getDataSourceResponse.Value.Count);
+
+                /* TODO: Uncomment when supported
+                // Add, list and remove an azure blob source to the first account
+                var addDataSourceBlobResponse =
+                    clientToUse.DataLakeAnalyticsAccount.AddStorageAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName,
+                        new AddStorageAccountParameters
+                        {
+                            Properties =
+                                new StorageAccountProperties
+                                {
+                                    Suffix = commonData.StorageAccountSuffix,
+                                    AccessKey = commonData.StorageAccountAccessKey
+                                }
+                        });
+
+                Assert.Equal(HttpStatusCode.OK, addDataSourceBlobResponse.StatusCode);
+
+                // Get the data sources and confirm there is 1
+                var getDataSourceBlobResponse =
+                    clientToUse.DataLakeAnalyticsAccount.ListStorageAccounts(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, null);
+
+                Assert.Equal(HttpStatusCode.OK, getDataSourceBlobResponse.StatusCode);
+                Assert.Equal(1, getDataSourceBlobResponse.Value.Count);
+
+                // Get the specific data source we added and confirm that it has the same properties
+                var getSingleDataSourceBlobResponse =
+                    clientToUse.DataLakeAnalyticsAccount.GetStorageAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName);
+
+                Assert.Equal(HttpStatusCode.OK, getSingleDataSourceBlobResponse.StatusCode);
+                Assert.Equal(commonData.StorageAccountName, getSingleDataSourceBlobResponse.StorageAccount.Name);
+                Assert.Equal(commonData.StorageAccountAccessKey, getSingleDataSourceBlobResponse.StorageAccount.Properties.AccessKey);
+                Assert.Equal(commonData.StorageAccountSuffix, getSingleDataSourceBlobResponse.StorageAccount.Properties.Suffix);
+
+                // Remove the data source we added
+                var removeDataSourceBlobResponse =
+                    clientToUse.DataLakeAnalyticsAccount.DeleteStorageAccount(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName);
+
+                Assert.Equal(HttpStatusCode.OK, removeDataSourceBlobResponse.StatusCode);
+
+                // Confirm that there no azure data sources.
+                getDataSourceBlobResponse =
+                    clientToUse.DataLakeAnalyticsAccount.ListStorageAccounts(commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName, null);
+
+                Assert.Equal(HttpStatusCode.OK, getDataSourceResponse.StatusCode);
+                Assert.Equal(0, getDataSourceBlobResponse.Value.Count);
+                */
 
                 // Delete the account and confirm that it is deleted.
                 AzureOperationResponse deleteResponse = clientToUse.DataLakeAnalyticsAccount.Delete(commonData.ResourceGroupName, newAccount.Name);

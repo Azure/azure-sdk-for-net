@@ -34,9 +34,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.CommonTestFixture\.ctor.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemConcatenateFiles.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -71,6 +68,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetFileProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\FixtureSetup.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

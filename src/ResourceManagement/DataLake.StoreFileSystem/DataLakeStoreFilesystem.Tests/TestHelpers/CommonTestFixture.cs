@@ -24,13 +24,11 @@ namespace DataLakeStoreFileSystem.Tests
         public string HostUrl { get; set; }
         public string Location = "West US";
         
-        public CommonTestFixture()
+        public void Instantiate(string className)
         {
-            
             try
             {
-                TestUtilities.StartTest();
-                UndoContext.Current.Start();
+                UndoContext.Current.Start(className, "FixtureSetup");
                 var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
                 dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
@@ -60,7 +58,6 @@ namespace DataLakeStoreFileSystem.Tests
         private static void Cleanup()
         {
             UndoContext.Current.UndoAll();
-            
         }
     }
 }

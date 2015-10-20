@@ -580,6 +580,7 @@ namespace DataLakeStoreFileSystem.Tests
 
         public void SetFixture(CommonTestFixture data)
         {
+            data.Instantiate(TestUtilities.GetCallingClass());
             commonData = data;
             dataLakeStoreFileSystemClient = this.GetDataLakeStoreFileSystemManagementClient();
             helper = new DataLakeStoreFileSystemManagementHelper(this);

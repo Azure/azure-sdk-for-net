@@ -34,9 +34,9 @@ namespace DataLakeAnalytics.Tests
         public DataLakeAnalyticsManagementHelper(TestBase testBase)
         {
             this.testBase = testBase;
-            resourceManagementClient = ClientManagementUtilities.GetResourceManagementClient(this.testBase);
-            storageManagementClient = ClientManagementUtilities.GetStorageManagementClient(this.testBase);
-            dataLakeStoreManagementClient = ClientManagementUtilities.GetDataLakeStoreManagementClient(this.testBase);
+            resourceManagementClient = this.testBase.GetResourceManagementClient();
+            storageManagementClient = this.testBase.GetStorageManagementClient();
+            dataLakeStoreManagementClient = this.testBase.GetDataLakeStoreManagementClient();
         }
 
         public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.BigAnalytics")
