@@ -348,8 +348,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
 
-        public const string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix = "azurebiganalytics.net";
+        public const string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix = "azuredatalakeanalytics.net";
 
-        public const string AzureDataLakeStoreFileSystemEndpointSuffix = "azuredatalake.net";
+        public const string AzureDataLakeStoreFileSystemEndpointSuffix = "azuredatalakestore.net";
     }
 }
