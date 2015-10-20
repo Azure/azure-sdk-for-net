@@ -56,7 +56,7 @@
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitPigJob.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.JobsEnumerationTests\GetJobsPagination.json">
+    <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\GetJobsPagination.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
