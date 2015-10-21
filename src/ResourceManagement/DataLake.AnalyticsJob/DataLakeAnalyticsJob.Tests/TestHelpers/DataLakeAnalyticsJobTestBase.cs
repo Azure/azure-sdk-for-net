@@ -45,7 +45,7 @@ namespace DataLakeAnalyticsJob.Tests
                     { 
                         currentEnvironment.Credentials as SubscriptionCloudCredentials, 
                         // Have to remove the https:// since this is a suffix
-                        currentEnvironment.Endpoints.KonaJobAndCatalogServiceUri.OriginalString.Replace("https://","") }) as T;
+                        currentEnvironment.Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://","") }) as T;
 
             return AddMockHandler<T>(ref client);
         }

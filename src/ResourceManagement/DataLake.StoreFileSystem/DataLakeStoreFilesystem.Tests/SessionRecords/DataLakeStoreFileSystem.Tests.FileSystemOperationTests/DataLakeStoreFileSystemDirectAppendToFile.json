@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt7548?op=APPEND&append=true&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ3NTQ4P29wPUFQUEVORCZhcHBlbmQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt2902?op=APPEND&append=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQyOTAyP29wPUFQUEVORCZhcHBlbmQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "More test contents, that were appended!",
       "RequestHeaders": {
@@ -38,13 +38,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b68f6dbc-3646-406b-9b9a-7f8a6b5b197f"
+          "bcf71be1-d5b5-47a4-8f4a-164906e79666"
         ],
         "x-origin-server": [
-          "bn4sch103201524"
+          "bn4sch103190225"
         ],
         "Server-Perf": [
-          "[b68f6dbc3646406b9b9a7f8a6b5b197f][ AuthTime::1721.89696076205::PostAuthTime::31718.2316212306 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:04:567 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:04:568 ms]%0a[Open :: 00:04:568 ms]%0a[GetLength :: 00:00:010 ms]%0a[Write :: 00:00:071 ms]%0a[FlushWrite :: 00:00:041 ms]%0a[APPEND :: 00:04:692 ms]%0a"
+          "[bcf71be1d5b547a48f4a164906e79666][ AuthTime::1688.11056076321::PostAuthTime::31687.4647419269 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:04:539 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:04:539 ms]%0a[Open :: 00:04:539 ms]%0a[GetLength :: 00:00:009 ms]%0a[Write :: 00:01:619 ms]%0a[FlushWrite :: 00:00:076 ms]%0a[APPEND :: 00:06:246 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -56,10 +56,10 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 21 Oct 2015 01:27:58 GMT"
+          "Wed, 21 Oct 2015 18:43:23 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=6f4c713d-2a99-40c9-9022-5607a928023a; path=/; secure; HttpOnly"
+          "UserPrincipalSession=9ec860f3-a788-4a7f-a8c4-736dfff7a2e0; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
@@ -67,7 +67,7 @@
   ],
   "Names": {
     "CreateFile": [
-      "SDKTestFolder01/SDKTestFile01.txt7548"
+      "SDKTestFolder01/SDKTestFile01.txt2902"
     ]
   },
   "Variables": {}

@@ -13,8 +13,8 @@
     <Compile Include="ScenarioTests\JobOperationTests.cs" />
     <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
     <Compile Include="TestHelpers\CommonTestFixture.cs" />
-    <Compile Include="TestHelpers\BigAnalyticsJobTestBase.cs" />
-    <Compile Include="TestHelpers\BigAnalyticsManagementHelper.cs" />
+    <Compile Include="TestHelpers\DataLakeAnalyticsJobTestBase.cs" />
+    <Compile Include="TestHelpers\DataLakeAnalyticsManagementHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
@@ -37,7 +37,10 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="SessionRecords\DataLakeAnalyticsJob.Tests.JobOperationTests\" />
+    <None Include="SessionRecords\DataLakeAnalyticsJob.Tests.JobOperationTests\SubmitGetListCancelTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

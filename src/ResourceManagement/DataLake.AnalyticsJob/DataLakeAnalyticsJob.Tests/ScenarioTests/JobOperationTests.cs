@@ -25,8 +25,7 @@ namespace DataLakeAnalyticsJob.Tests
 {
     public class JobOperationTests : TestBase
     {
-        //commenting out for now due to migration issues for big analytics
-        //[Fact] 
+        [Fact] 
         public void SubmitGetListCancelTest()
         {
             TestUtilities.StartTest();
@@ -88,12 +87,12 @@ namespace DataLakeAnalyticsJob.Tests
                 Assert.True(getResponse.DataLakeAnalyticsAccount.Properties.ProvisioningState == DataLakeAnalyticsAccountStatus.Succeeded);
 
                 // TODO: Remove this sleep once defect 5022906 is fixed
-                TestUtilities.Wait(60000); // Wait for one minutes to submit the job, which gives the CJS queue a chance to create.
+                TestUtilities.Wait(120000); // Wait for two minutes to submit the job, which gives the CJS queue a chance to create.
 
                 // We need to hardcode the job ID to use for the mocks.
                 // TODO: come up with some way to re-generate this when necessary (i.e. re-running/running the test against the server).
-                Guid jobId = new Guid("3c68ef94-c2ea-4be8-8684-9d5196961a10");
-                var secondId = new Guid("d016d907-48b2-4f20-9ee6-30300020c39b");
+                Guid jobId = new Guid("397f4ee0-7795-49e0-b510-2b0155f24616");
+                var secondId = new Guid("f77a17e6-edb5-4f13-9a2b-3bea2e8bb9bb");
                 // Submit a job to the account
                 var jobToSubmit = new JobInformation
                 {

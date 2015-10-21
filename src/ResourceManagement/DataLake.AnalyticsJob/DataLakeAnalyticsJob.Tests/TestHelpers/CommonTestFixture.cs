@@ -28,7 +28,7 @@ namespace DataLakeAnalyticsJob.Tests
         public string DataLakeAccountSuffix { get; set; }
         public string StorageAccountType = "AzureBlob";
         public string DataLakeAccountType = "DataLake";
-        public string Location = "West US";
+        public string Location = "East US 2";
 
         public CommonTestFixture()
         {

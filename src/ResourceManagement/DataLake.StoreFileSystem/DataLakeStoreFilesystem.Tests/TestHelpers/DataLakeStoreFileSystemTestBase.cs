@@ -48,7 +48,7 @@ namespace DataLakeStoreFileSystem.Tests
                         currentEnvironment.Credentials as SubscriptionCloudCredentials, 
                         
                         // Have to remove the https:// since this is a suffix
-                        currentEnvironment.Endpoints.DataLakeServiceUri.OriginalString.Replace("https://","") }) as T;
+                        currentEnvironment.Endpoints.DataLakeStoreServiceUri.OriginalString.Replace("https://","") }) as T;
 
             return TestBase.AddMockHandler<T>(ref client);
         }
