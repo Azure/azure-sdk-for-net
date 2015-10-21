@@ -55,7 +55,7 @@ namespace DataLakeStoreFileSystem.Tests
             dataLakeStoreFileSystemClient = this.testBase.GetDataLakeStoreFileSystemManagementClient();
         }
 
-        public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLake")
+        public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLakeStore")
         {
             var reg = resourceManagementClient.Providers.Register(providerName);
             ThrowIfTrue(reg == null, "resourceManagementClient.Providers.Register returned null.");

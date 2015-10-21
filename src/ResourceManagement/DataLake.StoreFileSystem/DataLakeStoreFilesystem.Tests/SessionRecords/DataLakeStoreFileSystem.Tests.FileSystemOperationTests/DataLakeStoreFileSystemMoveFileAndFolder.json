@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt2554?op=RENAME&destination=SDKTestFolder017788%2FSDKTestMoveFile01.txt&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQyNTU0P29wPVJFTkFNRSZkZXN0aW5hdGlvbj1TREtUZXN0Rm9sZGVyMDE3Nzg4JTJGU0RLVGVzdE1vdmVGaWxlMDEudHh0JmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt2274?op=RENAME&destination=SDKTestFolder015589%2FSDKTestMoveFile01.txt&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQyMjc0P29wPVJFTkFNRSZkZXN0aW5hdGlvbj1TREtUZXN0Rm9sZGVyMDE1NTg5JTJGU0RLVGVzdE1vdmVGaWxlMDEudHh0JmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -32,13 +32,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6d5754c3-75ab-4b30-813d-016298afc50f"
+          "81b091f6-0e48-414c-81ea-647c5bbb26ed"
         ],
         "x-origin-server": [
-          "bn4sch103201523"
+          "bn4sch103201423"
         ],
         "Server-Perf": [
-          "[6d5754c375ab4b30813d016298afc50f][ AuthTime::1817.27510525568::PostAuthTime::31958.2090880008 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:01:074 ms]%0a"
+          "[81b091f60e48414c81ea647c5bbb26ed][ AuthTime::1827.10974077881::PostAuthTime::31872.629237434 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:001 ms]%0a[CleanCacheRename :: 00:00:003 ms]%0a[RENAME :: 00:00:544 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -50,17 +50,17 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 00:16:43 GMT"
+          "Tue, 20 Oct 2015 20:24:45 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=25030984-0e1f-42ba-a675-6edfa84ebd7c; path=/; secure; HttpOnly"
+          "UserPrincipalSession=2563407c-d175-46a7-926d-38bb64298a10; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt2554?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQyNTU0P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt2274?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQyMjc0P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -75,7 +75,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile01.txt2554 [94909cd1440f45b3b68ff88b2bdd3980]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/SDKTestFile01.txt2274 [1a0d2e61aa364b7db3fabfd108d7b4c8]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "219"
@@ -90,13 +90,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "94909cd1-440f-45b3-b68f-f88b2bdd3980"
+          "1a0d2e61-aa36-4b7d-b3fa-bfd108d7b4c8"
         ],
         "x-origin-server": [
-          "bn4sch103201523"
+          "bn4sch103201423"
         ],
         "Server-Perf": [
-          "[94909cd1440f45b3b68ff88b2bdd3980][ AuthTime::825.878613379319::PostAuthTime::190.751870309258 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:136 ms]%0a"
+          "[1a0d2e61aa364b7db3fabfd108d7b4c8][ AuthTime::834.85913249069::PostAuthTime::187.330071737153 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:092 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -108,14 +108,14 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 00:16:43 GMT"
+          "Tue, 20 Oct 2015 20:24:45 GMT"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder017788?op=RENAME&destination=SDKTestMoveFolder010819&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNzc4OD9vcD1SRU5BTUUmZGVzdGluYXRpb249U0RLVGVzdE1vdmVGb2xkZXIwMTA4MTkmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder015589?op=RENAME&destination=SDKTestMoveFolder017748&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNTU4OT9vcD1SRU5BTUUmZGVzdGluYXRpb249U0RLVGVzdE1vdmVGb2xkZXIwMTc3NDgmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -145,13 +145,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "89a1e0f4-f415-4c40-a86b-44d6bdb40872"
+          "e9f101a6-2c9b-41d4-9fc0-0bd2be696751"
         ],
         "x-origin-server": [
-          "bn4sch103201523"
+          "bn4sch103201423"
         ],
         "Server-Perf": [
-          "[89a1e0f4f4154c40a86b44d6bdb40872][ AuthTime::1789.90263956108::PostAuthTime::31686.6229049371 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:637 ms]%0a"
+          "[e9f101a62c9b41d49fc00bd2be696751][ AuthTime::1737.72164718733::PostAuthTime::32157.4735930891 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[CleanCacheRename :: 00:00:000 ms]%0a[RENAME :: 00:00:513 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -163,17 +163,17 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 00:16:45 GMT"
+          "Tue, 20 Oct 2015 20:24:46 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=25030984-0e1f-42ba-a675-6edfa84ebd7c; path=/; secure; HttpOnly"
+          "UserPrincipalSession=2563407c-d175-46a7-926d-38bb64298a10; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestMoveFolder010819?op=LISTSTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdE1vdmVGb2xkZXIwMTA4MTk/b3A9TElTVFNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestMoveFolder017748?op=LISTSTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdE1vdmVGb2xkZXIwMTc3NDg/b3A9TElTVFNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -188,7 +188,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatuses\": {\r\n    \"FileStatus\": [\r\n      {\r\n        \"length\": 42,\r\n        \"pathSuffix\": \"SDKTestMoveFile01.txt\",\r\n        \"type\": \"FILE\",\r\n        \"blockSize\": 268435456,\r\n        \"accessTime\": 1445300201887,\r\n        \"modificationTime\": 1445300202213,\r\n        \"replication\": 0,\r\n        \"permission\": \"777\",\r\n        \"owner\": \"NotSupportYet\",\r\n        \"group\": \"NotSupportYet\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatuses\": {\r\n    \"FileStatus\": [\r\n      {\r\n        \"length\": 42,\r\n        \"pathSuffix\": \"SDKTestMoveFile01.txt\",\r\n        \"type\": \"FILE\",\r\n        \"blockSize\": 268435456,\r\n        \"accessTime\": 1445372683807,\r\n        \"modificationTime\": 1445372684413,\r\n        \"replication\": 0,\r\n        \"permission\": \"777\",\r\n        \"owner\": \"NotSupportYet\",\r\n        \"group\": \"NotSupportYet\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "263"
@@ -203,13 +203,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ff89d44c-52a7-4f0e-8cbb-fa37de01724c"
+          "ef83c3ce-56de-4edb-8421-66acdd459f39"
         ],
         "x-origin-server": [
-          "bn4sch103201523"
+          "bn4sch103201423"
         ],
         "Server-Perf": [
-          "[ff89d44c52a74f0e8cbbfa37de01724c][ AuthTime::849.829520862096::PostAuthTime::189.468785979823 ][FsEnumerateDirectory :: 00:00:025 ms]%0a[ListDirectory :: 00:00:025 ms]%0a[LISTSTATUS :: 00:00:025 ms]%0a"
+          "[ef83c3ce56de4edb842166acdd459f39][ AuthTime::822.028305659378::PostAuthTime::185.619294826311 ][FsEnumerateDirectory :: 00:00:161 ms]%0a[ListDirectory :: 00:00:186 ms]%0a[LISTSTATUS :: 00:00:197 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -221,14 +221,14 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 00:16:46 GMT"
+          "Tue, 20 Oct 2015 20:24:46 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder017788?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNzc4OD9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder015589?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxNTU4OT9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -243,7 +243,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder017788 [172014e09c6a47fc82c8ae0e96a60091]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder015589 [667ab84ea1fa41feae7c6c09e90d4963]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "201"
@@ -258,13 +258,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "172014e0-9c6a-47fc-82c8-ae0e96a60091"
+          "667ab84e-a1fa-41fe-ae7c-6c09e90d4963"
         ],
         "x-origin-server": [
-          "bn4sch103201523"
+          "bn4sch103201423"
         ],
         "Server-Perf": [
-          "[172014e09c6a47fc82c8ae0e96a60091][ AuthTime::782.253746178547::PostAuthTime::185.61953299152 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:018 ms]%0a"
+          "[667ab84ea1fa41feae7c6c09e90d4963][ AuthTime::826.732942164193::PostAuthTime::183.053129460049 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:072 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -276,7 +276,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 00:16:46 GMT"
+          "Tue, 20 Oct 2015 20:24:46 GMT"
         ]
       },
       "StatusCode": 404

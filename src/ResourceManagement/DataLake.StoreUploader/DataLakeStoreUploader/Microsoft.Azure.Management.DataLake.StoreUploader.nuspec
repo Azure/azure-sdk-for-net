@@ -8,7 +8,7 @@
     <authors>Microsoft, begoldsm</authors>
     <owners>azure-sdk, Microsoft</owners>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
-    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net-pr</projectUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for the internal Data Lake Store Uploader services.</summary>
