@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder013835%2FSDKTestConcatFile01.txt?op=MSCONCAT&deletesourcedirectory=true&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxMzgzNSUyRlNES1Rlc3RDb25jYXRGaWxlMDEudHh0P29wPU1TQ09OQ0FUJmRlbGV0ZXNvdXJjZWRpcmVjdG9yeT10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder018931%2FSDKTestConcatFile01.txt?op=MSCONCAT&deletesourcedirectory=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxODkzMSUyRlNES1Rlc3RDb25jYXRGaWxlMDEudHh0P29wPU1TQ09OQ0FUJmRlbGV0ZXNvdXJjZWRpcmVjdG9yeT10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "sources=SDKTestFolder01/msconcatFolder/SDKTestFile01.txt3933,SDKTestFolder01/msconcatFolder/SDKTestFile01.txt3519",
+      "RequestBody": "sources=SDKTestFolder01/msconcatFolder/SDKTestFile01.txt745,SDKTestFolder01/msconcatFolder/SDKTestFile01.txt1630",
       "RequestHeaders": {
         "Content-Type": [
           "application/octet-stream"
         ],
         "Content-Length": [
-          "113"
+          "112"
         ],
         "useragent": [
           "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
@@ -35,13 +35,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6c2c1226-ffa4-41c2-b6a4-0a147181002f"
+          "35182446-cc51-452a-9403-e8c143498a23"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190224"
         ],
         "Server-Perf": [
-          "[6c2c1226ffa441c2b6a40a147181002f][ AuthTime::1770.22867984309::PostAuthTime::31267.909718765 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:001 ms]%0a[MSCONCAT :: 00:01:004 ms]%0a"
+          "[35182446cc51452a9403e8c143498a23][ AuthTime::1700.08382803278::PostAuthTime::31440.2169264195 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[MSCONCAT :: 00:31:593 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -53,17 +53,17 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 20:27:30 GMT"
+          "Wed, 21 Oct 2015 01:29:47 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=c5a3c0df-1122-497a-b195-2b57f1b34e55; path=/; secure; HttpOnly"
+          "UserPrincipalSession=7ff7e162-4e1d-4d9d-b9e8-2465b47b2e68; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FmsconcatFolder%2FSDKTestFile01.txt3933?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGbXNjb25jYXRGb2xkZXIlMkZTREtUZXN0RmlsZTAxLnR4dDM5MzM/b3A9R0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FmsconcatFolder%2FSDKTestFile01.txt745?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGbXNjb25jYXRGb2xkZXIlMkZTREtUZXN0RmlsZTAxLnR4dDc0NT9vcD1HRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -78,10 +78,10 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder/SDKTestFile01.txt3933 [d15a7714ed394cdb896883dfb6aa8d00]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder/SDKTestFile01.txt745 [bf54a644b91a4ff7830960f3063242b9]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "234"
+          "233"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -93,13 +93,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d15a7714-ed39-4cdb-8968-83dfb6aa8d00"
+          "bf54a644-b91a-4ff7-8309-60f3063242b9"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190224"
         ],
         "Server-Perf": [
-          "[d15a7714ed394cdb896883dfb6aa8d00][ AuthTime::976.42717469963::PostAuthTime::191.179565085736 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:238 ms]%0a"
+          "[bf54a644b91a4ff7830960f3063242b9][ AuthTime::753.16921287188::PostAuthTime::171.933006004824 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:519 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -111,14 +111,14 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 20:27:31 GMT"
+          "Wed, 21 Oct 2015 01:29:49 GMT"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FmsconcatFolder%2FSDKTestFile01.txt3519?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGbXNjb25jYXRGb2xkZXIlMkZTREtUZXN0RmlsZTAxLnR4dDM1MTk/b3A9R0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FmsconcatFolder%2FSDKTestFile01.txt1630?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGbXNjb25jYXRGb2xkZXIlMkZTREtUZXN0RmlsZTAxLnR4dDE2MzA/b3A9R0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -133,7 +133,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder/SDKTestFile01.txt3519 [3f2f30b2cf434d4c8b3a47844263d9c6]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder/SDKTestFile01.txt1630 [185f368d24dd45d28227962c83c7a8f6]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "234"
@@ -148,13 +148,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3f2f30b2-cf43-4d4c-8b3a-47844263d9c6"
+          "185f368d-24dd-45d2-8227-962c83c7a8f6"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190224"
         ],
         "Server-Perf": [
-          "[3f2f30b2cf434d4c8b3a47844263d9c6][ AuthTime::1804.01656718486::PostAuthTime::32316.189615913 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:007 ms]%0a"
+          "[185f368d24dd45d28227962c83c7a8f6][ AuthTime::1615.82810120952::PostAuthTime::30733.2386703848 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:005 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -166,10 +166,10 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 20:27:31 GMT"
+          "Wed, 21 Oct 2015 01:29:49 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=c5a3c0df-1122-497a-b195-2b57f1b34e55; path=/; secure; HttpOnly"
+          "UserPrincipalSession=7ff7e162-4e1d-4d9d-b9e8-2465b47b2e68; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 404
@@ -191,7 +191,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder [dd38162acebb4a0d91d3354dc1b4f2c7]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"RemoteException\": {\r\n    \"exception\": \"FileNotFoundException\",\r\n    \"message\": \"File/Folder does not exist: /SDKTestFolder01/msconcatFolder [f7dfd67635684af79801150711764f15]\",\r\n    \"javaClassName\": \"java.io.FileNotFoundException\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "212"
@@ -206,13 +206,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "dd38162a-cebb-4a0d-91d3-354dc1b4f2c7"
+          "f7dfd676-3568-4af7-9801-150711764f15"
         ],
         "x-origin-server": [
-          "bn4sch103190124"
+          "bn4sch103190224"
         ],
         "Server-Perf": [
-          "[dd38162acebb4a0d91d3354dc1b4f2c7][ AuthTime::1785.19799701982::PostAuthTime::31165.6906671867 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:006 ms]%0a"
+          "[f7dfd67635684af79801150711764f15][ AuthTime::1588.45568234308::PostAuthTime::30336.7662908662 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:005 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -224,15 +224,23 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 20 Oct 2015 20:27:31 GMT"
+          "Wed, 21 Oct 2015 01:29:49 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=c5a3c0df-1122-497a-b195-2b57f1b34e55; path=/; secure; HttpOnly"
+          "UserPrincipalSession=7ff7e162-4e1d-4d9d-b9e8-2465b47b2e68; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 404
     }
   ],
-  "Names": {},
+  "Names": {
+    "CreateFile": [
+      "SDKTestFolder01/msconcatFolder/SDKTestFile01.txt745",
+      "SDKTestFolder01/msconcatFolder/SDKTestFile01.txt1630"
+    ],
+    "CreateFolder": [
+      "SDKTestFolder018931"
+    ]
+  },
   "Variables": {}
 }

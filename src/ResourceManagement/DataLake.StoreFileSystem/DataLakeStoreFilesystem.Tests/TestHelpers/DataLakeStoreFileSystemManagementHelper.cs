@@ -114,9 +114,8 @@ namespace DataLakeStoreFileSystem.Tests
         internal string CreateFolder(string caboAccountName, bool randomName = false)
         {
             // Create a folder
-            var random = new Random();
             var folderPath = randomName
-                ? string.Format("{0}{1}", folderToCreate, random.Next(1, 10000).ToString("D4"))
+                ? TestUtilities.GenerateName(folderToCreate)
                 : folderToCreate;
 
             var response = dataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
@@ -128,8 +127,7 @@ namespace DataLakeStoreFileSystem.Tests
 
         internal string CreateFile(string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate, bool useDirectCreate = false)
         {
-            var random = new Random();
-            var filePath = string.Format("{0}/{1}{2}", folderName, fileToCreate, randomName ? random.Next(1, 10000).ToString("D4") : string.Empty);
+            var filePath = randomName ? TestUtilities.GenerateName(string.Format("{0}/{1}", folderName, fileToCreate)) : string.Format("{0}/{1}", folderName, fileToCreate);
 
             if (useDirectCreate)
             {

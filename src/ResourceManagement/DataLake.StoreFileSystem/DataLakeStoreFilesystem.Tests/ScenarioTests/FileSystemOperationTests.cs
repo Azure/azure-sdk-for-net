@@ -341,8 +341,7 @@ namespace DataLakeStoreFileSystem.Tests
                     DataLakeStoreFileSystemManagementHelper.fileContentsToAdd.Length);
 
                 var targetFolder1 = helper.CreateFolder(commonData.DataLakeStoreFileSystemAccountName, true);
-                var targetFolder2 = string.Format("{0}{1}", DataLakeStoreFileSystemManagementHelper.folderToMove,
-                    new Random().Next(0, 10000).ToString("D4"));
+                var targetFolder2 = TestUtilities.GenerateName(DataLakeStoreFileSystemManagementHelper.folderToMove);
 
                 // Move file first
                 var moveFileResponse = dataLakeStoreFileSystemClient.FileSystem.Rename(filePath,
