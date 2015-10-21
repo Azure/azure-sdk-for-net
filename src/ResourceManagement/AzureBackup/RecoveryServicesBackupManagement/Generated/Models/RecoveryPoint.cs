@@ -21,49 +21,52 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a RecoveryPoint object.
+    /// </summary>
+    public partial class RecoveryPoint : RecoveryPointBase
     {
-        private string _providerType;
+        private string _recoveryPointAdditionalInfo;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery Point Additional Information
         /// </summary>
-        public string ProviderType
+        public string RecoveryPointAdditionalInfo
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._recoveryPointAdditionalInfo; }
+            set { this._recoveryPointAdditionalInfo = value; }
         }
         
-        private string _status;
+        private string _recoveryPointTime;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery Point Time
         /// </summary>
-        public string Status
+        public string RecoveryPointTime
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._recoveryPointTime; }
+            set { this._recoveryPointTime = value; }
         }
         
-        private string _type;
+        private string _recoveryPointType;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery Point Type
         /// </summary>
-        public string Type
+        public string RecoveryPointType
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._recoveryPointType; }
+            set { this._recoveryPointType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
-        /// class.
+        /// Initializes a new instance of the RecoveryPoint class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public RecoveryPoint()
         {
         }
     }

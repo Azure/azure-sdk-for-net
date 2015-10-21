@@ -24,46 +24,38 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// </summary>
+    public partial class RecoveryPointQueryParameters
     {
-        private string _providerType;
+        private string _endDate;
         
         /// <summary>
-        /// Optional.
+        /// Optional. End Date query parametee.
         /// </summary>
-        public string ProviderType
+        public string EndDate
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._endDate; }
+            set { this._endDate = value; }
         }
         
-        private string _status;
+        private string _startDate;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Start Date query parameter
         /// </summary>
-        public string Status
+        public string StartDate
         {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._startDate; }
+            set { this._startDate = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
+        /// Initializes a new instance of the RecoveryPointQueryParameters
         /// class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public RecoveryPointQueryParameters()
         {
         }
     }

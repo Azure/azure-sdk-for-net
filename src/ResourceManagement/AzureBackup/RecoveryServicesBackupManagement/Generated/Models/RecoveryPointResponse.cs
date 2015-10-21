@@ -21,49 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a RecoveryPointResponse object.
+    /// </summary>
+    public partial class RecoveryPointResponse : BaseRecoveryServicesJobResponse
     {
-        private string _providerType;
+        private RecoveryPointResource _recPoint;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery Point
         /// </summary>
-        public string ProviderType
+        public RecoveryPointResource RecPoint
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._recPoint; }
+            set { this._recPoint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
-        /// class.
+        /// Initializes a new instance of the RecoveryPointResponse class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public RecoveryPointResponse()
         {
         }
     }

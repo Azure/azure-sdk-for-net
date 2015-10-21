@@ -21,49 +21,56 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a BaseRecoveryServicesJobResponse for Async
+    /// operations.
+    /// </summary>
+    public partial class BaseRecoveryServicesJobResponse : AzureOperationResponse
     {
-        private string _providerType;
+        private string _azureAsyncOperation;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Azure Async Operation Header for response.
         /// </summary>
-        public string ProviderType
+        public string AzureAsyncOperation
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._azureAsyncOperation; }
+            set { this._azureAsyncOperation = value; }
         }
         
-        private string _status;
+        private string _location;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Location Header for response. This needs to be used to
+        /// track the job.
         /// </summary>
-        public string Status
+        public string Location
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._location; }
+            set { this._location = value; }
         }
         
-        private string _type;
+        private string _retryAfter;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Retry after Header for response which specifies the retry
+        /// time for the job.
         /// </summary>
-        public string Type
+        public string RetryAfter
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._retryAfter; }
+            set { this._retryAfter = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
+        /// Initializes a new instance of the BaseRecoveryServicesJobResponse
         /// class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public BaseRecoveryServicesJobResponse()
         {
         }
     }

@@ -74,6 +74,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._registrationStatus = value; }
         }
         
+        private string _resourceGroup;
+        
+        /// <summary>
+        /// Optional. Resource Group
+        /// </summary>
+        public string ResourceGroup
+        {
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
+        }
+        
+        private string _vmVersion;
+        
+        /// <summary>
+        /// Optional. VM Version
+        /// </summary>
+        public string VmVersion
+        {
+            get { return this._vmVersion; }
+            set { this._vmVersion = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProtectableObject class.
         /// </summary>

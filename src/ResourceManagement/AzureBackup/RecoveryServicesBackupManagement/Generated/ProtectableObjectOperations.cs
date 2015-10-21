@@ -127,6 +127,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             List<string> odataFilter = new List<string>();
+            if (queryFilter != null && queryFilter.ProviderType != null)
+            {
+                odataFilter.Add("ProviderType eq '" + Uri.EscapeDataString(queryFilter.ProviderType) + "'");
+            }
             if (queryFilter != null && queryFilter.Status != null)
             {
                 odataFilter.Add("Status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
@@ -231,7 +235,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         JToken propertiesValue = valueValue["properties"];
                                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                         {
-                                            string typeName = ((string)propertiesValue["ObjectType"]);
+                                            string typeName = ((string)propertiesValue["objectType"]);
                                             if (typeName == "ProtectableObject")
                                             {
                                                 ProtectableObject protectableObjectInstance = new ProtectableObject();
@@ -262,6 +266,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     string containerIdInstance = ((string)containerIdValue);
                                                     protectableObjectInstance.ContainerId = containerIdInstance;
+                                                }
+                                                
+                                                JToken resourceGroupValue = propertiesValue["resourceGroup"];
+                                                if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceGroupInstance = ((string)resourceGroupValue);
+                                                    protectableObjectInstance.ResourceGroup = resourceGroupInstance;
+                                                }
+                                                
+                                                JToken vmVersionValue = propertiesValue["vmVersion"];
+                                                if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string vmVersionInstance = ((string)vmVersionValue);
+                                                    protectableObjectInstance.VmVersion = vmVersionInstance;
+                                                }
+                                                
+                                                JToken providerTypeValue = propertiesValue["providerType"];
+                                                if (providerTypeValue != null && providerTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string providerTypeInstance = ((string)providerTypeValue);
+                                                    protectableObjectInstance.ProviderType = providerTypeInstance;
+                                                }
+                                                
+                                                JToken workloadTypeValue = propertiesValue["workloadType"];
+                                                if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string workloadTypeInstance = ((string)workloadTypeValue);
+                                                    protectableObjectInstance.WorkloadType = workloadTypeInstance;
                                                 }
                                                 protectableObjectResourceInstance.Properties = protectableObjectInstance;
                                             }

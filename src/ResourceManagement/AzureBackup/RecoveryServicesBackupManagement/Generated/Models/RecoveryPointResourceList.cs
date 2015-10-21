@@ -20,51 +20,46 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a RecoveryPointResourceList object.
+    /// </summary>
+    public partial class RecoveryPointResourceList
     {
-        private string _providerType;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Next Link
         /// </summary>
-        public string ProviderType
+        public string NextLink
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
-        private string _status;
+        private IList<RecoveryPointResource> _recoveryPoints;
         
         /// <summary>
-        /// Optional.
+        /// Optional. value
         /// </summary>
-        public string Status
+        public IList<RecoveryPointResource> RecoveryPoints
         {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._recoveryPoints; }
+            set { this._recoveryPoints = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
-        /// class.
+        /// Initializes a new instance of the RecoveryPointResourceList class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public RecoveryPointResourceList()
         {
+            this.RecoveryPoints = new LazyList<RecoveryPointResource>();
         }
     }
 }
