@@ -82,10 +82,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Definition of Container operations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        IContainerOperation Container
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Protectable Object operations for the Azure Backup
         /// extension.
         /// </summary>
         IProtectableObjectOperations ProtectableObject
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Protected Item operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IProtectedItemOperations DataSource
         {
             get; 
         }
