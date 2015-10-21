@@ -23,22 +23,22 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class VMDiagnosticsTests : VMTestBase
+    public class VMDiskEncryptionTests : VMTestBase
     {
         /// <summary>
         /// Covers following Operations:
         /// Create RG
         /// Create Storage Account
         /// Create Network Resources
-        /// Create VM with DiagnosticsProfile
+        /// Create VM with DiskEncryptionSettings
         /// GET VM Model View
-        /// GET VM InstanceView
         /// Delete VM
         /// Delete RG
+        /// TODO: Add negative test case validation
         /// </summary>
         [Fact]
-        [Trait("Name", "TestVMBootDiagnostics")]
-        public void TestVMBootDiagnostics()
+        [Trait("Name", "TestDiskEncryption")]
+        public void TestVMDiskEncryption()
         {
             using (var context = UndoContext.Current)
             {
@@ -54,21 +54,26 @@ namespace Compute.Tests
                 {
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
-
-                    VirtualMachine inputVM;
-                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM,
+                    //Create VM with encryptionKey
+                    VirtualMachine inputVM1;
+                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM1,
                         (vm) =>
                         {
-                            vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountOutput.Name);
+                            vm.StorageProfile.OSDisk.EncryptionSettings = GetEncryptionSettings();
+                            vm.HardwareProfile.VirtualMachineSize = "Standard_D1";
                         });
-
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                    Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(getVMWithInstanceViewResponse.VirtualMachine != null, "VM in Get");
-                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
-
-                   
-                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                    //Create VM with encryptionKey and KEK
+                    VirtualMachine inputVM2;
+                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM2,
+                        (vm) =>
+                        {
+                            vm.StorageProfile.OSDisk.EncryptionSettings = GetEncryptionSettings(addKek:true);
+                            vm.HardwareProfile.VirtualMachineSize = "Standard_D1";
+                        });
+                    
+                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM1.Name);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
+                    lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM2.Name);
                     Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
