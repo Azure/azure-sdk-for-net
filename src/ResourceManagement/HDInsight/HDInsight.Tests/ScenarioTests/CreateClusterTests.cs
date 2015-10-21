@@ -47,7 +47,8 @@ namespace HDInsight.Tests
                 Assert.Equal(cluster.Properties.OperatingSystemType, createresponse.Cluster.Properties.OperatingSystemType);
                 Assert.Equal(createresponse.Cluster.Properties.ErrorInfos.Count, 0);
                 Assert.Equal(cluster.Properties.ClusterDefinition.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
-                Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion);
+                Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion.Substring(0, 3));
+
                 Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
 
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
@@ -55,7 +56,8 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
 
@@ -87,7 +89,8 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
 
@@ -143,8 +146,10 @@ namespace HDInsight.Tests
                     Assert.Equal(ex.Response.StatusCode, HttpStatusCode.Conflict);
                 }
 
-                var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);               
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                
             }
         }
 
@@ -162,7 +167,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
-                const string dnsname = "hdisdk-cluster";
+                const string dnsname = "hdisdk-testcluster1";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
@@ -176,11 +181,13 @@ namespace HDInsight.Tests
                 getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
             }
         }
 
-        //[Fact]
+        [Fact]
         public void TestCreateHumboldtClusterWithSshUsernamePassword()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -202,7 +209,37 @@ namespace HDInsight.Tests
                 client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
+
+        [Fact]
+        public void TestCreateHumboldtClusterWithCustomVMSizes()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomVmSizesCreateParametersIaas();
+                const string dnsname = "hdisdk-iaasclusternew-customvmsizes-2";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
             }
         }
     }

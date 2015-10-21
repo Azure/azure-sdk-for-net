@@ -22,8 +22,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />   
+    <None Include="packages.config" />
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithSshUsernamePassword.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
