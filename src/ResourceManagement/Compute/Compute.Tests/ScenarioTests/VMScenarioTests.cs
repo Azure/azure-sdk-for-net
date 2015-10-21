@@ -68,7 +68,7 @@ namespace Compute.Tests
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
-                    ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
+                    ValidateVM(inputVM, listResponse.Value.FirstOrDefault(x => x.Name == inputVM.Name),
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
