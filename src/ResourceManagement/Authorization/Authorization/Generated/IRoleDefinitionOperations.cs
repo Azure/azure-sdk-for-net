@@ -101,5 +101,19 @@ namespace Microsoft.Azure.Management.Authorization
         /// Role definition list operation result.
         /// </returns>
         Task<RoleDefinitionListResult> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get role definitions.
+        /// </summary>
+        /// <param name='parameters'>
+        /// List role definitions filters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role definition list operation result.
+        /// </returns>
+        Task<RoleDefinitionListResult> ListWithFiltersAsync(ListDefinitionFilterParameters parameters, CancellationToken cancellationToken);
     }
 }

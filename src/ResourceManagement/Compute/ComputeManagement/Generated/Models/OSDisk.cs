@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public partial class OSDisk : Disk
     {
+        private DiskEncryptionSettings _encryptionSettings;
+        
+        /// <summary>
+        /// Optional. Gets or sets the disk encryption settings.
+        /// </summary>
+        public DiskEncryptionSettings EncryptionSettings
+        {
+            get { return this._encryptionSettings; }
+            set { this._encryptionSettings = value; }
+        }
+        
         private string _operatingSystemType;
         
         /// <summary>

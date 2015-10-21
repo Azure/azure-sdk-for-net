@@ -141,7 +141,7 @@ namespace Compute.Tests
             }
             catch (Hyak.Common.CloudException ex)
             {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.Forbidden);
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.Conflict);
                 Assert.True(ex.Error.Code == "PropertyChangeNotAllowed");
             }
             Assert.True(createOrUpdateResponse == null);
@@ -165,7 +165,7 @@ namespace Compute.Tests
             }
             catch (Hyak.Common.CloudException ex)
             {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.Forbidden);
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.Conflict);
                 Assert.True(ex.Error.Code == "PropertyChangeNotAllowed");
             }
             Assert.True(createOrUpdateResponse == null);

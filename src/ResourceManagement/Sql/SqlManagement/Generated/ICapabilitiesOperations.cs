@@ -21,41 +21,32 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Sql.Responses;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Represents an Azure SQL Database Elastic Pool metric name.
+    /// Represents all the operations for determining the set of capabilites
+    /// available in a specified region.
     /// </summary>
-    public partial class Name
+    public partial interface ICapabilitiesOperations
     {
-        private string _localizedValue;
-        
         /// <summary>
-        /// Optional. Gets or sets the localized name of the metric
+        /// Returns information about the Azure SQL capabilities available for
+        /// the specified region.
         /// </summary>
-        public string LocalizedValue
-        {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
-        }
-        
-        private string _value;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the metric
-        /// </summary>
-        public string Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Name class.
-        /// </summary>
-        public Name()
-        {
-        }
+        /// <param name='locationName'>
+        /// The name of the region for which the Azure SQL capabilities are
+        /// retrieved.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql capabilities request
+        /// </returns>
+        Task<LocationCapabilitiesGetResponse> GetAsync(string locationName, CancellationToken cancellationToken);
     }
 }

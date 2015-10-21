@@ -13,10 +13,8 @@
 // limitations under the License.
 //
 
-using System;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Test;
@@ -97,7 +95,7 @@ namespace Compute.Tests
 
                 Assert.True(vmimageext.VirtualMachineExtensionImage.OperatingSystem == "Windows");
                 Assert.True(vmimageext.VirtualMachineExtensionImage.ComputeRole == "PaaS");
-                Assert.True(vmimageext.VirtualMachineExtensionImage.HandlerSchema == "");
+                Assert.True(string.IsNullOrEmpty(vmimageext.VirtualMachineExtensionImage.HandlerSchema));
                 Assert.True(vmimageext.VirtualMachineExtensionImage.VMScaleSetEnabled == false);
                 Assert.True(vmimageext.VirtualMachineExtensionImage.SupportsMultipleExtensions == false);
             }

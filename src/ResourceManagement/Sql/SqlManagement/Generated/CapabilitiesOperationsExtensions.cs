@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql
     /// manage your databases. The API enables users to create, retrieve,
     /// update, and delete databases and servers.
     /// </summary>
-    public static partial class LocationCapabilitiesOperationsExtensions
+    public static partial class CapabilitiesOperationsExtensions
     {
         /// <summary>
         /// Returns information about the Azure SQL capabilities available for
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Sql.ILocationCapabilitiesOperations.
+        /// Microsoft.Azure.Management.Sql.ICapabilitiesOperations.
         /// </param>
         /// <param name='locationName'>
         /// Required. The name of the region for which the Azure SQL
@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <returns>
         /// Represents the response to a Get Azure Sql capabilities request
         /// </returns>
-        public static LocationCapabilitiesGetResponse Get(this ILocationCapabilitiesOperations operations, string locationName)
+        public static LocationCapabilitiesGetResponse Get(this ICapabilitiesOperations operations, string locationName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILocationCapabilitiesOperations)s).GetAsync(locationName);
+                return ((ICapabilitiesOperations)s).GetAsync(locationName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Sql.ILocationCapabilitiesOperations.
+        /// Microsoft.Azure.Management.Sql.ICapabilitiesOperations.
         /// </param>
         /// <param name='locationName'>
         /// Required. The name of the region for which the Azure SQL
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <returns>
         /// Represents the response to a Get Azure Sql capabilities request
         /// </returns>
-        public static Task<LocationCapabilitiesGetResponse> GetAsync(this ILocationCapabilitiesOperations operations, string locationName)
+        public static Task<LocationCapabilitiesGetResponse> GetAsync(this ICapabilitiesOperations operations, string locationName)
         {
             return operations.GetAsync(locationName, CancellationToken.None);
         }

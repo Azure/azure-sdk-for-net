@@ -929,7 +929,7 @@
           "close"
         ]
       },
-      "StatusCode": 403
+      "StatusCode": 409
     },
     {
       "RequestUri": "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtest7168/providers/Microsoft.Compute/availabilitySets/asupdateFails2393?api-version=2015-06-15",
@@ -990,7 +990,7 @@
           "close"
         ]
       },
-      "StatusCode": 403
+      "StatusCode": 409
     },
     {
       "RequestUri": "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtest7168/providers/Microsoft.Compute/availabilitySets/asupdateFails2393?api-version=2015-06-15",

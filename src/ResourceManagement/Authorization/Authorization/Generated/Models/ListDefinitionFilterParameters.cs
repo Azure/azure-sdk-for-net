@@ -21,31 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
-    /// Represents the response to a data masking rule get request.
+    /// List role definitions filter.
     /// </summary>
-    public partial class DataMaskingRuleGetResponse : AzureOperationResponse
+    public partial class ListDefinitionFilterParameters
     {
-        private DataMaskingRule _dataMaskingRule;
+        private string _roleName;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Database data masking rule.
+        /// Optional. Returns role definitions with this name.
         /// </summary>
-        public DataMaskingRule DataMaskingRule
+        public string RoleName
         {
-            get { return this._dataMaskingRule; }
-            set { this._dataMaskingRule = value; }
+            get { return this._roleName; }
+            set { this._roleName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataMaskingRuleGetResponse class.
+        /// Initializes a new instance of the ListDefinitionFilterParameters
+        /// class.
         /// </summary>
-        public DataMaskingRuleGetResponse()
+        public ListDefinitionFilterParameters()
         {
         }
     }

@@ -141,31 +141,6 @@ namespace Microsoft.Azure.Management.Sql
         Task<DataMaskingPolicyGetResponse> GetPolicyAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns an Azure SQL Database data masking rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the server belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server on which the database is
-        /// hosted.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the Azure SQL Database for which the data masking rule
-        /// applies.
-        /// </param>
-        /// <param name='dataMaskingRule'>
-        /// The name of the Azure SQL Database  data masking rule.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents the response to a data masking rule get request.
-        /// </returns>
-        Task<DataMaskingRuleGetResponse> GetRuleAsync(string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Returns a list of Azure SQL Database data masking rules.
         /// </summary>
         /// <param name='resourceGroupName'>
