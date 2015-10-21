@@ -34,12 +34,6 @@ namespace Compute.Tests
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
 
-        public static ComputeManagementClient GetComputeManagementClientWithSpn(RecordedDelegatingHandler handler = null)
-        {
-            return GetComputeManagementClient(new ServicePrincipalNameFactory(),
-                handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-        }
-
         public static ComputeManagementClient GetComputeManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -49,11 +43,6 @@ namespace Compute.Tests
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             return GetResourceManagementClient(new CSMTestEnvironmentFactory(), handler);
-        }
-
-        public static ResourceManagementClient GetResourceManagementClientWithSpn(RecordedDelegatingHandler handler)
-        {
-            return GetResourceManagementClient(new ServicePrincipalNameFactory(), handler);
         }
 
         public static ResourceManagementClient GetResourceManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
@@ -67,11 +56,6 @@ namespace Compute.Tests
             return GetNetworkResourceProviderClient(new CSMTestEnvironmentFactory(), handler);
         }
 
-        public static NetworkResourceProviderClient GetNetworkResourceProviderClientSpn(RecordedDelegatingHandler handler)
-        {
-            return GetNetworkResourceProviderClient(new ServicePrincipalNameFactory(), handler);
-        }
-
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -83,16 +67,12 @@ namespace Compute.Tests
             return GetStorageManagementClient(new CSMTestEnvironmentFactory(), handler);
         }
 
-        public static StorageManagementClient GetStorageManagementClientSpn(RecordedDelegatingHandler handler)
-        {
-            return GetStorageManagementClient(new ServicePrincipalNameFactory(), handler);
-        }
-
         public static StorageManagementClient GetStorageManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             return TestBase.GetServiceClient<StorageManagementClient>(factory).WithHandler(handler);
         }
+
         public static void WaitSeconds(double seconds)
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)

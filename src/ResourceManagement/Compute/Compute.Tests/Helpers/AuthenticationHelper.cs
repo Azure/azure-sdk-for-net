@@ -17,16 +17,11 @@
 // https://github.com/Azure/azure-sdk-for-net/pull/1379/files
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Xunit.Sdk;
 
 namespace Compute.Tests
 {
-    public class AuthenticationHelper
+    public static class AuthenticationHelper
     {
         public static string GetTokenForSpn(string authority, string audience, string domain, string applicationId, string secret)
         {

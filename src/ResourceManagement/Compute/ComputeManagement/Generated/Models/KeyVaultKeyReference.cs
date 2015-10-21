@@ -26,61 +26,57 @@ using Microsoft.Azure.Management.Compute.Models;
 namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// Describes an Operating System disk.
+    /// Describes a reference to Key Vault Key
     /// </summary>
-    public partial class OSDisk : Disk
+    public partial class KeyVaultKeyReference
     {
-        private DiskEncryptionSettings _encryptionSettings;
+        private string _keyUrl;
         
         /// <summary>
-        /// Optional. Gets or sets the disk encryption settings.
+        /// Required. Gets or sets the URL referencing a key in a Key Vault.
         /// </summary>
-        public DiskEncryptionSettings EncryptionSettings
+        public string KeyUrl
         {
-            get { return this._encryptionSettings; }
-            set { this._encryptionSettings = value; }
+            get { return this._keyUrl; }
+            set { this._keyUrl = value; }
         }
         
-        private string _operatingSystemType;
+        private SourceVaultReference _sourceVault;
         
         /// <summary>
-        /// Optional. Gets or sets the Operating System type.
+        /// Required. Gets or sets the Relative URL of the Key Vault containing
+        /// the key
         /// </summary>
-        public string OperatingSystemType
+        public SourceVaultReference SourceVault
         {
-            get { return this._operatingSystemType; }
-            set { this._operatingSystemType = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the OSDisk class.
-        /// </summary>
-        public OSDisk()
-        {
+            get { return this._sourceVault; }
+            set { this._sourceVault = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OSDisk class with required
-        /// arguments.
+        /// Initializes a new instance of the KeyVaultKeyReference class.
         /// </summary>
-        public OSDisk(string name, VirtualHardDisk virtualHardDisk, string createOption)
+        public KeyVaultKeyReference()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the KeyVaultKeyReference class with
+        /// required arguments.
+        /// </summary>
+        public KeyVaultKeyReference(string keyUrl, SourceVaultReference sourceVault)
             : this()
         {
-            if (name == null)
+            if (keyUrl == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("keyUrl");
             }
-            if (virtualHardDisk == null)
+            if (sourceVault == null)
             {
-                throw new ArgumentNullException("virtualHardDisk");
+                throw new ArgumentNullException("sourceVault");
             }
-            if (createOption == null)
-            {
-                throw new ArgumentNullException("createOption");
-            }
-            this.Name = name;
-            this.VirtualHardDisk = virtualHardDisk;
-            this.CreateOption = createOption;
+            this.KeyUrl = keyUrl;
+            this.SourceVault = sourceVault;
         }
     }
 }

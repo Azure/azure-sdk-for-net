@@ -15,20 +15,14 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using Microsoft.Azure.Test.HttpRecorder;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -285,11 +279,11 @@ namespace Compute.Tests
 
             ImageReference imageRef = GetPlatformVMImage(useWindowsProfile);
 
-            VirtualMachine inputVM;
             try
             {
                 StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
+                VirtualMachine inputVM;
                 VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
                 VirtualMachineGetResponse getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
@@ -361,9 +355,9 @@ namespace Compute.Tests
         // 3. Complete the recording. 
         // 4. After recording completes, please delete key vault you created by deleting the whole resource group.
 
-        public static string KeyVaultId = "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
+        public const string KeyVaultId = "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
 
-        public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/24c727e7449b47cb9d2f385113f59a63");
+        public static readonly Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/24c727e7449b47cb9d2f385113f59a63");
 
 #pragma warning disable 1998
         public static async Task CreateKeyVault(string subId, string rgName, string keyVaultName)
