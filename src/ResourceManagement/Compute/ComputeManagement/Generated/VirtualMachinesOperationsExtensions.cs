@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static Page<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName)
+            public static VirtualMachineListResult List(this IVirtualMachinesOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -459,9 +459,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Page<VirtualMachine>> ListAsync( this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineListResult> ListAsync( this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static Page<VirtualMachine> ListAll(this IVirtualMachinesOperations operations)
+            public static VirtualMachineListResult ListAll(this IVirtualMachinesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -489,9 +489,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Page<VirtualMachine>> ListAllAsync( this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineListResult> ListAllAsync( this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -764,7 +764,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<VirtualMachine> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
+            public static VirtualMachineListResult ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -781,9 +781,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Page<VirtualMachine>> ListNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineListResult> ListNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -798,7 +798,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<VirtualMachine> ListAllNext(this IVirtualMachinesOperations operations, string nextPageLink)
+            public static VirtualMachineListResult ListAllNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -817,9 +817,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Page<VirtualMachine>> ListAllNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineListResult> ListAllNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

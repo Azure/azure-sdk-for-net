@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Compute
     using Models;
 
     /// <summary>
+    /// The Compute Management Client.
     /// </summary>
     public partial class ComputeManagementClient : ServiceClient<ComputeManagementClient>, IComputeManagementClient, IAzureClient
     {
@@ -75,17 +76,21 @@ namespace Microsoft.Azure.Management.Compute
 
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
 
-        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
-
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
 
         public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
+
+        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
 
         public virtual IUsageOperations Usage { get; private set; }
 
         public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
 
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
+
+        public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -193,12 +198,14 @@ namespace Microsoft.Azure.Management.Compute
         private void Initialize()
         {
             this.AvailabilitySets = new AvailabilitySetsOperations(this);
-            this.VirtualMachineImages = new VirtualMachineImagesOperations(this);
             this.VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             this.VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
+            this.VirtualMachineImages = new VirtualMachineImagesOperations(this);
             this.Usage = new UsageOperations(this);
             this.VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             this.VirtualMachines = new VirtualMachinesOperations(this);
+            this.VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
+            this.VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-06-15";
             this.AcceptLanguage = "en-US";

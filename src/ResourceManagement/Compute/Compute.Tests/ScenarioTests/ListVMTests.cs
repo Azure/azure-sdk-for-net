@@ -49,12 +49,12 @@ namespace Compute.Tests
                     var vm2 = CreateVM_NoAsyncTracking(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
 
                     var listResponse = m_CrpClient.VirtualMachines.ListAll();
-                    Assert.True(listResponse.Count() >= 2);
-                    Assert.Null(listResponse.NextPageLink);
+                    Assert.True(listResponse.Value.Count() >= 2);
+                    Assert.Null(listResponse.NextLink);
 
                     int vmsValidatedCount = 0;
 
-                    foreach (var vm in listResponse)
+                    foreach (var vm in listResponse.Value)
                     {
                         if (vm.Name == vm1.Name)
                         {
