@@ -1,6 +1,6 @@
 {
     "version": "2.0.0-preview",
-    "description": "Microsoft.Azure.Management.Resources",
+    "description": "Microsoft.Azure.Management.Storage",
     "authors": [ "Microsoft" ],
     "tags": [ "Microsoft AutoRest Management REST" ],
     "projectUrl": "https://github.com/Azure/AutoRest",

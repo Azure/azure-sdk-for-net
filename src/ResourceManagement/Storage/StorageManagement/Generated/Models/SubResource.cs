@@ -17,21 +17,14 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
     /// </summary>
-    public partial class UsageName
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Gets a string describing the resource name.
+        /// Resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
-
-        /// <summary>
-        /// Gets a localized string describing the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
