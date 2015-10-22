@@ -257,7 +257,6 @@ namespace HDInsight.Tests.Helpers
             return clusterparams;
         }
 
-
         public static ClusterCreateParameters GetCustomVmSizesCreateParametersIaas()
         {
             var clusterparams = new ClusterCreateParameters
@@ -279,6 +278,18 @@ namespace HDInsight.Tests.Helpers
                 ZookeeperNodeSize = "Large",
             };
             return clusterparams;
+        }
+
+        public static ClusterCreateParametersExtended AddConfigurations(ClusterCreateParametersExtended cluster, string configurationKey, Dictionary<string, string> configs)
+        {
+            string configurations = cluster.Properties.ClusterDefinition.Configurations;
+            var config = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<String, string>>>(configurations);
+            config.Add(configurationKey, configs);
+
+            var serializedConfig = JsonConvert.SerializeObject(config);
+            cluster.Properties.ClusterDefinition.Configurations = serializedConfig;
+
+            return cluster;
         }
     }
 }
