@@ -133,9 +133,27 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private void VerifyUploadedStream()
         {
             //verify that the remote stream has the length we expected.
-            var remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path);
-            
-            _token.ThrowIfCancellationRequested();
+            var retryCount = 0;
+            long remoteLength = -1;
+            while (retryCount < MaxBufferUploadAttemptCount)
+            {
+                _token.ThrowIfCancellationRequested();
+                retryCount++;
+                try
+                {
+                    remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path);
+                    break;
+                }
+                catch (Exception)
+                {
+                    if (retryCount >= MaxBufferUploadAttemptCount)
+                    {
+                        throw;
+                    }
+
+                    WaitForRetry(retryCount);
+                }
+            }
 
             if (_segmentMetadata.Length != remoteLength)
             {
