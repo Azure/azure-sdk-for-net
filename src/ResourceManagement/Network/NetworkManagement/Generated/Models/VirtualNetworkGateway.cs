@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._enableBgp = value; }
         }
         
+        private LocalNetworkGateway _gatewayDefaultSite;
+        
+        /// <summary>
+        /// Optional. Local network site which has default routes.
+        /// </summary>
+        public LocalNetworkGateway GatewayDefaultSite
+        {
+            get { return this._gatewayDefaultSite; }
+            set { this._gatewayDefaultSite = value; }
+        }
+        
         private string _gatewayType;
         
         /// <summary>

@@ -29,7 +29,8 @@
                         Bandwidth = bandwidth,
                         CircuitName = circuitName,
                         Location = location,
-                        ServiceProviderName = provider.Name
+                        ServiceProviderName = provider.Name,
+                       BillingType = BillingType.ServiceProviderType
                     };
                 var newResponse = expressRouteClient.DedicatedCircuits.New(newParams);
                 TestUtilities.ValidateOperationResponse(newResponse);
@@ -42,6 +43,7 @@
                 Assert.Equal(createdCircuit.DedicatedCircuit.Location, location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(createdCircuit.DedicatedCircuit.Status, DedicatedCircuitState.Enabled);
                 Assert.Equal(createdCircuit.DedicatedCircuit.ServiceProviderProvisioningState, ProviderProvisioningState.NotProvisioned);
+                Assert.Equal(createdCircuit.DedicatedCircuit.BillingType, BillingType.ServiceProviderType);
 
                 DedicatedCircuitListResponse circuits = expressRouteClient.DedicatedCircuits.List();
                 TestUtilities.ValidateOperationResponse(circuits);

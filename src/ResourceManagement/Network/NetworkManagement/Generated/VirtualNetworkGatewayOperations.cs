@@ -103,6 +103,13 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.GatewayDefaultSite != null)
+            {
+                if (parameters.GatewayDefaultSite.Location == null)
+                {
+                    throw new ArgumentNullException("parameters.GatewayDefaultSite.Location");
+                }
+            }
             if (parameters.Location == null)
             {
                 throw new ArgumentNullException("parameters.Location");
@@ -258,6 +265,80 @@ namespace Microsoft.Azure.Management.Network
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
+                if (parameters.GatewayDefaultSite != null)
+                {
+                    JObject gatewaydefaultsiteValue = new JObject();
+                    propertiesValue["gatewaydefaultsite"] = gatewaydefaultsiteValue;
+                    
+                    if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace != null)
+                    {
+                        JObject localNetworkAddressSpaceValue = new JObject();
+                        gatewaydefaultsiteValue["localNetworkAddressSpace"] = localNetworkAddressSpaceValue;
+                        
+                        if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes != null)
+                        {
+                            if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes is ILazyCollection == false || ((ILazyCollection)parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes).IsInitialized)
+                            {
+                                JArray addressPrefixesArray = new JArray();
+                                foreach (string addressPrefixesItem in parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes)
+                                {
+                                    addressPrefixesArray.Add(addressPrefixesItem);
+                                }
+                                localNetworkAddressSpaceValue["addressPrefixes"] = addressPrefixesArray;
+                            }
+                        }
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.GatewayIpAddress != null)
+                    {
+                        gatewaydefaultsiteValue["gatewayIpAddress"] = parameters.GatewayDefaultSite.GatewayIpAddress;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.ProvisioningState != null)
+                    {
+                        gatewaydefaultsiteValue["provisioningState"] = parameters.GatewayDefaultSite.ProvisioningState;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.ResourceGuid != null)
+                    {
+                        gatewaydefaultsiteValue["resourceGuid"] = parameters.GatewayDefaultSite.ResourceGuid;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Etag != null)
+                    {
+                        gatewaydefaultsiteValue["etag"] = parameters.GatewayDefaultSite.Etag;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Id != null)
+                    {
+                        gatewaydefaultsiteValue["id"] = parameters.GatewayDefaultSite.Id;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Name != null)
+                    {
+                        gatewaydefaultsiteValue["name"] = parameters.GatewayDefaultSite.Name;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Type != null)
+                    {
+                        gatewaydefaultsiteValue["type"] = parameters.GatewayDefaultSite.Type;
+                    }
+                    
+                    gatewaydefaultsiteValue["location"] = parameters.GatewayDefaultSite.Location;
+                    
+                    if (parameters.GatewayDefaultSite.Tags != null)
+                    {
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.GatewayDefaultSite.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        gatewaydefaultsiteValue["tags"] = tagsDictionary;
+                    }
+                }
+                
                 if (parameters.ResourceGuid != null)
                 {
                     propertiesValue["resourceGuid"] = parameters.ResourceGuid;
@@ -292,14 +373,14 @@ namespace Microsoft.Azure.Management.Network
                 
                 if (parameters.Tags != null)
                 {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    JObject tagsDictionary2 = new JObject();
+                    foreach (KeyValuePair<string, string> pair2 in parameters.Tags)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        string tagsKey2 = pair2.Key;
+                        string tagsValue2 = pair2.Value;
+                        tagsDictionary2[tagsKey2] = tagsValue2;
                     }
-                    virtualNetworkGatewayJsonFormatValue["tags"] = tagsDictionary;
+                    virtualNetworkGatewayJsonFormatValue["tags"] = tagsDictionary2;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -459,64 +540,154 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
                                 }
                                 
-                                JToken resourceGuidValue = propertiesValue3["resourceGuid"];
-                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                JToken gatewaydefaultsiteValue2 = propertiesValue3["gatewaydefaultsite"];
+                                if (gatewaydefaultsiteValue2 != null && gatewaydefaultsiteValue2.Type != JTokenType.Null)
                                 {
-                                    string resourceGuidInstance = ((string)resourceGuidValue);
-                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                    LocalNetworkGateway gatewaydefaultsiteInstance = new LocalNetworkGateway();
+                                    virtualNetworkGatewayInstance.GatewayDefaultSite = gatewaydefaultsiteInstance;
+                                    
+                                    JToken localNetworkAddressSpaceValue2 = gatewaydefaultsiteValue2["localNetworkAddressSpace"];
+                                    if (localNetworkAddressSpaceValue2 != null && localNetworkAddressSpaceValue2.Type != JTokenType.Null)
+                                    {
+                                        AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                        gatewaydefaultsiteInstance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                        
+                                        JToken addressPrefixesArray2 = localNetworkAddressSpaceValue2["addressPrefixes"];
+                                        if (addressPrefixesArray2 != null && addressPrefixesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray2))
+                                            {
+                                                localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken gatewayIpAddressValue = gatewaydefaultsiteValue2["gatewayIpAddress"];
+                                    if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
+                                    {
+                                        string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
+                                        gatewaydefaultsiteInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = gatewaydefaultsiteValue2["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        gatewaydefaultsiteInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    
+                                    JToken resourceGuidValue = gatewaydefaultsiteValue2["resourceGuid"];
+                                    if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGuidInstance = ((string)resourceGuidValue);
+                                        gatewaydefaultsiteInstance.ResourceGuid = resourceGuidInstance;
+                                    }
+                                    
+                                    JToken etagValue2 = gatewaydefaultsiteValue2["etag"];
+                                    if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance2 = ((string)etagValue2);
+                                        gatewaydefaultsiteInstance.Etag = etagInstance2;
+                                    }
+                                    
+                                    JToken idValue4 = gatewaydefaultsiteValue2["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        gatewaydefaultsiteInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue2 = gatewaydefaultsiteValue2["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        gatewaydefaultsiteInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken typeValue = gatewaydefaultsiteValue2["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        gatewaydefaultsiteInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = gatewaydefaultsiteValue2["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        gatewaydefaultsiteInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)gatewaydefaultsiteValue2["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey3 = ((string)property.Name);
+                                            string tagsValue3 = ((string)property.Value);
+                                            gatewaydefaultsiteInstance.Tags.Add(tagsKey3, tagsValue3);
+                                        }
+                                    }
                                 }
                                 
-                                JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                JToken resourceGuidValue2 = propertiesValue3["resourceGuid"];
+                                if (resourceGuidValue2 != null && resourceGuidValue2.Type != JTokenType.Null)
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance2;
+                                    string resourceGuidInstance2 = ((string)resourceGuidValue2);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance2;
+                                }
+                                
+                                JToken provisioningStateValue3 = propertiesValue3["provisioningState"];
+                                if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance3;
                                 }
                             }
                             
-                            JToken etagValue2 = responseDoc["etag"];
-                            if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                            JToken etagValue3 = responseDoc["etag"];
+                            if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                             {
-                                string etagInstance2 = ((string)etagValue2);
-                                virtualNetworkGatewayInstance.Etag = etagInstance2;
+                                string etagInstance3 = ((string)etagValue3);
+                                virtualNetworkGatewayInstance.Etag = etagInstance3;
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                virtualNetworkGatewayInstance.Id = idInstance4;
+                                string idInstance5 = ((string)idValue5);
+                                virtualNetworkGatewayInstance.Id = idInstance5;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                virtualNetworkGatewayInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                virtualNetworkGatewayInstance.Name = nameInstance3;
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                virtualNetworkGatewayInstance.Type = typeInstance;
+                                string typeInstance2 = ((string)typeValue2);
+                                virtualNetworkGatewayInstance.Type = typeInstance2;
                             }
                             
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance = ((string)locationValue);
-                                virtualNetworkGatewayInstance.Location = locationInstance;
+                                string locationInstance2 = ((string)locationValue2);
+                                virtualNetworkGatewayInstance.Location = locationInstance2;
                             }
                             
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property2 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey4 = ((string)property2.Name);
+                                    string tagsValue4 = ((string)property2.Value);
+                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey4, tagsValue4);
                                 }
                             }
                             
@@ -819,6 +990,13 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.GatewayDefaultSite != null)
+            {
+                if (parameters.GatewayDefaultSite.Location == null)
+                {
+                    throw new ArgumentNullException("parameters.GatewayDefaultSite.Location");
+                }
+            }
             if (parameters.Location == null)
             {
                 throw new ArgumentNullException("parameters.Location");
@@ -975,6 +1153,80 @@ namespace Microsoft.Azure.Management.Network
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
+                if (parameters.GatewayDefaultSite != null)
+                {
+                    JObject gatewaydefaultsiteValue = new JObject();
+                    propertiesValue["gatewaydefaultsite"] = gatewaydefaultsiteValue;
+                    
+                    if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace != null)
+                    {
+                        JObject localNetworkAddressSpaceValue = new JObject();
+                        gatewaydefaultsiteValue["localNetworkAddressSpace"] = localNetworkAddressSpaceValue;
+                        
+                        if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes != null)
+                        {
+                            if (parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes is ILazyCollection == false || ((ILazyCollection)parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes).IsInitialized)
+                            {
+                                JArray addressPrefixesArray = new JArray();
+                                foreach (string addressPrefixesItem in parameters.GatewayDefaultSite.LocalNetworkAddressSpace.AddressPrefixes)
+                                {
+                                    addressPrefixesArray.Add(addressPrefixesItem);
+                                }
+                                localNetworkAddressSpaceValue["addressPrefixes"] = addressPrefixesArray;
+                            }
+                        }
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.GatewayIpAddress != null)
+                    {
+                        gatewaydefaultsiteValue["gatewayIpAddress"] = parameters.GatewayDefaultSite.GatewayIpAddress;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.ProvisioningState != null)
+                    {
+                        gatewaydefaultsiteValue["provisioningState"] = parameters.GatewayDefaultSite.ProvisioningState;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.ResourceGuid != null)
+                    {
+                        gatewaydefaultsiteValue["resourceGuid"] = parameters.GatewayDefaultSite.ResourceGuid;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Etag != null)
+                    {
+                        gatewaydefaultsiteValue["etag"] = parameters.GatewayDefaultSite.Etag;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Id != null)
+                    {
+                        gatewaydefaultsiteValue["id"] = parameters.GatewayDefaultSite.Id;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Name != null)
+                    {
+                        gatewaydefaultsiteValue["name"] = parameters.GatewayDefaultSite.Name;
+                    }
+                    
+                    if (parameters.GatewayDefaultSite.Type != null)
+                    {
+                        gatewaydefaultsiteValue["type"] = parameters.GatewayDefaultSite.Type;
+                    }
+                    
+                    gatewaydefaultsiteValue["location"] = parameters.GatewayDefaultSite.Location;
+                    
+                    if (parameters.GatewayDefaultSite.Tags != null)
+                    {
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.GatewayDefaultSite.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        gatewaydefaultsiteValue["tags"] = tagsDictionary;
+                    }
+                }
+                
                 if (parameters.ResourceGuid != null)
                 {
                     propertiesValue["resourceGuid"] = parameters.ResourceGuid;
@@ -1009,14 +1261,14 @@ namespace Microsoft.Azure.Management.Network
                 
                 if (parameters.Tags != null)
                 {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    JObject tagsDictionary2 = new JObject();
+                    foreach (KeyValuePair<string, string> pair2 in parameters.Tags)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        string tagsKey2 = pair2.Key;
+                        string tagsValue2 = pair2.Value;
+                        tagsDictionary2[tagsKey2] = tagsValue2;
                     }
-                    virtualNetworkGatewayJsonFormatValue["tags"] = tagsDictionary;
+                    virtualNetworkGatewayJsonFormatValue["tags"] = tagsDictionary2;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1176,64 +1428,154 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
                                 }
                                 
-                                JToken resourceGuidValue = propertiesValue3["resourceGuid"];
-                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                JToken gatewaydefaultsiteValue2 = propertiesValue3["gatewaydefaultsite"];
+                                if (gatewaydefaultsiteValue2 != null && gatewaydefaultsiteValue2.Type != JTokenType.Null)
                                 {
-                                    string resourceGuidInstance = ((string)resourceGuidValue);
-                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                    LocalNetworkGateway gatewaydefaultsiteInstance = new LocalNetworkGateway();
+                                    virtualNetworkGatewayInstance.GatewayDefaultSite = gatewaydefaultsiteInstance;
+                                    
+                                    JToken localNetworkAddressSpaceValue2 = gatewaydefaultsiteValue2["localNetworkAddressSpace"];
+                                    if (localNetworkAddressSpaceValue2 != null && localNetworkAddressSpaceValue2.Type != JTokenType.Null)
+                                    {
+                                        AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                        gatewaydefaultsiteInstance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                        
+                                        JToken addressPrefixesArray2 = localNetworkAddressSpaceValue2["addressPrefixes"];
+                                        if (addressPrefixesArray2 != null && addressPrefixesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray2))
+                                            {
+                                                localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken gatewayIpAddressValue = gatewaydefaultsiteValue2["gatewayIpAddress"];
+                                    if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
+                                    {
+                                        string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
+                                        gatewaydefaultsiteInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = gatewaydefaultsiteValue2["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        gatewaydefaultsiteInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    
+                                    JToken resourceGuidValue = gatewaydefaultsiteValue2["resourceGuid"];
+                                    if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGuidInstance = ((string)resourceGuidValue);
+                                        gatewaydefaultsiteInstance.ResourceGuid = resourceGuidInstance;
+                                    }
+                                    
+                                    JToken etagValue2 = gatewaydefaultsiteValue2["etag"];
+                                    if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance2 = ((string)etagValue2);
+                                        gatewaydefaultsiteInstance.Etag = etagInstance2;
+                                    }
+                                    
+                                    JToken idValue4 = gatewaydefaultsiteValue2["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        gatewaydefaultsiteInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue2 = gatewaydefaultsiteValue2["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        gatewaydefaultsiteInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken typeValue = gatewaydefaultsiteValue2["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        gatewaydefaultsiteInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = gatewaydefaultsiteValue2["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        gatewaydefaultsiteInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)gatewaydefaultsiteValue2["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey3 = ((string)property.Name);
+                                            string tagsValue3 = ((string)property.Value);
+                                            gatewaydefaultsiteInstance.Tags.Add(tagsKey3, tagsValue3);
+                                        }
+                                    }
                                 }
                                 
-                                JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                JToken resourceGuidValue2 = propertiesValue3["resourceGuid"];
+                                if (resourceGuidValue2 != null && resourceGuidValue2.Type != JTokenType.Null)
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance2;
+                                    string resourceGuidInstance2 = ((string)resourceGuidValue2);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance2;
+                                }
+                                
+                                JToken provisioningStateValue3 = propertiesValue3["provisioningState"];
+                                if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance3;
                                 }
                             }
                             
-                            JToken etagValue2 = responseDoc["etag"];
-                            if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                            JToken etagValue3 = responseDoc["etag"];
+                            if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                             {
-                                string etagInstance2 = ((string)etagValue2);
-                                virtualNetworkGatewayInstance.Etag = etagInstance2;
+                                string etagInstance3 = ((string)etagValue3);
+                                virtualNetworkGatewayInstance.Etag = etagInstance3;
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                virtualNetworkGatewayInstance.Id = idInstance4;
+                                string idInstance5 = ((string)idValue5);
+                                virtualNetworkGatewayInstance.Id = idInstance5;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                virtualNetworkGatewayInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                virtualNetworkGatewayInstance.Name = nameInstance3;
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                virtualNetworkGatewayInstance.Type = typeInstance;
+                                string typeInstance2 = ((string)typeValue2);
+                                virtualNetworkGatewayInstance.Type = typeInstance2;
                             }
                             
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance = ((string)locationValue);
-                                virtualNetworkGatewayInstance.Location = locationInstance;
+                                string locationInstance2 = ((string)locationValue2);
+                                virtualNetworkGatewayInstance.Location = locationInstance2;
                             }
                             
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property2 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey4 = ((string)property2.Name);
+                                    string tagsValue4 = ((string)property2.Value);
+                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey4, tagsValue4);
                                 }
                             }
                             
@@ -1733,64 +2075,154 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
                                 }
                                 
-                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
-                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                JToken gatewaydefaultsiteValue = propertiesValue["gatewaydefaultsite"];
+                                if (gatewaydefaultsiteValue != null && gatewaydefaultsiteValue.Type != JTokenType.Null)
                                 {
-                                    string resourceGuidInstance = ((string)resourceGuidValue);
-                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance;
+                                    LocalNetworkGateway gatewaydefaultsiteInstance = new LocalNetworkGateway();
+                                    virtualNetworkGatewayInstance.GatewayDefaultSite = gatewaydefaultsiteInstance;
+                                    
+                                    JToken localNetworkAddressSpaceValue = gatewaydefaultsiteValue["localNetworkAddressSpace"];
+                                    if (localNetworkAddressSpaceValue != null && localNetworkAddressSpaceValue.Type != JTokenType.Null)
+                                    {
+                                        AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                        gatewaydefaultsiteInstance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                        
+                                        JToken addressPrefixesArray = localNetworkAddressSpaceValue["addressPrefixes"];
+                                        if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                            {
+                                                localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken gatewayIpAddressValue = gatewaydefaultsiteValue["gatewayIpAddress"];
+                                    if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
+                                    {
+                                        string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
+                                        gatewaydefaultsiteInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = gatewaydefaultsiteValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        gatewaydefaultsiteInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    
+                                    JToken resourceGuidValue = gatewaydefaultsiteValue["resourceGuid"];
+                                    if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGuidInstance = ((string)resourceGuidValue);
+                                        gatewaydefaultsiteInstance.ResourceGuid = resourceGuidInstance;
+                                    }
+                                    
+                                    JToken etagValue2 = gatewaydefaultsiteValue["etag"];
+                                    if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance2 = ((string)etagValue2);
+                                        gatewaydefaultsiteInstance.Etag = etagInstance2;
+                                    }
+                                    
+                                    JToken idValue4 = gatewaydefaultsiteValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        gatewaydefaultsiteInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue2 = gatewaydefaultsiteValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        gatewaydefaultsiteInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken typeValue = gatewaydefaultsiteValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        gatewaydefaultsiteInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = gatewaydefaultsiteValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        gatewaydefaultsiteInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)gatewaydefaultsiteValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            gatewaydefaultsiteInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
                                 }
                                 
-                                JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                JToken resourceGuidValue2 = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue2 != null && resourceGuidValue2.Type != JTokenType.Null)
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance2;
+                                    string resourceGuidInstance2 = ((string)resourceGuidValue2);
+                                    virtualNetworkGatewayInstance.ResourceGuid = resourceGuidInstance2;
+                                }
+                                
+                                JToken provisioningStateValue3 = propertiesValue["provisioningState"];
+                                if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                    virtualNetworkGatewayInstance.ProvisioningState = provisioningStateInstance3;
                                 }
                             }
                             
-                            JToken etagValue2 = responseDoc["etag"];
-                            if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                            JToken etagValue3 = responseDoc["etag"];
+                            if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                             {
-                                string etagInstance2 = ((string)etagValue2);
-                                virtualNetworkGatewayInstance.Etag = etagInstance2;
+                                string etagInstance3 = ((string)etagValue3);
+                                virtualNetworkGatewayInstance.Etag = etagInstance3;
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                virtualNetworkGatewayInstance.Id = idInstance4;
+                                string idInstance5 = ((string)idValue5);
+                                virtualNetworkGatewayInstance.Id = idInstance5;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                virtualNetworkGatewayInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                virtualNetworkGatewayInstance.Name = nameInstance3;
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                virtualNetworkGatewayInstance.Type = typeInstance;
+                                string typeInstance2 = ((string)typeValue2);
+                                virtualNetworkGatewayInstance.Type = typeInstance2;
                             }
                             
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance = ((string)locationValue);
-                                virtualNetworkGatewayInstance.Location = locationInstance;
+                                string locationInstance2 = ((string)locationValue2);
+                                virtualNetworkGatewayInstance.Location = locationInstance2;
                             }
                             
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property2 in tagsSequenceElement2)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey, tagsValue);
+                                    string tagsKey2 = ((string)property2.Name);
+                                    string tagsValue2 = ((string)property2.Value);
+                                    virtualNetworkGatewayInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
                         }
@@ -2060,64 +2492,154 @@ namespace Microsoft.Azure.Management.Network
                                             virtualNetworkGatewayJsonFormatInstance.EnableBgp = enableBgpInstance;
                                         }
                                         
-                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
-                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        JToken gatewaydefaultsiteValue = propertiesValue["gatewaydefaultsite"];
+                                        if (gatewaydefaultsiteValue != null && gatewaydefaultsiteValue.Type != JTokenType.Null)
                                         {
-                                            string resourceGuidInstance = ((string)resourceGuidValue);
-                                            virtualNetworkGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                            LocalNetworkGateway gatewaydefaultsiteInstance = new LocalNetworkGateway();
+                                            virtualNetworkGatewayJsonFormatInstance.GatewayDefaultSite = gatewaydefaultsiteInstance;
+                                            
+                                            JToken localNetworkAddressSpaceValue = gatewaydefaultsiteValue["localNetworkAddressSpace"];
+                                            if (localNetworkAddressSpaceValue != null && localNetworkAddressSpaceValue.Type != JTokenType.Null)
+                                            {
+                                                AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                                gatewaydefaultsiteInstance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                                
+                                                JToken addressPrefixesArray = localNetworkAddressSpaceValue["addressPrefixes"];
+                                                if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                                    {
+                                                        localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken gatewayIpAddressValue = gatewaydefaultsiteValue["gatewayIpAddress"];
+                                            if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
+                                            {
+                                                string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
+                                                gatewaydefaultsiteInstance.GatewayIpAddress = gatewayIpAddressInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = gatewaydefaultsiteValue["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                gatewaydefaultsiteInstance.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            
+                                            JToken resourceGuidValue = gatewaydefaultsiteValue["resourceGuid"];
+                                            if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceGuidInstance = ((string)resourceGuidValue);
+                                                gatewaydefaultsiteInstance.ResourceGuid = resourceGuidInstance;
+                                            }
+                                            
+                                            JToken etagValue2 = gatewaydefaultsiteValue["etag"];
+                                            if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                            {
+                                                string etagInstance2 = ((string)etagValue2);
+                                                gatewaydefaultsiteInstance.Etag = etagInstance2;
+                                            }
+                                            
+                                            JToken idValue4 = gatewaydefaultsiteValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            {
+                                                string idInstance4 = ((string)idValue4);
+                                                gatewaydefaultsiteInstance.Id = idInstance4;
+                                            }
+                                            
+                                            JToken nameValue2 = gatewaydefaultsiteValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                gatewaydefaultsiteInstance.Name = nameInstance2;
+                                            }
+                                            
+                                            JToken typeValue = gatewaydefaultsiteValue["type"];
+                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance = ((string)typeValue);
+                                                gatewaydefaultsiteInstance.Type = typeInstance;
+                                            }
+                                            
+                                            JToken locationValue = gatewaydefaultsiteValue["location"];
+                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance = ((string)locationValue);
+                                                gatewaydefaultsiteInstance.Location = locationInstance;
+                                            }
+                                            
+                                            JToken tagsSequenceElement = ((JToken)gatewaydefaultsiteValue["tags"]);
+                                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in tagsSequenceElement)
+                                                {
+                                                    string tagsKey = ((string)property.Name);
+                                                    string tagsValue = ((string)property.Value);
+                                                    gatewaydefaultsiteInstance.Tags.Add(tagsKey, tagsValue);
+                                                }
+                                            }
                                         }
                                         
-                                        JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        JToken resourceGuidValue2 = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue2 != null && resourceGuidValue2.Type != JTokenType.Null)
                                         {
-                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                            virtualNetworkGatewayJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                            string resourceGuidInstance2 = ((string)resourceGuidValue2);
+                                            virtualNetworkGatewayJsonFormatInstance.ResourceGuid = resourceGuidInstance2;
+                                        }
+                                        
+                                        JToken provisioningStateValue3 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                            virtualNetworkGatewayJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                         }
                                     }
                                     
-                                    JToken etagValue2 = valueValue["etag"];
-                                    if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                    JToken etagValue3 = valueValue["etag"];
+                                    if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                     {
-                                        string etagInstance2 = ((string)etagValue2);
-                                        virtualNetworkGatewayJsonFormatInstance.Etag = etagInstance2;
+                                        string etagInstance3 = ((string)etagValue3);
+                                        virtualNetworkGatewayJsonFormatInstance.Etag = etagInstance3;
                                     }
                                     
-                                    JToken idValue4 = valueValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue5 = valueValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualNetworkGatewayJsonFormatInstance.Id = idInstance4;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualNetworkGatewayJsonFormatInstance.Id = idInstance5;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        virtualNetworkGatewayJsonFormatInstance.Name = nameInstance2;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        virtualNetworkGatewayJsonFormatInstance.Name = nameInstance3;
                                     }
                                     
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken typeValue2 = valueValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        virtualNetworkGatewayJsonFormatInstance.Type = typeInstance;
+                                        string typeInstance2 = ((string)typeValue2);
+                                        virtualNetworkGatewayJsonFormatInstance.Type = typeInstance2;
                                     }
                                     
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    JToken locationValue2 = valueValue["location"];
+                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                                     {
-                                        string locationInstance = ((string)locationValue);
-                                        virtualNetworkGatewayJsonFormatInstance.Location = locationInstance;
+                                        string locationInstance2 = ((string)locationValue2);
+                                        virtualNetworkGatewayJsonFormatInstance.Location = locationInstance2;
                                     }
                                     
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement2 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        foreach (JProperty property2 in tagsSequenceElement2)
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            virtualNetworkGatewayJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                            string tagsKey2 = ((string)property2.Name);
+                                            string tagsValue2 = ((string)property2.Value);
+                                            virtualNetworkGatewayJsonFormatInstance.Tags.Add(tagsKey2, tagsValue2);
                                         }
                                     }
                                 }
