@@ -17,21 +17,14 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Tenant Id information
     /// </summary>
-    public partial class TenantIdDescription
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Gets or sets Id
+        /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets tenantId
-        /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
 
     }
 }

@@ -51,7 +51,7 @@ namespace ResourceGroups.Tests
 
         public string GetWebsiteLocation(ResourceManagementClient client)
         {
-            return ResourcesManagementTestUtilities.GetResourceLocation(client, "Microsoft.Web/sites");
+            return "WestUS";
         }
 
         public string GetMySqlLocation(ResourceManagementClient client)
