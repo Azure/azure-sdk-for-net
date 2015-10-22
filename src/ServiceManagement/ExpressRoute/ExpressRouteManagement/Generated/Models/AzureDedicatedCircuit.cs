@@ -41,6 +41,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._bandwidth = value; }
         }
         
+        private BillingType _billingType;
+        
+        /// <summary>
+        /// Optional. BillingType to be used for the new dedicated circuit.
+        /// </summary>
+        public BillingType BillingType
+        {
+            get { return this._billingType; }
+            set { this._billingType = value; }
+        }
+        
         private string _circuitName;
         
         /// <summary>
