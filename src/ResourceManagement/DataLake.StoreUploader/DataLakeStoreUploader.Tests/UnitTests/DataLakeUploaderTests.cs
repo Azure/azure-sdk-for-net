@@ -194,12 +194,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             myTokenSource.Cancel();
             Assert.True(cancelToken.IsCancellationRequested);
 
-            while (uploadTask.Status == TaskStatus.Running)
+            while (uploadTask.Status == TaskStatus.Running || uploadTask.Status == TaskStatus.WaitingToRun)
             {
                 Thread.Sleep(250);
             }
 
-            Assert.True(uploadTask.IsCanceled, "The task was not cancelled as expected.");
+            Assert.True(uploadTask.IsCanceled, "The task was not cancelled as expected. Actual task state: " + uploadTask.Status);
 
             // Verify that the file did not get uploaded completely.
             Assert.False(frontEnd.StreamExists(up.TargetStreamPath), "Uploaded stream exists when it should not yet have been completely created");

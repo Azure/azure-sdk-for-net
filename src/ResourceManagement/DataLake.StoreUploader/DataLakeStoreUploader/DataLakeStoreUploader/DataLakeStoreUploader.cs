@@ -227,19 +227,43 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 if (segment.Status == SegmentUploadStatus.Complete)
                 {
-                    //verify that the stream exists and that the length is as expected
-                    if (!_frontEnd.StreamExists(segment.Path))
+                    var retryCount = 0;
+                    while (retryCount < SingleSegmentUploader.MaxBufferUploadAttemptCount)
                     {
-                        // this segment was marked as completed, but no target stream exists; it needs to be reuploaded
-                        segment.Status = SegmentUploadStatus.Pending;
-                    }
-                    else 
-                    {
-                        var remoteLength = _frontEnd.GetStreamLength(segment.Path);
-                        if (remoteLength != segment.Length)
+                        _token.ThrowIfCancellationRequested();
+                        retryCount++;
+                        try
                         {
-                            //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
-                            segment.Status = SegmentUploadStatus.Pending;
+                            //verify that the stream exists and that the length is as expected
+                            if (!_frontEnd.StreamExists(segment.Path))
+                            {
+                                // this segment was marked as completed, but no target stream exists; it needs to be reuploaded
+                                segment.Status = SegmentUploadStatus.Pending;
+                            }
+                            else
+                            {
+                                var remoteLength = _frontEnd.GetStreamLength(segment.Path);
+                                if (remoteLength != segment.Length)
+                                {
+                                    //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
+                                    segment.Status = SegmentUploadStatus.Pending;
+                                }
+                            }
+
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            _token.ThrowIfCancellationRequested();
+                            if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
+                            {
+                                throw new UploadFailedException(
+                                    string.Format(
+                                        "Cannot validate metadata in order to resume due to the following exception retrieving file information: {0}",
+                                        e));
+                            }
+
+                            SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
                         }
                     }
                 }
@@ -420,9 +444,35 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             throw new UploadFailedException("Cannot perform 'Concatenate' operation because not all streams are fully uploaded.");
                         }
 
-                        string remoteStreamPath = metadata.Segments[i].Path;
+                        var remoteStreamPath = metadata.Segments[i].Path;
+                        var retryCount = 0;
+                        long remoteLength = -1;
+                        
+                        while (retryCount < SingleSegmentUploader.MaxBufferUploadAttemptCount)
+                        {
+                            _token.ThrowIfCancellationRequested();
+                            retryCount++;
+                            try
+                            {
+                                remoteLength = _frontEnd.GetStreamLength(remoteStreamPath);
+                                break;
+                            }
+                            catch (Exception e)
+                            {
+                                _token.ThrowIfCancellationRequested();
+                                if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
+                                {
+                                    throw new UploadFailedException(
+                                        string.Format(
+                                            "Cannot perform 'Concatenate' operation due to the following exception retrieving file information: {0}",
+                                            e));
+                                }
 
-                        long remoteLength = _frontEnd.GetStreamLength(remoteStreamPath);
+                                SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                            }
+                        }
+
+                        
                         if (remoteLength != metadata.Segments[i].Length)
                         {
                             throw new UploadFailedException(string.Format("Cannot perform 'Concatenate' operation because segment {0} has an incorrect length (expected {1}, actual {2}).", i, metadata.Segments[i].Length, remoteLength));

@@ -146,12 +146,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
                 catch (Exception)
                 {
+                    _token.ThrowIfCancellationRequested();
                     if (retryCount >= MaxBufferUploadAttemptCount)
                     {
                         throw;
                     }
 
-                    WaitForRetry(retryCount);
+                    WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
                 }
             }
 
@@ -278,7 +279,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     }
                     else
                     {
-                        WaitForRetry(attemptCount);
+                        WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
                     }
                 }
             }
@@ -322,10 +323,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Waits for retry.
         /// </summary>
         /// <param name="attemptCount">The attempt count.</param>
-        private void WaitForRetry(int attemptCount)
+        internal static void WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
         {
-            _token.ThrowIfCancellationRequested();
-            if (!this.UseBackOffRetryStrategy)
+            token.ThrowIfCancellationRequested();
+            if (!useBackOffRetryStrategy)
             {
                 //no need to wait
                 return;
