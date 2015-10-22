@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse EnableRdp(this IClusterOperations operations,
+        public static OperationResource EnableRdp(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string rdpUsername, string rdpPassword, DateTime rdpExpiryDate)
         {
             return
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> EnableRdpAsync(this IClusterOperations operations,
+        public static Task<OperationResource> EnableRdpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string rdpUsername, string rdpPassword, DateTime rdpExpiryDate)
         {
             return operations.EnableRdpAsync(resourceGroupName, clusterName, rdpUsername, rdpPassword, rdpExpiryDate,
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse DisableRdp(this IClusterOperations operations,
+        public static OperationResource DisableRdp(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
             return
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> DisableRdpAsync(this IClusterOperations operations,
+        public static Task<OperationResource> DisableRdpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
             return operations.DisableRdpAsync(resourceGroupName, clusterName, CancellationToken.None);

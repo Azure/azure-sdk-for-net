@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Compute">
-      <PackageVersion>9.0.0</PackageVersion>
+      <PackageVersion>9.1.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

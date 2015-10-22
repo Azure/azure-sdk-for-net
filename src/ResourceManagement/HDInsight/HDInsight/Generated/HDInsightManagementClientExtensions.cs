@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse GetLongRunningOperationStatus(this IHDInsightManagementClient operations, string operationStatusLink)
+        public static OperationResource GetLongRunningOperationStatus(this IHDInsightManagementClient operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> GetLongRunningOperationStatusAsync(this IHDInsightManagementClient operations, string operationStatusLink)
+        public static Task<OperationResource> GetLongRunningOperationStatusAsync(this IHDInsightManagementClient operations, string operationStatusLink)
         {
             return operations.GetLongRunningOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
