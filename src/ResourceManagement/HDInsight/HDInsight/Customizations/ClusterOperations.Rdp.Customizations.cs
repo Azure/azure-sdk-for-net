@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> EnableRdpAsync(string resourceGroupName,
+        public async Task<OperationResource> EnableRdpAsync(string resourceGroupName,
             string clusterName, string rdpUsername, string rdpPassword,
             DateTime rdpExpiryDate, CancellationToken cancellationToken)
         {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> DisableRdpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        public async Task<OperationResource> DisableRdpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try
             {

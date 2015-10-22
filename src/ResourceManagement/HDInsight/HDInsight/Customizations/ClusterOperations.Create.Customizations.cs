@@ -311,20 +311,20 @@ namespace Microsoft.Azure.Management.HDInsight
             if (gatewayConfig == null)
             {
                 gatewayConfig = new Dictionary<string, string>();
-
-                if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
-                {
-                    gatewayConfig.Add("restAuthCredential.isEnabled", "true");
-                    gatewayConfig.Add("restAuthCredential.username", clusterCreateParameters.UserName);
-                    gatewayConfig.Add("restAuthCredential.password", clusterCreateParameters.Password);
-                }
-                else
-                {
-                    gatewayConfig.Add("restAuthCredential.isEnabled", "false");
-                }
-
-                configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
             }
+
+            if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
+            {
+                gatewayConfig.Add("restAuthCredential.isEnabled", "true");
+                gatewayConfig.Add("restAuthCredential.username", clusterCreateParameters.UserName);
+                gatewayConfig.Add("restAuthCredential.password", clusterCreateParameters.Password);
+            }
+            else
+            {
+                gatewayConfig.Add("restAuthCredential.isEnabled", "false");
+            }
+
+            configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
             
             //datalake configs
             var datalakeConfigExists = true;
