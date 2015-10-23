@@ -49,8 +49,12 @@
   <ItemGroup>
     <Compile Include="Generated\BackupOperations.cs" />
     <Compile Include="Generated\BackupOperationsExtensions.cs" />
+    <Compile Include="Generated\ContainerOperation.cs" />
+    <Compile Include="Generated\ContainerOperationExtensions.cs" />
     <Compile Include="Generated\IBackupOperations.cs" />
+    <Compile Include="Generated\IContainerOperation.cs" />
     <Compile Include="Generated\IProtectableObjectOperations.cs" />
+    <Compile Include="Generated\IProtectedItemOperations.cs" />
     <Compile Include="Generated\IProtectionPolicyOperations.cs" />
     <Compile Include="Generated\IRecoveryPointOperations.cs" />
     <Compile Include="Generated\IRecoveryServicesBackupManagementClient.cs" />
@@ -61,6 +65,7 @@
     <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\Day.cs" />
+    <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
     <Compile Include="Generated\Models\Month.cs" />
@@ -71,6 +76,11 @@
     <Compile Include="Generated\Models\ProtectableObjectQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectedItem.cs" />
+    <Compile Include="Generated\Models\ProtectedItemBase.cs" />
+    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs" />
+    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\ProtectedItemResource.cs" />
     <Compile Include="Generated\Models\ProtectionPolicy.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
@@ -102,6 +112,8 @@
     <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
     <Compile Include="Generated\ProtectableObjectOperations.cs" />
     <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
+    <Compile Include="Generated\ProtectedItemOperations.cs" />
+    <Compile Include="Generated\ProtectedItemOperationsExtensions.cs" />
     <Compile Include="Generated\ProtectionPolicyOperations.cs" />
     <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
     <Compile Include="Generated\RecoveryPointOperations.cs" />

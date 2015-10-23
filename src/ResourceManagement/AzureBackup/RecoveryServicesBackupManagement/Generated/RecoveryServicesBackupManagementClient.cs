@@ -100,6 +100,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get { return this._backup; }
         }
         
+        private IContainerOperation _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        public virtual IContainerOperation Container
+        {
+            get { return this._container; }
+        }
+        
         private IProtectableObjectOperations _protectableObject;
         
         /// <summary>
@@ -109,6 +120,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public virtual IProtectableObjectOperations ProtectableObject
         {
             get { return this._protectableObject; }
+        }
+        
+        private IProtectedItemOperations _dataSource;
+        
+        /// <summary>
+        /// Definition of Protected Item operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IProtectedItemOperations DataSource
+        {
+            get { return this._dataSource; }
         }
         
         private IProtectionPolicyOperations _protectionPolicy;
@@ -150,7 +172,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             : base()
         {
             this._backup = new BackupOperations(this);
+            this._container = new ContainerOperation(this);
             this._protectableObject = new ProtectableObjectOperations(this);
+            this._dataSource = new ProtectedItemOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
@@ -223,7 +247,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             : base(httpClient)
         {
             this._backup = new BackupOperations(this);
+            this._container = new ContainerOperation(this);
             this._protectableObject = new ProtectableObjectOperations(this);
+            this._dataSource = new ProtectedItemOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
