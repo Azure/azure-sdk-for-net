@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupServices.Tests", "Bac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupServicesManagement", "BackupServicesManagement\BackupServicesManagement.csproj", "{38A6741C-77A3-42A8-A846-83373BE57C7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecoveryServicesBackupManagement", "RecoveryServicesBackupManagement\RecoveryServicesBackupManagement.csproj", "{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
@@ -47,6 +49,18 @@ Global
 		{38A6741C-77A3-42A8-A846-83373BE57C7F}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{38A6741C-77A3-42A8-A846-83373BE57C7F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{38A6741C-77A3-42A8-A846-83373BE57C7F}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

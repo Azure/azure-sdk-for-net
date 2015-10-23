@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14F715EC-C03D-4BB4-83BD-6EEFAA6B0C67}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.RecoveryServicesBackupManagement</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.RecoveryServicesBackupManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
+    <DocumentationFile>bin\Net45-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
+    <DocumentationFile>bin\Net40-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Release'">
+    <DocumentationFile>bin\Net40-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Debug'">
+    <DocumentationFile>bin\Portable-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Portable-Release'">
+    <DocumentationFile>bin\Portable-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\packages\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\BackupOperations.cs" />
+    <Compile Include="Generated\BackupOperationsExtensions.cs" />
+    <Compile Include="Generated\ContainerOperation.cs" />
+    <Compile Include="Generated\ContainerOperationExtensions.cs" />
+    <Compile Include="Generated\IBackupOperations.cs" />
+    <Compile Include="Generated\IContainerOperation.cs" />
+    <Compile Include="Generated\IProtectableObjectOperations.cs" />
+    <Compile Include="Generated\IProtectedItemOperations.cs" />
+    <Compile Include="Generated\IProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\IRecoveryPointOperations.cs" />
+    <Compile Include="Generated\IRecoveryServicesBackupManagementClient.cs" />
+    <Compile Include="Generated\IRecoveryServicesBackupVaultManagementClient.cs" />
+    <Compile Include="Generated\IRestoreOperations.cs" />
+    <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
+    <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\Day.cs" />
+    <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
+    <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
+    <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\Month.cs" />
+    <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\ProtectableObject.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectQueryParameters.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectedItem.cs" />
+    <Compile Include="Generated\Models\ProtectedItemBase.cs" />
+    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs" />
+    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\ProtectedItemResource.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicy.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyRequest.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResource.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyResponse.cs" />
+    <Compile Include="Generated\Models\ProviderTypes.cs" />
+    <Compile Include="Generated\Models\RecoveryPoint.cs" />
+    <Compile Include="Generated\Models\RecoveryPointBase.cs" />
+    <Compile Include="Generated\Models\RecoveryPointListResponse.cs" />
+    <Compile Include="Generated\Models\RecoveryPointQueryParameters.cs" />
+    <Compile Include="Generated\Models\RecoveryPointResource.cs" />
+    <Compile Include="Generated\Models\RecoveryPointResourceList.cs" />
+    <Compile Include="Generated\Models\RecoveryPointResponse.cs" />
+    <Compile Include="Generated\Models\Resource.cs" />
+    <Compile Include="Generated\Models\RetentionDuration.cs" />
+    <Compile Include="Generated\Models\RetentionDurationType.cs" />
+    <Compile Include="Generated\Models\RetentionPolicy.cs" />
+    <Compile Include="Generated\Models\RetentionScheduleBase.cs" />
+    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
+    <Compile Include="Generated\Models\SchedulePolicy.cs" />
+    <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
+    <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
+    <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\WeekNumber.cs" />
+    <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
+    <Compile Include="Generated\ProtectableObjectOperations.cs" />
+    <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
+    <Compile Include="Generated\ProtectedItemOperations.cs" />
+    <Compile Include="Generated\ProtectedItemOperationsExtensions.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryPointOperations.cs" />
+    <Compile Include="Generated\RecoveryPointOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupManagementClient.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupManagementClientExtensions.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClient.cs" />
+    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClientExtensions.cs" />
+    <Compile Include="Generated\RestoreOperations.cs" />
+    <Compile Include="Generated\RestoreOperationsExtensions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+</Project>
