@@ -288,6 +288,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
             try
             {
                 const string wadlPath = "./Resources/WADLYahoo.xml";
+                const string wadl2Path = "./Resources/WADLYahooModified.xml";
                 const string wadlMediaType = "application/vnd.sun.wadl+xml";
                 const string path = "wadlapi";
                 string wadlApiId = TestUtilities.GenerateName("aid");
@@ -332,6 +333,26 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     var wadlDoc = XDocument.Load(new MemoryStream(exportResponse.Content));
 
                     Assert.Equal(expectedWadlDoc.Root.Value, wadlDoc.Root.Value);
+
+                    // import on existing api
+                    using (var stream = File.OpenRead(wadl2Path))
+                    {
+                        importResponse = ApiManagementClient.Apis.Import(
+                            ResourceGroupName,
+                            ApiManagementServiceName,
+                            wadlApiId,
+                            wadlMediaType,
+                            stream,
+                            path);
+                    }
+
+                    Assert.NotNull(importResponse);
+                    Assert.Equal(HttpStatusCode.NoContent, importResponse.StatusCode);
+
+                    // get the api to check it was created
+                    getResponse = ApiManagementClient.Apis.Get(ResourceGroupName, ApiManagementServiceName, wadlApiId);
+
+                    Assert.Equal("http://api.search.yahoo.com/NewsSearchService/V2/", getResponse.Value.ServiceUrl);
                 }
                 finally
                 {
