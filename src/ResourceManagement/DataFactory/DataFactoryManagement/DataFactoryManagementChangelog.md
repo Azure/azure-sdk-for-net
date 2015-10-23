@@ -1,5 +1,11 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 
+_Release date: 
+
+## Bug Fixes
+* Successful gateway creation response has status Succeeded and includes the gateway key.
+ 
 ## Version 4.0.1
 _Release date: 2015.10.13_
 
