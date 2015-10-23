@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         private readonly CancellationToken _token;
 
-        private const int PerRequestTimeoutMs = 5000;
+        private const int PerRequestTimeoutMs = 30000; // 30 seconds and we timeout the request
 
         #endregion
 
