@@ -22,6 +22,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class UsageName
     {
         /// <summary>
+        /// Initializes a new instance of the UsageName class.
+        /// </summary>
+        public UsageName() { }
+
+        /// <summary>
+        /// Initializes a new instance of the UsageName class.
+        /// </summary>
+        public UsageName(string value = default(string), string localizedValue = default(string))
+        {
+            Value = value;
+            LocalizedValue = localizedValue;
+        }
+
+        /// <summary>
         /// Gets a string describing the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "value")]

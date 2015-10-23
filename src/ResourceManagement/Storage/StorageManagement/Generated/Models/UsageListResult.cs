@@ -22,6 +22,19 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class UsageListResult
     {
         /// <summary>
+        /// Initializes a new instance of the UsageListResult class.
+        /// </summary>
+        public UsageListResult() { }
+
+        /// <summary>
+        /// Initializes a new instance of the UsageListResult class.
+        /// </summary>
+        public UsageListResult(IList<Usage> value = default(IList<Usage>))
+        {
+            Value = value;
+        }
+
+        /// <summary>
         /// Gets or sets the list Storage Resource Usages.
         /// </summary>
         [JsonProperty(PropertyName = "value")]

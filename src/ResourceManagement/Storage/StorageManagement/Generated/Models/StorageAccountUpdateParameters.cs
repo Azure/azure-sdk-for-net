@@ -22,6 +22,22 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountUpdateParameters : Resource
     {
         /// <summary>
+        /// Initializes a new instance of the StorageAccountUpdateParameters
+        /// class.
+        /// </summary>
+        public StorageAccountUpdateParameters() { }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageAccountUpdateParameters
+        /// class.
+        /// </summary>
+        public StorageAccountUpdateParameters(AccountType? accountType = default(AccountType?), CustomDomain customDomain = default(CustomDomain))
+        {
+            AccountType = accountType;
+            CustomDomain = customDomain;
+        }
+
+        /// <summary>
         /// Gets or sets the account type. Note that StandardZRS and
         /// PremiumLRS accounts cannot be changed to other account types, and
         /// other account types cannot be changed to StandardZRS or

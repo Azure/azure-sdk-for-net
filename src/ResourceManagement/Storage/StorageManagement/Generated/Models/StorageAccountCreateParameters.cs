@@ -22,6 +22,21 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountCreateParameters : Resource
     {
         /// <summary>
+        /// Initializes a new instance of the StorageAccountCreateParameters
+        /// class.
+        /// </summary>
+        public StorageAccountCreateParameters() { }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageAccountCreateParameters
+        /// class.
+        /// </summary>
+        public StorageAccountCreateParameters(AccountType? accountType = default(AccountType?))
+        {
+            AccountType = accountType;
+        }
+
+        /// <summary>
         /// Gets or sets the account type. Possible values for this property
         /// include: 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS',
         /// 'Standard_RAGRS', 'Premium_LRS'.

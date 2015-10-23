@@ -151,12 +151,12 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new SubResource()
+                            FrontendPort = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new SubResource()
+                            FrontendIpConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
@@ -171,17 +171,17 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new SubResource()
+                            HttpListener = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new SubResource()
+                            BackendHttpSettings = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
@@ -220,7 +220,7 @@ namespace Networks.Tests
                         new ApplicationGatewayIpConfiguration()
                         {
                             Name = gatewayIpConfigName,
-                            Subnet = new SubResource()
+                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = subnet.Id
                             }
@@ -236,7 +236,7 @@ namespace Networks.Tests
                         {
                             Name = frontendIpConfigName,
                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                            Subnet = new SubResource()
+                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = subnet.Id
                             }                          
@@ -283,17 +283,17 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new SubResource()
+                            FrontendPort = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new SubResource()
+                            FrontendIpConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
                             },
-                            SslCertificate = new SubResource()
+                            SslCertificate = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "sslCertificates", sslCertName)
@@ -307,17 +307,17 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new SubResource()
+                            HttpListener = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new SubResource()
+                            BackendHttpSettings = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)

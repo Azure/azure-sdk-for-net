@@ -23,6 +23,21 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class Endpoints
     {
         /// <summary>
+        /// Initializes a new instance of the Endpoints class.
+        /// </summary>
+        public Endpoints() { }
+
+        /// <summary>
+        /// Initializes a new instance of the Endpoints class.
+        /// </summary>
+        public Endpoints(string blob = default(string), string queue = default(string), string table = default(string))
+        {
+            Blob = blob;
+            Queue = queue;
+            Table = table;
+        }
+
+        /// <summary>
         /// Gets the blob endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "blob")]

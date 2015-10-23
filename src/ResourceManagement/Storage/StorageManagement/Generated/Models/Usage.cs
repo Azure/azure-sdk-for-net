@@ -22,6 +22,22 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class Usage
     {
         /// <summary>
+        /// Initializes a new instance of the Usage class.
+        /// </summary>
+        public Usage() { }
+
+        /// <summary>
+        /// Initializes a new instance of the Usage class.
+        /// </summary>
+        public Usage(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
+        {
+            Unit = unit;
+            CurrentValue = currentValue;
+            Limit = limit;
+            Name = name;
+        }
+
+        /// <summary>
         /// Gets the unit of measurement. Possible values for this property
         /// include: 'Count', 'Bytes', 'Seconds', 'Percent',
         /// 'CountsPerSecond', 'BytesPerSecond'.

@@ -22,6 +22,29 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccount : Resource
     {
         /// <summary>
+        /// Initializes a new instance of the StorageAccount class.
+        /// </summary>
+        public StorageAccount() { }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageAccount class.
+        /// </summary>
+        public StorageAccount(ProvisioningState? provisioningState = default(ProvisioningState?), AccountType? accountType = default(AccountType?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), DateTime? lastGeoFailoverTime = default(DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), DateTime? creationTime = default(DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints))
+        {
+            ProvisioningState = provisioningState;
+            AccountType = accountType;
+            PrimaryEndpoints = primaryEndpoints;
+            PrimaryLocation = primaryLocation;
+            StatusOfPrimary = statusOfPrimary;
+            LastGeoFailoverTime = lastGeoFailoverTime;
+            SecondaryLocation = secondaryLocation;
+            StatusOfSecondary = statusOfSecondary;
+            CreationTime = creationTime;
+            CustomDomain = customDomain;
+            SecondaryEndpoints = secondaryEndpoints;
+        }
+
+        /// <summary>
         /// Gets the status of the storage account at the time the operation
         /// was called. Possible values for this property include:
         /// 'Creating', 'ResolvingDNS', 'Succeeded'.

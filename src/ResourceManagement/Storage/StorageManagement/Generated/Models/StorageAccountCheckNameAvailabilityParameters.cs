@@ -21,6 +21,22 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountCheckNameAvailabilityParameters
     {
         /// <summary>
+        /// Initializes a new instance of the
+        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// </summary>
+        public StorageAccountCheckNameAvailabilityParameters() { }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// </summary>
+        public StorageAccountCheckNameAvailabilityParameters(string name = default(string), string type = default(string))
+        {
+            Name = name;
+            Type = type;
+        }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

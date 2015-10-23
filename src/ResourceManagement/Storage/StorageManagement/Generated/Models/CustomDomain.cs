@@ -23,6 +23,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class CustomDomain
     {
         /// <summary>
+        /// Initializes a new instance of the CustomDomain class.
+        /// </summary>
+        public CustomDomain() { }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomDomain class.
+        /// </summary>
+        public CustomDomain(string name = default(string), bool? useSubDomain = default(bool?))
+        {
+            Name = name;
+            UseSubDomain = useSubDomain;
+        }
+
+        /// <summary>
         /// Gets or sets the custom domain name. Name is the CNAME source.
         /// </summary>
         [JsonProperty(PropertyName = "name")]

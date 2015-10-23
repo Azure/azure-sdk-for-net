@@ -22,6 +22,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountKeys
     {
         /// <summary>
+        /// Initializes a new instance of the StorageAccountKeys class.
+        /// </summary>
+        public StorageAccountKeys() { }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageAccountKeys class.
+        /// </summary>
+        public StorageAccountKeys(string key1 = default(string), string key2 = default(string))
+        {
+            Key1 = key1;
+            Key2 = key2;
+        }
+
+        /// <summary>
         /// Gets the value of key 1.
         /// </summary>
         [JsonProperty(PropertyName = "key1")]

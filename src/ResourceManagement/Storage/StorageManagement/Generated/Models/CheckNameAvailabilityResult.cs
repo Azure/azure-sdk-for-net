@@ -22,6 +22,23 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class CheckNameAvailabilityResult
     {
         /// <summary>
+        /// Initializes a new instance of the CheckNameAvailabilityResult
+        /// class.
+        /// </summary>
+        public CheckNameAvailabilityResult() { }
+
+        /// <summary>
+        /// Initializes a new instance of the CheckNameAvailabilityResult
+        /// class.
+        /// </summary>
+        public CheckNameAvailabilityResult(bool? nameAvailable = default(bool?), Reason? reason = default(Reason?), string message = default(string))
+        {
+            NameAvailable = nameAvailable;
+            Reason = reason;
+            Message = message;
+        }
+
+        /// <summary>
         /// Gets a boolean value that indicates whether the name is available
         /// for you to use. If true, the name is available. If false, the
         /// name has already been taken or invalid and cannot be used.

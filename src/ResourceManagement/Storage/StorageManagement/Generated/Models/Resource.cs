@@ -21,6 +21,23 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class Resource : IResource
     {
         /// <summary>
+        /// Initializes a new instance of the Resource class.
+        /// </summary>
+        public Resource() { }
+
+        /// <summary>
+        /// Initializes a new instance of the Resource class.
+        /// </summary>
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        {
+            Id = id;
+            Name = name;
+            Type = type;
+            Location = location;
+            Tags = tags;
+        }
+
+        /// <summary>
         /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]

@@ -292,7 +292,7 @@ namespace Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource { Id = publicIPaddress };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource { Id = publicIPaddress };
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -335,7 +335,7 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AvailabilitySet = new SubResource() { Id = asetId },
+                AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
                     VmSize = VirtualMachineSizeTypes.StandardA0
@@ -373,8 +373,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(Resource).GetProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
-            typeof(Resource).GetProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 
