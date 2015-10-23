@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
