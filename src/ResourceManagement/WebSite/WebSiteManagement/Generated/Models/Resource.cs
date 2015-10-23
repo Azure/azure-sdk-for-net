@@ -17,49 +17,65 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Specification for using a virtual network
     /// </summary>
-    public partial class VirtualNetworkProfile
+    public partial class Resource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkProfile class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
-        public VirtualNetworkProfile() { }
+        public Resource() { }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkProfile class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
-        public VirtualNetworkProfile(string id = default(string), string name = default(string), string type = default(string), string subnet = default(string))
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
+            Location = location;
             Type = type;
-            Subnet = subnet;
+            Tags = tags;
         }
 
         /// <summary>
-        /// Resource id of the virtual network
+        /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Name of the virtual network (read-only)
+        /// Resource Name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Resource type of the virtual network (read-only)
+        /// Resource Location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Subnet within the virtual network
+        /// Resource tags
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
-        public string Subnet { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+        }
     }
 }
