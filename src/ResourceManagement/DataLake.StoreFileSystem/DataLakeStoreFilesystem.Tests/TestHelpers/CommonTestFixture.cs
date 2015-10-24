@@ -14,6 +14,7 @@
 //
 using Microsoft.Azure.Test;
 using System;
+using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 
 namespace DataLakeStoreFileSystem.Tests
 {
@@ -23,12 +24,13 @@ namespace DataLakeStoreFileSystem.Tests
         public string DataLakeStoreFileSystemAccountName { get; set; }
         public string HostUrl { get; set; }
         public string Location = "West US";
-        
-        public void Instantiate(string className)
+        public DataLakeStoreFileSystemManagementClient DataLakeStoreFileSystemClient { get; set; }
+
+        public CommonTestFixture()
         {
             try
             {
-                UndoContext.Current.Start(className, "FixtureSetup");
+                UndoContext.Current.Start("DataLakeStoreFileSystem.Tests.FileSystemOperationTests", "FixtureSetup");
                 var dataLakeStoreFilesystemManagementHelper = new DataLakeStoreFileSystemManagementHelper(this);
                 dataLakeStoreFilesystemManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("adlfsrg1");
@@ -39,6 +41,7 @@ namespace DataLakeStoreFileSystem.Tests
                 this.HostUrl =
                     dataLakeStoreFilesystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName,
                         this.Location, this.DataLakeStoreFileSystemAccountName);
+
             }
             catch
             {
@@ -49,6 +52,7 @@ namespace DataLakeStoreFileSystem.Tests
             {
                 TestUtilities.EndTest();
             }
+
         }
 
         public void Dispose()

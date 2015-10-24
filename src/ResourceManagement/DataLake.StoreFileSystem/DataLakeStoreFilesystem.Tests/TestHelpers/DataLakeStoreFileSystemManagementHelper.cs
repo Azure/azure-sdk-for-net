@@ -31,17 +31,6 @@ namespace DataLakeStoreFileSystem.Tests
 {
     public class DataLakeStoreFileSystemManagementHelper
     {
-        internal const string folderToCreate = "SDKTestFolder01";
-        internal const string folderToMove = "SDKTestMoveFolder01";
-        internal const string fileToCreate = "SDKTestFile01.txt";
-        internal const string fileToCreateWithContents = "SDKTestFile02.txt";
-        internal const string fileToCopy = "SDKTestCopyFile01.txt";
-        internal const string fileToConcatTo = "SDKTestConcatFile01.txt";
-        internal const string fileToMove = "SDKTestMoveFile01.txt";
-
-        internal const string fileContentsToAdd = "These are some random test contents 1234!@";
-        internal const string fileContentsToAppend = "More test contents, that were appended!";
-
         internal readonly ResourceManagementClient resourceManagementClient;
         internal readonly DataLakeStoreManagementClient dataLakeStoreManagementClient;
         internal readonly DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient;
@@ -74,30 +63,80 @@ namespace DataLakeStoreFileSystem.Tests
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
         {
-            ResourceGroupCreateOrUpdateResult result = resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
-            var newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+            // get the resource group first
+            bool exists = false;
+            ResourceGroupGetResult newlyCreatedGroup = null;
+            try
+            {
+                newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+                exists = true;
+            }
+            catch
+            {
+                // do nothing because it means it doesn't exist
+            }
+
+            if (!exists)
+            {
+                ResourceGroupCreateOrUpdateResult result =
+                    resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                        new ResourceGroup {Location = location});
+                newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+            }
+
             ThrowIfTrue(newlyCreatedGroup == null, "resourceManagementClient.ResourceGroups.Get returned null.");
-            ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.ResourceGroup.Name), string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
+            ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.ResourceGroup.Name),
+                string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
         }
 
         public string TryCreateDataLakeStoreAccount(string resourceGroupName, string location, string accountName)
         {
-            dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName, new DataLakeStoreAccountCreateOrUpdateParameters { DataLakeStoreAccount = new DataLakeStoreAccount { Location = location, Name = accountName } });
-            var accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
-            
-            // wait for provisioning state to be Succeeded
-            // we will wait a maximum of 15 minutes for this to happen and then report failures
-            int timeToWaitInMinutes = 15;
-            int minutesWaited = 0;
-            while (accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState != DataLakeStoreAccountStatus.Succeeded && accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState != DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
+            bool exists = false;
+            DataLakeStoreAccountGetResponse accountGetResponse = null;
+            try
             {
-                TestUtilities.Wait(60000); // Wait for one minute and then go again.
-                minutesWaited++;
                 accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
+                exists = true;
+            }
+            catch
+            {
+                // do nothing because it doesn't exist
+            }
+
+
+            if (!exists)
+            {
+                dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName,
+                    new DataLakeStoreAccountCreateOrUpdateParameters
+                    {
+                        DataLakeStoreAccount = new DataLakeStoreAccount {Location = location, Name = accountName}
+                    });
+                
+                accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
+                    accountName);
+
+                // wait for provisioning state to be Succeeded
+                // we will wait a maximum of 15 minutes for this to happen and then report failures
+                int minutesWaited = 0;
+                int timeToWaitInMinutes = 15;
+                while (accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState !=
+                       DataLakeStoreAccountStatus.Succeeded &&
+                       accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState !=
+                       DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
+                {
+                    TestUtilities.Wait(60000); // Wait for one minute and then go again.
+                    minutesWaited++;
+                    accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
+                        accountName);
+                }
             }
 
             // Confirm that the account creation did succeed
-            ThrowIfTrue(accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState != DataLakeStoreAccountStatus.Succeeded, "Account failed to be provisioned into the success state after " + timeToWaitInMinutes + " minutes.");
+            ThrowIfTrue(
+                accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState !=
+                DataLakeStoreAccountStatus.Succeeded,
+                "Account failed to be provisioned into the success state. Actual State: " +
+                accountGetResponse.DataLakeStoreAccount.Properties.ProvisioningState);
 
             return accountGetResponse.DataLakeStoreAccount.Properties.Endpoint;
         }
@@ -109,163 +148,5 @@ namespace DataLakeStoreFileSystem.Tests
                 throw new Exception(message);
             }
         }
-
-        #region helpers
-        internal string CreateFolder(string caboAccountName, bool randomName = false)
-        {
-            // Create a folder
-            var folderPath = randomName
-                ? TestUtilities.GenerateName(folderToCreate)
-                : folderToCreate;
-
-            var response = dataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
-            Assert.True(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created);
-            Assert.True(response.OperationResult);
-
-            return folderPath;
-        }
-
-        internal string CreateFile(string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate, bool useDirectCreate = false)
-        {
-            var filePath = randomName ? TestUtilities.GenerateName(string.Format("{0}/{1}", folderName, fileToCreate)) : string.Format("{0}/{1}", folderName, fileToCreate);
-
-            if (useDirectCreate)
-            {
-                if (!withContents)
-                {
-                    var createFileResponse =
-                        dataLakeStoreFileSystemClient.FileSystem.DirectCreate(
-                            filePath,
-                            caboAccountName,
-                            new MemoryStream(),
-                            null);
-
-                    Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
-                                createFileResponse.StatusCode == HttpStatusCode.Created);
-                }
-                else
-                {
-                    var createFileResponse =
-                        dataLakeStoreFileSystemClient.FileSystem.DirectCreate(
-                            filePath,
-                            caboAccountName,
-                            new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)),
-                            null);
-
-                    Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
-                                createFileResponse.StatusCode == HttpStatusCode.Created);
-                }
-
-                return filePath;
-            }
-
-            var beginCreateFileResponse = dataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath,
-                caboAccountName, null);
-            Assert.Equal(HttpStatusCode.TemporaryRedirect, beginCreateFileResponse.StatusCode);
-            Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
-
-            if (!withContents)
-            {
-                var createFileResponse =
-                    dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
-                        new MemoryStream());
-                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
-                            createFileResponse.StatusCode == HttpStatusCode.Created);
-            }
-            else
-            {
-                var createFileResponse =
-                    dataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
-                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
-                Assert.True(createFileResponse.StatusCode == HttpStatusCode.OK ||
-                            createFileResponse.StatusCode == HttpStatusCode.Created);
-            }
-            return filePath;
-        }
-
-        internal FileStatusResponse GetAndCompareFileOrFolder(string caboAccountName, string fileOrFolderPath, FileType expectedType, long expectedLength)
-        {
-            var getResponse = dataLakeStoreFileSystemClient.FileSystem.GetFileStatus(fileOrFolderPath, caboAccountName);
-            Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-            Assert.Equal(expectedLength, getResponse.FileStatus.Length);
-            Assert.Equal(expectedType, getResponse.FileStatus.Type);
-
-            return getResponse;
-        }
-
-        internal void CompareFileContents(string caboAccountName, string filePath, string expectedContents, bool useDirectOpen = false)
-        {
-            // download a file and ensure they are equal
-            FileOpenResponse openResponse;
-            if (useDirectOpen)
-            {
-                openResponse = dataLakeStoreFileSystemClient.FileSystem.DirectOpen(filePath, caboAccountName, null);
-                Assert.Equal(HttpStatusCode.OK, openResponse.StatusCode);
-            }
-            else
-            {
-                var beginOpenResponse = dataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
-                Assert.Equal(HttpStatusCode.TemporaryRedirect, beginOpenResponse.StatusCode);
-                Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
-
-                openResponse = dataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
-                Assert.Equal(HttpStatusCode.OK, openResponse.StatusCode);
-                
-            }
-
-            string toCompare = Encoding.UTF8.GetString(openResponse.FileContents);
-            Assert.Equal(expectedContents, toCompare);
-        }
-
-        internal void DeleteFolder(string caboAccountName, string folderPath, bool recursive, bool failureExpected)
-        {
-            if (failureExpected)
-            {
-                // try to delete a folder that doesn't exist or should fail
-                try
-                {
-                    var deleteFolderResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                    Assert.Equal(HttpStatusCode.OK, deleteFolderResponse.StatusCode);
-                    Assert.True(!deleteFolderResponse.OperationResult);
-                }
-                catch (Exception e)
-                {
-                    Assert.Equal(typeof(CloudException), e.GetType());
-                }
-            }
-            else
-            {
-                // Delete a folder
-                var deleteFolderResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                Assert.Equal(HttpStatusCode.OK, deleteFolderResponse.StatusCode);
-                Assert.True(deleteFolderResponse.OperationResult);
-            }
-        }
-
-        internal void DeleteFile(string caboAccountName, string filePath, bool failureExpected)
-        {
-            if (failureExpected)
-            {
-                // try to delete a file that doesn't exist
-                try
-                {
-                    var deleteFileResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                    Assert.Equal(HttpStatusCode.OK, deleteFileResponse.StatusCode);
-                    Assert.True(!deleteFileResponse.OperationResult);
-                }
-                catch (Exception e)
-                {
-                    Assert.Equal(typeof(CloudException), e.GetType());
-                }
-            }
-            else
-            {
-                // Delete a file
-                var deleteFileResponse = dataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                Assert.Equal(HttpStatusCode.OK, deleteFileResponse.StatusCode);
-                Assert.True(deleteFileResponse.OperationResult);
-            }
-        }
-        #endregion
     }
 }
