@@ -30,6 +30,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectedItemBase : ProtectedItem
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. BackupManagementType for Protected Item
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
+        private string _containerName;
+        
+        /// <summary>
+        /// Optional. Container Name for the protected item
+        /// </summary>
+        public string ContainerName
+        {
+            get { return this._containerName; }
+            set { this._containerName = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -50,6 +72,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._lastBackupStatus; }
             set { this._lastBackupStatus = value; }
+        }
+        
+        private System.DateTime? _lastBackupTime;
+        
+        /// <summary>
+        /// Optional. Last backup time
+        /// </summary>
+        public System.DateTime? LastBackupTime
+        {
+            get { return this._lastBackupTime; }
+            set { this._lastBackupTime = value; }
         }
         
         private System.DateTime? _lastRecoveryPoint;
@@ -94,6 +127,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._protectionStatus; }
             set { this._protectionStatus = value; }
+        }
+        
+        private string _workloadType;
+        
+        /// <summary>
+        /// Optional. WorkloadType for Protected Item
+        /// </summary>
+        public string WorkloadType
+        {
+            get { return this._workloadType; }
+            set { this._workloadType = value; }
         }
         
         /// <summary>

@@ -30,37 +30,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class IaaSVMProtectedItem : ProtectedItemBase
     {
-        private System.DateTime? _lastBackupTime;
+        private string _resourceGroup;
         
         /// <summary>
-        /// Optional. Last backup time
+        /// Optional. Resource Group Name for IaaSVMProtectedItem.
         /// </summary>
-        public System.DateTime? LastBackupTime
+        public string ResourceGroup
         {
-            get { return this._lastBackupTime; }
-            set { this._lastBackupTime = value; }
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
-        private int _recoveryPointsCount;
-        
-        /// <summary>
-        /// Optional. Recovery point count.
-        /// </summary>
-        public int RecoveryPointsCount
-        {
-            get { return this._recoveryPointsCount; }
-            set { this._recoveryPointsCount = value; }
-        }
-        
-        private string _vmVersion;
+        private string _virtualMachineVersion;
         
         /// <summary>
         /// Optional. Classic or V2 VM
         /// </summary>
-        public string VmVersion
+        public string VirtualMachineVersion
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
