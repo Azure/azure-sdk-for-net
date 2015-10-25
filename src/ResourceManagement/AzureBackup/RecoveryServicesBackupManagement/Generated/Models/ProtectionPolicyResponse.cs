@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
@@ -29,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a ProtectionPolicyResponse.
     /// </summary>
-    public partial class ProtectionPolicyResponse : AzureOperationResponse
+    public partial class ProtectionPolicyResponse : BaseRecoveryServicesJobResponse
     {
         private ProtectionPolicyResource _item;
         
