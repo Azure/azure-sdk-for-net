@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _containerName;
         
         /// <summary>
-        /// Optional. Container Name for the procted item
+        /// Optional. Container Name for the protected item
         /// </summary>
         public string ContainerName
         {
