@@ -10,7 +10,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
