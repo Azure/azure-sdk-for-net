@@ -1,18 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Linq;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Client;
 using System;
 using System.Net;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
 {
-        [Collection("SerialCollection1")]
+    [Collection("SerialCollection1")]
     public class Subscription : TestBase, IDisposable
     {
         private string TEST_CONNECTION_STRING;
