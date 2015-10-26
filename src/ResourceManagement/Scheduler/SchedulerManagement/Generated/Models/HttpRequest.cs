@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,23 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class HttpRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the HttpRequest class.
+        /// </summary>
+        public HttpRequest() { }
+
+        /// <summary>
+        /// Initializes a new instance of the HttpRequest class.
+        /// </summary>
+        public HttpRequest(HttpAuthentication httpAuthentication = default(HttpAuthentication), string uri = default(string), string method = default(string), string body = default(string), IDictionary<string, string> headers = default(IDictionary<string, string>))
+        {
+            HttpAuthentication = httpAuthentication;
+            Uri = uri;
+            Method = method;
+            Body = body;
+            Headers = headers;
+        }
+
         /// <summary>
         /// Gets or sets the http authentication.
         /// </summary>

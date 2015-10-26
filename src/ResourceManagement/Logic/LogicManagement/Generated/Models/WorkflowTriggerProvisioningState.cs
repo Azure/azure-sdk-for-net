@@ -13,20 +13,18 @@ namespace Microsoft.Azure.Management.Logic.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for WorkflowState.
+    /// Defines values for WorkflowTriggerProvisioningState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum WorkflowState
+    public enum WorkflowTriggerProvisioningState
     {
         [EnumMember(Value = "NotSpecified")]
         NotSpecified,
-        [EnumMember(Value = "Enabled")]
-        Enabled,
-        [EnumMember(Value = "Disabled")]
-        Disabled,
-        [EnumMember(Value = "Deleted")]
-        Deleted,
-        [EnumMember(Value = "Suspended")]
-        Suspended
+        [EnumMember(Value = "Creating")]
+        Creating,
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        [EnumMember(Value = "Updating")]
+        Updating
     }
 }

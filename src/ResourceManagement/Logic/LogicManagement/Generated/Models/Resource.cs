@@ -18,21 +18,23 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class ResourceReference
+    public partial class Resource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
-        public ResourceReference() { }
+        public Resource() { }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
-        public ResourceReference(string id = default(string), string name = default(string), string type = default(string))
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
             Type = type;
+            Location = location;
+            Tags = tags;
         }
 
         /// <summary>
@@ -45,13 +47,25 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource location.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

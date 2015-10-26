@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -12,8 +14,25 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     public partial class JobAction
     {
         /// <summary>
+        /// Initializes a new instance of the JobAction class.
+        /// </summary>
+        public JobAction() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobAction class.
+        /// </summary>
+        public JobAction(JobActionType? type = default(JobActionType?), HttpRequest request = default(HttpRequest), StorageQueueMessage queueMessage = default(StorageQueueMessage), RetryPolicy retryPolicy = default(RetryPolicy), JobErrorAction errorAction = default(JobErrorAction))
+        {
+            Type = type;
+            Request = request;
+            QueueMessage = queueMessage;
+            RetryPolicy = retryPolicy;
+            ErrorAction = errorAction;
+        }
+
+        /// <summary>
         /// Gets or sets the job action type. Possible values for this
-        /// property include: 'Http', 'Https', 'StorageQueue'
+        /// property include: 'Http', 'Https', 'StorageQueue'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobActionType? Type { get; set; }

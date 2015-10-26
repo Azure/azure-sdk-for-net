@@ -18,29 +18,26 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class WorkflowRunActionFilter
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the WorkflowRunActionFilter class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public WorkflowRunActionFilter() { }
+        public SubResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the WorkflowRunActionFilter class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public WorkflowRunActionFilter(WorkflowStatus? status = default(WorkflowStatus?))
+        public SubResource(string id = default(string))
         {
-            Status = status;
+            Id = id;
         }
 
         /// <summary>
-        /// Gets or sets the status of workflow run action. Possible values
-        /// for this property include: 'NotSpecified', 'Paused', 'Running',
-        /// 'Waiting', 'Succeeded', 'Skipped', 'Suspended', 'Cancelled',
-        /// 'Failed'.
+        /// Gets or sets the resource id.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public WorkflowStatus? Status { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

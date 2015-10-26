@@ -758,7 +758,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal(null, workflow.ParametersLink);
         }
 
-        private void ValidateWorkflowList1(Page<Workflow> result)
+        private void ValidateWorkflowList1(IPage<Workflow> result)
         {
             Assert.Equal(1, result.Count());
             this.ValidateWorkflow1(result.First());

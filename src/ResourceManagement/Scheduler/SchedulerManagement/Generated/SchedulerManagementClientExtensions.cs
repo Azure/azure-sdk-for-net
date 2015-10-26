@@ -1,3 +1,4 @@
+
 namespace Microsoft.Azure.Management.Scheduler
 {
     using System;
