@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,22 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class StorageQueueMessage
     {
+        /// <summary>
+        /// Initializes a new instance of the StorageQueueMessage class.
+        /// </summary>
+        public StorageQueueMessage() { }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageQueueMessage class.
+        /// </summary>
+        public StorageQueueMessage(string storageAccount = default(string), string queueName = default(string), string sasToken = default(string), string message = default(string))
+        {
+            StorageAccount = storageAccount;
+            QueueName = queueName;
+            SasToken = sasToken;
+            Message = message;
+        }
+
         /// <summary>
         /// Gets or sets the Storage Account Name for the request.
         /// </summary>

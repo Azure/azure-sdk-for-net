@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,24 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class JobCollectionDefinition
     {
+        /// <summary>
+        /// Initializes a new instance of the JobCollectionDefinition class.
+        /// </summary>
+        public JobCollectionDefinition() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobCollectionDefinition class.
+        /// </summary>
+        public JobCollectionDefinition(string id = default(string), string type = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), JobCollectionProperties properties = default(JobCollectionProperties))
+        {
+            Id = id;
+            Type = type;
+            Name = name;
+            Location = location;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary>
         /// Gets the job collection identifier.
         /// </summary>

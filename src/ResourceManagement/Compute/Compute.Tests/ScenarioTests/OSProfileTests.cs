@@ -32,9 +32,9 @@ namespace Compute.Tests
     {
         private static readonly string CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("echo 'Hello World'"));
 
-        private const PassNames OOBESystem = PassNames.OobeSystem;
-        private const ComponentNames MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
-        private const SettingNames AutoLogon = SettingNames.AutoLogon;
+        private const string OOBESystem = PassNames.OobeSystem;
+        private const string MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
+        private const string AutoLogon = SettingNames.AutoLogon;
 
         private const string PacificStandardTime = "Pacific Standard Time";
 
@@ -363,9 +363,9 @@ namespace Compute.Tests
         {
         }
 
-        public static async Task<SubResource> GetVaultId(string subId, string rgName, string keyVaultName)
+        public static async Task<Microsoft.Azure.Management.Compute.Models.SubResource> GetVaultId(string subId, string rgName, string keyVaultName)
         {
-            return new SubResource { Id = KeyVaultId };
+            return new Microsoft.Azure.Management.Compute.Models.SubResource { Id = KeyVaultId };
         }
 
         public static async Task<string> AddSecret(string subId, string rgName, string keyVaultName, string secret)
