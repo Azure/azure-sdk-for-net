@@ -43,7 +43,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// </returns>
         public async Task<FileCreateOpenAndAppendResponse> BeginAppendAsync(string filePath, string accountName, int? bufferSize, CancellationToken cancellationToken)
         {
-            this.Client.SetAutoRedirectSwitch(false);
             return await this.InternalBeginAppendAsync(filePath, accountName, bufferSize, cancellationToken);    
         }
 
@@ -60,7 +59,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// </returns>
         public async Task<FileCreateOpenAndAppendResponse> BeginCreateAsync(string filePath, string accountName, FileCreateParameters parameters, CancellationToken cancellationToken)
         {
-            this.Client.SetAutoRedirectSwitch(false);
             return await this.InternalBeginCreateAsync(filePath, accountName, parameters, cancellationToken);
         }
 
@@ -84,7 +82,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// </returns>
         public async Task<FileCreateOpenAndAppendResponse> BeginOpenAsync(string filePath, string accountName, FileOpenParameters parameters, CancellationToken cancellationToken)
         {
-            this.Client.SetAutoRedirectSwitch(false);
             return await this.InternalBeginOpenAsync(filePath, accountName, parameters, cancellationToken);
         }
     }

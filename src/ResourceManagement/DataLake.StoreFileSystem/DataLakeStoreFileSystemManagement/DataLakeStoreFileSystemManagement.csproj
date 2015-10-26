@@ -14,7 +14,6 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Customizations\DataLakeStoreFileSystemManagementClient.Customizations.cs" />
     <Compile Include="Customizations\FileSystemOperations.Customizations.cs" />
     <Compile Include="Customizations\FileSystemOperationsExtensions.Customizations.cs" />
     <Compile Include="Customizations\IFileSystemOperations.Customizations.cs" />

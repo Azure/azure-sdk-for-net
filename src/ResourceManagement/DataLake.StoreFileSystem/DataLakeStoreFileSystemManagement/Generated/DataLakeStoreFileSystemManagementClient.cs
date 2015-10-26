@@ -23,6 +23,8 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
+using Hyak.Common.Internals;
+using Hyak.Common.Platform;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
@@ -117,8 +119,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// DataLakeStoreFileSystemManagementClient class.
         /// </summary>
         public DataLakeStoreFileSystemManagementClient()
-            : base()
         {
+            var handler = new HttpClientHandler
+            {
+                AllowAutoRedirect = false,
+                ClientCertificateOptions = ClientCertificateOption.Automatic
+            };
+
+            InitializeHttpClient(handler);
+
             this._fileSystem = new FileSystemOperations(this);
             this._userAgentSuffix = "";
             this._apiVersion = "2015-10-01-preview";

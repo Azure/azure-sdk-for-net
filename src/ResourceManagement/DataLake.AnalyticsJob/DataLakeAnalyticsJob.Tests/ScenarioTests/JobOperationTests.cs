@@ -91,8 +91,8 @@ namespace DataLakeAnalyticsJob.Tests
 
                 // We need to hardcode the job ID to use for the mocks.
                 // TODO: come up with some way to re-generate this when necessary (i.e. re-running/running the test against the server).
-                Guid jobId = new Guid("397f4ee0-7795-49e0-b510-2b0155f24616");
-                var secondId = new Guid("f77a17e6-edb5-4f13-9a2b-3bea2e8bb9bb");
+                Guid jobId = new Guid("e9d3ac6f-86d0-476d-a1ce-e96d4777c053");
+                var secondId = new Guid("a543af0e-166f-4e52-a1ae-70dd7b5a4723");
                 // Submit a job to the account
                 var jobToSubmit = new JobInformation
                 {

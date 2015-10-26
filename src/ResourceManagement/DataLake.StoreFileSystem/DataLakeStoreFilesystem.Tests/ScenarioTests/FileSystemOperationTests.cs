@@ -57,7 +57,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -77,7 +77,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -108,7 +108,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -127,7 +127,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -147,7 +147,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -169,7 +169,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -192,7 +192,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -223,7 +223,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -250,7 +250,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -298,7 +298,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -347,7 +347,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -406,7 +406,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -470,7 +470,8 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -509,7 +510,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -533,7 +534,7 @@ namespace DataLakeStoreFileSystem.Tests
         {
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -614,7 +615,7 @@ namespace DataLakeStoreFileSystem.Tests
             // This test simply tests that all bool/empty return actions return successfully
             try
             {
-                TestUtilities.StartTest();
+                UndoContext.Current.Start();
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
                 {
@@ -637,7 +638,8 @@ namespace DataLakeStoreFileSystem.Tests
                 */
 
                     // set the time on the file
-                    var timeToSet = DateTime.UtcNow.Ticks + 2;
+                    // We use a static date for now since we aren't interested in whether the value is set properly, only that the method returns a 200.
+                    var timeToSet = new DateTime(2015, 10, 26, 14, 30, 0).Ticks;
                     var timeResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.SetTimes(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, timeToSet, timeToSet);
                     Assert.True(timeResponse.StatusCode == HttpStatusCode.OK);
