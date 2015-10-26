@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -12,9 +14,26 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     public partial class JobRecurrence
     {
         /// <summary>
+        /// Initializes a new instance of the JobRecurrence class.
+        /// </summary>
+        public JobRecurrence() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobRecurrence class.
+        /// </summary>
+        public JobRecurrence(RecurrenceFrequency? frequency = default(RecurrenceFrequency?), int? interval = default(int?), int? count = default(int?), DateTime? endTime = default(DateTime?), JobRecurrenceSchedule schedule = default(JobRecurrenceSchedule))
+        {
+            Frequency = frequency;
+            Interval = interval;
+            Count = count;
+            EndTime = endTime;
+            Schedule = schedule;
+        }
+
+        /// <summary>
         /// Gets or sets the frequency of recurrence (second, minute, hour,
         /// day, week, month). Possible values for this property include:
-        /// 'Minute', 'Hour', 'Day', 'Week', 'Month'
+        /// 'Minute', 'Hour', 'Day', 'Week', 'Month'.
         /// </summary>
         [JsonProperty(PropertyName = "frequency")]
         public RecurrenceFrequency? Frequency { get; set; }

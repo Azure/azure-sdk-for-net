@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,22 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class OAuthAuthentication : HttpAuthentication
     {
+        /// <summary>
+        /// Initializes a new instance of the OAuthAuthentication class.
+        /// </summary>
+        public OAuthAuthentication() { }
+
+        /// <summary>
+        /// Initializes a new instance of the OAuthAuthentication class.
+        /// </summary>
+        public OAuthAuthentication(string secret = default(string), string tenant = default(string), string audience = default(string), string clientId = default(string))
+        {
+            Secret = secret;
+            Tenant = tenant;
+            Audience = audience;
+            ClientId = clientId;
+        }
+
         /// <summary>
         /// Gets or sets the secret.
         /// </summary>

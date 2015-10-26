@@ -1,3 +1,4 @@
+
 namespace Microsoft.Azure.Management.Scheduler
 {
     using System;
@@ -7,7 +8,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        JsonSerializerSettings DeserializationSettings { get; }        
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Management credentials for Azure.
+        /// The management credentials for Azure.
         /// </summary>
         ServiceClientCredentials Credentials { get; }
 

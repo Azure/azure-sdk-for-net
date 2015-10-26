@@ -103,19 +103,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.2.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.4.1\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.20\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.0.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.Authentication.0.9.3\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.Authentication.0.10.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">

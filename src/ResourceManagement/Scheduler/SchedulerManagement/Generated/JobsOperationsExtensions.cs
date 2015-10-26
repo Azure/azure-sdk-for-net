@@ -1,3 +1,4 @@
+
 namespace Microsoft.Azure.Management.Scheduler
 {
     using System;
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The job name.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task<JobDefinition> GetAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The job definition.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task<JobDefinition> CreateOrUpdateAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The job definition.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task<JobDefinition> PatchAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -191,7 +192,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The job name.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -234,7 +235,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The job name.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task RunAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -285,7 +286,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// entries.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task<JobListResult> ListAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
@@ -343,7 +344,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// entries.
             /// </param>
             /// <param name='cancellationToken'>
-            /// Cancellation token.
+            /// The cancellation token.
             /// </param>
             public static async Task<JobHistoryListResult> ListJobHistoryAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {

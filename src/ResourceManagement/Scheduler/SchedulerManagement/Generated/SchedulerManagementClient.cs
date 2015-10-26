@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Net;
@@ -13,7 +15,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Scheduler
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Management credentials for Azure.
+        /// The management credentials for Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -123,7 +124,7 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Management credentials for Azure.
+        /// Required. The management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
@@ -136,6 +137,10 @@ namespace Microsoft.Azure.Management.Scheduler
                 throw new ArgumentNullException("credentials");
             }
             this.Credentials = credentials;
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -145,7 +150,7 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Management credentials for Azure.
+        /// Required. The management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
@@ -163,6 +168,10 @@ namespace Microsoft.Azure.Management.Scheduler
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -182,7 +191,11 @@ namespace Microsoft.Azure.Management.Scheduler
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver()
+                ContractResolver = new ReadOnlyJsonContractResolver(),
+                Converters = new List<JsonConverter>
+                    {
+                        new Iso8601TimeSpanConverter()
+                    }
             };
             SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings = new JsonSerializerSettings{
@@ -190,7 +203,11 @@ namespace Microsoft.Azure.Management.Scheduler
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver()
+                ContractResolver = new ReadOnlyJsonContractResolver(),
+                Converters = new List<JsonConverter>
+                    {
+                        new Iso8601TimeSpanConverter()
+                    }
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 

@@ -68,6 +68,8 @@
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
                       Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
                       Condition=" '$(Scope)' == 'all'  " />
+    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\project.json" Condition=" '$(Scope)' != 'all'  " />
+    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\**\project.json" Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -96,7 +98,11 @@
     <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
       <Output TaskParameter="AutoRestLibraries" ItemName="AutoRestLibraries" />
       <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
-    </FilterOutAutoRestLibraries>    
+    </FilterOutAutoRestLibraries>
+    <Message Text="AutoRest Libraries:" />
+    <Message Text="@(AutoRestLibraries)" />
+    <Message Text="Non-AutoRest Libraries:" />
+    <Message Text="@(NonAutoRestLibraries)" />
   </Target>
   
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
@@ -114,9 +120,17 @@
     <MSBuild Projects="@(AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
+             
+    <CallTarget Targets="BuildDnx"
+             Condition=" '@(DnxLibrariesToBuild)' != '' "/>
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
+  </Target>
+  
+  <Target Name="BuildDnx">
+    <Exec Command="dnu restore &quot;%(DnxLibrariesToBuild.FullPath)&quot;"/>
+    <Exec Command="dnu build &quot;%(DnxLibrariesToBuild.FullPath)&quot; --configuration $(Configuration) --out $(LibraryRoot)dnx"/>
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
