@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/csmrg8204?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIwND9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourcegroups/csmrg2682?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5NzdjZGItMTYzZi00MzVmLTljMzItMzllYzhhZTYxZjRkL3Jlc291cmNlZ3JvdXBzL2NzbXJnMjY4Mj9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -12,11 +12,17 @@
         "Content-Length": [
           "38"
         ],
+        "x-ms-client-request-id": [
+          "2df1fc53-42d1-45c6-8722-c4f5612216fb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204\",\r\n  \"name\": \"csmrg8204\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682\",\r\n  \"name\": \"csmrg2682\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -31,16 +37,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1194"
         ],
         "x-ms-request-id": [
-          "c55f6739-cdf7-4078-901b-11da3f083a63"
+          "5ce845ff-07da-4031-bbde-730429bb1f11"
         ],
         "x-ms-correlation-request-id": [
-          "c55f6739-cdf7-4078-901b-11da3f083a63"
+          "5ce845ff-07da-4031-bbde-730429bb1f11"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150618T223425Z:c55f6739-cdf7-4078-901b-11da3f083a63"
+          "WESTUS:20151022T202403Z:5ce845ff-07da-4031-bbde-730429bb1f11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,16 +55,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2015 22:34:25 GMT"
+          "Thu, 22 Oct 2015 20:24:02 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/csmrg8204/deployments/csmd3345?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIwNC9kZXBsb3ltZW50cy9jc21kMzM0NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourcegroups/csmrg2682/deployments/csmd4971?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5NzdjZGItMTYzZi00MzVmLTljMzItMzllYzhhZTYxZjRkL3Jlc291cmNlZ3JvdXBzL2NzbXJnMjY4Mi9kZXBsb3ltZW50cy9jc21kNDk3MT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/good-website.js\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"value\": \"csmr4720\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"csmr4720\"\r\n      },\r\n      \"siteMode\": {\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/good-website.js\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"value\": \"csmr3353\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"csmr3353\"\r\n      },\r\n      \"siteMode\": {\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -66,11 +72,17 @@
         "Content-Length": [
           "621"
         ],
+        "x-ms-client-request-id": [
+          "1fef44fe-6ae7-41dc-a764-b132b5a057e4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204/deployments/csmd3345\",\r\n  \"name\": \"csmd3345\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/good-website.js\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csmr4720\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csmr4720\"\r\n      },\r\n      \"siteMode\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2015-06-18T22:34:27.2213204Z\",\r\n    \"duration\": \"PT0.7373115S\",\r\n    \"correlationId\": \"bbe6a71a-eaf9-4d82-a76b-cc4d7f61a9eb\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Web\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"Sites\",\r\n            \"locations\": [\r\n              \"northeurope\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"serverFarms\",\r\n            \"locations\": [\r\n              \"northeurope\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204/providers/Microsoft.Web/serverFarms/csmr4720\",\r\n            \"resourceType\": \"Microsoft.Web/serverFarms\",\r\n            \"resourceName\": \"csmr4720\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204/providers/Microsoft.Web/Sites/csmr4720\",\r\n        \"resourceType\": \"Microsoft.Web/Sites\",\r\n        \"resourceName\": \"csmr4720\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682/deployments/csmd4971\",\r\n  \"name\": \"csmd4971\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/good-website.js\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csmr3353\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csmr3353\"\r\n      },\r\n      \"siteMode\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2015-10-22T20:24:04.2301953Z\",\r\n    \"duration\": \"PT0.5904611S\",\r\n    \"correlationId\": \"344e1917-1d00-4146-b660-d31d469fcf46\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Web\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"Sites\",\r\n            \"locations\": [\r\n              \"northeurope\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"serverFarms\",\r\n            \"locations\": [\r\n              \"northeurope\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682/providers/Microsoft.Web/serverFarms/csmr3353\",\r\n            \"resourceType\": \"Microsoft.Web/serverFarms\",\r\n            \"resourceName\": \"csmr3353\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682/providers/Microsoft.Web/Sites/csmr3353\",\r\n        \"resourceType\": \"Microsoft.Web/Sites\",\r\n        \"resourceName\": \"csmr3353\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1382"
@@ -85,16 +97,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1193"
         ],
         "x-ms-request-id": [
-          "bbe6a71a-eaf9-4d82-a76b-cc4d7f61a9eb"
+          "344e1917-1d00-4146-b660-d31d469fcf46"
         ],
         "x-ms-correlation-request-id": [
-          "bbe6a71a-eaf9-4d82-a76b-cc4d7f61a9eb"
+          "344e1917-1d00-4146-b660-d31d469fcf46"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150618T223427Z:bbe6a71a-eaf9-4d82-a76b-cc4d7f61a9eb"
+          "WESTUS:20151022T202404Z:344e1917-1d00-4146-b660-d31d469fcf46"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -103,25 +115,31 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2015 22:34:27 GMT"
+          "Thu, 22 Oct 2015 20:24:03 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/csmrg8204/deployments/csmd3345/operations?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIwNC9kZXBsb3ltZW50cy9jc21kMzM0NS9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourcegroups/csmrg2682/deployments/csmd4971/operations?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5NzdjZGItMTYzZi00MzVmLTljMzItMzllYzhhZTYxZjRkL3Jlc291cmNlZ3JvdXBzL2NzbXJnMjY4Mi9kZXBsb3ltZW50cy9jc21kNDk3MS9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "10bd821d-ca2d-45cb-9d92-a6a7ddd7c21b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204/deployments/csmd3345/operations/33C03B68F4B4915D\",\r\n      \"operationId\": \"33C03B68F4B4915D\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"timestamp\": \"2015-06-18T22:34:31.2999936Z\",\r\n        \"duration\": \"PT2.4771531S\",\r\n        \"trackingId\": \"0d24cd65-30cb-49f9-bdf5-4c96129ec124\",\r\n        \"statusCode\": \"BadRequest\",\r\n        \"statusMessage\": {\r\n          \"error\": {\r\n            \"code\": \"NoRegisteredProviderFound\",\r\n            \"message\": \"No registered resource provider found for location 'North Europe' and API version '01-01-2014' for type 'serverFarms'. The supported api-versions are '2015-06-01, 2015-05-01, 2015-04-01, 2015-02-01, 2014-11-01, 2014-06-01, 2014-04-01, 2014-04-01-preview'. The supported locations are 'brazilsouth, eastasia, eastus, japaneast, japanwest, northcentralus, northeurope, southcentralus, westeurope, westus, southeastasia, centralus, eastus2, msftwestus, msfteastus, msfteastasia, msftnortheurope, australiaeast, australiasoutheast, eastus2stage, eastasiastage'.\"\r\n          }\r\n        },\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg8204/providers/Microsoft.Web/serverFarms/csmr4720\",\r\n          \"resourceType\": \"Microsoft.Web/serverFarms\",\r\n          \"resourceName\": \"csmr4720\"\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682/deployments/csmd4971/operations/EE4B75DDEE69B89F\",\r\n      \"operationId\": \"EE4B75DDEE69B89F\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"timestamp\": \"2015-10-22T20:24:09.1634668Z\",\r\n        \"duration\": \"PT2.8266142S\",\r\n        \"trackingId\": \"5b49ed82-db5f-4bf2-8013-0e57b4f4ae09\",\r\n        \"statusCode\": \"BadRequest\",\r\n        \"statusMessage\": {\r\n          \"error\": {\r\n            \"code\": \"NoRegisteredProviderFound\",\r\n            \"message\": \"No registered resource provider found for location 'North Europe' and API version '01-01-2014' for type 'serverFarms'. The supported api-versions are '2015-08-01, 2015-07-01, 2015-06-01, 2015-05-01, 2015-04-01, 2015-02-01, 2014-11-01, 2014-06-01, 2014-04-01, 2014-04-01-preview'. The supported locations are 'brazilsouth, eastasia, eastus, japaneast, japanwest, northcentralus, northeurope, southcentralus, westeurope, westus, southeastasia, centralus, eastus2, msftwestus, msfteastus, msfteastasia, msftnortheurope, australiaeast, australiasoutheast, eastus2stage, eastasiastage, centralusstage, westindia, centralindia, southindia'.\"\r\n          }\r\n        },\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/resourceGroups/csmrg2682/providers/Microsoft.Web/serverFarms/csmr3353\",\r\n          \"resourceType\": \"Microsoft.Web/serverFarms\",\r\n          \"resourceName\": \"csmr3353\"\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1220"
+          "1297"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -133,16 +151,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14997"
         ],
         "x-ms-request-id": [
-          "e3fe83da-7177-4620-a2e5-0173f806ac91"
+          "e312440c-796f-46da-88a1-30805b4a8b67"
         ],
         "x-ms-correlation-request-id": [
-          "e3fe83da-7177-4620-a2e5-0173f806ac91"
+          "e312440c-796f-46da-88a1-30805b4a8b67"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150618T223457Z:e3fe83da-7177-4620-a2e5-0173f806ac91"
+          "WESTUS:20151022T202434Z:e312440c-796f-46da-88a1-30805b4a8b67"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -151,7 +169,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2015 22:34:56 GMT"
+          "Thu, 22 Oct 2015 20:24:33 GMT"
         ]
       },
       "StatusCode": 200
@@ -159,12 +177,12 @@
   ],
   "Names": {
     "CreateLargeWebDeploymentTemplateWorks": [
-      "csmr4720",
-      "csmrg8204",
-      "csmd3345"
+      "csmr3353",
+      "csmrg2682",
+      "csmd4971"
     ]
   },
   "Variables": {
-    "SubscriptionId": "38b598fc-e57a-423f-b2e7-dc0ddb631f1f"
+    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
   }
 }

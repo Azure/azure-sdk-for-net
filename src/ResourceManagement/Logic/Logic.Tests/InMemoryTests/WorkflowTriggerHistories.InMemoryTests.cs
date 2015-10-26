@@ -236,7 +236,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Fq2wzoMQpAJYmc7wm/nqHg==", history.OutputsLink.ContentHash.Value);
         }
 
-        private void ValidateTriggerHistoryListResponse1(Page<WorkflowTriggerHistory> page)
+        private void ValidateTriggerHistoryListResponse1(IPage<WorkflowTriggerHistory> page)
         {
             Assert.Equal(1, page.Count());
             Assert.Equal("http://management.azure.com/keyNextLink", page.NextPageLink);

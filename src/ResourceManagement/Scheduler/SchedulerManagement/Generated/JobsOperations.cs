@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -11,7 +13,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -28,6 +29,10 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </param>
         internal JobsOperations(SchedulerManagementClient client)
         {
+            if (client == null) 
+            {
+                throw new ArgumentNullException("client");
+            }
             this.Client = client;
         }
 
@@ -41,18 +46,18 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<JobDefinition>> GetWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -90,8 +95,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -105,8 +110,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -196,21 +199,21 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='job'>
         /// The job definition.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<JobDefinition>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -253,8 +256,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -268,8 +271,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("PUT");
@@ -302,7 +303,7 @@ namespace Microsoft.Azure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request  
+            // Serialize Request
             string requestContent = JsonConvert.SerializeObject(job, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -369,21 +370,21 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='job'>
         /// The job definition.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<JobDefinition>> PatchWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -426,8 +427,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "Patch", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -441,8 +442,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("PATCH");
@@ -475,7 +474,7 @@ namespace Microsoft.Azure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request  
+            // Serialize Request
             string requestContent = JsonConvert.SerializeObject(job, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -536,18 +535,18 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -585,8 +584,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -600,8 +599,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("DELETE");
@@ -678,18 +675,18 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse> RunWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -727,8 +724,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "Run", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/run";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/run").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -742,8 +739,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("POST");
@@ -820,22 +815,22 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='top'>
         /// The number of jobs to request, in the of range [1..100].
-        /// </param>    
+        /// </param>
         /// <param name='skip'>
         /// The (0-based) index of the job history list from which to begin requesting
         /// entries.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<JobListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -870,8 +865,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -892,8 +887,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -983,25 +976,25 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
-        /// </param>    
+        /// </param>
         /// <param name='jobCollectionName'>
         /// The job collection name.
-        /// </param>    
+        /// </param>
         /// <param name='jobName'>
         /// The job name.
-        /// </param>    
+        /// </param>
         /// <param name='top'>
         /// the number of job history to request, in the of range [1..100].
-        /// </param>    
+        /// </param>
         /// <param name='skip'>
         /// The (0-based) index of the job history list from which to begin requesting
         /// entries.
-        /// </param>    
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<JobHistoryListResult>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1041,8 +1034,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ServiceClientTracing.Enter(invocationId, this, "ListJobHistory", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/history";
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/history").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{jobCollectionName}", Uri.EscapeDataString(jobCollectionName));
@@ -1064,8 +1057,6 @@ namespace Microsoft.Azure.Management.Scheduler
             {
                 url += "?" + string.Join("&", queryParameters);
             }
-            // trim all duplicate forward slashes in the url
-            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");

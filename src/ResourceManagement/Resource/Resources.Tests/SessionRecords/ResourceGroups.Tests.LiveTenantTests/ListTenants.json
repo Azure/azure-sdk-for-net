@@ -2,32 +2,54 @@
   "Entries": [
     {
       "RequestUri": "/tenants?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eebb2377-2a6f-44e9-acd1-95dae4c6ed4d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Subscriptions.SubscriptionClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.SubscriptionClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/27becc5d-8661-4961-889c-af932da262a0\",\r\n      \"tenantId\": \"27becc5d-8661-4961-889c-af932da262a0\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14995"
+        ],
         "x-ms-request-id": [
-          "de89a66b-5170-494b-912d-d94c1b089efc"
+          "00cb31b5-8455-47fd-9f65-9018775f9c03"
         ],
         "x-ms-correlation-request-id": [
-          "de89a66b-5170-494b-912d-d94c1b089efc"
+          "00cb31b5-8455-47fd-9f65-9018775f9c03"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220519Z:de89a66b-5170-494b-912d-d94c1b089efc"
+          "WESTUS:20151022T203058Z:00cb31b5-8455-47fd-9f65-9018775f9c03"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:05:19 GMT"
+          "Thu, 22 Oct 2015 20:30:58 GMT"
         ]
       },
       "StatusCode": 200
@@ -35,6 +57,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
   }
 }

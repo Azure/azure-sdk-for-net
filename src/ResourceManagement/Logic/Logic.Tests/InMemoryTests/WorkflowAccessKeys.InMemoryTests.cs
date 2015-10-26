@@ -394,7 +394,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("default", key.Name);
         }
 
-        private void ValidateKeyListResponse1(Page<WorkflowAccessKey> page)
+        private void ValidateKeyListResponse1(IPage<WorkflowAccessKey> page)
         {
             Assert.Equal(1, page.Count());
             Assert.Equal("http://management.azure.com/keyNextLink", page.NextPageLink);

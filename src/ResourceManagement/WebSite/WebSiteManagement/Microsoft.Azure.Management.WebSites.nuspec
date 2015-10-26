@@ -15,23 +15,21 @@
     <description>Provides management capabilities for Microsoft Azure Web Sites via Resource Management.  Deploy, configure, debug, and scale your websites using familiar APIs.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure web site management "web sites" "web sites management" REST HTTP client azureofficial windowsazureofficial "resource management" resource management</tags>
-    <references>
-      <group targetFramework="portable-net403+win8+wpa81">
-        <reference file="Microsoft.Azure.Management.WebSites.dll" />
-      </group>
-      <group targetFramework="net45">
-        <reference file="Microsoft.Azure.Management.WebSites.dll" />
-      </group>
-    </references>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.20,2.0)" />
+      <group targetFramework="portable-net45+win8+wpa81">
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.0,3.0)" />
+      </group>
+      <group targetFramework="dotnet">
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.0,3.0)" />
+      </group>
     </dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\WebSite\WebSiteManagement\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.dll" target="lib\portable-net403+win8+wpa81" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.pdb" target="lib\portable-net403+win8+wpa81" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.xml" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.dll" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.pdb" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.xml" target="lib\portable-net45+win8+wpa81" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.xml" target="lib\net45" />

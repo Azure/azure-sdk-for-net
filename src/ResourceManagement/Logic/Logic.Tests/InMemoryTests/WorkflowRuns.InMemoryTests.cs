@@ -268,7 +268,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("4Ikl8rJkAg3bN8C9I6nKFQ==", run.Trigger.OutputsLink.ContentHash.Value);
         }
 
-        private void ValidateRunListResponse1(Page<WorkflowRun> page)
+        private void ValidateRunListResponse1(IPage<WorkflowRun> page)
         {
             Assert.Equal(1, page.Count());
             Assert.Equal("http://management.azure.com/runNextLink", page.NextPageLink);

@@ -67,7 +67,7 @@ namespace Networks.Tests
                         new FrontendIpConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PublicIPAddress = new SubResource()
+                            PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = lbPublicIp.Id
                             }
@@ -85,7 +85,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -95,12 +95,12 @@ namespace Networks.Tests
                             BackendPort = 80,
                             EnableFloatingIP = false,
                             IdleTimeoutInMinutes = 15,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
-                            Probe = new SubResource()
+                            Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
@@ -124,7 +124,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule1Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -138,7 +138,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule2Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -268,7 +268,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -278,12 +278,12 @@ namespace Networks.Tests
                             BackendPort = 80,
                             EnableFloatingIP = false,
                             IdleTimeoutInMinutes = 15,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
-                            Probe = new SubResource()
+                            Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
@@ -307,7 +307,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule1Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -321,7 +321,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule2Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -450,7 +450,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -459,12 +459,12 @@ namespace Networks.Tests
                             FrontendPort = 80,
                             BackendPort = 80,
                             EnableFloatingIP = false,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
-                            Probe = new SubResource()
+                            Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
@@ -488,7 +488,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule1Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -501,7 +501,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule2Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -633,7 +633,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -642,12 +642,12 @@ namespace Networks.Tests
                             FrontendPort = 80,
                             BackendPort = 80,
                             EnableFloatingIP = false,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
-                            Probe = new SubResource()
+                            Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
@@ -672,7 +672,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule1Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -685,7 +685,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule2Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -884,7 +884,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbname, "FrontendIPConfigurations", frontendIpConfigName)
@@ -893,7 +893,7 @@ namespace Networks.Tests
                             FrontendPort = 80,
                             BackendPort = 80,
                             EnableFloatingIP = false,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbname, "backendAddressPools", backEndAddressPoolName)
@@ -931,7 +931,7 @@ namespace Networks.Tests
                                                                   }
                                                           };
 
-                getLoadBalancer.LoadBalancingRules[0].Probe = new SubResource()
+                getLoadBalancer.LoadBalancingRules[0].Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                                                                                {
                                                                                    Id =
                                                                                        GetChildLbResourceId(
@@ -1058,7 +1058,7 @@ namespace Networks.Tests
                         new FrontendIpConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PublicIPAddress = new SubResource()
+                            PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = lbPublicIp.Id
                             }
@@ -1076,7 +1076,7 @@ namespace Networks.Tests
                         new LoadBalancingRule()
                         {
                             Name = loadBalancingRuleName,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -1086,12 +1086,12 @@ namespace Networks.Tests
                             BackendPort = 80,
                             EnableFloatingIP = false,
                             IdleTimeoutInMinutes = 15,
-                            BackendAddressPool = new SubResource()
+                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
-                            Probe = new SubResource()
+                            Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
@@ -1115,7 +1115,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule1Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -1129,7 +1129,7 @@ namespace Networks.Tests
                         new InboundNatRule()
                         {
                             Name = inboundNatRule2Name,
-                            FrontendIPConfiguration = new SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
                                     Id = GetChildLbResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -1149,22 +1149,22 @@ namespace Networks.Tests
                 var getLoadBalancer = networkResourceProviderClient.LoadBalancers.Get(resourceGroupName, lbName);
 
                 // Associate the nic with LB
-                nic1.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<SubResource>
+                nic1.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<Microsoft.Azure.Management.Network.Models.SubResource>
                                                                                     {
                                                                                         getLoadBalancer.BackendAddressPools.First()
                                                                                     };
 
-                nic1.IpConfigurations.First().LoadBalancerInboundNatRules = new List<SubResource>
+                nic1.IpConfigurations.First().LoadBalancerInboundNatRules = new List<Microsoft.Azure.Management.Network.Models.SubResource>
                                                                                     {
                                                                                         getLoadBalancer.InboundNatRules.First()
                                                                                     };
 
-                nic2.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<SubResource>
+                nic2.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<Microsoft.Azure.Management.Network.Models.SubResource>
                                                                                     {
                                                                                         getLoadBalancer.BackendAddressPools.First()
                                                                                     };
 
-                nic3.IpConfigurations.First().LoadBalancerInboundNatRules = new List<SubResource>
+                nic3.IpConfigurations.First().LoadBalancerInboundNatRules = new List<Microsoft.Azure.Management.Network.Models.SubResource>
                                                                                     {
                                                                                         getLoadBalancer.InboundNatRules[1]
                                                                                     };
