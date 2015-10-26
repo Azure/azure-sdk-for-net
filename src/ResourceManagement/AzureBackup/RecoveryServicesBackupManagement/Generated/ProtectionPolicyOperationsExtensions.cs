@@ -168,6 +168,128 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be fetched.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static ProtectionPolicyResponse Get(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).GetAsync(resourceGroupName, resourceName, policyName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be fetched.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static Task<ProtectionPolicyResponse> GetAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetAsync(resourceGroupName, resourceName, policyName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. OperationId to get operation result.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static ProtectionPolicyResponse GetOperationResult(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).GetOperationResultAsync(resourceGroupName, resourceName, policyName, operationId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. OperationId to get operation result.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static Task<ProtectionPolicyResponse> GetOperationResultAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetOperationResultAsync(resourceGroupName, resourceName, policyName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
