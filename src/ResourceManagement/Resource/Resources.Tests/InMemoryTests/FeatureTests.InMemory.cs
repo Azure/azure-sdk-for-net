@@ -15,7 +15,7 @@
 
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Net;
 using System.Net.Http;

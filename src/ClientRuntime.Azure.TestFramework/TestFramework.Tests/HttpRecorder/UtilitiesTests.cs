@@ -6,6 +6,7 @@ using Xunit;
 
 namespace HttpRecorder.Tests
 {
+    [Collection("SerialCollection1")]
     public class UtilitiesTests
     {
         [Fact]

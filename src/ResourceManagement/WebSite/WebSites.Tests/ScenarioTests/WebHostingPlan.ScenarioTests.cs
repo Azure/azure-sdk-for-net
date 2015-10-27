@@ -22,7 +22,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using WebSites.Tests.Helpers;
 using Xunit;
 

@@ -71,7 +71,7 @@ namespace Authorization.Tests
             }
 
             this.testEnvironment = testEnv;
-            if (testEnv.AuthorizationContext != null)
+            if (testEnv != null && testEnv.AuthorizationContext != null  && testEnv.AuthorizationContext.UserId != null)
             {
                 var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
 
@@ -219,9 +219,9 @@ namespace Authorization.Tests
             return string.Format(
                 GraphUriFormatter,
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
-                this.testEnvironment.AuthorizationContext == null ?
+                this.testEnvironment.AuthorizationContext == null  || this.testEnvironment.AuthorizationContext.TenantId == null?
                 GraphManagementClient.DefaultTenantId :
-                    this.testEnvironment.AuthorizationContext.TenatId,
+                    this.testEnvironment.AuthorizationContext.TenantId,
                 suffix,
                 GraphManagementClient.GraphApiVersion);
         }

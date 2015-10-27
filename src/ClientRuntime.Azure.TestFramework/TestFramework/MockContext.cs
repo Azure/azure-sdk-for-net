@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.Rest.Azure;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
