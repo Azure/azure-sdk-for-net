@@ -40,17 +40,20 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <param name='parameters'>
         /// Required. Role definition.
         /// </param>
         /// <returns>
         /// Role definition create or update operation result.
         /// </returns>
-        public static RoleDefinitionCreateOrUpdateResult CreateOrUpdate(this IRoleDefinitionOperations operations, Guid roleDefinitionId, RoleDefinitionCreateOrUpdateParameters parameters)
+        public static RoleDefinitionCreateOrUpdateResult CreateOrUpdate(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope, RoleDefinitionCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRoleDefinitionOperations)s).CreateOrUpdateAsync(roleDefinitionId, parameters);
+                return ((IRoleDefinitionOperations)s).CreateOrUpdateAsync(roleDefinitionId, scope, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -65,15 +68,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <param name='parameters'>
         /// Required. Role definition.
         /// </param>
         /// <returns>
         /// Role definition create or update operation result.
         /// </returns>
-        public static Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId, RoleDefinitionCreateOrUpdateParameters parameters)
+        public static Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope, RoleDefinitionCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateAsync(roleDefinitionId, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(roleDefinitionId, scope, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -86,14 +92,17 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <returns>
         /// Role definition delete operation result.
         /// </returns>
-        public static RoleDefinitionDeleteResult Delete(this IRoleDefinitionOperations operations, string roleDefinitionId)
+        public static RoleDefinitionDeleteResult Delete(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRoleDefinitionOperations)s).DeleteAsync(roleDefinitionId);
+                return ((IRoleDefinitionOperations)s).DeleteAsync(roleDefinitionId, scope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -108,52 +117,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <returns>
         /// Role definition delete operation result.
         /// </returns>
-        public static Task<RoleDefinitionDeleteResult> DeleteAsync(this IRoleDefinitionOperations operations, string roleDefinitionId)
+        public static Task<RoleDefinitionDeleteResult> DeleteAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope)
         {
-            return operations.DeleteAsync(roleDefinitionId, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
-        /// </param>
-        /// <param name='roleDefinitionName'>
-        /// Required. Role definition name (GUID).
-        /// </param>
-        /// <returns>
-        /// Role definition get operation result.
-        /// </returns>
-        public static RoleDefinitionGetResult Get(this IRoleDefinitionOperations operations, Guid roleDefinitionName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IRoleDefinitionOperations)s).GetAsync(roleDefinitionName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
-        /// </param>
-        /// <param name='roleDefinitionName'>
-        /// Required. Role definition name (GUID).
-        /// </param>
-        /// <returns>
-        /// Role definition get operation result.
-        /// </returns>
-        public static Task<RoleDefinitionGetResult> GetAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionName)
-        {
-            return operations.GetAsync(roleDefinitionName, CancellationToken.None);
+            return operations.DeleteAsync(roleDefinitionId, scope, CancellationToken.None);
         }
         
         /// <summary>
@@ -165,6 +137,46 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         /// <param name='roleDefinitionId'>
         /// Required. Role definition Id
+        /// </param>
+        /// <returns>
+        /// Role definition get operation result.
+        /// </returns>
+        public static RoleDefinitionGetResult Get(this IRoleDefinitionOperations operations, Guid roleDefinitionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRoleDefinitionOperations)s).GetAsync(roleDefinitionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
+        /// </param>
+        /// <param name='roleDefinitionId'>
+        /// Required. Role definition Id
+        /// </param>
+        /// <returns>
+        /// Role definition get operation result.
+        /// </returns>
+        public static Task<RoleDefinitionGetResult> GetAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId)
+        {
+            return operations.GetAsync(roleDefinitionId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
+        /// </param>
+        /// <param name='roleDefinitionId'>
+        /// Required. Fully qualified role definition Id
         /// </param>
         /// <returns>
         /// Role definition get operation result.
@@ -186,7 +198,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Required. Role definition Id
+        /// Required. Fully qualified role definition Id
         /// </param>
         /// <returns>
         /// Role definition get operation result.
