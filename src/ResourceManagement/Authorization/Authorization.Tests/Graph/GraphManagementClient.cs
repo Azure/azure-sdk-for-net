@@ -71,7 +71,7 @@ namespace Authorization.Tests
             }
 
             this.testEnvironment = testEnv;
-            if (testEnv.AuthorizationContext != null)
+            if (testEnv.AuthorizationContext != null  && testEnv.AuthorizationContext.UserId != null)
             {
                 var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
 
