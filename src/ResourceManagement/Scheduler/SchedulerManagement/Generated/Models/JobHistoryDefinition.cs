@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,22 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class JobHistoryDefinition
     {
+        /// <summary>
+        /// Initializes a new instance of the JobHistoryDefinition class.
+        /// </summary>
+        public JobHistoryDefinition() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobHistoryDefinition class.
+        /// </summary>
+        public JobHistoryDefinition(string id = default(string), string type = default(string), string name = default(string), JobHistoryDefinitionProperties properties = default(JobHistoryDefinitionProperties))
+        {
+            Id = id;
+            Type = type;
+            Name = name;
+            Properties = properties;
+        }
+
         /// <summary>
         /// Gets the job history identifier.
         /// </summary>

@@ -6,12 +6,12 @@
 @echo off
 setlocal
 
-set autoRestVersion=0.11.0-Nightly20150727
+set autoRestVersion=0.12.0-Nightly20151022
 set repoRoot=%~dp0..\..\..\..
 set generatedFolder=%~dp0Generated
 
 if "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-logic/2015-02-01-preview/swagger/logic.json?token=AH8IX8feQ_AbVGqLGTA3zABKe4sMSgv4ks5VwpPzwA=="
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-logic/2015-02-01-preview/swagger/logic.json"
 ) else (
     set specFile="%1"
 )

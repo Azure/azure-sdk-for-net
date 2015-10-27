@@ -56,7 +56,7 @@ namespace Networks.Tests
                     {
                             Name = ipConfigName,
                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                            Subnet = new SubResource()
+                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = subnetId
                             }
@@ -66,7 +66,7 @@ namespace Networks.Tests
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource() { Id = publicIpAddressId };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource() { Id = publicIpAddressId };
             }
 
             // Test NIC apis

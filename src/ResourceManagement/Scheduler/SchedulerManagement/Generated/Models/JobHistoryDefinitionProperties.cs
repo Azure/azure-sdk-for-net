@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,28 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class JobHistoryDefinitionProperties
     {
+        /// <summary>
+        /// Initializes a new instance of the JobHistoryDefinitionProperties
+        /// class.
+        /// </summary>
+        public JobHistoryDefinitionProperties() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobHistoryDefinitionProperties
+        /// class.
+        /// </summary>
+        public JobHistoryDefinitionProperties(DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), DateTime? expectedExecutionTime = default(DateTime?), JobHistoryActionName? actionName = default(JobHistoryActionName?), JobExecutionStatus? status = default(JobExecutionStatus?), string message = default(string), int? retryCount = default(int?), int? repeatCount = default(int?))
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            ExpectedExecutionTime = expectedExecutionTime;
+            ActionName = actionName;
+            Status = status;
+            Message = message;
+            RetryCount = retryCount;
+            RepeatCount = repeatCount;
+        }
+
         /// <summary>
         /// Gets the start time for this job.
         /// </summary>
@@ -31,7 +55,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
 
         /// <summary>
         /// Gets the job history action name. Possible values for this
-        /// property include: 'MainAction', 'ErrorAction'
+        /// property include: 'MainAction', 'ErrorAction'.
         /// </summary>
         [JsonProperty(PropertyName = "actionName")]
         public JobHistoryActionName? ActionName { get; private set; }
@@ -39,7 +63,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Gets the job history status. Possible values for this property
         /// include: 'Completed', 'Failed', 'Cancelled', 'CallbackNotFound',
-        /// 'Postponed'
+        /// 'Postponed'.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobExecutionStatus? Status { get; private set; }

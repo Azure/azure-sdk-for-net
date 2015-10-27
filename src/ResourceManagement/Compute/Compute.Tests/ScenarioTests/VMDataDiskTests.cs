@@ -20,6 +20,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Compute.Tests
 {
@@ -47,16 +48,16 @@ namespace Compute.Tests
 
                     Action<VirtualMachine> addDataDiskToVM = vm =>
                     {
-                        string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                        string containerName = HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix);
                         var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
-                        var vhduri = vhdContainer + string.Format("/{0}.vhd", ComputeManagementTestUtilities.GenerateName(TestPrefix));
+                        var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
 
                         vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
                         vm.StorageProfile.DataDisks = new List<DataDisk>();
                         foreach (int index in new int[] {1, 2})
                         {
                             var diskName = "dataDisk" + index;
-                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, ComputeManagementTestUtilities.GenerateName(TestPrefix));
+                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
                             var dd = new DataDisk
                             {
                                 Caching = CachingTypes.None,
@@ -129,6 +130,10 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
 
                     passed = true;
+                }
+                catch (Exception e)
+                {
+                    throw e;
                 }
                 finally
                 {

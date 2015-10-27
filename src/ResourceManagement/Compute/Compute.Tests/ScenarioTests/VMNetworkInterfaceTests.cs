@@ -20,7 +20,7 @@ using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -29,49 +29,11 @@ namespace Compute.Tests
 {
     public class VMNetworkInterfaceTests : VMTestBase
     {
-
-        public static void FixRecords()
-        {
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                var records = new Dictionary<string, Queue<RecordEntry>>();
-                foreach (var record in HttpMockServer.Records.GetAllEntities())
-                {
-                    var key = HttpMockServer.Matcher.GetMatchingKey(record);
-                    if (!records.ContainsKey(key))
-                    {
-                        records[key] = new Queue<RecordEntry>();
-                    }
-
-                    records[key].Enqueue(record);
-                }
-
-                var newRecords = new Dictionary<string, Queue<RecordEntry>>();
-                foreach (var key in records.Keys)
-                {
-                    Queue<RecordEntry> newRecord = new Queue<RecordEntry>();
-                    var queue = records[key];
-
-                    while (queue.Count > 0)
-                    {
-                        newRecord.Enqueue(queue.Dequeue());
-                        //queue.Dequeue();
-                        //queue.Dequeue();
-                        //queue.Dequeue();
-                    }
-
-                    newRecords[key] = newRecord;
-                }
-                HttpMockServer.Records = new Records( newRecords, HttpMockServer.Matcher);
-            }
-        }
-
         [Fact]
         public void TestNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start())
             {
-                //FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -134,7 +96,6 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                //FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);

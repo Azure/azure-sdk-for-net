@@ -6,12 +6,13 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace HttpRecorder.Tests
 {
+    [Collection("SerialCollection1")]
     public class HttpMockServerTests : IDisposable
     {
         private string currentDir;
@@ -197,7 +198,7 @@ namespace HttpRecorder.Tests
             catch (AggregateException aggregateException)
             {
                 var exception = aggregateException.InnerExceptions[0];
-                Assert.Equal("Unable to find a matching HTTP request for URL 'POST /path/to/resourceB?api-version=xyz (x-ms-version=123)'. Calling method DoStuffC().", 
+                Assert.Equal("Unable to find a matching HTTP request for URL 'POST /path/to/resourceB?api-version=xyz (x-ms-version=123)'. Calling method DoStuffC().",
                     exception.Message);
             }
         }
@@ -232,7 +233,7 @@ namespace HttpRecorder.Tests
             Assert.Equal(resultDOrig.RequestMessage.RequestUri, resultDPlayback.RequestMessage.RequestUri);
         }
 
-        [Fact (Skip = "Removed content check for now as it requires re-recording of all tests.")]
+        [Fact(Skip = "Removed content check for now as it requires re-recording of all tests.")]
         public void PlaybackWithDifferentContentTypeDoesNotMatch()
         {
             HttpMockServer.RecordsDirectory = currentDir;
@@ -273,7 +274,7 @@ namespace HttpRecorder.Tests
             FakeHttpClient client2 = CreateClient();
             var result1 = client1.DoStuffA().Result;
             var result2 = client2.DoStuffA().Result;
-            
+
             HttpMockServer.Initialize(this.GetType(), "testB", HttpRecorderMode.Record);
             FakeHttpClient client3 = CreateClient();
             var result3 = client3.DoStuffA().Result;
@@ -304,7 +305,7 @@ namespace HttpRecorder.Tests
         public void MissingFileOnPlaybackThrowsAnException()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            Assert.Throws<ArgumentException>(()=>HttpMockServer.Initialize(this.GetType(), "testA", HttpRecorderMode.Playback));
+            Assert.Throws<ArgumentException>(() => HttpMockServer.Initialize(this.GetType(), "testA", HttpRecorderMode.Playback));
         }
 
         [Fact]
@@ -388,7 +389,14 @@ namespace HttpRecorder.Tests
             string outputDir = Path.Combine(currentDir, this.GetType().Name);
             if (Directory.Exists(outputDir))
             {
-                Directory.Delete(outputDir, true);
+                try
+                {
+                    Directory.Delete(outputDir, true);
+                }
+                catch
+                {
+                    
+                }
             }
 
             HttpMockServer.RecordsDirectory = "SessionRecords";

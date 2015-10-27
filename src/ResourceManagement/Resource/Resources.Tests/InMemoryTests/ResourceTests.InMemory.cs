@@ -463,7 +463,7 @@ namespace ResourceGroups.Tests
                 identity.ResourceName,
                 identity.ResourceProviderApiVersion);
             // Validate headers
-            Assert.Equal("https://localhost:123/test/subscriptions/" + randomValue + "/resourcegroups/foo/providers/Microsoft.Web/sites/" + randomValue + "?api-version=2014-01-04", handler.Uri.AbsoluteUri);
+            Assert.Equal("https://localhost:123/test/subscriptions/" + randomValue + "/resourcegroups/foo/providers/Microsoft.Web//sites/" + randomValue + "?api-version=2014-01-04", handler.Uri.AbsoluteUri);
         }
 
         [Fact]

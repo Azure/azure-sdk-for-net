@@ -2,26 +2,45 @@
   "Entries": [
     {
       "RequestUri": "/subscriptions?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2c9561d8-cc19-4a83-9b59-a94597673eaa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Subscriptions.SubscriptionClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.SubscriptionClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e\",\r\n      \"subscriptionId\": \"5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e\",\r\n      \"displayName\": \"adminNext528\",\r\n      \"state\": \"Enabled\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d\",\r\n      \"subscriptionId\": \"00977cdb-163f-435f-9c32-39ec8ae61f4d\",\r\n      \"displayName\": \"node\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/279b0675-cf67-467f-98f0-67ae31eb540f\",\r\n      \"subscriptionId\": \"279b0675-cf67-467f-98f0-67ae31eb540f\",\r\n      \"displayName\": \"Azure SDK CI\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101\",\r\n      \"subscriptionId\": \"6b085460-5f21-477e-ba44-1035046e9101\",\r\n      \"displayName\": \"Azure SDK Infrastructure\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c\",\r\n      \"subscriptionId\": \"db1ab6f0-4769-4b27-930e-01e2ef9c123c\",\r\n      \"displayName\": \"Azure SDK sandbox\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "1080"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
         "x-ms-request-id": [
-          "079f1af3-cba4-4160-9951-0568094c4a97"
+          "755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
         ],
         "x-ms-correlation-request-id": [
-          "079f1af3-cba4-4160-9951-0568094c4a97"
+          "755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140627T223133Z:079f1af3-cba4-4160-9951-0568094c4a97"
+          "WESTUS:20151022T202552Z:755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -30,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 27 Jun 2014 22:31:33 GMT"
+          "Thu, 22 Oct 2015 20:25:52 GMT"
         ]
       },
       "StatusCode": 200
@@ -38,6 +57,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
   }
 }

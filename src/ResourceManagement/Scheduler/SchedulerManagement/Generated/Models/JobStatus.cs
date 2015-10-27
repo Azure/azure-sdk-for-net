@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,23 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class JobStatus
     {
+        /// <summary>
+        /// Initializes a new instance of the JobStatus class.
+        /// </summary>
+        public JobStatus() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobStatus class.
+        /// </summary>
+        public JobStatus(int? executionCount = default(int?), int? failureCount = default(int?), int? faultedCount = default(int?), DateTime? lastExecutionTime = default(DateTime?), DateTime? nextExecutionTime = default(DateTime?))
+        {
+            ExecutionCount = executionCount;
+            FailureCount = failureCount;
+            FaultedCount = faultedCount;
+            LastExecutionTime = lastExecutionTime;
+            NextExecutionTime = nextExecutionTime;
+        }
+
         /// <summary>
         /// Gets the number of times this job has executed.
         /// </summary>

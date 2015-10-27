@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,23 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class ClientCertAuthentication : HttpAuthentication
     {
+        /// <summary>
+        /// Initializes a new instance of the ClientCertAuthentication class.
+        /// </summary>
+        public ClientCertAuthentication() { }
+
+        /// <summary>
+        /// Initializes a new instance of the ClientCertAuthentication class.
+        /// </summary>
+        public ClientCertAuthentication(string password = default(string), string pfx = default(string), string certificateThumbprint = default(string), DateTime? certificateExpirationDate = default(DateTime?), string certificateSubjectName = default(string))
+        {
+            Password = password;
+            Pfx = pfx;
+            CertificateThumbprint = certificateThumbprint;
+            CertificateExpirationDate = certificateExpirationDate;
+            CertificateSubjectName = certificateSubjectName;
+        }
+
         /// <summary>
         /// Gets or sets the password.
         /// </summary>

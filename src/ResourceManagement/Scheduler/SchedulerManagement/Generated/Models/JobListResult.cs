@@ -1,6 +1,8 @@
+
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -11,6 +13,20 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     /// </summary>
     public partial class JobListResult
     {
+        /// <summary>
+        /// Initializes a new instance of the JobListResult class.
+        /// </summary>
+        public JobListResult() { }
+
+        /// <summary>
+        /// Initializes a new instance of the JobListResult class.
+        /// </summary>
+        public JobListResult(IList<JobDefinition> value = default(IList<JobDefinition>), string nextLink = default(string))
+        {
+            Value = value;
+            NextLink = nextLink;
+        }
+
         /// <summary>
         /// Gets or sets all jobs under job collection.
         /// </summary>

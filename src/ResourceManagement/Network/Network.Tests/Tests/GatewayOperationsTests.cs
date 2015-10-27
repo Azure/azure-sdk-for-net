@@ -79,11 +79,11 @@ namespace Networks.Tests
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIPAddress = new SubResource()
+                             PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id
                              },
-                             Subnet = new SubResource()
+                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = getSubnetResponse.Id
                              }
@@ -285,11 +285,11 @@ namespace Networks.Tests
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIPAddress = new SubResource()
+                             PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id
                              },
-                             Subnet = new SubResource()
+                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = getSubnetResponse.Id
                              }
@@ -454,11 +454,11 @@ namespace Networks.Tests
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIPAddress = new SubResource()
+                             PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id
                              },
-                             Subnet = new SubResource()
+                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = getSubnetResponse.Id
                              }
