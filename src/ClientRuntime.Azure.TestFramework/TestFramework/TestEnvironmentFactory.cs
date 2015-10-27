@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
