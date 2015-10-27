@@ -372,9 +372,9 @@ namespace Authorization.Tests
                         {
                             createResult = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
                         }
-                        catch (Exception)
+                        catch (CloudException e)
                         {
-                            if (createResult.StatusCode == HttpStatusCode.Conflict)
+                            if (e.Response.StatusCode == HttpStatusCode.Conflict)
                             {
                                 i--;
                                 continue;
@@ -386,39 +386,33 @@ namespace Authorization.Tests
                         createdAssignments.Add(createResult.RoleAssignment);
                     }
 
-                    var page1 = client.RoleAssignments.List(null);
-                    RoleAssignmentListResult page2 = null;
-                    do
+                    // Validate
+                 
+                    // Get the first page of assignments
+                    var firstPage = client.RoleAssignments.List(null);
+                    Assert.NotNull(firstPage);
+                    Assert.True(firstPage.StatusCode == HttpStatusCode.OK);
+                    Assert.NotNull(firstPage.RoleAssignments);
+                    Assert.NotNull(firstPage.NextLink);
+
+                    // Get the next page of assignments
+                    var nextPage = client.RoleAssignments.ListNext(firstPage.NextLink);
+
+                    Assert.True(nextPage.StatusCode == HttpStatusCode.OK);
+                    Assert.NotNull(nextPage.RoleAssignments);
+                    Assert.NotEqual(0, nextPage.RoleAssignments.Count());
+
+                    foreach (var roleAssignment in nextPage.RoleAssignments)
                     {
-                        page2 = client.RoleAssignments.ListNext(page1.NextLink);
-                        page1.NextLink = page2.NextLink;
-                    } while (page2.NextLink != null);
-
-                    //// Get the first page of assignments
-                    //var firstPage = client.RoleAssignments.List(null);
-                    //Assert.NotNull(firstPage);
-                    //Assert.True(firstPage.StatusCode == HttpStatusCode.OK);
-                    //Assert.NotNull(firstPage.RoleAssignments);
-                    //Assert.NotNull(firstPage.NextLink);
-
-                    //// Get the next page of assignments
-                    //var nextPage = client.RoleAssignments.ListNext(firstPage.NextLink);
-
-                    //Assert.True(nextPage.StatusCode == HttpStatusCode.OK);
-                    //Assert.NotNull(nextPage.RoleAssignments);
-                    //Assert.NotEqual(0, nextPage.RoleAssignments.Count());
-
-                    //foreach (var roleAssignment in nextPage.RoleAssignments)
-                    //{
-                    //    Assert.NotNull(roleAssignment);
-                    //    Assert.NotNull(roleAssignment.Id);
-                    //    Assert.NotNull(roleAssignment.Name);
-                    //    Assert.NotNull(roleAssignment.Type);
-                    //    Assert.NotNull(roleAssignment.Properties);
-                    //    Assert.NotNull(roleAssignment.Properties.PrincipalId);
-                    //    Assert.NotNull(roleAssignment.Properties.RoleDefinitionId);
-                    //    Assert.NotNull(roleAssignment.Properties.Scope);
-                    //}
+                        Assert.NotNull(roleAssignment);
+                        Assert.NotNull(roleAssignment.Id);
+                        Assert.NotNull(roleAssignment.Name);
+                        Assert.NotNull(roleAssignment.Type);
+                        Assert.NotNull(roleAssignment.Properties);
+                        Assert.NotNull(roleAssignment.Properties.PrincipalId);
+                        Assert.NotNull(roleAssignment.Properties.RoleDefinitionId);
+                        Assert.NotNull(roleAssignment.Properties.Scope);
+                    }
                 }
                 finally
                 {
