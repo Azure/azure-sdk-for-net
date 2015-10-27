@@ -37,22 +37,40 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             //We keep creating a file, by appending a number of bytes to it (taken from FileLengthsInMB). 
             //At each iteration, we append a new blob of data, and then run the whole test on the entire file
             var rnd = new Random(0);
-            string filePath = @"c:\temp\test.txt";
-            if (File.Exists(filePath))
+            string folderPath = string.Format(@"{0}\uploadtest", Environment.CurrentDirectory);
+            string filePath = Path.Combine(folderPath, "verifymetadata.txt");
+            try
             {
-                File.Delete(filePath);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
+                foreach (var lengthMB in FileLengthsMB)
+                {
+                    var appendLength = (int) (lengthMB*1024*1024);
+                    AppendToFile(filePath, appendLength, rnd, 0, MaxAppendLength);
+                    string metadataFilePath = filePath + ".metadata.txt";
+
+                    var up = new UploadParameters(filePath, filePath, null, isBinary: false,
+                        maxSegmentLength: 4*1024*1024);
+                    var mg = new UploadMetadataGenerator(up, MaxAppendLength);
+                    var metadata = mg.CreateNewMetadata(metadataFilePath);
+
+                    VerifySegmentsAreOnRecordBoundaries(metadata, filePath);
+                }
             }
-            foreach (var lengthMB in FileLengthsMB)
+            finally
             {
-                var appendLength = (int)(lengthMB * 1024 * 1024);
-                AppendToFile(filePath, appendLength, rnd, 0, MaxAppendLength);
-                string metadataFilePath = filePath + ".metadata.txt";
-
-                var up = new UploadParameters(filePath, filePath, null, isBinary: false, maxSegmentLength: 4 * 1024 * 1024);
-                var mg = new UploadMetadataGenerator(up, MaxAppendLength);
-                var metadata = mg.CreateNewMetadata(metadataFilePath);
-
-                VerifySegmentsAreOnRecordBoundaries(metadata, filePath);
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
         }
 
@@ -62,21 +80,38 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             //We keep creating a file, by appending a number of bytes to it (taken from FileLengthsInMB). 
             //At each iteration, we append a new blob of data, and then run the whole test on the entire file
             var rnd = new Random(0);
-            string filePath = @"c:\temp\test.txt";
-            if (File.Exists(filePath))
+            string folderPath = string.Format(@"{0}\uploadtest", Environment.CurrentDirectory);
+            string filePath = Path.Combine(folderPath, "verifymetadata.txt");
+            try
             {
-                File.Delete(filePath);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                foreach (var lengthMB in FileLengthsMB.Where(l => l > MaxAppendLength))
+                {
+                    var length = (int) (lengthMB*1024*1024);
+                    AppendToFile(filePath, length, rnd, MaxAppendLength + 1, MaxAppendLength + 10);
+                    string metadataFilePath = filePath + ".metadata.txt";
+
+                    var up = new UploadParameters(filePath, filePath, null, isBinary: false,
+                        maxSegmentLength: 4*1024*1024);
+                    var mg = new UploadMetadataGenerator(up, MaxAppendLength);
+
+                    Assert.Throws<Exception>(() => mg.CreateNewMetadata(metadataFilePath));
+                }
             }
-            foreach (var lengthMB in FileLengthsMB.Where(l => l > MaxAppendLength))
+            finally
             {
-                var length = (int)(lengthMB * 1024 * 1024);
-                AppendToFile(filePath, length, rnd, MaxAppendLength + 1, MaxAppendLength + 10);
-                string metadataFilePath = filePath + ".metadata.txt";
-
-                var up = new UploadParameters(filePath, filePath, null, isBinary: false, maxSegmentLength: 4 * 1024 * 1024);
-                var mg = new UploadMetadataGenerator(up, MaxAppendLength);
-
-                Assert.Throws<Exception>(() => mg.CreateNewMetadata(metadataFilePath));
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
         }
 
