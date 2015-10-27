@@ -20,7 +20,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ResourceGroups.Tests
 {

@@ -4,6 +4,7 @@
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Client;
 using System;
+using System.Linq;
 using System.Net;
 using Xunit;
 
