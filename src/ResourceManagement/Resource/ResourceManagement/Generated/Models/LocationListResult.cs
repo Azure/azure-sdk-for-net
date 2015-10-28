@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     using System;
     using System.Linq;
@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Location list operation response.
     /// </summary>
-    public partial class StorageAccountRegenerateKeyParameters
+    public partial class LocationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the LocationListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters() { }
+        public LocationListResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the LocationListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters(string keyName = default(string))
+        public LocationListResult(IList<Location> value = default(IList<Location>))
         {
-            KeyName = keyName;
+            Value = value;
         }
 
         /// <summary>
+        /// Gets the locations.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Location> Value { get; set; }
 
     }
 }

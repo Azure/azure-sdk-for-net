@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Endpoints class.
         /// </summary>
-        public Endpoints(string blob = default(string), string queue = default(string), string table = default(string))
+        public Endpoints(string blob = default(string), string queue = default(string), string table = default(string), string file = default(string))
         {
             Blob = blob;
             Queue = queue;
             Table = table;
+            File = file;
         }
 
         /// <summary>
@@ -54,6 +55,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "table")]
         public string Table { get; set; }
+
+        /// <summary>
+        /// Gets the file endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "file")]
+        public string File { get; set; }
 
     }
 }

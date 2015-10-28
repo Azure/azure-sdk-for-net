@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     using System;
     using System.Linq;
@@ -17,28 +17,30 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Provider operations metadata list
     /// </summary>
-    public partial class StorageAccountRegenerateKeyParameters
+    public partial class ProviderOperationsMetadataListResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// ProviderOperationsMetadataListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters() { }
+        public ProviderOperationsMetadataListResult() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// ProviderOperationsMetadataListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters(string keyName = default(string))
+        public ProviderOperationsMetadataListResult(IList<ProviderOperationsMetadata> value = default(IList<ProviderOperationsMetadata>))
         {
-            KeyName = keyName;
+            Value = value;
         }
 
         /// <summary>
+        /// Gets or sets the list of providers.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ProviderOperationsMetadata> Value { get; set; }
 
     }
 }

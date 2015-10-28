@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The list storage accounts operation response.
     /// </summary>
-    public partial class StorageAccountRegenerateKeyParameters
+    public partial class StorageAccountListResult
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the StorageAccountListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters() { }
+        public StorageAccountListResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the StorageAccountListResult class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters(string keyName = default(string))
+        public StorageAccountListResult(IList<StorageAccount> value = default(IList<StorageAccount>))
         {
-            KeyName = keyName;
+            Value = value;
         }
 
         /// <summary>
+        /// Gets the list of storage accounts and their properties.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<StorageAccount> Value { get; set; }
 
     }
 }

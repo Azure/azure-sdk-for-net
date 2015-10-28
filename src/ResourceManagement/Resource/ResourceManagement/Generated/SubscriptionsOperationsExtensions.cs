@@ -20,6 +20,38 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
+            /// Gets a list of the subscription locations.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Id of the subscription
+            /// </param>
+            public static LocationListResult ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
+            {
+                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListLocationsAsync(subscriptionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of the subscription locations.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Id of the subscription
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LocationListResult> ListLocationsAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<LocationListResult> result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Gets details about particular subscription.
             /// </summary>
             /// <param name='operations'>
