@@ -210,7 +210,7 @@ namespace Common.Authentication.Test
             AzureSession.DataStore = dataStore;
             dataStore.WriteFile(path, contents);
             var profile = new AzureRMProfile(path);
-            Assert.Equal(3, profile.Environments.Count);
+            Assert.Equal(4, profile.Environments.Count);
             Assert.Equal("3c0ff8a7-e8bb-40e8-ae66-271343379af6", profile.Context.Tenant.Id.ToString());
             Assert.Equal("contoso.com", profile.Context.Tenant.Domain);
             Assert.Equal("00000000-0000-0000-0000-000000000000", profile.Context.Subscription.Id.ToString());
