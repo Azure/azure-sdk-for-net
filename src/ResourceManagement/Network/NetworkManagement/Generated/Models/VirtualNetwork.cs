@@ -29,12 +29,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetwork class.
         /// </summary>
-        public VirtualNetwork(string etag = default(string), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), string provisioningState = default(string))
+        public VirtualNetwork(string etag = default(string), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
             Subnets = subnets;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -64,6 +65,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
         public IList<Subnet> Subnets { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the VirtualNetwork resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource

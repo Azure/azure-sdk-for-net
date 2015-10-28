@@ -13,12 +13,11 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for OperationStatus.
+    /// Defines values for ExpressRouteCircuitPeeringState.
     /// </summary>
-    public static class OperationStatus
+    public static class ExpressRouteCircuitPeeringState
     {
-        public const string InProgress = "InProgress";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

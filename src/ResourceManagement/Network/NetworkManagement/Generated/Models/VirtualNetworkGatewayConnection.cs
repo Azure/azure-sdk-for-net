@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VirtualNetworkGatewayConnection
         /// class.
         /// </summary>
-        public VirtualNetworkGatewayConnection(string etag = default(string), VirtualNetworkGateway virtualNetworkGateway1 = default(VirtualNetworkGateway), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string provisioningState = default(string))
+        public VirtualNetworkGatewayConnection(string etag = default(string), VirtualNetworkGateway virtualNetworkGateway1 = default(VirtualNetworkGateway), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), SubResource peer = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
             ConnectionType = connectionType;
             RoutingWeight = routingWeight;
             SharedKey = sharedKey;
+            Peer = peer;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -84,6 +86,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedKey")]
         public string SharedKey { get; set; }
+
+        /// <summary>
+        /// The reference to peerings resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.peer")]
+        public SubResource Peer { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the
+        /// VirtualNetworkGatewayConnection resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the

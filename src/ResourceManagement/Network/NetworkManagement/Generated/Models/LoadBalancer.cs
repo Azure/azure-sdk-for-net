@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LoadBalancer class.
         /// </summary>
-        public LoadBalancer(string etag = default(string), IList<FrontendIpConfiguration> frontendIPConfigurations = default(IList<FrontendIpConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), string provisioningState = default(string))
+        public LoadBalancer(string etag = default(string), IList<FrontendIpConfiguration> frontendIPConfigurations = default(IList<FrontendIpConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), IList<InboundNatPool> inboundNatPools = default(IList<InboundNatPool>), IList<OutboundNatRule> outboundNatRules = default(IList<OutboundNatRule>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             FrontendIPConfigurations = frontendIPConfigurations;
@@ -37,6 +37,9 @@ namespace Microsoft.Azure.Management.Network.Models
             LoadBalancingRules = loadBalancingRules;
             Probes = probes;
             InboundNatRules = inboundNatRules;
+            InboundNatPools = inboundNatPools;
+            OutboundNatRules = outboundNatRules;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -76,6 +79,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
         public IList<InboundNatRule> InboundNatRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets inbound NAT pools
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundNatPools")]
+        public IList<InboundNatPool> InboundNatPools { get; set; }
+
+        /// <summary>
+        /// Gets or sets outbound NAT rules
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outboundNatRules")]
+        public IList<OutboundNatRule> OutboundNatRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the Load balancer resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource

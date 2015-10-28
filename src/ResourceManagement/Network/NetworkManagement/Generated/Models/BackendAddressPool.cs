@@ -29,12 +29,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the BackendAddressPool class.
         /// </summary>
-        public BackendAddressPool(string name = default(string), string etag = default(string), IList<SubResource> backendIPConfigurations = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
+        public BackendAddressPool(string name = default(string), string etag = default(string), IList<SubResource> backendIPConfigurations = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
             BackendIPConfigurations = backendIPConfigurations;
             LoadBalancingRules = loadBalancingRules;
+            OutboundNatRule = outboundNatRule;
             ProvisioningState = provisioningState;
         }
 
@@ -63,6 +64,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; set; }
+
+        /// <summary>
+        /// Gets outbound rules that use this Backend Address Pool
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outboundNatRule")]
+        public SubResource OutboundNatRule { get; set; }
 
         /// <summary>
         /// Provisioning state of the PublicIP resource

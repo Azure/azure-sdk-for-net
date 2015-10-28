@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineInstanceView class.
         /// </summary>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             VmAgent = vmAgent;
             Disks = disks;
             Extensions = extensions;
+            BootDiagnostics = bootDiagnostics;
             Statuses = statuses;
         }
 
@@ -75,6 +76,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
         public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the boot diagnostics.
+        /// </summary>
+        [JsonProperty(PropertyName = "bootDiagnostics")]
+        public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.

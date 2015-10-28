@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// IP configuration of application gateway
     /// </summary>
-    public partial class ApplicationGatewayIpConfiguration : SubResource
+    public partial class ApplicationGatewayIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayIpConfiguration class.
+        /// ApplicationGatewayIPConfiguration class.
         /// </summary>
-        public ApplicationGatewayIpConfiguration() { }
+        public ApplicationGatewayIPConfiguration() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayIpConfiguration class.
+        /// ApplicationGatewayIPConfiguration class.
         /// </summary>
-        public ApplicationGatewayIpConfiguration(string name = default(string), string etag = default(string), SubResource subnet = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayIPConfiguration(string name = default(string), string etag = default(string), SubResource subnet = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
