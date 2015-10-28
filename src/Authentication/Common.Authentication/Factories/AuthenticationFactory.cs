@@ -48,8 +48,18 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint, 
                 configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
+            IAccessToken token;
+            if (account.IsPropertySet(AzureAccount.Property.CertificateThumbprint))
+            {
+                var thumbprint = account.GetProperty(AzureAccount.Property.CertificateThumbprint);
+                token = TokenProvider.GetAccessTokenWithCertificate(configuration, account.Id, thumbprint, account.Type);
+            }
+            else
+            {
 
-            var token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
+                token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
+            }
+
             account.Id = token.UserId;
             return token;
         }
@@ -126,13 +136,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
                     context.Account.Id, context.Environment.Name, tenant);
                 var tokenCache = AzureSession.TokenCache;
-
                 if(context.TokenCache != null && context.TokenCache.Length > 0)
                 {
                     tokenCache = new TokenCache(context.TokenCache);
                 }
+                
                 var token = Authenticate(context.Account, context.Environment,
-                    tenant, null, ShowDialog.Never, tokenCache);
+                        tenant, null, ShowDialog.Never, tokenCache);
 
                 if (context.TokenCache != null && context.TokenCache.Length > 0)
                 {
