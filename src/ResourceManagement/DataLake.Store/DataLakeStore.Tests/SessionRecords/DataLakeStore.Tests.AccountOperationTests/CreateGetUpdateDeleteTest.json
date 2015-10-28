@@ -1,0 +1,1076 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"name\": \"testdatalake14825\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ],
+        "x-ms-client-request-id": [
+          "dcc50b51-f635-4d4b-939a-e4e75c3e2059"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  },\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n  \"name\": \"testdatalake14825\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "392"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/d9a200f0-26c5-4cf0-bdd6-24ecfa13e2410?api-version=2015-10-01-preview&expanded=true"
+        ],
+        "x-ms-request-id": [
+          "b5cd6cc2-9121-4b24-b45c-def1eb47348b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "84e9f00e-8625-4763-a172-346d4a3e304c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171154Z:84e9f00e-8625-4763-a172-346d4a3e304c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:11:54 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825/operationresults/0?api-version=2015-10-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/d9a200f0-26c5-4cf0-bdd6-24ecfa13e2410?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvZDlhMjAwZjAtMjZjNS00Y2YwLWJkZDYtMjRlY2ZhMTNlMjQxMD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4d05520d-6172-43eb-8552-530bdf6078ee"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14734"
+        ],
+        "x-ms-correlation-request-id": [
+          "88827e3d-c309-4180-b9ab-180246c74082"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171154Z:88827e3d-c309-4180-b9ab-180246c74082"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:11:54 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/d9a200f0-26c5-4cf0-bdd6-24ecfa13e2410?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvZDlhMjAwZjAtMjZjNS00Y2YwLWJkZDYtMjRlY2ZhMTNlMjQxMD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fc0dc72b-153f-4b70-ba2c-1e1511561d07"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14733"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b397283-cb86-4e8e-b4fc-b37e70fb5821"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171205Z:9b397283-cb86-4e8e-b4fc-b37e70fb5821"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/d9a200f0-26c5-4cf0-bdd6-24ecfa13e2410?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvZDlhMjAwZjAtMjZjNS00Y2YwLWJkZDYtMjRlY2ZhMTNlMjQxMD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "774bd028-d936-413a-8063-c8b5a9ee1ee7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14732"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec4a04a9-469b-4071-9909-7e33ee68995b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171220Z:ec4a04a9-469b-4071-9909-7e33ee68995b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:20 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/d9a200f0-26c5-4cf0-bdd6-24ecfa13e2410?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvZDlhMjAwZjAtMjZjNS00Y2YwLWJkZDYtMjRlY2ZhMTNlMjQxMD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "21f2c266-a627-4089-bfb4-185cc8055f88"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14726"
+        ],
+        "x-ms-correlation-request-id": [
+          "e1a3aa45-006c-483a-a366-8611966fe2e1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171235Z:e1a3aa45-006c-483a-a366-8611966fe2e1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake14825.caboaccountdogfood.net\",\r\n    \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n    \"lastModifiedTime\": \"2015-10-26T17:11:58.8683501Z\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  },\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n  \"name\": \"testdatalake14825\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "487"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dfa978d1-b133-444e-b22d-42b2644a2bb5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14725"
+        ],
+        "x-ms-correlation-request-id": [
+          "e458d2a2-3c47-4ec9-b485-3f0fc11c3836"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171235Z:e458d2a2-3c47-4ec9-b485-3f0fc11c3836"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake14825.caboaccountdogfood.net\",\r\n    \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n    \"lastModifiedTime\": \"2015-10-26T17:12:36.2815667Z\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"updatedKey\": \"updatedValue\"\r\n  },\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n  \"name\": \"testdatalake14825\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "493"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7f93f5a8-7a11-4600-9388-7ca988344366"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14724"
+        ],
+        "x-ms-correlation-request-id": [
+          "6b27a13f-7946-4076-ac4d-3e4ac87df2db"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171236Z:6b27a13f-7946-4076-ac4d-3e4ac87df2db"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"testdatalake14825\",\r\n  \"tags\": {\r\n    \"updatedKey\": \"updatedValue\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "88"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ],
+        "x-ms-client-request-id": [
+          "4cee787b-f29a-488b-ba9d-c31c5bd91e5c"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake14825.caboaccountdogfood.net\",\r\n    \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n    \"lastModifiedTime\": \"2015-10-26T17:12:36.2815667Z\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"updatedKey\": \"updatedValue\"\r\n  },\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n  \"name\": \"testdatalake14825\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "539"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1623444e-d97f-43b0-8e9c-2132f332e664"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-correlation-request-id": [
+          "d5cc7e2b-c415-40c7-a730-8c93748ac46b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171236Z:d5cc7e2b-c415-40c7-a730-8c93748ac46b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825acct2?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjVhY2N0Mj9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"name\": \"testdatalake14825acct2\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\",\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n  \"tags\": {\r\n    \"updatedKey\": \"updatedValue\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"active\",\r\n    \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n    \"lastModifiedTime\": \"2015-10-26T17:12:36.2815667Z\",\r\n    \"endpoint\": \"testdatalake14825.caboaccountdogfood.net\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "580"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ],
+        "x-ms-client-request-id": [
+          "d8563e79-d3a7-48a3-9f07-04502e70b92e"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n    \"lastModifiedTime\": \"2015-10-26T17:12:36.2815667Z\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"updatedKey\": \"updatedValue\"\r\n  },\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825acct2\",\r\n  \"name\": \"testdatalake14825acct2\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "460"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/89b5e0aa-da9b-4e6c-aa63-eff4e2a024080?api-version=2015-10-01-preview&expanded=true"
+        ],
+        "x-ms-request-id": [
+          "8482987b-e0cd-49a9-ad8c-7438d5978d2a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1186"
+        ],
+        "x-ms-correlation-request-id": [
+          "6ea5e428-ad47-487b-a94c-dac9798244b6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171237Z:6ea5e428-ad47-487b-a94c-dac9798244b6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:37 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825acct2/operationresults/0?api-version=2015-10-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/89b5e0aa-da9b-4e6c-aa63-eff4e2a024080?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvODliNWUwYWEtZGE5Yi00ZTZjLWFhNjMtZWZmNGUyYTAyNDA4MD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c024709d-764a-4ae6-bed5-2077254f7126"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14723"
+        ],
+        "x-ms-correlation-request-id": [
+          "fc8523b6-be5f-4d6b-827a-99965425f883"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171237Z:fc8523b6-be5f-4d6b-827a-99965425f883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:37 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/89b5e0aa-da9b-4e6c-aa63-eff4e2a024080?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvODliNWUwYWEtZGE5Yi00ZTZjLWFhNjMtZWZmNGUyYTAyNDA4MD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0bb3dde1-5320-4e2c-9168-e8fbc1db363f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14720"
+        ],
+        "x-ms-correlation-request-id": [
+          "368bf8bc-aead-4b6a-97d7-231ac8580809"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171247Z:368bf8bc-aead-4b6a-97d7-231ac8580809"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:12:47 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/89b5e0aa-da9b-4e6c-aa63-eff4e2a024080?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvODliNWUwYWEtZGE5Yi00ZTZjLWFhNjMtZWZmNGUyYTAyNDA4MD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "081ee26f-c549-44ab-bec9-ba2143901583"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14718"
+        ],
+        "x-ms-correlation-request-id": [
+          "cbfc3f21-6331-4fdf-a2fe-3a15f78bdada"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171302Z:cbfc3f21-6331-4fdf-a2fe-3a15f78bdada"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:02 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/WestUS/operationResults/89b5e0aa-da9b-4e6c-aa63-eff4e2a024080?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvV2VzdFVTL29wZXJhdGlvblJlc3VsdHMvODliNWUwYWEtZGE5Yi00ZTZjLWFhNjMtZWZmNGUyYTAyNDA4MD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXcmZXhwYW5kZWQ9dHJ1ZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e1a6b09d-b708-4673-b9e1-8de8a2f7c393"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14717"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4f4f461-e960-4b26-9b53-e9686abdd03e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171318Z:a4f4f461-e960-4b26-9b53-e9686abdd03e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:17 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHM/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"state\": \"Active\",\r\n        \"endpoint\": \"testdatalake14825.caboaccountdogfood.net\",\r\n        \"creationTime\": \"2015-10-26T17:11:58.8683501Z\",\r\n        \"lastModifiedTime\": \"2015-10-26T17:12:36.2815667Z\"\r\n      },\r\n      \"location\": \"West US\",\r\n      \"tags\": {\r\n        \"updatedKey\": \"updatedValue\"\r\n      },\r\n      \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825\",\r\n      \"name\": \"testdatalake14825\",\r\n      \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"state\": \"Active\",\r\n        \"endpoint\": \"testdatalake14825acct2.caboaccountdogfood.net\",\r\n        \"creationTime\": \"2015-10-26T17:12:39.6214274Z\",\r\n        \"lastModifiedTime\": \"2015-10-26T17:12:39.6214274Z\"\r\n      },\r\n      \"location\": \"West US\",\r\n      \"tags\": {\r\n        \"updatedKey\": \"updatedValue\"\r\n      },\r\n      \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825acct2\",\r\n      \"name\": \"testdatalake14825acct2\",\r\n      \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1014"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9e5b64fe-4af2-48b5-90b9-bcca5176c0cb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14716"
+        ],
+        "x-ms-correlation-request-id": [
+          "9e26c3b0-fec0-4efc-a7cf-361207f86d3f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171318Z:9e26c3b0-fec0-4efc-a7cf-361207f86d3f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:17 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f842a0d6-5f86-4ff3-a765-3fb6697ddbcb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1185"
+        ],
+        "x-ms-correlation-request-id": [
+          "0b796f70-35b4-404f-ba34-0b5f6738adef"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171319Z:0b796f70-35b4-404f-ba34-0b5f6738adef"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1184"
+        ],
+        "x-ms-request-id": [
+          "7240aef8-1035-44e6-b9ba-10806d34ebbb"
+        ],
+        "x-ms-correlation-request-id": [
+          "7240aef8-1035-44e6-b9ba-10806d34ebbb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171319Z:7240aef8-1035-44e6-b9ba-10806d34ebbb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:19 GMT"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/datalakerg12922/providers/Microsoft.DataLakeStore/accounts/testdatalake14825?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxMjkyMi9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGRhdGFsYWtlMTQ4MjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1183"
+        ],
+        "x-ms-request-id": [
+          "8ad54dde-cef0-4afa-92b2-274acf3ad962"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ad54dde-cef0-4afa-92b2-274acf3ad962"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151026T171320Z:8ad54dde-cef0-4afa-92b2-274acf3ad962"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2015 17:13:19 GMT"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0353d26d-e338-469a-a87a-bd3507471155"
+  }
+}
