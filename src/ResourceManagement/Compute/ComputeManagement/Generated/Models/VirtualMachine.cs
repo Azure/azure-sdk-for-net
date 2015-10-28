@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachine class.
         /// </summary>
-        public VirtualMachine(Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView))
+        public VirtualMachine(Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView))
         {
             Plan = plan;
             Resources = resources;
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             StorageProfile = storageProfile;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
+            DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
@@ -78,6 +79,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the diagnostics profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
+        public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the reference Id of the availailbity set to which

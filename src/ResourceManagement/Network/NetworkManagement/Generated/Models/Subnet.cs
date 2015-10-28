@@ -29,12 +29,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Subnet class.
         /// </summary>
-        public Subnet(string name = default(string), string etag = default(string), string addressPrefix = default(string), SubResource networkSecurityGroup = default(SubResource), IList<SubResource> ipConfigurations = default(IList<SubResource>), string provisioningState = default(string))
+        public Subnet(string name = default(string), string etag = default(string), string addressPrefix = default(string), SubResource networkSecurityGroup = default(SubResource), SubResource routeTable = default(SubResource), IList<SubResource> ipConfigurations = default(IList<SubResource>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
             AddressPrefix = addressPrefix;
             NetworkSecurityGroup = networkSecurityGroup;
+            RouteTable = routeTable;
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
         }
@@ -64,6 +65,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public SubResource NetworkSecurityGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the RouteTable resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeTable")]
+        public SubResource RouteTable { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resources.Models
 
         /// <summary>
         /// Gets or sets the deployment mode. Possible values for this
-        /// property include: 'Incremental'.
+        /// property include: 'Incremental', 'Complete'.
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }

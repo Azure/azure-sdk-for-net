@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Storage
             this.StorageAccounts = new StorageAccountsOperations(this);
             this.Usage = new UsageOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-05-01-preview";
+            this.ApiVersion = "2015-06-15";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

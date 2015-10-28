@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendAddressPool class.
         /// </summary>
-        public ApplicationGatewayBackendAddressPool(string name = default(string), string etag = default(string), IList<SubResource> backendIpConfigurations = default(IList<SubResource>), IList<ApplicationGatewayBackendAddress> backendAddresses = default(IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string))
+        public ApplicationGatewayBackendAddressPool(string name = default(string), string etag = default(string), IList<SubResource> backendIPConfigurations = default(IList<SubResource>), IList<ApplicationGatewayBackendAddress> backendAddresses = default(IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
-            BackendIpConfigurations = backendIpConfigurations;
+            BackendIPConfigurations = backendIPConfigurations;
             BackendAddresses = backendAddresses;
             ProvisioningState = provisioningState;
         }
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets backendIpConfiguration of application gateway
+        /// Gets or sets backendIPConfiguration of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendIpConfigurations")]
-        public IList<SubResource> BackendIpConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
+        public IList<SubResource> BackendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the backend addresses

@@ -29,13 +29,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroup class.
         /// </summary>
-        public NetworkSecurityGroup(string etag = default(string), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<SubResource> networkInterfaces = default(IList<SubResource>), IList<SubResource> subnets = default(IList<SubResource>), string provisioningState = default(string))
+        public NetworkSecurityGroup(string etag = default(string), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<SubResource> networkInterfaces = default(IList<SubResource>), IList<SubResource> subnets = default(IList<SubResource>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             SecurityRules = securityRules;
             DefaultSecurityRules = defaultSecurityRules;
             NetworkInterfaces = networkInterfaces;
             Subnets = subnets;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -69,6 +70,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
         public IList<SubResource> Subnets { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the network security group
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource

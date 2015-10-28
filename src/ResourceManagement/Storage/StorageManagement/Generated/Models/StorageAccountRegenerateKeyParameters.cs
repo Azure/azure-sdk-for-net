@@ -30,16 +30,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the
         /// StorageAccountRegenerateKeyParameters class.
         /// </summary>
-        public StorageAccountRegenerateKeyParameters(KeyName? keyName = default(KeyName?))
+        public StorageAccountRegenerateKeyParameters(string keyName = default(string))
         {
             KeyName = keyName;
         }
 
         /// <summary>
-        /// Possible values for this property include: 'key1', 'key2'.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
-        public KeyName? KeyName { get; set; }
+        public string KeyName { get; set; }
 
     }
 }

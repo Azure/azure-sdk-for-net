@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the FrontendIpConfiguration class.
         /// </summary>
-        public FrontendIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
+        public FrontendIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             InboundNatRules = inboundNatRules;
+            InboundNatPools = inboundNatPools;
+            OutboundNatRules = outboundNatRules;
             LoadBalancingRules = loadBalancingRules;
             ProvisioningState = provisioningState;
         }
@@ -89,6 +91,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
         public IList<SubResource> InboundNatRules { get; set; }
+
+        /// <summary>
+        /// Read only.Inbound pools URIs that use this frontend IP
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundNatPools")]
+        public IList<SubResource> InboundNatPools { get; set; }
+
+        /// <summary>
+        /// Read only.Outbound rules URIs that use this frontend IP
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outboundNatRules")]
+        public IList<SubResource> OutboundNatRules { get; set; }
 
         /// <summary>
         /// Gets Load Balancing rules URIs that use this frontend IP

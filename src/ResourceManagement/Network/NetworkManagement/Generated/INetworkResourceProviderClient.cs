@@ -72,17 +72,29 @@ namespace Microsoft.Azure.Management.Network
 
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
+        IExpressRouteCircuitsOperations ExpressRouteCircuits { get; }
+
+        IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; }
+
+        IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; }
+
         ILoadBalancersOperations LoadBalancers { get; }
 
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         INetworkInterfacesOperations NetworkInterfaces { get; }
 
+        IRouteTablesOperations RouteTables { get; }
+
         INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
 
         IPublicIpAddressesOperations PublicIpAddresses { get; }
 
+        IRoutesOperations Routes { get; }
+
         ISecurityRulesOperations SecurityRules { get; }
+
+        IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
 
         ISubnetsOperations Subnets { get; }
 

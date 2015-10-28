@@ -67,6 +67,10 @@ namespace Microsoft.Azure.Management.Resources
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
+        IDeploymentsOperations Deployments { get; }
+
+        IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
+
         IProvidersOperations Providers { get; }
 
         IResourceGroupsOperations ResourceGroups { get; }
@@ -78,8 +82,6 @@ namespace Microsoft.Azure.Management.Resources
         IDeploymentOperationsOperations DeploymentOperations { get; }
 
         IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; }
-
-        IDeploymentsOperations Deployments { get; }
 
     }
 }
