@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Frontend IP configuration of application gateway
     /// </summary>
-    public partial class ApplicationGatewayFrontendIpConfiguration : SubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayFrontendIpConfiguration class.
+        /// ApplicationGatewayFrontendIPConfiguration class.
         /// </summary>
-        public ApplicationGatewayFrontendIpConfiguration() { }
+        public ApplicationGatewayFrontendIPConfiguration() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayFrontendIpConfiguration class.
+        /// ApplicationGatewayFrontendIPConfiguration class.
         /// </summary>
-        public ApplicationGatewayFrontendIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayFrontendIPConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;

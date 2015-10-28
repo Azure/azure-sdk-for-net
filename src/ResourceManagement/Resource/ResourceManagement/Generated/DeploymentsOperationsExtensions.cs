@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class DeploymentsOperationsExtensions
     {
             /// <summary>
-            /// Cancel a currently running template deployment.
+            /// Begin deleting deployment.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,21 +31,98 @@ namespace Microsoft.Azure.Management.Resources
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to be deleted.
             /// </param>
-            public static void Cancel(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
+            public static void Delete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CancelAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).DeleteAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Cancel a currently running template deployment.
+            /// Begin deleting deployment.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Begin deleting deployment.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment to be deleted.
+            /// </param>
+            public static void BeginDelete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
+            {
+                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).BeginDeleteAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Begin deleting deployment.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Checks whether deployment exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to check. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            public static bool? CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
+            {
+                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CheckExistenceAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether deployment exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to check. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -52,52 +130,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool?> CheckExistenceAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CancelWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Validate a deployment template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='parameters'>
-            /// Deployment to validate.
-            /// </param>
-            public static DeploymentValidateResult Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
-            {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ValidateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Validate a deployment template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='parameters'>
-            /// Deployment to validate.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DeploymentValidateResult> ValidateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<DeploymentValidateResult> result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -180,6 +215,87 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<DeploymentExtended> GetAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<DeploymentExtended> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Cancel a currently running template deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            public static void Cancel(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
+            {
+                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CancelAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancel a currently running template deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.CancelWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Validate a deployment template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Deployment to validate.
+            /// </param>
+            public static DeploymentValidateResult Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
+            {
+                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ValidateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validate a deployment template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Deployment to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> ValidateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<DeploymentValidateResult> result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

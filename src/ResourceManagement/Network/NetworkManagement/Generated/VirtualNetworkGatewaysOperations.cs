@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;

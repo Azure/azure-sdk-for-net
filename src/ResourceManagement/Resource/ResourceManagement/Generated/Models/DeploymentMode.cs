@@ -19,6 +19,8 @@ namespace Microsoft.Azure.Management.Resources.Models
     public enum DeploymentMode
     {
         [EnumMember(Value = "Incremental")]
-        Incremental
+        Incremental,
+        [EnumMember(Value = "Complete")]
+        Complete
     }
 }

@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Storage
         /// properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Storage
         /// properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Deletes a storage account in Microsoft Azure.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -527,7 +527,7 @@ namespace Microsoft.Azure.Management.Storage
         /// operation should be used to retrieve storage keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -673,15 +673,18 @@ namespace Microsoft.Azure.Management.Storage
         /// Updates the account type or tags for a storage account. It can also be
         /// used to add a custom domain (note that custom domains cannot be added via
         /// the Create operation). Only one custom domain is supported per storage
-        /// account. This API can only be used to update one of tags, accountType, or
-        /// customDomain per call. To update multiple of these properties, call the
-        /// API multiple times with one change per call. This call does not change
-        /// the storage keys for the account. If you want to change storage account
-        /// keys, use the RegenerateKey operation. The location and name of the
-        /// storage account cannot be changed after creation.
+        /// account. In order to replace a custom domain, the old value must be
+        /// cleared before a new value may be set. To clear a custom domain, simply
+        /// update the custom domain with empty string. Then call update again with
+        /// the new cutsom domain name. The update API can only be used to update one
+        /// of tags, accountType, or customDomain per call. To update multiple of
+        /// these properties, call the API multiple times with one change per call.
+        /// This call does not change the storage keys for the account. If you want
+        /// to change storage account keys, use the RegenerateKey operation. The
+        /// location and name of the storage account cannot be changed after creation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -990,7 +993,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -1087,7 +1090,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<StorageAccount>>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1098,7 +1101,7 @@ namespace Microsoft.Azure.Management.Storage
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<StorageAccount>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1113,7 +1116,7 @@ namespace Microsoft.Azure.Management.Storage
         /// this.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1121,7 +1124,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1224,7 +1227,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<StorageAccount>>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1235,7 +1238,7 @@ namespace Microsoft.Azure.Management.Storage
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<StorageAccount>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1248,7 +1251,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Regenerates the access keys for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the userâ€™s subscription.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
         /// The name of the storage account within the specified resource group.
@@ -1256,7 +1259,8 @@ namespace Microsoft.Azure.Management.Storage
         /// use numbers and lower-case letters only.
         /// </param>
         /// <param name='regenerateKey'>
-        /// Specifies name of the key which should be regenerated.
+        /// Specifies name of the key which should be regenerated. key1 or key2 for
+        /// the default keys
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1394,251 +1398,6 @@ namespace Microsoft.Azure.Management.Storage
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<StorageAccountKeys>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Lists all the storage accounts available under the subscription. Note that
-        /// storage keys are not returned; use the ListKeys operation for this.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListNext", tracingParameters);
-            }
-            // Construct URL
-            string url = "{nextLink}";
-            url = url.Replace("{nextLink}", nextPageLink);
-            List<string> queryParameters = new List<string>();
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<IPage<StorageAccount>>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<StorageAccount>>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Lists all the storage accounts available under the given resource group.
-        /// Note that storage keys are not returned; use the ListKeys operation for
-        /// this.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListByResourceGroupNext", tracingParameters);
-            }
-            // Construct URL
-            string url = "{nextLink}";
-            url = url.Replace("{nextLink}", nextPageLink);
-            List<string> queryParameters = new List<string>();
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<IPage<StorageAccount>>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<StorageAccount>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagementLock>> CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, string lockName, ManagementLock parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementLockObject>> CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, string lockName, ManagementLockProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<ManagementLock>();
+            var result = new AzureOperationResponse<ManagementLockObject>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -197,13 +197,13 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagementLock>> CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLock parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementLockObject>> CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<ManagementLock>();
+            var result = new AzureOperationResponse<ManagementLockObject>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -396,13 +396,13 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -593,7 +593,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagementLock>> CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(string lockName, ManagementLock parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementLockObject>> CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(string lockName, ManagementLockProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (lockName == null)
             {
@@ -705,7 +705,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<ManagementLock>();
+            var result = new AzureOperationResponse<ManagementLockObject>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -716,13 +716,13 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -865,7 +865,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagementLock>> GetWithHttpMessagesAsync(string lockName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementLockObject>> GetWithHttpMessagesAsync(string lockName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (lockName == null)
             {
@@ -968,7 +968,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<ManagementLock>();
+            var result = new AzureOperationResponse<ManagementLockObject>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -979,13 +979,13 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<ManagementLock>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ManagementLockObject>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1140,7 +1140,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1248,7 +1248,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1259,7 +1259,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1295,7 +1295,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtResourceLevelWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtResourceLevelWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1427,7 +1427,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1438,7 +1438,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1459,7 +1459,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -1554,7 +1554,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1565,7 +1565,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1586,7 +1586,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtSubscriptionLevelWithHttpMessagesAsync(Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtSubscriptionLevelWithHttpMessagesAsync(Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -1688,7 +1688,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1699,7 +1699,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1720,7 +1720,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtResourceGroupLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtResourceGroupLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1809,7 +1809,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1820,7 +1820,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1841,7 +1841,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtResourceLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtResourceLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1930,7 +1930,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1941,7 +1941,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1962,7 +1962,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListNextNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListNextNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2051,7 +2051,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2062,7 +2062,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -2083,7 +2083,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<ManagementLock>>> ListAtSubscriptionLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementLockObject>>> ListAtSubscriptionLevelNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2172,7 +2172,7 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<ManagementLock>>();
+            var result = new AzureOperationResponse<IPage<ManagementLockObject>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2183,7 +2183,7 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<ManagementLock>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<ManagementLockObject>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

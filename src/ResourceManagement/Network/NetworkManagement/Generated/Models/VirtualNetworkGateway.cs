@@ -29,13 +29,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
-        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIpConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIpConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), string provisioningState = default(string))
+        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIpConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIpConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             IpConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
             EnableBgp = enableBgp;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
-        /// property include: 'Vpn'.
+        /// property include: 'Vpn', 'ExpressRoute'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayType")]
         public string GatewayType { get; set; }
@@ -71,6 +72,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the VirtualNetworkGateway
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the VirtualNetworkGateway

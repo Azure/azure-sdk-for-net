@@ -52,17 +52,19 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the current usage count and the limit for the resources under the
         /// subscription.
         /// </summary>
+        /// <param name='apiVersion'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<UsageListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsageListResult>> ListWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.Client.ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Storage
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -83,9 +86,9 @@ namespace Microsoft.Azure.Management.Storage
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (queryParameters.Count > 0)
             {

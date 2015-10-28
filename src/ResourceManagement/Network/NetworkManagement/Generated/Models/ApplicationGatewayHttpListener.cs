@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayHttpListener
         /// class.
         /// </summary>
-        public ApplicationGatewayHttpListener(string name = default(string), string etag = default(string), SubResource frontendIpConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), SubResource sslCertificate = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayHttpListener(string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), SubResource sslCertificate = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
-            FrontendIpConfiguration = frontendIpConfiguration;
+            FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;
             Protocol = protocol;
             SslCertificate = sslCertificate;
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets frontend IP configuration resource of application
         /// gateway
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendIpConfiguration")]
-        public SubResource FrontendIpConfiguration { get; set; }
+        [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
+        public SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets frontend port resource of application gateway

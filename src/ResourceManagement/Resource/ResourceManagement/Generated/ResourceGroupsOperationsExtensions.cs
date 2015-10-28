@@ -137,46 +137,6 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Create a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be created or updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update resource group service
-            /// operation.
-            /// </param>
-            public static ResourceGroup BeginCreateOrUpdate(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
-            {
-                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be created or updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update resource group service
-            /// operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ResourceGroup> BeginCreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ResourceGroup> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
             /// Begin deleting resource group.To determine whether the operation has
             /// finished processing the request, call GetLongRunningOperationStatus.
             /// </summary>

@@ -76,11 +76,11 @@ namespace Microsoft.Azure.Management.Compute
 
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
 
-        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
-
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
 
         public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
+
+        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
 
         public virtual IUsageOperations Usage { get; private set; }
 
@@ -202,9 +202,9 @@ namespace Microsoft.Azure.Management.Compute
         private void Initialize()
         {
             this.AvailabilitySets = new AvailabilitySetsOperations(this);
-            this.VirtualMachineImages = new VirtualMachineImagesOperations(this);
             this.VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             this.VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
+            this.VirtualMachineImages = new VirtualMachineImagesOperations(this);
             this.Usage = new UsageOperations(this);
             this.VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             this.VirtualMachines = new VirtualMachinesOperations(this);

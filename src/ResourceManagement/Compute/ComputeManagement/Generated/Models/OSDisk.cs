@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
         /// </summary>
-        public OSDisk(string osType = default(string), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), string createOption = default(string))
+        public OSDisk(string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), string createOption = default(string), int? diskSizeGB = default(int?))
         {
             OsType = osType;
+            EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
             Image = image;
             Caching = caching;
             CreateOption = createOption;
+            DiskSizeGB = diskSizeGB;
         }
 
         /// <summary>
@@ -45,6 +47,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public string OsType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk encryption settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionSettings")]
+        public DiskEncryptionSettings EncryptionSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the disk name.
@@ -80,6 +88,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the initial disk size in GB for blank data disks, and
+        /// the new desired size for existing OS and Data disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
 
     }
 }

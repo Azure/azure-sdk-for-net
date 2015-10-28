@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -258,18 +258,21 @@ namespace Microsoft.Azure.Management.Storage
             /// Updates the account type or tags for a storage account. It can also be
             /// used to add a custom domain (note that custom domains cannot be added via
             /// the Create operation). Only one custom domain is supported per storage
-            /// account. This API can only be used to update one of tags, accountType, or
-            /// customDomain per call. To update multiple of these properties, call the
-            /// API multiple times with one change per call. This call does not change
-            /// the storage keys for the account. If you want to change storage account
-            /// keys, use the RegenerateKey operation. The location and name of the
-            /// storage account cannot be changed after creation.
+            /// account. In order to replace a custom domain, the old value must be
+            /// cleared before a new value may be set. To clear a custom domain, simply
+            /// update the custom domain with empty string. Then call update again with
+            /// the new cutsom domain name. The update API can only be used to update one
+            /// of tags, accountType, or customDomain per call. To update multiple of
+            /// these properties, call the API multiple times with one change per call.
+            /// This call does not change the storage keys for the account. If you want
+            /// to change storage account keys, use the RegenerateKey operation. The
+            /// location and name of the storage account cannot be changed after creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -289,18 +292,21 @@ namespace Microsoft.Azure.Management.Storage
             /// Updates the account type or tags for a storage account. It can also be
             /// used to add a custom domain (note that custom domains cannot be added via
             /// the Create operation). Only one custom domain is supported per storage
-            /// account. This API can only be used to update one of tags, accountType, or
-            /// customDomain per call. To update multiple of these properties, call the
-            /// API multiple times with one change per call. This call does not change
-            /// the storage keys for the account. If you want to change storage account
-            /// keys, use the RegenerateKey operation. The location and name of the
-            /// storage account cannot be changed after creation.
+            /// account. In order to replace a custom domain, the old value must be
+            /// cleared before a new value may be set. To clear a custom domain, simply
+            /// update the custom domain with empty string. Then call update again with
+            /// the new cutsom domain name. The update API can only be used to update one
+            /// of tags, accountType, or customDomain per call. To update multiple of
+            /// these properties, call the API multiple times with one change per call.
+            /// This call does not change the storage keys for the account. If you want
+            /// to change storage account keys, use the RegenerateKey operation. The
+            /// location and name of the storage account cannot be changed after creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -365,7 +371,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<StorageAccount> List(this IStorageAccountsOperations operations)
+            public static StorageAccountListResult List(this IStorageAccountsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -380,9 +386,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageAccount>> ListAsync( this IStorageAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountListResult> ListAsync( this IStorageAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -395,9 +401,9 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
-            public static IPage<StorageAccount> ListByResourceGroup(this IStorageAccountsOperations operations, string resourceGroupName)
+            public static StorageAccountListResult ListByResourceGroup(this IStorageAccountsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -411,14 +417,14 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageAccount>> ListByResourceGroupAsync( this IStorageAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountListResult> ListByResourceGroupAsync( this IStorageAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -429,7 +435,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -437,7 +443,8 @@ namespace Microsoft.Azure.Management.Storage
             /// use numbers and lower-case letters only.
             /// </param>
             /// <param name='regenerateKey'>
-            /// Specifies name of the key which should be regenerated.
+            /// Specifies name of the key which should be regenerated. key1 or key2 for
+            /// the default keys
             /// </param>
             public static StorageAccountKeys RegenerateKey(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey)
             {
@@ -451,7 +458,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the userâ€™s subscription.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
             /// The name of the storage account within the specified resource group.
@@ -459,7 +466,8 @@ namespace Microsoft.Azure.Management.Storage
             /// use numbers and lower-case letters only.
             /// </param>
             /// <param name='regenerateKey'>
-            /// Specifies name of the key which should be regenerated.
+            /// Specifies name of the key which should be regenerated. key1 or key2 for
+            /// the default keys
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -467,76 +475,6 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task<StorageAccountKeys> RegenerateKeyAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<StorageAccountKeys> result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, regenerateKey, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Lists all the storage accounts available under the subscription. Note that
-            /// storage keys are not returned; use the ListKeys operation for this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<StorageAccount> ListNext(this IStorageAccountsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the storage accounts available under the subscription. Note that
-            /// storage keys are not returned; use the ListKeys operation for this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<StorageAccount>> ListNextAsync( this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Lists all the storage accounts available under the given resource group.
-            /// Note that storage keys are not returned; use the ListKeys operation for
-            /// this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<StorageAccount> ListByResourceGroupNext(this IStorageAccountsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the storage accounts available under the given resource group.
-            /// Note that storage keys are not returned; use the ListKeys operation for
-            /// this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<StorageAccount>> ListByResourceGroupNextAsync( this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

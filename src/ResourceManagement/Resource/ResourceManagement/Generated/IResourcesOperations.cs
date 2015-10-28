@@ -25,7 +25,9 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IResourcesOperations
     {
         /// <summary>
-        /// Move resources within or across subscriptions.
+        /// Begin moving resources.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
         /// Source resource group name.
@@ -40,6 +42,24 @@ namespace Microsoft.Azure.Management.Resources
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> MoveResourcesWithHttpMessagesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Begin moving resources.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='sourceResourceGroupName'>
+        /// Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// move resources' parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginMoveResourcesWithHttpMessagesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all of the resources under a subscription.
         /// </summary>
@@ -140,36 +160,6 @@ namespace Microsoft.Azure.Management.Resources
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<GenericResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Create a resource.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
-        /// </param>
-        /// <param name='parentResourcePath'>
-        /// Resource identity.
-        /// </param>
-        /// <param name='resourceType'>
-        /// Resource identity.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Resource identity.
-        /// </param>
-        /// <param name='apiVersion'>
-        /// </param>
-        /// <param name='parameters'>
-        /// Create or update resource parameters.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<GenericResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a resource belonging to a resource group.
         /// </summary>

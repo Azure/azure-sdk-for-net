@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PublicIpAddress class.
         /// </summary>
-        public PublicIpAddress(string etag = default(string), string publicIPAllocationMethod = default(string), SubResource ipConfiguration = default(SubResource), PublicIpAddressDnsSettings dnsSettings = default(PublicIpAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string provisioningState = default(string))
+        public PublicIpAddress(string etag = default(string), string publicIPAllocationMethod = default(string), SubResource ipConfiguration = default(SubResource), PublicIpAddressDnsSettings dnsSettings = default(PublicIpAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
             DnsSettings = dnsSettings;
             IpAddress = ipAddress;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -79,6 +80,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the PublicIP resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource

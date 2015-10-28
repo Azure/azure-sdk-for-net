@@ -125,7 +125,7 @@ namespace Compute.Tests
                 while (!created)
                 {
                     ComputeManagementTestUtilities.WaitSeconds(10);
-                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
+                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName).Value;
                     created =
                         stos.Any(
                             t =>

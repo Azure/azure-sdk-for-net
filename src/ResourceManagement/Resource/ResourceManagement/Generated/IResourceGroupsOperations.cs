@@ -75,23 +75,6 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create a resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to be created or updated.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the create or update resource group service
-        /// operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ResourceGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Begin deleting resource group.To determine whether the operation
         /// has finished processing the request, call
         /// GetLongRunningOperationStatus.

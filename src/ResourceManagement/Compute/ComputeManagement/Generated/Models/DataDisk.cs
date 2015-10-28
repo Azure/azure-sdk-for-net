@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DataDisk class.
         /// </summary>
-        public DataDisk(int? lun = default(int?), int? diskSizeGB = default(int?), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), string createOption = default(string))
+        public DataDisk(int? lun = default(int?), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), string createOption = default(string), int? diskSizeGB = default(int?))
         {
             Lun = lun;
-            DiskSizeGB = diskSizeGB;
             Name = name;
             Vhd = vhd;
             Image = image;
             Caching = caching;
             CreateOption = createOption;
+            DiskSizeGB = diskSizeGB;
         }
 
         /// <summary>
@@ -45,13 +45,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
         public int? Lun { get; set; }
-
-        /// <summary>
-        /// Gets or sets the disk size in GB for a blank data disk to be
-        /// created.
-        /// </summary>
-        [JsonProperty(PropertyName = "diskSizeGB")]
-        public int? DiskSizeGB { get; set; }
 
         /// <summary>
         /// Gets or sets the disk name.
@@ -87,6 +80,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the initial disk size in GB for blank data disks, and
+        /// the new desired size for existing OS and Data disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
 
     }
 }
