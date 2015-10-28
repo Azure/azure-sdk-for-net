@@ -71,9 +71,10 @@ namespace Authorization.Tests
                 this.CleanupTestData();
             }
 
-            try
+            using (UndoContext context = UndoContext.Current)
             {
-                UndoContext.Current.Start();
+                context.Start();
+
                 this.EnvironmentFactory = new CSMTestEnvironmentFactory();
                 this.TestEnvironment = this.EnvironmentFactory.GetTestEnvironment();
 
@@ -82,15 +83,6 @@ namespace Authorization.Tests
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
-            }
-            catch
-            {
-                Cleanup();
-                throw;
-            }
-            finally
-            {
-                TestUtilities.EndTest();
             }
         }
         

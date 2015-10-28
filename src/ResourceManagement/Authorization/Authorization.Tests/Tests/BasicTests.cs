@@ -486,7 +486,7 @@ namespace Authorization.Tests
                     }
                     catch (CloudException ce)
                     {
-                        Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
+                        Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
                         Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                     }
                 }
@@ -568,8 +568,8 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("RoleDefinitionWithSameNameExists", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
                 finally
                 {
@@ -590,8 +590,8 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("RoleDefinitionExists", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
               
                 // Negative test - create a roledefinition with type=BuiltInRole
@@ -618,7 +618,7 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
                     Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
 

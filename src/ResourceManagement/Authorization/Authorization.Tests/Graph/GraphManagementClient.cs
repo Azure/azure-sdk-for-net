@@ -30,9 +30,9 @@ namespace Authorization.Tests
 {
     internal class GraphManagementClient : ServiceClient<GraphManagementClient>
     {
-        private const string DefaultUserDomain = "@aad264.ccsctp.net";
+        private const string DefaultUserDomain = "@aad191.ccsctp.net";
 
-        private const string DefaultTenantId = "023e39f2-b57a-4d29-9eaa-1833df6d37ed";
+        private const string DefaultTenantId = "e80a6e61-8b40-4a0b-9c90-fdc4db897423";
         
         private const string GraphApiVersion = "1.42-previewInternal";
 
@@ -73,7 +73,6 @@ namespace Authorization.Tests
             this.testEnvironment = testEnv;
             if (testEnv != null && testEnv.AuthorizationContext != null  && testEnv.AuthorizationContext.UserId != null)
             {
-                
                 var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
 
                 if (atIndex != -1 &&
