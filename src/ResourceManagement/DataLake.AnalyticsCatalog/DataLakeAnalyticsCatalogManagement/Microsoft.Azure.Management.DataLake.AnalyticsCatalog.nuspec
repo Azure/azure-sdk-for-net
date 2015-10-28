@@ -11,10 +11,10 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for the internal Data Lake Analytics Catalog services.</summary>
-    <description>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. 
-CSM/Resource Groups-compatible library.
-Provides management capabilities for Data Lake Analytics Catalog services.</description>
+    <summary>Provides management capabilities for the Data Lake Analytics Catalog services.</summary>
+    <description>
+      CSM/Resource Groups-compatible library.
+      Provides management capabilities for Data Lake Analytics Catalog services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Data Lake Analytics Catalog management "DataLakeAnalyticsCatalog" "Data Lake Analytics Catalog management" REST HTTP client windowsazureofficial</tags>
     <references>

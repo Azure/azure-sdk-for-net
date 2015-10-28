@@ -11,12 +11,12 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for the internal Data Lake Analytics Job services.</summary>
-    <description>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. 
-CSM/Resource Groups-compatible library.
-Provides management capabilities for Data Lake Analytics Job services.</description>
+    <summary>Provides management capabilities for the Data Lake Analytics Job services.</summary>
+    <description>
+      CSM/Resource Groups-compatible library.
+      Provides management capabilities for Data Lake Analytics Job services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure Data Lake Analytics Job management "Data Lake AnalyticsJob" "Data Lake Analytics Job management" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft Azure Data Lake Analytics Job management "Data Lake Analytics Job" "Data Lake Analytics Job management" REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Management.DataLake.AnalyticsJob.dll" />
