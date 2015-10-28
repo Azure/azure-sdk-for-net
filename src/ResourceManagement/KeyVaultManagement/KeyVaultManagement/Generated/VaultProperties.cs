@@ -54,6 +54,29 @@ namespace Microsoft.Azure.Management.KeyVault
             set { this._enabledForDeployment = value; }
         }
         
+        private bool? _enabledForDiskEncryption;
+        
+        /// <summary>
+        /// Optional. Enabled or disabled for disk encryption
+        /// </summary>
+        public bool? EnabledForDiskEncryption
+        {
+            get { return this._enabledForDiskEncryption; }
+            set { this._enabledForDiskEncryption = value; }
+        }
+        
+        private bool? _enabledForTemplateDeployment;
+        
+        /// <summary>
+        /// Optional. Enabled or disabled for Azure Resource Manager template
+        /// deployment
+        /// </summary>
+        public bool? EnabledForTemplateDeployment
+        {
+            get { return this._enabledForTemplateDeployment; }
+            set { this._enabledForTemplateDeployment = value; }
+        }
+        
         private Sku _sku;
         
         /// <summary>
