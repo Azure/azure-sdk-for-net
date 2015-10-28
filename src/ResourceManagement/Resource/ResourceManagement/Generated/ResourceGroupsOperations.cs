@@ -342,38 +342,12 @@ namespace Microsoft.Azure.Management.Resources
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<ResourceGroup> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
-                resourceGroupName, parameters, customHeaders, cancellationToken);
-            return await this.Client.GetPutOrPatchOperationResultAsync<ResourceGroup>(response,
-                customHeaders,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Create a resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to be created or updated.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the create or update resource group service
-        /// operation.
-        /// </param>
-        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ResourceGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -401,7 +375,7 @@ namespace Microsoft.Azure.Management.Resources
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -466,7 +440,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);

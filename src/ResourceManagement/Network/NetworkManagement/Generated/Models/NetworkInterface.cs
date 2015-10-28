@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkInterface class.
         /// </summary>
-        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), SubResource networkSecurityGroup = default(SubResource), IList<NetworkInterfaceIpConfiguration> ipConfigurations = default(IList<NetworkInterfaceIpConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), string provisioningState = default(string))
+        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), SubResource networkSecurityGroup = default(SubResource), IList<NetworkInterfaceIpConfiguration> ipConfigurations = default(IList<NetworkInterfaceIpConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             VirtualMachine = virtualMachine;
@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
             Primary = primary;
+            EnableIPForwarding = enableIPForwarding;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -83,6 +85,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether IPForwarding is enabled on the NIC
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
+        public bool? EnableIPForwarding { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the network interface
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource

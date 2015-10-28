@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGateway class.
         /// </summary>
-        public LocalNetworkGateway(string etag = default(string), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), string provisioningState = default(string))
+        public LocalNetworkGateway(string etag = default(string), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
             GatewayIpAddress = gatewayIpAddress;
+            ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
@@ -55,6 +56,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayIpAddress")]
         public string GatewayIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource guid property of the LocalNetworkGateway
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the LocalNetworkGateway

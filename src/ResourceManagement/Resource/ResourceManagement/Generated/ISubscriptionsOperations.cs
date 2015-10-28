@@ -23,6 +23,19 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface ISubscriptionsOperations
     {
         /// <summary>
+        /// Gets a list of the subscription locations.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Id of the subscription
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<LocationListResult>> ListLocationsWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets details about particular subscription.
         /// </summary>
         /// <param name='subscriptionId'>

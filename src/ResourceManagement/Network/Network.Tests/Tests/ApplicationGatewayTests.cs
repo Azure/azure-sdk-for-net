@@ -87,9 +87,9 @@ namespace Networks.Tests
                         Tier = ApplicationGatewayTier.Standard,
                         Capacity = 2
                     },
-                GatewayIpConfigurations = new List<ApplicationGatewayIpConfiguration>()
+                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
                     {
-                        new ApplicationGatewayIpConfiguration()
+                        new ApplicationGatewayIPConfiguration()
                         {
                             Name = gatewayIpConfigName,
                             Subnet = new Subnet()
@@ -97,10 +97,10 @@ namespace Networks.Tests
                                 Id = subnet.Id
                             }
                         }
-                    },            
-                FrontendIpConfigurations = new List<ApplicationGatewayFrontendIpConfiguration>() 
+                    },
+                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
                     { 
-                        new ApplicationGatewayFrontendIpConfiguration()
+                        new ApplicationGatewayFrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
@@ -156,7 +156,7 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
@@ -215,9 +215,9 @@ namespace Networks.Tests
                     Tier = ApplicationGatewayTier.Standard,
                     Capacity = 2
                 },
-                GatewayIpConfigurations = new List<ApplicationGatewayIpConfiguration>()
+                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
                     {
-                        new ApplicationGatewayIpConfiguration()
+                        new ApplicationGatewayIPConfiguration()
                         {
                             Name = gatewayIpConfigName,
                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
@@ -230,9 +230,9 @@ namespace Networks.Tests
                     {
                         sslCert
                     },
-                FrontendIpConfigurations = new List<ApplicationGatewayFrontendIpConfiguration>() 
+                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
                     { 
-                        new ApplicationGatewayFrontendIpConfiguration()
+                        new ApplicationGatewayFrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
@@ -288,7 +288,7 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
@@ -335,8 +335,8 @@ namespace Networks.Tests
             Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
             Assert.Equal(gw1.Sku.Tier, gw2.Sku.Tier);
             Assert.Equal(gw1.Sku.Capacity, gw2.Sku.Capacity);
-            Assert.Equal(gw1.GatewayIpConfigurations.Count, gw2.GatewayIpConfigurations.Count);
-            Assert.Equal(gw1.FrontendIpConfigurations.Count, gw2.FrontendIpConfigurations.Count);
+            Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
+            Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
             Assert.Equal(gw1.SslCertificates.Count, gw2.SslCertificates.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);

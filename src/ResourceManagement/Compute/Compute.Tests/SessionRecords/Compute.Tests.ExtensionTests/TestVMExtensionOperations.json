@@ -176,7 +176,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts/pslibtest3905?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts/pslibtest3905?api-version=2015-06-15",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"SoutheastAsia\",\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_GRS\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -220,7 +220,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/providers/Microsoft.Storage/operations/0aa2aa60-deec-4666-8e05-0c6668ae348a?monitor=true&api-version=2015-05-01-preview"
+          "https://management.azure.com/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/providers/Microsoft.Storage/operations/0aa2aa60-deec-4666-8e05-0c6668ae348a?monitor=true&api-version=2015-06-15"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -245,7 +245,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/providers/Microsoft.Storage/operations/0aa2aa60-deec-4666-8e05-0c6668ae348a?monitor=true&api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/providers/Microsoft.Storage/operations/0aa2aa60-deec-4666-8e05-0c6668ae348a?monitor=true&api-version=2015-06-15",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -296,7 +296,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts?api-version=2015-06-15",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -353,7 +353,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts/pslibtest3905?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/resourceGroups/pslibtest125/providers/Microsoft.Storage/storageAccounts/pslibtest3905?api-version=2015-06-15",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

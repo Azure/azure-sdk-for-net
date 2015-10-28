@@ -70,11 +70,11 @@ namespace Microsoft.Azure.Management.Compute
 
         IAvailabilitySetsOperations AvailabilitySets { get; }
 
-        IVirtualMachineImagesOperations VirtualMachineImages { get; }
-
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
 
         IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
+
+        IVirtualMachineImagesOperations VirtualMachineImages { get; }
 
         IUsageOperations Usage { get; }
 

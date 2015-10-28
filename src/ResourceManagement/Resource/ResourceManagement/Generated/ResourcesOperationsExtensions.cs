@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class ResourcesOperationsExtensions
     {
             /// <summary>
-            /// Move resources within or across subscriptions.
+            /// Begin moving resources.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +39,8 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Move resources within or across subscriptions.
+            /// Begin moving resources.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,6 +57,45 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task MoveResourcesAsync( this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.MoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Begin moving resources.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceResourceGroupName'>
+            /// Source resource group name.
+            /// </param>
+            /// <param name='parameters'>
+            /// move resources' parameters.
+            /// </param>
+            public static void BeginMoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+            {
+                Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginMoveResourcesAsync(sourceResourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Begin moving resources.To determine whether the operation has finished
+            /// processing the request, call GetLongRunningOperationStatus.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceResourceGroupName'>
+            /// Source resource group name.
+            /// </param>
+            /// <param name='parameters'>
+            /// move resources' parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginMoveResourcesAsync( this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginMoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -277,72 +318,6 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<GenericResource> CreateOrUpdateAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<GenericResource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Create a resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            /// <param name='parameters'>
-            /// Create or update resource parameters.
-            /// </param>
-            public static GenericResource BeginCreateOrUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
-            {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            /// <param name='parameters'>
-            /// Create or update resource parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<GenericResource> BeginCreateOrUpdateAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<GenericResource> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

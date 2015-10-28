@@ -209,20 +209,11 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine extension image versions.
+        /// Gets a list of virtual machine extension image types.
         /// </summary>
         /// <param name='location'>
         /// </param>
         /// <param name='publisherName'>
-        /// </param>
-        /// <param name='type'>
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// </param>
-        /// <param name='orderby'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -230,7 +221,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -239,10 +230,6 @@ namespace Microsoft.Azure.Management.Compute
             if (publisherName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "publisherName");
-            }
-            if (type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -261,33 +248,16 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("publisherName", publisherName);
-                tracingParameters.Add("type", type);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListVersions", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListTypes", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types").ToString();
             url = url.Replace("{location}", Uri.EscapeDataString(location));
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
-            url = url.Replace("{type}", Uri.EscapeDataString(type));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
-            {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
-            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -381,11 +351,20 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine extension image types.
+        /// Gets a list of virtual machine extension image versions.
         /// </summary>
         /// <param name='location'>
         /// </param>
         /// <param name='publisherName'>
+        /// </param>
+        /// <param name='type'>
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='orderby'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -393,7 +372,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -402,6 +381,10 @@ namespace Microsoft.Azure.Management.Compute
             if (publisherName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "publisherName");
+            }
+            if (type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -420,16 +403,33 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("publisherName", publisherName);
+                tracingParameters.Add("type", type);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListTypes", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListVersions", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions").ToString();
             url = url.Replace("{location}", Uri.EscapeDataString(location));
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
+            url = url.Replace("{type}", Uri.EscapeDataString(type));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+            }
+            if (top != null)
+            {
+                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (orderby != null)
+            {
+                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

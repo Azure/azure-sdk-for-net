@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Management lock information.
     /// </summary>
-    public partial class ManagementLock
+    public partial class ManagementLockObject
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementLock class.
+        /// Initializes a new instance of the ManagementLockObject class.
         /// </summary>
-        public ManagementLock() { }
+        public ManagementLockObject() { }
 
         /// <summary>
-        /// Initializes a new instance of the ManagementLock class.
+        /// Initializes a new instance of the ManagementLockObject class.
         /// </summary>
-        public ManagementLock(ManagementLockProperties properties = default(ManagementLockProperties), string id = default(string), string type = default(string), string name = default(string))
+        public ManagementLockObject(ManagementLockProperties properties = default(ManagementLockProperties), string id = default(string), string type = default(string), string name = default(string))
         {
             Properties = properties;
             Id = id;
@@ -44,22 +44,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         public ManagementLockProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets the Id of the lock.
+        /// Gets or sets the Id of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets the type of the lock.
+        /// Gets or sets the type of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Gets the name of the lock.
+        /// Gets or sets the name of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
     }
 }

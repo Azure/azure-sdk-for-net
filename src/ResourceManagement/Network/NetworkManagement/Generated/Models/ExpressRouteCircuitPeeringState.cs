@@ -6,21 +6,18 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyName.
+    /// Defines values for ExpressRouteCircuitPeeringState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyName
+    public static class ExpressRouteCircuitPeeringState
     {
-        [EnumMember(Value = "key1")]
-        Key1,
-        [EnumMember(Value = "key2")]
-        Key2
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
