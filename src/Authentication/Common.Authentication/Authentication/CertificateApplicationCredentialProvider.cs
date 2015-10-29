@@ -15,6 +15,7 @@
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.Azure.Authentication;
 using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Common.Authentication
@@ -44,9 +45,16 @@ namespace Microsoft.Azure.Common.Authentication
         /// <returns></returns>
         public async Task<AuthenticationResult> AuthenticateAsync(string clientId, string audience, AuthenticationContext context)
         {
+            var task = new Task<X509Certificate2>(() =>
+            {
+                return  AzureSession.DataStore.GetCertificate(this._certificateThumbprint);
+            });
+            task.Start();
+            var certificate = await task.ConfigureAwait(false);
+
             return await context.AcquireTokenAsync(
-                audience, 
-                new ClientAssertionCertificate(clientId, AzureSession.DataStore.GetCertificate(this._certificateThumbprint)));
+                audience,
+                new ClientAssertionCertificate(clientId, certificate));
         }
     }
 }

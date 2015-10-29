@@ -235,14 +235,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 }
                 else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
                 {
-                    var thumbprint = context.Account.GetProperty(AzureAccount.Property.CertificateThumbprint);
-
-                    if (thumbprint != null)
+                    if (context.Account.IsPropertySet(AzureAccount.Property.CertificateThumbprint))
                     {
                         result = ApplicationTokenProvider.LoginSilentAsync(
                             tenant,
                             context.Account.Id,
-                            new CertificateApplicationCredentialProvider(thumbprint),
+                            new CertificateApplicationCredentialProvider(
+                                context.Account.GetProperty(AzureAccount.Property.CertificateThumbprint)),
                             env,
                             tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
