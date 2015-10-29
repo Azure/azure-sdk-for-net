@@ -33,25 +33,52 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 throw new ArgumentException(string.Format(Resources.InvalidCredentialType, "User"), "credentialType");
             }
-            return new ServicePrincipalAccessToken(config, AcquireToken(config, userId, password), this, userId);
+            return new ServicePrincipalAccessToken(config, AcquireTokenWithSecret(config, userId, password), this.RenewWithSecret, userId);
         }
 
-        private AuthenticationResult AcquireToken(AdalConfiguration config, string appId, SecureString appKey)
+        public IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string clientId, string certificateThumbprint, AzureAccount.AccountType credentialType)
+        {
+            if (credentialType == AzureAccount.AccountType.User)
+            {
+                throw new ArgumentException(string.Format(Resources.InvalidCredentialType, "User"), "credentialType");
+            }
+            return new ServicePrincipalAccessToken(config, AcquireTokenWithCertificate(config, clientId, certificateThumbprint), 
+                (adalConfig, appId) => this.RenewWithCertificate(adalConfig, appId, certificateThumbprint), clientId);
+        }
+
+        private AuthenticationContext GetContext(AdalConfiguration config)
+        {
+            string authority = config.AdEndpoint + config.AdDomain;
+            return new AuthenticationContext(authority, config.ValidateAuthority, config.TokenCache);
+        }
+		
+        private AuthenticationResult AcquireTokenWithSecret(AdalConfiguration config, string appId, SecureString appKey)
         {
             if (appKey == null)
             {
-                return Renew(config, appId);
+                return RenewWithSecret(config, appId);
             }
 
             StoreAppKey(appId, config.AdDomain, appKey);
-
-            string authority = config.AdEndpoint + config.AdDomain;
-            var context = new AuthenticationContext(authority, config.ValidateAuthority, config.TokenCache);
             var credential = new ClientCredential(appId, appKey);
+            var context = GetContext(config);
             return context.AcquireToken(config.ResourceClientUri, credential);
         }
 
-        private AuthenticationResult Renew(AdalConfiguration config, string appId)
+        private AuthenticationResult AcquireTokenWithCertificate(AdalConfiguration config, string appId,
+            string thumbprint)
+        {
+            var certificate = AzureSession.DataStore.GetCertificate(thumbprint);
+            if (certificate == null)
+            {
+                throw new ArgumentException(string.Format(Resources.CertificateNotFoundInStore, thumbprint));
+            }
+
+            var context = GetContext(config);
+            return context.AcquireToken(config.ResourceClientUri, new ClientAssertionCertificate(appId, certificate));
+        }
+
+        private AuthenticationResult RenewWithSecret(AdalConfiguration config, string appId)
         {
             TracingAdapter.Information(Resources.SPNRenewTokenTrace, appId, config.AdDomain, config.AdEndpoint, 
                 config.ClientId, config.ClientRedirectUri);
@@ -61,8 +88,16 @@ namespace Microsoft.Azure.Common.Authentication
                 {
                     throw new KeyNotFoundException(string.Format(Resources.ServiceKeyNotFound, appId));
                 }
-                return AcquireToken(config, appId, appKey);
+                return AcquireTokenWithSecret(config, appId, appKey);
             }
+        }
+
+        private AuthenticationResult RenewWithCertificate(AdalConfiguration config, string appId,
+            string thumbprint)
+        {
+            TracingAdapter.Information(Resources.SPNRenewTokenTrace, appId, config.AdDomain, config.AdEndpoint, 
+                config.ClientId, config.ClientRedirectUri);
+            return AcquireTokenWithCertificate(config, appId, thumbprint);
         }
 
         private SecureString LoadAppKey(string appId, string tenantId)
@@ -80,14 +115,14 @@ namespace Microsoft.Azure.Common.Authentication
         {
             internal readonly AdalConfiguration Configuration;
             internal AuthenticationResult AuthResult;
-            private readonly ServicePrincipalTokenProvider tokenProvider;
+            private readonly Func<AdalConfiguration, string, AuthenticationResult> tokenRenewer;
             private readonly string appId;
 
-            public ServicePrincipalAccessToken(AdalConfiguration configuration, AuthenticationResult authResult, ServicePrincipalTokenProvider tokenProvider, string appId)
+            public ServicePrincipalAccessToken(AdalConfiguration configuration, AuthenticationResult authResult, Func<AdalConfiguration, string, AuthenticationResult> tokenRenewer, string appId)
             {
                 Configuration = configuration;
                 AuthResult = authResult;
-                this.tokenProvider = tokenProvider;
+                this.tokenRenewer = tokenRenewer;
                 this.appId = appId;
             }
 
@@ -95,7 +130,7 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 if (IsExpired)
                 {
-                    AuthResult = tokenProvider.Renew(Configuration, appId);
+                    AuthResult = tokenRenewer(Configuration, appId);
                 }
 
                 authTokenSetter(AuthResult.AccessTokenType, AuthResult.AccessToken);

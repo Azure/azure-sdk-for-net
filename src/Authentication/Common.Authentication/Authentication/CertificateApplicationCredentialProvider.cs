@@ -15,28 +15,29 @@
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.Azure.Authentication;
 using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Common.Authentication
 {
     /// <summary>
-    /// Interface to the keystore for authentication
+    /// Interface to the certificate store for authentication
     /// </summary>
-    internal sealed class KeyStoreApplicationCredentialProvider : IApplicationAuthenticationProvider
+    internal sealed class CertificateApplicationCredentialProvider : IApplicationAuthenticationProvider
     {
-        private string _tenantId;
+        private string _certificateThumbprint;
 
         /// <summary>
-        /// Create a credential provider
+        /// Create a certificate provider
         /// </summary>
-        /// <param name="tenant"></param>
-        public KeyStoreApplicationCredentialProvider(string tenant)
+        /// <param name="certificateThumbprint"></param>
+        public CertificateApplicationCredentialProvider(string certificateThumbprint)
         {
-            this._tenantId = tenant;
+            this._certificateThumbprint = certificateThumbprint;
         }
         
         /// <summary>
-        /// Authenticate using the secret for the specified client from the key store
+        /// Authenticate using certificate thumbprint from the datastore 
         /// </summary>
         /// <param name="clientId">The active directory client id for the application.</param>
         /// <param name="audience">The intended audience for authentication</param>
@@ -44,14 +45,16 @@ namespace Microsoft.Azure.Common.Authentication
         /// <returns></returns>
         public async Task<AuthenticationResult> AuthenticateAsync(string clientId, string audience, AuthenticationContext context)
         {
-            var task = new Task<SecureString>(() =>
+            var task = new Task<X509Certificate2>(() =>
             {
-                return ServicePrincipalKeyStore.GetKey(clientId, _tenantId);
+                return  AzureSession.DataStore.GetCertificate(this._certificateThumbprint);
             });
             task.Start();
-            var key = await task.ConfigureAwait(false);
+            var certificate = await task.ConfigureAwait(false);
 
-            return await context.AcquireTokenAsync(audience, new ClientCredential(clientId, key));
+            return await context.AcquireTokenAsync(
+                audience,
+                new ClientAssertionCertificate(clientId, certificate));
         }
     }
 }

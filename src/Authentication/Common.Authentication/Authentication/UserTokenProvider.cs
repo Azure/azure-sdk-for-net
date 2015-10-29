@@ -292,6 +292,10 @@ namespace Microsoft.Azure.Common.Authentication
                 int lpdwBufferLength);
         }
 
+        public IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string clientId, string certificate, AzureAccount.AccountType credentialType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
