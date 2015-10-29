@@ -82,5 +82,9 @@ namespace Microsoft.Azure.Management.Compute
 
         IVirtualMachinesOperations VirtualMachines { get; }
 
+        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
+
+        IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
+
     }
 }

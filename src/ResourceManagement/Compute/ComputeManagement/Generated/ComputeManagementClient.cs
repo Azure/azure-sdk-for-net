@@ -88,6 +88,10 @@ namespace Microsoft.Azure.Management.Compute
 
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
+        public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
+
+        public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
@@ -159,10 +163,6 @@ namespace Microsoft.Azure.Management.Compute
                 throw new ArgumentNullException("credentials");
             }
             this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
         }
 
         /// <summary>
@@ -190,10 +190,6 @@ namespace Microsoft.Azure.Management.Compute
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
         }
 
         /// <summary>
@@ -208,9 +204,15 @@ namespace Microsoft.Azure.Management.Compute
             this.Usage = new UsageOperations(this);
             this.VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             this.VirtualMachines = new VirtualMachinesOperations(this);
+            this.VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
+            this.VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-06-15";
             this.AcceptLanguage = "en-US";
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

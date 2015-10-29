@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='top'>
         /// </param>
-        /// <param name='orderby'>
+        /// <param name='orderBy'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderBy = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("type", type);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderby", orderby);
+                tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListVersions", tracingParameters);
             }
@@ -426,9 +426,9 @@ namespace Microsoft.Azure.Management.Compute
             {
                 queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
+                queryParameters.Add(string.Format("$orderBy={0}", Uri.EscapeDataString(orderBy)));
             }
             if (this.Client.ApiVersion != null)
             {

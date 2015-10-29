@@ -29,16 +29,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceReference class.
         /// </summary>
-        public NetworkInterfaceReference(bool? primary = default(bool?))
+        public NetworkInterfaceReference(NetworkInterfaceReferenceProperties properties = default(NetworkInterfaceReferenceProperties))
         {
-            Primary = primary;
+            Properties = properties;
         }
 
         /// <summary>
-        /// Gets or sets whether this is a primary NIC on a virtual machine
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primary")]
-        public bool? Primary { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public NetworkInterfaceReferenceProperties Properties { get; set; }
 
     }
 }

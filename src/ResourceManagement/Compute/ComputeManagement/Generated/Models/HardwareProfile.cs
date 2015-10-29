@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the HardwareProfile class.
         /// </summary>
-        public HardwareProfile(string vmSize = default(string))
+        public HardwareProfile(VirtualMachineSizeTypes? vmSize = default(VirtualMachineSizeTypes?))
         {
             VmSize = vmSize;
         }
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_G2', 'Standard_G3', 'Standard_G4', 'Standard_G5'.
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
-        public string VmSize { get; set; }
+        public VirtualMachineSizeTypes? VmSize { get; set; }
 
     }
 }

@@ -17,24 +17,27 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The API entity reference.
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class ApiEntityReference
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the ApiEntityReference class.
         /// </summary>
-        public SubResource() { }
+        public ApiEntityReference() { }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the ApiEntityReference class.
         /// </summary>
-        public SubResource(string id = default(string))
+        public ApiEntityReference(string id = default(string))
         {
             Id = id;
         }
 
         /// <summary>
-        /// Resource Id
+        /// Gets or sets the relative URL in the previous Service Management
+        /// API's namespace. For Example:
+        /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

@@ -29,15 +29,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImage class.
         /// </summary>
-        public VirtualMachineImage(string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
+        public VirtualMachineImage(VirtualMachineImageProperties properties = default(VirtualMachineImageProperties), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Properties = properties;
             Name = name;
             Location = location;
             Tags = tags;
-            Plan = plan;
-            OsDiskImage = osDiskImage;
-            DataDiskImages = dataDiskImages;
         }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public VirtualMachineImageProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.
@@ -56,21 +59,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.plan")]
-        public PurchasePlan Plan { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osDiskImage")]
-        public OSDiskImage OsDiskImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
 
     }
 }

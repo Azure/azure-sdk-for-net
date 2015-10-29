@@ -29,38 +29,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AvailabilitySet class.
         /// </summary>
-        public AvailabilitySet(int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public AvailabilitySet(AvailabilitySetProperties properties = default(AvailabilitySetProperties))
         {
-            PlatformUpdateDomainCount = platformUpdateDomainCount;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachines = virtualMachines;
-            Statuses = statuses;
+            Properties = properties;
         }
 
         /// <summary>
-        /// Gets or sets Update Domain count.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.platformUpdateDomainCount")]
-        public int? PlatformUpdateDomainCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets Fault Domain count.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
-        public int? PlatformFaultDomainCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list containing reference to all Virtual Machines
-        /// created under this Availability Set.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualMachines")]
-        public IList<SubResource> VirtualMachines { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource status information.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.statuses")]
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public AvailabilitySetProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
