@@ -15,12 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for ProtocolTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProtocolTypes
+    public static class ProtocolTypes
     {
-        [EnumMember(Value = "Http")]
-        Http,
-        [EnumMember(Value = "Https")]
-        Https
+        public const string Http = "Http";
+        public const string Https = "Https";
     }
 }

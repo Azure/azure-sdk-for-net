@@ -31,18 +31,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineExtensionImage
         /// class.
         /// </summary>
-        public VirtualMachineExtensionImage(VirtualMachineExtensionImageProperties properties = default(VirtualMachineExtensionImageProperties), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public VirtualMachineExtensionImage(string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string operatingSystem = default(string), string computeRole = default(string), string handlerSchema = default(string), bool? vmScaleSetEnabled = default(bool?), bool? supportsMultipleExtensions = default(bool?))
         {
-            Properties = properties;
             Name = name;
             Location = location;
             Tags = tags;
+            OperatingSystem = operatingSystem;
+            ComputeRole = computeRole;
+            HandlerSchema = handlerSchema;
+            VmScaleSetEnabled = vmScaleSetEnabled;
+            SupportsMultipleExtensions = supportsMultipleExtensions;
         }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VirtualMachineExtensionImageProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.
@@ -61,6 +60,42 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operating system this extension supports.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operatingSystem")]
+        public string OperatingSystem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of role (IaaS or PaaS) this extension
+        /// supports.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computeRole")]
+        public string ComputeRole { get; set; }
+
+        /// <summary>
+        /// Gets or sets the schema defined by publisher, where extension
+        /// consumers should provide settings in a matching schema.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.handlerSchema")]
+        public string HandlerSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the extension can be used on xRP
+        /// VMScaleSets.By default existing extensions are usable on
+        /// scalesets, but there might be cases where a publisher wants to
+        /// explicitly indicate the extension is only enabled for CRP VMs but
+        /// not VMSS.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vmScaleSetEnabled")]
+        public bool? VmScaleSetEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the handler can support multiple extensions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsMultipleExtensions")]
+        public bool? SupportsMultipleExtensions { get; set; }
 
     }
 }

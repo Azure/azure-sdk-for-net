@@ -15,14 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for CachingTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum CachingTypes
+    public static class CachingTypes
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "ReadOnly")]
-        ReadOnly,
-        [EnumMember(Value = "ReadWrite")]
-        ReadWrite
+        public const string None = "None";
+        public const string ReadOnly = "ReadOnly";
+        public const string ReadWrite = "ReadWrite";
     }
 }

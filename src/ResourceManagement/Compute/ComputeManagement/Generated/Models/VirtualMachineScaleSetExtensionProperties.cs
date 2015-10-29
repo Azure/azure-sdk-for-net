@@ -31,9 +31,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetExtensionProperties class.
         /// </summary>
-        public VirtualMachineScaleSetExtensionProperties(string publisher = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
+        public VirtualMachineScaleSetExtensionProperties(string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
         {
             Publisher = publisher;
+            Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
@@ -46,6 +47,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the extension handler.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the type version of the extension handler.

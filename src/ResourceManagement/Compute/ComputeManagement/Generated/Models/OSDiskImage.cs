@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDiskImage class.
         /// </summary>
-        public OSDiskImage(OperatingSystemTypes? operatingSystem = default(OperatingSystemTypes?))
+        public OSDiskImage(stringEnum operatingSystem = default(stringEnum))
         {
             OperatingSystem = operatingSystem;
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// values for this property include: 'Windows', 'Linux'.
         /// </summary>
         [JsonProperty(PropertyName = "operatingSystem")]
-        public OperatingSystemTypes? OperatingSystem { get; set; }
+        public stringEnum OperatingSystem { get; set; }
 
     }
 }

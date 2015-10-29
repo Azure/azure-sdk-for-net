@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Scale Set Extension.
     /// </summary>
-    public partial class VirtualMachineScaleSetExtension : Resource
+    public partial class VirtualMachineScaleSetExtension
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetExtension
@@ -31,22 +31,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetExtension
         /// class.
         /// </summary>
-        public VirtualMachineScaleSetExtension(VirtualMachineScaleSetExtensionProperties properties = default(VirtualMachineScaleSetExtensionProperties))
+        public VirtualMachineScaleSetExtension(string name = default(string), VirtualMachineScaleSetExtensionProperties properties = default(VirtualMachineScaleSetExtensionProperties))
         {
+            Name = name;
             Properties = properties;
         }
+
+        /// <summary>
+        /// Gets or sets the name of the extension.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public VirtualMachineScaleSetExtensionProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

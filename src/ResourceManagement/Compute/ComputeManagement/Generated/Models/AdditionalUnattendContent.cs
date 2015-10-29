@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AdditionalUnattendContent class.
         /// </summary>
-        public AdditionalUnattendContent(PassNames? passName = default(PassNames?), ComponentNames? componentName = default(ComponentNames?), SettingNames? settingName = default(SettingNames?), string content = default(string))
+        public AdditionalUnattendContent(stringEnumEnumEnumEnumEnum passName = default(stringEnumEnumEnumEnumEnum), stringEnumEnumEnumEnumEnumEnum componentName = default(stringEnumEnumEnumEnumEnumEnum), stringEnumEnumEnumEnumEnumEnumEnum settingName = default(stringEnumEnumEnumEnumEnumEnumEnum), string content = default(string))
         {
             PassName = passName;
             ComponentName = componentName;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'oobeSystem'.
         /// </summary>
         [JsonProperty(PropertyName = "passName")]
-        public PassNames? PassName { get; set; }
+        public stringEnumEnumEnumEnumEnum PassName { get; set; }
 
         /// <summary>
         /// Gets or sets the component name. Currently, the only allowable
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// property include: 'Microsoft-Windows-Shell-Setup'.
         /// </summary>
         [JsonProperty(PropertyName = "componentName")]
-        public ComponentNames? ComponentName { get; set; }
+        public stringEnumEnumEnumEnumEnumEnum ComponentName { get; set; }
 
         /// <summary>
         /// Gets or sets setting name (e.g. FirstLogonCommands, AutoLogon ).
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'FirstLogonCommands'.
         /// </summary>
         [JsonProperty(PropertyName = "settingName")]
-        public SettingNames? SettingName { get; set; }
+        public stringEnumEnumEnumEnumEnumEnumEnum SettingName { get; set; }
 
         /// <summary>
         /// Gets or sets XML formatted content that is added to the

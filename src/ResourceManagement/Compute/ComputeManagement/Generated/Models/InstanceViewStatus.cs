@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the InstanceViewStatus class.
         /// </summary>
-        public InstanceViewStatus(string code = default(string), StatusLevelTypes? level = default(StatusLevelTypes?), string displayStatus = default(string), string message = default(string), DateTime? time = default(DateTime?))
+        public InstanceViewStatus(string code = default(string), string level = default(string), string displayStatus = default(string), string message = default(string), DateTime? time = default(DateTime?))
         {
             Code = code;
             Level = level;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'Info', 'Warning', 'Error'.
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public StatusLevelTypes? Level { get; set; }
+        public string Level { get; set; }
 
         /// <summary>
         /// Gets or sets the short localizable label for the status.

@@ -15,48 +15,27 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for VirtualMachineSizeTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum VirtualMachineSizeTypes
+    public static class VirtualMachineSizeTypes
     {
-        [EnumMember(Value = "Basic_A0")]
-        BasicA0,
-        [EnumMember(Value = "Basic_A1")]
-        BasicA1,
-        [EnumMember(Value = "Basic_A2")]
-        BasicA2,
-        [EnumMember(Value = "Basic_A3")]
-        BasicA3,
-        [EnumMember(Value = "Basic_A4")]
-        BasicA4,
-        [EnumMember(Value = "Standard_A0")]
-        StandardA0,
-        [EnumMember(Value = "Standard_A1")]
-        StandardA1,
-        [EnumMember(Value = "Standard_A2")]
-        StandardA2,
-        [EnumMember(Value = "Standard_A3")]
-        StandardA3,
-        [EnumMember(Value = "Standard_A4")]
-        StandardA4,
-        [EnumMember(Value = "Standard_A5")]
-        StandardA5,
-        [EnumMember(Value = "Standard_A6")]
-        StandardA6,
-        [EnumMember(Value = "Standard_A7")]
-        StandardA7,
-        [EnumMember(Value = "Standard_A8")]
-        StandardA8,
-        [EnumMember(Value = "Standard_A9")]
-        StandardA9,
-        [EnumMember(Value = "Standard_G1")]
-        StandardG1,
-        [EnumMember(Value = "Standard_G2")]
-        StandardG2,
-        [EnumMember(Value = "Standard_G3")]
-        StandardG3,
-        [EnumMember(Value = "Standard_G4")]
-        StandardG4,
-        [EnumMember(Value = "Standard_G5")]
-        StandardG5
+        public const string BasicA0 = "Basic_A0";
+        public const string BasicA1 = "Basic_A1";
+        public const string BasicA2 = "Basic_A2";
+        public const string BasicA3 = "Basic_A3";
+        public const string BasicA4 = "Basic_A4";
+        public const string StandardA0 = "Standard_A0";
+        public const string StandardA1 = "Standard_A1";
+        public const string StandardA2 = "Standard_A2";
+        public const string StandardA3 = "Standard_A3";
+        public const string StandardA4 = "Standard_A4";
+        public const string StandardA5 = "Standard_A5";
+        public const string StandardA6 = "Standard_A6";
+        public const string StandardA7 = "Standard_A7";
+        public const string StandardA8 = "Standard_A8";
+        public const string StandardA9 = "Standard_A9";
+        public const string StandardG1 = "Standard_G1";
+        public const string StandardG2 = "Standard_G2";
+        public const string StandardG3 = "Standard_G3";
+        public const string StandardG4 = "Standard_G4";
+        public const string StandardG5 = "Standard_G5";
     }
 }

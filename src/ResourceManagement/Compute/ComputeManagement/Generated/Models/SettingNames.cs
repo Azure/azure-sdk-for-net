@@ -15,12 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for SettingNames.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SettingNames
+    public static class SettingNames
     {
-        [EnumMember(Value = "AutoLogon")]
-        AutoLogon,
-        [EnumMember(Value = "FirstLogonCommands")]
-        FirstLogonCommands
+        public const string AutoLogon = "AutoLogon";
+        public const string FirstLogonCommands = "FirstLogonCommands";
     }
 }

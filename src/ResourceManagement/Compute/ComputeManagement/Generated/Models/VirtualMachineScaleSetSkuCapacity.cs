@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetSkuCapacity class.
         /// </summary>
-        public VirtualMachineScaleSetSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultCapacity = default(long?), VirtualMachineScaleSetSkuScaleType? scaleType = default(VirtualMachineScaleSetSkuScaleType?))
+        public VirtualMachineScaleSetSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultCapacity = default(long?), stringEnumEnumEnumEnumEnumEnumEnumEnumEnumEnum scaleType = default(stringEnumEnumEnumEnumEnumEnumEnumEnumEnumEnum))
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// this property include: 'Automatic', 'None'.
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
-        public VirtualMachineScaleSetSkuScaleType? ScaleType { get; set; }
+        public stringEnumEnumEnumEnumEnumEnumEnumEnumEnumEnum ScaleType { get; set; }
 
     }
 }

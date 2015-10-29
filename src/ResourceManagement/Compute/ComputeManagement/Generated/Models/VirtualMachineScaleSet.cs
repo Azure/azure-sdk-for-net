@@ -29,10 +29,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSet class.
         /// </summary>
-        public VirtualMachineScaleSet(Sku sku = default(Sku), VirtualMachineScaleSetProperties properties = default(VirtualMachineScaleSetProperties))
+        public VirtualMachineScaleSet(Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string))
         {
             Sku = sku;
-            Properties = properties;
+            UpgradePolicy = upgradePolicy;
+            VirtualMachineProfile = virtualMachineProfile;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary>
@@ -42,9 +44,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the upgrade policy.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VirtualMachineScaleSetProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.upgradePolicy")]
+        public UpgradePolicy UpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
+        public VirtualMachineScaleSetVMProfile VirtualMachineProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provisioning state, which only appears in the
+        /// response.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

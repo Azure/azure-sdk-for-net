@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
         /// </summary>
-        public OSDisk(OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), DiskCreateOptionTypes? createOption = default(DiskCreateOptionTypes?), int? diskSizeGB = default(int?))
+        public OSDisk(string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), stringEnumEnumEnum caching = default(stringEnumEnumEnum), stringEnumEnumEnumEnum createOption = default(stringEnumEnumEnumEnum), int? diskSizeGB = default(int?))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// property include: 'Windows', 'Linux'.
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public OperatingSystemTypes? OsType { get; set; }
+        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the disk encryption settings.
@@ -80,14 +80,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'None', 'ReadOnly', 'ReadWrite'.
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
-        public CachingTypes? Caching { get; set; }
+        public stringEnumEnumEnum Caching { get; set; }
 
         /// <summary>
         /// Gets or sets the create option. Possible values for this property
         /// include: 'fromImage', 'empty', 'attach'.
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
-        public DiskCreateOptionTypes? CreateOption { get; set; }
+        public stringEnumEnumEnumEnum CreateOption { get; set; }
 
         /// <summary>
         /// Gets or sets the initial disk size in GB for blank data disks, and

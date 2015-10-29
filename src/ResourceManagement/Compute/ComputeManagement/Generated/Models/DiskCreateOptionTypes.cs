@@ -15,14 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for DiskCreateOptionTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DiskCreateOptionTypes
+    public static class DiskCreateOptionTypes
     {
-        [EnumMember(Value = "fromImage")]
-        FromImage,
-        [EnumMember(Value = "empty")]
-        Empty,
-        [EnumMember(Value = "attach")]
-        Attach
+        public const string FromImage = "fromImage";
+        public const string Empty = "empty";
+        public const string Attach = "attach";
     }
 }

@@ -466,13 +466,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": ""
           },
           "204": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           }
         },
@@ -977,10 +977,10 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           },
           "204": {
@@ -1137,7 +1137,9 @@
             }
           }
         },
-        "x-ms-pageable": true
+        "x-ms-pageable": {
+          "path": "nextLink"
+        }
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines": {
@@ -1163,7 +1165,9 @@
             }
           }
         },
-        "x-ms-pageable": true
+        "x-ms-pageable": {
+          "path": "nextLink"
+        }
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes": {
@@ -1355,13 +1359,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
@@ -1447,10 +1451,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
@@ -1637,7 +1641,9 @@
             }
           }
         },
-        "x-ms-pageable": true
+        "x-ms-pageable": {
+          "path": "nextLink"
+        }
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/skus": {
@@ -2257,7 +2263,8 @@
             "Error"
           ],
           "x-ms-enum": {
-            "name": "StatusLevelTypes"
+            "name": "StatusLevelTypes",
+            "modelAsString": "True"
           }
         },
         "displayStatus": {
@@ -2313,7 +2320,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "#/definitions/Resource"
         }
       ],
       "description": "Create or update Availability Set parameters."
@@ -2424,7 +2431,7 @@
       },
       "allOf": [
         {
-          "$ref": "SubResource"
+          "$ref": "#/definitions/SubResource"
         }
       ],
       "description": "Describes a Virtual Machine Extension Image."
@@ -2449,7 +2456,7 @@
       },
       "allOf": [
         {
-          "$ref": "SubResource"
+          "$ref": "#/definitions/SubResource"
         }
       ],
       "description": "Virtual machine image resource information."
@@ -2530,7 +2537,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "#/definitions/Resource"
         }
       ],
       "description": "Describes a Virtual Machine Extension."
@@ -2562,7 +2569,8 @@
             "Linux"
           ],
           "x-ms-enum": {
-            "name": "OperatingSystemTypes"
+            "name": "OperatingSystemTypes",
+            "modelAsString": "True"
           }
         }
       },
@@ -2618,7 +2626,7 @@
       },
       "allOf": [
         {
-          "$ref": "SubResource"
+          "$ref": "#/definitions/SubResource"
         }
       ],
       "description": "Describes a Virtual Machine Image."
@@ -2851,7 +2859,8 @@
             "Standard_G5"
           ],
           "x-ms-enum": {
-            "name": "VirtualMachineSizeTypes"
+            "name": "VirtualMachineSizeTypes",
+            "modelAsString": "True"
           }
         }
       },
@@ -2936,7 +2945,8 @@
             "Linux"
           ],
           "x-ms-enum": {
-            "name": "OperatingSystemTypes"
+            "name": "OperatingSystemTypes",
+            "modelAsString": "True"
           }
         },
         "encryptionSettings": {
@@ -2964,7 +2974,8 @@
             "ReadWrite"
           ],
           "x-ms-enum": {
-            "name": "CachingTypes"
+            "name": "CachingTypes",
+            "modelAsString": "True"
           }
         },
         "createOption": {
@@ -2976,7 +2987,8 @@
             "attach"
           ],
           "x-ms-enum": {
-            "name": "DiskCreateOptionTypes"
+            "name": "DiskCreateOptionTypes",
+            "modelAsString": "True"
           }
         },
         "diskSizeGB": {
@@ -3015,7 +3027,8 @@
             "ReadWrite"
           ],
           "x-ms-enum": {
-            "name": "CachingTypes"
+            "name": "CachingTypes",
+            "modelAsString": "True"
           }
         },
         "createOption": {
@@ -3027,7 +3040,8 @@
             "attach"
           ],
           "x-ms-enum": {
-            "name": "DiskCreateOptionTypes"
+            "name": "DiskCreateOptionTypes",
+            "modelAsString": "True"
           }
         },
         "diskSizeGB": {
@@ -3067,7 +3081,8 @@
             "oobeSystem"
           ],
           "x-ms-enum": {
-            "name": "PassNames"
+            "name": "PassNames",
+            "modelAsString": "True"
           }
         },
         "componentName": {
@@ -3077,7 +3092,8 @@
             "Microsoft-Windows-Shell-Setup"
           ],
           "x-ms-enum": {
-            "name": "ComponentNames"
+            "name": "ComponentNames",
+            "modelAsString": "True"
           }
         },
         "settingName": {
@@ -3088,7 +3104,8 @@
             "FirstLogonCommands"
           ],
           "x-ms-enum": {
-            "name": "SettingNames"
+            "name": "SettingNames",
+            "modelAsString": "True"
           }
         },
         "content": {
@@ -3108,7 +3125,8 @@
             "Https"
           ],
           "x-ms-enum": {
-            "name": "ProtocolTypes"
+            "name": "ProtocolTypes",
+            "modelAsString": "True"
           }
         },
         "certificateUrl": {
@@ -3278,7 +3296,7 @@
       },
       "allOf": [
         {
-          "$ref": "SubResource"
+          "$ref": "#/definitions/SubResource"
         }
       ],
       "description": "Describes a network interface reference."
@@ -3490,7 +3508,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "#/definitions/Resource"
         }
       ],
       "description": "Describes a Virtual Machine."
@@ -3539,7 +3557,8 @@
             "Manual"
           ],
           "x-ms-enum": {
-            "name": "UpgradeMode"
+            "name": "UpgradeMode",
+            "modelAsString": "True"
           }
         }
       },
@@ -3596,7 +3615,8 @@
             "ReadWrite"
           ],
           "x-ms-enum": {
-            "name": "CachingTypes"
+            "name": "CachingTypes",
+            "modelAsString": "True"
           }
         },
         "createOption": {
@@ -3608,7 +3628,8 @@
             "attach"
           ],
           "x-ms-enum": {
-            "name": "DiskCreateOptionTypes"
+            "name": "DiskCreateOptionTypes",
+            "modelAsString": "True"
           }
         },
         "osType": {
@@ -3619,7 +3640,8 @@
             "Linux"
           ],
           "x-ms-enum": {
-            "name": "OperatingSystemTypes"
+            "name": "OperatingSystemTypes",
+            "modelAsString": "True"
           }
         },
         "image": {
@@ -3732,6 +3754,10 @@
           "type": "string",
           "description": "Gets or sets the name of the extension handler publisher."
         },
+        "type": {
+          "type": "string",
+          "description": "Gets or sets the type of the extension handler."
+        },
         "typeHandlerVersion": {
           "type": "string",
           "description": "Gets or sets the type version of the extension handler."
@@ -3757,15 +3783,14 @@
     },
     "VirtualMachineScaleSetExtension": {
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the extension."
+        },
         "properties": {
           "$ref": "#/definitions/VirtualMachineScaleSetExtensionProperties"
         }
       },
-      "allOf": [
-        {
-          "$ref": "Resource"
-        }
-      ],
       "description": "Describes a Virtual Machine Scale Set Extension."
     },
     "VirtualMachineScaleSetExtensionProfile": {
@@ -3830,7 +3855,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "#/definitions/Resource"
         }
       ],
       "description": "Describes a Virtual Machine Scale Set."
@@ -3965,7 +3990,8 @@
             "None"
           ],
           "x-ms-enum": {
-            "name": "VirtualMachineScaleSetSkuScaleType"
+            "name": "VirtualMachineScaleSetSkuScaleType",
+            "modelAsString": "True"
           }
         }
       },
@@ -4068,7 +4094,7 @@
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "#/definitions/Resource"
         }
       ],
       "description": "Describes a virtual machine scale set virtual machine."
@@ -4201,7 +4227,7 @@
       "required": [
         "location"
       ],
-      "x-ms-external": true
+      "x-ms-azure-resource": true
     },
     "SubResource": {
       "properties": {
@@ -4210,7 +4236,7 @@
           "description": "Resource Id"
         }
       },
-      "x-ms-external": true
+      "x-ms-azure-resource": true
     }
   },
   "parameters": {

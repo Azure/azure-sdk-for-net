@@ -15,14 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for StatusLevelTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StatusLevelTypes
+    public static class StatusLevelTypes
     {
-        [EnumMember(Value = "Info")]
-        Info,
-        [EnumMember(Value = "Warning")]
-        Warning,
-        [EnumMember(Value = "Error")]
-        Error
+        public const string Info = "Info";
+        public const string Warning = "Warning";
+        public const string Error = "Error";
     }
 }

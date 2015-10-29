@@ -15,10 +15,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for PassNames.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum PassNames
+    public static class PassNames
     {
-        [EnumMember(Value = "oobeSystem")]
-        OobeSystem
+        public const string OobeSystem = "oobeSystem";
     }
 }

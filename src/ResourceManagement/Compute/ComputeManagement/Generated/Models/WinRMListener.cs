@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the WinRMListener class.
         /// </summary>
-        public WinRMListener(ProtocolTypes? protocol = default(ProtocolTypes?), string certificateUrl = default(string))
+        public WinRMListener(stringEnumEnumEnumEnumEnumEnumEnumEnum protocol = default(stringEnumEnumEnumEnumEnumEnumEnumEnum), string certificateUrl = default(string))
         {
             Protocol = protocol;
             CertificateUrl = certificateUrl;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'Http', 'Https'.
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
-        public ProtocolTypes? Protocol { get; set; }
+        public stringEnumEnumEnumEnumEnumEnumEnumEnum Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets the Certificate URL in KMS for Https listeners.

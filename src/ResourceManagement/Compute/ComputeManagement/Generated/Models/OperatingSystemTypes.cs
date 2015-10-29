@@ -15,12 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for OperatingSystemTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OperatingSystemTypes
+    public static class OperatingSystemTypes
     {
-        [EnumMember(Value = "Windows")]
-        Windows,
-        [EnumMember(Value = "Linux")]
-        Linux
+        public const string Windows = "Windows";
+        public const string Linux = "Linux";
     }
 }
