@@ -146,7 +146,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.USGovernmentGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, null },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null},
+                        { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, null},
+                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, null}
                     }
                 }
             }
