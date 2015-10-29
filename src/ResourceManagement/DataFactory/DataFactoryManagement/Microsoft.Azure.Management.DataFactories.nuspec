@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.DataFactories</id>
     <title>Microsoft Azure Data Factory Management Library</title>
-    <releaseNotes>https://azure.microsoft.com/en-us/documentation/articles/data-factory-api-change-log/#version-401</releaseNotes>
+    <releaseNotes>https://azure.microsoft.com/en-us/documentation/articles/data-factory-api-change-log/#version-410</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
