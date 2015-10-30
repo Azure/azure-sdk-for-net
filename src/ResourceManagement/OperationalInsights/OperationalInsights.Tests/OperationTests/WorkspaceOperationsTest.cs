@@ -254,6 +254,10 @@ namespace OperationalInsights.Tests.OperationTests
                     "SiteRecovery");
                 Assert.True(disableResponse != null && HttpStatusCode.OK == disableResponse.Result.StatusCode);
 
+                listResponse = client.Workspaces.ListIntelligencePacks(resourceGroupName, workspaceName);
+                Assert.NotNull(listResponse);
+                Assert.NotNull(listResponse.IntelligencePacks);
+
                 foreach (var ip in listResponse.IntelligencePacks)
                 {
                     if (ip.Name.Equals("ChangeTracking"))
