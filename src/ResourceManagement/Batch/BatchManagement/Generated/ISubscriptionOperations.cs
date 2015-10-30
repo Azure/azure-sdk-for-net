@@ -21,30 +21,28 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Batch.Models;
 
-namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
+namespace Microsoft.Azure.Management.Batch
 {
     /// <summary>
-    /// Time period interval.
+    /// Operations for managing Batch service properties at the subscription
+    /// level.
     /// </summary>
-    public enum PeriodIntervalContract
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
-        /// A period starting with start time and ending at the same time next
-        /// day.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
-        Day = 1,
-        
-        /// <summary>
-        /// A period starting with start time and ending at the same time on
-        /// the same day of next month.
-        /// </summary>
-        Month = 2,
-        
-        /// <summary>
-        /// A period starting with start time and ending at the same time on
-        /// the same day and month of the next year.
-        /// </summary>
-        Year = 3,
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Values returned by the Get Subscription Quotas operation.
+        /// </returns>
+        Task<SubscriptionQuotasGetResponse> GetSubscriptionQuotasAsync(string locationName, CancellationToken cancellationToken);
     }
 }

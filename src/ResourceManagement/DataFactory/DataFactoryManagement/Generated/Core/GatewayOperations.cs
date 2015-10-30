@@ -397,6 +397,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+
                     result.Location = url;
                     
                     if (shouldTrace)

@@ -69,6 +69,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <param name='parameters'>
         /// Required. Role definition.
         /// </param>
@@ -78,9 +81,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <returns>
         /// Role definition create or update operation result.
         /// </returns>
-        public async Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(Guid roleDefinitionId, RoleDefinitionCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(Guid roleDefinitionId, string scope, RoleDefinitionCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
@@ -94,17 +101,15 @@ namespace Microsoft.Azure.Management.Authorization
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("roleDefinitionId", roleDefinitionId);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
+            url = url + "/";
+            url = url + scope;
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
             url = url + Uri.EscapeDataString(roleDefinitionId.ToString());
             List<string> queryParameters = new List<string>();
@@ -409,18 +414,21 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition delete operation result.
         /// </returns>
-        public async Task<RoleDefinitionDeleteResult> DeleteAsync(string roleDefinitionId, CancellationToken cancellationToken)
+        public async Task<RoleDefinitionDeleteResult> DeleteAsync(Guid roleDefinitionId, string scope, CancellationToken cancellationToken)
         {
             // Validate
-            if (roleDefinitionId == null)
+            if (scope == null)
             {
-                throw new ArgumentNullException("roleDefinitionId");
+                throw new ArgumentNullException("scope");
             }
             
             // Tracing
@@ -431,13 +439,16 @@ namespace Microsoft.Azure.Management.Authorization
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("roleDefinitionId", roleDefinitionId);
+                tracingParameters.Add("scope", scope);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
             url = url + "/";
-            url = url + roleDefinitionId;
+            url = url + scope;
+            url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
+            url = url + Uri.EscapeDataString(roleDefinitionId.ToString());
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
@@ -637,8 +648,8 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Get role definition by name (GUID).
         /// </summary>
-        /// <param name='roleDefinitionName'>
-        /// Required. Role definition name (GUID).
+        /// <param name='roleDefinitionId'>
+        /// Required. Role definition Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -646,7 +657,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <returns>
         /// Role definition get operation result.
         /// </returns>
-        public async Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionName, CancellationToken cancellationToken)
+        public async Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionId, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -657,7 +668,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("roleDefinitionName", roleDefinitionName);
+                tracingParameters.Add("roleDefinitionId", roleDefinitionId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -669,7 +680,7 @@ namespace Microsoft.Azure.Management.Authorization
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
-            url = url + Uri.EscapeDataString(roleDefinitionName.ToString());
+            url = url + Uri.EscapeDataString(roleDefinitionId.ToString());
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
@@ -870,7 +881,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// Required. Role definition Id
+        /// Required. Fully qualified role definition Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

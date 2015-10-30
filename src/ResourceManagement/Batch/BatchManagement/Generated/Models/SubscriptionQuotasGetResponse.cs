@@ -21,42 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.ApiManagement.SmapiModels;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
+namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Time period of predefined units.
+    /// Values returned by the Get Subscription Quotas operation.
     /// </summary>
-    public partial class PeriodContract
+    public partial class SubscriptionQuotasGetResponse : AzureOperationResponse
     {
-        private PeriodIntervalContract _interval;
+        private int _accountQuota;
         
         /// <summary>
-        /// Optional. Gets or sets interval unit for this period.
+        /// Optional. The number of accounts the subscription is allowed to
+        /// create in the Batch Service at the specified region.
         /// </summary>
-        public PeriodIntervalContract Interval
+        public int AccountQuota
         {
-            get { return this._interval; }
-            set { this._interval = value; }
-        }
-        
-        private int _value;
-        
-        /// <summary>
-        /// Optional. Gets or sets length of period expressed in number of
-        /// interval units.
-        /// </summary>
-        public int Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._accountQuota; }
+            set { this._accountQuota = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PeriodContract class.
+        /// Initializes a new instance of the SubscriptionQuotasGetResponse
+        /// class.
         /// </summary>
-        public PeriodContract()
+        public SubscriptionQuotasGetResponse()
         {
         }
     }

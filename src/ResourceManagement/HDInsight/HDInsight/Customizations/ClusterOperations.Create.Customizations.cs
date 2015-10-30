@@ -326,6 +326,38 @@ namespace Microsoft.Azure.Management.HDInsight
 
             configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
             
+            //datalake configs
+            var datalakeConfigExists = true;
+            Dictionary<string, string> datalakeConfig;
+            configurations.TryGetValue(ConfigurationKey.ClusterIdentity, out datalakeConfig);
+
+            if (datalakeConfig == null)
+            {
+                datalakeConfigExists = false;
+            }
+
+            //Add/override datalake config if principal is provided by user
+            if (clusterCreateParameters.Principal != null)
+            {
+                datalakeConfig = new Dictionary<string, string>();
+                ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
+
+                datalakeConfig.Add("clusterIdentity.applicationId", servicePrincipalObj.ApplicationId.ToString());
+                // converting the tenant Id to URI as RP expects this to be URI
+                datalakeConfig.Add("clusterIdentity.aadTenantId", "https://login.windows.net/" + servicePrincipalObj.AADTenantId.ToString());
+                datalakeConfig.Add("clusterIdentity.certificate", Convert.ToBase64String(servicePrincipalObj.CertificateFileBytes));
+                datalakeConfig.Add("clusterIdentity.certificatePassword", servicePrincipalObj.CertificatePassword);
+                datalakeConfig.Add("clusterIdentity.resourceUri", servicePrincipalObj.ResourceUri.ToString());
+
+                if (!datalakeConfigExists)
+                {
+                    configurations.Add(ConfigurationKey.ClusterIdentity, datalakeConfig);
+                }
+                else
+                {
+                    configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
+                }
+            }
 
             return configurations;
         }

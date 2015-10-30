@@ -298,5 +298,45 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureDataLakeStoreLinkedService = @"
+{
+    name: ""LinkedService-AzureDataLakeStore"",
+    properties:
+    {
+        type: ""AzureDataLakeStore"",
+        typeProperties:
+        {
+            authorization: ""authCode"",
+            sessionId: ""sessionId"",
+            dataLakeStoreUri: ""https://account.azuredatalake.net/webhdfs/v1"",
+            accountName: ""account"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
+        },
+        description: ""test description""
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataLakeAnalyticsLinkedService = @"
+{
+    name: ""LinkedService-AzureDataLakeAnalytics"",
+    properties:
+    {
+        type: ""AzureDataLakeAnalytics"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authorization: ""authCode"",
+            sessionId: ""sessionId"",
+            accountName: ""account"",
+            dataLakeAnalyticsUri: ""microsoftkonacompute.net"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
+        }
+    }
+}";
     }
 }

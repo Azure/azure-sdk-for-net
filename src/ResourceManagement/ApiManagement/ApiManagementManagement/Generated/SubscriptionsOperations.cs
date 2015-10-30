@@ -1691,6 +1691,16 @@ namespace Microsoft.Azure.Management.ApiManagement
                 JObject subscriptionUpdateParametersValue = new JObject();
                 requestDoc = subscriptionUpdateParametersValue;
                 
+                if (parameters.UserIdPath != null)
+                {
+                    subscriptionUpdateParametersValue["userId"] = parameters.UserIdPath;
+                }
+                
+                if (parameters.ProductIdPath != null)
+                {
+                    subscriptionUpdateParametersValue["productId"] = parameters.ProductIdPath;
+                }
+                
                 if (parameters.ExpiresOn != null)
                 {
                     subscriptionUpdateParametersValue["expirationDate"] = parameters.ExpiresOn.Value;

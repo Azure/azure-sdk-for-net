@@ -3315,5 +3315,461 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
         }
+        
+        /// <summary>
+        /// The list network interface operation retrieves information about
+        /// all network interfaces in a virtual machine from a virtual machine
+        /// scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='virtualMachineScaleSetName'>
+        /// Required. The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='virtualmachineIndex'>
+        /// Required. The virtual machine index.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for ListNetworkInterface Api service call
+        /// </returns>
+        public async Task<NetworkInterfaceListResponse> ListVirtualMachineScaleSetVMNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (virtualMachineScaleSetName == null)
+            {
+                throw new ArgumentNullException("virtualMachineScaleSetName");
+            }
+            if (virtualmachineIndex == null)
+            {
+                throw new ArgumentNullException("virtualmachineIndex");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("virtualMachineScaleSetName", virtualMachineScaleSetName);
+                tracingParameters.Add("virtualmachineIndex", virtualmachineIndex);
+                TracingAdapter.Enter(invocationId, this, "ListVirtualMachineScaleSetVMNetworkInterfacesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.compute/virtualMachineScaleSets/";
+            url = url + Uri.EscapeDataString(virtualMachineScaleSetName);
+            url = url + "/virtualMachines/";
+            url = url + Uri.EscapeDataString(virtualmachineIndex);
+            url = url + "/networkInterfaces";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    NetworkInterfaceListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkInterfaceListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    NetworkInterface networkInterfaceJsonFormatInstance = new NetworkInterface();
+                                    result.NetworkInterfaces.Add(networkInterfaceJsonFormatInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken virtualMachineValue = propertiesValue["virtualMachine"];
+                                        if (virtualMachineValue != null && virtualMachineValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceId virtualMachineInstance = new ResourceId();
+                                            networkInterfaceJsonFormatInstance.VirtualMachine = virtualMachineInstance;
+                                            
+                                            JToken idValue = virtualMachineValue["id"];
+                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                            {
+                                                string idInstance = ((string)idValue);
+                                                virtualMachineInstance.Id = idInstance;
+                                            }
+                                        }
+                                        
+                                        JToken networkSecurityGroupValue = propertiesValue["networkSecurityGroup"];
+                                        if (networkSecurityGroupValue != null && networkSecurityGroupValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceId networkSecurityGroupInstance = new ResourceId();
+                                            networkInterfaceJsonFormatInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
+                                            
+                                            JToken idValue2 = networkSecurityGroupValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            {
+                                                string idInstance2 = ((string)idValue2);
+                                                networkSecurityGroupInstance.Id = idInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken ipConfigurationsArray = propertiesValue["ipConfigurations"];
+                                        if (ipConfigurationsArray != null && ipConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken ipConfigurationsValue in ((JArray)ipConfigurationsArray))
+                                            {
+                                                NetworkInterfaceIpConfiguration networkInterfaceIpConfigurationJsonFormatInstance = new NetworkInterfaceIpConfiguration();
+                                                networkInterfaceJsonFormatInstance.IpConfigurations.Add(networkInterfaceIpConfigurationJsonFormatInstance);
+                                                
+                                                JToken propertiesValue2 = ipConfigurationsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JToken privateIPAddressValue = propertiesValue2["privateIPAddress"];
+                                                    if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAddressInstance = ((string)privateIPAddressValue);
+                                                        networkInterfaceIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                    }
+                                                    
+                                                    JToken privateIPAllocationMethodValue = propertiesValue2["privateIPAllocationMethod"];
+                                                    if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
+                                                        networkInterfaceIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                    }
+                                                    
+                                                    JToken subnetValue = propertiesValue2["subnet"];
+                                                    if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId subnetInstance = new ResourceId();
+                                                        networkInterfaceIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                        
+                                                        JToken idValue3 = subnetValue["id"];
+                                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance3 = ((string)idValue3);
+                                                            subnetInstance.Id = idInstance3;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken publicIPAddressValue = propertiesValue2["publicIPAddress"];
+                                                    if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId publicIPAddressInstance = new ResourceId();
+                                                        networkInterfaceIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                        
+                                                        JToken idValue4 = publicIPAddressValue["id"];
+                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance4 = ((string)idValue4);
+                                                            publicIPAddressInstance.Id = idInstance4;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken loadBalancerBackendAddressPoolsArray = propertiesValue2["loadBalancerBackendAddressPools"];
+                                                    if (loadBalancerBackendAddressPoolsArray != null && loadBalancerBackendAddressPoolsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken loadBalancerBackendAddressPoolsValue in ((JArray)loadBalancerBackendAddressPoolsArray))
+                                                        {
+                                                            ResourceId resourceIdInstance = new ResourceId();
+                                                            networkInterfaceIpConfigurationJsonFormatInstance.LoadBalancerBackendAddressPools.Add(resourceIdInstance);
+                                                            
+                                                            JToken idValue5 = loadBalancerBackendAddressPoolsValue["id"];
+                                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance5 = ((string)idValue5);
+                                                                resourceIdInstance.Id = idInstance5;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken loadBalancerInboundNatRulesArray = propertiesValue2["loadBalancerInboundNatRules"];
+                                                    if (loadBalancerInboundNatRulesArray != null && loadBalancerInboundNatRulesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken loadBalancerInboundNatRulesValue in ((JArray)loadBalancerInboundNatRulesArray))
+                                                        {
+                                                            ResourceId resourceIdInstance2 = new ResourceId();
+                                                            networkInterfaceIpConfigurationJsonFormatInstance.LoadBalancerInboundNatRules.Add(resourceIdInstance2);
+                                                            
+                                                            JToken idValue6 = loadBalancerInboundNatRulesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance6 = ((string)idValue6);
+                                                                resourceIdInstance2.Id = idInstance6;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                                        networkInterfaceIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue = ipConfigurationsValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance = ((string)nameValue);
+                                                    networkInterfaceIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken etagValue = ipConfigurationsValue["etag"];
+                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance = ((string)etagValue);
+                                                    networkInterfaceIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                                }
+                                                
+                                                JToken idValue7 = ipConfigurationsValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    networkInterfaceIpConfigurationJsonFormatInstance.Id = idInstance7;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken dnsSettingsValue = propertiesValue["dnsSettings"];
+                                        if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
+                                        {
+                                            NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
+                                            networkInterfaceJsonFormatInstance.DnsSettings = dnsSettingsInstance;
+                                            
+                                            JToken dnsServersArray = dnsSettingsValue["dnsServers"];
+                                            if (dnsServersArray != null && dnsServersArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dnsServersValue in ((JArray)dnsServersArray))
+                                                {
+                                                    dnsSettingsInstance.DnsServers.Add(((string)dnsServersValue));
+                                                }
+                                            }
+                                            
+                                            JToken appliedDnsServersArray = dnsSettingsValue["appliedDnsServers"];
+                                            if (appliedDnsServersArray != null && appliedDnsServersArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken appliedDnsServersValue in ((JArray)appliedDnsServersArray))
+                                                {
+                                                    dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
+                                                }
+                                            }
+                                            
+                                            JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                            if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                                dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                            }
+                                            
+                                            JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                            if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                            {
+                                                string internalFqdnInstance = ((string)internalFqdnValue);
+                                                dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
+                                            }
+                                        }
+                                        
+                                        JToken macAddressValue = propertiesValue["macAddress"];
+                                        if (macAddressValue != null && macAddressValue.Type != JTokenType.Null)
+                                        {
+                                            string macAddressInstance = ((string)macAddressValue);
+                                            networkInterfaceJsonFormatInstance.MacAddress = macAddressInstance;
+                                        }
+                                        
+                                        JToken primaryValue = propertiesValue["primary"];
+                                        if (primaryValue != null && primaryValue.Type != JTokenType.Null)
+                                        {
+                                            bool primaryInstance = ((bool)primaryValue);
+                                            networkInterfaceJsonFormatInstance.Primary = primaryInstance;
+                                        }
+                                        
+                                        JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                        if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                        {
+                                            bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                            networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            networkInterfaceJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
+                                        JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                            networkInterfaceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken etagValue2 = valueValue["etag"];
+                                    if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance2 = ((string)etagValue2);
+                                        networkInterfaceJsonFormatInstance.Etag = etagInstance2;
+                                    }
+                                    
+                                    JToken idValue8 = valueValue["id"];
+                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    {
+                                        string idInstance8 = ((string)idValue8);
+                                        networkInterfaceJsonFormatInstance.Id = idInstance8;
+                                    }
+                                    
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        networkInterfaceJsonFormatInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        networkInterfaceJsonFormatInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        networkInterfaceJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            networkInterfaceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
     }
 }
