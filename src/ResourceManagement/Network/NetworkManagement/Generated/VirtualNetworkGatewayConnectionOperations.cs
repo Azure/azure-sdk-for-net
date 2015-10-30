@@ -283,6 +283,17 @@ namespace Microsoft.Azure.Management.Network
                     
                     virtualNetworkGateway1Value["enableBgp"] = parameters.VirtualNetworkGateway1.EnableBgp;
                     
+                    if (parameters.VirtualNetworkGateway1.GatewayDefaultSite != null)
+                    {
+                        JObject gatewayDefaultSiteValue = new JObject();
+                        virtualNetworkGateway1Value["gatewayDefaultSite"] = gatewayDefaultSiteValue;
+                        
+                        if (parameters.VirtualNetworkGateway1.GatewayDefaultSite.Id != null)
+                        {
+                            gatewayDefaultSiteValue["id"] = parameters.VirtualNetworkGateway1.GatewayDefaultSite.Id;
+                        }
+                    }
+                    
                     if (parameters.VirtualNetworkGateway1.ProvisioningState != null)
                     {
                         virtualNetworkGateway1Value["provisioningState"] = parameters.VirtualNetworkGateway1.ProvisioningState;
@@ -410,6 +421,17 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     virtualNetworkGateway2Value["enableBgp"] = parameters.VirtualNetworkGateway2.EnableBgp;
+                    
+                    if (parameters.VirtualNetworkGateway2.GatewayDefaultSite != null)
+                    {
+                        JObject gatewayDefaultSiteValue2 = new JObject();
+                        virtualNetworkGateway2Value["gatewayDefaultSite"] = gatewayDefaultSiteValue2;
+                        
+                        if (parameters.VirtualNetworkGateway2.GatewayDefaultSite.Id != null)
+                        {
+                            gatewayDefaultSiteValue2["id"] = parameters.VirtualNetworkGateway2.GatewayDefaultSite.Id;
+                        }
+                    }
                     
                     if (parameters.VirtualNetworkGateway2.ProvisioningState != null)
                     {
@@ -541,6 +563,15 @@ namespace Microsoft.Azure.Management.Network
                 {
                     propertiesValue["sharedKey"] = parameters.SharedKey;
                 }
+                
+                if (parameters.ConnectionStatus != null)
+                {
+                    propertiesValue["connectionStatus"] = parameters.ConnectionStatus;
+                }
+                
+                propertiesValue["egressBytesTransferred"] = parameters.EgressBytesTransferred;
+                
+                propertiesValue["ingressBytesTransferred"] = parameters.IngressBytesTransferred;
                 
                 if (parameters.Peer != null)
                 {
@@ -756,6 +787,20 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway1Instance.EnableBgp = enableBgpInstance;
                                     }
                                     
+                                    JToken gatewayDefaultSiteValue3 = virtualNetworkGateway1Value2["gatewayDefaultSite"];
+                                    if (gatewayDefaultSiteValue3 != null && gatewayDefaultSiteValue3.Type != JTokenType.Null)
+                                    {
+                                        ResourceId gatewayDefaultSiteInstance = new ResourceId();
+                                        virtualNetworkGateway1Instance.GatewayDefaultSite = gatewayDefaultSiteInstance;
+                                        
+                                        JToken idValue4 = gatewayDefaultSiteValue3["id"];
+                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                        {
+                                            string idInstance4 = ((string)idValue4);
+                                            gatewayDefaultSiteInstance.Id = idInstance4;
+                                        }
+                                    }
+                                    
                                     JToken provisioningStateValue2 = virtualNetworkGateway1Value2["provisioningState"];
                                     if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                     {
@@ -777,11 +822,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway1Instance.Etag = etagInstance2;
                                     }
                                     
-                                    JToken idValue4 = virtualNetworkGateway1Value2["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue5 = virtualNetworkGateway1Value2["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualNetworkGateway1Instance.Id = idInstance4;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualNetworkGateway1Instance.Id = idInstance5;
                                     }
                                     
                                     JToken nameValue2 = virtualNetworkGateway1Value2["name"];
@@ -851,11 +896,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId subnetInstance2 = new ResourceId();
                                                 virtualNetworkGatewayIpConfigurationInstance2.Subnet = subnetInstance2;
                                                 
-                                                JToken idValue5 = subnetValue4["id"];
-                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                JToken idValue6 = subnetValue4["id"];
+                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance5 = ((string)idValue5);
-                                                    subnetInstance2.Id = idInstance5;
+                                                    string idInstance6 = ((string)idValue6);
+                                                    subnetInstance2.Id = idInstance6;
                                                 }
                                             }
                                             
@@ -865,11 +910,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId publicIPAddressInstance2 = new ResourceId();
                                                 virtualNetworkGatewayIpConfigurationInstance2.PublicIpAddress = publicIPAddressInstance2;
                                                 
-                                                JToken idValue6 = publicIPAddressValue4["id"];
-                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                JToken idValue7 = publicIPAddressValue4["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance6 = ((string)idValue6);
-                                                    publicIPAddressInstance2.Id = idInstance6;
+                                                    string idInstance7 = ((string)idValue7);
+                                                    publicIPAddressInstance2.Id = idInstance7;
                                                 }
                                             }
                                             
@@ -894,11 +939,11 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGatewayIpConfigurationInstance2.Etag = etagInstance3;
                                             }
                                             
-                                            JToken idValue7 = ipConfigurationsValue2["id"];
-                                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                            JToken idValue8 = ipConfigurationsValue2["id"];
+                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                             {
-                                                string idInstance7 = ((string)idValue7);
-                                                virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance7;
+                                                string idInstance8 = ((string)idValue8);
+                                                virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance8;
                                             }
                                         }
                                     }
@@ -924,6 +969,20 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway2Instance.EnableBgp = enableBgpInstance2;
                                     }
                                     
+                                    JToken gatewayDefaultSiteValue4 = virtualNetworkGateway2Value2["gatewayDefaultSite"];
+                                    if (gatewayDefaultSiteValue4 != null && gatewayDefaultSiteValue4.Type != JTokenType.Null)
+                                    {
+                                        ResourceId gatewayDefaultSiteInstance2 = new ResourceId();
+                                        virtualNetworkGateway2Instance.GatewayDefaultSite = gatewayDefaultSiteInstance2;
+                                        
+                                        JToken idValue9 = gatewayDefaultSiteValue4["id"];
+                                        if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                        {
+                                            string idInstance9 = ((string)idValue9);
+                                            gatewayDefaultSiteInstance2.Id = idInstance9;
+                                        }
+                                    }
+                                    
                                     JToken provisioningStateValue4 = virtualNetworkGateway2Value2["provisioningState"];
                                     if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                     {
@@ -945,11 +1004,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway2Instance.Etag = etagInstance4;
                                     }
                                     
-                                    JToken idValue8 = virtualNetworkGateway2Value2["id"];
-                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    JToken idValue10 = virtualNetworkGateway2Value2["id"];
+                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
                                     {
-                                        string idInstance8 = ((string)idValue8);
-                                        virtualNetworkGateway2Instance.Id = idInstance8;
+                                        string idInstance10 = ((string)idValue10);
+                                        virtualNetworkGateway2Instance.Id = idInstance10;
                                     }
                                     
                                     JToken nameValue4 = virtualNetworkGateway2Value2["name"];
@@ -1035,11 +1094,11 @@ namespace Microsoft.Azure.Management.Network
                                         localNetworkGateway2Instance.Etag = etagInstance5;
                                     }
                                     
-                                    JToken idValue9 = localNetworkGateway2Value2["id"];
-                                    if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                    JToken idValue11 = localNetworkGateway2Value2["id"];
+                                    if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                     {
-                                        string idInstance9 = ((string)idValue9);
-                                        localNetworkGateway2Instance.Id = idInstance9;
+                                        string idInstance11 = ((string)idValue11);
+                                        localNetworkGateway2Instance.Id = idInstance11;
                                     }
                                     
                                     JToken nameValue5 = localNetworkGateway2Value2["name"];
@@ -1096,17 +1155,38 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayConnectionInstance.SharedKey = sharedKeyInstance;
                                 }
                                 
+                                JToken connectionStatusValue = propertiesValue2["connectionStatus"];
+                                if (connectionStatusValue != null && connectionStatusValue.Type != JTokenType.Null)
+                                {
+                                    string connectionStatusInstance = ((string)connectionStatusValue);
+                                    virtualNetworkGatewayConnectionInstance.ConnectionStatus = connectionStatusInstance;
+                                }
+                                
+                                JToken egressBytesTransferredValue = propertiesValue2["egressBytesTransferred"];
+                                if (egressBytesTransferredValue != null && egressBytesTransferredValue.Type != JTokenType.Null)
+                                {
+                                    ulong egressBytesTransferredInstance = ((ulong)egressBytesTransferredValue);
+                                    virtualNetworkGatewayConnectionInstance.EgressBytesTransferred = egressBytesTransferredInstance;
+                                }
+                                
+                                JToken ingressBytesTransferredValue = propertiesValue2["ingressBytesTransferred"];
+                                if (ingressBytesTransferredValue != null && ingressBytesTransferredValue.Type != JTokenType.Null)
+                                {
+                                    ulong ingressBytesTransferredInstance = ((ulong)ingressBytesTransferredValue);
+                                    virtualNetworkGatewayConnectionInstance.IngressBytesTransferred = ingressBytesTransferredInstance;
+                                }
+                                
                                 JToken peerValue2 = propertiesValue2["peer"];
                                 if (peerValue2 != null && peerValue2.Type != JTokenType.Null)
                                 {
                                     ResourceId peerInstance = new ResourceId();
                                     virtualNetworkGatewayConnectionInstance.Peer = peerInstance;
                                     
-                                    JToken idValue10 = peerValue2["id"];
-                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                    JToken idValue12 = peerValue2["id"];
+                                    if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                     {
-                                        string idInstance10 = ((string)idValue10);
-                                        peerInstance.Id = idInstance10;
+                                        string idInstance12 = ((string)idValue12);
+                                        peerInstance.Id = idInstance12;
                                     }
                                 }
                                 
@@ -1132,11 +1212,11 @@ namespace Microsoft.Azure.Management.Network
                                 virtualNetworkGatewayConnectionInstance.Etag = etagInstance6;
                             }
                             
-                            JToken idValue11 = responseDoc["id"];
-                            if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                            JToken idValue13 = responseDoc["id"];
+                            if (idValue13 != null && idValue13.Type != JTokenType.Null)
                             {
-                                string idInstance11 = ((string)idValue11);
-                                virtualNetworkGatewayConnectionInstance.Id = idInstance11;
+                                string idInstance13 = ((string)idValue13);
+                                virtualNetworkGatewayConnectionInstance.Id = idInstance13;
                             }
                             
                             JToken nameValue6 = responseDoc["name"];
@@ -1543,10 +1623,7 @@ namespace Microsoft.Azure.Management.Network
                 JObject connectionResetSharedKeyJsonFormatValue = new JObject();
                 requestDoc = connectionResetSharedKeyJsonFormatValue;
                 
-                JObject propertiesValue = new JObject();
-                connectionResetSharedKeyJsonFormatValue["properties"] = propertiesValue;
-                
-                propertiesValue["keyLength"] = parameters.KeyLength;
+                connectionResetSharedKeyJsonFormatValue["keyLength"] = parameters.KeyLength;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -1597,15 +1674,11 @@ namespace Microsoft.Azure.Management.Network
                             ConnectionResetSharedKey connectionResetSharedKeyInstance = new ConnectionResetSharedKey();
                             result.ConnectionResetSharedKey = connectionResetSharedKeyInstance;
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken keyLengthValue = responseDoc["keyLength"];
+                            if (keyLengthValue != null && keyLengthValue.Type != JTokenType.Null)
                             {
-                                JToken keyLengthValue = propertiesValue2["keyLength"];
-                                if (keyLengthValue != null && keyLengthValue.Type != JTokenType.Null)
-                                {
-                                    uint keyLengthInstance = ((uint)keyLengthValue);
-                                    connectionResetSharedKeyInstance.KeyLength = keyLengthInstance;
-                                }
+                                uint keyLengthInstance = ((uint)keyLengthValue);
+                                connectionResetSharedKeyInstance.KeyLength = keyLengthInstance;
                             }
                             
                             JToken errorValue = responseDoc["error"];
@@ -1820,12 +1893,9 @@ namespace Microsoft.Azure.Management.Network
                 JObject connectionSharedKeyJsonFormatValue = new JObject();
                 requestDoc = connectionSharedKeyJsonFormatValue;
                 
-                JObject propertiesValue = new JObject();
-                connectionSharedKeyJsonFormatValue["properties"] = propertiesValue;
-                
                 if (parameters.Value != null)
                 {
-                    propertiesValue["value"] = parameters.Value;
+                    connectionSharedKeyJsonFormatValue["value"] = parameters.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1877,15 +1947,11 @@ namespace Microsoft.Azure.Management.Network
                             ConnectionSharedKey connectionSharedKeyInstance = new ConnectionSharedKey();
                             result.ConnectionSharedKey = connectionSharedKeyInstance;
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
                             {
-                                JToken valueValue = propertiesValue2["value"];
-                                if (valueValue != null && valueValue.Type != JTokenType.Null)
-                                {
-                                    string valueInstance = ((string)valueValue);
-                                    connectionSharedKeyInstance.Value = valueInstance;
-                                }
+                                string valueInstance = ((string)valueValue);
+                                connectionSharedKeyInstance.Value = valueInstance;
                             }
                             
                             JToken errorValue = responseDoc["error"];
@@ -2388,6 +2454,20 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway1Instance.EnableBgp = enableBgpInstance;
                                     }
                                     
+                                    JToken gatewayDefaultSiteValue = virtualNetworkGateway1Value["gatewayDefaultSite"];
+                                    if (gatewayDefaultSiteValue != null && gatewayDefaultSiteValue.Type != JTokenType.Null)
+                                    {
+                                        ResourceId gatewayDefaultSiteInstance = new ResourceId();
+                                        virtualNetworkGateway1Instance.GatewayDefaultSite = gatewayDefaultSiteInstance;
+                                        
+                                        JToken idValue4 = gatewayDefaultSiteValue["id"];
+                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                        {
+                                            string idInstance4 = ((string)idValue4);
+                                            gatewayDefaultSiteInstance.Id = idInstance4;
+                                        }
+                                    }
+                                    
                                     JToken provisioningStateValue2 = virtualNetworkGateway1Value["provisioningState"];
                                     if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                     {
@@ -2409,11 +2489,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway1Instance.Etag = etagInstance2;
                                     }
                                     
-                                    JToken idValue4 = virtualNetworkGateway1Value["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue5 = virtualNetworkGateway1Value["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualNetworkGateway1Instance.Id = idInstance4;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualNetworkGateway1Instance.Id = idInstance5;
                                     }
                                     
                                     JToken nameValue2 = virtualNetworkGateway1Value["name"];
@@ -2483,11 +2563,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId subnetInstance2 = new ResourceId();
                                                 virtualNetworkGatewayIpConfigurationInstance2.Subnet = subnetInstance2;
                                                 
-                                                JToken idValue5 = subnetValue2["id"];
-                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                JToken idValue6 = subnetValue2["id"];
+                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance5 = ((string)idValue5);
-                                                    subnetInstance2.Id = idInstance5;
+                                                    string idInstance6 = ((string)idValue6);
+                                                    subnetInstance2.Id = idInstance6;
                                                 }
                                             }
                                             
@@ -2497,11 +2577,11 @@ namespace Microsoft.Azure.Management.Network
                                                 ResourceId publicIPAddressInstance2 = new ResourceId();
                                                 virtualNetworkGatewayIpConfigurationInstance2.PublicIpAddress = publicIPAddressInstance2;
                                                 
-                                                JToken idValue6 = publicIPAddressValue2["id"];
-                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                JToken idValue7 = publicIPAddressValue2["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance6 = ((string)idValue6);
-                                                    publicIPAddressInstance2.Id = idInstance6;
+                                                    string idInstance7 = ((string)idValue7);
+                                                    publicIPAddressInstance2.Id = idInstance7;
                                                 }
                                             }
                                             
@@ -2526,11 +2606,11 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGatewayIpConfigurationInstance2.Etag = etagInstance3;
                                             }
                                             
-                                            JToken idValue7 = ipConfigurationsValue2["id"];
-                                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                            JToken idValue8 = ipConfigurationsValue2["id"];
+                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                             {
-                                                string idInstance7 = ((string)idValue7);
-                                                virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance7;
+                                                string idInstance8 = ((string)idValue8);
+                                                virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance8;
                                             }
                                         }
                                     }
@@ -2556,6 +2636,20 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway2Instance.EnableBgp = enableBgpInstance2;
                                     }
                                     
+                                    JToken gatewayDefaultSiteValue2 = virtualNetworkGateway2Value["gatewayDefaultSite"];
+                                    if (gatewayDefaultSiteValue2 != null && gatewayDefaultSiteValue2.Type != JTokenType.Null)
+                                    {
+                                        ResourceId gatewayDefaultSiteInstance2 = new ResourceId();
+                                        virtualNetworkGateway2Instance.GatewayDefaultSite = gatewayDefaultSiteInstance2;
+                                        
+                                        JToken idValue9 = gatewayDefaultSiteValue2["id"];
+                                        if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                        {
+                                            string idInstance9 = ((string)idValue9);
+                                            gatewayDefaultSiteInstance2.Id = idInstance9;
+                                        }
+                                    }
+                                    
                                     JToken provisioningStateValue4 = virtualNetworkGateway2Value["provisioningState"];
                                     if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                     {
@@ -2577,11 +2671,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGateway2Instance.Etag = etagInstance4;
                                     }
                                     
-                                    JToken idValue8 = virtualNetworkGateway2Value["id"];
-                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    JToken idValue10 = virtualNetworkGateway2Value["id"];
+                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
                                     {
-                                        string idInstance8 = ((string)idValue8);
-                                        virtualNetworkGateway2Instance.Id = idInstance8;
+                                        string idInstance10 = ((string)idValue10);
+                                        virtualNetworkGateway2Instance.Id = idInstance10;
                                     }
                                     
                                     JToken nameValue4 = virtualNetworkGateway2Value["name"];
@@ -2667,11 +2761,11 @@ namespace Microsoft.Azure.Management.Network
                                         localNetworkGateway2Instance.Etag = etagInstance5;
                                     }
                                     
-                                    JToken idValue9 = localNetworkGateway2Value["id"];
-                                    if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                    JToken idValue11 = localNetworkGateway2Value["id"];
+                                    if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                     {
-                                        string idInstance9 = ((string)idValue9);
-                                        localNetworkGateway2Instance.Id = idInstance9;
+                                        string idInstance11 = ((string)idValue11);
+                                        localNetworkGateway2Instance.Id = idInstance11;
                                     }
                                     
                                     JToken nameValue5 = localNetworkGateway2Value["name"];
@@ -2728,17 +2822,38 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayConnectionInstance.SharedKey = sharedKeyInstance;
                                 }
                                 
+                                JToken connectionStatusValue = propertiesValue["connectionStatus"];
+                                if (connectionStatusValue != null && connectionStatusValue.Type != JTokenType.Null)
+                                {
+                                    string connectionStatusInstance = ((string)connectionStatusValue);
+                                    virtualNetworkGatewayConnectionInstance.ConnectionStatus = connectionStatusInstance;
+                                }
+                                
+                                JToken egressBytesTransferredValue = propertiesValue["egressBytesTransferred"];
+                                if (egressBytesTransferredValue != null && egressBytesTransferredValue.Type != JTokenType.Null)
+                                {
+                                    ulong egressBytesTransferredInstance = ((ulong)egressBytesTransferredValue);
+                                    virtualNetworkGatewayConnectionInstance.EgressBytesTransferred = egressBytesTransferredInstance;
+                                }
+                                
+                                JToken ingressBytesTransferredValue = propertiesValue["ingressBytesTransferred"];
+                                if (ingressBytesTransferredValue != null && ingressBytesTransferredValue.Type != JTokenType.Null)
+                                {
+                                    ulong ingressBytesTransferredInstance = ((ulong)ingressBytesTransferredValue);
+                                    virtualNetworkGatewayConnectionInstance.IngressBytesTransferred = ingressBytesTransferredInstance;
+                                }
+                                
                                 JToken peerValue = propertiesValue["peer"];
                                 if (peerValue != null && peerValue.Type != JTokenType.Null)
                                 {
                                     ResourceId peerInstance = new ResourceId();
                                     virtualNetworkGatewayConnectionInstance.Peer = peerInstance;
                                     
-                                    JToken idValue10 = peerValue["id"];
-                                    if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                    JToken idValue12 = peerValue["id"];
+                                    if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                     {
-                                        string idInstance10 = ((string)idValue10);
-                                        peerInstance.Id = idInstance10;
+                                        string idInstance12 = ((string)idValue12);
+                                        peerInstance.Id = idInstance12;
                                     }
                                 }
                                 
@@ -2764,11 +2879,11 @@ namespace Microsoft.Azure.Management.Network
                                 virtualNetworkGatewayConnectionInstance.Etag = etagInstance6;
                             }
                             
-                            JToken idValue11 = responseDoc["id"];
-                            if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                            JToken idValue13 = responseDoc["id"];
+                            if (idValue13 != null && idValue13.Type != JTokenType.Null)
                             {
-                                string idInstance11 = ((string)idValue11);
-                                virtualNetworkGatewayConnectionInstance.Id = idInstance11;
+                                string idInstance13 = ((string)idValue13);
+                                virtualNetworkGatewayConnectionInstance.Id = idInstance13;
                             }
                             
                             JToken nameValue6 = responseDoc["name"];
@@ -3239,6 +3354,20 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGateway1Instance.EnableBgp = enableBgpInstance;
                                             }
                                             
+                                            JToken gatewayDefaultSiteValue = virtualNetworkGateway1Value["gatewayDefaultSite"];
+                                            if (gatewayDefaultSiteValue != null && gatewayDefaultSiteValue.Type != JTokenType.Null)
+                                            {
+                                                ResourceId gatewayDefaultSiteInstance = new ResourceId();
+                                                virtualNetworkGateway1Instance.GatewayDefaultSite = gatewayDefaultSiteInstance;
+                                                
+                                                JToken idValue4 = gatewayDefaultSiteValue["id"];
+                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance4 = ((string)idValue4);
+                                                    gatewayDefaultSiteInstance.Id = idInstance4;
+                                                }
+                                            }
+                                            
                                             JToken provisioningStateValue2 = virtualNetworkGateway1Value["provisioningState"];
                                             if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                             {
@@ -3260,11 +3389,11 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGateway1Instance.Etag = etagInstance2;
                                             }
                                             
-                                            JToken idValue4 = virtualNetworkGateway1Value["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue5 = virtualNetworkGateway1Value["id"];
+                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                virtualNetworkGateway1Instance.Id = idInstance4;
+                                                string idInstance5 = ((string)idValue5);
+                                                virtualNetworkGateway1Instance.Id = idInstance5;
                                             }
                                             
                                             JToken nameValue2 = virtualNetworkGateway1Value["name"];
@@ -3334,11 +3463,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId subnetInstance2 = new ResourceId();
                                                         virtualNetworkGatewayIpConfigurationInstance2.Subnet = subnetInstance2;
                                                         
-                                                        JToken idValue5 = subnetValue2["id"];
-                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                        JToken idValue6 = subnetValue2["id"];
+                                                        if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance5 = ((string)idValue5);
-                                                            subnetInstance2.Id = idInstance5;
+                                                            string idInstance6 = ((string)idValue6);
+                                                            subnetInstance2.Id = idInstance6;
                                                         }
                                                     }
                                                     
@@ -3348,11 +3477,11 @@ namespace Microsoft.Azure.Management.Network
                                                         ResourceId publicIPAddressInstance2 = new ResourceId();
                                                         virtualNetworkGatewayIpConfigurationInstance2.PublicIpAddress = publicIPAddressInstance2;
                                                         
-                                                        JToken idValue6 = publicIPAddressValue2["id"];
-                                                        if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                        JToken idValue7 = publicIPAddressValue2["id"];
+                                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance6 = ((string)idValue6);
-                                                            publicIPAddressInstance2.Id = idInstance6;
+                                                            string idInstance7 = ((string)idValue7);
+                                                            publicIPAddressInstance2.Id = idInstance7;
                                                         }
                                                     }
                                                     
@@ -3377,11 +3506,11 @@ namespace Microsoft.Azure.Management.Network
                                                         virtualNetworkGatewayIpConfigurationInstance2.Etag = etagInstance3;
                                                     }
                                                     
-                                                    JToken idValue7 = ipConfigurationsValue2["id"];
-                                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                    JToken idValue8 = ipConfigurationsValue2["id"];
+                                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance7 = ((string)idValue7);
-                                                        virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance7;
+                                                        string idInstance8 = ((string)idValue8);
+                                                        virtualNetworkGatewayIpConfigurationInstance2.Id = idInstance8;
                                                     }
                                                 }
                                             }
@@ -3407,6 +3536,20 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGateway2Instance.EnableBgp = enableBgpInstance2;
                                             }
                                             
+                                            JToken gatewayDefaultSiteValue2 = virtualNetworkGateway2Value["gatewayDefaultSite"];
+                                            if (gatewayDefaultSiteValue2 != null && gatewayDefaultSiteValue2.Type != JTokenType.Null)
+                                            {
+                                                ResourceId gatewayDefaultSiteInstance2 = new ResourceId();
+                                                virtualNetworkGateway2Instance.GatewayDefaultSite = gatewayDefaultSiteInstance2;
+                                                
+                                                JToken idValue9 = gatewayDefaultSiteValue2["id"];
+                                                if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance9 = ((string)idValue9);
+                                                    gatewayDefaultSiteInstance2.Id = idInstance9;
+                                                }
+                                            }
+                                            
                                             JToken provisioningStateValue4 = virtualNetworkGateway2Value["provisioningState"];
                                             if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                             {
@@ -3428,11 +3571,11 @@ namespace Microsoft.Azure.Management.Network
                                                 virtualNetworkGateway2Instance.Etag = etagInstance4;
                                             }
                                             
-                                            JToken idValue8 = virtualNetworkGateway2Value["id"];
-                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                            JToken idValue10 = virtualNetworkGateway2Value["id"];
+                                            if (idValue10 != null && idValue10.Type != JTokenType.Null)
                                             {
-                                                string idInstance8 = ((string)idValue8);
-                                                virtualNetworkGateway2Instance.Id = idInstance8;
+                                                string idInstance10 = ((string)idValue10);
+                                                virtualNetworkGateway2Instance.Id = idInstance10;
                                             }
                                             
                                             JToken nameValue4 = virtualNetworkGateway2Value["name"];
@@ -3518,11 +3661,11 @@ namespace Microsoft.Azure.Management.Network
                                                 localNetworkGateway2Instance.Etag = etagInstance5;
                                             }
                                             
-                                            JToken idValue9 = localNetworkGateway2Value["id"];
-                                            if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                            JToken idValue11 = localNetworkGateway2Value["id"];
+                                            if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                             {
-                                                string idInstance9 = ((string)idValue9);
-                                                localNetworkGateway2Instance.Id = idInstance9;
+                                                string idInstance11 = ((string)idValue11);
+                                                localNetworkGateway2Instance.Id = idInstance11;
                                             }
                                             
                                             JToken nameValue5 = localNetworkGateway2Value["name"];
@@ -3579,17 +3722,38 @@ namespace Microsoft.Azure.Management.Network
                                             virtualNetworkGatewayConnectionJsonFormatInstance.SharedKey = sharedKeyInstance;
                                         }
                                         
+                                        JToken connectionStatusValue = propertiesValue["connectionStatus"];
+                                        if (connectionStatusValue != null && connectionStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string connectionStatusInstance = ((string)connectionStatusValue);
+                                            virtualNetworkGatewayConnectionJsonFormatInstance.ConnectionStatus = connectionStatusInstance;
+                                        }
+                                        
+                                        JToken egressBytesTransferredValue = propertiesValue["egressBytesTransferred"];
+                                        if (egressBytesTransferredValue != null && egressBytesTransferredValue.Type != JTokenType.Null)
+                                        {
+                                            ulong egressBytesTransferredInstance = ((ulong)egressBytesTransferredValue);
+                                            virtualNetworkGatewayConnectionJsonFormatInstance.EgressBytesTransferred = egressBytesTransferredInstance;
+                                        }
+                                        
+                                        JToken ingressBytesTransferredValue = propertiesValue["ingressBytesTransferred"];
+                                        if (ingressBytesTransferredValue != null && ingressBytesTransferredValue.Type != JTokenType.Null)
+                                        {
+                                            ulong ingressBytesTransferredInstance = ((ulong)ingressBytesTransferredValue);
+                                            virtualNetworkGatewayConnectionJsonFormatInstance.IngressBytesTransferred = ingressBytesTransferredInstance;
+                                        }
+                                        
                                         JToken peerValue = propertiesValue["peer"];
                                         if (peerValue != null && peerValue.Type != JTokenType.Null)
                                         {
                                             ResourceId peerInstance = new ResourceId();
                                             virtualNetworkGatewayConnectionJsonFormatInstance.Peer = peerInstance;
                                             
-                                            JToken idValue10 = peerValue["id"];
-                                            if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                            JToken idValue12 = peerValue["id"];
+                                            if (idValue12 != null && idValue12.Type != JTokenType.Null)
                                             {
-                                                string idInstance10 = ((string)idValue10);
-                                                peerInstance.Id = idInstance10;
+                                                string idInstance12 = ((string)idValue12);
+                                                peerInstance.Id = idInstance12;
                                             }
                                         }
                                         
@@ -3615,11 +3779,11 @@ namespace Microsoft.Azure.Management.Network
                                         virtualNetworkGatewayConnectionJsonFormatInstance.Etag = etagInstance6;
                                     }
                                     
-                                    JToken idValue11 = valueValue["id"];
-                                    if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                    JToken idValue13 = valueValue["id"];
+                                    if (idValue13 != null && idValue13.Type != JTokenType.Null)
                                     {
-                                        string idInstance11 = ((string)idValue11);
-                                        virtualNetworkGatewayConnectionJsonFormatInstance.Id = idInstance11;
+                                        string idInstance13 = ((string)idValue13);
+                                        virtualNetworkGatewayConnectionJsonFormatInstance.Id = idInstance13;
                                     }
                                     
                                     JToken nameValue6 = valueValue["name"];
