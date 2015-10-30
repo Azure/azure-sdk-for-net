@@ -17,30 +17,27 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The List Virtual Machine operation response.
     /// </summary>
-    public partial class VirtualMachineScaleSetListResult
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetListResult
-        /// class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public VirtualMachineScaleSetListResult() { }
+        public SubResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetListResult
-        /// class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public VirtualMachineScaleSetListResult(IList<VirtualMachineScaleSet> value = default(IList<VirtualMachineScaleSet>))
+        public SubResource(string id = default(string))
         {
-            Value = value;
+            Id = id;
         }
 
         /// <summary>
-        /// Gets or sets the list of virtual machine scale sets.
+        /// Resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualMachineScaleSet> Value { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
