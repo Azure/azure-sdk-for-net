@@ -35,5 +35,16 @@ namespace Microsoft.Azure.Common.Authentication
         /// <returns>An access token.</returns>
         IAccessToken GetAccessToken(AdalConfiguration config, ShowDialog promptBehavior, string userId,
             SecureString password, AzureAccount.AccountType credentialType);
+
+        /// <summary>
+        /// Get a new authentication token for the given environment
+        /// </summary>
+        /// <param name="config">The ADAL Configuration</param>
+        /// <param name="principalId">The id for the given principal</param>
+        /// <param name="certificateThumbprint">The certificate thumbprint for this user</param>
+        /// <param name="credentialType">The account type</param>
+        /// <returns>An access token, which can be renewed</returns>
+        IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string principalId, string certificateThumbprint, 
+            AzureAccount.AccountType credentialType);
     }
 }
