@@ -53,5 +53,16 @@ namespace Microsoft.Azure.Common.Authentication
                     throw new ArgumentException(Resources.UnknownCredentialType, "credentialType");
             }
         }
-   }
+
+        public IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string clientId, string certificate, AzureAccount.AccountType credentialType)
+        {
+            switch (credentialType)
+            {
+                case AzureAccount.AccountType.ServicePrincipal:
+                    return servicePrincipalTokenProvider.GetAccessTokenWithCertificate(config, clientId, certificate, credentialType);
+                default:
+                    throw new ArgumentException(string.Format(Resources.UnsupportedCredentialType, credentialType), "credentialType");
+            }
+        }
+    }
 }
