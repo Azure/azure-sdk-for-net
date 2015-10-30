@@ -112,6 +112,7 @@
     <Compile Include="Generated\Models\ExpressRouteCircuitsArpTableListResponse.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitServiceProviderProperties.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitSku.cs" />
+	<Compile Include="Generated\Models\ExpressRouteCircuitBillingType.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitSkuFamily.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitSkuTier.cs" />
     <Compile Include="Generated\Models\ExpressRouteCircuitsRoutesTableListResponse.cs" />

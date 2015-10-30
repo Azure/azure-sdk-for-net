@@ -27,49 +27,36 @@ using Microsoft.Azure.Management.HDInsight.Models;
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The cluster long running operation response.
+    /// The azure async operation response.
     /// </summary>
-    public partial class HDInsightLongRunningOperationResponse : AzureOperationResponse
+    public partial class OperationResource : AzureOperationResponse
     {
-        private ErrorInfo _error;
+        private ErrorInfo _errorInfo;
         
         /// <summary>
-        /// Optional. Gets or sets the operation error if any occurred
+        /// Optional. Gets or sets the operation error information.
         /// </summary>
-        public ErrorInfo Error
+        public ErrorInfo ErrorInfo
         {
-            get { return this._error; }
-            set { this._error = value; }
+            get { return this._errorInfo; }
+            set { this._errorInfo = value; }
         }
         
-        private int _retryAfter;
+        private AsyncOperationState _state;
         
         /// <summary>
-        /// Optional. Gets or sets the recommended retry interval for the Get
-        /// Azure-AsyncOperation call
+        /// Optional. Gets or sets the async operation state.
         /// </summary>
-        public int RetryAfter
+        public AsyncOperationState State
         {
-            get { return this._retryAfter; }
-            set { this._retryAfter = value; }
-        }
-        
-        private OperationStatus _status;
-        
-        /// <summary>
-        /// Optional. Gets the status of the create request.
-        /// </summary>
-        public OperationStatus Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// HDInsightLongRunningOperationResponse class.
+        /// Initializes a new instance of the OperationResource class.
         /// </summary>
-        public HDInsightLongRunningOperationResponse()
+        public OperationResource()
         {
         }
     }

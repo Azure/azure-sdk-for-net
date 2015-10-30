@@ -64,6 +64,17 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
             set { this._primaryKey = value; }
         }
         
+        private string _productIdPath;
+        
+        /// <summary>
+        /// Optional. Gets or sets Product identifier path: /products/{pid}
+        /// </summary>
+        public string ProductIdPath
+        {
+            get { return this._productIdPath; }
+            set { this._productIdPath = value; }
+        }
+        
         private string _secondaryKey;
         
         /// <summary>
@@ -97,6 +108,17 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         {
             get { return this._stateComment; }
             set { this._stateComment = value; }
+        }
+        
+        private string _userIdPath;
+        
+        /// <summary>
+        /// Optional. Gets or sets User identifier path: /users/{uid}
+        /// </summary>
+        public string UserIdPath
+        {
+            get { return this._userIdPath; }
+            set { this._userIdPath = value; }
         }
         
         /// <summary>

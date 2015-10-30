@@ -1,13 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/nonexistentrg/providers/Microsoft.HDInsight/clusters?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL25vbmV4aXN0ZW50cmcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnM/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourceGroups/nonexistentrg/providers/Microsoft.HDInsight/clusters?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjQzYjY3ZDQtNjBjYS00ZGZkLWE1NTYtMjE2ZWUwNmY3N2ExL3Jlc291cmNlR3JvdXBzL25vbmV4aXN0ZW50cmcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnM/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+          "ARM",
+          "SDK",
+          "v1.0.7-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'nonexistentrg' could not be found.\"\r\n  }\r\n}",
@@ -28,13 +30,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "001c72b0-6587-46b8-8db5-b2a57e466302"
+          "e03dde72-208c-42cf-bddc-fec93e678799"
         ],
         "x-ms-correlation-request-id": [
-          "001c72b0-6587-46b8-8db5-b2a57e466302"
+          "e03dde72-208c-42cf-bddc-fec93e678799"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150527T033834Z:001c72b0-6587-46b8-8db5-b2a57e466302"
+          "WESTUS:20151006T111629Z:e03dde72-208c-42cf-bddc-fec93e678799"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,7 +45,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 May 2015 03:38:34 GMT"
+          "Tue, 06 Oct 2015 11:16:29 GMT"
         ]
       },
       "StatusCode": 404
@@ -51,6 +53,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3312c132-fc40-493f-9c97-82d80256a313"
+    "SubscriptionId": "243b67d4-60ca-4dfd-a556-216ee06f77a1"
   }
 }

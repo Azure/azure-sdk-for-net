@@ -25,13 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Know sku family values for cache.
+    /// Sku family values for cache.
     /// </summary>
     public static partial class SkuFamily
     {
         /// <summary>
-        /// C family caches (250MB, 1GB, 2.5GB, 6GB, 13GB, 26GB, 53GB) .
+        /// C family caches (250MB, 1GB, 2.5GB, 6GB, 13GB, 26GB, 53GB).
         /// </summary>
         public const string C = "C";
+        
+        /// <summary>
+        /// P family caches (6GB, 13GB, 26GB, 53GB).
+        /// </summary>
+        public const string P = "P";
     }
 }

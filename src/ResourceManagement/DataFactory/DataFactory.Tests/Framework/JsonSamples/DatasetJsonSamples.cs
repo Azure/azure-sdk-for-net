@@ -387,5 +387,48 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureDataLakeStoreDataset = @"
+{
+    name: ""Table-AzureDataLakeStore"",
+    properties:
+    {
+        type: ""AzureDataLakeStore"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {            
+            folderPath: ""data/{Year}/{Month}/{Day}/{Hour}"",
+            partitionedBy: 
+            [
+                { name: ""Year"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy"" } },
+                { name: ""Month"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""MM"" } }, 
+                { name: ""Day"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""dd"" } }, 
+                { name: ""Hour"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""hh"" } } 
+            ],
+            fileName: ""itemname"",
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8""
+            },
+            compression:
+            {
+                type: ""Deflate"",
+                level: ""Fastest""
+            }
+        },
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}
+";
     }
 }

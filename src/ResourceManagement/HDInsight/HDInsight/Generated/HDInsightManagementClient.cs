@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -277,9 +276,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> GetLongRunningOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<OperationResource> GetLongRunningOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -334,7 +333,7 @@ namespace Microsoft.Azure.Management.HDInsight
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -346,13 +345,13 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
                     
                     // Create Result
-                    HDInsightLongRunningOperationResponse result = null;
+                    OperationResource result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HDInsightLongRunningOperationResponse();
+                        result = new OperationResource();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -361,11 +360,18 @@ namespace Microsoft.Azure.Management.HDInsight
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                AsyncOperationState statusInstance = ((AsyncOperationState)Enum.Parse(typeof(AsyncOperationState), ((string)statusValue), true));
+                                result.State = statusInstance;
+                            }
+                            
                             JToken errorValue = responseDoc["error"];
                             if (errorValue != null && errorValue.Type != JTokenType.Null)
                             {
                                 ErrorInfo errorInstance = new ErrorInfo();
-                                result.Error = errorInstance;
+                                result.ErrorInfo = errorInstance;
                                 
                                 JToken codeValue = errorValue["code"];
                                 if (codeValue != null && codeValue.Type != JTokenType.Null)
@@ -385,21 +391,9 @@ namespace Microsoft.Azure.Management.HDInsight
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("RetryAfter"))
-                    {
-                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("RetryAfter").FirstOrDefault(), CultureInfo.InvariantCulture);
-                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    if (statusCode == HttpStatusCode.Accepted)
-                    {
-                        result.Status = OperationStatus.InProgress;
-                    }
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)

@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Sql.Responses;
 
-namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
+namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Time period interval.
+    /// Represents all the operations for determining the set of capabilites
+    /// available in a specified region.
     /// </summary>
-    public enum PeriodIntervalContract
+    public partial interface ICapabilitiesOperations
     {
         /// <summary>
-        /// A period starting with start time and ending at the same time next
-        /// day.
+        /// Returns information about the Azure SQL capabilities available for
+        /// the specified region.
         /// </summary>
-        Day = 1,
-        
-        /// <summary>
-        /// A period starting with start time and ending at the same time on
-        /// the same day of next month.
-        /// </summary>
-        Month = 2,
-        
-        /// <summary>
-        /// A period starting with start time and ending at the same time on
-        /// the same day and month of the next year.
-        /// </summary>
-        Year = 3,
+        /// <param name='locationName'>
+        /// The name of the region for which the Azure SQL capabilities are
+        /// retrieved.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql capabilities request
+        /// </returns>
+        Task<LocationCapabilitiesGetResponse> GetAsync(string locationName, CancellationToken cancellationToken);
     }
 }

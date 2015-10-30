@@ -446,6 +446,90 @@ namespace Microsoft.Azure.Management.Authorization
         }
         
         /// <summary>
+        /// Gets role assignments of the resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static RoleAssignmentListResult ListForResourceGroupNext(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRoleAssignmentOperations)s).ListForResourceGroupNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static Task<RoleAssignmentListResult> ListForResourceGroupNextAsync(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return operations.ListForResourceGroupNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static RoleAssignmentListResult ListForResourceNext(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRoleAssignmentOperations)s).ListForResourceNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static Task<RoleAssignmentListResult> ListForResourceNextAsync(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return operations.ListForResourceNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets role assignments of the scope.
         /// </summary>
         /// <param name='operations'>
@@ -491,6 +575,90 @@ namespace Microsoft.Azure.Management.Authorization
         public static Task<RoleAssignmentListResult> ListForScopeAsync(this IRoleAssignmentOperations operations, string scope, ListAssignmentsFilterParameters parameters)
         {
             return operations.ListForScopeAsync(scope, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the scope.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static RoleAssignmentListResult ListForScopeNext(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRoleAssignmentOperations)s).ListForScopeNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the scope.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static Task<RoleAssignmentListResult> ListForScopeNextAsync(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return operations.ListForScopeNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static RoleAssignmentListResult ListNext(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRoleAssignmentOperations)s).ListNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Authorization.IRoleAssignmentOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public static Task<RoleAssignmentListResult> ListNextAsync(this IRoleAssignmentOperations operations, string nextLink)
+        {
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
     }
 }

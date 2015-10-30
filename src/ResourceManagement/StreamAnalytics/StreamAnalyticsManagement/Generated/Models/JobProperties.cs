@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
@@ -227,8 +226,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JobProperties()
         {
-            this.Inputs = new LazyList<Input>();
-            this.Outputs = new LazyList<Output>();
         }
     }
 }

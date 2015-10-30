@@ -23,30 +23,26 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Sql.Responses;
+using Microsoft.Azure.Management.Batch.Models;
 
-namespace Microsoft.Azure.Management.Sql
+namespace Microsoft.Azure.Management.Batch
 {
     /// <summary>
-    /// Represents all the operations for determining the set of capabilites
-    /// available in a specified region.
+    /// Operations for managing Batch service properties at the subscription
+    /// level.
     /// </summary>
-    public partial interface ILocationCapabilitiesOperations
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
-        /// Returns information about the Azure SQL capabilities available for
-        /// the specified region.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the region for which the Azure SQL capabilities are
-        /// retrieved.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Azure Sql capabilities request
+        /// Values returned by the Get Subscription Quotas operation.
         /// </returns>
-        Task<LocationCapabilitiesGetResponse> GetAsync(string locationName, CancellationToken cancellationToken);
+        Task<SubscriptionQuotasGetResponse> GetSubscriptionQuotasAsync(string locationName, CancellationToken cancellationToken);
     }
 }

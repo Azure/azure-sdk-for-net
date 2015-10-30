@@ -21,9 +21,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomizationModels\Principal.cs" />
     <Compile Include="CustomizationModels\ClusterCreateParameters.cs" />
     <Compile Include="CustomizationModels\ClusterNodeType.cs" />
     <Compile Include="CustomizationModels\HDInsightRetryPolicy.cs" />
+    <Compile Include="CustomizationModels\ServicePrincipal.cs" />
     <Compile Include="Customizations\ClusterOperations.Resize.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Rdp.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Http.Customizations.cs" />

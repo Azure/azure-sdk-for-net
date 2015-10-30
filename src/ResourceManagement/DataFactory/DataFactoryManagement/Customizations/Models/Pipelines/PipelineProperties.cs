@@ -35,13 +35,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public IList<Activity> Activities { get; set; }
 
-        /// <summary>
-        /// The start time of the pipeline.
-        /// </summary>
+        /// <summary>                                                         
+        /// The start time of the pipeline. The start and end time  
+        /// can both be empty to create a pipeline; they must both have values
+        /// to set an active period for the pipeline and one cannot have a    
+        /// value if the other does not.                                      
+        /// </summary>                                                        
         public DateTime? Start { get; set; }
 
         /// <summary>
-        /// The end time of the pipeline.
+        /// The end time of the pipeline. The start and end time can
+        /// both be empty to create a pipeline; they must both have values to
+        /// set an active period for the pipeline and one cannot have a value
+        /// if the other does not.
         /// </summary>
         public DateTime? End { get; set; }
 

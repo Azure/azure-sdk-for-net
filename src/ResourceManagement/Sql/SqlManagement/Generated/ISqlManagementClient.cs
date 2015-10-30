@@ -87,6 +87,15 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        ICapabilitiesOperations Capabilities
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating pertaining to
         /// activation on Azure SQL Data Warehouse databases. Contains
         /// operations to: Pause and Resume databases
@@ -143,15 +152,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Update, and Delete firewall rules.
         /// </summary>
         IFirewallRuleOperations FirewallRules
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Represents all the operations for determining the set of
-        /// capabilites available in a specified region.
-        /// </summary>
-        ILocationCapabilitiesOperations Capabilities
         {
             get; 
         }

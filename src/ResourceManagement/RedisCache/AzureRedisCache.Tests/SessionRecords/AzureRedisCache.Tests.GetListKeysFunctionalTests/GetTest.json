@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra16259/providers/Microsoft.Cache/Redis/hydracache-1?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTYyNTkvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlLTE/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra16259/providers/Microsoft.Cache/Redis/hydracache-1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache-1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"3.0\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache-1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "487"
+          "555"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,28 +25,28 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0a57da7c-2457-4458-aad8-277d28349563"
+          "49e4fab6-c863-4ba9-a6a0-5a14f2705291"
         ],
         "x-rp-server-mvid": [
-          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+          "07b2bbeb-fdac-487b-ada5-44fe2bacf2b2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31640"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "962f58ad-7db8-4927-b8bd-27da5d334e8a"
+          "b0b75472-5cb8-4c9d-be87-b3513ff1b022"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150428T000309Z:962f58ad-7db8-4927-b8bd-27da5d334e8a"
+          "CENTRALUS:20151014T014556Z:b0b75472-5cb8-4c9d-be87-b3513ff1b022"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 28 Apr 2015 00:03:08 GMT"
+          "Wed, 14 Oct 2015 01:45:55 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -57,6 +57,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "11b3fbdd-bd86-456a-9037-9fd0d77d505d"
+    "SubscriptionId": "19b520e4-39a7-4fac-b1da-d940f2d39a38"
   }
 }

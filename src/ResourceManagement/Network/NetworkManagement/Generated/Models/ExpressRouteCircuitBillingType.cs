@@ -22,40 +22,21 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database Elastic Pool metric name.
+    /// The Billing Types available for a dedicated circuit
     /// </summary>
-    public partial class Name
+    public static partial class ExpressRouteCircuitBillingType
     {
-        private string _localizedValue;
+        public const string ServiceProviderType = "ServiceProviderType";
         
-        /// <summary>
-        /// Optional. Gets or sets the localized name of the metric
-        /// </summary>
-        public string LocalizedValue
-        {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
-        }
+        public const string MeteredData = "MeteredData";
         
-        private string _value;
+        public const string IXP = "IXP";
         
-        /// <summary>
-        /// Optional. Gets or sets the name of the metric
-        /// </summary>
-        public string Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
+        public const string UnlimitedData = "UnlimitedData";
         
-        /// <summary>
-        /// Initializes a new instance of the Name class.
-        /// </summary>
-        public Name()
-        {
-        }
+        public const string Telco = "Telco";
     }
 }

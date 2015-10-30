@@ -21,31 +21,31 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Represents the response to a data masking rule get request.
+    /// The DocumentDB data source as output.
     /// </summary>
-    public partial class DataMaskingRuleGetResponse : AzureOperationResponse
+    public partial class DocumentDbOutputDataSource : OutputDataSource
     {
-        private DataMaskingRule _dataMaskingRule;
+        private DocumentDbOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Database data masking rule.
+        /// Optional. Gets or sets the properties of the DocumentDB data source
+        /// as output.
         /// </summary>
-        public DataMaskingRule DataMaskingRule
+        public DocumentDbOutputDataSourceProperties Properties
         {
-            get { return this._dataMaskingRule; }
-            set { this._dataMaskingRule = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataMaskingRuleGetResponse class.
+        /// Initializes a new instance of the DocumentDbOutputDataSource class.
         /// </summary>
-        public DataMaskingRuleGetResponse()
+        public DocumentDbOutputDataSource()
         {
         }
     }

@@ -21,42 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
-namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
+namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
-    /// Time period of predefined units.
+    /// List role definitions filter.
     /// </summary>
-    public partial class PeriodContract
+    public partial class ListDefinitionFilterParameters
     {
-        private PeriodIntervalContract _interval;
+        private string _roleName;
         
         /// <summary>
-        /// Optional. Gets or sets interval unit for this period.
+        /// Optional. Returns role definitions with this name.
         /// </summary>
-        public PeriodIntervalContract Interval
+        public string RoleName
         {
-            get { return this._interval; }
-            set { this._interval = value; }
-        }
-        
-        private int _value;
-        
-        /// <summary>
-        /// Optional. Gets or sets length of period expressed in number of
-        /// interval units.
-        /// </summary>
-        public int Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._roleName; }
+            set { this._roleName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PeriodContract class.
+        /// Initializes a new instance of the ListDefinitionFilterParameters
+        /// class.
         /// </summary>
-        public PeriodContract()
+        public ListDefinitionFilterParameters()
         {
         }
     }
