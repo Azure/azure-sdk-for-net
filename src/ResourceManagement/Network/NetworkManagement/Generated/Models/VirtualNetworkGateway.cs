@@ -43,12 +43,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._enableBgp = value; }
         }
         
-        private LocalNetworkGateway _gatewayDefaultSite;
+        private ResourceId _gatewayDefaultSite;
         
         /// <summary>
-        /// Optional. Local network site which has default routes.
+        /// Optional. Gets or sets the reference of the LocalNetworkGateway
+        /// resource which represents Local network site having default
+        /// routes. Assign Null value in case of removing existing default
+        /// site setting.
         /// </summary>
-        public LocalNetworkGateway GatewayDefaultSite
+        public ResourceId GatewayDefaultSite
         {
             get { return this._gatewayDefaultSite; }
             set { this._gatewayDefaultSite = value; }
