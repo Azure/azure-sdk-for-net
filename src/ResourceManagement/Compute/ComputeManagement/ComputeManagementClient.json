@@ -171,6 +171,9 @@
               "$ref": "#/definitions/AvailabilitySetListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -210,6 +213,9 @@
               "$ref": "#/definitions/VirtualMachineSizeListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -791,7 +797,8 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "The location upon which resource usage is queried."
+            "description": "The location upon which resource usage is queried.",
+            "pattern": "^[-\\w\\._]+$"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -807,6 +814,9 @@
               "$ref": "#/definitions/ListUsagesResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -823,7 +833,8 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "The location upon which virtual-machine-sizes is queried."
+            "description": "The location upon which virtual-machine-sizes is queried.",
+            "pattern": "^[-\\w\\._]+$"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -839,6 +850,9 @@
               "$ref": "#/definitions/VirtualMachineSizeListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -1138,7 +1152,7 @@
           }
         },
         "x-ms-pageable": {
-          "path": "nextLink"
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1166,7 +1180,7 @@
           }
         },
         "x-ms-pageable": {
-          "path": "nextLink"
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1206,6 +1220,9 @@
               "$ref": "#/definitions/VirtualMachineSizeListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -1615,6 +1632,9 @@
               "$ref": "#/definitions/VirtualMachineScaleSetListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -1642,7 +1662,7 @@
           }
         },
         "x-ms-pageable": {
-          "path": "nextLink"
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1682,6 +1702,9 @@
               "$ref": "#/definitions/VirtualMachineScaleSetListSkusResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -2110,6 +2133,9 @@
               "$ref": "#/definitions/VirtualMachineScaleSetVMListResult"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         },
         "x-ms-odata": "#/definitions/VirtualMachineScaleSetVM"
       }

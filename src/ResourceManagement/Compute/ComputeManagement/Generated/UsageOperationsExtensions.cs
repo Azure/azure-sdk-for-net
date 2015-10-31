@@ -52,5 +52,37 @@ namespace Microsoft.Azure.Management.Compute
                 return result.Body;
             }
 
+            /// <summary>
+            /// Lists compute usages for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ListUsagesResult ListNext(this IUsageOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IUsageOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists compute usages for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ListUsagesResult> ListNextAsync( this IUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ListUsagesResult> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
     }
 }
