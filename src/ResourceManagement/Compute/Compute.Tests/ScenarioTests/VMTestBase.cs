@@ -34,7 +34,7 @@ namespace Compute.Tests
 {
     public class VMTestBase
     {
-        protected const string TestPrefix = "pslibtest";
+        protected const string TestPrefix = "crptestar";
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
@@ -110,7 +110,8 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
                 var stoInput = new StorageAccountCreateParameters
@@ -154,7 +155,8 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
                 PublicIpAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
@@ -205,8 +207,8 @@ namespace Compute.Tests
         protected PublicIpAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
-            string publicIpName = ComputeManagementTestUtilities.GenerateName(null);
-            string domainNameLabel = ComputeManagementTestUtilities.GenerateName(null);
+            string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
+            string domainNameLabel = ComputeManagementTestUtilities.GenerateName("dn");
 
             var publicIp = new PublicIpAddress()
             {
@@ -231,8 +233,8 @@ namespace Compute.Tests
         {
             // Create Vnet
             // Populate parameter for Put Vnet
-            string vnetName = ComputeManagementTestUtilities.GenerateName(null);
-            string subnetName = ComputeManagementTestUtilities.GenerateName(null);
+            string vnetName = ComputeManagementTestUtilities.GenerateName("vn");
+            string subnetName = ComputeManagementTestUtilities.GenerateName("sn");
 
             var vnet = new VirtualNetwork()
             {
@@ -269,8 +271,8 @@ namespace Compute.Tests
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
-            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName(null);
-            string ipConfigName = ComputeManagementTestUtilities.GenerateName(null);
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
+            string ipConfigName = ComputeManagementTestUtilities.GenerateName("ip");
 
             var nicParameters = new NetworkInterface()
             {
