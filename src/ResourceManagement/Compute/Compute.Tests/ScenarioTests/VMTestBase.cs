@@ -101,6 +101,51 @@ namespace Compute.Tests
             return m_linuxImageReference;
         }
 
+        protected DiagnosticsProfile GetDiagnosticsProfile(string storageAccountName)
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true,
+                    StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                }
+            };
+        }
+
+        protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
+        {
+            string testVaultId =
+                @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
+            string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
+            
+            DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
+            {
+                DiskEncryptionKey = new KeyVaultSecretReference
+                {
+                    SecretUrl = encryptionKeyFakeUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                }
+            };
+
+            if (addKek)
+            {
+                string nonExistentKekUri = @"https://testvault123.vault.azure.net/keys/TestKey/514ceb769c984379a7e0230bdd703272";
+                diskEncryptionSettings.KeyEncryptionKey = new KeyVaultKeyReference
+                {
+                    KeyUrl = nonExistentKekUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                };
+            }
+            return diskEncryptionSettings;
+        }
+
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
         {
             try

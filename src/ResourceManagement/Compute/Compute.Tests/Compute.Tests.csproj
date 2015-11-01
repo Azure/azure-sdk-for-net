@@ -52,6 +52,15 @@
     <None Include="SessionRecords\Compute.Tests.VMDataDiskTests\TestVMDataDiskScenario.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiagnosticsTests\TestVMBootDiagnostics.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiskEncryptionTests\TestVMDiskEncryption.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiskSizeTests\TestVMDiskSizeScenario.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Compute.Tests.VMMarketplaceTest\TestVMMarketplace.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
