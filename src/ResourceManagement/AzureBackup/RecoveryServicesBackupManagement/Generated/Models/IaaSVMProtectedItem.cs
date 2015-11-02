@@ -28,19 +28,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a IaasVM ProtectedItem object.
     /// </summary>
-    public partial class IaaSVMProtectedItem : ProtectedItemBase
+    public partial class IaaSVMProtectedItem : ProtectedItem
     {
-        private string _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Resource Group Name for IaaSVMProtectedItem.
-        /// </summary>
-        public string ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
-        
         private string _virtualMachineVersion;
         
         /// <summary>

@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectedItemCreateOrUpdateResponse : BaseRecoveryServicesJobResponse
     {
-        private ProtectedItem _item;
+        private ProtectedItemBase _item;
         
         /// <summary>
         /// Optional. Item
         /// </summary>
-        public ProtectedItem Item
+        public ProtectedItemBase Item
         {
             get { return this._item; }
             set { this._item = value; }

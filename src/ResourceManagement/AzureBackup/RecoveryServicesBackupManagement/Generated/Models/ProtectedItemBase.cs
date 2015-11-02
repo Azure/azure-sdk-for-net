@@ -21,125 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The Base class for ProtectedItemBase.
+    /// The definition of a ProtectedItemBase object.
     /// </summary>
-    public partial class ProtectedItemBase : ProtectedItem
+    public partial class ProtectedItemBase
     {
-        private string _backupManagementType;
-        
-        /// <summary>
-        /// Optional. BackupManagementType for Protected Item
-        /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
-        
-        private string _containerName;
-        
-        /// <summary>
-        /// Optional. Container Name for the protected item
-        /// </summary>
-        public string ContainerName
-        {
-            get { return this._containerName; }
-            set { this._containerName = value; }
-        }
-        
-        private string _friendlyName;
-        
-        /// <summary>
-        /// Optional. Protected Item FriendlyName
-        /// </summary>
-        public string FriendlyName
-        {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
-        }
-        
-        private string _lastBackupStatus;
-        
-        /// <summary>
-        /// Optional. Healthy or Unhealthy
-        /// </summary>
-        public string LastBackupStatus
-        {
-            get { return this._lastBackupStatus; }
-            set { this._lastBackupStatus = value; }
-        }
-        
-        private System.DateTime? _lastBackupTime;
-        
-        /// <summary>
-        /// Optional. Last backup time
-        /// </summary>
-        public System.DateTime? LastBackupTime
-        {
-            get { return this._lastBackupTime; }
-            set { this._lastBackupTime = value; }
-        }
-        
-        private System.DateTime? _lastRecoveryPoint;
-        
-        /// <summary>
-        /// Optional. Last Recovery point date and time
-        /// </summary>
-        public System.DateTime? LastRecoveryPoint
-        {
-            get { return this._lastRecoveryPoint; }
-            set { this._lastRecoveryPoint = value; }
-        }
-        
-        private bool _policyInconsistent;
-        
-        /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
-        /// </summary>
-        public bool PolicyInconsistent
-        {
-            get { return this._policyInconsistent; }
-            set { this._policyInconsistent = value; }
-        }
-        
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. Policy name with with Object is protected
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
-        }
-        
-        private string _protectionStatus;
-        
-        /// <summary>
-        /// Optional. Protection Status of Protected Item
-        /// </summary>
-        public string ProtectionStatus
-        {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
-        }
-        
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional. WorkloadType for Protected Item
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ProtectedItemBase class.
         /// </summary>
