@@ -144,6 +144,10 @@ namespace Microsoft.Azure.Management.Compute.Models
                     }
                 }
             }
+            if (this.StorageProfile != null)
+            {
+                this.StorageProfile.Validate();
+            }
         }
     }
 }

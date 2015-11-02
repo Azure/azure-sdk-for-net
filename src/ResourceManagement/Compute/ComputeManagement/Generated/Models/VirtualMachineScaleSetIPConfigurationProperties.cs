@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetIPConfigurationProperties class.
         /// </summary>
-        public VirtualMachineScaleSetIPConfigurationProperties(ApiEntityReference subnet = default(ApiEntityReference), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfigurationProperties(ApiEntityReference subnet, IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>))
         {
             Subnet = subnet;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
@@ -50,5 +50,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Subnet == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
+            }
+        }
     }
 }

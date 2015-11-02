@@ -12,6 +12,6 @@ set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.ex
 %repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages -verbosity quiet
 
 @echo on
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace %namespace% -Input %specFile% -outputDirectory %generateFolder% -Header MICROSOFT_MIT
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace %namespace% -Input %specFile% -outputDirectory %generateFolder% -Header MICROSOFT_MIT %~5
 @echo off
 endlocal

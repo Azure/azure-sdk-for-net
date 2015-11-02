@@ -54,7 +54,7 @@ namespace Compute.Tests
             }
         }
 
-        public static void ValidateVirtualMachineSizeListResponse(IList<VirtualMachineSize> vmSizeListResponse)
+        public static void ValidateVirtualMachineSizeListResponse(IPage<VirtualMachineSize> vmSizeListResponse)
         {
             var expectedVMSizePropertiesList = new List<VirtualMachineSize>()
             {
@@ -78,9 +78,9 @@ namespace Compute.Tests
                 }
             };
 
-            IList<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
+            IPage<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
             Assert.NotNull(vmSizesPropertyList);
-            Assert.True(vmSizesPropertyList.Count > 1, "ListVMSizes should return more than 1 VM sizes");
+            Assert.True(vmSizesPropertyList.Count() > 1, "ListVMSizes should return more than 1 VM sizes");
 
             VirtualMachineSize expectedVMSizeProperties = expectedVMSizePropertiesList[0];
             VirtualMachineSize vmSizeProperties =

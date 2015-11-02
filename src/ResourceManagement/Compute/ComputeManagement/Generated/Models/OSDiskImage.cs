@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDiskImage class.
         /// </summary>
-        public OSDiskImage(string operatingSystem = default(string))
+        public OSDiskImage(string operatingSystem)
         {
             OperatingSystem = operatingSystem;
         }
@@ -41,5 +41,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "operatingSystem")]
         public string OperatingSystem { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (OperatingSystem == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OperatingSystem");
+            }
+        }
     }
 }

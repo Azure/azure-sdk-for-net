@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DataDiskImage class.
         /// </summary>
-        public DataDiskImage(int? lun = default(int?))
+        public DataDiskImage(int? lun)
         {
             Lun = lun;
         }
@@ -42,5 +42,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "lun")]
         public int? Lun { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Lun == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Lun");
+            }
+        }
     }
 }

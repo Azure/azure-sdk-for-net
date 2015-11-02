@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineSizeListResult>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineSize>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineSizeListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineSize>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineSizeListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineSize>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineSizeListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineSize>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineSizeListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineSize>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineSizeListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineSize>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

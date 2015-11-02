@@ -72,10 +72,10 @@ namespace Compute.Tests
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }

@@ -63,5 +63,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "extensionProfile")]
         public VirtualMachineScaleSetExtensionProfile ExtensionProfile { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.StorageProfile != null)
+            {
+                this.StorageProfile.Validate();
+            }
+        }
     }
 }

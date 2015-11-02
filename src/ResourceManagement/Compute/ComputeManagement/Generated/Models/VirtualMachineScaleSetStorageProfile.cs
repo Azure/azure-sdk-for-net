@@ -49,5 +49,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "osDisk")]
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.OsDisk != null)
+            {
+                this.OsDisk.Validate();
+            }
+        }
     }
 }

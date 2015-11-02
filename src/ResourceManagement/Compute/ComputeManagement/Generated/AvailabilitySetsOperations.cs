@@ -497,7 +497,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AvailabilitySetListResult>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AvailabilitySet>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -600,7 +600,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<AvailabilitySetListResult>();
+            var result = new AzureOperationResponse<IPage<AvailabilitySet>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -611,7 +611,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<AvailabilitySetListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<AvailabilitySet>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineSizeListResult>> ListAvailableSizesWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineSize>>> ListAvailableSizesWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -744,7 +744,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineSizeListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineSize>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -755,7 +755,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineSizeListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineSize>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -776,7 +776,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AvailabilitySetListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AvailabilitySet>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -865,7 +865,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<AvailabilitySetListResult>();
+            var result = new AzureOperationResponse<IPage<AvailabilitySet>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -876,7 +876,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<AvailabilitySetListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<AvailabilitySet>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineSizeListResult>> ListAvailableSizesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineSize>>> ListAvailableSizesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -986,7 +986,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineSizeListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineSize>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -997,7 +997,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineSizeListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineSize>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

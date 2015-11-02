@@ -254,8 +254,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -263,11 +263,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeallocateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginDeallocateInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+            AzureOperationResponse response = await BeginDeallocateWithHttpMessagesAsync(
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -281,8 +281,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginDeallocateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -300,10 +300,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -311,6 +307,12 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -323,7 +325,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginDeallocateInstances", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDeallocate", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -543,7 +545,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200 && (int)statusCode != 204 && (int)statusCode != 202)
+            if ((int)statusCode != 202 && (int)statusCode != 200 && (int)statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -722,8 +724,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -731,11 +733,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse response = await BeginDeleteInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -748,8 +750,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -757,7 +759,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -767,10 +769,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -778,6 +776,16 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (instanceIds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceIds");
+            }
+            VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceRequiredIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1038,7 +1046,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetListResult>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSet>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1141,7 +1149,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSet>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1152,7 +1160,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSet>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1305,7 +1313,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetListSkusResult>> ListSkusWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>> ListSkusWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1414,7 +1422,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetListSkusResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1425,7 +1433,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetListSkusResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSetSku>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1444,8 +1452,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1453,11 +1461,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> PowerOffInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginPowerOffInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+            AzureOperationResponse response = await BeginPowerOffWithHttpMessagesAsync(
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -1471,8 +1479,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1480,7 +1488,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginPowerOffInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1490,10 +1498,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1501,6 +1505,12 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1513,7 +1523,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginPowerOffInstances", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginPowerOff", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1614,8 +1624,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1623,11 +1633,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RestartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginRestartInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+            AzureOperationResponse response = await BeginRestartWithHttpMessagesAsync(
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -1640,8 +1650,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1649,7 +1659,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginRestartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1659,10 +1669,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1670,6 +1676,12 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1682,7 +1694,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginRestartInstances", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginRestart", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1783,8 +1795,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1792,11 +1804,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> StartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginStartInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+            AzureOperationResponse response = await BeginStartWithHttpMessagesAsync(
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -1809,8 +1821,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1818,7 +1830,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginStartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1828,10 +1840,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1839,6 +1847,12 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1851,7 +1865,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginStartInstances", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginStart", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1953,8 +1967,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1962,11 +1976,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse response = await BeginUpdateInstancesWithHttpMessagesAsync(
-                resourceGroupName, vmScaleSetName, vmInstanceIDs, customHeaders, cancellationToken);
+                resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
@@ -1980,8 +1994,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1989,7 +2003,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1999,10 +2013,6 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
             }
-            if (vmInstanceIDs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmInstanceIDs");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -2010,6 +2020,16 @@ namespace Microsoft.Azure.Management.Compute
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (instanceIds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceIds");
+            }
+            VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = null;
+            if (instanceIds != null)
+            {
+                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceRequiredIDs();
+                vmInstanceIDs.InstanceIds = instanceIds;
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2126,7 +2146,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSet>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2215,7 +2235,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSet>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2226,7 +2246,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSet>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -2371,7 +2391,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetListSkusResult>> ListSkusNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>> ListSkusNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2460,7 +2480,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetListSkusResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2471,7 +2491,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetListSkusResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSetSku>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

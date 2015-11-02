@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetIPConfiguration(string name = default(string), VirtualMachineScaleSetIPConfigurationProperties properties = default(VirtualMachineScaleSetIPConfigurationProperties))
+        public VirtualMachineScaleSetIPConfiguration(string name, VirtualMachineScaleSetIPConfigurationProperties properties = default(VirtualMachineScaleSetIPConfigurationProperties))
         {
             Name = name;
             Properties = properties;
@@ -49,5 +49,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "properties")]
         public VirtualMachineScaleSetIPConfigurationProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
+        }
     }
 }

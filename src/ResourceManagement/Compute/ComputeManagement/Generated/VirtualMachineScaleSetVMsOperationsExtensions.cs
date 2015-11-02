@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='expand'>
             /// The list parameters.
             /// </param>
-            public static VirtualMachineScaleSetVMListResult List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string))
+            public static IPage<VirtualMachineScaleSetVM> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string))
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetVMsOperations)s).ListAsync(resourceGroupName, virtualMachineScaleSetName, filter, select, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetVMListResult> ListAsync( this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetVM>> ListAsync( this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetVMListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, filter, select, expand, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSetVM>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, filter, select, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineScaleSetVMListResult ListNext(this IVirtualMachineScaleSetVMsOperations operations, string nextPageLink)
+            public static IPage<VirtualMachineScaleSetVM> ListNext(this IVirtualMachineScaleSetVMsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetVMsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -620,9 +620,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetVMListResult> ListNextAsync( this IVirtualMachineScaleSetVMsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetVM>> ListNextAsync( this IVirtualMachineScaleSetVMsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetVMListResult> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSetVM>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

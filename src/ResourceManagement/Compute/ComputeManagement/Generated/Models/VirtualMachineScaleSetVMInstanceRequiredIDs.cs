@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     using System;
     using System.Linq;
@@ -17,43 +17,39 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Specifies the list of virtual machine scale set instance IDs.
     /// </summary>
-    public partial class StorageAccountCheckNameAvailabilityParameters
+    public partial class VirtualMachineScaleSetVMInstanceRequiredIDs
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// VirtualMachineScaleSetVMInstanceRequiredIDs class.
         /// </summary>
-        public StorageAccountCheckNameAvailabilityParameters() { }
+        public VirtualMachineScaleSetVMInstanceRequiredIDs() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// VirtualMachineScaleSetVMInstanceRequiredIDs class.
         /// </summary>
-        public StorageAccountCheckNameAvailabilityParameters(string name, string type = default(string))
+        public VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
         {
-            Name = name;
-            Type = type;
+            InstanceIds = instanceIds;
         }
 
         /// <summary>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "instanceIds")]
+        public IList<string> InstanceIds { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (InstanceIds == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "InstanceIds");
             }
         }
     }

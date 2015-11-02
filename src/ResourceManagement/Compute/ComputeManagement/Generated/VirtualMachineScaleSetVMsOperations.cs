@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 204 && (int)statusCode != 202 && (int)statusCode != 200)
+            if ((int)statusCode != 202 && (int)statusCode != 200 && (int)statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetVMListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -836,7 +836,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetVMListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -847,7 +847,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetVMListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSetVM>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1366,7 +1366,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetVMListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1455,7 +1455,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineScaleSetVMListResult>();
+            var result = new AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1466,7 +1466,7 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineScaleSetVMListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<VirtualMachineScaleSetVM>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

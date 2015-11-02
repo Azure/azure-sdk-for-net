@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetNetworkConfiguration(string name = default(string), VirtualMachineScaleSetNetworkConfigurationProperties properties = default(VirtualMachineScaleSetNetworkConfigurationProperties))
+        public VirtualMachineScaleSetNetworkConfiguration(string name, VirtualMachineScaleSetNetworkConfigurationProperties properties = default(VirtualMachineScaleSetNetworkConfigurationProperties))
         {
             Name = name;
             Properties = properties;
@@ -49,5 +49,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "properties")]
         public VirtualMachineScaleSetNetworkConfigurationProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
+        }
     }
 }

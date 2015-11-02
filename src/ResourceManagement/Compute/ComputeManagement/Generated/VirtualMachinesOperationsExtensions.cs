@@ -507,7 +507,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static VirtualMachineSizeListResult ListAvailableSizes(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static IPage<VirtualMachineSize> ListAvailableSizes(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAvailableSizesAsync(resourceGroupName, vmName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -527,9 +527,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineSizeListResult> ListAvailableSizesAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineSize>> ListAvailableSizesAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineSizeListResult> result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineSize>> result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -832,7 +832,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineSizeListResult ListAvailableSizesNext(this IVirtualMachinesOperations operations, string nextPageLink)
+            public static IPage<VirtualMachineSize> ListAvailableSizesNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAvailableSizesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -849,9 +849,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineSizeListResult> ListAvailableSizesNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineSize>> ListAvailableSizesNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineSizeListResult> result = await operations.ListAvailableSizesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineSize>> result = await operations.ListAvailableSizesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
