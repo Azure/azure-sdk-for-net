@@ -34,8 +34,8 @@ namespace Compute.Tests
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
-                string rg1Name = baseRGName + "_1";
-                string rg2Name = baseRGName + "_2";
+                string rg1Name = baseRGName + "a";
+                string rg2Name = baseRGName + "b";
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1, inputVM2;

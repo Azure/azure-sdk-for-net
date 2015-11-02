@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,7 +27,7 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class AvailabilitySetTests
+    public class AvailabilitySetTests : VMTestBase
     {
         RecordedDelegatingHandler handler;
         ComputeManagementClient computeClient;
@@ -36,7 +37,7 @@ namespace Compute.Tests
 
         string subId;
         string location;
-        const string testPrefix = "pslibtest";
+        const string testPrefix = TestPrefix;
         string resourceGroupName;
 
         // These values are configurable in the service, but normal default values are FD = 3 and UD = 5
@@ -97,7 +98,8 @@ namespace Compute.Tests
                 resourceGroupName,
                 new ResourceGroup
                 {
-                    Location = location
+                    Location = location,
+                    Tags = new Dictionary<string, string>() { { resourceGroupName, DateTime.UtcNow.ToString("u") } }
                 });
         }
 
