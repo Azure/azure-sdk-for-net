@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetVMListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to power off (stop) a virtual machine scale set.
         /// </summary>
@@ -289,6 +289,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetVMListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSetVM>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

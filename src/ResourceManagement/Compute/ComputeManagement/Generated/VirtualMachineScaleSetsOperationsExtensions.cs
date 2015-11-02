@@ -121,12 +121,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void DeallocateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void Deallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).DeallocateInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).DeallocateAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,15 +142,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeallocateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeallocateAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeallocateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -166,12 +166,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginDeallocateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginDeallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginDeallocateInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginDeallocateAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -187,15 +187,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeallocateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeallocateAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeallocateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -322,12 +322,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void DeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void DeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).DeleteInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).DeleteInstancesAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,15 +342,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -365,12 +365,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginDeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginDeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginDeleteInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginDeleteInstancesAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -385,15 +385,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static VirtualMachineScaleSetListResult List(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName)
+            public static IPage<VirtualMachineScaleSet> List(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -460,9 +460,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetListResult> ListAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSet>> ListAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSet>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -510,7 +510,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            public static VirtualMachineScaleSetListSkusResult ListSkus(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            public static IPage<VirtualMachineScaleSetSku> ListSkus(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListSkusAsync(resourceGroupName, vmScaleSetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -530,9 +530,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetListSkusResult> ListSkusAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetListSkusResult> result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSetSku>> result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -549,12 +549,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void PowerOffInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void PowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).PowerOffInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).PowerOffAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -570,15 +570,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PowerOffInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PowerOffAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.PowerOffInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -594,12 +594,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginPowerOffInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginPowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginPowerOffInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginPowerOffAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -615,15 +615,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginPowerOffInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginPowerOffAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginPowerOffInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -638,12 +638,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void RestartInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void Restart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).RestartInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).RestartAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -658,15 +658,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestartInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.RestartInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.RestartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -681,12 +681,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginRestartInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginRestart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginRestartInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginRestartAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -701,15 +701,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRestartInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestartAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginRestartInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -724,12 +724,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void StartInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void Start(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).StartInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).StartAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -744,15 +744,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task StartInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task StartAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.StartInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.StartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -767,12 +767,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginStartInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginStart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginStartInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginStartAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -787,15 +787,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginStartInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginStartAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginStartInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -811,12 +811,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void UpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void UpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).UpdateInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).UpdateInstancesAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -832,15 +832,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.UpdateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.UpdateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -856,12 +856,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
-            public static void BeginUpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs)
+            public static void BeginUpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginUpdateInstancesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginUpdateInstancesAsync(resourceGroupName, vmScaleSetName, instanceIds), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -877,15 +877,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            /// <param name='vmInstanceIDs'>
-            /// The list of virtual machine scale set instance IDs.
+            /// <param name='instanceIds'>
+            /// Gets or sets the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginUpdateInstancesAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginUpdateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmInstanceIDs, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginUpdateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineScaleSetListResult ListNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
+            public static IPage<VirtualMachineScaleSet> ListNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -914,9 +914,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetListResult> ListNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSet>> ListNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetListResult> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSet>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineScaleSetListSkusResult ListSkusNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
+            public static IPage<VirtualMachineScaleSetSku> ListSkusNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListSkusNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -984,9 +984,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetListSkusResult> ListSkusNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineScaleSetListSkusResult> result = await operations.ListSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<VirtualMachineScaleSetSku>> result = await operations.ListSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

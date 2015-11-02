@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='location'>
             /// The location upon which resource usage is queried.
             /// </param>
-            public static ListUsagesResult List(this IUsageOperations operations, string location)
+            public static IPage<Usage> List(this IUsageOperations operations, string location)
             {
                 return Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListUsagesResult> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Usage>> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ListUsagesResult> result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<Usage>> result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static ListUsagesResult ListNext(this IUsageOperations operations, string nextPageLink)
+            public static IPage<Usage> ListNext(this IUsageOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IUsageOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -78,9 +78,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListUsagesResult> ListNextAsync( this IUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Usage>> ListNextAsync( this IUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ListUsagesResult> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<Usage>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

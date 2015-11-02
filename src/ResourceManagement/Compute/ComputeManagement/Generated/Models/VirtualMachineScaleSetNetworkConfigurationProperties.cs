@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkConfigurationProperties class.
         /// </summary>
-        public VirtualMachineScaleSetNetworkConfigurationProperties(bool? primary = default(bool?), IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetIPConfiguration>))
+        public VirtualMachineScaleSetNetworkConfigurationProperties(IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? primary = default(bool?))
         {
             Primary = primary;
             IpConfigurations = ipConfigurations;
@@ -50,5 +50,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "ipConfigurations")]
         public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (IpConfigurations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "IpConfigurations");
+            }
+            if (this.IpConfigurations != null)
+            {
+                foreach (var element in this.IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -86,11 +86,11 @@ namespace Compute.Tests
                     ValidateVMScaleSetInstanceView(inputVMScaleSet, getInstanceViewResponse);
                     
                     var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
-                    ValidateVMScaleSet(inputVMScaleSet, listResponse.Value.FirstOrDefault(x => x.Name == vmssName));
+                    ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName));
 
                     var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
-                    Assert.NotNull(listSkusResponse.Value);
-                    Assert.False(listSkusResponse.Value.Count == 0);
+                    Assert.NotNull(listSkusResponse);
+                    Assert.False(listSkusResponse.Count() == 0);
 
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                 }

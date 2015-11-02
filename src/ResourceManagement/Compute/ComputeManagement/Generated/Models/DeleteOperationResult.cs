@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DeleteOperationResult class.
         /// </summary>
-        public DeleteOperationResult(string operationId = default(string), OperationStatus? status = default(OperationStatus?), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), ApiError error = default(ApiError))
+        public DeleteOperationResult(string operationId, OperationStatus? status, DateTime? startTime, DateTime? endTime = default(DateTime?), ApiError error = default(ApiError))
         {
             OperationId = operationId;
             Status = status;
@@ -69,5 +69,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "error")]
         public ApiError Error { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (OperationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OperationId");
+            }
+            if (Status == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+            }
+            if (StartTime == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StartTime");
+            }
+        }
     }
 }

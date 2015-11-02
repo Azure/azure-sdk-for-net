@@ -32,7 +32,7 @@ namespace Compute.Tests
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
                 var virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
-                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse.Value);
+                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse);
             }
         }
     }

@@ -224,7 +224,7 @@ namespace Compute.Tests
             // List AvailabilitySets
             string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
             var listResponse = computeClient.AvailabilitySets.List(resourceGroupName);
-            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.Value.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
+            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
             // This call will also delete the Availability Set
@@ -322,7 +322,7 @@ namespace Compute.Tests
 
             // List VM Sizes
             var listVMSizesResponse = computeClient.AvailabilitySets.ListAvailableSizes(resourceGroupName, inputAvailabilitySetName);
-            Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
+            Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
             // Delete AvailabilitySet
             computeClient.AvailabilitySets.Delete(resourceGroupName, inputAvailabilitySetName);

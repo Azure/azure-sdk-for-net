@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetOSDisk
         /// class.
         /// </summary>
-        public VirtualMachineScaleSetOSDisk(string name = default(string), string caching = default(string), string createOption = default(string), string osType = default(string), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>))
+        public VirtualMachineScaleSetOSDisk(string name, string createOption, string caching = default(string), string osType = default(string), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>))
         {
             Name = name;
             Caching = caching;
@@ -83,5 +83,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "vhdContainers")]
         public IList<string> VhdContainers { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (CreateOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
+            }
+        }
     }
 }

@@ -68,6 +68,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.VirtualMachineProfile != null)
+            {
+                this.VirtualMachineProfile.Validate();
+            }
         }
     }
 }

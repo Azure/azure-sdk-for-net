@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the PurchasePlan class.
         /// </summary>
-        public PurchasePlan(string publisher = default(string), string name = default(string), string product = default(string))
+        public PurchasePlan(string publisher, string name, string product)
         {
             Publisher = publisher;
             Name = name;
@@ -55,5 +55,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "product")]
         public string Product { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Publisher == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Publisher");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Product == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Product");
+            }
+        }
     }
 }

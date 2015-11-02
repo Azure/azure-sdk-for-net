@@ -17,46 +17,39 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Describes a virtual machine scale set storage profile.
+    /// Specifies the list of virtual machine scale set instance IDs.
     /// </summary>
-    public partial class VirtualMachineScaleSetStorageProfile
+    public partial class VirtualMachineScaleSetVMInstanceRequiredIDs
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetStorageProfile class.
+        /// VirtualMachineScaleSetVMInstanceRequiredIDs class.
         /// </summary>
-        public VirtualMachineScaleSetStorageProfile() { }
+        public VirtualMachineScaleSetVMInstanceRequiredIDs() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetStorageProfile class.
+        /// VirtualMachineScaleSetVMInstanceRequiredIDs class.
         /// </summary>
-        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk))
+        public VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
         {
-            ImageReference = imageReference;
-            OsDisk = osDisk;
+            InstanceIds = instanceIds;
         }
 
         /// <summary>
-        /// Gets or sets the image reference.
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </summary>
-        [JsonProperty(PropertyName = "imageReference")]
-        public ImageReference ImageReference { get; set; }
-
-        /// <summary>
-        /// Gets or sets the OS disk.
-        /// </summary>
-        [JsonProperty(PropertyName = "osDisk")]
-        public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
+        [JsonProperty(PropertyName = "instanceIds")]
+        public IList<string> InstanceIds { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.OsDisk != null)
+            if (InstanceIds == null)
             {
-                this.OsDisk.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "InstanceIds");
             }
         }
     }

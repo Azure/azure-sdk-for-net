@@ -76,8 +76,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeallocateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to deallocate virtual machines in a virtual machine
         /// scale set.
@@ -96,8 +96,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginDeallocateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete a virtual machine scale set.
         /// </summary>
@@ -164,8 +164,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete virtual machines in a virtual machine
         /// scale set.
@@ -184,8 +184,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to get a virtual machine scale set instance view.
         /// </summary>
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetListResult>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSet>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of Virtual Machine Scale Sets in the subscription.
         /// Use nextLink property in the response to get the next page of
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetListSkusResult>> ListSkusWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>> ListSkusWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to power off (stop) virtual machines in a virtual
         /// machine scale set.
@@ -264,8 +264,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> PowerOffInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to power off (stop) virtual machines in a virtual
         /// machine scale set.
@@ -284,8 +284,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginPowerOffInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to restart virtual machines in a virtual machine
         /// scale set.
@@ -304,8 +304,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> RestartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to restart virtual machines in a virtual machine
         /// scale set.
@@ -324,8 +324,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginRestartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to start virtual machines in a virtual machine scale
         /// set.
@@ -344,8 +344,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> StartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to start virtual machines in a virtual machine scale
         /// set.
@@ -364,8 +364,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginStartInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to manually upgrade virtual machines in a virtual
         /// machine scale set.
@@ -384,8 +384,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to manually upgrade virtual machines in a virtual
         /// machine scale set.
@@ -404,8 +404,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set.
         /// </param>
-        /// <param name='vmInstanceIDs'>
-        /// The list of virtual machine scale set instance IDs.
+        /// <param name='instanceIds'>
+        /// Gets or sets the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to list virtual machine scale sets under a resource
         /// group.
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetListResult>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSet>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of Virtual Machine Scale Sets in the subscription.
         /// Use nextLink property in the response to get the next page of
@@ -457,6 +457,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineScaleSetListSkusResult>> ListSkusNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineScaleSetSku>>> ListSkusNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

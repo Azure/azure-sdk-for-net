@@ -132,18 +132,15 @@ namespace Compute.Tests
                         vmScaleSetCustomizer: 
                             (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual });
 
-                    VirtualMachineScaleSetVMInstanceIDs virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs()
-                    {
-                        InstanceIds = new List<string>() {"0", "1"}
-                    };
+                    var virtualMachineScaleSetInstanceIDs = new List<string>() {"0", "1"};
 
-                    m_CrpClient.VirtualMachineScaleSets.StartInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    virtualMachineScaleSetInstanceIDs.InstanceIds = new List<string>() { "0" };
-                    m_CrpClient.VirtualMachineScaleSets.PowerOffInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    virtualMachineScaleSetInstanceIDs = new List<string>() { "0" };
+                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    virtualMachineScaleSetInstanceIDs.InstanceIds = new List<string>() { "1" };
-                    m_CrpClient.VirtualMachineScaleSets.RestartInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    m_CrpClient.VirtualMachineScaleSets.DeallocateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };
+                    m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
 
                     passed = true;

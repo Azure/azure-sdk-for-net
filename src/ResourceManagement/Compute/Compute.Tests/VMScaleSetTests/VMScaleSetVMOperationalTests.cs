@@ -88,12 +88,12 @@ namespace Compute.Tests
                     //TODO: AutoRest - Filter Expression Sample?
                     //var filterExpression = "$filter=properties/latestModelApplied eq true";
                     var listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, null);
-                    Assert.False(listResponse.Value == null, "VMScaleSetVMs not returned");
-                    Assert.True(listResponse.Value.Count == inputVMScaleSet.Sku.Capacity);
+                    Assert.False(listResponse == null, "VMScaleSetVMs not returned");
+                    Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 
                     listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, null, "instanceView", "instanceView");
-                    Assert.False(listResponse.Value == null, "VMScaleSetVMs not returned");
-                    Assert.True(listResponse.Value.Count == inputVMScaleSet.Sku.Capacity);
+                    Assert.False(listResponse == null, "VMScaleSetVMs not returned");
+                    Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
                     
                     m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
                     m_CrpClient.VirtualMachineScaleSetVMs.Restart(rgName, vmScaleSet.Name, instanceId);

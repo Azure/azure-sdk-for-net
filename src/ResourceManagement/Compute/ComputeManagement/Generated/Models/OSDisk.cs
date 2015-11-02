@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
         /// </summary>
-        public OSDisk(string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), string createOption = default(string), int? diskSizeGB = default(int?))
+        public OSDisk(string name, VirtualHardDisk vhd, string createOption, string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), int? diskSizeGB = default(int?))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -96,5 +96,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Vhd == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Vhd");
+            }
+            if (CreateOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
+            }
+            if (this.EncryptionSettings != null)
+            {
+                this.EncryptionSettings.Validate();
+            }
+        }
     }
 }
