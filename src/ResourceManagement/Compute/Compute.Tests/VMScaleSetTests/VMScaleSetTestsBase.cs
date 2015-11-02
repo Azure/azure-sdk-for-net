@@ -242,9 +242,9 @@ namespace Compute.Tests
             Assert.NotNull(vmScaleSetInstanceView.Statuses);
             Assert.NotNull(vmScaleSetInstanceView);
             // TODO: AutoRest
-            // Assert.NotNull(vmScaleSetInstanceView.StatusesSummary);
-            // int instancesCount = vmScaleSetInstanceView.StatusesSummary.Sum(statusSummary => statusSummary.Count);
-            // Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            Assert.NotNull(vmScaleSetInstanceView.Extensions);
+            int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
+            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut)
