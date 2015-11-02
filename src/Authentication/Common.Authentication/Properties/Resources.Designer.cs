@@ -502,6 +502,15 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate authentication is not supported for account type {0}..
+        /// </summary>
+        public static string UnsupportedCredentialType {
+            get {
+                return ResourceManager.GetString("UnsupportedCredentialType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Common.Authentication]: Acquiring token using AdalConfiguration with Domain: &apos;{0}&apos;, AdEndpoint: &apos;{1}&apos;, ClientId: &apos;{2}&apos;, ClientRedirectUri: {3}.
         /// </summary>
         public static string UPNAcquireTokenConfigTrace {

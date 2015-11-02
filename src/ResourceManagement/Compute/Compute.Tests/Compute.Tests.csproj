@@ -20,6 +20,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\*.cs" />
     <Compile Include="ScenarioTests\*.cs" />
+    <Compile Include="VMScaleSetTests\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -52,6 +53,15 @@
     <None Include="SessionRecords\Compute.Tests.VMDataDiskTests\TestVMDataDiskScenario.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiagnosticsTests\TestVMBootDiagnostics.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiskEncryptionTests\TestVMDiskEncryption.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiskSizeTests\TestVMDiskSizeScenario.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Compute.Tests.VMMarketplaceTest\TestVMMarketplace.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -80,6 +90,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMOperationalTests\TestVMOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetOperationalTests\TestVMScaleSetBatchOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetOperationalTests\TestVMScaleSetOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetScenarioTests\TestVMScaleSetScenarioOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetUpdateTests\TestVMScaleSetScalingOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetUpdateTests\TestVMScaleSetUpdateOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetVMOperationalTests\TestVMScaleSetVMOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">

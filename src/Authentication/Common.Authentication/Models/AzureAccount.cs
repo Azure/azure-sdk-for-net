@@ -49,7 +49,12 @@ namespace Microsoft.Azure.Common.Authentication.Models
             /// <summary>
             /// Access token.
             /// </summary>
-            AccessToken
+            AccessToken,
+
+            /// <summary>
+            /// Thumbprint for associated certificate
+            /// </summary>
+            CertificateThumbprint
         }
     }
 }

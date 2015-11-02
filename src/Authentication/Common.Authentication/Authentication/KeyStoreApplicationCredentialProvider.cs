@@ -20,9 +20,9 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Common.Authentication
 {
     /// <summary>
-    /// Interface to the keystore for obtaiing credentials
+    /// Interface to the keystore for authentication
     /// </summary>
-    internal sealed class KeyStoreApplicationCredentialProvider : IApplicationCredentialProvider
+    internal sealed class KeyStoreApplicationCredentialProvider : IApplicationAuthenticationProvider
     {
         private string _tenantId;
 
@@ -34,13 +34,15 @@ namespace Microsoft.Azure.Common.Authentication
         {
             this._tenantId = tenant;
         }
-
+        
         /// <summary>
-        /// Get the secret for the specified client from the key store.
+        /// Authenticate using the secret for the specified client from the key store
         /// </summary>
         /// <param name="clientId">The active directory client id for the application.</param>
-        /// <returns>A client credential for the application.</returns>
-        public async Task<ClientCredential> GetCredentialAsync(string clientId)
+        /// <param name="audience">The intended audience for authentication</param>
+        /// <param name="context">The AD AuthenticationContext to use</param>
+        /// <returns></returns>
+        public async Task<AuthenticationResult> AuthenticateAsync(string clientId, string audience, AuthenticationContext context)
         {
             var task = new Task<SecureString>(() =>
             {
@@ -48,7 +50,8 @@ namespace Microsoft.Azure.Common.Authentication
             });
             task.Start();
             var key = await task.ConfigureAwait(false);
-            return new ClientCredential(clientId, key);
+
+            return await context.AcquireTokenAsync(audience, new ClientCredential(clientId, key));
         }
     }
 }

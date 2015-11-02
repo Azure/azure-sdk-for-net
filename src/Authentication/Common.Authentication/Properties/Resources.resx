@@ -297,4 +297,7 @@
   <data name="NoTenantInContext" xml:space="preserve">
     <value>No tenant found in the context.  Please ensure that the credentials you provided are authorized to access an Azure subscription, then run Login-AzureRMAccount to login.</value>
   </data>
+  <data name="UnsupportedCredentialType" xml:space="preserve">
+    <value>Certificate authentication is not supported for account type {0}.</value>
+  </data>
 </root>
