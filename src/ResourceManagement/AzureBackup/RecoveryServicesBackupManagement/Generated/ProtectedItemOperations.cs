@@ -36,7 +36,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Protected Item operations for the Azure Backup extension.
+    /// Definition of ProtectedItem operations for the Azure Backup extension.
     /// </summary>
     internal partial class ProtectedItemOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IProtectedItemOperations
     {
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemCreateOrUpdateResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public async Task<ProtectedItemCreateOrUpdateResponse> CreateOrUpdateProtectedItemAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectedItemResponse> CreateOrUpdateProtectedItemAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -202,10 +202,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 {
                     JObject itemValue = new JObject();
                     requestDoc = itemValue;
-                    if (request.Item is ProtectedItemBase)
+                    if (request.Item is ProtectedItem)
                     {
                         itemValue["ObjectType"] = "ProtectedItemBase";
-                        ProtectedItemBase derived = ((ProtectedItemBase)request.Item);
+                        ProtectedItem derived = ((ProtectedItem)request.Item);
                         
                         if (derived.FriendlyName != null)
                         {
@@ -225,6 +225,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         if (derived.ProtectionStatus != null)
                         {
                             itemValue["ProtectionStatus"] = derived.ProtectionStatus;
+                        }
+                        
+                        if (derived.ProtectionState != null)
+                        {
+                            itemValue["ProtectionState"] = derived.ProtectionState;
                         }
                         
                         itemValue["PolicyInconsistent"] = derived.PolicyInconsistent;
@@ -264,11 +269,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             itemValue["VirtualMachineVersion"] = derived2.VirtualMachineVersion;
                         }
                         
-                        if (derived2.ResourceGroup != null)
-                        {
-                            itemValue["ResourceGroup"] = derived2.ResourceGroup;
-                        }
-                        
                         if (derived2.FriendlyName != null)
                         {
                             itemValue["FriendlyName"] = derived2.FriendlyName;
@@ -287,6 +287,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         if (derived2.ProtectionStatus != null)
                         {
                             itemValue["ProtectionStatus"] = derived2.ProtectionStatus;
+                        }
+                        
+                        if (derived2.ProtectionState != null)
+                        {
+                            itemValue["ProtectionState"] = derived2.ProtectionState;
                         }
                         
                         itemValue["PolicyInconsistent"] = derived2.PolicyInconsistent;
@@ -386,13 +391,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    ProtectedItemCreateOrUpdateResponse result = null;
+                    ProtectedItemResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProtectedItemCreateOrUpdateResponse();
+                        result = new ProtectedItemResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -401,84 +406,94 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            ProtectedItemResource itemInstance = new ProtectedItemResource();
+                            result.Item = itemInstance;
+                            
                             JToken itemValue2 = responseDoc["Item"];
                             if (itemValue2 != null && itemValue2.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)itemValue2["ObjectType"]);
                                 if (typeName == "ProtectedItemBase")
                                 {
-                                    ProtectedItemBase protectedItemBaseInstance = new ProtectedItemBase();
+                                    ProtectedItem protectedItemInstance = new ProtectedItem();
                                     
                                     JToken friendlyNameValue = itemValue2["FriendlyName"];
                                     if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance = ((string)friendlyNameValue);
-                                        protectedItemBaseInstance.FriendlyName = friendlyNameInstance;
+                                        protectedItemInstance.FriendlyName = friendlyNameInstance;
                                     }
                                     
                                     JToken backupManagementTypeValue = itemValue2["BackupManagementType"];
                                     if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                        protectedItemBaseInstance.BackupManagementType = backupManagementTypeInstance;
+                                        protectedItemInstance.BackupManagementType = backupManagementTypeInstance;
                                     }
                                     
                                     JToken workloadTypeValue = itemValue2["WorkloadType"];
                                     if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
                                     {
                                         string workloadTypeInstance = ((string)workloadTypeValue);
-                                        protectedItemBaseInstance.WorkloadType = workloadTypeInstance;
+                                        protectedItemInstance.WorkloadType = workloadTypeInstance;
                                     }
                                     
                                     JToken protectionStatusValue = itemValue2["ProtectionStatus"];
                                     if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
                                     {
                                         string protectionStatusInstance = ((string)protectionStatusValue);
-                                        protectedItemBaseInstance.ProtectionStatus = protectionStatusInstance;
+                                        protectedItemInstance.ProtectionStatus = protectionStatusInstance;
+                                    }
+                                    
+                                    JToken protectionStateValue = itemValue2["ProtectionState"];
+                                    if (protectionStateValue != null && protectionStateValue.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance = ((string)protectionStateValue);
+                                        protectedItemInstance.ProtectionState = protectionStateInstance;
                                     }
                                     
                                     JToken policyInconsistentValue = itemValue2["PolicyInconsistent"];
                                     if (policyInconsistentValue != null && policyInconsistentValue.Type != JTokenType.Null)
                                     {
                                         bool policyInconsistentInstance = ((bool)policyInconsistentValue);
-                                        protectedItemBaseInstance.PolicyInconsistent = policyInconsistentInstance;
+                                        protectedItemInstance.PolicyInconsistent = policyInconsistentInstance;
                                     }
                                     
                                     JToken lastBackupStatusValue = itemValue2["LastBackupStatus"];
                                     if (lastBackupStatusValue != null && lastBackupStatusValue.Type != JTokenType.Null)
                                     {
                                         string lastBackupStatusInstance = ((string)lastBackupStatusValue);
-                                        protectedItemBaseInstance.LastBackupStatus = lastBackupStatusInstance;
+                                        protectedItemInstance.LastBackupStatus = lastBackupStatusInstance;
                                     }
                                     
                                     JToken lastBackupTimeValue = itemValue2["LastBackupTime"];
                                     if (lastBackupTimeValue != null && lastBackupTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime lastBackupTimeInstance = ((DateTime)lastBackupTimeValue);
-                                        protectedItemBaseInstance.LastBackupTime = lastBackupTimeInstance;
+                                        protectedItemInstance.LastBackupTime = lastBackupTimeInstance;
                                     }
                                     
                                     JToken lastRecoveryPointValue = itemValue2["LastRecoveryPoint"];
                                     if (lastRecoveryPointValue != null && lastRecoveryPointValue.Type != JTokenType.Null)
                                     {
                                         DateTime lastRecoveryPointInstance = ((DateTime)lastRecoveryPointValue);
-                                        protectedItemBaseInstance.LastRecoveryPoint = lastRecoveryPointInstance;
+                                        protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
                                     }
                                     
                                     JToken policyNameValue = itemValue2["PolicyName"];
                                     if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
                                     {
                                         string policyNameInstance = ((string)policyNameValue);
-                                        protectedItemBaseInstance.PolicyName = policyNameInstance;
+                                        protectedItemInstance.PolicyName = policyNameInstance;
                                     }
                                     
                                     JToken containerNameValue = itemValue2["ContainerName"];
                                     if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                     {
                                         string containerNameInstance = ((string)containerNameValue);
-                                        protectedItemBaseInstance.ContainerName = containerNameInstance;
+                                        protectedItemInstance.ContainerName = containerNameInstance;
                                     }
-                                    result.Item = protectedItemBaseInstance;
+                                    itemInstance.Item = protectedItemInstance;
                                 }
                                 if (typeName == "IaaSVMProtectedItem")
                                 {
@@ -489,13 +504,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
                                         iaaSVMProtectedItemInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                    }
-                                    
-                                    JToken resourceGroupValue = itemValue2["ResourceGroup"];
-                                    if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
-                                    {
-                                        string resourceGroupInstance = ((string)resourceGroupValue);
-                                        iaaSVMProtectedItemInstance.ResourceGroup = resourceGroupInstance;
                                     }
                                     
                                     JToken friendlyNameValue2 = itemValue2["FriendlyName"];
@@ -524,6 +532,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string protectionStatusInstance2 = ((string)protectionStatusValue2);
                                         iaaSVMProtectedItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                    }
+                                    
+                                    JToken protectionStateValue2 = itemValue2["ProtectionState"];
+                                    if (protectionStateValue2 != null && protectionStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance2 = ((string)protectionStateValue2);
+                                        iaaSVMProtectedItemInstance.ProtectionState = protectionStateInstance2;
                                     }
                                     
                                     JToken policyInconsistentValue2 = itemValue2["PolicyInconsistent"];
@@ -567,15 +582,61 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string containerNameInstance2 = ((string)containerNameValue2);
                                         iaaSVMProtectedItemInstance.ContainerName = containerNameInstance2;
                                     }
-                                    result.Item = iaaSVMProtectedItemInstance;
+                                    itemInstance.Item = iaaSVMProtectedItemInstance;
                                 }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                itemInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                itemInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                itemInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                result.Location = locationInstance;
+                                itemInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    itemInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                itemInstance.ETag = eTagInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
@@ -838,6 +899,1329 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     {
                         result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
                     }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the details of specific protected Objects.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required.
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectedItemResponse.
+        /// </returns>
+        public async Task<ProtectedItemResponse> GetAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException("protectedItemName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.RecoveryServices";
+            url = url + "/";
+            url = url + "recoveryServicesVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/protectionContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/protectedItems/";
+            url = url + Uri.EscapeDataString(protectedItemName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ProtectedItemResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProtectedItemResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ProtectedItemResource itemInstance = new ProtectedItemResource();
+                            result.Item = itemInstance;
+                            
+                            JToken itemValue = responseDoc["Item"];
+                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)itemValue["ObjectType"]);
+                                if (typeName == "ProtectedItemBase")
+                                {
+                                    ProtectedItem protectedItemInstance = new ProtectedItem();
+                                    
+                                    JToken friendlyNameValue = itemValue["FriendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        protectedItemInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue = itemValue["BackupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectedItemInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
+                                    JToken workloadTypeValue = itemValue["WorkloadType"];
+                                    if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance = ((string)workloadTypeValue);
+                                        protectedItemInstance.WorkloadType = workloadTypeInstance;
+                                    }
+                                    
+                                    JToken protectionStatusValue = itemValue["ProtectionStatus"];
+                                    if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string protectionStatusInstance = ((string)protectionStatusValue);
+                                        protectedItemInstance.ProtectionStatus = protectionStatusInstance;
+                                    }
+                                    
+                                    JToken protectionStateValue = itemValue["ProtectionState"];
+                                    if (protectionStateValue != null && protectionStateValue.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance = ((string)protectionStateValue);
+                                        protectedItemInstance.ProtectionState = protectionStateInstance;
+                                    }
+                                    
+                                    JToken policyInconsistentValue = itemValue["PolicyInconsistent"];
+                                    if (policyInconsistentValue != null && policyInconsistentValue.Type != JTokenType.Null)
+                                    {
+                                        bool policyInconsistentInstance = ((bool)policyInconsistentValue);
+                                        protectedItemInstance.PolicyInconsistent = policyInconsistentInstance;
+                                    }
+                                    
+                                    JToken lastBackupStatusValue = itemValue["LastBackupStatus"];
+                                    if (lastBackupStatusValue != null && lastBackupStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string lastBackupStatusInstance = ((string)lastBackupStatusValue);
+                                        protectedItemInstance.LastBackupStatus = lastBackupStatusInstance;
+                                    }
+                                    
+                                    JToken lastBackupTimeValue = itemValue["LastBackupTime"];
+                                    if (lastBackupTimeValue != null && lastBackupTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastBackupTimeInstance = ((DateTime)lastBackupTimeValue);
+                                        protectedItemInstance.LastBackupTime = lastBackupTimeInstance;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue = itemValue["LastRecoveryPoint"];
+                                    if (lastRecoveryPointValue != null && lastRecoveryPointValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance = ((DateTime)lastRecoveryPointValue);
+                                        protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
+                                    }
+                                    
+                                    JToken policyNameValue = itemValue["PolicyName"];
+                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance = ((string)policyNameValue);
+                                        protectedItemInstance.PolicyName = policyNameInstance;
+                                    }
+                                    
+                                    JToken containerNameValue = itemValue["ContainerName"];
+                                    if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance = ((string)containerNameValue);
+                                        protectedItemInstance.ContainerName = containerNameInstance;
+                                    }
+                                    itemInstance.Item = protectedItemInstance;
+                                }
+                                if (typeName == "IaaSVMProtectedItem")
+                                {
+                                    IaaSVMProtectedItem iaaSVMProtectedItemInstance = new IaaSVMProtectedItem();
+                                    
+                                    JToken virtualMachineVersionValue = itemValue["VirtualMachineVersion"];
+                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                        iaaSVMProtectedItemInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                    }
+                                    
+                                    JToken friendlyNameValue2 = itemValue["FriendlyName"];
+                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                        iaaSVMProtectedItemInstance.FriendlyName = friendlyNameInstance2;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = itemValue["BackupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        iaaSVMProtectedItemInstance.BackupManagementType = backupManagementTypeInstance2;
+                                    }
+                                    
+                                    JToken workloadTypeValue2 = itemValue["WorkloadType"];
+                                    if (workloadTypeValue2 != null && workloadTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance2 = ((string)workloadTypeValue2);
+                                        iaaSVMProtectedItemInstance.WorkloadType = workloadTypeInstance2;
+                                    }
+                                    
+                                    JToken protectionStatusValue2 = itemValue["ProtectionStatus"];
+                                    if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
+                                    {
+                                        string protectionStatusInstance2 = ((string)protectionStatusValue2);
+                                        iaaSVMProtectedItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                    }
+                                    
+                                    JToken protectionStateValue2 = itemValue["ProtectionState"];
+                                    if (protectionStateValue2 != null && protectionStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance2 = ((string)protectionStateValue2);
+                                        iaaSVMProtectedItemInstance.ProtectionState = protectionStateInstance2;
+                                    }
+                                    
+                                    JToken policyInconsistentValue2 = itemValue["PolicyInconsistent"];
+                                    if (policyInconsistentValue2 != null && policyInconsistentValue2.Type != JTokenType.Null)
+                                    {
+                                        bool policyInconsistentInstance2 = ((bool)policyInconsistentValue2);
+                                        iaaSVMProtectedItemInstance.PolicyInconsistent = policyInconsistentInstance2;
+                                    }
+                                    
+                                    JToken lastBackupStatusValue2 = itemValue["LastBackupStatus"];
+                                    if (lastBackupStatusValue2 != null && lastBackupStatusValue2.Type != JTokenType.Null)
+                                    {
+                                        string lastBackupStatusInstance2 = ((string)lastBackupStatusValue2);
+                                        iaaSVMProtectedItemInstance.LastBackupStatus = lastBackupStatusInstance2;
+                                    }
+                                    
+                                    JToken lastBackupTimeValue2 = itemValue["LastBackupTime"];
+                                    if (lastBackupTimeValue2 != null && lastBackupTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastBackupTimeInstance2 = ((DateTime)lastBackupTimeValue2);
+                                        iaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue2 = itemValue["LastRecoveryPoint"];
+                                    if (lastRecoveryPointValue2 != null && lastRecoveryPointValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
+                                        iaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                    }
+                                    
+                                    JToken policyNameValue2 = itemValue["PolicyName"];
+                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance2 = ((string)policyNameValue2);
+                                        iaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                    }
+                                    
+                                    JToken containerNameValue2 = itemValue["ContainerName"];
+                                    if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance2 = ((string)containerNameValue2);
+                                        iaaSVMProtectedItemInstance.ContainerName = containerNameInstance2;
+                                    }
+                                    itemInstance.Item = iaaSVMProtectedItemInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                itemInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                itemInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                itemInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                itemInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    itemInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                itemInstance.ETag = eTagInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the details of specific protected Objects.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required.
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// Required.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectedItemResponse.
+        /// </returns>
+        public async Task<ProtectedItemResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException("protectedItemName");
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetOperationResultAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.RecoveryServices";
+            url = url + "/";
+            url = url + "recoveryServicesVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/protectionContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/protectedItems/";
+            url = url + Uri.EscapeDataString(protectedItemName);
+            url = url + "/operationResults/";
+            url = url + Uri.EscapeDataString(operationId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ProtectedItemResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProtectedItemResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ProtectedItemResource itemInstance = new ProtectedItemResource();
+                            result.Item = itemInstance;
+                            
+                            JToken itemValue = responseDoc["Item"];
+                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)itemValue["ObjectType"]);
+                                if (typeName == "ProtectedItemBase")
+                                {
+                                    ProtectedItem protectedItemInstance = new ProtectedItem();
+                                    
+                                    JToken friendlyNameValue = itemValue["FriendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        protectedItemInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue = itemValue["BackupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectedItemInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
+                                    JToken workloadTypeValue = itemValue["WorkloadType"];
+                                    if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance = ((string)workloadTypeValue);
+                                        protectedItemInstance.WorkloadType = workloadTypeInstance;
+                                    }
+                                    
+                                    JToken protectionStatusValue = itemValue["ProtectionStatus"];
+                                    if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string protectionStatusInstance = ((string)protectionStatusValue);
+                                        protectedItemInstance.ProtectionStatus = protectionStatusInstance;
+                                    }
+                                    
+                                    JToken protectionStateValue = itemValue["ProtectionState"];
+                                    if (protectionStateValue != null && protectionStateValue.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance = ((string)protectionStateValue);
+                                        protectedItemInstance.ProtectionState = protectionStateInstance;
+                                    }
+                                    
+                                    JToken policyInconsistentValue = itemValue["PolicyInconsistent"];
+                                    if (policyInconsistentValue != null && policyInconsistentValue.Type != JTokenType.Null)
+                                    {
+                                        bool policyInconsistentInstance = ((bool)policyInconsistentValue);
+                                        protectedItemInstance.PolicyInconsistent = policyInconsistentInstance;
+                                    }
+                                    
+                                    JToken lastBackupStatusValue = itemValue["LastBackupStatus"];
+                                    if (lastBackupStatusValue != null && lastBackupStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string lastBackupStatusInstance = ((string)lastBackupStatusValue);
+                                        protectedItemInstance.LastBackupStatus = lastBackupStatusInstance;
+                                    }
+                                    
+                                    JToken lastBackupTimeValue = itemValue["LastBackupTime"];
+                                    if (lastBackupTimeValue != null && lastBackupTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastBackupTimeInstance = ((DateTime)lastBackupTimeValue);
+                                        protectedItemInstance.LastBackupTime = lastBackupTimeInstance;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue = itemValue["LastRecoveryPoint"];
+                                    if (lastRecoveryPointValue != null && lastRecoveryPointValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance = ((DateTime)lastRecoveryPointValue);
+                                        protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
+                                    }
+                                    
+                                    JToken policyNameValue = itemValue["PolicyName"];
+                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance = ((string)policyNameValue);
+                                        protectedItemInstance.PolicyName = policyNameInstance;
+                                    }
+                                    
+                                    JToken containerNameValue = itemValue["ContainerName"];
+                                    if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance = ((string)containerNameValue);
+                                        protectedItemInstance.ContainerName = containerNameInstance;
+                                    }
+                                    itemInstance.Item = protectedItemInstance;
+                                }
+                                if (typeName == "IaaSVMProtectedItem")
+                                {
+                                    IaaSVMProtectedItem iaaSVMProtectedItemInstance = new IaaSVMProtectedItem();
+                                    
+                                    JToken virtualMachineVersionValue = itemValue["VirtualMachineVersion"];
+                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                        iaaSVMProtectedItemInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                    }
+                                    
+                                    JToken friendlyNameValue2 = itemValue["FriendlyName"];
+                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                        iaaSVMProtectedItemInstance.FriendlyName = friendlyNameInstance2;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = itemValue["BackupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        iaaSVMProtectedItemInstance.BackupManagementType = backupManagementTypeInstance2;
+                                    }
+                                    
+                                    JToken workloadTypeValue2 = itemValue["WorkloadType"];
+                                    if (workloadTypeValue2 != null && workloadTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance2 = ((string)workloadTypeValue2);
+                                        iaaSVMProtectedItemInstance.WorkloadType = workloadTypeInstance2;
+                                    }
+                                    
+                                    JToken protectionStatusValue2 = itemValue["ProtectionStatus"];
+                                    if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
+                                    {
+                                        string protectionStatusInstance2 = ((string)protectionStatusValue2);
+                                        iaaSVMProtectedItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                    }
+                                    
+                                    JToken protectionStateValue2 = itemValue["ProtectionState"];
+                                    if (protectionStateValue2 != null && protectionStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance2 = ((string)protectionStateValue2);
+                                        iaaSVMProtectedItemInstance.ProtectionState = protectionStateInstance2;
+                                    }
+                                    
+                                    JToken policyInconsistentValue2 = itemValue["PolicyInconsistent"];
+                                    if (policyInconsistentValue2 != null && policyInconsistentValue2.Type != JTokenType.Null)
+                                    {
+                                        bool policyInconsistentInstance2 = ((bool)policyInconsistentValue2);
+                                        iaaSVMProtectedItemInstance.PolicyInconsistent = policyInconsistentInstance2;
+                                    }
+                                    
+                                    JToken lastBackupStatusValue2 = itemValue["LastBackupStatus"];
+                                    if (lastBackupStatusValue2 != null && lastBackupStatusValue2.Type != JTokenType.Null)
+                                    {
+                                        string lastBackupStatusInstance2 = ((string)lastBackupStatusValue2);
+                                        iaaSVMProtectedItemInstance.LastBackupStatus = lastBackupStatusInstance2;
+                                    }
+                                    
+                                    JToken lastBackupTimeValue2 = itemValue["LastBackupTime"];
+                                    if (lastBackupTimeValue2 != null && lastBackupTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastBackupTimeInstance2 = ((DateTime)lastBackupTimeValue2);
+                                        iaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue2 = itemValue["LastRecoveryPoint"];
+                                    if (lastRecoveryPointValue2 != null && lastRecoveryPointValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
+                                        iaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                    }
+                                    
+                                    JToken policyNameValue2 = itemValue["PolicyName"];
+                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance2 = ((string)policyNameValue2);
+                                        iaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                    }
+                                    
+                                    JToken containerNameValue2 = itemValue["ContainerName"];
+                                    if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance2 = ((string)containerNameValue2);
+                                        iaaSVMProtectedItemInstance.ContainerName = containerNameInstance2;
+                                    }
+                                    itemInstance.Item = iaaSVMProtectedItemInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                itemInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                itemInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                itemInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                itemInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    itemInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                itemInstance.ETag = eTagInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the list of all protected Objects.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='queryFilter'>
+        /// Optional.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectedItemsListResponse.
+        /// </returns>
+        public async Task<ProtectedItemListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("queryFilter", queryFilter);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.RecoveryServices";
+            url = url + "/";
+            url = url + "recoveryServicesVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupProtectedItems";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            List<string> odataFilter = new List<string>();
+            if (queryFilter != null && queryFilter.ProviderType != null)
+            {
+                odataFilter.Add("ProviderType eq '" + Uri.EscapeDataString(queryFilter.ProviderType) + "'");
+            }
+            if (queryFilter != null && queryFilter.DatasourceType != null)
+            {
+                odataFilter.Add("Type eq '" + Uri.EscapeDataString(queryFilter.DatasourceType) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ProtectedItemListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProtectedItemListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ProtectedItemResourceList itemListInstance = new ProtectedItemResourceList();
+                            result.ItemList = itemListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    ProtectedItemResource protectedItemResourceInstance = new ProtectedItemResource();
+                                    itemListInstance.Value.Add(protectedItemResourceInstance);
+                                    
+                                    JToken itemValue = valueValue["Item"];
+                                    if (itemValue != null && itemValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)itemValue["ObjectType"]);
+                                        if (typeName == "ProtectedItemBase")
+                                        {
+                                            ProtectedItem protectedItemInstance = new ProtectedItem();
+                                            
+                                            JToken friendlyNameValue = itemValue["FriendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                protectedItemInstance.FriendlyName = friendlyNameInstance;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue = itemValue["BackupManagementType"];
+                                            if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                                protectedItemInstance.BackupManagementType = backupManagementTypeInstance;
+                                            }
+                                            
+                                            JToken workloadTypeValue = itemValue["WorkloadType"];
+                                            if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string workloadTypeInstance = ((string)workloadTypeValue);
+                                                protectedItemInstance.WorkloadType = workloadTypeInstance;
+                                            }
+                                            
+                                            JToken protectionStatusValue = itemValue["ProtectionStatus"];
+                                            if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string protectionStatusInstance = ((string)protectionStatusValue);
+                                                protectedItemInstance.ProtectionStatus = protectionStatusInstance;
+                                            }
+                                            
+                                            JToken protectionStateValue = itemValue["ProtectionState"];
+                                            if (protectionStateValue != null && protectionStateValue.Type != JTokenType.Null)
+                                            {
+                                                string protectionStateInstance = ((string)protectionStateValue);
+                                                protectedItemInstance.ProtectionState = protectionStateInstance;
+                                            }
+                                            
+                                            JToken policyInconsistentValue = itemValue["PolicyInconsistent"];
+                                            if (policyInconsistentValue != null && policyInconsistentValue.Type != JTokenType.Null)
+                                            {
+                                                bool policyInconsistentInstance = ((bool)policyInconsistentValue);
+                                                protectedItemInstance.PolicyInconsistent = policyInconsistentInstance;
+                                            }
+                                            
+                                            JToken lastBackupStatusValue = itemValue["LastBackupStatus"];
+                                            if (lastBackupStatusValue != null && lastBackupStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string lastBackupStatusInstance = ((string)lastBackupStatusValue);
+                                                protectedItemInstance.LastBackupStatus = lastBackupStatusInstance;
+                                            }
+                                            
+                                            JToken lastBackupTimeValue = itemValue["LastBackupTime"];
+                                            if (lastBackupTimeValue != null && lastBackupTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastBackupTimeInstance = ((DateTime)lastBackupTimeValue);
+                                                protectedItemInstance.LastBackupTime = lastBackupTimeInstance;
+                                            }
+                                            
+                                            JToken lastRecoveryPointValue = itemValue["LastRecoveryPoint"];
+                                            if (lastRecoveryPointValue != null && lastRecoveryPointValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastRecoveryPointInstance = ((DateTime)lastRecoveryPointValue);
+                                                protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
+                                            }
+                                            
+                                            JToken policyNameValue = itemValue["PolicyName"];
+                                            if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance = ((string)policyNameValue);
+                                                protectedItemInstance.PolicyName = policyNameInstance;
+                                            }
+                                            
+                                            JToken containerNameValue = itemValue["ContainerName"];
+                                            if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
+                                            {
+                                                string containerNameInstance = ((string)containerNameValue);
+                                                protectedItemInstance.ContainerName = containerNameInstance;
+                                            }
+                                            protectedItemResourceInstance.Item = protectedItemInstance;
+                                        }
+                                        if (typeName == "IaaSVMProtectedItem")
+                                        {
+                                            IaaSVMProtectedItem iaaSVMProtectedItemInstance = new IaaSVMProtectedItem();
+                                            
+                                            JToken virtualMachineVersionValue = itemValue["VirtualMachineVersion"];
+                                            if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                                iaaSVMProtectedItemInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                            }
+                                            
+                                            JToken friendlyNameValue2 = itemValue["FriendlyName"];
+                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                iaaSVMProtectedItemInstance.FriendlyName = friendlyNameInstance2;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue2 = itemValue["BackupManagementType"];
+                                            if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                                iaaSVMProtectedItemInstance.BackupManagementType = backupManagementTypeInstance2;
+                                            }
+                                            
+                                            JToken workloadTypeValue2 = itemValue["WorkloadType"];
+                                            if (workloadTypeValue2 != null && workloadTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string workloadTypeInstance2 = ((string)workloadTypeValue2);
+                                                iaaSVMProtectedItemInstance.WorkloadType = workloadTypeInstance2;
+                                            }
+                                            
+                                            JToken protectionStatusValue2 = itemValue["ProtectionStatus"];
+                                            if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string protectionStatusInstance2 = ((string)protectionStatusValue2);
+                                                iaaSVMProtectedItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                            }
+                                            
+                                            JToken protectionStateValue2 = itemValue["ProtectionState"];
+                                            if (protectionStateValue2 != null && protectionStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string protectionStateInstance2 = ((string)protectionStateValue2);
+                                                iaaSVMProtectedItemInstance.ProtectionState = protectionStateInstance2;
+                                            }
+                                            
+                                            JToken policyInconsistentValue2 = itemValue["PolicyInconsistent"];
+                                            if (policyInconsistentValue2 != null && policyInconsistentValue2.Type != JTokenType.Null)
+                                            {
+                                                bool policyInconsistentInstance2 = ((bool)policyInconsistentValue2);
+                                                iaaSVMProtectedItemInstance.PolicyInconsistent = policyInconsistentInstance2;
+                                            }
+                                            
+                                            JToken lastBackupStatusValue2 = itemValue["LastBackupStatus"];
+                                            if (lastBackupStatusValue2 != null && lastBackupStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string lastBackupStatusInstance2 = ((string)lastBackupStatusValue2);
+                                                iaaSVMProtectedItemInstance.LastBackupStatus = lastBackupStatusInstance2;
+                                            }
+                                            
+                                            JToken lastBackupTimeValue2 = itemValue["LastBackupTime"];
+                                            if (lastBackupTimeValue2 != null && lastBackupTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastBackupTimeInstance2 = ((DateTime)lastBackupTimeValue2);
+                                                iaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
+                                            }
+                                            
+                                            JToken lastRecoveryPointValue2 = itemValue["LastRecoveryPoint"];
+                                            if (lastRecoveryPointValue2 != null && lastRecoveryPointValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
+                                                iaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                            }
+                                            
+                                            JToken policyNameValue2 = itemValue["PolicyName"];
+                                            if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance2 = ((string)policyNameValue2);
+                                                iaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                            }
+                                            
+                                            JToken containerNameValue2 = itemValue["ContainerName"];
+                                            if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string containerNameInstance2 = ((string)containerNameValue2);
+                                                iaaSVMProtectedItemInstance.ContainerName = containerNameInstance2;
+                                            }
+                                            protectedItemResourceInstance.Item = iaaSVMProtectedItemInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        protectedItemResourceInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        protectedItemResourceInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        protectedItemResourceInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        protectedItemResourceInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            protectedItemResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken eTagValue = valueValue["eTag"];
+                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                    {
+                                        string eTagInstance = ((string)eTagValue);
+                                        protectedItemResourceInstance.ETag = eTagInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                itemListInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
                     
                     if (shouldTrace)
                     {
