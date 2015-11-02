@@ -116,6 +116,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
             set { this._resourceType = value; }
         }
         
+        private IEventOperations _events;
+        
+        /// <summary>
+        /// Definition of event operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IEventOperations Events
+        {
+            get { return this._events; }
+        }
+        
         private IFabricOperations _fabrics;
         
         /// <summary>
@@ -250,6 +260,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient()
             : base()
         {
+            this._events = new EventOperations(this);
             this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);
             this._logicalNetwork = new LogicalNetworkOperations(this);
@@ -394,6 +405,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._events = new EventOperations(this);
             this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);
             this._logicalNetwork = new LogicalNetworkOperations(this);

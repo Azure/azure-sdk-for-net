@@ -91,6 +91,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of event operations for the Site Recovery extension.
+        /// </summary>
+        IEventOperations Events
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of fabric operations for the Site Recovery extension.
         /// </summary>
         IFabricOperations Fabrics
