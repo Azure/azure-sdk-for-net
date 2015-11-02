@@ -101,6 +101,12 @@
     <None Include="SessionRecords\Compute.Tests.VMScaleSetScenarioTests\TestVMScaleSetScenarioOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetUpdateTests\TestVMScaleSetScalingOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMScaleSetUpdateTests\TestVMScaleSetUpdateOperations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

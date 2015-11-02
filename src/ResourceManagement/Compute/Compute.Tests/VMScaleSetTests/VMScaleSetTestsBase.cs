@@ -188,8 +188,6 @@ namespace Compute.Tests
         protected void UpdateVMScaleSet(string rgName, string vmssName, VirtualMachineScaleSet inputVMScaleSet)
         {
             var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
-
-            var lroResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
         }
 
         private VirtualMachineScaleSet CreateVMScaleSetAndGetOperationResponse(
