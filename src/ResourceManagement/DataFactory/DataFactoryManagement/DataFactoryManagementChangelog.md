@@ -1,5 +1,13 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 
+_Release date: _
+
+### Feature Additions
+
+* New Activity type: AzureMLUpdateResource, along with a new optional property in the Azure ML Linked Service, "updateResourceEndpoint". 
+    * This Activity takes as input a blob Dataset for an .iLearner file (e.g. produced as output of a retraining batch execution) and uploads it to the indicated management endpoint.
+
 ## Version 4.1.0 
 _Release date: 2015.10.28_
 
