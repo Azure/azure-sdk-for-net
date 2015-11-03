@@ -71,8 +71,9 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 handler.IsPassThrough = true;
             }
-            var client = context.GetServiceClient<GraphRbacManagementClient>(
-                handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+            var client = handler == null ?
+                context.GetServiceClient<GraphRbacManagementClient>() :
+                context.GetServiceClient<GraphRbacManagementClient>(handler);
             client.TenantID = GetTenantAndDomain().TenantId;
             return client;
         }
