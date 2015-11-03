@@ -472,13 +472,13 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "204": {
             "description": ""
           },
           "200": {
+            "description": ""
+          },
+          "202": {
             "description": ""
           }
         },
@@ -947,13 +947,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
@@ -991,13 +991,13 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": ""
+          },
           "202": {
             "description": ""
           },
           "200": {
-            "description": ""
-          },
-          "204": {
             "description": ""
           }
         },
@@ -1397,7 +1397,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_DeallocateInstances",
+        "operationId": "VirtualMachineScaleSets_Deallocate",
         "description": "The operation to deallocate virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1417,7 +1417,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1468,13 +1468,13 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": ""
           },
           "204": {
-            "description": ""
-          },
-          "202": {
             "description": ""
           }
         },
@@ -1545,7 +1545,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
+              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceRequiredIDs"
             },
             "description": "The list of virtual machine scale set instance IDs."
           },
@@ -1713,7 +1713,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_PowerOffInstances",
+        "operationId": "VirtualMachineScaleSets_PowerOff",
         "description": "The operation to power off (stop) virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1733,7 +1733,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1759,7 +1759,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_RestartInstances",
+        "operationId": "VirtualMachineScaleSets_Restart",
         "description": "The operation to restart virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1779,7 +1779,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1805,7 +1805,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_StartInstances",
+        "operationId": "VirtualMachineScaleSets_Start",
         "description": "The operation to start virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1825,7 +1825,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1873,7 +1873,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
+              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceRequiredIDs"
             },
             "description": "The list of virtual machine scale set instance IDs."
           },
@@ -1973,13 +1973,13 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": ""
-          },
           "202": {
             "description": ""
           },
           "200": {
+            "description": ""
+          },
+          "204": {
             "description": ""
           }
         },
@@ -2432,6 +2432,11 @@
           "description": "Gets or sets whether the handler can support multiple extensions."
         }
       },
+      "required": [
+        "operatingSystem",
+        "computeRole",
+        "handlerSchema"
+      ],
       "description": "Describes the properties of a Virtual Machine Extension Image."
     },
     "VirtualMachineExtensionImage": {
@@ -2455,6 +2460,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2480,6 +2489,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2583,6 +2596,11 @@
           "description": "Gets or sets the product ID."
         }
       },
+      "required": [
+        "publisher",
+        "name",
+        "product"
+      ],
       "description": "Used for establishing the purchase context of any 3rd Party artifact through MarketPlace."
     },
     "OSDiskImage": {
@@ -2600,6 +2618,9 @@
           }
         }
       },
+      "required": [
+        "operatingSystem"
+      ],
       "description": "Contains the os disk image information."
     },
     "DataDiskImage": {
@@ -2610,6 +2631,9 @@
           "description": "Gets the LUN number for a data disk.This value is used to identify data disk image inside the VMImage therefore it must be unique for each data disk.The allowed character for the value is digit."
         }
       },
+      "required": [
+        "lun"
+      ],
       "description": "Contains the data disk images information."
     },
     "VirtualMachineImageProperties": {
@@ -2650,6 +2674,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2698,6 +2726,12 @@
           "description": "Gets or sets the name of the type of usage."
         }
       },
+      "required": [
+        "unit",
+        "currentValue",
+        "limit",
+        "name"
+      ],
       "description": "Describes Compute Resource Usage."
     },
     "ListUsagesResult": {
@@ -2727,6 +2761,11 @@
           "description": "Gets or sets whether it overwrites destination VirtualHardDisk if true, in case of conflict."
         }
       },
+      "required": [
+        "vhdPrefix",
+        "destinationContainerName",
+        "overwriteVhds"
+      ],
       "description": "Capture Virtual Machine parameters."
     },
     "ComputeLongRunningOperationProperties": {
@@ -2924,6 +2963,10 @@
           "description": "Gets or sets the Relative URL of the Key Vault containing the secret."
         }
       },
+      "required": [
+        "secretUrl",
+        "sourceVault"
+      ],
       "description": "Describes a reference to Key Vault Secret"
     },
     "KeyVaultKeyReference": {
@@ -2937,6 +2980,10 @@
           "description": "Gets or sets the Relative URL of the Key Vault containing the key"
         }
       },
+      "required": [
+        "keyUrl",
+        "sourceVault"
+      ],
       "description": "Describes a reference to Key Vault Key"
     },
     "DiskEncryptionSettings": {
@@ -2950,6 +2997,9 @@
           "description": "Gets or sets the key encryption key which is KeyVault Key."
         }
       },
+      "required": [
+        "diskEncryptionKey"
+      ],
       "description": "Describes a Encryption Settings for a Disk"
     },
     "VirtualHardDisk": {
@@ -3023,6 +3073,11 @@
           "description": "Gets or sets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks."
         }
       },
+      "required": [
+        "name",
+        "vhd",
+        "createOption"
+      ],
       "description": "Describes an Operating System disk."
     },
     "DataDisk": {
@@ -3076,6 +3131,12 @@
           "description": "Gets or sets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks."
         }
       },
+      "required": [
+        "lun",
+        "name",
+        "vhd",
+        "createOption"
+      ],
       "description": "Describes a data disk."
     },
     "StorageProfile": {
@@ -3682,6 +3743,10 @@
           "description": "Gets or sets the list of virtual hard disk container uris."
         }
       },
+      "required": [
+        "name",
+        "createOption"
+      ],
       "description": "Describes a virtual machine scale set operating system disk."
     },
     "VirtualMachineScaleSetStorageProfile": {
@@ -3720,6 +3785,9 @@
           "description": "Gets or sets the load balancer backend address pools."
         }
       },
+      "required": [
+        "subnet"
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration properties."
     },
     "VirtualMachineScaleSetIPConfiguration": {
@@ -3732,6 +3800,9 @@
           "$ref": "#/definitions/VirtualMachineScaleSetIPConfigurationProperties"
         }
       },
+      "required": [
+        "name"
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration."
     },
     "VirtualMachineScaleSetNetworkConfigurationProperties": {
@@ -3748,6 +3819,9 @@
           "description": "Gets or sets the virtual machine scale set IP Configuration."
         }
       },
+      "required": [
+        "ipConfigurations"
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration."
     },
     "VirtualMachineScaleSetNetworkConfiguration": {
@@ -3760,6 +3834,9 @@
           "$ref": "#/definitions/VirtualMachineScaleSetNetworkConfigurationProperties"
         }
       },
+      "required": [
+        "name"
+      ],
       "description": "Describes a virtual machine scale set network profile's network configurations."
     },
     "VirtualMachineScaleSetNetworkProfile": {
@@ -3896,6 +3973,21 @@
           "description": "Gets or sets the virtual machine scale set instance ids."
         }
       },
+      "description": "Specifies the list of virtual machine scale set instance IDs."
+    },
+    "VirtualMachineScaleSetVMInstanceRequiredIDs": {
+      "properties": {
+        "instanceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the virtual machine scale set instance ids."
+        }
+      },
+      "required": [
+        "instanceIds"
+      ],
       "description": "Specifies the list of virtual machine scale set instance IDs."
     },
     "VirtualMachineStatusCodeCount": {
@@ -4219,6 +4311,11 @@
           "description": "Gets or sets the operation error if any occurred"
         }
       },
+      "required": [
+        "operationId",
+        "status",
+        "startTime"
+      ],
       "description": "The compute long running operation response."
     },
     "Resource": {

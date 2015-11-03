@@ -70,10 +70,10 @@ namespace Compute.Tests
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet);
 
                     // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
-                    // m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
-                    // m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
-                    // m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
-                    // m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
+                    m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
+                    m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
+                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
+                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
 
                     passed = true;
