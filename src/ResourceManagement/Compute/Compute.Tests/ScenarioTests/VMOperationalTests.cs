@@ -126,7 +126,7 @@ namespace Compute.Tests
 
                     // Create 2nd VM from the captured image
                     // TODO : Provisioning Time-out Issues
-                    /* VirtualMachine inputVM2;
+                    VirtualMachine inputVM2;
                     string as2Name = as1Name + "b";
                     VirtualMachine vm2 = CreateVM_NoAsyncTracking(rg1Name, as2Name, storageAccountOutput, imageRef, out inputVM2,
                         vm =>
@@ -135,8 +135,8 @@ namespace Compute.Tests
                             vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = imageUri };
                             vm.StorageProfile.OsDisk.Vhd.Uri = vm.StorageProfile.OsDisk.Vhd.Uri.Replace(".vhd", "copy.vhd");
                             vm.StorageProfile.OsDisk.OsType = "Windows";
-                        });
-                    Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri); */
+                        }, false, false);
+                    Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri);
                 }
                 finally
                 {
