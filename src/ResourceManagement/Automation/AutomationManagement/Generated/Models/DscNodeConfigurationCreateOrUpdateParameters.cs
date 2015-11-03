@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of the dsc node configuration.
+    /// The parameters supplied to the create or update node configuration
+    /// operation.
     /// </summary>
-    public partial class DscNodeConfiguration
+    public partial class DscNodeConfigurationCreateOrUpdateParameters
     {
         private DscConfigurationAssociationProperty _configuration;
         
         /// <summary>
-        /// Optional. Gets or sets the configuration of the node.
+        /// Required. Gets or sets the configuration of the node.
         /// </summary>
         public DscConfigurationAssociationProperty Configuration
         {
@@ -41,32 +42,10 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._configuration = value; }
         }
         
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets creation time.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the node configuration name.
+        /// Required. Gets or sets the type of the parameter.
         /// </summary>
         public string Name
         {
@@ -74,11 +53,48 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
+        private ContentSource _source;
+        
         /// <summary>
-        /// Initializes a new instance of the DscNodeConfiguration class.
+        /// Required. Gets or sets the source.
         /// </summary>
-        public DscNodeConfiguration()
+        public ContentSource Source
         {
+            get { return this._source; }
+            set { this._source = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DscNodeConfigurationCreateOrUpdateParameters class.
+        /// </summary>
+        public DscNodeConfigurationCreateOrUpdateParameters()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DscNodeConfigurationCreateOrUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public DscNodeConfigurationCreateOrUpdateParameters(ContentSource source, string name, DscConfigurationAssociationProperty configuration)
+            : this()
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (configuration == null)
+            {
+                throw new ArgumentNullException("configuration");
+            }
+            this.Source = source;
+            this.Name = name;
+            this.Configuration = configuration;
         }
     }
 }

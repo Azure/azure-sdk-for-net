@@ -21,63 +21,63 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the patch runbook properties.
+    /// Definition of Usage.
     /// </summary>
-    public partial class RunbookPatchProperties
+    public partial class Usage
     {
-        private string _description;
+        private long _currentValue;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the runbook.
+        /// Optional. Gets or sets the current usage value.
         /// </summary>
-        public string Description
+        public long CurrentValue
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._currentValue; }
+            set { this._currentValue = value; }
         }
         
-        private int _logActivityTrace;
+        private long _limit;
         
         /// <summary>
-        /// Optional. Gets or sets the activity-level tracing options of the
-        /// runbook.
+        /// Optional. Gets or sets max limit. -1 for unlimited
         /// </summary>
-        public int LogActivityTrace
+        public long Limit
         {
-            get { return this._logActivityTrace; }
-            set { this._logActivityTrace = value; }
+            get { return this._limit; }
+            set { this._limit = value; }
         }
         
-        private bool _logProgress;
+        private UsageCounterName _name;
         
         /// <summary>
-        /// Optional. Gets or sets progress log option.
+        /// Optional. Gets or sets the usage counter name.
         /// </summary>
-        public bool LogProgress
+        public UsageCounterName Name
         {
-            get { return this._logProgress; }
-            set { this._logProgress = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private bool _logVerbose;
+        private string _unit;
         
         /// <summary>
-        /// Optional. Gets or sets verbose log option.
+        /// Optional. Gets or sets the usage unit name.
         /// </summary>
-        public bool LogVerbose
+        public string Unit
         {
-            get { return this._logVerbose; }
-            set { this._logVerbose = value; }
+            get { return this._unit; }
+            set { this._unit = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookPatchProperties class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        public RunbookPatchProperties()
+        public Usage()
         {
         }
     }

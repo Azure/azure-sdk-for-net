@@ -237,6 +237,26 @@ namespace Microsoft.Azure.Management.Automation.Testing
                 }
             }
         }
+
+        [Fact]
+        public void CanGetUsage()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                {
+                    var usage = _testFixture.GetUsages();
+                    Assert.Equal(2, usage.Count);
+
+                    Assert.Equal(0, usage[0].CurrentValue);
+                    Assert.Equal("AccountUsage", usage[0].Name.Value);
+                    Assert.Equal(-1, usage[0].Limit);
+                }
+            }
+        }
+
     }
 }
 

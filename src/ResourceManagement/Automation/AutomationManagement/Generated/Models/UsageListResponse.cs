@@ -23,54 +23,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of hybrid runbook worker group.
+    /// The response model for the get usage operation.
     /// </summary>
-    public partial class HybridRunbookWorkerGroup
+    public partial class UsageListResponse : AzureOperationResponse, IEnumerable<Usage>
     {
-        private CredentialNavigation _credential;
+        private IList<Usage> _usage;
         
         /// <summary>
-        /// Optional. Sets the credential of a worker group.
+        /// Optional. Gets or sets usage.
         /// </summary>
-        public CredentialNavigation Credential
+        public IList<Usage> Usage
         {
-            get { return this._credential; }
-            set { this._credential = value; }
-        }
-        
-        private IList<HybridRunbookWorker> _hybridRunbookWorkers;
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of hybrid runbook workers.
-        /// </summary>
-        public IList<HybridRunbookWorker> HybridRunbookWorkers
-        {
-            get { return this._hybridRunbookWorkers; }
-            set { this._hybridRunbookWorkers = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the group.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._usage; }
+            set { this._usage = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the HybridRunbookWorkerGroup class.
+        /// Initializes a new instance of the UsageListResponse class.
         /// </summary>
-        public HybridRunbookWorkerGroup()
+        public UsageListResponse()
         {
-            this.HybridRunbookWorkers = new LazyList<HybridRunbookWorker>();
+            this.Usage = new LazyList<Usage>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Usage.
+        /// </summary>
+        public IEnumerator<Usage> GetEnumerator()
+        {
+            return this.Usage.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Usage.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
