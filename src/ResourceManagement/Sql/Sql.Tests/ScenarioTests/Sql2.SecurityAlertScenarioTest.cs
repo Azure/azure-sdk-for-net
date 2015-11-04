@@ -41,25 +41,25 @@ namespace Sql2.Tests.ScenarioTests
         /// </summary>
         private void TestDatabaseSecurityAlertAPIs(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database database)
         {
-            DatabaseAuditingPolicyGetResponse getDefaultDatabasePolicyResponse = sqlClient.AuditingPolicy.GetDatabasePolicy(resourceGroupName, server.Name, database.Name);
-            DatabaseAuditingPolicyProperties properties = getDefaultDatabasePolicyResponse.AuditingPolicy.Properties;
+            DatabaseSecurityAlertPolicyGetResponse getDefaultDatabaseSecurityAlertPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
+            DatabaseSecurityAlertPolicyProperties properties = getDefaultDatabaseSecurityAlertPolicyResponse.SecurityAlertPolicy.Properties;
 
             // Verify that the initial Get request contains the default policy.
-            TestUtilities.ValidateOperationResponse(getDefaultDatabasePolicyResponse, HttpStatusCode.OK);
+            TestUtilities.ValidateOperationResponse(getDefaultDatabaseSecurityAlertPolicyResponse, HttpStatusCode.OK);
             VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), properties);
 
             // Modify the policy properties, send and receive, see it its still ok
             ChangeDataBaseSecurityAlertPolicy(properties);
-            DatabaseAuditingPolicyCreateOrUpdateParameters updateParams =
-                new DatabaseAuditingPolicyCreateOrUpdateParameters { Properties = properties };
+            DatabaseSecurityAlertPolicyCreateOrUpdateParameters updateParams =
+                new DatabaseSecurityAlertPolicyCreateOrUpdateParameters { Properties = properties };
 
-            var updateResponse = sqlClient.AuditingPolicy.CreateOrUpdateDatebasePolicy(resourceGroupName, server.Name, database.Name, updateParams);
+            var updateResponse = sqlClient.SecurityAlertPolicy.CreateOrUpdateDatebaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name, updateParams);
 
             // Verify that the initial Get request contains the default policy.
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
 
-            DatabaseAuditingPolicyGetResponse getUpdatedPolicyResponse = sqlClient.AuditingPolicy.GetDatabasePolicy(resourceGroupName, server.Name, database.Name);
-            DatabaseAuditingPolicyProperties updatedProperties = getUpdatedPolicyResponse.AuditingPolicy.Properties;
+            DatabaseSecurityAlertPolicyGetResponse getUpdatedPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
+            DatabaseSecurityAlertPolicyProperties updatedProperties = getUpdatedPolicyResponse.SecurityAlertPolicy.Properties;
 
             // Verify that the Get request contains the updated policy.
             TestUtilities.ValidateOperationResponse(getUpdatedPolicyResponse, HttpStatusCode.OK);
@@ -70,20 +70,14 @@ namespace Sql2.Tests.ScenarioTests
         /// Creates and returns a DatabaseSecurityAlertPolicyProperties object that holds the default settings for a database security alert policy
         /// </summary>
         /// <returns>A DatabaseSecurityAlertPolicyProperties object with the default security alert policy settings</returns>
-        private DatabaseAuditingPolicyProperties GetDefaultDatabaseSecurityAlertProperties()
+        private DatabaseSecurityAlertPolicyProperties GetDefaultDatabaseSecurityAlertProperties()
         {
-            DatabaseAuditingPolicyProperties props = new DatabaseAuditingPolicyProperties
+            DatabaseSecurityAlertPolicyProperties props = new DatabaseSecurityAlertPolicyProperties
             {
-                AuditingState = "New",
-                EventTypesToAudit = "",
-                StorageAccountName = null,
-                StorageAccountKey = null,
-                StorageAccountSecondaryKey = null,
-                StorageAccountResourceGroupName = null,
-                StorageAccountSubscriptionId = null,
-                StorageTableEndpoint = null,
-                RetentionDays = "0",
-                UseServerDefault = "Disabled"
+                State = "Disabled",
+                DisabledAlerts = string.Empty,
+                EmailAddresses = string.Empty,
+                EmailAccountAdmins = "Enabled"
             };
             return props;
         }
@@ -93,33 +87,27 @@ namespace Sql2.Tests.ScenarioTests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private static void VerifyDatabaseSecurityAlertPolicyInformation(DatabaseAuditingPolicyProperties expected, DatabaseAuditingPolicyProperties actual)
+        private static void VerifyDatabaseSecurityAlertPolicyInformation(DatabaseSecurityAlertPolicyProperties expected, DatabaseSecurityAlertPolicyProperties actual)
         {
-            Assert.Equal(expected.AuditingState, actual.AuditingState);
-            Assert.Equal(expected.EventTypesToAudit, actual.EventTypesToAudit);
-            Assert.Equal(expected.StorageAccountName, actual.StorageAccountName);
-            Assert.Equal(expected.StorageAccountKey, actual.StorageAccountKey);
-            Assert.Equal(expected.StorageAccountSecondaryKey, actual.StorageAccountSecondaryKey);
-            Assert.Equal(expected.StorageAccountResourceGroupName, actual.StorageAccountResourceGroupName);
-            Assert.Equal(expected.StorageTableEndpoint, actual.StorageTableEndpoint);
-            Assert.Equal(expected.StorageAccountSubscriptionId, actual.StorageAccountSubscriptionId);
-            Assert.Equal(expected.RetentionDays, actual.RetentionDays);
-            Assert.Equal(expected.UseServerDefault, actual.UseServerDefault);
+            Assert.Equal(expected.State, actual.State);
+            Assert.Equal(expected.DisabledAlerts, actual.DisabledAlerts);
+            Assert.Equal(expected.EmailAddresses, actual.EmailAddresses);
+            Assert.Equal(expected.EmailAccountAdmins, actual.EmailAccountAdmins);
         }
 
         /// <summary>
         /// Changes the database security alert policy with new values
         /// </summary>
-        private void ChangeDataBaseSecurityAlertPolicy(DatabaseAuditingPolicyProperties properties)
+        private void ChangeDataBaseSecurityAlertPolicy(DatabaseSecurityAlertPolicyProperties properties)
         {
-            properties.AuditingState = "Disabled";
-            properties.EventTypesToAudit = "PlainSQL_Success";
-            properties.RetentionDays = "10";
-            properties.AuditLogsTableName = "TempHyrdraTestAuditLogsTableName";
+            properties.State = "Enabled";
+            properties.DisabledAlerts = "DisableAlert1";
+            properties.EmailAddresses = "email1@email.com;email2@email.com";
+            properties.EmailAccountAdmins = "Disabled";
         }
 
         /// <summary>
-        /// Test for the Auditing policy lifecycle
+        /// Test for the Security alert policy lifecycle
         /// </summary>
         [Fact]
         public void DatabaseSecurityAlertPolicyLifecycleTest()
@@ -127,7 +115,7 @@ namespace Sql2.Tests.ScenarioTests
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
-                Sql2ScenarioHelper.RunDatabaseTestInEnvironment(new BasicDelegatingHandler(), "2.0", TestDatabaseSecurityAlertAPIs);
+                Sql2ScenarioHelper.RunDatabaseTestInEnvironment(new BasicDelegatingHandler(), "12.0", TestDatabaseSecurityAlertAPIs);
             }
         }
     }

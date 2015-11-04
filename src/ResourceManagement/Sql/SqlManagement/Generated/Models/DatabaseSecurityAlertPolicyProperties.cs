@@ -30,18 +30,6 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class DatabaseSecurityAlertPolicyProperties : BaseSecurityAlertPolicyProperties
     {
-        private string _useServerDefault;
-        
-        /// <summary>
-        /// Optional. Indicates whether the default server security alert
-        /// policy is used for that Azure SQL Database.
-        /// </summary>
-        public string UseServerDefault
-        {
-            get { return this._useServerDefault; }
-            set { this._useServerDefault = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the
         /// DatabaseSecurityAlertPolicyProperties class.

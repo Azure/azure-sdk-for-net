@@ -189,11 +189,6 @@ namespace Microsoft.Azure.Management.Sql
                 JObject propertiesValue = new JObject();
                 databaseSecurityAlertPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                if (parameters.Properties.UseServerDefault != null)
-                {
-                    propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;
-                }
-                
                 if (parameters.Properties.State != null)
                 {
                     propertiesValue["state"] = parameters.Properties.State;
@@ -427,13 +422,6 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 DatabaseSecurityAlertPolicyProperties propertiesInstance = new DatabaseSecurityAlertPolicyProperties();
                                 securityAlertPolicyInstance.Properties = propertiesInstance;
-                                
-                                JToken useServerDefaultValue = propertiesValue["useServerDefault"];
-                                if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
-                                {
-                                    string useServerDefaultInstance = ((string)useServerDefaultValue);
-                                    propertiesInstance.UseServerDefault = useServerDefaultInstance;
-                                }
                                 
                                 JToken stateValue = propertiesValue["state"];
                                 if (stateValue != null && stateValue.Type != JTokenType.Null)
