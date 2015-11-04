@@ -43,13 +43,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale set.
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachine")]
-        public VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; set; }
+        public VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; private set; }
 
         /// <summary>
-        /// Gets or sets the extensions information.
+        /// Gets the extensions information.
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
-        public IList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; set; }
+        public IList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource status information.

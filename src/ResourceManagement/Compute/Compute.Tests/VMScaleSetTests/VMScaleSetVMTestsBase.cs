@@ -35,11 +35,11 @@ namespace Compute.Tests
 {
     public class VMScaleSetVMTestsBase : VMScaleSetTestsBase
     {
-        protected void ValidateVMScaleSetVM(VirtualMachineScaleSetVM vmScaleSetVM, VirtualMachineScaleSetVM vmScaleSetVMOut)
+        protected void ValidateVMScaleSetVM(VirtualMachineScaleSetVM vmScaleSetVM, string skuName, VirtualMachineScaleSetVM vmScaleSetVMOut)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetVMOut.ProvisioningState));
 
-            Assert.True(vmScaleSetVM.Sku.Name
+            Assert.True(skuName
                 == vmScaleSetVMOut.Sku.Name);
             
             Assert.NotNull(vmScaleSetVMOut.StorageProfile.OsDisk);
@@ -94,11 +94,11 @@ namespace Compute.Tests
         {
             VirtualMachineScaleSetVM expectedVirtualMachineScaleSetVM = new VirtualMachineScaleSetVM()
             {
-                InstanceId = instanceId,
+                /*InstanceId = instanceId,
                 Sku = new Sku()
                 {
                     Name = inputVMScaleSet.Sku.Name
-                },
+                },*/
                 OsProfile = new OSProfile()
                 {
                     AdminPassword = inputVMScaleSet.VirtualMachineProfile.OsProfile.AdminPassword,

@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 204 && (int)statusCode != 200 && (int)statusCode != 202)
+            if ((int)statusCode != 202 && (int)statusCode != 204 && (int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine extension.
         /// </param>
         /// <param name='expand'>
-        /// Name of the property to expand. Allowed value is null or 'instanceView'.
+        /// The expand expression to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -79,7 +79,7 @@ namespace Compute.Tests
                     var getResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
 
                     VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId);
-                    ValidateVMScaleSetVM(vmScaleSetVMModel, getResponse);
+                    ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, getResponse);
 
                     var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmScaleSet.Name, instanceId);
                     Assert.True(getInstanceViewResponse != null, "VMScaleSetVM not returned.");

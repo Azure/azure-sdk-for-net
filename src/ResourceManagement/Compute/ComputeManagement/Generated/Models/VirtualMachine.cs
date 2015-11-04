@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine child extension resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
-        public IList<VirtualMachineExtension> Resources { get; set; }
+        public IList<VirtualMachineExtension> Resources { get; private set; }
 
         /// <summary>
         /// Gets or sets the hardware profile.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
-        public VirtualMachineInstanceView InstanceView { get; set; }
+        public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

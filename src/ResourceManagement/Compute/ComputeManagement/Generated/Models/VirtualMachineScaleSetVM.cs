@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine instance id.
         /// </summary>
         [JsonProperty(PropertyName = "instanceId")]
-        public string InstanceId { get; set; }
+        public string InstanceId { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine sku.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets or sets the purchase plan when deploying virtual machine from
@@ -69,20 +69,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine child extension resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
-        public IList<VirtualMachineExtension> Resources { get; set; }
+        public IList<VirtualMachineExtension> Resources { get; private set; }
 
         /// <summary>
         /// Specifies whether the latest model has been applied to the virtual
         /// machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.latestModelApplied")]
-        public bool? LatestModelApplied { get; set; }
+        public bool? LatestModelApplied { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
-        public VirtualMachineInstanceView InstanceView { get; set; }
+        public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Gets or sets the hardware profile.

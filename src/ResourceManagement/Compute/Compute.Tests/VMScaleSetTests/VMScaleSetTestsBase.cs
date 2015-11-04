@@ -40,15 +40,12 @@ namespace Compute.Tests
             var vmExtension = new VirtualMachineScaleSetExtension
             {
                 Name = "vmssext01",
-                Properties =  new VirtualMachineScaleSetExtensionProperties
-                {
-                    Publisher = "Microsoft.Compute",
-                    Type = "VMAccessAgent",
-                    TypeHandlerVersion = "2.0",
-                    AutoUpgradeMinorVersion = true,
-                    Settings = "{}",
-                    ProtectedSettings = "{}"
-                }
+                Publisher = "Microsoft.Compute",
+                VirtualMachineScaleSetExtensionType = "VMAccessAgent",
+                TypeHandlerVersion = "2.0",
+                AutoUpgradeMinorVersion = true,
+                Settings = "{}",
+                ProtectedSettings = "{}"
             };
 
             return vmExtension;
@@ -100,21 +97,15 @@ namespace Compute.Tests
                             new VirtualMachineScaleSetNetworkConfiguration()
                             {
                                 Name = TestUtilities.GenerateName("vmsstestnetconfig"),
-                                Properties = new VirtualMachineScaleSetNetworkConfigurationProperties
+                                Primary = true,
+                                IpConfigurations = new List<VirtualMachineScaleSetIPConfiguration>
                                 {
-                                    Primary = true,
-                                    IpConfigurations = new List<VirtualMachineScaleSetIPConfiguration>
+                                    new VirtualMachineScaleSetIPConfiguration()
                                     {
-                                        new VirtualMachineScaleSetIPConfiguration()
+                                        Name = TestUtilities.GenerateName("vmsstestnetconfig"),
+                                        Subnet = new Microsoft.Azure.Management.Compute.Models.ApiEntityReference()
                                         {
-                                            Name = TestUtilities.GenerateName("vmsstestnetconfig"),
-                                            Properties = new VirtualMachineScaleSetIPConfigurationProperties
-                                            {
-                                                Subnet = new Microsoft.Azure.Management.Compute.Models.ApiEntityReference()
-                                                {
-                                                    Id = subnetId
-                                                }
-                                            }
+                                            Id = subnetId
                                         }
                                     }
                                 }

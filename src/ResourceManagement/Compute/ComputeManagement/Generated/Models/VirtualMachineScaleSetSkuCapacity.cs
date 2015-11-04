@@ -43,26 +43,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the minimum capacity.
         /// </summary>
         [JsonProperty(PropertyName = "minimum")]
-        public long? Minimum { get; set; }
+        public long? Minimum { get; private set; }
 
         /// <summary>
         /// Gets the maximum capacity that can be set.
         /// </summary>
         [JsonProperty(PropertyName = "maximum")]
-        public long? Maximum { get; set; }
+        public long? Maximum { get; private set; }
 
         /// <summary>
         /// Gets the default capacity.
         /// </summary>
         [JsonProperty(PropertyName = "defaultCapacity")]
-        public long? DefaultCapacity { get; set; }
+        public long? DefaultCapacity { get; private set; }
 
         /// <summary>
         /// Gets the scale type applicable to the sku. Possible values for
         /// this property include: 'Automatic', 'None'.
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
-        public string ScaleType { get; set; }
+        public string ScaleType { get; private set; }
 
     }
 }

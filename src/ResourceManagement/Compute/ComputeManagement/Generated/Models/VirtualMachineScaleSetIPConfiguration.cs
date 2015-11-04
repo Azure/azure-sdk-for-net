@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a virtual machine scale set network profile's IP
     /// configuration.
     /// </summary>
-    public partial class VirtualMachineScaleSetIPConfiguration
+    public partial class VirtualMachineScaleSetIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -32,10 +32,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetIPConfiguration(string name, VirtualMachineScaleSetIPConfigurationProperties properties = default(VirtualMachineScaleSetIPConfigurationProperties))
+        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>))
         {
             Name = name;
-            Properties = properties;
+            Subnet = subnet;
+            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
         }
 
         /// <summary>
@@ -45,9 +46,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the subnet.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VirtualMachineScaleSetIPConfigurationProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.subnet")]
+        public ApiEntityReference Subnet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the load balancer backend address pools.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
+        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
@@ -58,9 +66,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.Properties != null)
+            if (Subnet == null)
             {
-                this.Properties.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
             }
         }
     }
