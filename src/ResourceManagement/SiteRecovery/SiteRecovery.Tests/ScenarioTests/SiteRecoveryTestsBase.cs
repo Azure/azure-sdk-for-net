@@ -50,6 +50,7 @@ namespace SiteRecovery.Tests
         protected static CustomRequestHeaders RequestHeaders = new CustomRequestHeaders
         {
             ClientRequestId = Guid.NewGuid().ToString(),
+            Culture = "en"
         };
 
         protected readonly RecordedDelegationHandler CustomHttpHandler

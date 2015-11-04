@@ -1024,7 +1024,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
-                httpRequest.Headers.Add("Accept-Language", .Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1213,7 +1212,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
-                httpRequest.Headers.Add("Accept-Language", .Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1402,7 +1400,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
-                httpRequest.Headers.Add("Accept-Language", .Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
