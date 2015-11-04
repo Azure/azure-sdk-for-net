@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the instance view status code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
         /// Gets the number of instances having a particular status code.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
+        public int? Count { get; private set; }
 
     }
 }

@@ -17,12 +17,50 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Compute.Tests
 {
     public class VMOperationalTests : VMTestBase
     {
+        class Image
+        {
+            [JsonProperty("uri")]
+            public string Uri { get; set; }
+        }
+
+        class OSDisk
+        {
+            [JsonProperty("image")]
+            public Image Image { get; set; }
+        }
+
+        class StorageProfile
+        {
+            [JsonProperty("osDisk")]
+            public OSDisk OSDisk { get; set; }
+        }
+
+        class Properties
+        {
+            [JsonProperty("storageProfile")]
+            public StorageProfile StorageProfile { get; set; }
+        }
+
+        class Resource
+        {
+            [JsonProperty("properties")]
+            public Properties Properties { get; set; }
+        }
+
+        class Template
+        {
+            [JsonProperty("resources")]
+            public List<Resource> Resources { get; set; }
+        }
+
         /// <summary>
         /// Covers following Operations:
         /// Create RG
@@ -49,7 +87,7 @@ namespace Compute.Tests
 
                 // Create resource group
                 string rg1Name = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;
-                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string as1Name = ComputeManagementTestUtilities.GenerateName("as");
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1;
 
@@ -58,7 +96,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
+                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
 
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
@@ -75,11 +113,30 @@ namespace Compute.Tests
 
                     var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
 
-                    Assert.NotNull(captureResponse.Properties.Output);
-                    string outputAsString = captureResponse.Properties.Output.ToString();
+                    Assert.NotNull(captureResponse.Output);
+                    string outputAsString = captureResponse.Output.ToString();
                     Assert.Equal('{', outputAsString[0]);
                     Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
                     Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
+
+                    Template template = JsonConvert.DeserializeObject<Template>(outputAsString);
+                    Assert.True(template.Resources.Count > 0);
+                    string imageUri = template.Resources[0].Properties.StorageProfile.OSDisk.Image.Uri;
+                    Assert.False(string.IsNullOrEmpty(imageUri));
+
+                    // Create 2nd VM from the captured image
+                    // TODO : Provisioning Time-out Issues
+                    VirtualMachine inputVM2;
+                    string as2Name = as1Name + "b";
+                    VirtualMachine vm2 = CreateVM_NoAsyncTracking(rg1Name, as2Name, storageAccountOutput, imageRef, out inputVM2,
+                        vm =>
+                        {
+                            vm.StorageProfile.ImageReference = null;
+                            vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = imageUri };
+                            vm.StorageProfile.OsDisk.Vhd.Uri = vm.StorageProfile.OsDisk.Vhd.Uri.Replace(".vhd", "copy.vhd");
+                            vm.StorageProfile.OsDisk.OsType = "Windows";
+                        }, false, false);
+                    Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri);
                 }
                 finally
                 {

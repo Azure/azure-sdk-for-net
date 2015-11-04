@@ -517,7 +517,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -898,7 +898,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ComputeLongRunningOperationResult"
+              "$ref": "#/definitions/VirtualMachineCaptureResult"
             }
           },
           "202": {
@@ -991,10 +991,10 @@
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           },
           "204": {
@@ -1029,7 +1029,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -1376,13 +1376,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
@@ -1397,7 +1397,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_DeallocateInstances",
+        "operationId": "VirtualMachineScaleSets_Deallocate",
         "description": "The operation to deallocate virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1417,7 +1417,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1468,13 +1468,13 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": ""
           },
           "204": {
-            "description": ""
-          },
-          "202": {
             "description": ""
           }
         },
@@ -1545,7 +1545,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
+              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceRequiredIDs"
             },
             "description": "The list of virtual machine scale set instance IDs."
           },
@@ -1713,7 +1713,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_PowerOffInstances",
+        "operationId": "VirtualMachineScaleSets_PowerOff",
         "description": "The operation to power off (stop) virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1733,7 +1733,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1759,7 +1759,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_RestartInstances",
+        "operationId": "VirtualMachineScaleSets_Restart",
         "description": "The operation to restart virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1779,7 +1779,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1805,7 +1805,7 @@
         "tags": [
           "VirtualMachineScaleSets"
         ],
-        "operationId": "VirtualMachineScaleSets_StartInstances",
+        "operationId": "VirtualMachineScaleSets_Start",
         "description": "The operation to start virtual machines in a virtual machine scale set.",
         "parameters": [
           {
@@ -1825,7 +1825,7 @@
           {
             "name": "vmInstanceIDs",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
             },
@@ -1873,7 +1873,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceIDs"
+              "$ref": "#/definitions/VirtualMachineScaleSetVMInstanceRequiredIDs"
             },
             "description": "The list of virtual machine scale set instance IDs."
           },
@@ -1973,13 +1973,13 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": ""
+          },
           "204": {
             "description": ""
           },
           "202": {
-            "description": ""
-          },
-          "200": {
             "description": ""
           }
         },
@@ -2117,7 +2117,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The list parameters."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -2432,6 +2432,11 @@
           "description": "Gets or sets whether the handler can support multiple extensions."
         }
       },
+      "required": [
+        "operatingSystem",
+        "computeRole",
+        "handlerSchema"
+      ],
       "description": "Describes the properties of a Virtual Machine Extension Image."
     },
     "VirtualMachineExtensionImage": {
@@ -2455,6 +2460,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2480,6 +2489,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2583,6 +2596,11 @@
           "description": "Gets or sets the product ID."
         }
       },
+      "required": [
+        "publisher",
+        "name",
+        "product"
+      ],
       "description": "Used for establishing the purchase context of any 3rd Party artifact through MarketPlace."
     },
     "OSDiskImage": {
@@ -2600,16 +2618,23 @@
           }
         }
       },
+      "required": [
+        "operatingSystem"
+      ],
       "description": "Contains the os disk image information."
     },
     "DataDiskImage": {
       "properties": {
         "lun": {
+          "readOnly": true,
           "type": "integer",
           "format": "int32",
           "description": "Gets the LUN number for a data disk.This value is used to identify data disk image inside the VMImage therefore it must be unique for each data disk.The allowed character for the value is digit."
         }
       },
+      "required": [
+        "lun"
+      ],
       "description": "Contains the data disk images information."
     },
     "VirtualMachineImageProperties": {
@@ -2650,6 +2675,10 @@
           "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "required": [
+        "name",
+        "location"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/SubResource"
@@ -2698,6 +2727,12 @@
           "description": "Gets or sets the name of the type of usage."
         }
       },
+      "required": [
+        "unit",
+        "currentValue",
+        "limit",
+        "name"
+      ],
       "description": "Describes Compute Resource Usage."
     },
     "ListUsagesResult": {
@@ -2727,9 +2762,14 @@
           "description": "Gets or sets whether it overwrites destination VirtualHardDisk if true, in case of conflict."
         }
       },
+      "required": [
+        "vhdPrefix",
+        "destinationContainerName",
+        "overwriteVhds"
+      ],
       "description": "Capture Virtual Machine parameters."
     },
-    "ComputeLongRunningOperationProperties": {
+    "VirtualMachineCaptureResultProperties": {
       "properties": {
         "output": {
           "type": "object",
@@ -2738,103 +2778,18 @@
       },
       "description": "Compute-specific operation properties, including output"
     },
-    "ApiErrorBase": {
+    "VirtualMachineCaptureResult": {
       "properties": {
-        "code": {
-          "type": "string",
-          "description": "Gets or sets the error code."
-        },
-        "target": {
-          "type": "string",
-          "description": "Gets or sets the target of the particular error."
-        },
-        "message": {
-          "type": "string",
-          "description": "Gets or sets the error message."
-        }
-      },
-      "description": "Api error base."
-    },
-    "InnerError": {
-      "properties": {
-        "exceptiontype": {
-          "type": "string",
-          "description": "Gets or sets the exception type."
-        },
-        "errordetail": {
-          "type": "string",
-          "description": "Gets or sets the internal error message or exception dump."
-        }
-      },
-      "description": "Inner error details."
-    },
-    "ApiError": {
-      "properties": {
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApiErrorBase"
-          },
-          "description": "Gets or sets the Api error details"
-        },
-        "innererror": {
-          "$ref": "#/definitions/InnerError",
-          "description": "Gets or sets the Api inner error"
-        },
-        "code": {
-          "type": "string",
-          "description": "Gets or sets the error code."
-        },
-        "target": {
-          "type": "string",
-          "description": "Gets or sets the target of the particular error."
-        },
-        "message": {
-          "type": "string",
-          "description": "Gets or sets the error message."
-        }
-      },
-      "description": "Api error."
-    },
-    "ComputeLongRunningOperationResult": {
-      "properties": {
-        "operationId": {
-          "type": "string",
-          "description": "Gets the operation identifier."
-        },
-        "status": {
-          "type": "string",
-          "description": "Gets the operation status.",
-          "enum": [
-            "InProgress",
-            "Failed",
-            "Succeeded",
-            "Preempted"
-          ],
-          "x-ms-enum": {
-            "name": "ComputeOperationStatus",
-            "modelAsString": "False"
-          }
-        },
-        "startTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Gets the operation start time"
-        },
-        "endTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Gets the operation end time"
-        },
         "properties": {
-          "$ref": "#/definitions/ComputeLongRunningOperationProperties"
-        },
-        "error": {
-          "$ref": "#/definitions/ApiError",
-          "description": "Gets the operation error, if any occurred."
+          "$ref": "#/definitions/VirtualMachineCaptureResultProperties"
         }
       },
-      "description": "The Compute service response for long-running operations."
+      "allOf": [
+        {
+          "$ref": "#/definitions/SubResource"
+        }
+      ],
+      "description": "Resource Id."
     },
     "Plan": {
       "properties": {
@@ -2878,11 +2833,43 @@
             "Standard_A7",
             "Standard_A8",
             "Standard_A9",
+            "Standard_A10",
+            "Standard_A11",
+            "Standard_D1",
+            "Standard_D2",
+            "Standard_D3",
+            "Standard_D4",
+            "Standard_D11",
+            "Standard_D12",
+            "Standard_D13",
+            "Standard_D14",
+            "Standard_D1_v2",
+            "Standard_D2_v2",
+            "Standard_D3_v2",
+            "Standard_D4_v2",
+            "Standard_D5_v2",
+            "Standard_D11_v2",
+            "Standard_D12_v2",
+            "Standard_D13_v2",
+            "Standard_D14_v2",
+            "Standard_DS1",
+            "Standard_DS2",
+            "Standard_DS3",
+            "Standard_DS4",
+            "Standard_DS11",
+            "Standard_DS12",
+            "Standard_DS13",
+            "Standard_DS14",
             "Standard_G1",
             "Standard_G2",
             "Standard_G3",
             "Standard_G4",
-            "Standard_G5"
+            "Standard_G5",
+            "Standard_GS1",
+            "Standard_GS2",
+            "Standard_GS3",
+            "Standard_GS4",
+            "Standard_GS5"
           ],
           "x-ms-enum": {
             "name": "VirtualMachineSizeTypes",
@@ -2924,6 +2911,10 @@
           "description": "Gets or sets the Relative URL of the Key Vault containing the secret."
         }
       },
+      "required": [
+        "secretUrl",
+        "sourceVault"
+      ],
       "description": "Describes a reference to Key Vault Secret"
     },
     "KeyVaultKeyReference": {
@@ -2937,6 +2928,10 @@
           "description": "Gets or sets the Relative URL of the Key Vault containing the key"
         }
       },
+      "required": [
+        "keyUrl",
+        "sourceVault"
+      ],
       "description": "Describes a reference to Key Vault Key"
     },
     "DiskEncryptionSettings": {
@@ -2950,6 +2945,9 @@
           "description": "Gets or sets the key encryption key which is KeyVault Key."
         }
       },
+      "required": [
+        "diskEncryptionKey"
+      ],
       "description": "Describes a Encryption Settings for a Disk"
     },
     "VirtualHardDisk": {
@@ -3023,6 +3021,11 @@
           "description": "Gets or sets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks."
         }
       },
+      "required": [
+        "name",
+        "vhd",
+        "createOption"
+      ],
       "description": "Describes an Operating System disk."
     },
     "DataDisk": {
@@ -3076,6 +3079,12 @@
           "description": "Gets or sets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks."
         }
       },
+      "required": [
+        "lun",
+        "name",
+        "vhd",
+        "createOption"
+      ],
       "description": "Describes a data disk."
     },
     "StorageProfile": {
@@ -3510,6 +3519,7 @@
         },
         "instanceView": {
           "$ref": "#/definitions/VirtualMachineInstanceView",
+          "readOnly": true,
           "description": "Gets the virtual machine instance view."
         }
       },
@@ -3525,6 +3535,7 @@
           "$ref": "#/definitions/VirtualMachineProperties"
         },
         "resources": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineExtension"
@@ -3682,6 +3693,10 @@
           "description": "Gets or sets the list of virtual hard disk container uris."
         }
       },
+      "required": [
+        "name",
+        "createOption"
+      ],
       "description": "Describes a virtual machine scale set operating system disk."
     },
     "VirtualMachineScaleSetStorageProfile": {
@@ -3720,6 +3735,9 @@
           "description": "Gets or sets the load balancer backend address pools."
         }
       },
+      "required": [
+        "subnet"
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration properties."
     },
     "VirtualMachineScaleSetIPConfiguration": {
@@ -3732,6 +3750,14 @@
           "$ref": "#/definitions/VirtualMachineScaleSetIPConfigurationProperties"
         }
       },
+      "required": [
+        "name"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/SubResource"
+        }
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration."
     },
     "VirtualMachineScaleSetNetworkConfigurationProperties": {
@@ -3748,6 +3774,9 @@
           "description": "Gets or sets the virtual machine scale set IP Configuration."
         }
       },
+      "required": [
+        "ipConfigurations"
+      ],
       "description": "Describes a virtual machine scale set network profile's IP configuration."
     },
     "VirtualMachineScaleSetNetworkConfiguration": {
@@ -3760,6 +3789,14 @@
           "$ref": "#/definitions/VirtualMachineScaleSetNetworkConfigurationProperties"
         }
       },
+      "required": [
+        "name"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/SubResource"
+        }
+      ],
       "description": "Describes a virtual machine scale set network profile's network configurations."
     },
     "VirtualMachineScaleSetNetworkProfile": {
@@ -3801,8 +3838,9 @@
           "description": "Gets or sets Json formatted protected settings for the extension."
         },
         "provisioningState": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the provisioning state, which only appears in the response."
+          "description": "Gets the provisioning state, which only appears in the response."
         }
       },
       "description": "Describes the properties of a Virtual Machine Scale Set Extension."
@@ -3817,6 +3855,11 @@
           "$ref": "#/definitions/VirtualMachineScaleSetExtensionProperties"
         }
       },
+      "allOf": [
+        {
+          "$ref": "#/definitions/SubResource"
+        }
+      ],
       "description": "Describes a Virtual Machine Scale Set Extension."
     },
     "VirtualMachineScaleSetExtensionProfile": {
@@ -3898,13 +3941,30 @@
       },
       "description": "Specifies the list of virtual machine scale set instance IDs."
     },
+    "VirtualMachineScaleSetVMInstanceRequiredIDs": {
+      "properties": {
+        "instanceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the virtual machine scale set instance ids."
+        }
+      },
+      "required": [
+        "instanceIds"
+      ],
+      "description": "Specifies the list of virtual machine scale set instance IDs."
+    },
     "VirtualMachineStatusCodeCount": {
       "properties": {
         "code": {
+          "readOnly": true,
           "type": "string",
           "description": "Gets the instance view status code."
         },
         "count": {
+          "readOnly": true,
           "type": "integer",
           "format": "int32",
           "description": "Gets the number of instances having a particular status code."
@@ -3915,11 +3975,12 @@
     "VirtualMachineScaleSetInstanceViewStatusesSummary": {
       "properties": {
         "statusesSummary": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineStatusCodeCount"
           },
-          "description": "Gets or sets the extensions information."
+          "description": "Gets the extensions information."
         }
       },
       "description": "Instance view statuses summary for virtual machines of a virtual machine scale set."
@@ -3927,15 +3988,17 @@
     "VirtualMachineScaleSetVMExtensionsSummary": {
       "properties": {
         "name": {
+          "readOnly": true,
           "type": "string",
           "description": "Gets the extension name."
         },
         "statusesSummary": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineStatusCodeCount"
           },
-          "description": "Gets or sets the extensions information."
+          "description": "Gets the extensions information."
         }
       },
       "description": "Extensions summary for virtual machines of a virtual machine scale set."
@@ -3944,14 +4007,16 @@
       "properties": {
         "virtualMachine": {
           "$ref": "#/definitions/VirtualMachineScaleSetInstanceViewStatusesSummary",
+          "readOnly": true,
           "description": "Gets the instance view status summary for the virtual machine scale set."
         },
         "extensions": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineScaleSetVMExtensionsSummary"
           },
-          "description": "Gets or sets the extensions information."
+          "description": "Gets the extensions information."
         },
         "statuses": {
           "type": "array",
@@ -3994,21 +4059,25 @@
     "VirtualMachineScaleSetSkuCapacity": {
       "properties": {
         "minimum": {
+          "readOnly": true,
           "type": "integer",
           "format": "int64",
           "description": "Gets the minimum capacity."
         },
         "maximum": {
+          "readOnly": true,
           "type": "integer",
           "format": "int64",
           "description": "Gets the maximum capacity that can be set."
         },
         "defaultCapacity": {
+          "readOnly": true,
           "type": "integer",
           "format": "int64",
           "description": "Gets the default capacity."
         },
         "scaleType": {
+          "readOnly": true,
           "type": "string",
           "description": "Gets the scale type applicable to the sku.",
           "enum": [
@@ -4026,15 +4095,18 @@
     "VirtualMachineScaleSetSku": {
       "properties": {
         "resourceType": {
+          "readOnly": true,
           "type": "string",
           "description": "Gets the type of resource the sku applies to."
         },
         "sku": {
           "$ref": "#/definitions/Sku",
+          "readOnly": true,
           "description": "Gets the Sku."
         },
         "capacity": {
           "$ref": "#/definitions/VirtualMachineScaleSetSkuCapacity",
+          "readOnly": true,
           "description": "Gets available scaling information."
         }
       },
@@ -4043,6 +4115,7 @@
     "VirtualMachineScaleSetListSkusResult": {
       "properties": {
         "value": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineScaleSetSku"
@@ -4055,11 +4128,13 @@
     "VirtualMachineScaleSetVMProperties": {
       "properties": {
         "latestModelApplied": {
+          "readOnly": true,
           "type": "boolean",
           "description": "Specifies whether the latest model has been applied to the virtual machine."
         },
         "instanceView": {
           "$ref": "#/definitions/VirtualMachineInstanceView",
+          "readOnly": true,
           "description": "Gets the virtual machine instance view."
         },
         "hardwareProfile": {
@@ -4096,11 +4171,13 @@
     "VirtualMachineScaleSetVM": {
       "properties": {
         "instanceId": {
+          "readOnly": true,
           "type": "string",
           "description": "Gets the virtual machine instance id."
         },
         "sku": {
           "$ref": "#/definitions/Sku",
+          "readOnly": true,
           "description": "Gets the virtual machine sku."
         },
         "properties": {
@@ -4111,6 +4188,7 @@
           "description": "Gets or sets the purchase plan when deploying virtual machine from VM Marketplace images."
         },
         "resources": {
+          "readOnly": true,
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachineExtension"
@@ -4185,6 +4263,64 @@
       },
       "description": "The List Virtual Machine Scale Set VMs operation response."
     },
+    "ApiErrorBase": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the particular error."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message."
+        }
+      },
+      "description": "Api error base."
+    },
+    "InnerError": {
+      "properties": {
+        "exceptiontype": {
+          "type": "string",
+          "description": "Gets or sets the exception type."
+        },
+        "errordetail": {
+          "type": "string",
+          "description": "Gets or sets the internal error message or exception dump."
+        }
+      },
+      "description": "Inner error details."
+    },
+    "ApiError": {
+      "properties": {
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiErrorBase"
+          },
+          "description": "Gets or sets the Api error details"
+        },
+        "innererror": {
+          "$ref": "#/definitions/InnerError",
+          "description": "Gets or sets the Api inner error"
+        },
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the particular error."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message."
+        }
+      },
+      "description": "Api error."
+    },
     "DeleteOperationResult": {
       "properties": {
         "operationId": {
@@ -4219,7 +4355,61 @@
           "description": "Gets or sets the operation error if any occurred"
         }
       },
+      "required": [
+        "operationId",
+        "status",
+        "startTime"
+      ],
       "description": "The compute long running operation response."
+    },
+    "ComputeLongRunningOperationProperties": {
+      "properties": {
+        "output": {
+          "type": "object",
+          "description": "Operation output data (raw JSON)"
+        }
+      },
+      "description": "Compute-specific operation properties, including output"
+    },
+    "ComputeLongRunningOperationResult": {
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "description": "Gets the operation identifier."
+        },
+        "status": {
+          "type": "string",
+          "description": "Gets the operation status.",
+          "enum": [
+            "InProgress",
+            "Failed",
+            "Succeeded",
+            "Preempted"
+          ],
+          "x-ms-enum": {
+            "name": "ComputeOperationStatus",
+            "modelAsString": "False"
+          }
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets the operation start time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets the operation end time"
+        },
+        "properties": {
+          "$ref": "#/definitions/ComputeLongRunningOperationProperties"
+        },
+        "error": {
+          "$ref": "#/definitions/ApiError",
+          "description": "Gets the operation error, if any occurred."
+        }
+      },
+      "description": "The Compute service response for long-running operations."
     },
     "Resource": {
       "properties": {

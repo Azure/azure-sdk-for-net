@@ -191,7 +191,8 @@ namespace Compute.Tests
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef, 
             out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            bool waitOperation = true)
         {
             try
             {
@@ -223,7 +224,15 @@ namespace Compute.Tests
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                VirtualMachine createOrUpdateResponse = null;
+                if (waitOperation)
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
+                else
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
 
                 Assert.True(createOrUpdateResponse.Name == inputVM.Name);
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") || 
