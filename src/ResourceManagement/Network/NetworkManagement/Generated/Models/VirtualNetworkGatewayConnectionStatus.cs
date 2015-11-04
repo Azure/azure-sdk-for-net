@@ -13,13 +13,13 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ServiceProviderProvisioningState.
+    /// Defines values for VirtualNetworkGatewayConnectionStatus.
     /// </summary>
-    public static class ServiceProviderProvisioningState
+    public static class VirtualNetworkGatewayConnectionStatus
     {
-        public const string NotProvisioned = "NotProvisioned";
-        public const string Provisioning = "Provisioning";
-        public const string Provisioned = "Provisioned";
-        public const string Deprovisioning = "Deprovisioning";
+        public const string Unknown = "Unknown";
+        public const string Connecting = "Connecting";
+        public const string Connected = "Connected";
+        public const string NotConnected = "NotConnected";
     }
 }
