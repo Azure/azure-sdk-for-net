@@ -74,7 +74,7 @@ namespace Sql2.Tests.ScenarioTests
         {
             DatabaseSecurityAlertPolicyProperties props = new DatabaseSecurityAlertPolicyProperties
             {
-                State = "Disabled",
+                State = "New",
                 DisabledAlerts = string.Empty,
                 EmailAddresses = string.Empty,
                 EmailAccountAdmins = "Enabled"
