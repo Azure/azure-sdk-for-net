@@ -173,6 +173,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -374,6 +375,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -699,6 +701,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -927,6 +930,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1147,6 +1151,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", .Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1300,6 +1305,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
+                            }
                         }
                         
                     }
@@ -1405,6 +1417,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", .Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1480,6 +1493,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
+                            }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
                             }
                         }
                         
@@ -1628,6 +1648,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 

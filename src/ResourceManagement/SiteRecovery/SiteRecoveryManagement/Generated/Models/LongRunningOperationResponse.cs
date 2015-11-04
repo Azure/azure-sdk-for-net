@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._asyncOperation = value; }
         }
         
+        private string _culture;
+        
+        /// <summary>
+        /// Optional. Culture being used for request.
+        /// </summary>
+        public string Culture
+        {
+            get { return this._culture; }
+            set { this._culture = value; }
+        }
+        
         private string _location;
         
         /// <summary>

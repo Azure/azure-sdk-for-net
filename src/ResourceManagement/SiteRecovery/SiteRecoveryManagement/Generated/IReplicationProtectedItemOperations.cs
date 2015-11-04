@@ -158,6 +158,30 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> BeginPurgeProtectionAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginRepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Execute reprotect for the given Replication protected item.
         /// </summary>
         /// <param name='fabricName'>
@@ -485,6 +509,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
+        Task<ReplicationProtectedItemOperationResponse> GetRepairVMReplicationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
         Task<ReplicationProtectedItemOperationResponse> GetReprotectStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
@@ -576,6 +617,38 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ReplicationProtectedItemListResponse> ListAsync(string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Enumerate all replication protected items under vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        Task<ReplicationProtectedItemListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get subsequent page data for replication protected items under
+        /// vault.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        Task<ReplicationProtectedItemListResponse> ListAllNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Execute planned failover for the given Replication protected item.
         /// </summary>
         /// <param name='fabricName'>
@@ -623,6 +696,30 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// A standard service response for long running operations.
         /// </returns>
         Task<LongRunningOperationResponse> PurgeProtectionAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> RepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Execute reprotect for the given Replication protected item.

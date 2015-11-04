@@ -174,6 +174,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -345,6 +346,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -584,6 +586,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -825,6 +828,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
