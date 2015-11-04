@@ -26,8 +26,13 @@ using System.Threading;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
-    public struct TenantAndDomain
+    public class TenantAndDomain
     {
+        public TenantAndDomain()
+        {
+
+        }
+
         public TenantAndDomain(string t, string d)
         {
             TenantId = t;

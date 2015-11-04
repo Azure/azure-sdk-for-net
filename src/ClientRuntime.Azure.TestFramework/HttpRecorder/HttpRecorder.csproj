@@ -4,10 +4,11 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9E5CB6E6-92AF-464A-BD30-E848D94ED490}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <AutoRestProjects>true</AutoRestProjects>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Test.HttpRecorder</RootNamespace>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
+    <OutputType>Library</OutputType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RestorePackages>true</RestorePackages>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

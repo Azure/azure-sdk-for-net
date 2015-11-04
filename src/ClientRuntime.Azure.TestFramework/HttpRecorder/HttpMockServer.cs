@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 // Will throw KeyNotFoundException if the request is not recorded
                 var result = records[Matcher.GetMatchingKey(request)].Dequeue().GetResponse();
                 result.RequestMessage = request;
-                return TaskEx.FromResult(result);
+                return Task.FromResult(result);
             }
             else
             {
