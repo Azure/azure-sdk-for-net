@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intune", "Intune\Intune.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intune.Tests", "Intune.Tests\Intune.Tests.csproj", "{42C0C5C7-295B-4C85-9E14-58FFC2B832CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientRuntime.Azure.TestFramework", "..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj", "{F144A258-3C38-447A-993E-967F74A1A76C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,22 +51,6 @@ Global
 		{42C0C5C7-295B-4C85-9E14-58FFC2B832CA}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{42C0C5C7-295B-4C85-9E14-58FFC2B832CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42C0C5C7-295B-4C85-9E14-58FFC2B832CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{F144A258-3C38-447A-993E-967F74A1A76C}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

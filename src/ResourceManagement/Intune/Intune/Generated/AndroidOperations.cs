@@ -1257,7 +1257,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Group>>> GetGroupsForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GroupItem>>> GetGroupsForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1360,7 +1360,7 @@ namespace Microsoft.Azure.Management.Intune
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<Group>>();
+            var result = new AzureOperationResponse<IPage<GroupItem>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1371,7 +1371,7 @@ namespace Microsoft.Azure.Management.Intune
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<Group>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<GroupItem>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1931,7 +1931,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Group>>> GetGroupsForMAMPolicyNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GroupItem>>> GetGroupsForMAMPolicyNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2019,7 +2019,7 @@ namespace Microsoft.Azure.Management.Intune
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IPage<Group>>();
+            var result = new AzureOperationResponse<IPage<GroupItem>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2030,7 +2030,7 @@ namespace Microsoft.Azure.Management.Intune
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<Group>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<GroupItem>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

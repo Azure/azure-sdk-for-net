@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Intune.Models
     /// <summary>
     /// Group entity for Intune MAM.
     /// </summary>
-    public partial class Group : Resource
+    public partial class GroupItem : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Group class.
+        /// Initializes a new instance of the GroupItem class.
         /// </summary>
-        public Group() { }
+        public GroupItem() { }
 
         /// <summary>
-        /// Initializes a new instance of the Group class.
+        /// Initializes a new instance of the GroupItem class.
         /// </summary>
-        public Group(string friendlyName)
+        public GroupItem(string friendlyName)
         {
             FriendlyName = friendlyName;
         }

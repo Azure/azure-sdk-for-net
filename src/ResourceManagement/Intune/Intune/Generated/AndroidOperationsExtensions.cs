@@ -396,7 +396,7 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='policyId'>
             /// policy name for the tenant
             /// </param>
-            public static IPage<Group> GetGroupsForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId)
+            public static IPage<GroupItem> GetGroupsForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId)
             {
                 return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetGroupsForMAMPolicyAsync(hostName, policyId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -416,9 +416,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Group>> GetGroupsForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GroupItem>> GetGroupsForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Group>> result = await operations.GetGroupsForMAMPolicyWithHttpMessagesAsync(hostName, policyId, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<GroupItem>> result = await operations.GetGroupsForMAMPolicyWithHttpMessagesAsync(hostName, policyId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -589,7 +589,7 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Group> GetGroupsForMAMPolicyNext(this IAndroidOperations operations, string nextPageLink)
+            public static IPage<GroupItem> GetGroupsForMAMPolicyNext(this IAndroidOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetGroupsForMAMPolicyNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -606,9 +606,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Group>> GetGroupsForMAMPolicyNextAsync( this IAndroidOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GroupItem>> GetGroupsForMAMPolicyNextAsync( this IAndroidOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Group>> result = await operations.GetGroupsForMAMPolicyNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<GroupItem>> result = await operations.GetGroupsForMAMPolicyNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
