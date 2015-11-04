@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The list parameters.
         /// </param>
         /// <param name='expand'>
-        /// The list parameters.
+        /// The expand expression to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

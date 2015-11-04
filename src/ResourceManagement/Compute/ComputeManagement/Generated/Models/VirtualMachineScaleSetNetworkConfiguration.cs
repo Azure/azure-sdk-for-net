@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a virtual machine scale set network profile's network
     /// configurations.
     /// </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration
+    public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -32,10 +32,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, VirtualMachineScaleSetNetworkConfigurationProperties properties = default(VirtualMachineScaleSetNetworkConfigurationProperties))
+        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? primary = default(bool?))
         {
             Name = name;
-            Properties = properties;
+            Primary = primary;
+            IpConfigurations = ipConfigurations;
         }
 
         /// <summary>
@@ -45,9 +46,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets whether this is a primary NIC on a virtual machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VirtualMachineScaleSetNetworkConfigurationProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.primary")]
+        public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine scale set IP Configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
+        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
@@ -58,9 +66,19 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.Properties != null)
+            if (IpConfigurations == null)
             {
-                this.Properties.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "IpConfigurations");
+            }
+            if (this.IpConfigurations != null)
+            {
+                foreach (var element in this.IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

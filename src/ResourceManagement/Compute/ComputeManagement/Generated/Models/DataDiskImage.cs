@@ -40,17 +40,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for each data disk.The allowed character for the value is digit.
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
-        public int? Lun { get; set; }
+        public int? Lun { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (Lun == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Lun");
-            }
+            //Nothing to validate
         }
     }
 }

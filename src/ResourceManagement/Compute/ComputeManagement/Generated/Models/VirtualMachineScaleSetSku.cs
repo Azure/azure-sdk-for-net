@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the type of resource the sku applies to.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public string ResourceType { get; set; }
+        public string ResourceType { get; private set; }
 
         /// <summary>
         /// Gets the Sku.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets available scaling information.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
-        public VirtualMachineScaleSetSkuCapacity Capacity { get; set; }
+        public VirtualMachineScaleSetSkuCapacity Capacity { get; private set; }
 
     }
 }

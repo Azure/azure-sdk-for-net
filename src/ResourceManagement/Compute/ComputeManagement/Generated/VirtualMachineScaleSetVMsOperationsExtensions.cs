@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The list parameters.
             /// </param>
             /// <param name='expand'>
-            /// The list parameters.
+            /// The expand expression to apply on the operation.
             /// </param>
             public static IPage<VirtualMachineScaleSetVM> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, Expression<Func<VirtualMachineScaleSetVM, bool>> filter = default(Expression<Func<VirtualMachineScaleSetVM, bool>>), string select = default(string), string expand = default(string))
             {
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The list parameters.
             /// </param>
             /// <param name='expand'>
-            /// The list parameters.
+            /// The expand expression to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
