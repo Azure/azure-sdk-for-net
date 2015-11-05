@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._azureVMDiskDetails = value; }
         }
         
+        private string _encryption;
+        
+        /// <summary>
+        /// Optional. Gets or sets the encryption info.
+        /// </summary>
+        public string Encryption
+        {
+            get { return this._encryption; }
+            set { this._encryption = value; }
+        }
+        
         private InitialReplicationDetails _initialReplicationDetails;
         
         /// <summary>
@@ -63,6 +74,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._lastReplicatedTime; }
             set { this._lastReplicatedTime = value; }
+        }
+        
+        private OSDetails _oSDetails;
+        
+        /// <summary>
+        /// Optional. Type of the OS on the VM.
+        /// </summary>
+        public OSDetails OSDetails
+        {
+            get { return this._oSDetails; }
+            set { this._oSDetails = value; }
         }
         
         private string _recoveryAzureStorageAccount;
@@ -107,6 +129,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._selectedRecoveryAzureNetworkId; }
             set { this._selectedRecoveryAzureNetworkId = value; }
+        }
+        
+        private int _sourceVmCPUCount;
+        
+        /// <summary>
+        /// Optional. Gets or sets the CPU count of the VM on the primary side.
+        /// </summary>
+        public int SourceVmCPUCount
+        {
+            get { return this._sourceVmCPUCount; }
+            set { this._sourceVmCPUCount = value; }
+        }
+        
+        private int _sourceVmRAMSizeInMB;
+        
+        /// <summary>
+        /// Optional. Gets or sets the RAM size of the VM on the primary side.
+        /// </summary>
+        public int SourceVmRAMSizeInMB
+        {
+            get { return this._sourceVmRAMSizeInMB; }
+            set { this._sourceVmRAMSizeInMB = value; }
         }
         
         private IList<VMNicDetails> _vMNics;

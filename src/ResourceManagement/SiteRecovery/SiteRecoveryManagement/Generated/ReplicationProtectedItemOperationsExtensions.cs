@@ -1701,17 +1701,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
         /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        public static ReplicationProtectedItemListResponse ListAll(this IReplicationProtectedItemOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static ReplicationProtectedItemListResponse ListAll(this IReplicationProtectedItemOperations operations, string skipToken, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IReplicationProtectedItemOperations)s).ListAllAsync(customRequestHeaders);
+                return ((IReplicationProtectedItemOperations)s).ListAllAsync(skipToken, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1723,15 +1726,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
         /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        public static Task<ReplicationProtectedItemListResponse> ListAllAsync(this IReplicationProtectedItemOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<ReplicationProtectedItemListResponse> ListAllAsync(this IReplicationProtectedItemOperations operations, string skipToken, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAllAsync(customRequestHeaders, CancellationToken.None);
+            return operations.ListAllAsync(skipToken, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

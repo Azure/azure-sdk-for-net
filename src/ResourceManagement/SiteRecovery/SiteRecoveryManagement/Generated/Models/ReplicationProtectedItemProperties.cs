@@ -200,6 +200,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._providerSpecificDetails = value; }
         }
         
+        private string _recoveryFabricArmID;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Arm ID of recovery fabric.
+        /// </summary>
+        public string RecoveryFabricArmID
+        {
+            get { return this._recoveryFabricArmID; }
+            set { this._recoveryFabricArmID = value; }
+        }
+        
         private string _recoveryFabricFriendlyName;
         
         /// <summary>

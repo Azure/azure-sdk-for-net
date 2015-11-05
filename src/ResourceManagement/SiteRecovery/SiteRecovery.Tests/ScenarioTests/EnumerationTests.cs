@@ -13,12 +13,13 @@
 // limitations under the License.
 //
 
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Management.SiteRecovery;
-using Microsoft.Azure.Management.RecoveryServices;
 using System.Net;
+using System.Web;
 using Xunit;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
@@ -137,7 +138,31 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
+        public void EnumerateProtectedItemsUnderVault()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
+                var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    RequestHeaders);
+                itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                while (protectedItemsResponse.NextLink != null)
+                {
+                    protectedItemsResponse = client.ReplicationProtectedItem.ListAllNext(
+                        protectedItemsResponse.NextLink,
+                        RequestHeaders);
+
+                    itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                }
+            }
+        }
+
+        [Fact]
         public void EnumerateNetworksUnderFabricTest()
         {
             using (UndoContext context = UndoContext.Current)

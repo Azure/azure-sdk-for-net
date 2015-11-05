@@ -688,6 +688,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Enumerate all replication protected items under vault.
         /// </summary>
+        /// <param name='skipToken'>
+        /// Continuation Token.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -697,7 +700,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        Task<ReplicationProtectedItemListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ReplicationProtectedItemListResponse> ListAllAsync(string skipToken, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get subsequent page data for replication protected items under
