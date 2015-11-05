@@ -527,10 +527,7 @@ namespace Networks.Tests
                 // 3A. VirtualNetworkGatewayConnectionResetSharedKey API
                 var connectionResetSharedKey = new ConnectionResetSharedKey()
                 {
-                    Properties = new ConnectionResetSharedKeyPropertiesFormat
-                    {
-                        KeyLength = 50
-                    }
+                    KeyLength = 50
                 };
                 var resetConnectionResetSharedKeyResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.ResetSharedKey(resourceGroupName, connectionSharedKeyName, connectionResetSharedKey);
                 Assert.NotNull(resetConnectionResetSharedKeyResponse);
