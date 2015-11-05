@@ -193,6 +193,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IStorageMappingOperations StorageMapping
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of storage operations for the Site Recovery extension.
+        /// </summary>
+        IStorageOperations Storage
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of vCenter entity operations for the Site Recovery
         /// extension.
         /// </summary>

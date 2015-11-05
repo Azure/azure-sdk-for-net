@@ -242,6 +242,27 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get { return this._replicationProtectedItem; }
         }
         
+        private IStorageMappingOperations _storageMapping;
+        
+        /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IStorageMappingOperations StorageMapping
+        {
+            get { return this._storageMapping; }
+        }
+        
+        private IStorageOperations _storage;
+        
+        /// <summary>
+        /// Definition of storage operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IStorageOperations Storage
+        {
+            get { return this._storage; }
+        }
+        
         private IVCenterOperations _vCenters;
         
         /// <summary>
@@ -272,6 +293,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._protectionContainer = new ProtectionContainerOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
+            this._storageMapping = new StorageMappingOperations(this);
+            this._storage = new StorageOperations(this);
             this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -417,6 +440,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._protectionContainer = new ProtectionContainerOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
+            this._storageMapping = new StorageMappingOperations(this);
+            this._storage = new StorageOperations(this);
             this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
