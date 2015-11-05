@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._authorizations = value; }
         }
         
+        private string _billingType;
+        
+        /// <summary>
+        /// Required. BillingType to be used for the new dedicated circuit.
+        /// </summary>
+        public string BillingType
+        {
+            get { return this._billingType; }
+            set { this._billingType = value; }
+        }
+        
         private string _circuitProvisioningState;
         
         /// <summary>
@@ -147,13 +158,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuit class with
         /// required arguments.
         /// </summary>
-        public ExpressRouteCircuit(string location)
+        public ExpressRouteCircuit(string billingType, string location)
             : this()
         {
+            if (billingType == null)
+            {
+                throw new ArgumentNullException("billingType");
+            }
             if (location == null)
             {
                 throw new ArgumentNullException("location");
             }
+            this.BillingType = billingType;
             this.Location = location;
         }
     }
