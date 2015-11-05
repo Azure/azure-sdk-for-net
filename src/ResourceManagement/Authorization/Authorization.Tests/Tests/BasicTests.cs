@@ -13,17 +13,18 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.Authorization;
-using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
-using Xunit;
-using System.Collections.Generic;
 using Hyak.Common;
+using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Xunit;
 
 namespace Authorization.Tests
 {
@@ -272,16 +273,17 @@ namespace Authorization.Tests
 
         [Fact]
         public void RoleAssignmentListByFilterTest()
-        {
-            var principalId = testContext.Users.ElementAt(1);
-           
+        {                     
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = testContext.GetAuthorizationManagementClient();
-
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
+
+                var principalId = testContext.Users.ElementAt(1);
+                // Read/write the PrincipalId from Testcontext to enable Playback mode test execution
+                principalId = GetValueFromTestContext(() => principalId, Guid.Parse, "PrincipalId");                
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId;
                 var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
@@ -661,7 +663,6 @@ namespace Authorization.Tests
         [Fact]
         public void RoleDefinitionUpdateTests()
         {
-            const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
@@ -670,7 +671,6 @@ namespace Authorization.Tests
                 RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
                 string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
-                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
                 // Create a custom role definition
                 try
@@ -696,13 +696,13 @@ namespace Authorization.Tests
                         }
                     };
 
-                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
 
                     // Update role name, permissions for the custom role
                     createOrUpdateParams.RoleDefinition.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
                     createOrUpdateParams.RoleDefinition.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
 
-                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                    
                     // Validate the updated roleDefinition properties.
                     Assert.NotNull(updatedRoleDefinition);
@@ -723,7 +723,7 @@ namespace Authorization.Tests
 
                     try
                     {
-                        client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                        client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                     }
                     catch (CloudException ce)
                     {
@@ -733,7 +733,7 @@ namespace Authorization.Tests
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
                     Assert.NotNull(deleteResult);
                 }
 
@@ -754,6 +754,10 @@ namespace Authorization.Tests
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
                 string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
                 string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
+
+                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2"); 
+                var resourceGroup = "newtestrg";   
+                string resourceGroupScope = currentSubscriptionId + "/resourceGroups/" + resourceGroup;
 
                 // Create a custom role definition
                 try
@@ -778,7 +782,7 @@ namespace Authorization.Tests
                         }
                     };
 
-                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
 
                     // Validate the roleDefinition properties.
                     Assert.NotNull(roleDefinition);
@@ -793,10 +797,22 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.RoleDefinition.Properties.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.RoleDefinition.Properties.Permissions.Single().Actions.Single());
 
+                    // create resource group
+                    var resourceClient = PermissionsTests.GetResourceManagementClient();                    
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroup, new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = "westus"});
+                    createOrUpdateParams.RoleDefinition.Properties.AssignableScopes = new List<string> { resourceGroupScope };
+                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
+
+                    roleDefinition = client.RoleDefinitions.CreateOrUpdate(newRoleId, resourceGroupScope, createOrUpdateParams);
+                    Assert.NotNull(roleDefinition);
+
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
+                    Assert.NotNull(deleteResult);
+
+                    deleteResult = client.RoleDefinitions.Delete(newRoleId, resourceGroupScope);
                     Assert.NotNull(deleteResult);
                 }
 
@@ -806,9 +822,9 @@ namespace Authorization.Tests
                 // Negative test - create a roledefinition with same name (but different id) as an already existing custom role
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
-                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
+                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition3");
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -817,7 +833,7 @@ namespace Authorization.Tests
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
                     Assert.NotNull(deleteResult);
                 }
 
@@ -830,7 +846,7 @@ namespace Authorization.Tests
                     RoleDefinition builtInRole = allRoleDefinitions.RoleDefinitions.First(x => x.Properties.Type == "BuiltInRole");
 
                     createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + builtInRole.Name.ToString();
-                    client.RoleDefinitions.CreateOrUpdate(builtInRole.Name, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(builtInRole.Name, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -843,7 +859,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch(CloudException ce)
                 {
@@ -858,7 +874,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -873,7 +889,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -886,7 +902,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {

@@ -14,17 +14,26 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
+    <Compile Include="Customizations\Models\Activities\AzureMLUpdateResourceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
+    <Compile Include="Customizations\Models\Activities\DataLakeAnalyticsUSQLActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\USqlCompilationMode.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureDataLakeStoreSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopyBehavior\CopyBehaviorType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\FileSystemSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\SqlDWSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\AzureDataLakeStoreSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\SqlDWSource.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
+    <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OAuthLinkedServiceBase.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureSqlDataWarehouseTableDataset.cs" />
     <Compile Include="Customizations\Models\Registration\BaseAdfSchemaProperty.cs" />

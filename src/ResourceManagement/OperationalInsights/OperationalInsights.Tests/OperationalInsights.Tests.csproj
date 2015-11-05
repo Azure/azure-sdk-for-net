@@ -40,6 +40,9 @@
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.WorkspaceOperationsTest\CanCreateListDeleteWorkspace.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.WorkspaceOperationsTest\CanEnableDisableListIntelligencePacks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.WorkspaceOperationsTest\CanPerformWorkspaceActions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

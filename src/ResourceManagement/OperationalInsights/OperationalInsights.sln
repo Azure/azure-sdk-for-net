@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationalInsightsManagement", "OperationalInsightsManagement\OperationalInsightsManagement.csproj", "{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationalInsights.Tests", "OperationalInsights.Tests\OperationalInsights.Tests.csproj", "{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}"
