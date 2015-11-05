@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
         public static string CallerIdentity { get; set; }
         public static string TestIdentity { get; set; }
 
+        public static IDataStore DataStore { get; set; }
+
         static HttpMockServer()
         {
             Matcher = new SimpleRecordMatcher("x-ms-version");
@@ -74,9 +76,9 @@ namespace Microsoft.Azure.Test.HttpRecorder
             if (Mode == HttpRecorderMode.Playback)
             {
                 string recordDir = Path.Combine(RecordsDirectory, CallerIdentity);
-                if (Directory.Exists(recordDir))
+                if (HttpMockServer.DataStore.DirectoryExists(recordDir))
                 {
-                    foreach (string recordsFile in Directory.GetFiles(recordDir, testIdentity + ".json"))
+                    foreach (string recordsFile in HttpMockServer.DataStore.GetFiles(recordDir, testIdentity + ".json", false)) //TODO: check whether we need to go 'recursive'
                     {
                         RecordEntryPack pack = RecordEntryPack.Deserialize(recordsFile);
                         foreach (var entry in pack.Entries)
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             if (!initialized)
             {
-                throw new ApplicationException("HttpMockServer has not been initialized yet. Use HttpMockServer.Initialize() method to initialize the HttpMockServer.");
+                throw new InvalidOperationException("HttpMockServer has not been initialized yet. Use HttpMockServer.Initialize() method to initialize the HttpMockServer.");
             }
             HttpMockServer server = new HttpMockServer();
             servers.Add(server);
@@ -242,7 +244,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static HttpRecorderMode GetCurrentMode()
         {
-            string input = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
+            string input = HttpMockServer.DataStore.GetEnvironmentVariable(ModeEnvironmentVariableName);
             HttpRecorderMode mode;
 
             if (string.IsNullOrEmpty(input))

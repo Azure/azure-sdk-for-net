@@ -11,21 +11,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.Azure.Authentication;
+//using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     public static partial class TestUtilities
     {
-        public static ActiveDirectoryServiceSettings AsAzureEnvironment(this TestEnvironment env)
-        {
-            return new ActiveDirectoryServiceSettings
-            { 
-                AuthenticationEndpoint = env.Endpoints.AADAuthUri,
-                TokenAudience = env.Endpoints.AADTokenAudienceUri,
-                ValidateAuthority = false
-            };
-        }
+        //public static ActiveDirectoryServiceSettings AsAzureEnvironment(this TestEnvironment env)
+        //{
+        //    return new ActiveDirectoryServiceSettings
+        //    { 
+        //        AuthenticationEndpoint = env.Endpoints.AADAuthUri,
+        //        TokenAudience = env.Endpoints.AADTokenAudienceUri,
+        //        ValidateAuthority = false
+        //    };
+        //}
 
         /// <summary>
         /// Simply function determining retry policy - retry on any internal server error
@@ -36,9 +36,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Generate a name to be used in azure
         /// </summary>
         /// <returns></returns>
-        public static string GenerateName(string prefix = "azsmnet")
+        public static string GenerateName(string prefix = "azsmnet",
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="testframework_failed")
         {
-            return HttpMockServer.GetAssetName(GetCurrentMethodName(2), prefix);
+            return HttpMockServer.GetAssetName(methodName, prefix);
         }
 
         /// <summary>
@@ -96,9 +98,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static string GetCurrentMethodName(int index = 1)
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(index);
-
+            StackFrame sf = GetTopStackFrame();
             return sf.GetMethod().Name;
         }
 
@@ -110,12 +110,25 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static string GetCallingClass(int index = 1)
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(index);
-
-            return sf.GetMethod().ReflectedType.ToString();
+            StackFrame sf = GetTopStackFrame();
+            return sf.GetMethod().DeclaringType.FullName;
         }
 
+        private static StackFrame GetTopStackFrame()
+        {
+            StackTrace st = null;
+            try
+            {
+                throw new InvalidOperationException(
+                    "Throw an exception to intialize the StackTrace object from it, " + 
+                    "because CoreClr has no parameter-less constructor");
+            }
+            catch (Exception ex)
+            {
+                st = new StackTrace(ex, false);
+            }
+            return st.GetFrames()[1];
+        }
         /// <summary>
         /// Break up the connection string into key-value pairs
         /// </summary>

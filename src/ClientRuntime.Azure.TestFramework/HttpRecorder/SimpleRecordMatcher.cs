@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public SimpleRecordMatcher()
         {
-            MatchingHeaders = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            MatchingHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
         public SimpleRecordMatcher(params string[] matchingHeaders)
         {
-            MatchingHeaders = new HashSet<string>(matchingHeaders, StringComparer.InvariantCultureIgnoreCase);
+            MatchingHeaders = new HashSet<string>(matchingHeaders, StringComparer.OrdinalIgnoreCase);
         }
 
         private string GetMatchingKey(string httpMethod, string requestUri, Dictionary<string, List<string>> requestHeaders)

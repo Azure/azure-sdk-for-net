@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     throw new KeyNotFoundException(
                         string.Format("Unable to find a matching HTTP request for URL '{0}'. Calling method {1}().", 
                             Utilities.DecodeBase64AsUri(key), 
-                            GetCallingMethodName()));
+                            HttpMockServer.DataStore.GetCallingMethodName()));
                 }
             }
             set { sessionRecords[key] = value; }
@@ -87,37 +87,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 Enqueue(recordEntry);
             }
-        }
-
-        private string GetCallingMethodName()
-        {
-            StackTrace st = new StackTrace();
-            int depth = 3;
-            StackFrame sf = st.GetFrame(depth);
-            string methodName = string.Empty;
-            bool foundSendAsync = false;
-            while (sf != null)
-            {
-                depth++;
-                sf = st.GetFrame(depth);
-                if (sf != null)
-                {
-                    methodName = sf.GetMethod().Name;
-                }
-                if (methodName == "SendAsync")
-                {
-                    foundSendAsync = true;
-                }
-                if (foundSendAsync && 
-                    methodName != "MoveNext" &&
-                    methodName != "SendAsync" &&
-                    methodName != "Start")
-                {
-                    break;
-                }
-            }
-
-            return methodName;
         }
     }
 }

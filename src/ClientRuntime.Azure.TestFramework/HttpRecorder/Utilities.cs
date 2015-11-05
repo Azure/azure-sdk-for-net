@@ -121,7 +121,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static void SerializeJson<T>(T data, string path)
         {
-            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
+            HttpMockServer.DataStore.WriteFile(
+                path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
                     TypeNameHandling = TypeNameHandling.None
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static T DeserializeJson<T>(string path)
         {
-            string json = File.ReadAllText(path);
+            string json = HttpMockServer.DataStore.ReadFileAsText(path);
             return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
@@ -140,18 +141,24 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static void CleanDirectory(string dir)
         {
-            if (Directory.Exists(dir))
+            if (HttpMockServer.DataStore.DirectoryExists(dir))
             {
-                foreach (string file in Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)) File.Delete(file);
-                foreach (string subDirectory in Directory.GetDirectories(dir, "*", SearchOption.AllDirectories)) Directory.Delete(subDirectory, true);
+                foreach (string file in HttpMockServer.DataStore.GetFiles(dir, "*.*", true))
+                {
+                    HttpMockServer.DataStore.DeleteFile(file);
+                }
+                foreach (string subDirectory in HttpMockServer.DataStore.GetDirectories(dir, "*", true))
+                {
+                    HttpMockServer.DataStore.DeleteDirectory(subDirectory);
+                }
             }
         }
 
         public static void EnsureDirectoryExists(string dir)
         {
-            if (!Directory.Exists(dir))
+            if (!HttpMockServer.DataStore.DirectoryExists(dir))
             {
-                Directory.CreateDirectory(dir);
+                HttpMockServer.DataStore.CreateDirectory(dir);
             }
         }
         
@@ -181,7 +188,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 headers = " " + string.Join(" ", uriSplit.Skip(2));
             }
             byte[] encodedUri = Convert.FromBase64String(uriSplit[1]);
-            return string.Format("{0} {1}{2}", uriSplit[0], Encoding.UTF8.GetString(encodedUri), headers);
+            return string.Format("{0} {1}{2}", uriSplit[0], Encoding.UTF8.GetString(encodedUri, 0, encodedUri.Length), headers);
         }
     }
 }

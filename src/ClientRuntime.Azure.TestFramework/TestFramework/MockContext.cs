@@ -28,8 +28,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         static MockContext()
         {
-            ServiceClientTracing.AddTracingInterceptor(
-                new TestingTracingInterceptor());
+            //ServiceClientTracing.AddTracingInterceptor(
+            //    new TestingTracingInterceptor());
         }
 
         /// <summary>
@@ -47,10 +47,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Return a new UndoContext
         /// </summary>
         /// <returns></returns>
-        public static MockContext Start(string className, string methodName)
+        public static MockContext Start(
+            string className,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed")
         {
             var context = new MockContext();
 
+            HttpMockServer.DataStore = new Microsoft.Azure.Test.HttpRecorder.DataStore();
             HttpMockServer.Initialize(className, methodName);
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {
@@ -148,7 +152,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 server = HttpMockServer.CreateInstance();
             }
-            catch (ApplicationException)
+            catch (InvalidOperationException)
             {
                 // mock server has never been initialized, we will need to initialize it.
                 HttpMockServer.Initialize("TestEnvironment", "InitialCreation");

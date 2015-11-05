@@ -1,0 +1,33 @@
+﻿{
+  "version": "0.10.2",
+  "description": "Microsoft.Azure.Test.TestFramework",
+  "authors": [ "Microsoft Corporation" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+        "System.Net.Http": "",
+        "System.Runtime": { "type": "build" },
+        "System.Threading.Tasks": {"type": "build"}
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0.0-beta-23409",
+        "System.Diagnostics.Debug": "4.0.11-beta-23409",
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23409",
+        "System.Threading.Thread": "4.0.0-beta-23409",
+        "Microsoft.CSharp": "4.0.1-beta-23409",
+        "System.Collections": "4.0.11-beta-23409",
+        "System.Linq": "4.0.1-beta-23409",
+        "System.Runtime": "4.0.21-beta-23409",
+        "System.Threading": "4.0.11-beta-23409",
+        "System.Net.Http": "4.0.1-beta-23409"
+      }
+    }
+  },
+  "dependencies": {
+    "HttpRecorder": "1.1.1",
+    "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview"
+  }
+}

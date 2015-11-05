@@ -9,21 +9,36 @@
     <RootNamespace>Microsoft.Azure.Test.HttpRecorder</RootNamespace>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RestorePackages>true</RestorePackages>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
   </PropertyGroup>
   <Import Project="..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(LibraryFxTarget)' == 'portable' ">
+      <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Runtime" />
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition=" '$(LibraryFxTarget)' == 'net45' ">
+      <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Runtime.Serialization" />
+        <Reference Include="System.XML" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <None Include="Microsoft.Azure.Test.HttpRecorder.nuget.proj" />
     <None Include="Microsoft.Azure.Test.HttpRecorder.nuspec">
@@ -34,8 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetNames.cs" />
+    <Compile Include="DataStore.cs" />
     <Compile Include="HttpMockServer.cs" />
     <Compile Include="HttpRecorderMode.cs" />
+    <Compile Include="IDataStore.cs" />
     <Compile Include="IRecordMatcher.cs" />
     <Compile Include="RecordEntry.cs" />
     <Compile Include="RecordEntryPack.cs" />
@@ -43,5 +60,6 @@
     <Compile Include="SimpleRecordMatcher.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
 </Project>

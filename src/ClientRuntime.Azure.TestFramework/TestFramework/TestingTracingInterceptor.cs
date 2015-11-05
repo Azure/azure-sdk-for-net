@@ -13,7 +13,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     {
         public TestingTracingInterceptor()
         {
-            Debug.Listeners.Add(new DefaultTraceListener());
+            throw new NotSupportedException();
+            //Debug.Listeners.Add(new DefaultTraceListener());
         }
 
         private void Write(string message, params object[] arguments)
