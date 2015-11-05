@@ -35,7 +35,7 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\ListRestorePointsTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.SqlSecurityAlertScenarioTests\DatabaseSecurityAlertPolicyLifecycleTest.json">
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecurityAlertScenarioTests\DatabaseSecurityAlertPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataMaskingScenarioTests\DataMaskingPolicyLifecycleTest.json">
