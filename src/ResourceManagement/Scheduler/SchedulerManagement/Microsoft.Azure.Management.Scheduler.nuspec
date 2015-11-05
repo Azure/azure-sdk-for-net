@@ -16,20 +16,20 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure scheduler management "job collection" "job" REST HTTP client azureofficial windowsazureofficial</tags>
     <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
+      </group>
       <group targetFramework="portable-net45+win8+wpa81">
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.0,3.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
       </group>
       <group targetFramework="dotnet">
         <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.0,3.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\Scheduler\SchedulerManagement\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.dll" target="lib\portable-net45+win8+wpa81" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.pdb" target="lib\portable-net45+win8+wpa81" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.xml" target="lib\portable-net45+win8+wpa81" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.dll" target="lib\dotnet" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.pdb" target="lib\dotnet" />
     <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.xml" target="lib\dotnet" />
