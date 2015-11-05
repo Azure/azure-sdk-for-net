@@ -31,7 +31,7 @@ namespace Networks.Tests
 {
     public class VirtualNetworkTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void VirtualNetworkApiTest()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
