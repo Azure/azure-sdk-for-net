@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets the job identifier.
+        /// Gets the job resource identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the job name.
+        /// Gets the job resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
