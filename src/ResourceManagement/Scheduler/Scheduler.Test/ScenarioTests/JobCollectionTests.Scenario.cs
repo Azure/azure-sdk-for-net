@@ -390,9 +390,9 @@ namespace Scheduler.Test.ScenarioTests
 
                 var listByResourceGroupResult = client.JobCollections.ListByResourceGroup(resourceGroupName);
 
-                Assert.True(listByResourceGroupResult.Value.Count >= 2);
-                var listByResourceGroupResult1 = listByResourceGroupResult.Value.Where(jc => string.Compare(jc.Id, id1) == 0).FirstOrDefault();
-                var listByResourceGroupResult2 = listByResourceGroupResult.Value.Where(jc => string.Compare(jc.Id, id2) == 0).FirstOrDefault();
+                Assert.True(listByResourceGroupResult.Count() >= 2);
+                var listByResourceGroupResult1 = listByResourceGroupResult.Where(jc => string.Compare(jc.Id, id1) == 0).FirstOrDefault();
+                var listByResourceGroupResult2 = listByResourceGroupResult.Where(jc => string.Compare(jc.Id, id2) == 0).FirstOrDefault();
 
                 Assert.Equal(location, listByResourceGroupResult1.Location);
                 Assert.Equal(type, listByResourceGroupResult1.Type);
@@ -491,9 +491,9 @@ namespace Scheduler.Test.ScenarioTests
 
                 var listBySubResult = client.JobCollections.ListBySubscription();
 
-                Assert.True(listBySubResult.Value.Count >= 2);
-                var listBySubResult1 = listBySubResult.Value.Where(jc => string.Compare(jc.Id, id1) == 0).FirstOrDefault();
-                var listBySubResult2 = listBySubResult.Value.Where(jc => string.Compare(jc.Id, id2) == 0).FirstOrDefault();
+                Assert.True(listBySubResult.Count() >= 2);
+                var listBySubResult1 = listBySubResult.Where(jc => string.Compare(jc.Id, id1) == 0).FirstOrDefault();
+                var listBySubResult2 = listBySubResult.Where(jc => string.Compare(jc.Id, id2) == 0).FirstOrDefault();
 
                 Assert.Equal(location, listBySubResult1.Location);
                 Assert.Equal(type, listBySubResult1.Type);

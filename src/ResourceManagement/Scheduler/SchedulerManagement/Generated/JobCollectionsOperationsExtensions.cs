@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static JobCollectionListResult ListBySubscription(this IJobCollectionsOperations operations)
+            public static IPage<JobCollectionDefinition> ListBySubscription(this IJobCollectionsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).ListBySubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobCollectionListResult> ListBySubscriptionAsync( this IJobCollectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionAsync( this IJobCollectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobCollectionListResult> result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static JobCollectionListResult ListByResourceGroup(this IJobCollectionsOperations operations, string resourceGroupName)
+            public static IPage<JobCollectionDefinition> ListByResourceGroup(this IJobCollectionsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobCollectionListResult> ListByResourceGroupAsync( this IJobCollectionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupAsync( this IJobCollectionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobCollectionListResult> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -305,6 +305,70 @@ namespace Microsoft.Azure.Management.Scheduler
             public static async Task DisableAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DisableWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets all job collections under specified subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<JobCollectionDefinition> ListBySubscriptionNext(this IJobCollectionsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).ListBySubscriptionNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all job collections under specified subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets all job collections under specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<JobCollectionDefinition> ListByResourceGroupNext(this IJobCollectionsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all job collections under specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
     }
