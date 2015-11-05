@@ -112,6 +112,7 @@ namespace DataLakeAnalytics.Tests
             storageAccountSuffix = getResponse.StorageAccount.PrimaryEndpoints.Blob.ToString();
             storageAccountSuffix = storageAccountSuffix.Replace("https://", "").TrimEnd('/');
             storageAccountSuffix = storageAccountSuffix.Replace(storageAccountName, "").TrimStart('.');
+            storageAccountSuffix = storageAccountSuffix.Replace("blob.",""); // remove the opening "blob." if it exists.
 
             return accessKey;
         }

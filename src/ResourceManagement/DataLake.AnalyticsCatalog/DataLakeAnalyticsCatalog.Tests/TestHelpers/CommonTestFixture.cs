@@ -22,7 +22,7 @@ namespace BigAnalyticsCatalog.Tests
         public string ResourceGroupName { set; get; }
         public string BigAnalyticsCatalogAccountName { get; set; }
         public string HostUrl { get; set; }
-        public string Location = "West US";
+        public string Location = "East US 2";
         
         public CommonTestFixture()
         {

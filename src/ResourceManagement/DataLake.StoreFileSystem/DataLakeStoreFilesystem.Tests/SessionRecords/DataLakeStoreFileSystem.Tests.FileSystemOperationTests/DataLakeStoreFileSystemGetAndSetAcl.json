@@ -17,7 +17,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"group\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "271"
@@ -32,10 +32,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a185c833-a3be-413b-bef6-22abedcf30ae"
+          "9ec83c22-de34-404a-b18d-2e0e0029a56a"
         ],
         "Server-Perf": [
-          "[a185c833a3be413bbef622abedcf30ae][ AuthTime::1813.85199549381::PostAuthTime::31782.3993485359 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:051 ms]%0a"
+          "[9ec83c22de34404ab18d2e0e0029a56a][ AuthTime::1757.39933980978::PostAuthTime::1313802.06439891 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:041 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -47,10 +47,10 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:29 GMT"
+          "Wed, 04 Nov 2015 18:47:39 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=00c05494-908a-4261-b64c-bf697a51492c; path=/; secure; HttpOnly"
+          "UserPrincipalSession=f03b6020-2ee5-4d1e-ae75-56c915484697; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200
@@ -72,7 +72,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::rwx\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::rwx\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"group\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "271"
@@ -87,10 +87,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0647d15f-fce9-47de-97a3-883eae651ece"
+          "bcfbda2a-bc7e-4327-a918-f1676682f092"
         ],
         "Server-Perf": [
-          "[0647d15ffce947de97a3883eae651ece][ AuthTime::887.465902063112::PostAuthTime::189.468623910342 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:109 ms]%0a"
+          "[bcfbda2abc7e4327a918f1676682f092][ AuthTime::787.814452161015::PostAuthTime::185.191996626341 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:034 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:31 GMT"
+          "Wed, 04 Nov 2015 18:47:41 GMT"
         ]
       },
       "StatusCode": 200
@@ -124,7 +124,7 @@
           "0.9.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"group\": \"353f35f8-e1c3-461c-8314-5650973a5ec7\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"AclStatus\": {\r\n    \"entries\": [\r\n      \"user::rwx\",\r\n      \"group::rwx\",\r\n      \"other::---\",\r\n      \"mask::rwx\",\r\n      \"default:user::rwx\",\r\n      \"default:group::rwx\",\r\n      \"default:other::---\",\r\n      \"default:mask::rwx\"\r\n    ],\r\n    \"owner\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"group\": \"f5181084-3fee-489a-9278-85f6fc92c3bb\",\r\n    \"stickyBit\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "271"
@@ -139,10 +139,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "02858f99-40bf-4614-886c-445981236cc8"
+          "a57f9211-5e43-4786-b409-1f30ea280004"
         ],
         "Server-Perf": [
-          "[02858f9940bf4614886c445981236cc8][ AuthTime::841.7026001254::PostAuthTime::190.75170714224 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:016 ms]%0a"
+          "[a57f92115e434786b4091f30ea280004][ AuthTime::741.195681647687::PostAuthTime::174.499618068238 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:026 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -154,7 +154,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:34 GMT"
+          "Wed, 04 Nov 2015 18:47:42 GMT"
         ]
       },
       "StatusCode": 200
@@ -188,13 +188,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "10f6064f-42a9-4818-8e93-1dc98161014b"
+          "738a0ad4-4b51-4708-9b2a-8e128e2cf137"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[10f6064f42a948188e931dc98161014b][ AuthTime::824.167129289454::PostAuthTime::187.75784626781 ][SETACL :: 00:01:054 ms]%0a"
+          "[738a0ad44b5147089b2a8e128e2cf137][ AuthTime::808.771514134897::PostAuthTime::182.625825772396 ][SETACL :: 00:00:612 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -206,7 +206,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:31 GMT"
+          "Wed, 04 Nov 2015 18:47:41 GMT"
         ]
       },
       "StatusCode": 200
@@ -240,13 +240,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e05d6653-53c5-472e-85e9-74db9acb406a"
+          "f9802c2e-6bc1-4cb4-bf30-d38b63c14ef9"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[e05d665353c5472e85e974db9acb406a][ AuthTime::786.957715564398::PostAuthTime::186.902457446545 ][CHECKACCESS :: 00:00:004 ms]%0a"
+          "[f9802c2e6bc14cb4bf30d38b63c14ef9][ AuthTime::774.983597891292::PostAuthTime::183.05352091472 ][CHECKACCESS :: 00:00:008 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -258,7 +258,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:33 GMT"
+          "Wed, 04 Nov 2015 18:47:41 GMT"
         ]
       },
       "StatusCode": 200
@@ -292,13 +292,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cac345db-20fb-42f9-a7d3-afd4a4a3e7d5"
+          "dfeda842-e1c3-4a3e-8586-64fda727e113"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[cac345db20fb42f9a7d3afd4a4a3e7d5][ AuthTime::828.871767806415::PostAuthTime::181.770124518951 ][MODIFYACLENTRIES :: 00:00:154 ms]%0a"
+          "[dfeda842e1c34a3e858664fda727e113][ AuthTime::757.448097056003::PostAuthTime::175.355008352886 ][MODIFYACLENTRIES :: 00:00:031 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -310,7 +310,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Oct 2015 21:42:33 GMT"
+          "Wed, 04 Nov 2015 18:47:41 GMT"
         ]
       },
       "StatusCode": 200
@@ -318,6 +318,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "0353d26d-e338-469a-a87a-bd3507471155"
+    "SubscriptionId": "045c28ea-c686-462f-9081-33c34e871ba3"
   }
 }
