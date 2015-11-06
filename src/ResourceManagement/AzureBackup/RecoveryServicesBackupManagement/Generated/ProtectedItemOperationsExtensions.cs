@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ProtectedItemOperationsExtensions
     {
         /// <summary>
-        /// Trigger the Discovery.
+        /// Create Or Update ProtectedItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -59,9 +59,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        public static ProtectedItemResponse CreateOrUpdateProtectedItem(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders)
+        public static BaseRecoveryServicesJobResponse CreateOrUpdateProtectedItem(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// Create Or Update ProtectedItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -99,15 +100,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        public static Task<ProtectedItemResponse> CreateOrUpdateProtectedItemAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders)
+        public static Task<BaseRecoveryServicesJobResponse> CreateOrUpdateProtectedItemAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders)
         {
             return operations.CreateOrUpdateProtectedItemAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, request, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// Delete the specified protected item.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -145,7 +147,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// Delete the specified protected item.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
