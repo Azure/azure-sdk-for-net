@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -792,7 +792,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/certificates/";

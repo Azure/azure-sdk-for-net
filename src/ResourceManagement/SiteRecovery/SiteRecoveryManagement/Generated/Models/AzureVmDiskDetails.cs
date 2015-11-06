@@ -20,10 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -32,59 +29,81 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class AzureVmDiskDetails
     {
-        private IList<VirtualHardDisk> _disks;
+        private string _lunId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets LunId of the disk for the Azure VM.
         /// </summary>
-        public IList<VirtualHardDisk> Disks
+        public string LunId
         {
-            get { return this._disks; }
-            set { this._disks = value; }
+            get { return this._lunId; }
+            set { this._lunId = value; }
         }
         
-        private ulong _maxSizeMB;
+        private string _maxSizeMB;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets max side in MB.
         /// </summary>
-        public ulong MaxSizeMB
+        public string MaxSizeMB
         {
             get { return this._maxSizeMB; }
             set { this._maxSizeMB = value; }
         }
         
-        private string _osDisk;
+        private string _targetDiskLocation;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets blob uri of the Azure disk.
         /// </summary>
-        public string OsDisk
+        public string TargetDiskLocation
         {
-            get { return this._osDisk; }
-            set { this._osDisk = value; }
+            get { return this._targetDiskLocation; }
+            set { this._targetDiskLocation = value; }
         }
         
-        private string _osType;
+        private string _targetDiskName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets Azure disk name.
         /// </summary>
-        public string OsType
+        public string TargetDiskName
         {
-            get { return this._osType; }
-            set { this._osType = value; }
+            get { return this._targetDiskName; }
+            set { this._targetDiskName = value; }
         }
         
-        private string _vHDId;
+        private string _vhdId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the VHD id.
         /// </summary>
-        public string VHDId
+        public string VhdId
         {
-            get { return this._vHDId; }
-            set { this._vHDId = value; }
+            get { return this._vhdId; }
+            set { this._vhdId = value; }
+        }
+        
+        private string _vhdName;
+        
+        /// <summary>
+        /// Optional. Gets or sets VHD name.
+        /// </summary>
+        public string VhdName
+        {
+            get { return this._vhdName; }
+            set { this._vhdName = value; }
+        }
+        
+        private string _vhdType;
+        
+        /// <summary>
+        /// Optional. Gets or sets VHD type.
+        /// </summary>
+        public string VhdType
+        {
+            get { return this._vhdType; }
+            set { this._vhdType = value; }
         }
         
         /// <summary>
@@ -92,7 +111,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public AzureVmDiskDetails()
         {
-            this.Disks = new LazyList<VirtualHardDisk>();
         }
     }
 }
