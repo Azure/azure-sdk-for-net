@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Azure.Test;
 using System.IO;
+using System;
+using System.Threading;
 
 namespace SiteRecovery.Tests
 {
@@ -103,6 +105,109 @@ namespace SiteRecovery.Tests
             }
 
             return propertyBagContainer;
+        }
+    }
+
+    public static class MonitoringHelper
+    {
+        #region Protection jobs
+        public const string PrimaryIrJobName = "PrimaryIrCompletion";
+
+        public const string SecondaryIrJobName = "SecondaryIrCompletion";
+
+        public const string AzureIrJobName = "IrCompletion";
+
+        public const string EnableDrJobName = "EnableDr";
+
+        public const string DisableDrJobName = "DisableDr";
+
+        public const string ReverseReplicationJobName = "ReverseReplication";
+
+        public const string Reprotect = "ReprotectReplicationGroup";
+        #endregion
+
+        #region Failover jobs
+        public const string PlannedFailoverJobName = "PlannedFailover";
+
+        public const string CommitFailoverJobName = "CommitFailover";
+
+        public const string TestFailoverJobName = "TestFailover";
+
+        public const string UnplannedFailoverJobName = "UnplannedFailover";
+        #endregion
+
+        #region Cloud pairing jobs
+        public const string AddProtectionProfileJobName = "AddProtectionProfile";
+
+        public const string AssociateProtectionProfileJobName = "AssociateProtectionProfile";
+        #endregion
+
+        /// <summary>
+        /// Monitors jobs for specific object id.
+        /// </summary>
+        /// <param name="jobName">Name of the job to monitor.</param>
+        /// <param name="startTime">Start time of job</param>
+        /// <param name="client">SiteRecovery client.</param>
+        /// <param name="requestHeaders">Request headers.</param>
+        public static void MonitorJobs(
+            string jobName,
+            DateTime startTime,
+            SiteRecoveryManagementClient client,
+            CustomRequestHeaders requestHeaders)
+        {
+            bool trackingFinished = false;
+
+            while (!trackingFinished)
+            {
+
+                if (!trackingFinished)
+                {
+                    Thread.Sleep(new TimeSpan(0, 1, 0));
+                }
+
+                JobListResponse jobList = client.Jobs.List(requestHeaders);
+                trackingFinished = true;
+
+                foreach (var job in jobList.Jobs)
+                {
+                    if (job.Properties.ScenarioName.Contains(jobName)
+                        && job.Properties.State.Equals(
+                            "InProgress",
+                            StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        trackingFinished = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns job id of the job.
+        /// </summary>
+        /// <param name="jobName">Name of the job to check for.</param>
+        /// <param name="startTime">Start time of job</param>
+        /// <param name="client">SiteRecovery client.</param>
+        /// <param name="requestHeaders">Request headers.</param>
+        /// <returns>Job object of the job queried.</returns>
+        public static Job GetJobId(
+            string jobName,
+            DateTime startTime,
+            SiteRecoveryManagementClient client,
+            CustomRequestHeaders requestHeaders)
+        {
+
+            JobListResponse jobList = client.Jobs.List(requestHeaders);
+
+            foreach (var job in jobList.Jobs)
+            {
+                if (job.Properties.ScenarioName.Contains(jobName))
+                {
+                    return job;
+                }
+            }
+
+            return new Job();
         }
     }
 }

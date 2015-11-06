@@ -55,17 +55,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._allowedActions = value; }
         }
         
-        private string _displayName;
-        
-        /// <summary>
-        /// Required. Display name.
-        /// </summary>
-        public string DisplayName
-        {
-            get { return this._displayName; }
-            set { this._displayName = value; }
-        }
-        
         private System.DateTime? _endTime;
         
         /// <summary>
@@ -77,15 +66,26 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._endTime = value; }
         }
         
-        private IList<ErrorDetails> _errors;
+        private IList<JobErrorDetails> _errors;
         
         /// <summary>
         /// Required. List of errors.
         /// </summary>
-        public IList<ErrorDetails> Errors
+        public IList<JobErrorDetails> Errors
         {
             get { return this._errors; }
             set { this._errors = value; }
+        }
+        
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Required. Display name.
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
         private string _scenarioName;
@@ -134,6 +134,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._stateDescription = value; }
         }
         
+        private string _targetInstanceType;
+        
+        /// <summary>
+        /// Required. Affected ObjectT ype.
+        /// </summary>
+        public string TargetInstanceType
+        {
+            get { return this._targetInstanceType; }
+            set { this._targetInstanceType = value; }
+        }
+        
         private string _targetObjectId;
         
         /// <summary>
@@ -156,17 +167,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._targetObjectName = value; }
         }
         
-        private string _targetObjectType;
-        
-        /// <summary>
-        /// Required. Affected ObjectT ype.
-        /// </summary>
-        public string TargetObjectType
-        {
-            get { return this._targetObjectType; }
-            set { this._targetObjectType = value; }
-        }
-        
         private IList<AsrTask> _tasks;
         
         /// <summary>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public JobProperties()
         {
             this.AllowedActions = new LazyList<string>();
-            this.Errors = new LazyList<ErrorDetails>();
+            this.Errors = new LazyList<JobErrorDetails>();
             this.Tasks = new LazyList<AsrTask>();
         }
     }
