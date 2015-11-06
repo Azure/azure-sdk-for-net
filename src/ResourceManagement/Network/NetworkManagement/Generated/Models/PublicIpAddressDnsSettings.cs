@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Contains FQDN of the DNS record associated with the public IP address
     /// </summary>
-    public partial class PublicIpAddressDnsSettings
+    public partial class PublicIPAddressDnsSettings
     {
         /// <summary>
-        /// Initializes a new instance of the PublicIpAddressDnsSettings class.
+        /// Initializes a new instance of the PublicIPAddressDnsSettings class.
         /// </summary>
-        public PublicIpAddressDnsSettings() { }
+        public PublicIPAddressDnsSettings() { }
 
         /// <summary>
-        /// Initializes a new instance of the PublicIpAddressDnsSettings class.
+        /// Initializes a new instance of the PublicIPAddressDnsSettings class.
         /// </summary>
-        public PublicIpAddressDnsSettings(string domainNameLabel = default(string), string fqdn = default(string), string reverseFqdn = default(string))
+        public PublicIPAddressDnsSettings(string domainNameLabel = default(string), string fqdn = default(string), string reverseFqdn = default(string))
         {
             DomainNameLabel = domainNameLabel;
             Fqdn = fqdn;

@@ -26,13 +26,13 @@ namespace Microsoft.Azure.Management.Network
     using Models;
 
     /// <summary>
-    /// The Windows Azure Network management API provides a RESTful set of web
-    /// services that interact with Windows Azure Networks service to manage
-    /// your network resrources. The API has entities that capture the
-    /// relationship between an end user and the Windows Azure Networks
+    /// The Microsoft Azure Network management API provides a RESTful set of
+    /// web services that interact with Microsoft Azure Networks service to
+    /// manage your network resrources. The API has entities that capture the
+    /// relationship between an end user and the Microsoft Azure Networks
     /// service.
     /// </summary>
-    public partial class NetworkResourceProviderClient : ServiceClient<NetworkResourceProviderClient>, INetworkResourceProviderClient, IAzureClient
+    public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, INetworkManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -78,11 +78,15 @@ namespace Microsoft.Azure.Management.Network
 
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
 
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
+
+        public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
+
+        public virtual IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; private set; }
+
         public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
 
         public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
-
-        public virtual IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; private set; }
 
         public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
 
@@ -90,17 +94,15 @@ namespace Microsoft.Azure.Management.Network
 
         public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
 
-        public virtual IRouteTablesOperations RouteTables { get; private set; }
-
         public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
 
-        public virtual IPublicIpAddressesOperations PublicIpAddresses { get; private set; }
+        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
+
+        public virtual IRouteTablesOperations RouteTables { get; private set; }
 
         public virtual IRoutesOperations Routes { get; private set; }
 
         public virtual ISecurityRulesOperations SecurityRules { get; private set; }
-
-        public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
 
         public virtual ISubnetsOperations Subnets { get; private set; }
 
@@ -110,30 +112,28 @@ namespace Microsoft.Azure.Management.Network
 
         public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
 
-        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
-
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
-        public NetworkResourceProviderClient() : base()
+        public NetworkManagementClient() : base()
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(params DelegatingHandler[] handlers) : base(handlers)
+        public NetworkManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -142,13 +142,13 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public NetworkManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. The management credentials for Azure.
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkResourceProviderClient class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -226,25 +226,25 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             this.ApplicationGateways = new ApplicationGatewaysOperations(this);
+            this.VirtualNetworks = new VirtualNetworksOperations(this);
+            this.ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
+            this.ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             this.ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             this.ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
-            this.ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             this.LoadBalancers = new LoadBalancersOperations(this);
             this.LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             this.NetworkInterfaces = new NetworkInterfacesOperations(this);
-            this.RouteTables = new RouteTablesOperations(this);
             this.NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
-            this.PublicIpAddresses = new PublicIpAddressesOperations(this);
+            this.PublicIPAddresses = new PublicIPAddressesOperations(this);
+            this.RouteTables = new RouteTablesOperations(this);
             this.Routes = new RoutesOperations(this);
             this.SecurityRules = new SecurityRulesOperations(this);
-            this.ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             this.Subnets = new SubnetsOperations(this);
             this.Usages = new UsagesOperations(this);
             this.VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             this.VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
-            this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-05-01-preview";
+            this.ApiVersion = "2015-06-15";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

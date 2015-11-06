@@ -24,7 +24,7 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
                 
@@ -43,13 +43,13 @@ namespace Networks.Tests
                 };
 
                 // Put Nsg
-                var putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
                 Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
-                var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
 
                 // Query for usages
-                var usagesResponse = networkResourceProviderClient.Usages.List(getNsgResponse.Location.Replace(" ", string.Empty));
+                var usagesResponse = networkManagementClient.Usages.List(getNsgResponse.Location.Replace(" ", string.Empty));
 
                 // Verify that the strings are populated
                 Assert.NotNull(usagesResponse);

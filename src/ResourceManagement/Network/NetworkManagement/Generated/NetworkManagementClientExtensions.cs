@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network
     using Microsoft.Rest.Azure;
     using Models;
 
-    public static partial class NetworkResourceProviderClientExtensions
+    public static partial class NetworkManagementClientExtensions
     {
             /// <summary>
             /// Checks whether a domain name in the cloudapp.net zone is available for use.
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Network
             /// The domain name to be verified. It must conform to the following regular
             /// expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
             /// </param>
-            public static DnsNameAvailabilityResult CheckDnsNameAvailability(this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string))
+            public static DnsNameAvailabilityResult CheckDnsNameAvailability(this INetworkManagementClient operations, string location, string domainNameLabel = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkResourceProviderClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INetworkManagementClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync( this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync( this INetworkManagementClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<DnsNameAvailabilityResult> result = await operations.CheckDnsNameAvailabilityWithHttpMessagesAsync(location, domainNameLabel, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;

@@ -24,7 +24,7 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
                 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/publicIPAddresses");
                 
@@ -36,11 +36,11 @@ namespace Networks.Tests
                     });
 
 
-                // Create the parameter for PUT PublicIpAddress
+                // Create the parameter for PUT PublicIPAddress
                 string publicIpName = TestUtilities.GenerateName();
                 string domainNameLabel = TestUtilities.GenerateName();
 
-                var publicIp = new PublicIpAddress()
+                var publicIp = new PublicIPAddress()
                 {
                     Location = location,
                     Tags = new Dictionary<string, string>()
@@ -48,35 +48,35 @@ namespace Networks.Tests
                        {"key","value"}
                     },
                     PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                    DnsSettings = new PublicIpAddressDnsSettings()
+                    DnsSettings = new PublicIPAddressDnsSettings()
                     {
                         DomainNameLabel = domainNameLabel
                     }
                 };
 
-                // Put PublicIpAddress
-                var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
+                // Put PublicIPAddress
+                var putPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
                 Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
                 
-                // Get PublicIpAddress
-                var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
+                // Get PublicIPAddress
+                var getPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.Get(resourceGroupName, publicIpName);
                 Assert.Equal(4, getPublicIpAddressResponse.IdleTimeoutInMinutes);
 
-                // Get List of PublicIpAddress 
-                var getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
+                // Get List of PublicIPAddress 
+                var getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
                 Assert.Equal(1, getPublicIpAddressListResponse.Count());
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
-                // Get List of PublicIpAddress in a subscription
-                var getPublicIpAddressListSubscriptionResponse = networkResourceProviderClient.PublicIpAddresses.ListAll();
+                // Get List of PublicIPAddress in a subscription
+                var getPublicIpAddressListSubscriptionResponse = networkManagementClient.PublicIPAddresses.ListAll();
                 Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Count());
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.First());
 
-                // Delete PublicIpAddress
-                networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
+                // Delete PublicIPAddress
+                networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
 
-                // Get PublicIpAddress
-                getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
+                // Get PublicIPAddress
+                getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
                 Assert.Equal(0, getPublicIpAddressListResponse.Count());
             }
         }
@@ -90,7 +90,7 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = ResourcesManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/publicIPAddresses");
 
@@ -101,12 +101,12 @@ namespace Networks.Tests
                         Location = location
                     });
 
-                // Create the parameter for PUT PublicIpAddress
+                // Create the parameter for PUT PublicIPAddress
                 string publicIpName = TestUtilities.GenerateName();
                 string domainNameLabel = TestUtilities.GenerateName();
                 string reverseFqdn;
 
-                var publicIp = new PublicIpAddress()
+                var publicIp = new PublicIPAddress()
                 {
                     Location = location,
                     Tags = new Dictionary<string, string>()
@@ -114,53 +114,53 @@ namespace Networks.Tests
                        {"key","value"}
                     },
                     PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                    DnsSettings = new PublicIpAddressDnsSettings()
+                    DnsSettings = new PublicIPAddressDnsSettings()
                     {
                         DomainNameLabel = domainNameLabel,
                     },
                     IdleTimeoutInMinutes = 16,
                 };
 
-                // Put PublicIpAddress
-                var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
+                // Put PublicIPAddress
+                var putPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
                 Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
 
-                // Get PublicIpAddress
-                var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
+                // Get PublicIPAddress
+                var getPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.Get(resourceGroupName, publicIpName);
 
                 // Add Reverse FQDN
                 reverseFqdn = getPublicIpAddressResponse.DnsSettings.Fqdn;
                 getPublicIpAddressResponse.DnsSettings.ReverseFqdn = reverseFqdn;
 
-                putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, getPublicIpAddressResponse);
+                putPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, publicIpName, getPublicIpAddressResponse);
                 Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
 
-                // Get PublicIpAddress
-                getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
+                // Get PublicIPAddress
+                getPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.Get(resourceGroupName, publicIpName);
                 Assert.Equal(16, getPublicIpAddressResponse.IdleTimeoutInMinutes);
                 Assert.Equal(reverseFqdn, getPublicIpAddressResponse.DnsSettings.ReverseFqdn);
 
-                // Get List of PublicIpAddress 
-                var getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
+                // Get List of PublicIPAddress 
+                var getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
                 Assert.Equal(1, getPublicIpAddressListResponse.Count());
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
-                // Get List of PublicIpAddress in a subscription
-                var getPublicIpAddressListSubscriptionResponse = networkResourceProviderClient.PublicIpAddresses.ListAll();
+                // Get List of PublicIPAddress in a subscription
+                var getPublicIpAddressListSubscriptionResponse = networkManagementClient.PublicIPAddresses.ListAll();
                 Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Count());
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.First());
 
-                // Delete PublicIpAddress
-                networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
+                // Delete PublicIPAddress
+                networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
 
-                // Get PublicIpAddress
-                getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
+                // Get PublicIPAddress
+                getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
                 Assert.Equal(0, getPublicIpAddressListResponse.Count());
 
             }
         }
 
-        private static void ArePublicIpAddressesEqual(PublicIpAddress publicIpAddress1, PublicIpAddress publicIpAddress2)
+        private static void ArePublicIpAddressesEqual(PublicIPAddress publicIpAddress1, PublicIPAddress publicIpAddress2)
         {
             Assert.Equal(publicIpAddress1.Name, publicIpAddress2.Name);
             Assert.Equal(publicIpAddress1.Location, publicIpAddress2.Location);

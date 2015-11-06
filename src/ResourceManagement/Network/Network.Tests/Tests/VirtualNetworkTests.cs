@@ -40,7 +40,7 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
 
@@ -90,11 +90,15 @@ namespace Networks.Tests
                 };
 
                 // Put Vnet
-                var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
                 Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
 
+
+                var putVnetResponse1 = networkManagementClient.VirtualNetworks.GetById(putVnetResponse.Id);
+                Assert.Equal("Succeeded", putVnetResponse1.ProvisioningState);
+                
                 // Get Vnet
-                var getVnetResponse = networkResourceProviderClient.VirtualNetworks.Get(resourceGroupName, vnetName);
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
                 Assert.Equal(vnetName, getVnetResponse.Name);
                 Assert.Equal("Succeeded", getVnetResponse.ProvisioningState);
                 Assert.Equal("10.1.1.1", getVnetResponse.DhcpOptions.DnsServers[0]);
@@ -104,7 +108,7 @@ namespace Networks.Tests
                 Assert.Equal(subnet2Name, getVnetResponse.Subnets[1].Name);
 
                 // Get all Vnets
-                var getAllVnets = networkResourceProviderClient.VirtualNetworks.List(resourceGroupName);
+                var getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
                 Assert.Equal(vnetName, getAllVnets.First().Name);
                 Assert.Equal("Succeeded", getAllVnets.First().ProvisioningState);
                 Assert.Equal("10.0.0.0/16", getAllVnets.First().AddressSpace.AddressPrefixes[0]);
@@ -112,7 +116,7 @@ namespace Networks.Tests
                 Assert.Equal(subnet2Name, getAllVnets.First().Subnets[1].Name);
 
                 // Get all Vnets in a subscription
-                var getAllVnetInSubscription = networkResourceProviderClient.VirtualNetworks.ListAll();
+                var getAllVnetInSubscription = networkManagementClient.VirtualNetworks.ListAll();
                 var vnpgateway = getAllVnetInSubscription.FirstOrDefault(n => n.Name == vnetName);
                 Assert.NotNull(vnpgateway);
                 Assert.Equal("Succeeded", vnpgateway.ProvisioningState);
@@ -121,10 +125,10 @@ namespace Networks.Tests
                 Assert.Equal(subnet2Name, vnpgateway.Subnets[1].Name);
 
                 // Delete Vnet
-                networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
 
                 // Get all Vnets
-                getAllVnets = networkResourceProviderClient.VirtualNetworks.List(resourceGroupName);
+                getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
                 Assert.Null(getAllVnets);
             }
         }

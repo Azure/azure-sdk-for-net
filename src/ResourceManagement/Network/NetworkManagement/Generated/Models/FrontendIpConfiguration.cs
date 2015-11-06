@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Frontend IP address of the load balancer
     /// </summary>
-    public partial class FrontendIpConfiguration : SubResource
+    public partial class FrontendIPConfiguration : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the FrontendIpConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfiguration class.
         /// </summary>
-        public FrontendIpConfiguration() { }
+        public FrontendIPConfiguration() { }
 
         /// <summary>
-        /// Initializes a new instance of the FrontendIpConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfiguration class.
         /// </summary>
-        public FrontendIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
+        public FrontendIPConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;

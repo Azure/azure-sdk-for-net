@@ -23,6 +23,20 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IVirtualNetworksOperations
     {
         /// <summary>
+        /// The Get applicationgateway operation retreives information about
+        /// the specified applicationgateway.
+        /// </summary>
+        /// <param name='id'>
+        /// The id of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VirtualNetwork>> GetByIdWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The Delete VirtualNetwork operation deletes the specifed virtual
         /// network
         /// </summary>

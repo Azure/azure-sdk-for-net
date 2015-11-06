@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// ExpressRouteCircuitsOperations operations.
     /// </summary>
-    internal partial class ExpressRouteCircuitsOperations : IServiceOperations<NetworkResourceProviderClient>, IExpressRouteCircuitsOperations
+    internal partial class ExpressRouteCircuitsOperations : IServiceOperations<NetworkManagementClient>, IExpressRouteCircuitsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitsOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ExpressRouteCircuitsOperations(NetworkResourceProviderClient client)
+        internal ExpressRouteCircuitsOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete ExpressRouteCircuit operation deletes the specified
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 202 && (int)statusCode != 204 && (int)statusCode != 200)
+            if ((int)statusCode != 204 && (int)statusCode != 200 && (int)statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;

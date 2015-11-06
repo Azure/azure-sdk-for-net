@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// IPConfiguration in a NetworkInterface
     /// </summary>
-    public partial class NetworkInterfaceIpConfiguration : SubResource
+    public partial class NetworkInterfaceIPConfiguration : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIpConfiguration
+        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIpConfiguration() { }
+        public NetworkInterfaceIPConfiguration() { }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIpConfiguration
+        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatRules = default(IList<SubResource>), string provisioningState = default(string))
+        public NetworkInterfaceIPConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatRules = default(IList<SubResource>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;

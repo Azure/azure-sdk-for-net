@@ -20,13 +20,13 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = GetNrpServiceEndpoint(NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks"));
 
                 string domainNameLabel = TestUtilities.GenerateName("domainnamelabel");
 
-                var dnsNameAvailability = networkResourceProviderClient.CheckDnsNameAvailability(location, domainNameLabel);
+                var dnsNameAvailability = networkManagementClient.CheckDnsNameAvailability(location, domainNameLabel);
 
                 Assert.True(dnsNameAvailability.Available.Value);
             }

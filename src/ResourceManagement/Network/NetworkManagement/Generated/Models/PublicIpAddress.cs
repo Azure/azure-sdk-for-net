@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// PublicIPAddress resource
     /// </summary>
-    public partial class PublicIpAddress : Resource
+    public partial class PublicIPAddress : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PublicIpAddress class.
+        /// Initializes a new instance of the PublicIPAddress class.
         /// </summary>
-        public PublicIpAddress() { }
+        public PublicIPAddress() { }
 
         /// <summary>
-        /// Initializes a new instance of the PublicIpAddress class.
+        /// Initializes a new instance of the PublicIPAddress class.
         /// </summary>
-        public PublicIpAddress(string publicIPAllocationMethod, string etag = default(string), SubResource ipConfiguration = default(SubResource), PublicIpAddressDnsSettings dnsSettings = default(PublicIpAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
+        public PublicIPAddress(string publicIPAllocationMethod, string etag = default(string), SubResource ipConfiguration = default(SubResource), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -56,8 +56,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PublicIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets a reference to the network interface IP configurations using
-        /// this public IP address
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfiguration")]
         public SubResource IpConfiguration { get; set; }
@@ -67,10 +65,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// address
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsSettings")]
-        public PublicIpAddressDnsSettings DnsSettings { get; set; }
+        public PublicIPAddressDnsSettings DnsSettings { get; set; }
 
         /// <summary>
-        /// Gets the assigned public IP address
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipAddress")]
         public string IpAddress { get; set; }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LoadBalancer class.
         /// </summary>
-        public LoadBalancer(string etag = default(string), IList<FrontendIpConfiguration> frontendIPConfigurations = default(IList<FrontendIpConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), IList<InboundNatPool> inboundNatPools = default(IList<InboundNatPool>), IList<OutboundNatRule> outboundNatRules = default(IList<OutboundNatRule>), string resourceGuid = default(string), string provisioningState = default(string))
+        public LoadBalancer(string etag = default(string), IList<FrontendIPConfiguration> frontendIPConfigurations = default(IList<FrontendIPConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), IList<InboundNatPool> inboundNatPools = default(IList<InboundNatPool>), IList<OutboundNatRule> outboundNatRules = default(IList<OutboundNatRule>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             FrontendIPConfigurations = frontendIPConfigurations;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets frontend IP addresses of the load balancer
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public IList<FrontendIpConfiguration> FrontendIPConfigurations { get; set; }
+        public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets Pools of backend IP addresseses

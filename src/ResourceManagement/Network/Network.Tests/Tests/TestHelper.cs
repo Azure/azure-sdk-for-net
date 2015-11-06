@@ -9,10 +9,10 @@ namespace Networks.Tests
 {
     public class TestHelper
     {
-        public static PublicIpAddress CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location,
-            NetworkResourceProviderClient nrpClient)
+        public static PublicIPAddress CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location,
+            NetworkManagementClient nrpClient)
         {
-            var publicIp = new PublicIpAddress()
+            var publicIp = new PublicIPAddress()
             {
                 Location = location,
                 Tags = new Dictionary<string, string>()
@@ -20,16 +20,16 @@ namespace Networks.Tests
                     {"key","value"}
                 },
                 PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                DnsSettings = new PublicIpAddressDnsSettings()
+                DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
                 }
             };
 
             // Put nic1PublicIpAddress
-            var putPublicIpAddressResponse = nrpClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
+            var putPublicIpAddressResponse = nrpClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
             Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
-            var getPublicIpAddressResponse = nrpClient.PublicIpAddresses.Get(resourceGroupName, name);
+            var getPublicIpAddressResponse = nrpClient.PublicIPAddresses.Get(resourceGroupName, name);
 
             return getPublicIpAddressResponse;
         }
@@ -41,7 +41,7 @@ namespace Networks.Tests
             string subnetId,
             string location,
             string ipConfigName,
-            NetworkResourceProviderClient client)
+            NetworkManagementClient client)
         {
             var nicParameters = new NetworkInterface()
             {
@@ -50,9 +50,9 @@ namespace Networks.Tests
                 {
                     {"key","value"}
                 },
-                IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                 {
-                    new NetworkInterfaceIpConfiguration()
+                    new NetworkInterfaceIPConfiguration()
                     {
                             Name = ipConfigName,
                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
@@ -79,7 +79,7 @@ namespace Networks.Tests
             return getNicResponse;
         }
 
-        public static VirtualNetwork CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location, NetworkResourceProviderClient client)
+        public static VirtualNetwork CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location, NetworkManagementClient client)
         {
             var vnet = new VirtualNetwork()
             {

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// LoadBalancersOperations operations.
     /// </summary>
-    internal partial class LoadBalancersOperations : IServiceOperations<NetworkResourceProviderClient>, ILoadBalancersOperations
+    internal partial class LoadBalancersOperations : IServiceOperations<NetworkManagementClient>, ILoadBalancersOperations
     {
         /// <summary>
         /// Initializes a new instance of the LoadBalancersOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal LoadBalancersOperations(NetworkResourceProviderClient client)
+        internal LoadBalancersOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete loadbalancer operation deletes the specified loadbalancer.

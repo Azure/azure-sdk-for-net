@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// RoutesOperations operations.
     /// </summary>
-    internal partial class RoutesOperations : IServiceOperations<NetworkResourceProviderClient>, IRoutesOperations
+    internal partial class RoutesOperations : IServiceOperations<NetworkManagementClient>, IRoutesOperations
     {
         /// <summary>
         /// Initializes a new instance of the RoutesOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal RoutesOperations(NetworkResourceProviderClient client)
+        internal RoutesOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete route operation deletes the specified route from a route table.

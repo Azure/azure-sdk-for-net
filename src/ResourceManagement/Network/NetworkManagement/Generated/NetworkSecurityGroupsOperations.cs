@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// NetworkSecurityGroupsOperations operations.
     /// </summary>
-    internal partial class NetworkSecurityGroupsOperations : IServiceOperations<NetworkResourceProviderClient>, INetworkSecurityGroupsOperations
+    internal partial class NetworkSecurityGroupsOperations : IServiceOperations<NetworkManagementClient>, INetworkSecurityGroupsOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupsOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal NetworkSecurityGroupsOperations(NetworkResourceProviderClient client)
+        internal NetworkSecurityGroupsOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The Delete NetworkSecurityGroup operation deletes the specifed network

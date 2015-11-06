@@ -24,7 +24,7 @@ namespace Networks.Tests
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient =
+                var networkManagementClient =
                     NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient,
@@ -70,7 +70,7 @@ namespace Networks.Tests
                     }
                 };
 
-                var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName,vnetName, vnet);
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName,vnetName, vnet);
 
                 // Create a Subnet
                 // Populate paramters for a Subnet
@@ -82,26 +82,26 @@ namespace Networks.Tests
 
                 #region Verification
 
-                var putSubnetResponse = networkResourceProviderClient.Subnets.CreateOrUpdate(resourceGroupName, vnetName, subnet2Name, subnet);
+                var putSubnetResponse = networkManagementClient.Subnets.CreateOrUpdate(resourceGroupName, vnetName, subnet2Name, subnet);
 
-                var getVnetResponse = networkResourceProviderClient.VirtualNetworks.Get(resourceGroupName, vnetName);
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
                 Assert.Equal(2, getVnetResponse.Subnets.Count);
 
-                var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnet2Name);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnet2Name);
 
                 // Verify the getSubnetResponse
                 Assert.True(AreSubnetsEqual(getVnetResponse.Subnets[1], getSubnetResponse));
 
-                var getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
+                var getSubnetListResponse = networkManagementClient.Subnets.List(resourceGroupName, vnetName);
 
                 // Verify ListSubnets
                 Assert.True(AreSubnetsEqual(getVnetResponse.Subnets, getSubnetListResponse));
 
                 // Delete the subnet "subnet1"
-                networkResourceProviderClient.Subnets.Delete(resourceGroupName, vnetName, subnet2Name);
+                networkManagementClient.Subnets.Delete(resourceGroupName, vnetName, subnet2Name);
 
                 // Verify that the deletion was successful
-                getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
+                getSubnetListResponse = networkManagementClient.Subnets.List(resourceGroupName, vnetName);
 
                 Assert.Equal(1, getSubnetListResponse.Count());
                 Assert.Equal(subnet1Name, getSubnetListResponse.First().Name);
