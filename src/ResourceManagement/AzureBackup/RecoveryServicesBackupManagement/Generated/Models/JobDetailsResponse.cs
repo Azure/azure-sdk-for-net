@@ -21,30 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResource.
+    /// The definition of a JobDetailsResponse.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class JobDetailsResponse : AzureOperationResponse
     {
-        private ProtectedItemBase _properties;
+        private JobDetailsResource _item;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. JobDetailsResource.
         /// </summary>
-        public ProtectedItemBase Properties
+        public JobDetailsResource Item
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._item; }
+            set { this._item = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
+        /// Initializes a new instance of the JobDetailsResponse class.
         /// </summary>
-        public ProtectedItemResource()
+        public JobDetailsResponse()
         {
         }
     }

@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyRequest.
+    /// The definition of a ProtectedItemCreateOrUpdateRequest.
     /// </summary>
     public partial class ProtectedItemCreateOrUpdateRequest : ProtectedItemResource
     {

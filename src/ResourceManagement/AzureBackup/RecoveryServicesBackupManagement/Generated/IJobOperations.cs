@@ -23,31 +23,23 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Container operations for the Azure Backup extension with
-    /// RecoveryService Vault.
+    /// Definition of Job operations for the Azure Backup extension.
     /// </summary>
-    public partial interface IContainerOperation
+    public partial interface IJobOperations
     {
         /// <summary>
-        /// Get the status of refresh container operation
+        /// Cancel the job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
         /// </param>
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
-        /// </param>
-        /// <param name='operationId'>
-        /// Operation ID of refresh container operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -56,13 +48,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        Task<AzureOperationResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// List all protection containers.
+        /// Export job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -73,19 +64,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
-        /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerListResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken);
+        Task<JobResponse> ExportJobAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// Get the details of specific job Objects.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -96,16 +84,52 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
-        /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a JobDetailsResponse.
+        /// </returns>
+        Task<JobDetailsResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the operation result of specific job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> RefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken);
+        Task<JobResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string jobName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list  of jobs.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a JobListResponse.
+        /// </returns>
+        Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, IaaSVMJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

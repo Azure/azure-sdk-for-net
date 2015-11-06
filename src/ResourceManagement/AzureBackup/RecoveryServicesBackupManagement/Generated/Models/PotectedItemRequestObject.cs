@@ -28,23 +28,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a ProtectedItemResource.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class PotectedItemRequestObject : ProtectedItemResource
     {
-        private ProtectedItemBase _properties;
-        
         /// <summary>
-        /// Optional. Properties
+        /// Initializes a new instance of the PotectedItemRequestObject class.
         /// </summary>
-        public ProtectedItemBase Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
-        /// </summary>
-        public ProtectedItemResource()
+        public PotectedItemRequestObject()
         {
         }
     }

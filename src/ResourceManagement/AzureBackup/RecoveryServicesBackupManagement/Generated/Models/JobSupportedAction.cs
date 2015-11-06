@@ -24,47 +24,21 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    public enum JobSupportedAction
     {
-        private string _providerType;
+        /// <summary>
+        /// Invalid JobSupportedAction of Job.
+        /// </summary>
+        Invalid = 0,
         
         /// <summary>
-        /// Optional.
+        /// Cancellable JobSupportedAction of Job.
         /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
-        private string _status;
+        Cancellable = 1,
         
         /// <summary>
-        /// Optional.
+        /// Retriable JobSupportedAction of Job.
         /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
-        /// class.
-        /// </summary>
-        public ProtectableObjectQueryParameters()
-        {
-        }
+        Retriable = 2,
     }
 }

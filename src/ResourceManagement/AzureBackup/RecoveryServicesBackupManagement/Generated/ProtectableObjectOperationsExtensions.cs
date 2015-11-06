@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectableObjectListResponse.
         /// </returns>
-        public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectableObjectListResponse.
         /// </returns>
-        public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(resourceGroupName, resourceName, queryFilter, customRequestHeaders, CancellationToken.None);
         }

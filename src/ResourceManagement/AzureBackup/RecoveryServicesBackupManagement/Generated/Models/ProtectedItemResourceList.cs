@@ -20,32 +20,46 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResource.
+    /// The definition of a ProtectedItemResourceList.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class ProtectedItemResourceList
     {
-        private ProtectedItemBase _properties;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Next Link
         /// </summary>
-        public ProtectedItemBase Properties
+        public string NextLink
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
+        private IList<ProtectedItemResource> _value;
+        
+        /// <summary>
+        /// Optional. List of ProtectedItem responses.
+        /// </summary>
+        public IList<ProtectedItemResource> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
+        /// Initializes a new instance of the ProtectedItemResourceList class.
         /// </summary>
-        public ProtectedItemResource()
+        public ProtectedItemResourceList()
         {
+            this.Value = new LazyList<ProtectedItemResource>();
         }
     }
 }

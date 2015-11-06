@@ -26,10 +26,21 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMProtectableObject object.
+    /// The definition of a IaasVmProtectionContainer object.
     /// </summary>
-    public partial class ProtectableObject : ProtectableObjectBase
+    public partial class IaasVmProtectionContainer : ProtectionContainerBase
     {
+        private string _containerId;
+        
+        /// <summary>
+        /// Optional. Container ID
+        /// </summary>
+        public string ContainerId
+        {
+            get { return this._containerId; }
+            set { this._containerId = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -41,15 +52,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._friendlyName = value; }
         }
         
-        private string _protectionStatus;
+        private string _registrationStatus;
         
         /// <summary>
-        /// Optional. Protection Status
+        /// Optional. Registration Status
         /// </summary>
-        public string ProtectionStatus
+        public string RegistrationStatus
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._registrationStatus; }
+            set { this._registrationStatus = value; }
         }
         
         private string _resourceGroup;
@@ -63,10 +74,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._resourceGroup = value; }
         }
         
+        private string _vmVersion;
+        
         /// <summary>
-        /// Initializes a new instance of the ProtectableObject class.
+        /// Optional. VM Version
         /// </summary>
-        public ProtectableObject()
+        public string VmVersion
+        {
+            get { return this._vmVersion; }
+            set { this._vmVersion = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the IaasVmProtectionContainer class.
+        /// </summary>
+        public IaasVmProtectionContainer()
         {
         }
     }

@@ -21,30 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResource.
+    /// The definition of ProtectionContainerBase object.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class ProtectionContainerBase
     {
-        private ProtectedItemBase _properties;
+        private string _providerType;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Provider Type
         /// </summary>
-        public ProtectedItemBase Properties
+        public string ProviderType
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._providerType; }
+            set { this._providerType = value; }
+        }
+        
+        private string _workloadType;
+        
+        /// <summary>
+        /// Optional. Workload Type
+        /// </summary>
+        public string WorkloadType
+        {
+            get { return this._workloadType; }
+            set { this._workloadType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
+        /// Initializes a new instance of the ProtectionContainerBase class.
         /// </summary>
-        public ProtectedItemResource()
+        public ProtectionContainerBase()
         {
         }
     }

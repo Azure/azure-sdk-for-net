@@ -25,14 +25,25 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of ProtectableObjectBase object.
+    /// The definition of a ProtectedItemListQueryParam object.
     /// </summary>
-    public partial class ProtectableObjectBase
+    public partial class ProtectedItemListQueryParam
     {
+        private string _datasourceType;
+        
+        /// <summary>
+        /// Optional. Datasource Type query parameter
+        /// </summary>
+        public string DatasourceType
+        {
+            get { return this._datasourceType; }
+            set { this._datasourceType = value; }
+        }
+        
         private string _providerType;
         
         /// <summary>
-        /// Optional. Provider Type
+        /// Optional. provider type query parameter
         /// </summary>
         public string ProviderType
         {
@@ -40,10 +51,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._providerType = value; }
         }
         
+        private string _skipToken;
+        
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectBase class.
+        /// Optional. Skip Token query parameter
         /// </summary>
-        public ProtectableObjectBase()
+        public string SkipToken
+        {
+            get { return this._skipToken; }
+            set { this._skipToken = value; }
+        }
+        
+        private string _topToken;
+        
+        /// <summary>
+        /// Optional. Top Token query parameter
+        /// </summary>
+        public string TopToken
+        {
+            get { return this._topToken; }
+            set { this._topToken = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProtectedItemListQueryParam class.
+        /// </summary>
+        public ProtectedItemListQueryParam()
         {
         }
     }

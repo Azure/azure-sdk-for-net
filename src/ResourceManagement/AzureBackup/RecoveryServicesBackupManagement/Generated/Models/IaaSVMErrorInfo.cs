@@ -20,54 +20,68 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMProtectableObject object.
+    /// The definition of a IaaSVMJobs object.
     /// </summary>
-    public partial class ProtectableObject : ProtectableObjectBase
+    public partial class IaaSVMErrorInfo : ErrorInfo
     {
-        private string _friendlyName;
+        private int _errorCode;
         
         /// <summary>
-        /// Optional. Friendly Name
+        /// Optional. Job ErrorCode
         /// </summary>
-        public string FriendlyName
+        public int ErrorCode
         {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
+            get { return this._errorCode; }
+            set { this._errorCode = value; }
         }
         
-        private string _protectionStatus;
+        private string _errorString;
         
         /// <summary>
-        /// Optional. Protection Status
+        /// Optional. Job ErrorString
         /// </summary>
-        public string ProtectionStatus
+        public string ErrorString
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._errorString; }
+            set { this._errorString = value; }
         }
         
-        private string _resourceGroup;
+        private string _errorTitle;
         
         /// <summary>
-        /// Optional. Resource Group
+        /// Optional. Job ErrorTitle
         /// </summary>
-        public string ResourceGroup
+        public string ErrorTitle
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._errorTitle; }
+            set { this._errorTitle = value; }
+        }
+        
+        private IList<string> _recommendations;
+        
+        /// <summary>
+        /// Optional. Job Recommendations
+        /// </summary>
+        public IList<string> Recommendations
+        {
+            get { return this._recommendations; }
+            set { this._recommendations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObject class.
+        /// Initializes a new instance of the IaaSVMErrorInfo class.
         /// </summary>
-        public ProtectableObject()
+        public IaaSVMErrorInfo()
         {
+            this.Recommendations = new LazyList<string>();
         }
     }
 }

@@ -21,11 +21,8 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -91,6 +88,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Definition of Job operations for the Azure Backup extension.
+        /// </summary>
+        IJobOperations Job
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Protectable Object operations for the Azure Backup
         /// extension.
         /// </summary>
@@ -100,10 +105,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Protected Item operations for the Azure Backup
+        /// Definition of ProtectedItem operations for the Azure Backup
         /// extension.
         /// </summary>
-        IProtectedItemOperations DataSource
+        IProtectedItemOperations ProtectedItem
         {
             get; 
         }
@@ -132,54 +137,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         {
             get; 
         }
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// The protection policy Name to be fetched.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        Task<ProtectionPolicyResponse> GetAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// The protection policy Name to be updated.
-        /// </param>
-        /// <param name='operationId'>
-        /// OperationId to get operation result.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        Task<ProtectionPolicyResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

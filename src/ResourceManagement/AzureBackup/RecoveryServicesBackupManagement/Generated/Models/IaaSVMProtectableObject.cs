@@ -26,25 +26,25 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResource.
+    /// The definition of a IaasVM ProtectableObject object.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class IaaSVMProtectableObject : ProtectableObject
     {
-        private ProtectedItemBase _properties;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Classic or Classic VM
         /// </summary>
-        public ProtectedItemBase Properties
+        public string VirtualMachineVersion
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
+        /// Initializes a new instance of the IaaSVMProtectableObject class.
         /// </summary>
-        public ProtectedItemResource()
+        public IaaSVMProtectableObject()
         {
         }
     }

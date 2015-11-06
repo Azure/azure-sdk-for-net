@@ -26,25 +26,25 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResource.
+    /// The definition of a ProtectedItemResponse.
     /// </summary>
-    public partial class ProtectedItemResource : Resource
+    public partial class ProtectedItemResponse : BaseRecoveryServicesJobResponse
     {
-        private ProtectedItemBase _properties;
+        private ProtectedItemResource _item;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Item
         /// </summary>
-        public ProtectedItemBase Properties
+        public ProtectedItemResource Item
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._item; }
+            set { this._item = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemResource class.
+        /// Initializes a new instance of the ProtectedItemResponse class.
         /// </summary>
-        public ProtectedItemResource()
+        public ProtectedItemResponse()
         {
         }
     }
