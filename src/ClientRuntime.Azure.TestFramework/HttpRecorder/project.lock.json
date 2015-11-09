@@ -3159,7 +3159,9 @@
     ],
     ".NETFramework,Version=v4.5.1": [
       "fx/System.Net.Http ",
-      "fx/System.Xml.Linq "
+      "fx/System.Xml.Linq ",
+      "fx/System.Runtime ",
+      "fx/System.Threading.Tasks "
     ],
     "DNXCore,Version=v5.0": [
       "System.Diagnostics.StackTrace >= 4.0.1-beta-23409",

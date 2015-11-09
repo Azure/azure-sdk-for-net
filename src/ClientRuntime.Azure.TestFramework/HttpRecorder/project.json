@@ -12,7 +12,9 @@
     "net451": {
       "frameworkAssemblies": {
         "System.Net.Http": "",
-        "System.Xml.Linq": ""
+        "System.Xml.Linq": { "type": "build" },
+        "System.Runtime": { "type": "build" },
+        "System.Threading.Tasks": {"type": "build"}
       }
     },
     "dnxcore50": {

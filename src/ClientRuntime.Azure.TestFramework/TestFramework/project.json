@@ -7,9 +7,9 @@
   "licenseUrl": "",
   "frameworks": {
     "net451": {
-        "System.Net.Http": "",
-        "System.Runtime": { "type": "build" },
-        "System.Threading.Tasks": {"type": "build"}
+      "System.Net.Http": "",
+      "System.Runtime": { "type": "build" },
+      "System.Threading.Tasks": { "type": "build" }
     },
     "dnxcore50": {
       "dependencies": {
@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "HttpRecorder": "1.1.1",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview"
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
   }
 }

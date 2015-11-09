@@ -5,7 +5,8 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-  "commands": {"test": "xunit.runner.dnx"},
+  "commands": { "test": "xunit.runner.dnx" },
+  
   "frameworks": {
     "dnxcore50": {
       "dependencies": {
@@ -20,8 +21,9 @@
   },
   "dependencies": {
     "HttpRecorder": "1.1.1",
-    "ResourceManagement": "2.0.0-preview",
+    "Microsoft.Azure.Management.Resources": "2.0.1-preview",
     "TestFramework": "0.10.2",
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
     "xunit": "2.1.0"
   }
 }

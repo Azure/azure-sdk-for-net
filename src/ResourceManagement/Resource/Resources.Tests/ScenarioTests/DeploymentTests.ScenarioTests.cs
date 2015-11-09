@@ -190,7 +190,7 @@ namespace ResourceGroups.Tests
                 {
                     Properties = new DeploymentProperties()
                     {
-                        Template = File.ReadAllText("ScenarioTests\\good-website.js"),
+                        Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.js")),
                         Parameters =
                         JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,

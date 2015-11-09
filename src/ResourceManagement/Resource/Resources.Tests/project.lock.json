@@ -18,6 +18,19 @@
           "System.Xml.XDocument": "4.0.11-beta-23409"
         }
       },
+      "Microsoft.Azure.Management.Resources/2.0.1-preview": {
+        "type": "project",
+        "framework": "DNXCore,Version=v5.0",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23409",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "System.Diagnostics.Tools": "4.0.1-beta-23409",
+          "System.Net.Http": "4.0.1-beta-23409",
+          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
+          "System.Threading.Tasks": "4.0.11-beta-23409",
+          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -172,7 +185,7 @@
           "lib/dnxcore50/Microsoft.Framework.Logging.Abstractions.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.0",
@@ -183,28 +196,22 @@
           "System.Xml.ReaderWriter": "4.0.10"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime.Azure/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime.Azure/2.1.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CSharp": "4.0.0",
-          "Microsoft.Rest.ClientRuntime": "2.0.1-preview",
-          "Newtonsoft.Json": "6.0.8",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.ReaderWriter": "4.0.10"
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
       "Newtonsoft.Json/7.0.1": {
@@ -214,19 +221,6 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
-        }
-      },
-      "ResourceManagement/2.0.0-preview": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
-          "System.Diagnostics.Tools": "4.0.1-beta-23409",
-          "System.Net.Http": "4.0.1-beta-23409",
-          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
-          "System.Threading.Tasks": "4.0.11-beta-23409",
-          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
         }
       },
       "System.Collections/4.0.11-beta-23409": {
@@ -876,7 +870,7 @@
         "dependencies": {
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
           "System.Collections": "4.0.11-beta-23409",
           "System.Console": "4.0.0-beta-23409",
           "System.Diagnostics.Debug": "4.0.11-beta-23409",
@@ -1068,6 +1062,19 @@
           "System.Xml.XDocument": "4.0.11-beta-23409"
         }
       },
+      "Microsoft.Azure.Management.Resources/2.0.1-preview": {
+        "type": "project",
+        "framework": "DNXCore,Version=v5.0",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23409",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "System.Diagnostics.Tools": "4.0.1-beta-23409",
+          "System.Net.Http": "4.0.1-beta-23409",
+          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
+          "System.Threading.Tasks": "4.0.11-beta-23409",
+          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -1222,7 +1229,7 @@
           "lib/dnxcore50/Microsoft.Framework.Logging.Abstractions.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.0",
@@ -1233,28 +1240,22 @@
           "System.Xml.ReaderWriter": "4.0.10"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime.Azure/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime.Azure/2.1.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CSharp": "4.0.0",
-          "Microsoft.Rest.ClientRuntime": "2.0.1-preview",
-          "Newtonsoft.Json": "6.0.8",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.ReaderWriter": "4.0.10"
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.0.0": {
@@ -1295,19 +1296,6 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
-        }
-      },
-      "ResourceManagement/2.0.0-preview": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
-          "System.Diagnostics.Tools": "4.0.1-beta-23409",
-          "System.Net.Http": "4.0.1-beta-23409",
-          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
-          "System.Threading.Tasks": "4.0.11-beta-23409",
-          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
         }
       },
       "runtime.win7.System.Console/4.0.0-beta-23409": {
@@ -2271,7 +2259,7 @@
         "dependencies": {
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
           "System.Collections": "4.0.11-beta-23409",
           "System.Console": "4.0.0-beta-23409",
           "System.Diagnostics.Debug": "4.0.11-beta-23409",
@@ -2463,6 +2451,19 @@
           "System.Xml.XDocument": "4.0.11-beta-23409"
         }
       },
+      "Microsoft.Azure.Management.Resources/2.0.1-preview": {
+        "type": "project",
+        "framework": "DNXCore,Version=v5.0",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23409",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "System.Diagnostics.Tools": "4.0.1-beta-23409",
+          "System.Net.Http": "4.0.1-beta-23409",
+          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
+          "System.Threading.Tasks": "4.0.11-beta-23409",
+          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -2617,7 +2618,7 @@
           "lib/dnxcore50/Microsoft.Framework.Logging.Abstractions.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.0",
@@ -2628,28 +2629,22 @@
           "System.Xml.ReaderWriter": "4.0.10"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime.Azure/2.0.1-preview": {
+      "Microsoft.Rest.ClientRuntime.Azure/2.1.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CSharp": "4.0.0",
-          "Microsoft.Rest.ClientRuntime": "2.0.1-preview",
-          "Newtonsoft.Json": "6.0.8",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.ReaderWriter": "4.0.10"
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
         },
         "compile": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         },
         "runtime": {
-          "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.0.0": {
@@ -2690,19 +2685,6 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
-        }
-      },
-      "ResourceManagement/2.0.0-preview": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
-          "System.Diagnostics.Tools": "4.0.1-beta-23409",
-          "System.Net.Http": "4.0.1-beta-23409",
-          "System.Runtime.Serialization.Primitives": "4.0.11-beta-23409",
-          "System.Threading.Tasks": "4.0.11-beta-23409",
-          "System.Xml.ReaderWriter": "4.0.11-beta-23409"
         }
       },
       "runtime.win7.System.Console/4.0.0-beta-23409": {
@@ -3666,7 +3648,7 @@
         "dependencies": {
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23409",
-          "Microsoft.Rest.ClientRuntime.Azure": "2.0.1-preview",
+          "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
           "System.Collections": "4.0.11-beta-23409",
           "System.Console": "4.0.0-beta-23409",
           "System.Diagnostics.Debug": "4.0.11-beta-23409",
@@ -3848,9 +3830,9 @@
       "type": "project",
       "path": "../../../ClientRuntime.Azure.TestFramework/HttpRecorder/project.json"
     },
-    "ResourceManagement/2.0.0-preview": {
+    "Microsoft.Azure.Management.Resources/2.0.1-preview": {
       "type": "project",
-      "path": "../ResourceManagement/project.json"
+      "path": "../Microsoft.Azure.Management.Resources/project.json"
     },
     "TestFramework/0.10.2": {
       "type": "project",
@@ -4008,30 +3990,96 @@
         "Microsoft.Framework.Logging.Abstractions.nuspec"
       ]
     },
-    "Microsoft.Rest.ClientRuntime/2.0.1-preview": {
+    "Microsoft.Rest.ClientRuntime/1.4.1": {
       "type": "package",
-      "sha512": "aQN6rtEMJBuPC6F+TLdaiuPuJ2HCYrlLYOHf3gx05DcI855j9ReYeZA22Blg8zlYnwC1dXXhtyZ4lK9QfATCgw==",
+      "sha512": "qwBYB/y39tQEmKVtuKGWdFwCMQntNjJVr4kZ9a471mbYZjGpbfeC95uO30Dl8ltcBWzjX9R5qfVKEePP82ggEA==",
       "files": [
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.dll",
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.xml",
-        "lib/net451/Microsoft.Rest.ClientRuntime.dll",
-        "lib/net451/Microsoft.Rest.ClientRuntime.xml",
-        "Microsoft.Rest.ClientRuntime.2.0.1-preview.nupkg",
-        "Microsoft.Rest.ClientRuntime.2.0.1-preview.nupkg.sha512",
-        "Microsoft.Rest.ClientRuntime.nuspec"
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.dll",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.xml",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.dll",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.xml",
+        "Microsoft.Rest.ClientRuntime.1.4.1.nupkg",
+        "Microsoft.Rest.ClientRuntime.1.4.1.nupkg.sha512",
+        "Microsoft.Rest.ClientRuntime.nuspec",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/BasicAuthenticationCredentials.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/CertificateCredentials.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/GlobalSuppressions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/HttpExtensions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/HttpOperationException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/HttpOperationResponse.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/IServiceClientTracingInterceptor.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/IServiceOperations.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ITokenProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/obj/Net45-Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/obj/Net45-Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/obj/Net45-Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Properties/AssemblyInfo.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Properties/Resources.Designer.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/RestException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/RetryDelegatingHandler.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/DateJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/DateTimeRfc1123JsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/Iso8601TimeSpanConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/JsonConverterHelper.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/PolymorphicDeserializeJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/PolymorphicJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/PolymorphicSerializeJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/Serialization/ReadOnlyJsonContractResolver.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ServiceClient.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ServiceClientCredentials.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ServiceClientTracing.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/StringTokenProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TokenCredentials.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/AsyncExecution.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/ExponentialBackoffRetryStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/FixedIntervalRetryStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/Guard.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/HttpRequestWithStatusException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/HttpStatusCodeErrorDetectionStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/IncrementalRetryStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/ITransientErrorDetectionStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryCondition.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryingEventArgs.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryManager.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryPolicy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryPolicy.Generic.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/RetryStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TransientFaultHandling/TransientErrorIgnoreStrategy.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/TypeConversion.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ValidationException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime/ValidationRules.cs"
       ]
     },
-    "Microsoft.Rest.ClientRuntime.Azure/2.0.1-preview": {
+    "Microsoft.Rest.ClientRuntime.Azure/2.1.0": {
       "type": "package",
-      "sha512": "VXgkvmzHCPo/6Xr/0ipqFJIJRcj+QzPZ7atuKPhyTeXYDqgRTuMsR6T+kQgQwNCRCbC61P30qVlOiDf4CjJvTg==",
+      "sha512": "xVbxbH94HUiZ0UnJ34snWTRWR6eTpuoaHgls2/rBZeViaBV39Oj7Rsw0kUYqdvBnqJZOER6jn/66+zj0I+l2Dg==",
       "files": [
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.dll",
-        "lib/dnxcore50/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "lib/net451/Microsoft.Rest.ClientRuntime.Azure.dll",
-        "lib/net451/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "Microsoft.Rest.ClientRuntime.Azure.2.0.1-preview.nupkg",
-        "Microsoft.Rest.ClientRuntime.Azure.2.0.1-preview.nupkg.sha512",
-        "Microsoft.Rest.ClientRuntime.Azure.nuspec"
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.xml",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.dll",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.xml",
+        "Microsoft.Rest.ClientRuntime.Azure.2.1.0.nupkg",
+        "Microsoft.Rest.ClientRuntime.Azure.2.1.0.nupkg.sha512",
+        "Microsoft.Rest.ClientRuntime.Azure.nuspec",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/AzureAsyncOperation.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/AzureClientExtensions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/AzureOperationResponse.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/ClientRequestTrackingHandler.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/CloudError.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/CloudErrorJsonConverter.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/CloudException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/GlobalSuppressions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/IAzureClient.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/IPage.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/JsonSerializerExtensions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/OData/FilterString.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/OData/ODataQuery.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/OData/UrlExpressionVisitor.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/PollingState.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/Properties/AssemblyInfo.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/Properties/Resources.Designer.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/Resource.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/ResourceJsonConverter.cs"
       ]
     },
     "Microsoft.Win32.Primitives/4.0.0": {
@@ -6422,8 +6470,9 @@
   "projectFileDependencyGroups": {
     "": [
       "HttpRecorder >= 1.1.1",
-      "ResourceManagement >= 2.0.0-preview",
+      "Microsoft.Azure.Management.Resources >= 2.0.1-preview",
       "TestFramework >= 0.10.2",
+      "Microsoft.Rest.ClientRuntime.Azure >= 2.1.0",
       "xunit >= 2.1.0"
     ],
     "DNXCore,Version=v5.0": [
