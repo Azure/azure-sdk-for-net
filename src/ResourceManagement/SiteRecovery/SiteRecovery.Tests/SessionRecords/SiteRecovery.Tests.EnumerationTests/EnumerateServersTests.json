@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers?api-version=2015-08-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL1NlcnZlcnM/YXBpLXZlcnNpb249MjAxNS0wOC0xMA==",
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3JnMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXNCVlREMi92YXVsdHMvcnN2L3JlcGxpY2F0aW9uRmFicmljcz9hcGktdmVyc2lvbj0yMDE1LTExLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12e92b86-ee78-45d7-954d-b054e502cfed"
+          "eeba3217-8652-4c17-9089-53f8150142bb"
         ],
         "x-ms-version": [
           "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers/57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n      \"name\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n      \"type\": \"Microsoft.SiteRecovery/Servers\",\r\n      \"properties\": {\r\n        \"serverVersion\": \"3.2.7510.0\",\r\n        \"providerVersion\": \"3.5.601.0\",\r\n        \"lastHeartbeat\": \"2015-07-27T21:06:02.9032678Z\",\r\n        \"connectionStatus\": \"Connected\",\r\n        \"fabricType\": \"VMM\",\r\n        \"fabricObjectID\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"friendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": \"473344A3549EC61FFADCD2FD5BF2019BF8ACB4EB\",\r\n          \"kekCertExpiryDate\": \"2018-11-06T20:14:27Z\"\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"VMM\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "593"
+          "781"
         ],
         "Content-Type": [
           "application/json"
@@ -31,7 +31,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:07:01 PM"
+          "eeba3217-8652-4c17-9089-53f8150142bb 11/6/2015 3:06:13 PM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,19 +50,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "12e92b86-ee78-45d7-954d-b054e502cfed"
+          "eeba3217-8652-4c17-9089-53f8150142bb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14982"
         ],
         "x-ms-correlation-request-id": [
-          "d7c1416a-2504-438c-88dd-7e5fc55c215a"
+          "a80711ff-2d8a-42d3-86a8-d4f2306e9f96"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150727T210701Z:d7c1416a-2504-438c-88dd-7e5fc55c215a"
+          "CENTRALUS:20151106T150613Z:a80711ff-2d8a-42d3-86a8-d4f2306e9f96"
         ],
         "Date": [
-          "Mon, 27 Jul 2015 21:07:01 GMT"
+          "Fri, 06 Nov 2015 15:06:13 GMT"
         ]
       },
       "StatusCode": 200
