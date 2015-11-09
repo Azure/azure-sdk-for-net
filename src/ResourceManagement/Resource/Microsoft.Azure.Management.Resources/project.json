@@ -10,9 +10,6 @@
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
   },
 
-  "commands": {
-  },
-
   "frameworks": {
     "net451": {
       "frameworkAssemblies": {
@@ -33,11 +30,5 @@
         "Microsoft.CSharp": "4.0.1-beta-23409"
       }
     }
-  },
-  "compile": [
-    "./*.cs",
-    "./Properties/*.cs",
-    "./Generated/**/*.cs"
-  ],
-  "resource": [ "../Properties/*.resx" ]
+  }
 }

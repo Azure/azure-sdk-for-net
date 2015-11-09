@@ -67,9 +67,7 @@
     <!--Exclude data plane projects which are managed by parnter service team individually-->
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
                       Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
-                      Condition=" '$(Scope)' == 'all'  " />
-    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\project.json" Condition=" '$(Scope)' != 'all'  " />
-    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\**\project.json" Condition=" '$(Scope)' == 'all'  " />
+                      Condition=" '$(Scope)' == 'all' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -97,12 +95,12 @@
   <Target Name="PrepareForAutoRestLibraries">
     <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
       <Output TaskParameter="AutoRestLibraries" ItemName="AutoRestLibraries" />
+      <Output TaskParameter="DnxLibraries" ItemName="DnxLibraries" />
       <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
     </FilterOutAutoRestLibraries>
-    <Message Text="AutoRest Libraries:" />
-    <Message Text="@(AutoRestLibraries)" />
-    <Message Text="Non-AutoRest Libraries:" />
-    <Message Text="@(NonAutoRestLibraries)" />
+    <Message Text="AutoRest Libraries: @(AutoRestLibraries)" />
+    <Message Text="Dnx Libraries: @(DnxLibraries)" />
+    <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
   </Target>
   
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
@@ -121,16 +119,15 @@
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
              
-    <CallTarget Targets="BuildDnx"
-             Condition=" '@(DnxLibrariesToBuild)' != '' "/>
+    <CallTarget Targets="BuildDnx" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
   
   <Target Name="BuildDnx">
-    <Exec Command="dnu restore &quot;%(DnxLibrariesToBuild.FullPath)&quot;"/>
-    <Exec Command="dnu build &quot;%(DnxLibrariesToBuild.FullPath)&quot; --configuration $(Configuration) --out $(LibraryRoot)dnx"/>
+    <Exec Command="dnu restore &quot;%(DnxLibraries.Library)&quot;"/>
+    <Exec Command="dnu build &quot;%(DnxLibraries.Library)&quot; --configuration $(Configuration)"/>
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
@@ -144,10 +141,10 @@
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
-   <Target Name="Test">
+  <Target Name="Test">
      <PropertyGroup>
        <!--Extrat out service name from 'Scope' to use as test dll filter-->
-       <!--For example, from 'ServiceManagement\Storage', get 'Storage'. It is expected that the 'Scope' might not be set-->
+       <!--For example, from 'ServiceManagement\Storage', get 'Storage'.-->
        <TestPartialName>$([System.IO.Path]::GetFileName($(Scope)))</TestPartialName>
      </PropertyGroup>
     <ItemGroup>
@@ -159,7 +156,12 @@
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
     <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
-        ContinueOnError="false"/>
+      Condition=" '@(TestDlls)' != '' "  
+      ContinueOnError="false"/>
+
+    <!--TODO: need to sort out the configuration, 
+    Also based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(DnxLibraries.Filename).xml&quot;" WorkingDirectory="%(DnxLibraries.Test)"  />
   </Target>
   
   <PropertyGroup>

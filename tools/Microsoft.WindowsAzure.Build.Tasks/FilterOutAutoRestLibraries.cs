@@ -34,17 +34,22 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         [Output]
         public ITaskItem[] NonAutoRestLibraries { get; private set; }
 
+        [Output]
+        public ITaskItem[] DnxLibraries { get; private set; }
+
         public override bool Execute()
         {
             var autoRestOnes = new List<ITaskItem>();
+            var dnxLibraryOnes = new List<ITaskItem>();
+            var dnxLibraryTestOnes = new List<ITaskItem>();
             var others =  new List<ITaskItem>();
             foreach (ITaskItem solution in AllLibraries)
             {
                 bool isAutoRestLibrary = false;
                 string solutionFile = solution.GetMetadata("FullPath");
                 string libFolder = Path.GetDirectoryName(solutionFile);
-                string[] projects = Directory.GetFiles(libFolder, "*.csproj", SearchOption.AllDirectories);
-                foreach (string project in projects)
+                string[] csProjects = Directory.GetFiles(libFolder, "*.csproj", SearchOption.AllDirectories);
+                foreach (string project in csProjects)
                 {
                     string text = File.ReadAllText(project);
                     if (text.Contains(AutoRestMark))
@@ -59,13 +64,35 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
                 else
                 {
-                    others.Add(solution);
+                    string[] dnxProjectJsonFiles = Directory.GetFiles(libFolder, "project.json", SearchOption.AllDirectories);
+                    if (dnxProjectJsonFiles.Length != 0)
+                    {
+                        dnxLibraryOnes.Add(solution);
+                        foreach (var file in dnxProjectJsonFiles)
+                        {
+                            string dir = Path.GetDirectoryName(file);
+                            if (dir.EndsWith("test", System.StringComparison.OrdinalIgnoreCase) ||
+                                dir.EndsWith("tests", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                solution.SetMetadata("Test", dir);
+                            }
+                            else
+                            {
+                                solution.SetMetadata("Library", dir);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        others.Add(solution);
+                    }
                 }
             }
 
             Log.LogMessage(MessageImportance.High, "We have found {0} autorest libraries.", autoRestOnes.Count);
             Log.LogMessage(MessageImportance.High, "we have found {0} Non autorest libraries.", others.Count);
             AutoRestLibraries = autoRestOnes.ToArray();
+            DnxLibraries = dnxLibraryOnes.ToArray();
             NonAutoRestLibraries = others.ToArray();
             return true;
         }
