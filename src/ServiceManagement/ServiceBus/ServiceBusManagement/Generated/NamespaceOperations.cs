@@ -2581,6 +2581,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         primaryKeyElement.Value = rule.PrimaryKey;
                         sharedAccessAuthorizationRuleElement.Add(primaryKeyElement);
                     }
+
+                    if (rule.SecondaryKey != null)
+                    {
+                        XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        secondaryKeyElement.Value = rule.SecondaryKey;
+                        sharedAccessAuthorizationRuleElement.Add(secondaryKeyElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
