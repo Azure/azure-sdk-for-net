@@ -79,6 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\CsmTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
