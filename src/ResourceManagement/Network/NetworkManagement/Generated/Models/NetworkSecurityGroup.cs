@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroup class.
         /// </summary>
-        public NetworkSecurityGroup(string etag = default(string), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<SubResource> networkInterfaces = default(IList<SubResource>), IList<SubResource> subnets = default(IList<SubResource>), string resourceGuid = default(string), string provisioningState = default(string))
+        public NetworkSecurityGroup(string etag = default(string), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             SecurityRules = securityRules;
@@ -63,13 +63,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to Network Interfaces
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkInterfaces")]
-        public IList<SubResource> NetworkInterfaces { get; set; }
+        public IList<NetworkInterface> NetworkInterfaces { get; set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<SubResource> Subnets { get; set; }
+        public IList<Subnet> Subnets { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the network security group
@@ -108,6 +108,26 @@ namespace Microsoft.Azure.Management.Network.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (this.NetworkInterfaces != null)
+            {
+                foreach (var element2 in this.NetworkInterfaces)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+            if (this.Subnets != null)
+            {
+                foreach (var element3 in this.Subnets)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

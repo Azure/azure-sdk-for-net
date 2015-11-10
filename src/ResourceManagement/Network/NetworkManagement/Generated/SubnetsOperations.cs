@@ -139,6 +139,10 @@ namespace Microsoft.Azure.Management.Network
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
+            if (this.Client.Expand != null)
+            {
+                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(this.Client.Expand)));
+            }
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);

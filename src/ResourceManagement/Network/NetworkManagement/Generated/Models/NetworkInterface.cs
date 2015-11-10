@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkInterface class.
         /// </summary>
-        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), SubResource networkSecurityGroup = default(SubResource), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
+        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             VirtualMachine = virtualMachine;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
-        public SubResource NetworkSecurityGroup { get; set; }
+        public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets list of IPConfigurations of the NetworkInterface
@@ -112,6 +112,20 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.NetworkSecurityGroup != null)
+            {
+                this.NetworkSecurityGroup.Validate();
+            }
+            if (this.IpConfigurations != null)
+            {
+                foreach (var element in this.IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the RouteTable class.
         /// </summary>
-        public RouteTable(string etag = default(string), IList<Route> routes = default(IList<Route>), IList<SubResource> subnets = default(IList<SubResource>), string provisioningState = default(string))
+        public RouteTable(string etag = default(string), IList<Route> routes = default(IList<Route>), IList<Subnet> subnets = default(IList<Subnet>), string provisioningState = default(string))
         {
             Etag = etag;
             Routes = routes;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to subnets
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<SubResource> Subnets { get; set; }
+        public IList<Subnet> Subnets { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the resource
@@ -76,6 +76,16 @@ namespace Microsoft.Azure.Management.Network.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (this.Subnets != null)
+            {
+                foreach (var element1 in this.Subnets)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PublicIPAddress class.
         /// </summary>
-        public PublicIPAddress(string publicIPAllocationMethod, string etag = default(string), SubResource ipConfiguration = default(SubResource), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
+        public PublicIPAddress(string publicIPAllocationMethod, string etag = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfiguration")]
-        public SubResource IpConfiguration { get; set; }
+        public IPConfiguration IpConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets FQDN of the DNS record associated with the public IP
@@ -100,6 +100,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (PublicIPAllocationMethod == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAllocationMethod");
+            }
+            if (this.IpConfiguration != null)
+            {
+                this.IpConfiguration.Validate();
             }
         }
     }

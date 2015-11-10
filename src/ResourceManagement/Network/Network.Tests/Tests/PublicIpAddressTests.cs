@@ -47,7 +47,7 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                    PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
+                    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                     DnsSettings = new PublicIPAddressDnsSettings()
                     {
                         DomainNameLabel = domainNameLabel
@@ -113,7 +113,7 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                    PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
+                    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                     DnsSettings = new PublicIPAddressDnsSettings()
                     {
                         DomainNameLabel = domainNameLabel,

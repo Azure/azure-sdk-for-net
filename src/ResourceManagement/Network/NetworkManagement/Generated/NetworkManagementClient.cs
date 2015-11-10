@@ -67,6 +67,11 @@ namespace Microsoft.Azure.Management.Network
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// expand references resources.
+        /// </summary>
+        public string Expand { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -77,8 +82,6 @@ namespace Microsoft.Azure.Management.Network
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
-
-        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
 
         public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
 
@@ -111,6 +114,8 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
 
         public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
+
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -226,7 +231,6 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             this.ApplicationGateways = new ApplicationGatewaysOperations(this);
-            this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             this.ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             this.ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
@@ -243,6 +247,7 @@ namespace Microsoft.Azure.Management.Network
             this.Usages = new UsagesOperations(this);
             this.VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             this.VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
+            this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-06-15";
             this.AcceptLanguage = "en-US";

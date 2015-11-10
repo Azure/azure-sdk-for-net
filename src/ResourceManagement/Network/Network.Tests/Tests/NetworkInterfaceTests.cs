@@ -47,7 +47,7 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                    PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
+                    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                     DnsSettings = new PublicIPAddressDnsSettings()
                     {
                        DomainNameLabel = domainNameLabel
@@ -113,12 +113,12 @@ namespace Networks.Tests
                         new NetworkInterfaceIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             PublicIPAddress = new PublicIPAddress()
                              {
                                  Id = getPublicIpAddressResponse.Id
                              },
-                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             Subnet = new Subnet()
                              {
                                  Id = getSubnetResponse.Id
                              }
@@ -243,8 +243,8 @@ namespace Networks.Tests
                         new NetworkInterfaceIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
                              {
                                  Id = getSubnetResponse.Id
                              }

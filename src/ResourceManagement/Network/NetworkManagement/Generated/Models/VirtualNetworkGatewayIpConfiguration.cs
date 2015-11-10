@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// IpConfiguration for Virtual network gateway
     /// </summary>
-    public partial class VirtualNetworkGatewayIpConfiguration : SubResource
+    public partial class VirtualNetworkGatewayIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualNetworkGatewayIpConfiguration class.
+        /// VirtualNetworkGatewayIPConfiguration class.
         /// </summary>
-        public VirtualNetworkGatewayIpConfiguration() { }
+        public VirtualNetworkGatewayIPConfiguration() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualNetworkGatewayIpConfiguration class.
+        /// VirtualNetworkGatewayIPConfiguration class.
         /// </summary>
-        public VirtualNetworkGatewayIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string))
+        public VirtualNetworkGatewayIPConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -57,8 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the privateIPAddress of the Network Interface IP
-        /// Configuration
+        /// Gets or sets the privateIPAddress of the IP Configuration
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }

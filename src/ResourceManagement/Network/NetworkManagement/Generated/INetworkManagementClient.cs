@@ -60,6 +60,11 @@ namespace Microsoft.Azure.Management.Network
         string ApiVersion { get; }
 
         /// <summary>
+        /// expand references resources.
+        /// </summary>
+        string Expand { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -71,8 +76,6 @@ namespace Microsoft.Azure.Management.Network
 
 
         IApplicationGatewaysOperations ApplicationGateways { get; }
-
-        IVirtualNetworksOperations VirtualNetworks { get; }
 
         IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
 
@@ -105,6 +108,8 @@ namespace Microsoft.Azure.Management.Network
         IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; }
 
         IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; }
+
+        IVirtualNetworksOperations VirtualNetworks { get; }
 
             /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available

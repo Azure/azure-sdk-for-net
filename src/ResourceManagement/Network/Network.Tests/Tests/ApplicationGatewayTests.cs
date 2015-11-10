@@ -103,7 +103,7 @@ namespace Networks.Tests
                         new ApplicationGatewayFrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                             Subnet = new Subnet()
                             {
                                 Id = subnet.Id
@@ -235,7 +235,7 @@ namespace Networks.Tests
                         new ApplicationGatewayFrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
                                 Id = subnet.Id

@@ -19,7 +19,7 @@ namespace Networks.Tests
                 {
                     {"key","value"}
                 },
-                PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
@@ -55,8 +55,8 @@ namespace Networks.Tests
                     new NetworkInterfaceIPConfiguration()
                     {
                             Name = ipConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                            Subnet = new Subnet()
                             {
                                 Id = subnetId
                             }
@@ -66,7 +66,7 @@ namespace Networks.Tests
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource() { Id = publicIpAddressId };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = publicIpAddressId };
             }
 
             // Test NIC apis

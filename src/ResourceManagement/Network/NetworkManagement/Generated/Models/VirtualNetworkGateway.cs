@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
-        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIpConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIpConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string))
+        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             IpConfigurations = ipConfigurations;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// IpConfigurations for Virtual network gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<VirtualNetworkGatewayIpConfiguration> IpConfigurations { get; set; }
+        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this

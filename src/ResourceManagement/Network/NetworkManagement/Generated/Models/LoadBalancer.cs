@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.LoadBalancingRules != null)
+            if (this.FrontendIPConfigurations != null)
             {
-                foreach (var element in this.LoadBalancingRules)
+                foreach (var element in this.FrontendIPConfigurations)
                 {
                     if (element != null)
                     {
@@ -121,9 +121,9 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (this.Probes != null)
+            if (this.LoadBalancingRules != null)
             {
-                foreach (var element1 in this.Probes)
+                foreach (var element1 in this.LoadBalancingRules)
                 {
                     if (element1 != null)
                     {
@@ -131,9 +131,9 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (this.InboundNatRules != null)
+            if (this.Probes != null)
             {
-                foreach (var element2 in this.InboundNatRules)
+                foreach (var element2 in this.Probes)
                 {
                     if (element2 != null)
                     {
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (this.InboundNatPools != null)
+            if (this.InboundNatRules != null)
             {
-                foreach (var element3 in this.InboundNatPools)
+                foreach (var element3 in this.InboundNatRules)
                 {
                     if (element3 != null)
                     {
@@ -151,13 +151,23 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (this.OutboundNatRules != null)
+            if (this.InboundNatPools != null)
             {
-                foreach (var element4 in this.OutboundNatRules)
+                foreach (var element4 in this.InboundNatPools)
                 {
                     if (element4 != null)
                     {
                         element4.Validate();
+                    }
+                }
+            }
+            if (this.OutboundNatRules != null)
+            {
+                foreach (var element5 in this.OutboundNatRules)
+                {
+                    if (element5 != null)
+                    {
+                        element5.Validate();
                     }
                 }
             }

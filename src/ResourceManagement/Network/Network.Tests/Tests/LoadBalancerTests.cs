@@ -67,7 +67,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            PublicIPAddress = new PublicIPAddress()
                             {
                                 Id = lbPublicIp.Id
                             }
@@ -252,7 +252,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                             Subnet = vnet.Subnets[0]
                         }
                     },
@@ -433,7 +433,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Static,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Static,
                             PrivateIPAddress = "10.0.0.38",
                             Subnet = vnet.Subnets[0]
                         }
@@ -616,7 +616,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Static,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Static,
                             PrivateIPAddress = "10.0.0.38",
                             Subnet = vnet.Subnets[0]
                         }
@@ -867,7 +867,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIPAllocationMethod = IpAllocationMethod.Static,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Static,
                             PrivateIPAddress = "10.0.0.38",
                             Subnet = vnet.Subnets[0]
                         }
@@ -1058,7 +1058,7 @@ namespace Networks.Tests
                         new FrontendIPConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            PublicIPAddress = new PublicIPAddress()
                             {
                                 Id = lbPublicIp.Id
                             }
@@ -1149,22 +1149,22 @@ namespace Networks.Tests
                 var getLoadBalancer = networkManagementClient.LoadBalancers.Get(resourceGroupName, lbName);
 
                 // Associate the nic with LB
-                nic1.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<Microsoft.Azure.Management.Network.Models.SubResource>
+                nic1.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<BackendAddressPool>
                                                                                     {
                                                                                         getLoadBalancer.BackendAddressPools.First()
                                                                                     };
 
-                nic1.IpConfigurations.First().LoadBalancerInboundNatRules = new List<Microsoft.Azure.Management.Network.Models.SubResource>
+                nic1.IpConfigurations.First().LoadBalancerInboundNatRules = new List<InboundNatRule>
                                                                                     {
                                                                                         getLoadBalancer.InboundNatRules.First()
                                                                                     };
 
-                nic2.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<Microsoft.Azure.Management.Network.Models.SubResource>
+                nic2.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<BackendAddressPool>
                                                                                     {
                                                                                         getLoadBalancer.BackendAddressPools.First()
                                                                                     };
 
-                nic3.IpConfigurations.First().LoadBalancerInboundNatRules = new List<Microsoft.Azure.Management.Network.Models.SubResource>
+                nic3.IpConfigurations.First().LoadBalancerInboundNatRules = new List<InboundNatRule>
                                                                                     {
                                                                                         getLoadBalancer.InboundNatRules[1]
                                                                                     };

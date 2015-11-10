@@ -20,40 +20,6 @@ namespace Microsoft.Azure.Management.Network
     public static partial class VirtualNetworksOperationsExtensions
     {
             /// <summary>
-            /// The Get applicationgateway operation retreives information about the
-            /// specified applicationgateway.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// The id of the resource.
-            /// </param>
-            public static VirtualNetwork GetById(this IVirtualNetworksOperations operations, string id)
-            {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).GetByIdAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The Get applicationgateway operation retreives information about the
-            /// specified applicationgateway.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// The id of the resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualNetwork> GetByIdAsync( this IVirtualNetworksOperations operations, string id, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<VirtualNetwork> result = await operations.GetByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
             /// The Delete VirtualNetwork operation deletes the specifed virtual network
             /// </summary>
             /// <param name='operations'>

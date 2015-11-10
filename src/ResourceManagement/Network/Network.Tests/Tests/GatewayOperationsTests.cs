@@ -73,12 +73,12 @@ namespace Networks.Tests
                     EnableBgp = false,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                              PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id
@@ -279,12 +279,12 @@ namespace Networks.Tests
                     EnableBgp = false,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                              PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id
@@ -448,12 +448,12 @@ namespace Networks.Tests
                     EnableBgp = false,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                              PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
                              {
                                  Id = nic1publicIp.Id

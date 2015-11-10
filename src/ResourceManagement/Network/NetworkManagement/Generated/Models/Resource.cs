@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Resource name
