@@ -107,7 +107,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                 // Management Clients that are not subscription based should set "SubscriptionId=None" in
                 // the connection string.
-                if (!testEnv.SubscriptionId.Equals("None", StringComparison.InvariantCultureIgnoreCase))
+                if (testEnv.SubscriptionId == null || !testEnv.SubscriptionId.Equals("None", StringComparison.InvariantCultureIgnoreCase))
                 {
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(
