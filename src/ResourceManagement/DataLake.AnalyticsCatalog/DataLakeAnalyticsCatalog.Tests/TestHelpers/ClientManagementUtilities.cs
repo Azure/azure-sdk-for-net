@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-using Microsoft.Azure.Management.DataLake.Store;
+
+using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.AnalyticsCatalog;
+using Microsoft.Azure.Management.DataLake.AnalyticsJob;
+using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 
-namespace BigAnalyticsCatalog.Tests
+namespace DataLakeAnalyticsCatalog.Tests
 {
     public static class ClientManagementUtilities
     {
@@ -25,10 +28,30 @@ namespace BigAnalyticsCatalog.Tests
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
         /// <param name="testBase">the test class</param>
-        /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
-        public static DataLakeAnalyticsCatalogManagementClient GetBigAnalyticsCatalogManagementClient(this TestBase testBase)
+        /// <returns>A Data Lake analytics catalog management client, created from the current context (environment variables)</returns>
+        public static DataLakeAnalyticsCatalogManagementClient GetDataLakeAnalyticsCatalogManagementClient(this TestBase testBase)
         {
-            return TestBase.GetServiceClient<DataLakeAnalyticsCatalogManagementClient>(new CSMTestEnvironmentFactory());
+            return DataLakeAnalyticsCatalogTestBase.GetDataLakeAnalyticsCatalogServiceClient<DataLakeAnalyticsCatalogManagementClient>(new CSMTestEnvironmentFactory());
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <returns>A Data Lake analytics job management client, created from the current context (environment variables)</returns>
+        public static DataLakeAnalyticsJobManagementClient GetDataLakeAnalyticsJobManagementClient(this TestBase testBase)
+        {
+            return DataLakeAnalyticsCatalogTestBase.GetDataLakeAnalyticsCatalogServiceClient<DataLakeAnalyticsJobManagementClient>(new CSMTestEnvironmentFactory());
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <returns>A Data Lake analytics management client, created from the current context (environment variables)</returns>
+        public static DataLakeAnalyticsManagementClient GetDataLakeAnalyticsManagementClient(this TestBase testBase)
+        {
+            return TestBase.GetServiceClient<DataLakeAnalyticsManagementClient>(new CSMTestEnvironmentFactory());
         }
 
         /// <summary>
@@ -45,7 +68,7 @@ namespace BigAnalyticsCatalog.Tests
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
         /// <param name="testBase">the test class</param>
-        /// <returns>A storage management client, created from the current context (environment variables)</returns>
+        /// <returns>A data lake storage management client, created from the current context (environment variables)</returns>
         public static DataLakeStoreManagementClient GetDataLakeStoreManagementClient(this TestBase testBase)
         {
             return TestBase.GetServiceClient<DataLakeStoreManagementClient>(new CSMTestEnvironmentFactory());

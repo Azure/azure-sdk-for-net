@@ -11,14 +11,20 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\CatalogOperationTests.cs" />
     <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
     <Compile Include="TestHelpers\CommonTestFixture.cs" />
     <Compile Include="TestHelpers\DataLakeAnalyticsCatalogManagementHelper.cs" />
+    <Compile Include="TestHelpers\DataLakeAnalyticsCatalogTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataLake.AnalyticsJob\DataLakeAnalyticsJobManagement\DataLakeAnalyticsJobManagement.csproj">
+      <Project>{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}</Project>
+      <Name>DataLakeAnalyticsJobManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DataLake.Store\DataLakeStoreManagement\DataLakeStoreManagement.csproj">
       <Project>{f8dde40d-b5b4-4a37-8131-9ef8f18a4a6a}</Project>
@@ -35,5 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\FixtureSetup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\GetCatalogItemsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

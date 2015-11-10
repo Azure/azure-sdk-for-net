@@ -15,13 +15,17 @@
 using Microsoft.Azure.Test;
 using System;
 
-namespace BigAnalyticsCatalog.Tests
+namespace DataLakeAnalyticsCatalog.Tests
 {
     public class CommonTestFixture : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
-        public string BigAnalyticsCatalogAccountName { get; set; }
+        public string DataLakeAnalyticsAccountName { get; set; }
+        public string DataLakeStoreAccountName { get; set; }
         public string HostUrl { get; set; }
+        public string DatabaseName { get; set; }
+        public string TableName { get; set; }
+        public string TvfName { get; set; }
         public string Location = "East US 2";
         
         public CommonTestFixture()
@@ -29,16 +33,24 @@ namespace BigAnalyticsCatalog.Tests
             TestUtilities.StartTest();
             try
             {
-                UndoContext.Current.Start();
-
-                var BigAnalyticsCatalogManagementHelper = new BigAnalyticsCatalogManagementHelper(this);
-                BigAnalyticsCatalogManagementHelper.TryRegisterSubscriptionForResource();
+                UndoContext.Current.Start("DataLakeAnalyticsCatalog.Tests.CatalogOperationTests", "FixtureSetup");
+                var DataLakeAnalyticsCatalogManagementHelper = new DataLakeAnalyticsCatalogManagementHelper(this);
+                DataLakeAnalyticsCatalogManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("abarg1");
-                BigAnalyticsCatalogAccountName = TestUtilities.GenerateName("testabaCatalog1");
-                BigAnalyticsCatalogManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                DataLakeAnalyticsAccountName = TestUtilities.GenerateName("testadlac1");
+                DataLakeStoreAccountName = TestUtilities.GenerateName("testadlsc1");
+                DatabaseName = TestUtilities.GenerateName("testdb1");
+                TableName = TestUtilities.GenerateName("testtbl1");
+                TvfName = TestUtilities.GenerateName("testtvf1");
+                DataLakeAnalyticsCatalogManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
 
-                // create the DataLake account in the resource group and establish the host URL to use.
-                this.HostUrl = BigAnalyticsCatalogManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.Location, this.BigAnalyticsCatalogAccountName);
+                // create the DataLake accounts in the resource group and establish the host URL to use.
+                this.HostUrl =
+                    DataLakeAnalyticsCatalogManagementHelper.TryCreateDataLakeAnalyticsAccount(this.ResourceGroupName,
+                        this.Location, this.DataLakeStoreAccountName, this.DataLakeAnalyticsAccountName);
+                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                DataLakeAnalyticsCatalogManagementHelper.CreateCatalog(this.ResourceGroupName,
+                    this.DataLakeAnalyticsAccountName, this.DatabaseName, this.TableName, this.TvfName);
             }
             catch (Exception)
             {

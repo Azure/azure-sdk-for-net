@@ -14,25 +14,22 @@
 //
 
 using System;
-using System.Net.Http;
 using System.Reflection;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 
-namespace KonaCatalog.Tests
+namespace DataLakeAnalyticsCatalog.Tests
 {
-    
-    public class KonaCatalogTestBase : TestBase
+
+    public class DataLakeAnalyticsCatalogTestBase : TestBase
     {
         /// <summary>
-        /// Gets Kona catalog client for the current test environment 
+        /// Gets DataLakeAnalytics catalog client for the current test environment 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="factory"></param>
         /// <returns></returns>
-        public static T GetKonaCatalogServiceClient<T>(
+        public static T GetDataLakeAnalyticsCatalogServiceClient<T>(
             TestEnvironmentFactory factory)
             where T : class
         {
@@ -48,7 +45,7 @@ namespace KonaCatalog.Tests
                     { 
                         currentEnvironment.Credentials as SubscriptionCloudCredentials, 
                         // Have to remove the https:// since this is a suffix
-                        currentEnvironment.Endpoints.KonaCatalogServiceUri.OriginalString.Replace("https://","") }) as T;
+                        currentEnvironment.Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://","") }) as T;
 
             return AddMockHandler<T>(ref client);
         }
