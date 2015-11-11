@@ -1,0 +1,34 @@
+{
+  "version": "3.0.2-preview",
+  "description": "Microsoft.Azure.Management.Storage",
+  "authors": [ "Microsoft" ],
+  "tags": [ "Microsoft AutoRest Management REST" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
+  },
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": {"type": "build"},
+        "System.Linq.Expressions": {"type": "build"},
+        "System.Runtime": {"type": "build"},
+        "System.Collections": { "type": "build" }
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Diagnostics.Tools": "4.0.1-beta-23509",
+        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23509",
+        "System.Net.Http": "4.0.1-beta-23509",
+        "System.Threading.Tasks": "4.0.11-beta-23509",
+        "System.Xml.ReaderWriter": "4.0.11-beta-23509",
+        "Microsoft.CSharp": "4.0.1-beta-23509"
+      }
+    }
+  }
+}
