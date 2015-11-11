@@ -120,7 +120,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
             readonly byte[]  _associated_data_length;
 
-            RijndaelManaged  _aes;
+            Aes              _aes;
             HMAC             _hmac;
 
             ICryptoTransform _inner;
@@ -134,7 +134,13 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 GetAlgorithmParameters( name, key, out aesKey, out _hmac_key, out _hmac );
 
                 // Create the AES provider
-                _aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = aesKey.Length*8, Key = aesKey, IV = iv };
+                _aes = Aes.Create();
+
+                _aes.Mode    = CipherMode.CBC;
+                _aes.Padding = PaddingMode.PKCS7;
+                _aes.KeySize = aesKey.Length * 8;
+                _aes.Key     = aesKey;
+                _aes.IV      = iv;
 
                 _inner = _aes.CreateEncryptor();
 
@@ -236,7 +242,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
             readonly byte[]  _associated_data_length;
 
-            RijndaelManaged  _aes;
+            Aes              _aes;
             HMAC             _hmac;
 
             ICryptoTransform _inner;
@@ -250,7 +256,13 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 GetAlgorithmParameters( name, key, out aesKey, out _hmac_key, out _hmac );
 
                 // Create the AES provider
-                _aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = aesKey.Length*8, Key = aesKey, IV = iv };
+                _aes = Aes.Create();
+
+                _aes.Mode    = CipherMode.CBC;
+                _aes.Padding = PaddingMode.PKCS7;
+                _aes.KeySize = aesKey.Length * 8;
+                _aes.Key     = aesKey;
+                _aes.IV      = iv;
 
                 _inner = _aes.CreateDecryptor();
 
