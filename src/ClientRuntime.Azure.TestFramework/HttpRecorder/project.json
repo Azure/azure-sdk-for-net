@@ -5,6 +5,10 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
   "dependencies": {
     "Newtonsoft.Json": "6.0.8"
   },

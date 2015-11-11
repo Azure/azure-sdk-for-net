@@ -5,6 +5,10 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
   "frameworks": {
     "net451": {
       "System.Net.Http": "",

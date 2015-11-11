@@ -6,7 +6,10 @@
   "projectUrl": "",
   "licenseUrl": "",
   "commands": { "test": "xunit.runner.dnx" },
-  
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
   "frameworks": {
     "dnxcore50": {
       "dependencies": {
