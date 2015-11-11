@@ -1,0 +1,34 @@
+{
+  "version": "10.0.2-prerelease",
+  "description": "Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.",
+  "authors": [ "Microsoft" ],
+  "tags": [ "Microsoft Azure resource management virtual machine compute REST HTTP client core common azureofficial windowsazureofficial" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
+  },
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": {"type": "build"},
+        "System.Linq.Expressions": {"type": "build"},
+        "System.Runtime": {"type": "build"},
+        "System.Collections": { "type": "build" }
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Diagnostics.Tools": "4.0.1-beta-23509",
+        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23509",
+        "System.Net.Http": "4.0.1-beta-23509",
+        "System.Threading.Tasks": "4.0.11-beta-23509",
+        "System.Xml.ReaderWriter": "4.0.11-beta-23509",
+        "Microsoft.CSharp": "4.0.1-beta-23509"
+      }
+    }
+  }
+}

@@ -52,7 +52,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations")]
         public void TestVMScaleSetScenarioOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

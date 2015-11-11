@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
+//using System.Security.Cryptography.X509Certificates;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
@@ -56,15 +56,16 @@ namespace Networks.Tests
 
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)
         {
-            X509Certificate2 cert = new X509Certificate2("ApplicationGatewayCertificate\\GW5000.pfx", password, X509KeyStorageFlags.Exportable);
-            ApplicationGatewaySslCertificate sslCert = new ApplicationGatewaySslCertificate()
-            {
-                Name = sslCertName,
-                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
-                Password = password
-            };
+            throw new NotImplementedException("Certificate is not support for cross platform testing");
+            //X509Certificate2 cert = new X509Certificate2("ApplicationGatewayCertificate\\GW5000.pfx", password, X509KeyStorageFlags.Exportable);
+            //ApplicationGatewaySslCertificate sslCert = new ApplicationGatewaySslCertificate()
+            //{
+            //    Name = sslCertName,
+            //    Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
+            //    Password = password
+            //};
 
-            return sslCert;
+            //return sslCert;
         }
 
         private ApplicationGateway CreateApplicationGateway()

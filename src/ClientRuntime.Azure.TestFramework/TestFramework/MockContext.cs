@@ -35,17 +35,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Return a new UndoContext
         /// </summary>
         /// <returns></returns>
-        public static MockContext Start(int currentMethodStackDepth = 2)
-        {
-            var className = TestUtilities.GetCallingClass(currentMethodStackDepth);
-            var methodName = TestUtilities.GetCurrentMethodName(currentMethodStackDepth);
-            return Start(className, methodName);
-        }
-
-        /// <summary>
-        /// Return a new UndoContext
-        /// </summary>
-        /// <returns></returns>
         public static MockContext Start(
             string className,
             [System.Runtime.CompilerServices.CallerMemberName]

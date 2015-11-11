@@ -20,6 +20,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace Compute.Tests
@@ -39,16 +40,15 @@ namespace Compute.Tests
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
-            typeof(Resource).GetProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
 
-        [Fact]
         public void TestVMExtensionOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
                 //VMNetworkInterfaceTests.FixRecords();

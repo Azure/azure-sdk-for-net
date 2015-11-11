@@ -1,0 +1,3 @@
+{
+  "projects": [ "../../ClientRuntime.Azure.TestFramework", "./Microsoft.Azure.Management.Compute", "../Storage", "../Resource", "../Network" ]
+}
