@@ -15,7 +15,7 @@ namespace Networks.Tests
 
     public class UsageTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void UsageTest()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

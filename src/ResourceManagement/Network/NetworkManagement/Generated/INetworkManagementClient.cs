@@ -60,11 +60,6 @@ namespace Microsoft.Azure.Management.Network
         string ApiVersion { get; }
 
         /// <summary>
-        /// expand references resources.
-        /// </summary>
-        string Expand { get; set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }

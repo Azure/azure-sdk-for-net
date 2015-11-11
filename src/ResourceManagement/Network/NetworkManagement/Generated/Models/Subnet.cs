@@ -95,14 +95,6 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AddressPrefix");
             }
-            if (this.NetworkSecurityGroup != null)
-            {
-                this.NetworkSecurityGroup.Validate();
-            }
-            if (this.RouteTable != null)
-            {
-                this.RouteTable.Validate();
-            }
             if (this.IpConfigurations != null)
             {
                 foreach (var element in this.IpConfigurations)

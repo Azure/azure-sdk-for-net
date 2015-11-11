@@ -113,19 +113,19 @@ namespace Networks.Tests
 
                 // Get all Vnets in a subscription
                 var getAllVnetInSubscription = networkManagementClient.VirtualNetworks.ListAll();
-                var vnpgateway = getAllVnetInSubscription.FirstOrDefault(n => n.Name == vnetName);
-                Assert.NotNull(vnpgateway);
-                Assert.Equal("Succeeded", vnpgateway.ProvisioningState);
-                Assert.Equal("10.0.0.0/16", vnpgateway.AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, vnpgateway.Subnets[0].Name);
-                Assert.Equal(subnet2Name, vnpgateway.Subnets[1].Name);
+                var vnet1 = getAllVnetInSubscription.FirstOrDefault(n => n.Name == vnetName);
+                Assert.NotNull(vnet1);
+                Assert.Equal("Succeeded", vnet1.ProvisioningState);
+                Assert.Equal("10.0.0.0/16", vnet1.AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, vnet1.Subnets[0].Name);
+                Assert.Equal(subnet2Name, vnet1.Subnets[1].Name);
 
                 // Delete Vnet
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
 
                 // Get all Vnets
                 getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Null(getAllVnets);
+                Assert.Equal(0, getAllVnets.Count());
             }
         }
     }

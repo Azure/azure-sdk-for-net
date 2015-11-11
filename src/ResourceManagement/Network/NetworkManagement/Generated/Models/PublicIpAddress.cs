@@ -94,9 +94,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (PublicIPAllocationMethod == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAllocationMethod");

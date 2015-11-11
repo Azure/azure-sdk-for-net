@@ -115,5 +115,22 @@ namespace Networks.Tests
 
             return getVnetResponse;
         }
+
+        public static string GetChildLbResourceId(
+           string subscriptionId,
+           string resourceGroupName,
+           string lbname,
+           string childResourceType,
+           string childResourceName)
+        {
+            return
+                string.Format(
+                    "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/loadBalancers/{2}/{3}/{4}",
+                    subscriptionId,
+                    resourceGroupName,
+                    lbname,
+                    childResourceType,
+                    childResourceName);
+        }
     }
 }
