@@ -28,5 +28,6 @@
     "TestFramework": "",
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
     "xunit": "2.1.0"
-  }
+  },
+  "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }

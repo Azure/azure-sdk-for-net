@@ -28,8 +28,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         static MockContext()
         {
-            //ServiceClientTracing.AddTracingInterceptor(
-            //    new TestingTracingInterceptor());
+            ServiceClientTracing.AddTracingInterceptor(new TestingTracingInterceptor());
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             var context = new MockContext();
 
-            HttpMockServer.DataStore = new Microsoft.Azure.Test.HttpRecorder.DataStore();
+            HttpMockServer.FileSystemUtilsObject = new Microsoft.Azure.Test.HttpRecorder.FileSystemUtils();
             HttpMockServer.Initialize(className, methodName);
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {

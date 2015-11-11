@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static void SerializeJson<T>(T data, string path)
         {
-            HttpMockServer.DataStore.WriteFile(
+            HttpMockServer.FileSystemUtilsObject.WriteFile(
                 path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static T DeserializeJson<T>(string path)
         {
-            string json = HttpMockServer.DataStore.ReadFileAsText(path);
+            string json = HttpMockServer.FileSystemUtilsObject.ReadFileAsText(path);
             return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
@@ -141,24 +141,24 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static void CleanDirectory(string dir)
         {
-            if (HttpMockServer.DataStore.DirectoryExists(dir))
+            if (HttpMockServer.FileSystemUtilsObject.DirectoryExists(dir))
             {
-                foreach (string file in HttpMockServer.DataStore.GetFiles(dir, "*.*", true))
+                foreach (string file in HttpMockServer.FileSystemUtilsObject.GetFiles(dir, "*.*", true))
                 {
-                    HttpMockServer.DataStore.DeleteFile(file);
+                    HttpMockServer.FileSystemUtilsObject.DeleteFile(file);
                 }
-                foreach (string subDirectory in HttpMockServer.DataStore.GetDirectories(dir, "*", true))
+                foreach (string subDirectory in HttpMockServer.FileSystemUtilsObject.GetDirectories(dir, "*", true))
                 {
-                    HttpMockServer.DataStore.DeleteDirectory(subDirectory);
+                    HttpMockServer.FileSystemUtilsObject.DeleteDirectory(subDirectory);
                 }
             }
         }
 
         public static void EnsureDirectoryExists(string dir)
         {
-            if (!HttpMockServer.DataStore.DirectoryExists(dir))
+            if (!HttpMockServer.FileSystemUtilsObject.DirectoryExists(dir))
             {
-                HttpMockServer.DataStore.CreateDirectory(dir);
+                HttpMockServer.FileSystemUtilsObject.CreateDirectory(dir);
             }
         }
         

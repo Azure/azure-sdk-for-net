@@ -59,10 +59,16 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     throw new KeyNotFoundException(
                         string.Format("Unable to find a matching HTTP request for URL '{0}'. Calling method {1}().", 
                             Utilities.DecodeBase64AsUri(key), 
-                            HttpMockServer.DataStore.GetCallingMethodName()));
+                            GetCallingMethodName()));
                 }
             }
             set { sessionRecords[key] = value; }
+        }
+
+        private string GetCallingMethodName([System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="Getting_CallingMethodName_Failed_Your_Test_Will_Fail")
+        {
+            return methodName;
         }
 
         public IEnumerable<RecordEntry> GetAllEntities()

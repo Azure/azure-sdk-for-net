@@ -27,11 +27,13 @@
         "System.Runtime": "4.0.21-beta-23509",
         "System.Threading": "4.0.11-beta-23509",
         "System.Net.Http": "4.0.1-beta-23509"
+        
       }
     }
   },
   "dependencies": {
     "HttpRecorder": "1.1.1",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview"
   }
 }

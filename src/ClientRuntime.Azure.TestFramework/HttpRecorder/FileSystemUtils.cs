@@ -19,7 +19,7 @@ using System.IO;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
-    public class DataStore : IDataStore
+    public class FileSystemUtils
     {
         public void CreateDirectory(string path)
         {
@@ -39,40 +39,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
         public bool DirectoryExists(string path)
         {
             return Directory.Exists(path);
-        }
-
-        public string GetCallingMethodName()
-        {
-            //StackTrace st = new StackTrace();
-            //int depth = 3;
-            //StackFrame sf = st.GetFrame(depth);
-            //string methodName = string.Empty;
-            //bool foundSendAsync = false;
-            //while (sf != null)
-            //{
-            //    depth++;
-            //    sf = st.GetFrame(depth);
-            //    if (sf != null)
-            //    {
-            //        methodName = sf.GetMethod().Name;
-            //    }
-            //    if (methodName == "SendAsync")
-            //    {
-            //        foundSendAsync = true;
-            //    }
-            //    if (foundSendAsync &&
-            //        methodName != "MoveNext" &&
-            //        methodName != "SendAsync" &&
-            //        methodName != "Start")
-            //    {
-            //        break;
-            //    }
-            //}
-
-            //return methodName;
-
-            return "TODO:SKIP-FOR-NOW";
-        }
+        }       
 
         public string[] GetDirectories(string sourceDirName, string pattern, bool recursive)
         {

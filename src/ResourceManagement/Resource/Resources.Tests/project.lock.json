@@ -31,6 +31,31 @@
           "System.Xml.ReaderWriter": "4.0.11-beta-23509"
         }
       },
+      "Microsoft.Cci/4.0.0-beta-23409": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Threading": "4.0.0"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23509": {
         "type": "package",
         "dependencies": {
@@ -186,6 +211,41 @@
           "lib/dotnet5.4/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/3.6.210231457-alpha": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.0",
+          "System.Collections.Concurrent": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.0",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.0",
+          "System.Linq": "4.0.0",
+          "System.Net.Http": "4.0.0",
+          "System.Net.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Runtime": "4.0.0",
+          "System.Runtime.Extensions": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Runtime.Serialization.Json": "4.0.0",
+          "System.Runtime.Serialization.Primitives": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Text.Encoding.Extensions": "4.0.0",
+          "System.Text.RegularExpressions": "4.0.0",
+          "System.Threading": "4.0.0",
+          "System.Threading.Tasks": "4.0.0",
+          "System.Xml.ReaderWriter": "4.0.0",
+          "System.Xml.XDocument": "4.0.0"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        }
+      },
       "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
@@ -213,6 +273,20 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+        }
+      },
+      "Microsoft.Rest.ClientRuntime.Azure.Authentication/1.0.0-preview": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Cci": "4.0.0-beta-23409",
+          "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.210231457-alpha",
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
         }
       },
       "Newtonsoft.Json/7.0.1": {
@@ -254,6 +328,23 @@
         },
         "runtime": {
           "lib/dotnet5.4/System.Collections.Concurrent.dll": {}
+        }
+      },
+      "System.Collections.NonGeneric/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Collections.NonGeneric.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Collections.NonGeneric.dll": {}
         }
       },
       "System.ComponentModel/4.0.1-beta-23509": {
@@ -503,6 +594,35 @@
           "lib/dotnet/System.ObjectModel.dll": {}
         }
       },
+      "System.Private.DataContractSerialization/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Serialization.Primitives": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlSerializer": "4.0.10"
+        },
+        "compile": {
+          "ref/dnxcore50/_._": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Private.DataContractSerialization.dll": {}
+        }
+      },
       "System.Private.Uri/4.0.1-beta-23509": {
         "type": "package",
         "compile": {
@@ -621,6 +741,18 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Runtime.InteropServices.dll": {}
+        }
+      },
+      "System.Runtime.Serialization.Json/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Private.DataContractSerialization": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Runtime.Serialization.Json.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Runtime.Serialization.Json.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.1.0-beta-23509": {
@@ -794,6 +926,54 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "System.Xml.XmlDocument/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlDocument.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Xml.XmlDocument.dll": {}
+        }
+      },
+      "System.Xml.XmlSerializer/4.0.10": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlDocument": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlSerializer.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
       "TestFramework/0.10.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
@@ -801,6 +981,7 @@
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23509",
           "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview",
           "System.Collections": "4.0.11-beta-23509",
           "System.Console": "4.0.0-beta-23509",
           "System.Diagnostics.Debug": "4.0.11-beta-23509",
@@ -1005,6 +1186,31 @@
           "System.Xml.ReaderWriter": "4.0.11-beta-23509"
         }
       },
+      "Microsoft.Cci/4.0.0-beta-23409": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Threading": "4.0.0"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23509": {
         "type": "package",
         "dependencies": {
@@ -1160,6 +1366,41 @@
           "lib/dotnet5.4/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/3.6.210231457-alpha": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.0",
+          "System.Collections.Concurrent": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.0",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.0",
+          "System.Linq": "4.0.0",
+          "System.Net.Http": "4.0.0",
+          "System.Net.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Runtime": "4.0.0",
+          "System.Runtime.Extensions": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Runtime.Serialization.Json": "4.0.0",
+          "System.Runtime.Serialization.Primitives": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Text.Encoding.Extensions": "4.0.0",
+          "System.Text.RegularExpressions": "4.0.0",
+          "System.Threading": "4.0.0",
+          "System.Threading.Tasks": "4.0.0",
+          "System.Xml.ReaderWriter": "4.0.0",
+          "System.Xml.XDocument": "4.0.0"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        }
+      },
       "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
@@ -1187,6 +1428,20 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+        }
+      },
+      "Microsoft.Rest.ClientRuntime.Azure.Authentication/1.0.0-preview": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Cci": "4.0.0-beta-23409",
+          "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.210231457-alpha",
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.0.0": {
@@ -1793,6 +2048,35 @@
           "lib/dotnet/System.ObjectModel.dll": {}
         }
       },
+      "System.Private.DataContractSerialization/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Serialization.Primitives": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlSerializer": "4.0.10"
+        },
+        "compile": {
+          "ref/dnxcore50/_._": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Private.DataContractSerialization.dll": {}
+        }
+      },
       "System.Private.Networking/4.0.1-beta-23509": {
         "type": "package",
         "dependencies": {
@@ -1988,6 +2272,18 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Runtime.InteropServices.dll": {}
+        }
+      },
+      "System.Runtime.Serialization.Json/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Private.DataContractSerialization": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Runtime.Serialization.Json.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Runtime.Serialization.Json.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.1.0-beta-23509": {
@@ -2207,6 +2503,54 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "System.Xml.XmlDocument/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlDocument.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Xml.XmlDocument.dll": {}
+        }
+      },
+      "System.Xml.XmlSerializer/4.0.10": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlDocument": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlSerializer.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
       "TestFramework/0.10.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
@@ -2214,6 +2558,7 @@
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23509",
           "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview",
           "System.Collections": "4.0.11-beta-23509",
           "System.Console": "4.0.0-beta-23509",
           "System.Diagnostics.Debug": "4.0.11-beta-23509",
@@ -2418,6 +2763,31 @@
           "System.Xml.ReaderWriter": "4.0.11-beta-23509"
         }
       },
+      "Microsoft.Cci/4.0.0-beta-23409": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Threading": "4.0.0"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Cci.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.0.1-beta-23509": {
         "type": "package",
         "dependencies": {
@@ -2573,6 +2943,41 @@
           "lib/dotnet5.4/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/3.6.210231457-alpha": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.0",
+          "System.Collections.Concurrent": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.0",
+          "System.Globalization": "4.0.0",
+          "System.IO": "4.0.0",
+          "System.Linq": "4.0.0",
+          "System.Net.Http": "4.0.0",
+          "System.Net.Primitives": "4.0.0",
+          "System.Reflection": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Runtime": "4.0.0",
+          "System.Runtime.Extensions": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.0",
+          "System.Runtime.Serialization.Json": "4.0.0",
+          "System.Runtime.Serialization.Primitives": "4.0.0",
+          "System.Text.Encoding": "4.0.0",
+          "System.Text.Encoding.Extensions": "4.0.0",
+          "System.Text.RegularExpressions": "4.0.0",
+          "System.Threading": "4.0.0",
+          "System.Threading.Tasks": "4.0.0",
+          "System.Xml.ReaderWriter": "4.0.0",
+          "System.Xml.XDocument": "4.0.0"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {},
+          "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll": {}
+        }
+      },
       "Microsoft.Rest.ClientRuntime/1.4.1": {
         "type": "package",
         "dependencies": {
@@ -2600,6 +3005,20 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+        }
+      },
+      "Microsoft.Rest.ClientRuntime.Azure.Authentication/1.0.0-preview": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Cci": "4.0.0-beta-23409",
+          "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.210231457-alpha",
+          "Microsoft.Rest.ClientRuntime": "[1.4.1, 2.0.0)"
+        },
+        "compile": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.0.0": {
@@ -3206,6 +3625,35 @@
           "lib/dotnet/System.ObjectModel.dll": {}
         }
       },
+      "System.Private.DataContractSerialization/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Serialization.Primitives": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlSerializer": "4.0.10"
+        },
+        "compile": {
+          "ref/dnxcore50/_._": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Private.DataContractSerialization.dll": {}
+        }
+      },
       "System.Private.Networking/4.0.1-beta-23509": {
         "type": "package",
         "dependencies": {
@@ -3401,6 +3849,18 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Runtime.InteropServices.dll": {}
+        }
+      },
+      "System.Runtime.Serialization.Json/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Private.DataContractSerialization": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Runtime.Serialization.Json.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Runtime.Serialization.Json.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.1.0-beta-23509": {
@@ -3620,6 +4080,54 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "System.Xml.XmlDocument/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.Encoding": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlDocument.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Xml.XmlDocument.dll": {}
+        }
+      },
+      "System.Xml.XmlSerializer/4.0.10": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Xml.ReaderWriter": "4.0.10",
+          "System.Xml.XmlDocument": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Xml.XmlSerializer.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
       "TestFramework/0.10.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
@@ -3627,6 +4135,7 @@
           "HttpRecorder": "1.1.1",
           "Microsoft.CSharp": "4.0.1-beta-23509",
           "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+          "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview",
           "System.Collections": "4.0.11-beta-23509",
           "System.Console": "4.0.0-beta-23509",
           "System.Diagnostics.Debug": "4.0.11-beta-23509",
@@ -3816,6 +4325,17 @@
       "type": "project",
       "path": "../../../ClientRuntime.Azure.TestFramework/TestFramework/project.json"
     },
+    "Microsoft.Cci/4.0.0-beta-23409": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "Dczg109lbfHODVLTkG5qEzErDYM3xe7KjiMbGOfa8koO7cnP4ziFyAOaEGlV4Ov/h19HYJE/TjkjMLixOd3Lag==",
+      "files": [
+        "lib/dotnet/Microsoft.Cci.dll",
+        "Microsoft.Cci.4.0.0-beta-23409.nupkg",
+        "Microsoft.Cci.4.0.0-beta-23409.nupkg.sha512",
+        "Microsoft.Cci.nuspec"
+      ]
+    },
     "Microsoft.CSharp/4.0.1-beta-23509": {
       "type": "package",
       "serviceable": true,
@@ -3971,6 +4491,37 @@
         "Microsoft.Extensions.PlatformAbstractions.nuspec"
       ]
     },
+    "Microsoft.IdentityModel.Clients.ActiveDirectory/3.6.210231457-alpha": {
+      "type": "package",
+      "sha512": "NbFEP8Ke50MhJkg4KyHqwezK78tt7i73ybP/Ru4CJczYe6YHeU5gSmOb5O0+dZWqqe3IqOpjvemN7BerPni/Jw==",
+      "files": [
+        "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll",
+        "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.XML",
+        "lib/dnxcore50/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "lib/MonoAndroid10/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/MonoAndroid10/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll",
+        "lib/MonoAndroid10/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.XML",
+        "lib/MonoAndroid10/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.XML",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "lib/netcore45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/netcore45/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll",
+        "lib/netcore45/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.XML",
+        "lib/netcore45/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "lib/portable-net45+win/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/portable-net45+win/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "lib/Xamarin.iOS10/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/Xamarin.iOS10/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll",
+        "lib/Xamarin.iOS10/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.XML",
+        "lib/Xamarin.iOS10/Microsoft.IdentityModel.Clients.ActiveDirectory.XML",
+        "Microsoft.IdentityModel.Clients.ActiveDirectory.3.6.210231457-alpha.nupkg",
+        "Microsoft.IdentityModel.Clients.ActiveDirectory.3.6.210231457-alpha.nupkg.sha512",
+        "Microsoft.IdentityModel.Clients.ActiveDirectory.nuspec"
+      ]
+    },
     "Microsoft.Rest.ClientRuntime/1.4.1": {
       "type": "package",
       "sha512": "qwBYB/y39tQEmKVtuKGWdFwCMQntNjJVr4kZ9a471mbYZjGpbfeC95uO30Dl8ltcBWzjX9R5qfVKEePP82ggEA==",
@@ -4061,6 +4612,31 @@
         "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/Properties/Resources.Designer.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/Resource.cs",
         "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure/ResourceJsonConverter.cs"
+      ]
+    },
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication/1.0.0-preview": {
+      "type": "package",
+      "sha512": "UXn9fzV99tN+I2ebG73F7kSBq5LDJuqJjFFApUz/Vg+MZRFwnKXqT9M2+dlo4o1+A9AnbJvG5loPHxlqidEkUQ==",
+      "files": [
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll",
+        "lib/dotnet/Microsoft.Rest.ClientRuntime.Azure.Authentication.xml",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.Authentication.dll",
+        "lib/portable-net45+win8+wpa81/Microsoft.Rest.ClientRuntime.Azure.Authentication.xml",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication.1.0.0-preview.nupkg",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication.1.0.0-preview.nupkg.sha512",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication.nuspec",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/ActiveDirectoryClientSettings.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/ActiveDirectoryServiceSettings.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/ApplicationTokenProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/AuthenticationException.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/CertificateAuthenticationProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/GlobalSuppressions.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/IApplicationAuthenticationProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/IUserCredentialProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/MemoryApplicationAuthenticationProvider.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/Properties/AssemblyInfo.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/Properties/Resources.Designer.cs",
+        "src/Common/ClientRuntimes/CSharp/ClientRuntime.Azure.Authentication/UserTokenProvider.cs"
       ]
     },
     "Microsoft.Win32.Primitives/4.0.0": {
@@ -5460,6 +6036,22 @@
         "System.ObjectModel.nuspec"
       ]
     },
+    "System.Private.DataContractSerialization/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "uQvzoXHXHn/9YqUmPtgD8ZPJIlBuuL3QHegbuik97W/umoI28fOnGLnvjRHhju1VMWvFLRQoh7uZkBaoZ+KpVQ==",
+      "files": [
+        "lib/DNXCore50/System.Private.DataContractSerialization.dll",
+        "lib/netcore50/System.Private.DataContractSerialization.dll",
+        "ref/dnxcore50/_._",
+        "ref/netcore50/_._",
+        "runtime.json",
+        "runtimes/win8-aot/lib/netcore50/System.Private.DataContractSerialization.dll",
+        "System.Private.DataContractSerialization.4.0.0.nupkg",
+        "System.Private.DataContractSerialization.4.0.0.nupkg.sha512",
+        "System.Private.DataContractSerialization.nuspec"
+      ]
+    },
     "System.Private.Networking/4.0.1-beta-23509": {
       "type": "package",
       "serviceable": true,
@@ -6020,6 +6612,39 @@
         "System.Runtime.InteropServices.4.0.21-beta-23509.nupkg",
         "System.Runtime.InteropServices.4.0.21-beta-23509.nupkg.sha512",
         "System.Runtime.InteropServices.nuspec"
+      ]
+    },
+    "System.Runtime.Serialization.Json/4.0.0": {
+      "type": "package",
+      "sha512": "emhWMQP3sdtkAhD0TOeP3FfjS57sfQMQ2sqA6f2Yj5Gd9jkHV4KsQ2TsoJjghca6d8fur7+REQ6ILBXVdGf/0g==",
+      "files": [
+        "lib/DNXCore50/System.Runtime.Serialization.Json.dll",
+        "lib/net45/_._",
+        "lib/netcore50/System.Runtime.Serialization.Json.dll",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "ref/dotnet/de/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/es/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/fr/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/it/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/ja/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/ko/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/ru/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/System.Runtime.Serialization.Json.dll",
+        "ref/dotnet/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/zh-hans/System.Runtime.Serialization.Json.xml",
+        "ref/dotnet/zh-hant/System.Runtime.Serialization.Json.xml",
+        "ref/net45/_._",
+        "ref/netcore50/System.Runtime.Serialization.Json.dll",
+        "ref/netcore50/System.Runtime.Serialization.Json.xml",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "runtimes/win8-aot/lib/netcore50/System.Runtime.Serialization.Json.dll",
+        "System.Runtime.Serialization.Json.4.0.0.nupkg",
+        "System.Runtime.Serialization.Json.4.0.0.nupkg.sha512",
+        "System.Runtime.Serialization.Json.nuspec"
       ]
     },
     "System.Runtime.Serialization.Primitives/4.1.0-beta-23509": {
@@ -6669,6 +7294,73 @@
         "System.Xml.XDocument.4.0.11-beta-23509.nupkg",
         "System.Xml.XDocument.4.0.11-beta-23509.nupkg.sha512",
         "System.Xml.XDocument.nuspec"
+      ]
+    },
+    "System.Xml.XmlDocument/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "H5qTx2+AXgaKE5wehU1ZYeYPFpp/rfFh69/937NvwCrDqbIkvJRmIFyKKpkoMI6gl9hGfuVizfIudVTMyowCXw==",
+      "files": [
+        "lib/dotnet/System.Xml.XmlDocument.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Xml.XmlDocument.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/de/System.Xml.XmlDocument.xml",
+        "ref/dotnet/es/System.Xml.XmlDocument.xml",
+        "ref/dotnet/fr/System.Xml.XmlDocument.xml",
+        "ref/dotnet/it/System.Xml.XmlDocument.xml",
+        "ref/dotnet/ja/System.Xml.XmlDocument.xml",
+        "ref/dotnet/ko/System.Xml.XmlDocument.xml",
+        "ref/dotnet/ru/System.Xml.XmlDocument.xml",
+        "ref/dotnet/System.Xml.XmlDocument.dll",
+        "ref/dotnet/System.Xml.XmlDocument.xml",
+        "ref/dotnet/zh-hans/System.Xml.XmlDocument.xml",
+        "ref/dotnet/zh-hant/System.Xml.XmlDocument.xml",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Xml.XmlDocument.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "System.Xml.XmlDocument.4.0.0.nupkg",
+        "System.Xml.XmlDocument.4.0.0.nupkg.sha512",
+        "System.Xml.XmlDocument.nuspec"
+      ]
+    },
+    "System.Xml.XmlSerializer/4.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "OKhE6vruk88z/hl0lmfrMvXteTASgJUagu6PT6S10i9uLbvDR3pTwB6jVgiwa2D2qtTB+eneZbS9jljhPXhTtg==",
+      "files": [
+        "lib/DNXCore50/System.Xml.XmlSerializer.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/_._",
+        "lib/netcore50/System.Xml.XmlSerializer.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/de/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/es/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/fr/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/it/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/ja/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/ko/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/ru/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/System.Xml.XmlSerializer.dll",
+        "ref/dotnet/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/zh-hans/System.Xml.XmlSerializer.xml",
+        "ref/dotnet/zh-hant/System.Xml.XmlSerializer.xml",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "runtime.json",
+        "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll",
+        "System.Xml.XmlSerializer.4.0.10.nupkg",
+        "System.Xml.XmlSerializer.4.0.10.nupkg.sha512",
+        "System.Xml.XmlSerializer.nuspec"
       ]
     },
     "xunit/2.1.0": {

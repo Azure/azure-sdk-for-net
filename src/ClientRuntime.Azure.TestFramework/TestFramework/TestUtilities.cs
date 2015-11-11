@@ -11,21 +11,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
-//using Microsoft.Rest.Azure.Authentication;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     public static partial class TestUtilities
     {
-        //public static ActiveDirectoryServiceSettings AsAzureEnvironment(this TestEnvironment env)
-        //{
-        //    return new ActiveDirectoryServiceSettings
-        //    { 
-        //        AuthenticationEndpoint = env.Endpoints.AADAuthUri,
-        //        TokenAudience = env.Endpoints.AADTokenAudienceUri,
-        //        ValidateAuthority = false
-        //    };
-        //}
+        public static ActiveDirectoryServiceSettings AsAzureEnvironment(this TestEnvironment env)
+        {
+            return new ActiveDirectoryServiceSettings
+            {
+                AuthenticationEndpoint = env.Endpoints.AADAuthUri,
+                TokenAudience = env.Endpoints.AADTokenAudienceUri,
+                ValidateAuthority = false
+            };
+        }
 
         /// <summary>
         /// Simply function determining retry policy - retry on any internal server error
