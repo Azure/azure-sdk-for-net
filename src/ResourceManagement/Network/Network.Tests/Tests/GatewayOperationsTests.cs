@@ -17,6 +17,10 @@ using System.Text;
 
 namespace Networks.Tests
 {
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using SubResource = Microsoft.Azure.Management.Network.Models.SubResource;
+
     public class GatewayOperationsTests
     {
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
@@ -77,9 +81,9 @@ namespace Networks.Tests
                     GatewayDefaultSite = null,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -89,19 +93,17 @@ namespace Networks.Tests
                              },
                              Subnet = new SubResource()
                              {
-                                 Id = getSubnetResponse.Subnet.Id
+                                 Id = getSubnetResponse.Id
                              }
                         }
                     }
                 };
 
                 var putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
-                Assert.Equal(HttpStatusCode.OK, putVirtualNetworkGatewayResponse.StatusCode);
-                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.Status);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
 
                 // 2. GetVirtualNetworkGateway API
                 var getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Assert.Equal(HttpStatusCode.OK, getVirtualNetworkGatewayResponse.StatusCode);
                 Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3}, VpnType={4}",
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Location,
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Id, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Name,
@@ -331,13 +333,13 @@ namespace Networks.Tests
                         },
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                             PublicIPAddress = new SubResource()
+                             PublicIPAddress = new PublicIPAddress ()
                              {
                                  Id = nic1publicIp.Id
                              },
@@ -505,13 +507,13 @@ namespace Networks.Tests
                     GatewayDefaultSite = null,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
-                    IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
                     {
-                        new VirtualNetworkGatewayIpConfiguration()
+                        new VirtualNetworkGatewayIPConfiguration()
                         {
                              Name = ipConfigName,
                              PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                             PublicIPAddress = new SubResource()
+                             PublicIPAddress = new PublicIPAddress ()
                              {
                                  Id = nic1publicIp.Id
                              },
