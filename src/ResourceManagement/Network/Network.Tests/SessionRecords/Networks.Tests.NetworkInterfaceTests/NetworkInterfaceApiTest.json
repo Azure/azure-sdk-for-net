@@ -217,7 +217,7 @@
           "210"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"397acddf-4de0-45a7-a83a-c632feb26c5b\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -281,7 +281,7 @@
           "210"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"397acddf-4de0-45a7-a83a-c632feb26c5b\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -339,7 +339,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -391,7 +391,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -443,7 +443,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"471d4bb2-4150-415b-965f-e34502d72919\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -498,7 +498,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"471d4bb2-4150-415b-965f-e34502d72919\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -553,7 +553,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"471d4bb2-4150-415b-965f-e34502d72919\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -608,7 +608,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet8799\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\",\r\n  \"etag\": \"W/\\\"471d4bb2-4150-415b-965f-e34502d72919\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"azsmnet6872\",\r\n      \"fqdn\": \"azsmnet6872.azure-bvt.com\"\r\n    }\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -669,7 +669,7 @@
           "405"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet2985\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985\",\r\n  \"etag\": \"W/\\\"fdd2a5ca-4216-43a6-810e-250b092f3fdf\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet4748\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n        \"etag\": \"W/\\\"fdd2a5ca-4216-43a6-810e-250b092f3fdf\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
@@ -733,7 +733,7 @@
           "405"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet2985\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985\",\r\n  \"etag\": \"W/\\\"fdd2a5ca-4216-43a6-810e-250b092f3fdf\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet4748\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n        \"etag\": \"W/\\\"fdd2a5ca-4216-43a6-810e-250b092f3fdf\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
@@ -791,7 +791,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -843,7 +843,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -895,7 +895,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet2985\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985\",\r\n  \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet4748\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n        \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
@@ -950,7 +950,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet2985\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985\",\r\n  \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet4748\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n        \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westeurope\"\r\n}",
@@ -1005,7 +1005,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet4748\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n  \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressPrefix\": \"10.0.0.0/24\"\r\n  }\r\n}",
@@ -1060,7 +1060,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet4748\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\",\r\n  \"etag\": \"W/\\\"c70107ec-0b8c-4d23-9977-1bb2a7d3edb9\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressPrefix\": \"10.0.0.0/24\"\r\n  }\r\n}",
@@ -1121,7 +1121,7 @@
           "678"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet3319\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n  \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet5402\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n        \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n          },\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {}\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -1182,7 +1182,7 @@
           "678"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet3319\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n  \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet5402\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n        \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n          },\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {}\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -1237,7 +1237,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet3319\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n  \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet5402\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n        \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n          },\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {}\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -1292,7 +1292,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet3319\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n  \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet5402\",\r\n        \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n        \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n          },\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {}\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
@@ -1347,7 +1347,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet3319\",\r\n      \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n      \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"name\": \"azsmnet5402\",\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n            \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"privateIPAddress\": \"10.0.0.4\",\r\n              \"privateIPAllocationMethod\": \"Dynamic\",\r\n              \"publicIPAddress\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n              },\r\n              \"subnet\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"dnsSettings\": {}\r\n      },\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {\r\n        \"key\": \"value\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
@@ -1399,7 +1399,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet3319\",\r\n      \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n      \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"name\": \"azsmnet5402\",\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n            \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"privateIPAddress\": \"10.0.0.4\",\r\n              \"privateIPAllocationMethod\": \"Dynamic\",\r\n              \"publicIPAddress\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n              },\r\n              \"subnet\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"dnsSettings\": {}\r\n      },\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {\r\n        \"key\": \"value\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
@@ -1451,7 +1451,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nextLink\": \"\"\r\n}",
@@ -1503,7 +1503,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nextLink\": \"\"\r\n}",
@@ -1555,7 +1555,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet3319\",\r\n      \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n      \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"name\": \"azsmnet5402\",\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n            \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"privateIPAddress\": \"10.0.0.4\",\r\n              \"privateIPAllocationMethod\": \"Dynamic\",\r\n              \"publicIPAddress\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n              },\r\n              \"subnet\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"dnsSettings\": {}\r\n      },\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {\r\n        \"key\": \"value\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
@@ -1607,7 +1607,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet3319\",\r\n      \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319\",\r\n      \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"name\": \"azsmnet5402\",\r\n            \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/networkInterfaces/azsmnet3319/ipConfigurations/azsmnet5402\",\r\n            \"etag\": \"W/\\\"3204a8e4-3550-42ac-a0f6-b33d6744651d\\\"\",\r\n            \"properties\": {\r\n              \"provisioningState\": \"Succeeded\",\r\n              \"privateIPAddress\": \"10.0.0.4\",\r\n              \"privateIPAllocationMethod\": \"Dynamic\",\r\n              \"publicIPAddress\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/publicIPAddresses/azsmnet8799\"\r\n              },\r\n              \"subnet\": {\r\n                \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg411/providers/Microsoft.Network/virtualNetworks/azsmnet2985/subnets/azsmnet4748\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"dnsSettings\": {}\r\n      },\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {\r\n        \"key\": \"value\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
@@ -1659,7 +1659,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1717,7 +1717,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1775,7 +1775,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -1827,7 +1827,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -1879,7 +1879,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1937,7 +1937,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1995,7 +1995,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -2047,7 +2047,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -2099,7 +2099,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -2157,7 +2157,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -2215,7 +2215,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -2267,7 +2267,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",

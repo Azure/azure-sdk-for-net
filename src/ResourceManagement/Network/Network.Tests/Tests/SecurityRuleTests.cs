@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -9,26 +8,24 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
     public class SecurityRuleTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void SecurityRuleWithRulesApiTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "west us";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -65,20 +62,23 @@ namespace Networks.Tests
 
                 // Put Nsg
                 var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
+                Assert.Equal(HttpStatusCode.OK, putNsgResponse.StatusCode);
+                Assert.Equal("Succeeded", putNsgResponse.Status);
 
                 // Get NSG
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
-                Assert.Equal(networkSecurityGroupName, getNsgResponse.Name);
+                Assert.Equal(HttpStatusCode.OK, getNsgResponse.StatusCode);
+                Assert.Equal(networkSecurityGroupName, getNsgResponse.NetworkSecurityGroup.Name);
 
                 // Get SecurityRule
                 var getSecurityRuleResponse = networkManagementClient.SecurityRules.Get(resourceGroupName, networkSecurityGroupName, securityRule1);
-                Assert.Equal(securityRule1, getSecurityRuleResponse.Name);
+                Assert.Equal(HttpStatusCode.OK, getSecurityRuleResponse.StatusCode);
+                Assert.Equal(securityRule1, getSecurityRuleResponse.SecurityRule.Name);
 
-                CompareSecurityRule(getNsgResponse.SecurityRules[0], getSecurityRuleResponse);
+                this.CompareSecurityRule(getNsgResponse.NetworkSecurityGroup.SecurityRules[0], getSecurityRuleResponse.SecurityRule);
 
                 // Add a new security rule
-                var securityRule = new SecurityRule()
+                var SecurityRule = new SecurityRule()
                                    {
                                        Name = securityRule2,
                                        Access = SecurityRuleAccess.Deny,
@@ -92,50 +92,58 @@ namespace Networks.Tests
                                        SourcePortRange = "656",
                                    };
 
-                var putSecurityRuleResponse = networkManagementClient.SecurityRules.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, securityRule2, securityRule);
-                Assert.Equal("Succeeded", putSecurityRuleResponse.ProvisioningState);
+                var putSecurityRuleResponse = networkManagementClient.SecurityRules.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, securityRule2, SecurityRule);
+                Assert.Equal(HttpStatusCode.OK, putSecurityRuleResponse.StatusCode);
+                Assert.Equal("Succeeded", putSecurityRuleResponse.Status);
 
                 // Get NSG
                 getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                Assert.Equal(HttpStatusCode.OK, getNsgResponse.StatusCode);
 
                 // Get the SecurityRule2
                 var getSecurityRule2Response = networkManagementClient.SecurityRules.Get(resourceGroupName, networkSecurityGroupName, securityRule2);
-                Assert.Equal(securityRule2, getSecurityRule2Response.Name);
+                Assert.Equal(HttpStatusCode.OK, getSecurityRule2Response.StatusCode);
+                Assert.Equal(securityRule2, getSecurityRule2Response.SecurityRule.Name);
 
                 // Verify the security rule
-                Assert.Equal(SecurityRuleAccess.Deny, getSecurityRule2Response.Access);
-                Assert.Equal("Test outbound security rule", getSecurityRule2Response.Description);
-                Assert.Equal("*", getSecurityRule2Response.DestinationAddressPrefix);
-                Assert.Equal(destinationPortRange, getSecurityRule2Response.DestinationPortRange);
-                Assert.Equal(SecurityRuleDirection.Outbound, getSecurityRule2Response.Direction);
-                Assert.Equal(501, getSecurityRule2Response.Priority);
-                Assert.Equal(SecurityRuleProtocol.Udp, getSecurityRule2Response.Protocol);
-                Assert.Equal("Succeeded", getSecurityRule2Response.ProvisioningState);
-                Assert.Equal("*", getSecurityRule2Response.SourceAddressPrefix);
-                Assert.Equal("656", getSecurityRule2Response.SourcePortRange);
+                Assert.Equal(SecurityRuleAccess.Deny, getSecurityRule2Response.SecurityRule.Access);
+                Assert.Equal("Test outbound security rule", getSecurityRule2Response.SecurityRule.Description);
+                Assert.Equal("*", getSecurityRule2Response.SecurityRule.DestinationAddressPrefix);
+                Assert.Equal(destinationPortRange, getSecurityRule2Response.SecurityRule.DestinationPortRange);
+                Assert.Equal(SecurityRuleDirection.Outbound, getSecurityRule2Response.SecurityRule.Direction);
+                Assert.Equal(501, getSecurityRule2Response.SecurityRule.Priority);
+                Assert.Equal(SecurityRuleProtocol.Udp, getSecurityRule2Response.SecurityRule.Protocol);
+                Assert.Equal("Succeeded", getSecurityRule2Response.SecurityRule.ProvisioningState);
+                Assert.Equal("*", getSecurityRule2Response.SecurityRule.SourceAddressPrefix);
+                Assert.Equal("656", getSecurityRule2Response.SecurityRule.SourcePortRange);
 
-                this.CompareSecurityRule(getNsgResponse.SecurityRules[1], getSecurityRule2Response);
+                this.CompareSecurityRule(getNsgResponse.NetworkSecurityGroup.SecurityRules[1], getSecurityRule2Response.SecurityRule);
 
                 // List all SecurityRules
                 var getsecurityRules = networkManagementClient.SecurityRules.List(resourceGroupName, networkSecurityGroupName);
+                Assert.Equal(HttpStatusCode.OK, getsecurityRules.StatusCode);
 
-                Assert.Equal(2, getsecurityRules.Count());
-                this.CompareSecurityRule(getNsgResponse.SecurityRules[0], getsecurityRules.First());
-                this.CompareSecurityRule(getNsgResponse.SecurityRules[1], getsecurityRules.ToArray()[1]);
+                Assert.Equal(2, getsecurityRules.SecurityRules.Count);
+                this.CompareSecurityRule(getNsgResponse.NetworkSecurityGroup.SecurityRules[0], getsecurityRules.SecurityRules[0]);
+                this.CompareSecurityRule(getNsgResponse.NetworkSecurityGroup.SecurityRules[1], getsecurityRules.SecurityRules[1]);
 
                 // Delete a SecurityRule
-                networkManagementClient.SecurityRules.Delete(resourceGroupName, networkSecurityGroupName, securityRule2);
+                var deleteSecurityRuleResponse = networkManagementClient.SecurityRules.Delete(resourceGroupName, networkSecurityGroupName, securityRule2);
+                Assert.Equal(HttpStatusCode.OK, deleteSecurityRuleResponse.StatusCode);
 
                 getsecurityRules = networkManagementClient.SecurityRules.List(resourceGroupName, networkSecurityGroupName);
+                Assert.Equal(HttpStatusCode.OK, getsecurityRules.StatusCode);
 
-                Assert.Equal(1, getsecurityRules.Count());
+                Assert.Equal(1, getsecurityRules.SecurityRules.Count);
 
-                // Delete NSG
-                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+               // Delete NSG
+                var deleteResponse = networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
 
                 // List NSG
                 var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(0, listNsgResponse.Count());
+                Assert.Equal(HttpStatusCode.OK, listNsgResponse.StatusCode);
+                Assert.Equal(0, listNsgResponse.NetworkSecurityGroups.Count);
             }
         }
 

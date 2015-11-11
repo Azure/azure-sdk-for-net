@@ -217,7 +217,7 @@
           "247"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"etag\": \"W/\\\"a5217e73-a771-40e7-8132-197b3741f69f\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
@@ -281,7 +281,7 @@
           "247"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"etag\": \"W/\\\"a5217e73-a771-40e7-8132-197b3741f69f\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
@@ -345,7 +345,7 @@
           "247"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocalNetworkGatewayIpAddressCannotBeUpdated\",\r\n    \"message\": \"Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\",\r\n    \"innerError\": \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.ValidationException: Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Contract.Csm.Public.LocalNetworkGateway.Validate(LocalNetworkGateway existingGateway) in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontendContract\\\\Csm.Public\\\\LocalNetworkGateway.cs:line 117\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.Csm.PutLocalNetworkGatewayOperation.<ExecuteAsync>d__b.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\Csm\\\\PutLocalNetworkGatewayOperation.cs:line 112\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.OperationBase`1.<RunAsync>d__2.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\OperationBase.cs:line 113\"\r\n  }\r\n}",
@@ -403,7 +403,7 @@
           "247"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocalNetworkGatewayIpAddressCannotBeUpdated\",\r\n    \"message\": \"Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\",\r\n    \"innerError\": \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.ValidationException: Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Contract.Csm.Public.LocalNetworkGateway.Validate(LocalNetworkGateway existingGateway) in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontendContract\\\\Csm.Public\\\\LocalNetworkGateway.cs:line 117\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.Csm.PutLocalNetworkGatewayOperation.<ExecuteAsync>d__b.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\Csm\\\\PutLocalNetworkGatewayOperation.cs:line 112\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.OperationBase`1.<RunAsync>d__2.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\OperationBase.cs:line 113\"\r\n  }\r\n}",
@@ -455,7 +455,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -507,7 +507,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -559,7 +559,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
@@ -611,7 +611,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
@@ -663,7 +663,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
@@ -715,7 +715,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",

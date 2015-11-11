@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Xunit;
 
 namespace Networks.Tests
 {
+    using System;
+
     public class TestHelper
     {
         public static PublicIPAddress CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location,
@@ -16,9 +17,9 @@ namespace Networks.Tests
             {
                 Location = location,
                 Tags = new Dictionary<string, string>()
-                {
-                    {"key","value"}
-                },
+                    {
+                       {"key","value"}
+                    },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
@@ -28,10 +29,11 @@ namespace Networks.Tests
 
             // Put nic1PublicIpAddress
             var putPublicIpAddressResponse = nrpClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
-            Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
+            Assert.Equal(HttpStatusCode.OK, putPublicIpAddressResponse.StatusCode);
+            Assert.Equal("Succeeded", putPublicIpAddressResponse.Status);
             var getPublicIpAddressResponse = nrpClient.PublicIPAddresses.Get(resourceGroupName, name);
 
-            return getPublicIpAddressResponse;
+            return getPublicIpAddressResponse.PublicIPAddress;
         }
 
         public static NetworkInterface CreateNetworkInterface(
@@ -47,34 +49,36 @@ namespace Networks.Tests
             {
                 Location = location,
                 Tags = new Dictionary<string, string>()
-                {
-                    {"key","value"}
-                },
+                        {
+                           {"key","value"}
+                        },
                 IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                 {
                     new NetworkInterfaceIPConfiguration()
                     {
-                            Name = ipConfigName,
-                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                            Subnet = new Subnet()
-                            {
-                                Id = subnetId
-                            }
+                         Name = ipConfigName,
+                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                         
+                         Subnet = new Subnet()
+                         {
+                             Id = subnetId
+                         }
                     }
                 }
             };
 
-            if (!string.IsNullOrEmpty(publicIpAddressId))
+            if (!String.IsNullOrEmpty(publicIpAddressId))
             {
                 nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = publicIpAddressId };
             }
 
             // Test NIC apis
             var putNicResponse = client.NetworkInterfaces.CreateOrUpdate(resourceGroupName, name, nicParameters);
+            Assert.Equal(HttpStatusCode.OK, putNicResponse.StatusCode);
 
             var getNicResponse = client.NetworkInterfaces.Get(resourceGroupName, name);
             Assert.Equal(getNicResponse.Name, name);
-            Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+            Assert.Equal(getNicResponse.ProvisioningState, Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded);
 
             return getNicResponse;
         }
@@ -111,20 +115,21 @@ namespace Networks.Tests
             };
 
             var putVnetResponse = client.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+            Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
             var getVnetResponse = client.VirtualNetworks.Get(resourceGroupName, vnetName);
 
-            return getVnetResponse;
+            return getVnetResponse.VirtualNetwork;
         }
 
         public static string GetChildLbResourceId(
-           string subscriptionId,
-           string resourceGroupName,
-           string lbname,
-           string childResourceType,
-           string childResourceName)
+            string subscriptionId,
+            string resourceGroupName,
+            string lbname,
+            string childResourceType,
+            string childResourceName)
         {
             return
-                string.Format(
+                String.Format(
                     "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/loadBalancers/{2}/{3}/{4}",
                     subscriptionId,
                     resourceGroupName,

@@ -27,7 +27,7 @@ namespace Networks.Tests
             {
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/loadBalancers");
 
@@ -127,7 +127,7 @@ namespace Networks.Tests
                             Name = loadBalancingRuleName,
                             FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
-                                    Id = TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
+                                    Id = TestHelper.TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                                 },
                             Protocol = TransportProtocol.Tcp,
@@ -137,12 +137,12 @@ namespace Networks.Tests
                             IdleTimeoutInMinutes = 15,
                             BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
-                                Id = TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
+                                Id = TestHelper.TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
                                     resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                             },
                             Probe = new Microsoft.Azure.Management.Network.Models.SubResource()
                             {
-                                Id = TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId, 
+                                Id = TestHelper.TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId, 
                                 resourceGroupName, lbName, "probes", probeName)
                             }
                         }
@@ -166,7 +166,7 @@ namespace Networks.Tests
                             Name = inboundNatRule1Name,
                             FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
-                                    Id = TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
+                                    Id = TestHelper.TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                                 },
                             Protocol = TransportProtocol.Tcp,
@@ -180,7 +180,7 @@ namespace Networks.Tests
                             Name = inboundNatRule2Name,
                             FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
                                 {
-                                    Id = TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
+                                    Id = TestHelper.TestHelper.GetChildLbResourceId(networkManagementClient.SubscriptionId,
                                     resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                                 },
                             Protocol = TransportProtocol.Tcp,

@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using Microsoft.Azure.Management.Network;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Networks.Tests
 {
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class ApplicationGatewayTests
     {
-        private NetworkManagementClient networkManagementClient = null;
-        private string vnetName = null;
-        private string subnetName = null;
-        private string resourceGroupName = null;
-        private string location = null;
-        private Subnet subnet = null;
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                         string resourceGroupName,
                                                         string appGwname,
@@ -39,51 +32,37 @@ namespace Networks.Tests
                     childResourceName);
         }
 
-        private void Init()
-        {
-            vnetName = "azsmnet_vnetName";
-            subnetName = "azsmnet_subnetName";     
-            subnet = CreateSubnet();
-        }
-
-        private Subnet CreateSubnet()
-        {
-            var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
-            var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);            
-            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
-            return getSubnetResponse;
-        }
-
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)
         {
             X509Certificate2 cert = new X509Certificate2("ApplicationGatewayCertificate\\GW5000.pfx", password, X509KeyStorageFlags.Exportable);
             ApplicationGatewaySslCertificate sslCert = new ApplicationGatewaySslCertificate()
             {
                 Name = sslCertName,
-                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
+                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),                
                 Password = password
             };
 
             return sslCert;
         }
 
-        private ApplicationGateway CreateApplicationGateway()
+        private ApplicationGateway CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string subscriptionId)
         {
-            var appGwName = "azsmnet_appGw";
-            var gatewayIpConfigName = "azsmnet_gatewayIpConfigName";
-            var frontendIpConfigName = "azsmnet_frontendIpConfigName";
-            var frontendPortName = "azsmnet_frontendPortName";
-            var backendAddressPoolName = "azsmnet_backendAddressPoolName";
-            var backendHttpSettingsName = "azsmnet_backendHttpSettingsName";
-            var requestRoutingRuleName = "azsmnet_requestRoutingRuleName";
-            var httpListenerName = "azsmnet_httpListenerName";
+            var appGwName = TestUtilities.GenerateName();
+            var gatewayIPConfigName = TestUtilities.GenerateName();
+            var frontendIPConfigName = TestUtilities.GenerateName();
+            var frontendPortName = TestUtilities.GenerateName();
+            var backendAddressPoolName = TestUtilities.GenerateName();
+            var backendHttpSettingsName = TestUtilities.GenerateName();
+            var requestRoutingRuleName = TestUtilities.GenerateName();
+            var httpListenerName = TestUtilities.GenerateName();
             
             var appGw = new ApplicationGateway()
             {
                 Location = location,
+                Name = appGwName,
                 Sku = new ApplicationGatewaySku()
                     {
-                        Name = ApplicationGatewaySkuName.StandardMedium,
+                        Name = ApplicationGatewaySkuName.StandardSmall,
                         Tier = ApplicationGatewayTier.Standard,
                         Capacity = 2
                     },
@@ -91,20 +70,20 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayIPConfiguration()
                         {
-                            Name = gatewayIpConfigName,
-                            Subnet = new Subnet()
+                            Name = gatewayIPConfigName,
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
                             }
                         }
-                    },
+                    },            
                 FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
                     { 
                         new ApplicationGatewayFrontendIPConfiguration()
                         {
-                            Name = frontendIpConfigName,
+                            Name = frontendIPConfigName,
                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                            Subnet = new Subnet()
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
                             }                          
@@ -127,11 +106,11 @@ namespace Networks.Tests
                             {
                                 new ApplicationGatewayBackendAddress()
                                 {
-                                    IpAddress = "10.2.0.1"
+                                    IpAddress = "104.42.6.202"
                                 },
                                 new ApplicationGatewayBackendAddress()
                                 {
-                                    IpAddress = "10.2.0.2"
+                                    IpAddress = "23.99.1.115"
                                 }
                             }
                         }
@@ -143,7 +122,7 @@ namespace Networks.Tests
                             Name = backendHttpSettingsName,
                             Port = 80,
                             Protocol = ApplicationGatewayProtocol.Http,
-                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled
+                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled
                         }
                     },
                 HttpListeners = new List<ApplicationGatewayHttpListener>
@@ -151,15 +130,15 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendPort = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendIPConfiguration = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
-                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                             },
                             SslCertificate = null,
                             Protocol = ApplicationGatewayProtocol.Http
@@ -171,19 +150,19 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            HttpListener = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            BackendAddressPool = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            BackendHttpSettings = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
                             }
                         }
@@ -192,23 +171,24 @@ namespace Networks.Tests
             return appGw;
         }
 
-        private ApplicationGateway CreateApplicationGatewayWithSsl()
+        private ApplicationGateway CreateApplicationGatewayWithSsl(string location, Subnet subnet, string resourceGroupName, string subscriptionId)
         {
-            var appGwName = "azsmnet_appGwSsl";
-            var gatewayIpConfigName = "azsmnet_gatewayIpConfigNameSsl";
-            var frontendIpConfigName = "azsmnet_frontendIpConfigNameSsl";
-            var frontendPortName = "azsmnet_frontendPortNameSsl";
-            var backendAddressPoolName = "azsmnet_backendAddressPoolNameSsl";
-            var backendHttpSettingsName = "azsmnet_backendHttpSettingsNameSsl";
-            var requestRoutingRuleName = "azsmnet_requestRoutingRuleNameSsl";
-            var sslCertName = "azsmnet_sslCertNameSsl";            
-            var httpListenerName = "azsmnet_httpListenerNameSsl";
+            var appGwName = TestUtilities.GenerateName();
+            var gatewayIPConfigName = TestUtilities.GenerateName();
+            var frontendIPConfigName = TestUtilities.GenerateName();
+            var frontendPortName = TestUtilities.GenerateName();
+            var backendAddressPoolName = TestUtilities.GenerateName();
+            var backendHttpSettingsName = TestUtilities.GenerateName();
+            var requestRoutingRuleName = TestUtilities.GenerateName();
+            var sslCertName = TestUtilities.GenerateName();            
+            var httpListenerName = TestUtilities.GenerateName();
             var password = "1234";                        
             ApplicationGatewaySslCertificate sslCert = CreateSslCertificate(sslCertName, password);
 
             var appGw = new ApplicationGateway()
             {
                 Location = location,
+                Name = appGwName,
                 Sku = new ApplicationGatewaySku()
                 {
                     Name = ApplicationGatewaySkuName.StandardLarge,
@@ -219,8 +199,8 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayIPConfiguration()
                         {
-                            Name = gatewayIpConfigName,
-                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            Name = gatewayIPConfigName,
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
                             }
@@ -234,12 +214,12 @@ namespace Networks.Tests
                     { 
                         new ApplicationGatewayFrontendIPConfiguration()
                         {
-                            Name = frontendIpConfigName,
+                            Name = frontendIPConfigName,
                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                            Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
-                            }                          
+                            } 
                         }                    
                     },
                 FrontendPorts = new List<ApplicationGatewayFrontendPort>
@@ -283,22 +263,22 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendPort = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            FrontendIPConfiguration = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
-                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                             },
-                            SslCertificate = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            SslCertificate = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "sslCertificates", sslCertName)
                             },
-                            Protocol = ApplicationGatewayProtocol.Http
+                            Protocol = ApplicationGatewayProtocol.Https
                         }
                     },
                 RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
@@ -307,19 +287,19 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            HttpListener = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            BackendAddressPool = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new Microsoft.Azure.Management.Network.Models.SubResource()
+                            BackendHttpSettings = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkManagementClient.SubscriptionId,
+                                Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
                             }
                         }
@@ -335,94 +315,69 @@ namespace Networks.Tests
             Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
             Assert.Equal(gw1.Sku.Tier, gw2.Sku.Tier);
             Assert.Equal(gw1.Sku.Capacity, gw2.Sku.Capacity);
-            Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
-            Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
+            //Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
+            //Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
             Assert.Equal(gw1.SslCertificates.Count, gw2.SslCertificates.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
+            //Assert.Equal(gw1.ResourceGuid, gw2.ResourceGuid);
         }
 
-        [Fact(Skip="TODO: Autorest")]
+        [Fact]
         public void ApplicationGatewayApiTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };            
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
                 
-                location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/applicationgateways");
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
-                resourceGroupName = TestUtilities.GenerateName("csmrg");
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/applicationgateways");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
                     {
                         Location = location
                     });
 
-                Init();
-                
-                var appGw = CreateApplicationGatewayWithSsl();
-                var appGwName = TestUtilities.GenerateName("azsmnet");
+                var vnetName = TestUtilities.GenerateName();
+                var subnetName = TestUtilities.GenerateName();                
 
-                // Put AppGw
-                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
-                Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
+                var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Subnet.Id);
+                var subnet = getSubnetResponse.Subnet;
+
+                var appGw = CreateApplicationGateway(location, subnet, resourceGroupName, networkManagementClient.SubscriptionId);     
+
+                // Put AppGw                
+                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw.Name, appGw);                
+                Assert.Equal(HttpStatusCode.OK, putAppGwResponse.StatusCode);
+                Assert.Equal("Succeeded", putAppGwResponse.Status);
                 
                 // Get AppGw
-                var getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
+                var getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGw.Name);
                 CompareApplicationGateway(appGw, getResp);
 
-                // List AppGw
-                var listAppGw = networkManagementClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(1, listAppGw.Count());
-
-                // List all AppGw
-                var listAllAppGw = networkManagementClient.ApplicationGateways.ListAll();
-                Assert.Equal(1, listAllAppGw.Count());
-
-                //Add one more gateway
-                // Put AppGw
-                var appGw2 = CreateApplicationGateway();
-                var appGw2Name = TestUtilities.GenerateName("azsmnet");
-
-                putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw2Name, appGw2);
-                Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
-
-                // Get AppGw
-                getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGw2Name);
-                CompareApplicationGateway(appGw2, getResp);
-
-                // List AppGw
-                listAppGw = networkManagementClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(2, listAppGw.Count());
-
-                // List all AppGw
-                listAllAppGw = networkManagementClient.ApplicationGateways.ListAll();
-                Assert.Equal(2, listAllAppGw.Count());
-
                 //Start AppGw
-                networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGwName);
+                var startResult = networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);
+                Assert.Equal(HttpStatusCode.OK, startResult.StatusCode);
+                Assert.Equal("Succeeded", startResult.Status);
 
-                networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGw2Name);
-                
                 //Stop AppGw
-                networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGwName);
+                var stopResult = networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGw.Name);
+                Assert.Equal(HttpStatusCode.OK, stopResult.StatusCode);
+                Assert.Equal("Succeeded", stopResult.Status);
 
-                networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGw2Name);
-                
                 // Delete AppGw
-                networkManagementClient.ApplicationGateways.Delete(resourceGroupName, appGwName);
-
-                networkManagementClient.ApplicationGateways.Delete(resourceGroupName, appGw2Name);
-
-                // Verify Delete
-                listAppGw = networkManagementClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Null(listAppGw);
+                var deleteResult = networkManagementClient.ApplicationGateways.Delete(resourceGroupName, appGw.Name);
+                Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
             }
         }        
     }

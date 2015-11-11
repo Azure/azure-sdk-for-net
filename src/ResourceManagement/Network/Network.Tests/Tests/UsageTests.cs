@@ -11,7 +11,6 @@ using Xunit;
 namespace Networks.Tests
 {
     using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public class UsageTests
     {
@@ -20,11 +19,11 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
                 
@@ -44,18 +43,21 @@ namespace Networks.Tests
 
                 // Put Nsg
                 var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
+                Assert.Equal(HttpStatusCode.OK, putNsgResponse.StatusCode);
+                Assert.Equal("Succeeded", putNsgResponse.Status);
 
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                Assert.Equal(HttpStatusCode.OK, getNsgResponse.StatusCode);
 
                 // Query for usages
-                var usagesResponse = networkManagementClient.Usages.List(getNsgResponse.Location.Replace(" ", string.Empty));
+                var usagesResponse = networkManagementClient.Usages.List(getNsgResponse.NetworkSecurityGroup.Location.Replace(" ", string.Empty));
+                Assert.True(usagesResponse.StatusCode == HttpStatusCode.OK);
 
                 // Verify that the strings are populated
-                Assert.NotNull(usagesResponse);
-                Assert.True(usagesResponse.Any());
+                Assert.NotNull(usagesResponse.Usages);
+                Assert.True(usagesResponse.Usages.Any());
 
-                foreach (var usage in usagesResponse)
+                foreach (var usage in usagesResponse.Usages)
                 {
                     Assert.True(usage.Limit > 0);
                     Assert.NotNull(usage.Name);

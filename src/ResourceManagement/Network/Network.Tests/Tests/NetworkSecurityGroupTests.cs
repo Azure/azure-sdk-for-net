@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -9,26 +8,27 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
+    using System.Linq;
+
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class NetworkSecurityGroupTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkSecurityGroupApiTest()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "west us";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -50,6 +50,7 @@ namespace Networks.Tests
                 // Get NSG
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
                 Assert.Equal(networkSecurityGroupName, getNsgResponse.Name);
+                Assert.NotNull(getNsgResponse.ResourceGuid);
                 Assert.Equal(6, getNsgResponse.DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", getNsgResponse.DefaultSecurityRules[0].Name);
                 Assert.Equal("AllowAzureLoadBalancerInBound", getNsgResponse.DefaultSecurityRules[1].Name);
@@ -98,27 +99,26 @@ namespace Networks.Tests
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
-
+                
                 // List NSG
                 listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(0, listNsgResponse.Count());
             }
         }
 
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkSecurityGroupWithRulesApiTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "west us";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -224,11 +224,10 @@ namespace Networks.Tests
                 networkSecurityGroup.SecurityRules.Add(SecurityRule);
 
                 putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
-
+                
                 // Get NSG
                 getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
-
+                
                 // Verify the security rule
                 Assert.Equal(SecurityRuleAccess.Deny, getNsgResponse.SecurityRules[1].Access);
                 Assert.Equal("Test outbound security rule", getNsgResponse.SecurityRules[1].Description);
@@ -243,7 +242,7 @@ namespace Networks.Tests
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
-
+                
                 // List NSG
                 listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(0, listNsgResponse.Count());

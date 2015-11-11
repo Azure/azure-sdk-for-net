@@ -1,20 +1,4 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
@@ -23,9 +7,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
-
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
@@ -36,11 +18,11 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
 
@@ -91,41 +73,47 @@ namespace Networks.Tests
 
                 // Put Vnet
                 var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-                
+                Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
+                Assert.Equal("Succeeded", putVnetResponse.Status);
+
                 // Get Vnet
                 var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
-                Assert.Equal(vnetName, getVnetResponse.Name);
-                Assert.Equal("Succeeded", getVnetResponse.ProvisioningState);
-                Assert.Equal("10.1.1.1", getVnetResponse.DhcpOptions.DnsServers[0]);
-                Assert.Equal("10.1.2.4", getVnetResponse.DhcpOptions.DnsServers[1]);
-                Assert.Equal("10.0.0.0/16", getVnetResponse.AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, getVnetResponse.Subnets[0].Name);
-                Assert.Equal(subnet2Name, getVnetResponse.Subnets[1].Name);
+                Assert.Equal(HttpStatusCode.OK, getVnetResponse.StatusCode);
+                Assert.Equal(vnetName, getVnetResponse.VirtualNetwork.Name);
+                Assert.NotNull(getVnetResponse.VirtualNetwork.ResourceGuid);
+                Assert.Equal(Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded, getVnetResponse.VirtualNetwork.ProvisioningState);
+                Assert.Equal("10.1.1.1", getVnetResponse.VirtualNetwork.DhcpOptions.DnsServers[0]);
+                Assert.Equal("10.1.2.4", getVnetResponse.VirtualNetwork.DhcpOptions.DnsServers[1]);
+                Assert.Equal("10.0.0.0/16", getVnetResponse.VirtualNetwork.AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, getVnetResponse.VirtualNetwork.Subnets[0].Name);
+                Assert.Equal(subnet2Name, getVnetResponse.VirtualNetwork.Subnets[1].Name);
 
                 // Get all Vnets
                 var getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Equal(vnetName, getAllVnets.First().Name);
-                Assert.Equal("Succeeded", getAllVnets.First().ProvisioningState);
-                Assert.Equal("10.0.0.0/16", getAllVnets.First().AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, getAllVnets.First().Subnets[0].Name);
-                Assert.Equal(subnet2Name, getAllVnets.First().Subnets[1].Name);
+                Assert.Equal(HttpStatusCode.OK, getAllVnets.StatusCode);
+                Assert.Equal(vnetName, getAllVnets.VirtualNetworks[0].Name);
+                Assert.Equal(Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded, getAllVnets.VirtualNetworks[0].ProvisioningState);
+                Assert.Equal("10.0.0.0/16", getAllVnets.VirtualNetworks[0].AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, getAllVnets.VirtualNetworks[0].Subnets[0].Name);
+                Assert.Equal(subnet2Name, getAllVnets.VirtualNetworks[0].Subnets[1].Name);
 
                 // Get all Vnets in a subscription
                 var getAllVnetInSubscription = networkManagementClient.VirtualNetworks.ListAll();
-                var vnet1 = getAllVnetInSubscription.FirstOrDefault(n => n.Name == vnetName);
-                Assert.NotNull(vnet1);
-                Assert.Equal("Succeeded", vnet1.ProvisioningState);
-                Assert.Equal("10.0.0.0/16", vnet1.AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, vnet1.Subnets[0].Name);
-                Assert.Equal(subnet2Name, vnet1.Subnets[1].Name);
+                Assert.Equal(HttpStatusCode.OK, getAllVnetInSubscription.StatusCode);
+                Assert.Equal(vnetName, getAllVnetInSubscription.VirtualNetworks[0].Name);
+                Assert.Equal(Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded, getAllVnetInSubscription.VirtualNetworks[0].ProvisioningState);
+                Assert.Equal("10.0.0.0/16", getAllVnetInSubscription.VirtualNetworks[0].AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, getAllVnetInSubscription.VirtualNetworks[0].Subnets[0].Name);
+                Assert.Equal(subnet2Name, getAllVnetInSubscription.VirtualNetworks[0].Subnets[1].Name);
 
                 // Delete Vnet
-                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                var deleteVnetResponse = networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                Assert.Equal(HttpStatusCode.OK, deleteVnetResponse.StatusCode);
 
                 // Get all Vnets
                 getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Equal(0, getAllVnets.Count());
+                Assert.Equal(HttpStatusCode.OK, getAllVnets.StatusCode);
+                Assert.Equal(0, getAllVnets.VirtualNetworks.Count);
             }
         }
     }
