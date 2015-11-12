@@ -133,6 +133,9 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = this.GetSiteRecoveryClient(this.CustomHttpHandler);
 
+                string vmId = "6d1a20c4-7e4c-11e5-bbda-0050569e3855";
+                string vmAccount = "vm";
+
                 var responseServers = client.Fabrics.List(RequestHeaders);
 
                 Assert.True(
@@ -150,7 +153,7 @@ namespace SiteRecovery.Tests
 
                 var runAsAccount = vmWareDetails.RunAsAccounts.First(
                     account => account.AccountName.Equals(
-                        "vm",
+                        vmAccount,
                         StringComparison.InvariantCultureIgnoreCase));
                 Assert.NotNull(runAsAccount);
 
@@ -165,7 +168,7 @@ namespace SiteRecovery.Tests
                 var protectableItemsResponse = client.ProtectableItem.Get(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
-                    "6dc1754b-76f1-11e5-b057-0050569e3855",
+                    vmId,
                     RequestHeaders);
                 Assert.NotNull(protectableItemsResponse);
                 Assert.NotNull(protectableItemsResponse.ProtectableItem);
@@ -186,8 +189,9 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(policy);
 
                 Random random = new Random(100);
-                string storageAccountName = "bvtstoragev2";
+                //string storageAccountName = "bvtstoragev2";
                 string storageAccountSubscriptionId = "e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b";
+                string storageAccountId = "/subscriptions/e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.Storage/storageAccounts/bvtstoragev2";
                 var response = client.ReplicationProtectedItem.EnableProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
@@ -204,7 +208,7 @@ namespace SiteRecovery.Tests
                                 MultiVmGroupName = policy.Name + random.Next().ToString(),
                                 ProcessServerId = vmWareDetails.ProcessServers[0].Id,
                                 RunAsAccountId = runAsAccount.AccountId,
-                                StorageAccountId = storageAccountName,
+                                StorageAccountId = storageAccountId,
                                 StorageSubscriptionId = storageAccountSubscriptionId,
                                 MasterTargetId = vmWareDetails.MasterTargetServers[0].Id
                             }
@@ -214,6 +218,128 @@ namespace SiteRecovery.Tests
 
                 Assert.NotNull(response);
                 Assert.Equal(OperationStatus.Succeeded, response.Status);
+            }
+        }
+
+        [Fact]
+        public void DisableProtectionForVMwareVM()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var fabrics = client.Fabrics.List(RequestHeaders);
+
+                Fabric selectedFabric = null;
+                ProtectionContainer selectedContainer = null;
+
+                foreach (var fabric in fabrics.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType.Contains("VMware"))
+                    {
+                        selectedFabric = fabric;
+                    }
+                }
+
+                var containers = client.ProtectionContainer.List(selectedFabric.Name, RequestHeaders);
+
+                foreach (var container in containers.ProtectionContainers)
+                {
+                    if (container.Properties.ProtectedItemCount > 0
+                        && container.Properties.Role.Equals("Primary"))
+                    {
+                        selectedContainer = container;
+                        break;
+                    }
+                }
+
+                if (selectedContainer != null)
+                {
+                    var protectedItem = client.ReplicationProtectedItem.List(
+                        selectedFabric.Name,
+                        selectedContainer.Name,
+                        RequestHeaders).ReplicationProtectedItems[0];
+
+                    var response = client.ReplicationProtectedItem.DisableProtection(
+                        selectedFabric.Name,
+                        selectedContainer.Name,
+                        protectedItem.Name,
+                        new DisableProtectionInput()
+                        {
+                            Properties = new DisableProtectionInputProperties()
+                            {
+                                ProviderSettings = new DisableProtectionProviderSpecificInput()
+                                {
+
+                                }
+                            }
+                        },
+                        RequestHeaders);
+
+                    Assert.NotNull(response);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+                }
+                else
+                {
+                    throw new System.Exception("No protected item found");
+                }
+            }
+        }
+
+        [Fact]
+        public void PurgeProtectionForVMwareVM()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var fabrics = client.Fabrics.List(RequestHeaders);
+
+                Fabric selectedFabric = null;
+                ProtectionContainer selectedContainer = null;
+
+                foreach (var fabric in fabrics.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType.Contains("VMware"))
+                    {
+                        selectedFabric = fabric;
+                    }
+                }
+
+                var containers = client.ProtectionContainer.List(selectedFabric.Name, RequestHeaders);
+
+                foreach (var container in containers.ProtectionContainers)
+                {
+                    if (container.Properties.ProtectedItemCount > 0
+                        && container.Properties.Role.Equals("Primary"))
+                    {
+                        selectedContainer = container;
+                        break;
+                    }
+                }
+
+                if (selectedContainer != null)
+                {
+                    var protectedItem = client.ReplicationProtectedItem.List(
+                        selectedFabric.Name,
+                        selectedContainer.Name,
+                        RequestHeaders).ReplicationProtectedItems[0];
+
+                    var response = client.ReplicationProtectedItem.PurgeProtection(
+                        selectedFabric.Name,
+                        selectedContainer.Name,
+                        protectedItem.Name,
+                        RequestHeaders);
+
+                    Assert.NotNull(response);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+                }
+                else
+                {
+                    throw new System.Exception("No protected item found");
+                }
             }
         }
     }

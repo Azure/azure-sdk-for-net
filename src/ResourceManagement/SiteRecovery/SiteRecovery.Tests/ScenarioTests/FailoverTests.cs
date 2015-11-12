@@ -16,6 +16,7 @@
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Test;
+using System.Linq;
 using System.Net;
 using Xunit;
 using System;
@@ -160,6 +161,69 @@ namespace SiteRecovery.Tests
                 };
 
                 var ufoResp = client.ReplicationProtectedItem.UnplannedFailover(fabricId, containerId, pgs.ReplicationProtectedItems[0].Name, ufoInput, RequestHeaders);
+            }
+        }
+
+        [Fact]
+        public void VMwareAzureV2UnplannedFailover()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var protectedItemsResponse = client.ReplicationProtectedItem.List(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(protectedItemsResponse);
+                Assert.NotEmpty(protectedItemsResponse.ReplicationProtectedItems);
+
+                var protectedItem = protectedItemsResponse.ReplicationProtectedItems[0];
+                Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
+
+                var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
+                    as VMwareAzureV2ProviderSpecificSettings;
+                Assert.NotNull(vmWareAzureV2Details);
+
+                UnplannedFailoverInput ufoInput = new UnplannedFailoverInput()
+                {
+                    Properties = new UnplannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "PrimaryToRecovery",
+                        ProviderSpecificDetails = new VMWareAzureV2FailoverProviderInput 
+                        { 
+                            RecoveryPointId = "",
+                            VaultLocation = "Southeast Asia"
+                        },
+                        SourceSiteOperations = ""
+                    }
+                };
+
+                var failoverExecution = client.ReplicationProtectedItem.UnplannedFailover(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    protectedItem.Name, 
+                    ufoInput, 
+                    RequestHeaders);
             }
         }
     }

@@ -174,9 +174,9 @@ namespace SiteRecovery.Tests
                 var client = this.GetSiteRecoveryClient(CustomHttpHandler);
 
                 var response = client.ReplicationProtectedItem.Get(
-                    "Vmm;74d11999-cc51-4b39-80e5-0102bd53668e",
-                    "cloud_74d11999-cc51-4b39-80e5-0102bd53668e",
-                    "6dc1754b-76f1-11e5-b057-0050569e3855-Protected",
+                    "Vmm;2e908a93-f69f-49fe-bdf8-8687a9f1db35",
+                    "cloud_2e908a93-f69f-49fe-bdf8-8687a9f1db35",
+                    "6d1a20c4-7e4c-11e5-bbda-0050569e3855-Protected",
                     RequestHeaders);
 
                 Assert.NotNull(response);

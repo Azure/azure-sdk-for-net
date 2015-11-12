@@ -15,6 +15,7 @@
     <Compile Include="ScenarioTests\EnumerationTests.cs" />
     <Compile Include="ScenarioTests\FailoverTests.cs" />
     <Compile Include="ScenarioTests\GetTests.cs" />
+    <Compile Include="ScenarioTests\ProcessServerTests.cs" />
     <Compile Include="ScenarioTests\SiteTests.cs" />
     <Compile Include="ScenarioTests\PairingTests.cs" />
     <Compile Include="ScenarioTests\ProtectionTests.cs" />
