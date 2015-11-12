@@ -32,10 +32,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5244c5f2-0ef7-4cfa-a325-0a2a551b7082"
+          "c46d18c8-8b5e-4c87-b95b-0255170f467e"
         ],
         "Server-Perf": [
-          "[5244c5f20ef74cfaa3250a2a551b7082][ AuthTime::1833.95833903594::PostAuthTime::1675898.75934087 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:039 ms]%0a"
+          "[c46d18c88b5e4c87b95b0255170f467e][ AuthTime::1786.48031728096::PostAuthTime::1315669.83174922 ][SS Response Process :: 00:00:000 ms]%0a[GETACLSTATUS :: 00:00:042 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -47,10 +47,10 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Nov 2015 19:40:16 GMT"
+          "Thu, 12 Nov 2015 19:22:34 GMT"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=4a7890b4-0c72-4e37-a1c5-4ffe2365f287; path=/; secure; HttpOnly"
+          "UserPrincipalSession=a0378f74-8226-4b8b-a1e1-8fd13d2ebe19; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 200

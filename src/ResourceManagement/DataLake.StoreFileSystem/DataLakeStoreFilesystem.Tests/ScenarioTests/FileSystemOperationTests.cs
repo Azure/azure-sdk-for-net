@@ -53,133 +53,6 @@ namespace DataLakeStoreFileSystem.Tests
         #region SDK Tests
 
         [Fact]
-        public void DataLakeStoreFileSystemAclGet()
-        {
-            try
-            {
-                UndoContext.Current.Start();
-                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
-                {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.True(!string.IsNullOrEmpty(aclGetResponse.AclStatus.Owner));
-                    Assert.True(!string.IsNullOrEmpty(aclGetResponse.AclStatus.Group));
-                }
-            }
-            finally
-            {
-                TestUtilities.EndTest();
-            }
-
-        }
-
-        [Fact]
-        public void DataLakeStoreFileSystemAclSet()
-        {
-            try
-            {
-                UndoContext.Current.Start();
-                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
-                {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-
-                    var currentCount = aclGetResponse.AclStatus.Entries.Count;
-                    // add an entry to the ACL Entries
-                    var newAcls = string.Join(",", aclGetResponse.AclStatus.Entries);
-                    newAcls += string.Format(",user:{0}:rwx", commonData.AclUserId);
-
-                    var aclSetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.SetAcl("/",
-                        commonData.DataLakeStoreFileSystemAccountName, newAcls);
-
-                    Assert.Equal(HttpStatusCode.OK, aclSetResponse.StatusCode);
-                    
-                    // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
-                }
-            }
-            finally
-            {
-                TestUtilities.EndTest();
-            }
-
-        }
-
-        [Fact]
-        public void DataLakeStoreFileSystemAclEntrySetDelete()
-        {
-            try
-            {
-                UndoContext.Current.Start();
-                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
-                {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-
-                    var currentCount = aclGetResponse.AclStatus.Entries.Count;
-                    // add an entry to the ACL Entries
-                    var newAce = string.Format(",user:{0}:rwx", commonData.AclUserId);
-
-                    var aclSetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
-                        commonData.DataLakeStoreFileSystemAccountName, newAce);
-
-                    Assert.Equal(HttpStatusCode.OK, aclSetResponse.StatusCode);
-
-                    // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
-
-                    // now remove the entry
-                    var aceToRemove = string.Format(",user:{0}", commonData.AclUserId);
-                    var aclRemoveResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.RemoveAclEntries("/",
-                        commonData.DataLakeStoreFileSystemAccountName, aceToRemove);
-
-                    Assert.Equal(HttpStatusCode.OK, aclRemoveResponse.StatusCode);
-
-                    // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
-                        commonData.DataLakeStoreFileSystemAccountName);
-
-                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
-                    Assert.NotNull(aclGetResponse.AclStatus);
-                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
-                }
-            }
-            finally
-            {
-                TestUtilities.EndTest();
-            }
-
-        }
-
-        [Fact]
         public void DataLakeStoreFileSystemFolderCreate()
         {
             try
@@ -797,6 +670,133 @@ namespace DataLakeStoreFileSystem.Tests
             {
                 TestUtilities.EndTest();
             }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemGetAcl()
+        {
+            try
+            {
+                UndoContext.Current.Start();
+                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
+                {
+                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+                    Assert.True(!string.IsNullOrEmpty(aclGetResponse.AclStatus.Owner));
+                    Assert.True(!string.IsNullOrEmpty(aclGetResponse.AclStatus.Group));
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemSetAcl()
+        {
+            try
+            {
+                UndoContext.Current.Start();
+                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
+                {
+                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+
+                    var currentCount = aclGetResponse.AclStatus.Entries.Count;
+                    // add an entry to the ACL Entries
+                    var newAcls = string.Join(",", aclGetResponse.AclStatus.Entries);
+                    newAcls += string.Format(",user:{0}:rwx", commonData.AclUserId);
+
+                    var aclSetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.SetAcl("/",
+                        commonData.DataLakeStoreFileSystemAccountName, newAcls);
+
+                    Assert.Equal(HttpStatusCode.OK, aclSetResponse.StatusCode);
+                    
+                    // retrieve the ACL again and confirm the new entry is present
+                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemSetDeleteAclEntry()
+        {
+            try
+            {
+                UndoContext.Current.Start();
+                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient())
+                {
+                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+
+                    var currentCount = aclGetResponse.AclStatus.Entries.Count;
+                    // add an entry to the ACL Entries
+                    var newAce = string.Format(",user:{0}:rwx", commonData.AclUserId);
+
+                    var aclSetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
+                        commonData.DataLakeStoreFileSystemAccountName, newAce);
+
+                    Assert.Equal(HttpStatusCode.OK, aclSetResponse.StatusCode);
+
+                    // retrieve the ACL again and confirm the new entry is present
+                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+
+                    // now remove the entry
+                    var aceToRemove = string.Format(",user:{0}", commonData.AclUserId);
+                    var aclRemoveResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.RemoveAclEntries("/",
+                        commonData.DataLakeStoreFileSystemAccountName, aceToRemove);
+
+                    Assert.Equal(HttpStatusCode.OK, aclRemoveResponse.StatusCode);
+
+                    // retrieve the ACL again and confirm the new entry is present
+                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
+                        commonData.DataLakeStoreFileSystemAccountName);
+
+                    Assert.Equal(HttpStatusCode.OK, aclGetResponse.StatusCode);
+                    Assert.NotNull(aclGetResponse.AclStatus);
+                    Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
+                    Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
+                    Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+
         }
 
         #endregion

@@ -64,6 +64,9 @@
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFolderCreate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemGetAcl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemGetAndSetAcl.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -78,6 +81,12 @@
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMsConcatenateFiles.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetAcl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetDeleteAclEntry.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetFileProperties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
