@@ -42,7 +42,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

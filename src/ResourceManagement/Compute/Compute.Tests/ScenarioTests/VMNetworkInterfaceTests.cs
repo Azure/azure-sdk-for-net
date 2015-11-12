@@ -33,7 +33,7 @@ namespace Compute.Tests
         [Fact]
         public void TestNicVirtualMachineReference()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -96,7 +96,7 @@ namespace Compute.Tests
         [Fact]
         public void TestMultiNicVirtualMachineReference()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

@@ -30,7 +30,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageGet()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -62,7 +62,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListNoFilter()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -82,7 +82,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListFilters()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -167,7 +167,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListPublishers()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
@@ -184,7 +184,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListOffers()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -201,7 +201,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListSkus()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,

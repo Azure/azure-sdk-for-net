@@ -38,7 +38,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMMarketplace()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

@@ -15,7 +15,6 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Resource Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure resource management operations including Resource Groups.")]

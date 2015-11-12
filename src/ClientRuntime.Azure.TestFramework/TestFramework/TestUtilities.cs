@@ -93,42 +93,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Get the method name of the calling method
         /// </summary>
-        /// <param name="index">How deep into the stack trace to look - here we want the caller's caller.</param>
         /// <returns>The name of the declaring method</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetCurrentMethodName(int index = 1)
+        public static string GetCurrentMethodName([System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed_to_get_current_method_anem")
         {
-            StackFrame sf = GetTopStackFrame();
-            return sf.GetMethod().Name;
+            return methodName;
         }
 
-        /// <summary>
-        /// Get the typename of the calling class
-        /// </summary>
-        /// <param name="index">How deep into the stack trace to look - here we want the caller's caller.</param>
-        /// <returns>The name of the declaring type</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetCallingClass(int index = 1)
-        {
-            StackFrame sf = GetTopStackFrame();
-            return sf.GetMethod().DeclaringType.FullName;
-        }
-
-        private static StackFrame GetTopStackFrame()
-        {
-            StackTrace st = null;
-            try
-            {
-                throw new InvalidOperationException(
-                    "Throw an exception to intialize the StackTrace object from it, " + 
-                    "because CoreClr has no parameter-less constructor");
-            }
-            catch (Exception ex)
-            {
-                st = new StackTrace(ex, false);
-            }
-            return st.GetFrames()[1];
-        }
         /// <summary>
         /// Break up the connection string into key-value pairs
         /// </summary>

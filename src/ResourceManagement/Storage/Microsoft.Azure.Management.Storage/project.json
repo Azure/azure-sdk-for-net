@@ -1,9 +1,9 @@
 {
-  "version": "2.0.1-preview",
-  "description": "Microsoft.Azure.Management.Resources",
+  "version": "3.0.2-preview",
+  "description": "Microsoft.Azure.Management.Storage",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft AutoRest Management REST" ],
-  "projectUrl": "https://github.com/Azure/AutoRest",
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {
