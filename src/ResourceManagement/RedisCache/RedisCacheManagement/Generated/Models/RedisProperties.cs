@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         
         /// <summary>
         /// Optional. All Redis Settings. Few possible keys:
-        /// <para>rdb-backup-enabled</para><para>rdb-storage-connection-string</para><para>rdb-backup-frequency</para><para>maxmemory-delta</para><para>maxmemory-policy</para><para>notify-keyspace-events</para><para>maxmemory-samples</para><para>slowlog-log-slower-than</para><para>slowlog-max-len</para><para>list-max-ziplist-entries</para><para>list-max-ziplist-value</para><para>hash-max-ziplist-entries</para><para>hash-max-ziplist-value</para><para>set-max-intset-entries</para><para>zset-max-ziplist-entries</para><para>zset-max-ziplist-value
-        /// etc.</para>
+        /// <para>rdb-backup-enabled</para><para>rdb-storage-connection-string</para><para>rdb-backup-frequency</para><para>maxmemory-reserved</para><para>maxmemory-policy</para><para>notify-keyspace-events</para>.
         /// </summary>
         public IDictionary<string, string> RedisConfiguration
         {
