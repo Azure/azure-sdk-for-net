@@ -70,6 +70,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         }
 
         [Fact]
+        public void EnvironmentFactoryInCsmDoesNotGetSubscriptionIfSubscriptionIdIsNone()
+        {
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
+            Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Prod;SubscriptionId=None");
+            HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmClientSubscriptionNone.json");
+            var environment = TestEnvironmentFactory.GetTestEnvironment();
+            Assert.Equal("None", environment.SubscriptionId);
+        }
+
+        [Fact]
         public void EnvironmentFactoryInCsmUsesEndpointFromConnectionString()
         {
             HttpMockServer.Mode = HttpRecorderMode.Playback;
@@ -107,7 +119,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Assert.Equal(5, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is MockHandler);
         }
-        
+
+        [Fact]
+        public void TestGetServiceClientWhenSubscriptionIdIsNone()
+        {
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
+            Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=None;RawToken=abc");
+            HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmClientSubscriptionNone.json");
+            var client = MockContext.Start().GetServiceClient<SimpleClient>(new MockHandler());
+            Assert.Equal(5, client.HttpMessageHandlers.Count());
+            Assert.True(client.HttpMessageHandlers.First() is MockHandler);
+        }
+
         public void Dispose()
         {
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", TEST_CONNECTION_STRING);

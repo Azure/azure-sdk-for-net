@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets the job collection identifier.
+        /// Gets the job collection resource identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the job collection name.
+        /// Gets or sets the job collection resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

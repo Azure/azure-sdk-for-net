@@ -53,9 +53,9 @@ namespace Networks.Tests
 
                 // Verify that the strings are populated
                 Assert.NotNull(usagesResponse);
-                Assert.True(usagesResponse.Value.Any());
+                Assert.True(usagesResponse.Any());
 
-                foreach (var usage in usagesResponse.Value)
+                foreach (var usage in usagesResponse)
                 {
                     Assert.True(usage.Limit > 0);
                     Assert.NotNull(usage.Name);

@@ -30,25 +30,25 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the Storage Account Name for the request.
+        /// Gets or sets the storage account name.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccount")]
         public string StorageAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets the Queue Name for the request.
+        /// Gets or sets the queue name.
         /// </summary>
         [JsonProperty(PropertyName = "queueName")]
         public string QueueName { get; set; }
 
         /// <summary>
-        /// Gets or sets the SAS Key for the request.
+        /// Gets or sets the SAS key.
         /// </summary>
         [JsonProperty(PropertyName = "sasToken")]
         public string SasToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the message for the request.
+        /// Gets or sets the message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
