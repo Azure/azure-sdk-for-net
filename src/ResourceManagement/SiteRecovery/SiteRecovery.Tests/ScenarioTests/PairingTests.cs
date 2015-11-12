@@ -140,7 +140,7 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "ARMProfile";
+                string policyName = "Hydra-Profile-HyperVAzure-" + new Random().Next();
                 HyperVReplicaAzurePolicyInput hvrAPolicy = new HyperVReplicaAzurePolicyInput()
                 {
                     ApplicationConsistentSnapshotFrequencyInHours = 0,
