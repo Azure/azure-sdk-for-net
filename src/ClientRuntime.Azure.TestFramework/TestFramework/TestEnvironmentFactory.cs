@@ -105,47 +105,54 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                             .ConfigureAwait(false).GetAwaiter().GetResult();
                 }
 
-                //Getting subscriptions from server
-                var subscriptions = ListSubscriptions(
-                    testEnv.BaseUri.ToString(),
-                    testEnv.Credentials);
-                
-                if (subscriptions.Count == 0)
+                // Management Clients that are not subscription based should set "SubscriptionId=None" in
+                // the connection string.
+                if (testEnv.SubscriptionId == null || !testEnv.SubscriptionId.Equals("None", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    throw new Exception("Logged in account had no associated subscriptions. We are in " + 
-                                        testEnv.Endpoints.Name + " environment and the tenant is " + 
-                                        testEnv.Tenant + ". Please check if the subscription is in the " + 
-                                        "correct tenant and environment. You can set the envt. variable - " +
-                                        "TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>;" + 
-                                        "Environment=<Env-name>;Tenant=<tenant-id>");
-                }
-                
-                bool matchingSubscription = false;
-                //SubscriptionId is provided in envt. variable
-                if (testEnv.SubscriptionId != null)
-                {
-                    matchingSubscription = subscriptions.Any(item => item.SubscriptionId == testEnv.SubscriptionId);
-                    if (!matchingSubscription)
+                    //Getting subscriptions from server
+                    var subscriptions = ListSubscriptions(
+                        testEnv.BaseUri.ToString(),
+                        testEnv.Credentials);
+
+                    if (subscriptions.Count == 0)
                     {
-                        throw new Exception("The provided SubscriptionId in the envt. variable - \"" + testEnv.SubscriptionId +
-                                            "\" does not match the list of subscriptions associated with this account.");
-                    } 
-                }
-                else 
-                {
-                    if (subscriptions.Count > 1)
-                    {
-                        throw new Exception("There are multiple subscriptions associated with the logged in account. " +
-                                            "Please specify the subscription to use in the connection string. Please set " +
-                                            "the envt. variable - TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>");
+                        throw new Exception("Logged in account had no associated subscriptions. We are in " +
+                                            testEnv.Endpoints.Name + " environment and the tenant is " +
+                                            testEnv.Tenant + ". Please check if the subscription is in the " +
+                                            "correct tenant and environment. You can set the envt. variable - " +
+                                            "TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>;" +
+                                            "Environment=<Env-name>;Tenant=<tenant-id>");
                     }
-                    testEnv.SubscriptionId = subscriptions[0].SubscriptionId;
+
+                    bool matchingSubscription = false;
+                    //SubscriptionId is provided in envt. variable
+                    if (testEnv.SubscriptionId != null)
+                    {
+                        matchingSubscription = subscriptions.Any(item => item.SubscriptionId == testEnv.SubscriptionId);
+                        if (!matchingSubscription)
+                        {
+                            throw new Exception("The provided SubscriptionId in the envt. variable - \"" + testEnv.SubscriptionId +
+                                                "\" does not match the list of subscriptions associated with this account.");
+                        }
+                    }
+                    else
+                    {
+                        if (subscriptions.Count > 1)
+                        {
+                            throw new Exception("There are multiple subscriptions associated with the logged in account. " +
+                                                "Please specify the subscription to use in the connection string. Please set " +
+                                                "the envt. variable - TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>");
+                        }
+                        testEnv.SubscriptionId = subscriptions[0].SubscriptionId;
+                    }
                 }
-                
+
                 if (testEnv.SubscriptionId == null)
                 {
                     throw new Exception("Subscription Id was not provided in environment variable. " + "Please set " + 
-                                        "the envt. variable - TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>");
+                                        "the envt. variable - TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscription-id>. " + 
+                                        "If SubscriptionId is not required for your management client then please set it to " +
+                                        "'None' in the above mentioned envt. variable.");
                 }
 
                 SetEnvironmentSubscriptionId(testEnv, connectionString);

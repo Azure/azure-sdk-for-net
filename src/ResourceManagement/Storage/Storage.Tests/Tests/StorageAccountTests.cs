@@ -166,17 +166,17 @@ namespace Storage.Tests
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 var listAccountsRequest = storageMgmtClient.StorageAccounts.ListByResourceGroup(rgname);
-                Assert.Empty(listAccountsRequest.Value);
+                Assert.Empty(listAccountsRequest);
 
                 // Create storage accounts
                 string accountName1 = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
                 string accountName2 = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
 
                 listAccountsRequest = storageMgmtClient.StorageAccounts.ListByResourceGroup(rgname);
-                Assert.Equal(2, listAccountsRequest.Value.Count());
+                Assert.Equal(2, listAccountsRequest.Count());
 
-                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.Value.First(), true);
-                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.Value.ToArray()[1], true);
+                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.First(), true);
+                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.ToArray()[1], true);
             }
         }
 
@@ -201,11 +201,11 @@ namespace Storage.Tests
 
                 var listAccountsRequest = storageMgmtClient.StorageAccounts.List();
 
-                StorageAccount account1 = listAccountsRequest.Value.First(
+                StorageAccount account1 = listAccountsRequest.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName1));
                 StorageManagementTestUtilities.VerifyAccountProperties(account1, true);
 
-                StorageAccount account2 = listAccountsRequest.Value.First(
+                StorageAccount account2 = listAccountsRequest.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
                 StorageManagementTestUtilities.VerifyAccountProperties(account2, true);
             }
@@ -233,8 +233,8 @@ namespace Storage.Tests
                 Assert.NotNull(listKeysRequest.Key2);
 
                 // Regenerate keys
-                var regenRequest1 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, new StorageAccountRegenerateKeyParameters { KeyName = "key1" });
-                var regenRequest2 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, new StorageAccountRegenerateKeyParameters { KeyName = "key2" });
+                var regenRequest1 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key1" );
+                var regenRequest2 = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key2" );
 
                 // Verify listed keys are the same as keys returned by the regenerate request
                 listKeysRequest = storageMgmtClient.StorageAccounts.ListKeys(rgname, accountName);
@@ -260,7 +260,7 @@ namespace Storage.Tests
                 string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
 
                 // Regenerate keys
-                var regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, new StorageAccountRegenerateKeyParameters { KeyName = "key1" });
+                var regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key1" );
                 Assert.NotNull(regenRequest.Key1);
                 Assert.NotNull(regenRequest.Key2);
 
@@ -270,7 +270,7 @@ namespace Storage.Tests
                 Assert.Equal(regenRequest.Key2, listKeysRequest.Key2);
 
                 // Regenerate keys and verify that keys change
-                regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, new StorageAccountRegenerateKeyParameters { KeyName = "key2" });
+                regenRequest = storageMgmtClient.StorageAccounts.RegenerateKey(rgname, accountName, "key2" );
                 Assert.Equal(regenRequest.Key1, listKeysRequest.Key1);
                 Assert.NotEqual(regenRequest.Key2, listKeysRequest.Key2);
             }
@@ -288,14 +288,14 @@ namespace Storage.Tests
                 
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
-                var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(new StorageAccountCheckNameAvailabilityParameters { Name = accountName });
+                var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
                 Assert.Equal(true, checkNameRequest.NameAvailable);
                 Assert.Equal(null, checkNameRequest.Reason);
                 Assert.Equal(null, checkNameRequest.Message);
 
                 // Check invalid name
                 accountName = "CAPS";
-                checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(new StorageAccountCheckNameAvailabilityParameters { Name = accountName });
+                checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
                 Assert.Equal(false, checkNameRequest.NameAvailable);
                 Assert.Equal(Reason.AccountNameInvalid, checkNameRequest.Reason);
                 Assert.Equal("CAPS is not a valid storage account name. Storage account name must be between 3 and 24 "
@@ -306,7 +306,7 @@ namespace Storage.Tests
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
-                checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(new StorageAccountCheckNameAvailabilityParameters { Name = accountName });
+                checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
                 Assert.Equal(false, checkNameRequest.NameAvailable);
                 Assert.Equal(Reason.AlreadyExists, checkNameRequest.Reason);
                 Assert.Equal("The storage account named " + accountName + " is already taken.", checkNameRequest.Message);

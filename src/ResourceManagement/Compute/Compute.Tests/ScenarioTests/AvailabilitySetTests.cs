@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,7 +27,7 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class AvailabilitySetTests
+    public class AvailabilitySetTests : VMTestBase
     {
         RecordedDelegatingHandler handler;
         ComputeManagementClient computeClient;
@@ -36,7 +37,7 @@ namespace Compute.Tests
 
         string subId;
         string location;
-        const string testPrefix = "pslibtest";
+        const string testPrefix = TestPrefix;
         string resourceGroupName;
 
         // These values are configurable in the service, but normal default values are FD = 3 and UD = 5
@@ -97,7 +98,8 @@ namespace Compute.Tests
                 resourceGroupName,
                 new ResourceGroup
                 {
-                    Location = location
+                    Location = location,
+                    Tags = new Dictionary<string, string>() { { resourceGroupName, DateTime.UtcNow.ToString("u") } }
                 });
         }
 
@@ -222,7 +224,7 @@ namespace Compute.Tests
             // List AvailabilitySets
             string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
             var listResponse = computeClient.AvailabilitySets.List(resourceGroupName);
-            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.Value.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
+            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
             // This call will also delete the Availability Set
@@ -320,7 +322,7 @@ namespace Compute.Tests
 
             // List VM Sizes
             var listVMSizesResponse = computeClient.AvailabilitySets.ListAvailableSizes(resourceGroupName, inputAvailabilitySetName);
-            Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
+            Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
             // Delete AvailabilitySet
             computeClient.AvailabilitySets.Delete(resourceGroupName, inputAvailabilitySetName);

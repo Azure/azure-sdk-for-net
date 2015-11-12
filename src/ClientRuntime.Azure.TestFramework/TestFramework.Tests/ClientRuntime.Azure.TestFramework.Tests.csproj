@@ -43,15 +43,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.0.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.Authentication.0.10.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Test.HttpRecorder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.1.0.5774.40163-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -80,16 +76,16 @@
     <Compile Include="Client\ISimpleClient.cs" />
     <Compile Include="Client\MockHandler.cs" />
     <Compile Include="Client\SimpleClient.cs" />
-    <Compile Include="HttpRecorder\FakeHttpClient.cs" />
-    <Compile Include="HttpRecorder\HttpMockServerTests.cs" />
-    <Compile Include="HttpRecorder\RecordedDelegatingHandler.cs" />
-    <Compile Include="HttpRecorder\RecordEntryTest.cs" />
-    <Compile Include="HttpRecorder\UtilitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="HttpRecorder\SampleData\TestRecordingWithTwoClients.json" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\CsmClientSubscriptionNone.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\CsmTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -116,11 +112,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HttpRecorder\SampleData\another-template.js" />
-    <Content Include="HttpRecorder\SampleData\another-template0.js" />
-    <Content Include="HttpRecorder\SampleData\test-template.js" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\HttpRecorder\HttpRecorder.csproj">
+      <Project>{9e5cb6e6-92af-464a-bd30-e848d94ed490}</Project>
+      <Name>HttpRecorder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestFramework\ClientRuntime.Azure.TestFramework.csproj">
       <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
       <Name>ClientRuntime.Azure.TestFramework</Name>

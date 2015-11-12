@@ -34,7 +34,7 @@ namespace Compute.Tests
 {
     public class VMTestBase
     {
-        protected const string TestPrefix = "pslibtest";
+        protected const string TestPrefix = "crptestar";
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
@@ -101,6 +101,51 @@ namespace Compute.Tests
             return m_linuxImageReference;
         }
 
+        protected DiagnosticsProfile GetDiagnosticsProfile(string storageAccountName)
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true,
+                    StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                }
+            };
+        }
+
+        protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
+        {
+            string testVaultId =
+                @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
+            string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
+            
+            DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
+            {
+                DiskEncryptionKey = new KeyVaultSecretReference
+                {
+                    SecretUrl = encryptionKeyFakeUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                }
+            };
+
+            if (addKek)
+            {
+                string nonExistentKekUri = @"https://testvault123.vault.azure.net/keys/TestKey/514ceb769c984379a7e0230bdd703272";
+                diskEncryptionSettings.KeyEncryptionKey = new KeyVaultKeyReference
+                {
+                    KeyUrl = nonExistentKekUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                };
+            }
+            return diskEncryptionSettings;
+        }
+
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
         {
             try
@@ -110,7 +155,8 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
                 var stoInput = new StorageAccountCreateParameters
@@ -125,7 +171,7 @@ namespace Compute.Tests
                 while (!created)
                 {
                     ComputeManagementTestUtilities.WaitSeconds(10);
-                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName).Value;
+                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
                     created =
                         stos.Any(
                             t =>
@@ -145,7 +191,8 @@ namespace Compute.Tests
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef, 
             out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            bool waitOperation = true)
         {
             try
             {
@@ -154,7 +201,8 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
                 PublicIpAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
@@ -176,7 +224,15 @@ namespace Compute.Tests
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                VirtualMachine createOrUpdateResponse = null;
+                if (waitOperation)
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
+                else
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
 
                 Assert.True(createOrUpdateResponse.Name == inputVM.Name);
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") || 
@@ -205,8 +261,8 @@ namespace Compute.Tests
         protected PublicIpAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
-            string publicIpName = ComputeManagementTestUtilities.GenerateName(null);
-            string domainNameLabel = ComputeManagementTestUtilities.GenerateName(null);
+            string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
+            string domainNameLabel = ComputeManagementTestUtilities.GenerateName("dn");
 
             var publicIp = new PublicIpAddress()
             {
@@ -231,8 +287,8 @@ namespace Compute.Tests
         {
             // Create Vnet
             // Populate parameter for Put Vnet
-            string vnetName = ComputeManagementTestUtilities.GenerateName(null);
-            string subnetName = ComputeManagementTestUtilities.GenerateName(null);
+            string vnetName = ComputeManagementTestUtilities.GenerateName("vn");
+            string subnetName = ComputeManagementTestUtilities.GenerateName("sn");
 
             var vnet = new VirtualNetwork()
             {
@@ -269,8 +325,8 @@ namespace Compute.Tests
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
-            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName(null);
-            string ipConfigName = ComputeManagementTestUtilities.GenerateName(null);
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
+            string ipConfigName = ComputeManagementTestUtilities.GenerateName("ip");
 
             var nicParameters = new NetworkInterface()
             {

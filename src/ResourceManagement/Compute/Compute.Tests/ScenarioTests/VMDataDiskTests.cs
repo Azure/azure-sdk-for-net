@@ -83,7 +83,7 @@ namespace Compute.Tests
                         var testStatusList = new List<InstanceViewStatus> { testStatus };
 
                         // Negative tests for a bug in 5.0.0 that read-only fields have side-effect on the request body
-                        vm.InstanceView = new VirtualMachineInstanceView
+                        /* vm.InstanceView = new VirtualMachineInstanceView
                         {
                             Statuses = testStatusList,
                             VmAgent = new VirtualMachineAgentInstanceView
@@ -115,7 +115,7 @@ namespace Compute.Tests
                                     Statuses = testStatusList
                                 }
                             }
-                        };
+                        }; */
                     };
 
                     var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);

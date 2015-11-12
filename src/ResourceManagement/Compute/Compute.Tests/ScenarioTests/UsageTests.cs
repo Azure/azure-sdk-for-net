@@ -19,6 +19,8 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
+using Microsoft.Rest.Azure;
+using System.Linq;
 
 namespace Compute.Tests
 {
@@ -74,13 +76,13 @@ namespace Compute.Tests
             }
         }
 
-        public void ValidateListUsageResponse(ListUsagesResult luResponse)
+        public void ValidateListUsageResponse(IPage<Usage> luResponse)
         {
-            Assert.NotNull(luResponse.Value);
-            Assert.True(luResponse.Value.Count > 0);
+            Assert.NotNull(luResponse);
+            Assert.True(luResponse.Count() > 0);
 
             // Can't do any validation on primitive fields, but will make sure strings are populated and non-null as expected.
-            foreach (var usage in luResponse.Value)
+            foreach (var usage in luResponse)
             {
                 Assert.True(usage.Name.LocalizedValue != null);
                 Assert.True(usage.Name.Value != null);

@@ -350,9 +350,9 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.Null(result.NextLink);
+            Assert.Null(result.NextPageLink);
 
-            var jc1 = result.Value.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1") == 0).FirstOrDefault();
+            var jc1 = result.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1") == 0).FirstOrDefault();
             Assert.NotNull(jc1);
             Assert.Equal("North Central US", jc1.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc1.Type);
@@ -364,7 +364,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(RecurrenceFrequency.Minute, jc1.Properties.Quota.MaxRecurrence.Frequency);
             Assert.Equal(10, jc1.Properties.Quota.MaxRecurrence.Interval);
 
-            var jc2 = result.Value.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc2") == 0).FirstOrDefault();
+            var jc2 = result.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc2") == 0).FirstOrDefault();
             Assert.NotNull(jc2);
             Assert.Equal("South Central US", jc2.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc2.Type);
@@ -436,9 +436,9 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.Null(result.NextLink);
+            Assert.Null(result.NextPageLink);
 
-            var jc1 = result.Value.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/providers/Microsoft.Scheduler/jobCollections/jc1") == 0).FirstOrDefault();
+            var jc1 = result.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/providers/Microsoft.Scheduler/jobCollections/jc1") == 0).FirstOrDefault();
             Assert.NotNull(jc1);
             Assert.Equal("North Central US", jc1.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc1.Type);
@@ -450,7 +450,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(RecurrenceFrequency.Minute, jc1.Properties.Quota.MaxRecurrence.Frequency);
             Assert.Equal(10, jc1.Properties.Quota.MaxRecurrence.Interval);
 
-            var jc2 = result.Value.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/providers/Microsoft.Scheduler/jobCollections/jc2") == 0).FirstOrDefault();
+            var jc2 = result.Where(jc => string.Compare(jc.Id, "/subscriptions/12345/providers/Microsoft.Scheduler/jobCollections/jc2") == 0).FirstOrDefault();
             Assert.NotNull(jc2);
             Assert.Equal("South Central US", jc2.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc2.Type);
