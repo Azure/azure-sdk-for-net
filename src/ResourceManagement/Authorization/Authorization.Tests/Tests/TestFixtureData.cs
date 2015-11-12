@@ -24,6 +24,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Security;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Management.Resources;
 
 namespace Authorization.Tests
 {
@@ -36,11 +38,7 @@ namespace Authorization.Tests
         private bool disposed = false;
 
         private GraphManagementClient GraphClient { get; set; }
-
-        private CSMTestEnvironmentFactory EnvironmentFactory { get; set; }
-
-        public TestEnvironment TestEnvironment { get; private set; }
-
+        
         public IReadOnlyCollection<Guid> Users
         {
             get 
@@ -64,31 +62,40 @@ namespace Authorization.Tests
 
             if(HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record )
             {
-                this.EnvironmentFactory = new CSMTestEnvironmentFactory();
-                this.TestEnvironment = this.EnvironmentFactory.GetTestEnvironment();
-
-                this.GraphClient = (new GraphManagementClient(this.TestEnvironment));
+                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment()));
                 this.CleanupTestData();
             }
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-
-                this.EnvironmentFactory = new CSMTestEnvironmentFactory();
-                this.TestEnvironment = this.EnvironmentFactory.GetTestEnvironment();
-
-                this.GraphClient = (new GraphManagementClient(this.TestEnvironment))
-                                     .WithHandler(HttpMockServer.CreateInstance());
+                MockContext.Start();
+                
+                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment(), HttpMockServer.CreateInstance()));
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
             }
         }
-        
-        public AuthorizationManagementClient GetAuthorizationManagementClient()
+        public ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            return TestBase.GetServiceClient<AuthorizationManagementClient>(this.EnvironmentFactory);
+            var client = context.GetServiceClient<ResourceManagementClient>();
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
+
+            return client;
+        }
+
+        public AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context)
+        {
+            var client = context.GetServiceClient<AuthorizationManagementClient>();
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
+
+            return client;
         }
 
         public void Dispose()
@@ -119,7 +126,6 @@ namespace Authorization.Tests
 
         private void Cleanup()
         {
-            UndoContext.Current.UndoAll();
         }
 
         private void CreateUsers(int number)
@@ -166,13 +172,12 @@ namespace Authorization.Tests
                 this.GraphClient.DeleteGroup(group);
             }
 
-            var authorizationClient = new AuthorizationManagementClient(
-                (SubscriptionCloudCredentials)this.TestEnvironment.Credentials, 
-                this.TestEnvironment.BaseUri);
-
-            foreach(var assignment in authorizationClient.RoleAssignments.List(null).RoleAssignments)
+            var AuthorizationManagementClient = new AuthorizationManagementClient(
+                TestEnvironmentFactory.GetTestEnvironment().BaseUri,
+                TestEnvironmentFactory.GetTestEnvironment().Credentials);
+            foreach (var assignment in AuthorizationManagementClient.RoleAssignments.List(null))
             {
-                authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                AuthorizationManagementClient.RoleAssignments.DeleteById(assignment.Id);
             }
         }
     }

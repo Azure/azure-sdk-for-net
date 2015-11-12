@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
@@ -25,6 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Authorization.Tests
 {
@@ -60,8 +61,8 @@ namespace Authorization.Tests
 
         public string UserDomain { get; private set; }
 
-        public GraphManagementClient(TestEnvironment testEnv)
-            : base()
+        public GraphManagementClient(TestEnvironment testEnv, params DelegatingHandler[] handlers)
+            : base(handlers)
         {
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
 
@@ -71,14 +72,14 @@ namespace Authorization.Tests
             }
 
             this.testEnvironment = testEnv;
-            if (testEnv != null && testEnv.AuthorizationContext != null  && testEnv.AuthorizationContext.UserId != null)
+            if (testEnv != null  && testEnv.UserName != null)
             {
-                var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
+                var atIndex = this.testEnvironment.UserName.IndexOf("@");
 
                 if (atIndex != -1 &&
-                    atIndex != this.testEnvironment.AuthorizationContext.UserId.Length - 1)
+                    atIndex != this.testEnvironment.UserName.Length - 1)
                 {
-                    this.UserDomain = this.testEnvironment.AuthorizationContext.UserId.Substring(atIndex);
+                    this.UserDomain = this.testEnvironment.UserName.Substring(atIndex);
                 }
             }
             else
@@ -87,12 +88,6 @@ namespace Authorization.Tests
             }
         }  
         
-
-        public override GraphManagementClient WithHandler(DelegatingHandler handler)
-        {
-            return (GraphManagementClient)WithHandler(new GraphManagementClient(this.testEnvironment), handler);
-        }
-
         public Guid CreateUser(string userName)
         {
             var createBody = string.Format(
@@ -219,9 +214,9 @@ namespace Authorization.Tests
             return string.Format(
                 GraphUriFormatter,
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
-                this.testEnvironment.AuthorizationContext == null  || this.testEnvironment.AuthorizationContext.TenantId == null?
+                this.testEnvironment == null  || this.testEnvironment.Tenant == null?
                 GraphManagementClient.DefaultTenantId :
-                    this.testEnvironment.AuthorizationContext.TenantId,
+                    this.testEnvironment.Tenant,
                 suffix,
                 GraphManagementClient.GraphApiVersion);
         }
@@ -235,11 +230,13 @@ namespace Authorization.Tests
             httpRequest.Headers.Add("Accept", "application/json;odata=minimalmetadata");
 
 
-            if (this.testEnvironment.AuthorizationContext != null)
+            if (this.testEnvironment != null && this.testEnvironment.Credentials != null)
             {
-                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(
-                                                this.testEnvironment.AuthorizationContext.AccessTokenType,
-                                                this.testEnvironment.AuthorizationContext.AccessToken);
+                // Not Supported in current code
+                // var tokenCredentials = (TokenCredentials)this.testEnvironment.Credentials;
+                // httpRequest.Headers.Authorization = new AuthenticationHeaderValue(
+                //                                this.testEnvironment.AccessTokenType,
+                //                                this.testEnvironment.AuthorizationContext.AccessToken);
             }
 
             if(body != null)
