@@ -245,7 +245,7 @@ END;", dbName, tableName, tvfName);
 
             // run the job and create the data.
             // create a static GUID to use
-            var jobId = new Guid("eb835284-efe4-4787-a247-471434bfffcf");
+            var jobId = new Guid("6d7e9f28-d8d7-47b3-adfd-2e3fcd422072");
             var createOrBuildParams = new JobInfoBuildOrCreateParameters
             {
                 Job = new JobInformation

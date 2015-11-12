@@ -44,10 +44,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\FixtureSetup.json">
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\GetCatalogItemsTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\GetCatalogItemsTest.json">
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CommonTestFixture\.ctor.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

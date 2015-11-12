@@ -33,7 +33,7 @@ namespace DataLakeAnalyticsCatalog.Tests
             TestUtilities.StartTest();
             try
             {
-                UndoContext.Current.Start("DataLakeAnalyticsCatalog.Tests.CatalogOperationTests", "FixtureSetup");
+                UndoContext.Current.Start();
                 var DataLakeAnalyticsCatalogManagementHelper = new DataLakeAnalyticsCatalogManagementHelper(this);
                 DataLakeAnalyticsCatalogManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("abarg1");
