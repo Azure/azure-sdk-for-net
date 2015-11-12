@@ -15,7 +15,6 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Storage Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Storage management functions for managing the Microsoft Azure Storage service.")]

@@ -15,7 +15,6 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Compute Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Compute Resources.")]

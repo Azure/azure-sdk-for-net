@@ -15,7 +15,6 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Network Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Network management functions for managing the Microsoft Azure Network service.")]
