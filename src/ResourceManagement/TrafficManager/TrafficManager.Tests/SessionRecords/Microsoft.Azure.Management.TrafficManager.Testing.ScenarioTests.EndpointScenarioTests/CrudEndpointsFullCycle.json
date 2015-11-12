@@ -55,7 +55,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373?api-version=2015-04-28-preview",
+      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjMzNTJjMTctNGJlOS00YzQ2LThmMzgtMDE5YTU0ZWMwNWY3L3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2h5ZHJhdGVzdHdhdG12MnByb2ZpbGUzMzczP2FwaS12ZXJzaW9uPTIwMTUtMDQtMjgtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"foohydratestrelativeName5201\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"name\": \"hydratestwatmv2profile3373\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\",\r\n  \"location\": \"global\"\r\n}",
@@ -115,7 +115,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-04-28-preview",
+      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjMzNTJjMTctNGJlOS00YzQ2LThmMzgtMDE5YTU0ZWMwNWY3L3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2h5ZHJhdGVzdHdhdG12MnByb2ZpbGUzMzczL0V4dGVybmFsRW5kcG9pbnRzL2h5ZHJhdGVzdHdhdG12MmVuZHBvaW50OTA0Nj9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"hydratestwatmv2endpoint9046\",\r\n  \"type\": \"Microsoft.network/TrafficManagerProfiles/ExternalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
@@ -175,7 +175,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-04-28-preview",
+      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjMzNTJjMTctNGJlOS00YzQ2LThmMzgtMDE5YTU0ZWMwNWY3L3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2h5ZHJhdGVzdHdhdG12MnByb2ZpbGUzMzczL0V4dGVybmFsRW5kcG9pbnRzL2h5ZHJhdGVzdHdhdG12MmVuZHBvaW50OTA0Nj9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -229,7 +229,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-04-28-preview",
+      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjMzNTJjMTctNGJlOS00YzQ2LThmMzgtMDE5YTU0ZWMwNWY3L3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2h5ZHJhdGVzdHdhdG12MnByb2ZpbGUzMzczL0V4dGVybmFsRW5kcG9pbnRzL2h5ZHJhdGVzdHdhdG12MmVuZHBvaW50OTA0Nj9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"id\": \"/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile3373/externalEndpoints/hydratestwatmv2endpoint9046\",\r\n  \"name\": \"hydratestwatmv2endpoint9046\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"another.foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 0,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
@@ -289,7 +289,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-04-28-preview",
+      "RequestUri": "/subscriptions/f3352c17-4be9-4c46-8f38-019a54ec05f7/resourceGroups/hydratestdnsrg176/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile3373/ExternalEndpoints/hydratestwatmv2endpoint9046?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjMzNTJjMTctNGJlOS00YzQ2LThmMzgtMDE5YTU0ZWMwNWY3L3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2h5ZHJhdGVzdHdhdG12MnByb2ZpbGUzMzczL0V4dGVybmFsRW5kcG9pbnRzL2h5ZHJhdGVzdHdhdG12MmVuZHBvaW50OTA0Nj9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",

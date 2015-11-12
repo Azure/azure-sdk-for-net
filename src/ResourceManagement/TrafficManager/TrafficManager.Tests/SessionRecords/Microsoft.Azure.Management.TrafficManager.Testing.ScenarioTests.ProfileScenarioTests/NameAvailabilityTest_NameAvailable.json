@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Network/checkTrafficManagerNameAvailability?api-version=2015-04-28-preview",
+      "RequestUri": "/providers/Microsoft.Network/checkTrafficManagerNameAvailability?api-version=2015-11-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9jaGVja1RyYWZmaWNNYW5hZ2VyTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"hydratestrelativename2768\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
