@@ -38,7 +38,7 @@ namespace DataLakeAnalyticsCatalog.Tests
             try
             {
                 UndoContext.Current.Start();
-                using (var clientToUse = this.GetDataLakeAnalyticsCatalogManagementClient())
+                using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient())
                 {
                     var dbListResponse = clientToUse.Catalog.ListDatabases(commonData.ResourceGroupName,
                         commonData.DataLakeAnalyticsAccountName);
