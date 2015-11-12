@@ -174,6 +174,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 skuElement.Value = parameters.Sku.ToString();
                 createDedicatedCircuitElement.Add(skuElement);
                 
+                XElement billingTypeElement = new XElement(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
+                billingTypeElement.Value = parameters.BillingType.ToString();
+                createDedicatedCircuitElement.Add(billingTypeElement);
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -1239,7 +1243,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1329,7 +1333,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1423,7 +1427,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

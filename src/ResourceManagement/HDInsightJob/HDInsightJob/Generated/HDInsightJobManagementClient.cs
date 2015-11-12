@@ -55,6 +55,19 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             set { this._credentials = value; }
         }
         
+        private string _userAgentSuffix;
+        
+        /// <summary>
+        /// Gets or sets the additional UserAgent text to be added to the user
+        /// agent header. This is used to further differentiate using
+        /// applications.
+        /// </summary>
+        public string UserAgentSuffix
+        {
+            get { return this._userAgentSuffix; }
+            set { this._userAgentSuffix = value; }
+        }
+        
         private IJobOperations _jobManagement;
         
         /// <summary>
@@ -73,6 +86,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             : base()
         {
             this._jobManagement = new JobOperations(this);
+            this._userAgentSuffix = "";
         }
         
         /// <summary>
@@ -114,6 +128,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             : base(httpClient)
         {
             this._jobManagement = new JobOperations(this);
+            this._userAgentSuffix = "";
         }
         
         /// <summary>
@@ -164,6 +179,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 clonedClient._clusterDnsName = this._clusterDnsName;
                 clonedClient._credentials = this._credentials;
+                clonedClient._userAgentSuffix = this._userAgentSuffix;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }

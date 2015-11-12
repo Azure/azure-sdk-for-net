@@ -27,7 +27,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// The URI used as the base for all Service Management requests.
         /// </summary>
-        public Uri BaseUri { get; set; }
+        public Uri BaseUri
+        {
+            get
+            {
+                return this.InternalClient.BaseUri;
+            }
+
+            set
+            {
+                this.InternalClient.BaseUri = value;
+            }
+        }
 
         /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
@@ -38,7 +49,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// a request made to the service is secure. No anonymous requests are
         /// allowed.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; set; }
+        public SubscriptionCloudCredentials Credentials
+        {
+            get
+            {
+                return this.InternalClient.Credentials;
+            }
+
+            set
+            {
+                this.InternalClient.Credentials = value;
+            }
+        }
 
         /// <summary>
         /// Operations for managing data factory ActivityTypes.
@@ -95,6 +117,38 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </summary>
         public virtual IOAuthOperations OAuth { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations (in seconds).
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get
+            {
+                return this.InternalClient.LongRunningOperationInitialTimeout;
+            }
+
+            set
+            {
+                this.InternalClient.LongRunningOperationInitialTimeout = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations (in seconds).
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get
+            {
+                return this.InternalClient.LongRunningOperationRetryTimeout;
+            }
+
+            set
+            {
+                this.InternalClient.LongRunningOperationRetryTimeout = value;
+            }
+        }
+
         internal Core.DataFactoryManagementClient InternalClient { get; private set; }
 
         /// <summary>
@@ -102,7 +156,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </summary>
         public DataFactoryManagementClient()
         {
-            this.Initialize();
+            this.PreInitialize();
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -121,11 +176,15 @@ namespace Microsoft.Azure.Management.DataFactories
         /// The URI used as the base for all Service Management requests.
         /// </param>
         public DataFactoryManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
-            : this(credentials)
+            : this()
         {
+            Ensure.IsNotNull(credentials, "credentials");
             Ensure.IsNotNull(baseUri, "baseUri");
-            this.BaseUri = baseUri;
-            this.InternalClient.BaseUri = baseUri;
+
+            this.InternalClient = new Core.DataFactoryManagementClient(credentials, baseUri);
+
+            this.Credentials.InitializeServiceClient(this);
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -145,12 +204,10 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             Ensure.IsNotNull(credentials, "credentials");
 
-            this.InternalClient.Credentials = credentials;
-            this.Credentials = credentials;
-            this.BaseUri = new Uri("https://management.azure.com");
+            this.InternalClient = new Core.DataFactoryManagementClient(credentials);
             
-            this.Credentials.InitializeServiceClient(this.InternalClient);
             this.Credentials.InitializeServiceClient(this);
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -162,7 +219,9 @@ namespace Microsoft.Azure.Management.DataFactories
         public DataFactoryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this.Initialize();
+            this.PreInitialize();
+            this.InternalClient = new Core.DataFactoryManagementClient(httpClient);
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -188,10 +247,15 @@ namespace Microsoft.Azure.Management.DataFactories
             SubscriptionCloudCredentials credentials,
             Uri baseUri,
             HttpClient httpClient)
-            : this(credentials, httpClient)
+            : this(httpClient)
         {
+            Ensure.IsNotNull(credentials, "credentials");
             Ensure.IsNotNull(baseUri, "baseUri");
-            this.BaseUri = baseUri;
+
+            this.InternalClient = new Core.DataFactoryManagementClient(credentials, baseUri, httpClient);
+
+            this.Credentials.InitializeServiceClient(this);
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -214,11 +278,10 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             Ensure.IsNotNull(credentials, "credentials");
 
-            this.Credentials = credentials;
-            this.BaseUri = new Uri("https://management.azure.com");
+            this.InternalClient = new Core.DataFactoryManagementClient(credentials, httpClient);
 
-            this.Credentials.InitializeServiceClient(this.InternalClient);
             this.Credentials.InitializeServiceClient(this);
+            this.PostInitialize();
         }
 
         /// <summary>
@@ -238,9 +301,8 @@ namespace Microsoft.Azure.Management.DataFactories
 
                 clonedClient.Credentials = this.Credentials;
                 clonedClient.BaseUri = this.BaseUri;
-
-                clonedClient.InternalClient.Credentials = this.Credentials;
-                clonedClient.InternalClient.BaseUri = this.BaseUri;
+                clonedClient.LongRunningOperationRetryTimeout = this.LongRunningOperationRetryTimeout;
+                clonedClient.LongRunningOperationInitialTimeout = this.LongRunningOperationInitialTimeout;
 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient.InternalClient);
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
@@ -255,10 +317,8 @@ namespace Microsoft.Azure.Management.DataFactories
             return client;
         }
 
-        private void Initialize()
+        private void PreInitialize()
         {
-            this.InternalClient = new Core.DataFactoryManagementClient();
-
             this.ActivityTypes = new ActivityTypeOperations(this);
             this.ComputeTypes = new ComputeTypeOperations(this);
             this.DataFactories = new DataFactoryOperations(this);
@@ -270,9 +330,16 @@ namespace Microsoft.Azure.Management.DataFactories
             this.OAuth = new OAuthOperations(this);
             this.Pipelines = new PipelineOperations(this);
             this.Datasets = new DatasetOperations(this);
+        }
+
+        private void PostInitialize()
+        {
+            if (this.InternalClient == null)
+            {
+                this.InternalClient = new Core.DataFactoryManagementClient();
+            }
+
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;
-            this.Credentials = this.InternalClient.Credentials;
-            this.BaseUri = this.InternalClient.BaseUri;
         }
     }
 }

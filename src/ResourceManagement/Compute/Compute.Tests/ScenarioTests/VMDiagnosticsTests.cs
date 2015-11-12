@@ -43,7 +43,7 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                EnsureClientsInitialized(useSPN:true);
+                EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group

@@ -18,31 +18,31 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// AzureML Batch Execution Service activity.
+    /// Azure ML Batch Execution Service activity.
     /// </summary>
     [AdfTypeName("AzureMLBatchExecution")]
     public class AzureMLBatchExecutionActivity : ActivityTypeProperties
     {
         /// <summary>
-        /// Optional. Key,Value pairs to be passed to the AzureML Batch Execution Service Endpoint 
-        /// Keys must match the names of web service parameters defined in the published AzureML web service. 
+        /// Optional. Key,Value pairs to be passed to the Azure ML Batch Execution Service Endpoint. 
+        /// Keys must match the names of web service parameters defined in the published Azure ML web service. 
         /// Values may include ADF functions to be resolved at each slice execution time 
         /// (See https://msdn.microsoft.com/en-us/library/azure/dn835056.aspx). 
-        /// Values will be passed in the GlobalParameters property of the AzureML batch execution request.
+        /// Values will be passed in the GlobalParameters property of the Azure ML batch execution request.
         /// </summary>
         public IDictionary<string, string> GlobalParameters { get; set; }
 
         /// <summary>
-        /// Optional. Key,Value pairs mapping the AzureML endpoint's Web Service Output names to names of ADF Blob
+        /// Optional. Key,Value pairs mapping the Azure ML endpoint's Web Service Output names to names of ADF Blob
         /// Datasets where the batch execution output should be written. This information will be passed in the 
-        /// WebServiceOutputs property of the AzureML batch execution request.
+        /// WebServiceOutputs property of the Azure ML batch execution request.
         /// Mapped Datasets must be included in the Activity's Outputs.
         /// </summary>
         public IDictionary<string, string> WebServiceOutputs { get; set; }
 
         /// <summary>
         /// Optional. Name of ADF Blob Dataset giving the input to the batch execution. This information will be passed
-        /// in the WebServiceInput property of the AzureML batch execution request.
+        /// in the WebServiceInput property of the Azure ML batch execution request.
         /// </summary>
         public string WebServiceInput { get; set; }
 

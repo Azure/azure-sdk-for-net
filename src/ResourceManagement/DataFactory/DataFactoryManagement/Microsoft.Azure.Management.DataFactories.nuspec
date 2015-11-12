@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.DataFactories</id>
     <title>Microsoft Azure Data Factory Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes>https://azure.microsoft.com/en-us/documentation/articles/data-factory-api-change-log/#version-420</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>

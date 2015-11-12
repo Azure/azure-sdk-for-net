@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -29,10 +32,21 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class JobQueryParameter
     {
+        private IList<AffectedObjectType> _affectedObjectTypes;
+        
+        /// <summary>
+        /// Optional. List of type of objects to fetch jobs for.
+        /// </summary>
+        public IList<AffectedObjectType> AffectedObjectTypes
+        {
+            get { return this._affectedObjectTypes; }
+            set { this._affectedObjectTypes = value; }
+        }
+        
         private string _endTime;
         
         /// <summary>
-        /// Optional. End range of start time in UTC.
+        /// Optional. End range of start UTC time in seconds.
         /// </summary>
         public string EndTime
         {
@@ -40,21 +54,32 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._endTime = value; }
         }
         
-        private string _objectId;
+        private string _fabricId;
         
         /// <summary>
-        /// Optional. Id of afftected object.
+        /// Optional. Id of affected fabric.
         /// </summary>
-        public string ObjectId
+        public string FabricId
         {
-            get { return this._objectId; }
-            set { this._objectId = value; }
+            get { return this._fabricId; }
+            set { this._fabricId = value; }
+        }
+        
+        private IList<string> _jobStatus;
+        
+        /// <summary>
+        /// Optional. List of status the job to be fetched can be in.
+        /// </summary>
+        public IList<string> JobStatus
+        {
+            get { return this._jobStatus; }
+            set { this._jobStatus = value; }
         }
         
         private string _startTime;
         
         /// <summary>
-        /// Optional. Start time  in UTC.
+        /// Optional. Start UTC time in seconds.
         /// </summary>
         public string StartTime
         {
@@ -62,22 +87,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._startTime = value; }
         }
         
-        private string _state;
-        
-        /// <summary>
-        /// Optional. State of job.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the JobQueryParameter class.
         /// </summary>
         public JobQueryParameter()
         {
+            this.AffectedObjectTypes = new LazyList<AffectedObjectType>();
+            this.JobStatus = new LazyList<string>();
         }
     }
 }
