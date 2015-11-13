@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type = "Microsoft.Storage/storageAccounts", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -132,16 +132,16 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(accountName, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(accountName, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -343,16 +343,16 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -827,16 +827,16 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -1420,16 +1420,16 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(regenerateKey, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(regenerateKey, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
