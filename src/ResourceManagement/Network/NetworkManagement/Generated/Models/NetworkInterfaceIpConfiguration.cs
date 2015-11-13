@@ -19,28 +19,28 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// IPConfiguration in a NetworkInterface
     /// </summary>
-    public partial class NetworkInterfaceIpConfiguration : SubResource
+    public partial class NetworkInterfaceIPConfiguration : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIpConfiguration
+        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIpConfiguration() { }
+        public NetworkInterfaceIPConfiguration() { }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIpConfiguration
+        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatRules = default(IList<SubResource>), string provisioningState = default(string))
+        public NetworkInterfaceIPConfiguration(string name = default(string), string etag = default(string), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
+            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
+            LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
-            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
-            LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
             ProvisioningState = provisioningState;
         }
 
@@ -59,50 +59,66 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the privateIPAddress of the Network Interface IP
-        /// Configuration
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
-        /// Possible values for this property include: 'Static', 'Dynamic'.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
-        public string PrivateIPAllocationMethod { get; set; }
-
-        /// <summary>
-        /// Gets or sets the reference of the subnet resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
-        public SubResource Subnet { get; set; }
-
-        /// <summary>
-        /// Gets or sets the reference of the PublicIP resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public SubResource PublicIPAddress { get; set; }
-
-        /// <summary>
         /// Gets or sets the reference of LoadBalancerBackendAddressPool
         /// resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+        public IList<BackendAddressPool> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets list of references of LoadBalancerInboundNatRules
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerInboundNatRules")]
-        public IList<SubResource> LoadBalancerInboundNatRules { get; set; }
+        public IList<InboundNatRule> LoadBalancerInboundNatRules { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the PublicIP resource
-        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
+        public string PrivateIPAllocationMethod { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnet")]
+        public Subnet Subnet { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPAddress")]
+        public PublicIPAddress PublicIPAddress { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.LoadBalancerInboundNatRules != null)
+            {
+                foreach (var element in this.LoadBalancerInboundNatRules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.Subnet != null)
+            {
+                this.Subnet.Validate();
+            }
+            if (this.PublicIPAddress != null)
+            {
+                this.PublicIPAddress.Validate();
+            }
+        }
     }
 }

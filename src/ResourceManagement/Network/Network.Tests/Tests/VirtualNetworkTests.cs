@@ -1,20 +1,4 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
@@ -23,24 +7,27 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
-
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
+    using System.Linq;
+
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class VirtualNetworkTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void VirtualNetworkApiTest()
         {
-            var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
 
@@ -90,12 +77,13 @@ namespace Networks.Tests
                 };
 
                 // Put Vnet
-                var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
                 Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
 
                 // Get Vnet
-                var getVnetResponse = networkResourceProviderClient.VirtualNetworks.Get(resourceGroupName, vnetName);
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
                 Assert.Equal(vnetName, getVnetResponse.Name);
+                Assert.NotNull(getVnetResponse.ResourceGuid);
                 Assert.Equal("Succeeded", getVnetResponse.ProvisioningState);
                 Assert.Equal("10.1.1.1", getVnetResponse.DhcpOptions.DnsServers[0]);
                 Assert.Equal("10.1.2.4", getVnetResponse.DhcpOptions.DnsServers[1]);
@@ -104,28 +92,23 @@ namespace Networks.Tests
                 Assert.Equal(subnet2Name, getVnetResponse.Subnets[1].Name);
 
                 // Get all Vnets
-                var getAllVnets = networkResourceProviderClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Equal(vnetName, getAllVnets.First().Name);
-                Assert.Equal("Succeeded", getAllVnets.First().ProvisioningState);
-                Assert.Equal("10.0.0.0/16", getAllVnets.First().AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, getAllVnets.First().Subnets[0].Name);
-                Assert.Equal(subnet2Name, getAllVnets.First().Subnets[1].Name);
+                var getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
+                Assert.Equal(vnetName, getAllVnets.ElementAt(0).Name);
+                Assert.Equal("Succeeded", getAllVnets.ElementAt(0).ProvisioningState);
+                Assert.Equal("10.0.0.0/16", getAllVnets.ElementAt(0).AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, getAllVnets.ElementAt(0).Subnets[0].Name);
+                Assert.Equal(subnet2Name, getAllVnets.ElementAt(0).Subnets[1].Name);
 
                 // Get all Vnets in a subscription
-                var getAllVnetInSubscription = networkResourceProviderClient.VirtualNetworks.ListAll();
-                var vnpgateway = getAllVnetInSubscription.FirstOrDefault(n => n.Name == vnetName);
-                Assert.NotNull(vnpgateway);
-                Assert.Equal("Succeeded", vnpgateway.ProvisioningState);
-                Assert.Equal("10.0.0.0/16", vnpgateway.AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, vnpgateway.Subnets[0].Name);
-                Assert.Equal(subnet2Name, vnpgateway.Subnets[1].Name);
+                var getAllVnetInSubscription = networkManagementClient.VirtualNetworks.ListAll();
+                Assert.NotEqual(0, getAllVnetInSubscription.Count());
 
                 // Delete Vnet
-                networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
-
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                
                 // Get all Vnets
-                getAllVnets = networkResourceProviderClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Null(getAllVnets);
+                getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
+                Assert.Equal(0, getAllVnets.Count());
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// ApplicationGatewaysOperations operations.
     /// </summary>
-    internal partial class ApplicationGatewaysOperations : IServiceOperations<NetworkResourceProviderClient>, IApplicationGatewaysOperations
+    internal partial class ApplicationGatewaysOperations : IServiceOperations<NetworkManagementClient>, IApplicationGatewaysOperations
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewaysOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ApplicationGatewaysOperations(NetworkResourceProviderClient client)
+        internal ApplicationGatewaysOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete applicationgateway operation deletes the specified
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 204 && (int)statusCode != 202 && (int)statusCode != 200)
+            if ((int)statusCode != 202 && (int)statusCode != 204 && (int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -409,10 +409,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -475,16 +471,16 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -1092,7 +1088,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 202 && (int)statusCode != 200)
+            if ((int)statusCode != 200 && (int)statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;

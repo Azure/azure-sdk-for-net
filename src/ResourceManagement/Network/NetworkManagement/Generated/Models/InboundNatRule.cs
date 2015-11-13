@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the InboundNatRule class.
         /// </summary>
-        public InboundNatRule(string protocol, int? frontendPort, bool? enableFloatingIP, string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendIPConfiguration = default(SubResource), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), string provisioningState = default(string))
+        public InboundNatRule(string protocol, int? frontendPort, bool? enableFloatingIP, string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the frontendIPConfigurations is forwarded to the backed IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfiguration")]
-        public SubResource BackendIPConfiguration { get; set; }
+        public NetworkInterfaceIPConfiguration BackendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the transport potocol for the external endpoint.
@@ -144,6 +144,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (EnableFloatingIP == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "EnableFloatingIP");
+            }
+            if (this.BackendIPConfiguration != null)
+            {
+                this.BackendIPConfiguration.Validate();
             }
         }
     }

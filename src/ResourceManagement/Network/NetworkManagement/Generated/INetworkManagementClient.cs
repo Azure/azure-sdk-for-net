@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Network
     using Models;
 
     /// <summary>
-    /// The Windows Azure Network management API provides a RESTful set of web
-    /// services that interact with Windows Azure Networks service to manage
-    /// your network resrources. The API has entities that capture the
-    /// relationship between an end user and the Windows Azure Networks
+    /// The Microsoft Azure Network management API provides a RESTful set of
+    /// web services that interact with Microsoft Azure Networks service to
+    /// manage your network resrources. The API has entities that capture the
+    /// relationship between an end user and the Microsoft Azure Networks
     /// service.
     /// </summary>
-    public partial interface INetworkResourceProviderClient
+    public partial interface INetworkManagementClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -72,11 +72,13 @@ namespace Microsoft.Azure.Management.Network
 
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
+        IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
+
+        IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; }
+
         IExpressRouteCircuitsOperations ExpressRouteCircuits { get; }
 
         IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; }
-
-        IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; }
 
         ILoadBalancersOperations LoadBalancers { get; }
 
@@ -84,17 +86,15 @@ namespace Microsoft.Azure.Management.Network
 
         INetworkInterfacesOperations NetworkInterfaces { get; }
 
-        IRouteTablesOperations RouteTables { get; }
-
         INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
 
-        IPublicIpAddressesOperations PublicIpAddresses { get; }
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        IRouteTablesOperations RouteTables { get; }
 
         IRoutesOperations Routes { get; }
 
         ISecurityRulesOperations SecurityRules { get; }
-
-        IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
 
         ISubnetsOperations Subnets { get; }
 

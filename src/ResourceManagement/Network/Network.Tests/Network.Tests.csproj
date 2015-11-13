@@ -22,6 +22,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ApplicationGatewayTests.cs" />
     <Compile Include="Tests\GatewayOperationsTests.cs" />
+    <Compile Include="Tests\ExpandResourceTests.cs" />
     <Compile Include="Tests\UsageTests.cs" />
     <Compile Include="Tests\LoadBalancerTests.cs" />
     <Compile Include="Tests\NetworkInterfaceTests.cs" />
@@ -40,7 +41,10 @@
     <None Include="ApplicationGatewayCertificate\GW5000.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\ApplicationGatewayApiTest.json">
+    <None Include="SessionRecords\Networks.Tests.CheckDnsAvailabilityTests\CheckDnsAvailabilityTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.ExpandResourceTests\ExpandResourceTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json">
@@ -52,9 +56,6 @@
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Networks.Tests.CheckDnsAvailabilityTests\CheckDnsAvailabilityTest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithDistributionPolicy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -64,6 +65,12 @@
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithStaticIp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerNatPoolTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerOutboundNatRuleTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\UpdateLoadBalancerRule.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -71,6 +78,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceDnsSettingsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceEnableIPForwardingTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupApiTest.json">
@@ -95,18 +105,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.VirtualNetworkTests\VirtualNetworkApiTest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Networks.Tests.GatewayOperationsTests\LocalNettworkGatewayOperationsApisTest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Networks.Tests.GatewayOperationsTests\VirtualNetworkGatewayConnectionOperationsApisTest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Networks.Tests.GatewayOperationsTests\VirtualNetworkGatewayConnectionSharedKeyOperationsApisTest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Networks.Tests.GatewayOperationsTests\VirtualNetworkGatewayOperationsApisTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -169,6 +167,10 @@
       <Name>NetworkManagement</Name>
       <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\" />
+    <Folder Include="SessionRecords\Networks.Tests.GatewayOperationsTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

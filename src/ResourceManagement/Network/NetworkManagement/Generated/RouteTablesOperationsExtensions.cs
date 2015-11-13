@@ -106,9 +106,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeTableName'>
             /// The name of the route table.
             /// </param>
-            public static RouteTable Get(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName)
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
+            public static RouteTable Get(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).GetAsync(resourceGroupName, routeTableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).GetAsync(resourceGroupName, routeTableName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -124,12 +127,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeTableName'>
             /// The name of the route table.
             /// </param>
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteTable> GetAsync( this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteTable> GetAsync( this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<RouteTable> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, routeTableName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<RouteTable> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, routeTableName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

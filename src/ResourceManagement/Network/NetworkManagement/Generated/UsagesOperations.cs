@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// UsagesOperations operations.
     /// </summary>
-    internal partial class UsagesOperations : IServiceOperations<NetworkResourceProviderClient>, IUsagesOperations
+    internal partial class UsagesOperations : IServiceOperations<NetworkManagementClient>, IUsagesOperations
     {
         /// <summary>
         /// Initializes a new instance of the UsagesOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal UsagesOperations(NetworkResourceProviderClient client)
+        internal UsagesOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// Lists compute usages for a subscription.

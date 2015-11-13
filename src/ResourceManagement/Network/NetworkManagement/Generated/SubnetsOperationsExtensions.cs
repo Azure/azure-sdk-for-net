@@ -120,9 +120,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='subnetName'>
             /// The name of the subnet.
             /// </param>
-            public static Subnet Get(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName)
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
+            public static Subnet Get(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).GetAsync(resourceGroupName, virtualNetworkName, subnetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).GetAsync(resourceGroupName, virtualNetworkName, subnetName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,12 +143,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='subnetName'>
             /// The name of the subnet.
             /// </param>
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Subnet> GetAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Subnet> GetAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subnet> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subnet> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

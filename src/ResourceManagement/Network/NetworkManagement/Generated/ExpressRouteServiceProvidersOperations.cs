@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// ExpressRouteServiceProvidersOperations operations.
     /// </summary>
-    internal partial class ExpressRouteServiceProvidersOperations : IServiceOperations<NetworkResourceProviderClient>, IExpressRouteServiceProvidersOperations
+    internal partial class ExpressRouteServiceProvidersOperations : IServiceOperations<NetworkManagementClient>, IExpressRouteServiceProvidersOperations
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteServiceProvidersOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ExpressRouteServiceProvidersOperations(NetworkResourceProviderClient client)
+        internal ExpressRouteServiceProvidersOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The List ExpressRouteServiceProvider opertion retrieves all the available
