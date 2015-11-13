@@ -86,16 +86,7 @@ namespace Networks.Tests
 
                 // List NSG in a subscription
                 var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
-                Assert.Equal(1, listNsgSubsciptionResponse.Count());
-                Assert.Equal(networkSecurityGroupName, listNsgSubsciptionResponse.First().Name);
-                Assert.Equal(6, listNsgSubsciptionResponse.First().DefaultSecurityRules.Count);
-                Assert.Equal("AllowVnetInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[0].Name);
-                Assert.Equal("AllowAzureLoadBalancerInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[1].Name);
-                Assert.Equal("DenyAllInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[2].Name);
-                Assert.Equal("AllowVnetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[3].Name);
-                Assert.Equal("AllowInternetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[4].Name);
-                Assert.Equal("DenyAllOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[5].Name);
-                Assert.Equal(getNsgResponse.Etag, listNsgSubsciptionResponse.First().Etag);
+                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
@@ -195,16 +186,7 @@ namespace Networks.Tests
 
                 // List NSG in a subscription
                 var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
-                Assert.Equal(1, listNsgSubsciptionResponse.Count());
-                Assert.Equal(networkSecurityGroupName, listNsgSubsciptionResponse.First().Name);
-                Assert.Equal(6, listNsgSubsciptionResponse.First().DefaultSecurityRules.Count);
-                Assert.Equal("AllowVnetInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[0].Name);
-                Assert.Equal("AllowAzureLoadBalancerInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[1].Name);
-                Assert.Equal("DenyAllInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[2].Name);
-                Assert.Equal("AllowVnetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[3].Name);
-                Assert.Equal("AllowInternetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[4].Name);
-                Assert.Equal("DenyAllOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[5].Name);
-                Assert.Equal(getNsgResponse.Etag, listNsgSubsciptionResponse.First().Etag);
+                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
 
                 // Add a new security rule
                 var SecurityRule = new SecurityRule()

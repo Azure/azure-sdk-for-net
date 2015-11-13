@@ -29,11 +29,10 @@ namespace Networks.Tests
 
             // Put nic1PublicIpAddress
             var putPublicIpAddressResponse = nrpClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
-            Assert.Equal(HttpStatusCode.OK, putPublicIpAddressResponse.StatusCode);
-            Assert.Equal("Succeeded", putPublicIpAddressResponse.Status);
+            Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
             var getPublicIpAddressResponse = nrpClient.PublicIPAddresses.Get(resourceGroupName, name);
 
-            return getPublicIpAddressResponse.PublicIPAddress;
+            return getPublicIpAddressResponse;
         }
 
         public static NetworkInterface CreateNetworkInterface(
@@ -74,11 +73,10 @@ namespace Networks.Tests
 
             // Test NIC apis
             var putNicResponse = client.NetworkInterfaces.CreateOrUpdate(resourceGroupName, name, nicParameters);
-            Assert.Equal(HttpStatusCode.OK, putNicResponse.StatusCode);
-
+            
             var getNicResponse = client.NetworkInterfaces.Get(resourceGroupName, name);
             Assert.Equal(getNicResponse.Name, name);
-            Assert.Equal(getNicResponse.ProvisioningState, Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded);
+            Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
 
             return getNicResponse;
         }
@@ -114,11 +112,10 @@ namespace Networks.Tests
                         }
             };
 
-            var putVnetResponse = client.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-            Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
+            client.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
             var getVnetResponse = client.VirtualNetworks.Get(resourceGroupName, vnetName);
 
-            return getVnetResponse.VirtualNetwork;
+            return getVnetResponse;
         }
 
         public static string GetChildLbResourceId(

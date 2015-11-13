@@ -12,6 +12,8 @@ namespace Networks.Tests
 {
     using System.Linq;
 
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class UsageTests
     {
         [Fact]
@@ -43,21 +45,18 @@ namespace Networks.Tests
 
                 // Put Nsg
                 var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal(HttpStatusCode.OK, putNsgResponse.StatusCode);
-                Assert.Equal("Succeeded", putNsgResponse.Status);
+                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
-                Assert.Equal(HttpStatusCode.OK, getNsgResponse.StatusCode);
-
+                
                 // Query for usages
-                var usagesResponse = networkManagementClient.Usages.List(getNsgResponse.NetworkSecurityGroup.Location.Replace(" ", string.Empty));
-                Assert.True(usagesResponse.StatusCode == HttpStatusCode.OK);
-
+                var usagesResponse = networkManagementClient.Usages.List(getNsgResponse.Location.Replace(" ", string.Empty));
+                
                 // Verify that the strings are populated
-                Assert.NotNull(usagesResponse.Usages);
-                Assert.True(usagesResponse.Usages.Any());
+                Assert.NotNull(usagesResponse);
+                Assert.True(usagesResponse.Any());
 
-                foreach (var usage in usagesResponse.Usages)
+                foreach (var usage in usagesResponse)
                 {
                     Assert.True(usage.Limit > 0);
                     Assert.NotNull(usage.Name);

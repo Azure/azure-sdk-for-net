@@ -375,7 +375,7 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancer subscription
                 var listLoadBalancerSubscription = networkManagementClient.LoadBalancers.ListAll();
-                Assert.NotEqual(1, listLoadBalancerSubscription.Count());
+                Assert.NotEqual(0, listLoadBalancerSubscription.Count());
                 Assert.NotNull(listLoadBalancerSubscription.First().Name);
                 Assert.NotNull(listLoadBalancerSubscription.First().Etag);
 
@@ -558,7 +558,7 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancer subscription
                 var listLoadBalancerSubscription = networkManagementClient.LoadBalancers.ListAll();
-                Assert.NotEqual(1, listLoadBalancerSubscription.Count());
+                Assert.NotEqual(0, listLoadBalancerSubscription.Count());
                 Assert.NotNull(listLoadBalancerSubscription.First().Name);
                 Assert.NotNull(listLoadBalancerSubscription.First().Etag);
 
@@ -742,13 +742,13 @@ namespace Networks.Tests
 
                 // Do another put after changing the distribution policy
                 loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIP;
-                putLoadBalancer = networkManagementClient.LoadBalancers.CreateOrUpdate(resourceGroupName, lbName, loadbalancerparamater);
+                networkManagementClient.LoadBalancers.CreateOrUpdate(resourceGroupName, lbName, loadbalancerparamater);
                 getLoadBalancer = networkManagementClient.LoadBalancers.Get(resourceGroupName, lbName);
                 
                 Assert.Equal(LoadDistribution.SourceIP, getLoadBalancer.LoadBalancingRules[0].LoadDistribution);
 
                 loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIPProtocol;
-                putLoadBalancer = networkManagementClient.LoadBalancers.CreateOrUpdate(resourceGroupName, lbName, loadbalancerparamater);
+                networkManagementClient.LoadBalancers.CreateOrUpdate(resourceGroupName, lbName, loadbalancerparamater);
                 getLoadBalancer = networkManagementClient.LoadBalancers.Get(resourceGroupName, lbName);
                 
                 Assert.Equal(LoadDistribution.SourceIPProtocol, getLoadBalancer.LoadBalancingRules[0].LoadDistribution);

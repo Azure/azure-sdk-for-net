@@ -8,6 +8,8 @@ using Xunit;
 
 namespace Networks.Tests
 {
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class CheckDnsAvailabilityTests
     {
         [Fact]
@@ -27,7 +29,7 @@ namespace Networks.Tests
 
                 var dnsNameAvailability = networkManagementClient.CheckDnsNameAvailability(location, domainNameLabel);
 
-                Assert.True(dnsNameAvailability.DnsNameAvailability);
+                Assert.True(dnsNameAvailability.Available);
             }
         }
 
