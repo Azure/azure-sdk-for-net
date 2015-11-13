@@ -156,7 +156,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
 
             var handlers = new List<DelegatingHandler>(existingHandlers);
-            handlers.Add(server);
+            if (!MockServerInHandlers(handlers))
+            {
+                handlers.Add(server);
+            }
 
             ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.Credentials);
             handlers.Add(cleaner);
@@ -179,6 +182,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
 
             HttpMockServer.Flush();
+        }
+
+        private static bool MockServerInHandlers(List<DelegatingHandler> handlers)
+        {
+            var result = false;
+            foreach (var handler in handlers)
+            {
+                if (HandlerContains<HttpMockServer>(handler))
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private static bool HandlerContains<T1>(DelegatingHandler handler)
+        {
+            return (handler is T1 || (handler.InnerHandler != null
+                && handler.InnerHandler is DelegatingHandler
+                && HandlerContains<T1>(handler.InnerHandler as DelegatingHandler)));
         }
         
         /// <summary>
