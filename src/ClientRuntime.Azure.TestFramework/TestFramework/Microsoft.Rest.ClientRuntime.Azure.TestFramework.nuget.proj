@@ -5,7 +5,7 @@
     Microsoft.Rest.ClientRuntime.Azure.TestFramework
     -->
     <SdkNuGetPackage Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
-      <PackageVersion>0.10.2-preview</PackageVersion>
+      <PackageVersion>0.10.3-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
