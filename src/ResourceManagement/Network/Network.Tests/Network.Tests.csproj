@@ -41,28 +41,72 @@
     <None Include="ApplicationGatewayCertificate\GW5000.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Networks.Tests.CheckDnsAvailabilityTests\CheckDnsAvailabilityTest.json" />
-    <None Include="SessionRecords\Networks.Tests.ExpandResourceTests\ExpandResourceTest.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiNicAssociationTest.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithDistributionPolicy.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithDynamicIp.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithStaticIp.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerNatPoolTest.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerOutboundNatRuleTest.json" />
-    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\UpdateLoadBalancerRule.json" />
-    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceDnsSettingsTest.json" />
-    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceEnableIPForwardingTest.json" />
-    <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupWithRulesApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.PublicIpAddressTests\PublicIpAddressApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.PublicIpAddressTests\PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn.json" />
-    <None Include="SessionRecords\Networks.Tests.SecurityRuleTests\SecurityRuleWithRulesApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.SubnetTests\SubnetApiTest.json" />
-    <None Include="SessionRecords\Networks.Tests.UsageTests\UsageTest.json" />
-    <None Include="SessionRecords\Networks.Tests.VirtualNetworkTests\VirtualNetworkApiTest.json" />
+    <None Include="SessionRecords\Networks.Tests.CheckDnsAvailabilityTests\CheckDnsAvailabilityTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.ExpandResourceTests\ExpandResourceTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiNicAssociationTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithDistributionPolicy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithDynamicIp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerApiTestWithStaticIp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerNatPoolTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\LoadBalancerOutboundNatRuleTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\UpdateLoadBalancerRule.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceDnsSettingsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceEnableIPForwardingTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupWithRulesApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.PublicIpAddressTests\PublicIpAddressApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.PublicIpAddressTests\PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.SecurityRuleTests\SecurityRuleWithRulesApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.SubnetTests\SubnetApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.UsageTests\UsageTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.VirtualNetworkTests\VirtualNetworkApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
