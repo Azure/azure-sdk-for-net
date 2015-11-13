@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using Xunit;
@@ -85,9 +86,8 @@ namespace Compute.Tests
                     Assert.True(getInstanceViewResponse != null, "VMScaleSetVM not returned.");
                     ValidateVMScaleSetVMInstanceView(getInstanceViewResponse);
 
-                    //TODO: AutoRest - Filter Expression Sample?
-                    //var filterExpression = "$filter=properties/latestModelApplied eq true";
-                    var listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, null);
+                    Expression<Func<VirtualMachineScaleSetVM, bool>> filter = vm => vm.LatestModelApplied == true;
+                    var listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, filter);
                     Assert.False(listResponse == null, "VMScaleSetVMs not returned");
                     Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 

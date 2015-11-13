@@ -39,7 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.0.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
@@ -67,50 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionCreateUpdateDelete.json">
+    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionEnableDisable.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionListByResourceGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionListBySubscription.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionPatch.json" />
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateHttpJobWithBasicAuth.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateHttpJobWithClientCertAuth.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateHttpJobWithOAuth.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreatePatchDeleteStorageJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateUpdateDeleteHttpJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateWithScheduleForDay.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateWithScheduleForMonth.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateWithScheduleForMonthlyOccurrence.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateWithScheduleForWeek.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobHistoryList.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobList.json">
+    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

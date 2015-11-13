@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the CustomDomain class.
         /// </summary>
-        public CustomDomain(string name = default(string), bool? useSubDomain = default(bool?))
+        public CustomDomain(string name, bool? useSubDomain = default(bool?))
         {
             Name = name;
             UseSubDomain = useSubDomain;
@@ -49,5 +49,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "useSubDomain")]
         public bool? UseSubDomain { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

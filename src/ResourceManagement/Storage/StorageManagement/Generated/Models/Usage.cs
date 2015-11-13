@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
-        public Usage(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
+        public Usage(UsageUnit? unit, int? currentValue, int? limit, UsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -65,5 +65,27 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "name")]
         public UsageName Name { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Unit == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Unit");
+            }
+            if (CurrentValue == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CurrentValue");
+            }
+            if (Limit == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Limit");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

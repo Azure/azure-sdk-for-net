@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Xunit;
@@ -34,11 +35,16 @@ namespace Storage.Tests.Helpers
     public static class StorageManagementTestUtilities
     {
         public static bool IsTestTenant = false;
-        private static TokenCredentials Creds = null;
+        private static HttpClientHandler Handler = null;
+
+        // These should be filled in only if test tenant is true
+        private static string certName = null;
+        private static string certPassword = null;
+        private static string testSubscription = null;
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? "North US" : "West US";
+        public static string DefaultLocation = IsTestTenant ? null : "westus";
         public static AccountType DefaultAccountType = AccountType.StandardGRS;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
@@ -48,17 +54,16 @@ namespace Storage.Tests.Helpers
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            ResourceManagementClient resourcesClient;
             if (IsTestTenant)
             {
-                resourcesClient = new ResourceManagementClient(GetCreds());
+                return null;
             }
             else
             {
                 handler.IsPassThrough = true;
-                resourcesClient = context.GetServiceClient<ResourceManagementClient>(handler);
+                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handler);
+                return resourcesClient;
             }
-            return resourcesClient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -66,7 +71,9 @@ namespace Storage.Tests.Helpers
             StorageManagementClient storageClient;
             if (IsTestTenant)
             {
-                storageClient = new StorageManagementClient(testUri, GetCreds());
+                storageClient = new StorageManagementClient(new TokenCredentials("xyz"), GetHandler());
+                storageClient.SubscriptionId = testSubscription;
+                storageClient.BaseUri = testUri;
             }
             else
             {
@@ -76,9 +83,17 @@ namespace Storage.Tests.Helpers
             return storageClient;
         }
 
-        private static TokenCredentials GetCreds() 
+        private static HttpClientHandler GetHandler() 
         {
-            return Creds;
+            if (Handler == null)
+            {
+                X509Certificate2 cert = new X509Certificate2(certName, certPassword);
+                Handler = new System.Net.Http.WebRequestHandler();
+                ((WebRequestHandler)Handler).ClientCertificates.Add(cert);
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+            }
+
+            return Handler;
         }
 
         public static StorageAccountCreateParameters GetDefaultStorageAccountParameters()
@@ -123,10 +138,10 @@ namespace Storage.Tests.Helpers
 
         public static void VerifyAccountProperties(StorageAccount account, bool useDefaults)
         {
+            Assert.NotNull(account);
             Assert.NotNull(account.Id);
             Assert.NotNull(account.Location);
             Assert.NotNull(account.Name);
-            Assert.NotNull(account);
             Assert.NotNull(account.AccountType);
             Assert.NotNull(account.CreationTime);
 
@@ -140,6 +155,7 @@ namespace Storage.Tests.Helpers
             {
                 Assert.NotNull(account.PrimaryEndpoints.Queue);
                 Assert.NotNull(account.PrimaryEndpoints.Table);
+                Assert.NotNull(account.PrimaryEndpoints.File);
             }
 
             Assert.Equal(ProvisioningState.Succeeded, account.ProvisioningState);
@@ -150,7 +166,7 @@ namespace Storage.Tests.Helpers
                 case AccountType.StandardLRS:
                 case AccountType.StandardZRS:
                 case AccountType.PremiumLRS:
-                    Assert.Equal("", account.SecondaryLocation); // TODO: make null when service is fixed
+                    Assert.Null(account.SecondaryLocation);
                     Assert.Null(account.StatusOfSecondary);
                     Assert.Null(account.SecondaryEndpoints);
                     break;
