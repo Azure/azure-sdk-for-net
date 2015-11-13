@@ -12,18 +12,7 @@ namespace HttpRecorder.Tests
         [Fact]
         public void GetCurrentMethodNameReturnsName()
         {
-            Assert.Equal("GetCurrentMethodNameReturnsName", TestUtilities.GetCurrentMethodName(1));
-        }
-
-        [Fact]
-        public void GetCurrentMethodNameReturnsNameWithIndex()
-        {
-            Assert.Equal("GetCurrentMethodNameReturnsNameWithIndex", GetName());
-        }
-
-        private string GetName()
-        {
-            return TestUtilities.GetCurrentMethodName(2);
+            Assert.Equal("GetCurrentMethodNameReturnsName", TestUtilities.GetCurrentMethodName());
         }
     }
 }

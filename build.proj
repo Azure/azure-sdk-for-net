@@ -118,16 +118,24 @@
     <MSBuild Projects="@(AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
-             
-    <CallTarget Targets="BuildDnx" />
+
+    
+    <CallTarget Targets="BuildDnxLibraries" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
   
-  <Target Name="BuildDnx">
-    <Exec Command="dnu restore &quot;%(DnxLibraries.Library)&quot;"/>
-    <Exec Command="dnu build &quot;%(DnxLibraries.Library)&quot; --configuration $(Configuration)"/>
+  <Target Name="BuildDnxLibraries">
+    <Exec Command="dnu restore &quot;%(DnxLibraries.Directory)&quot;"/>
+    <Exec Command="dnu build &quot;%(DnxLibraries.Library)&quot;"/>
+    <Exec Command="dnu build &quot;%(DnxLibraries.Test)&quot;"/>
+  </Target>
+
+  <Target Name="BuildTextFramework">
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework" />
+    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder" />
+    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework" />
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
