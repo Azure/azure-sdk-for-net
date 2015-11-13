@@ -39,7 +39,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             string connectionString = Environment.GetEnvironmentVariable(TestCSMOrgIdConnectionStringKey);
             TestEnvironment testEnv = new TestEnvironment(TestUtilities.ParseConnectionString(connectionString));
-            CredManCache credCache = new CredManCache("SpecTestSupport");
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
@@ -70,7 +69,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         if(testEnv.UserName != null && 
                            !parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password))
                         {
-                            credCache.TryGetValue(testEnv.UserName, out password);
+                            throw new InvalidOperationException("Certificate is not yet supported on dnxcore platform");
                         }
 
                         if (testEnv.UserName != null && password != null)
@@ -83,7 +82,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
                             ServiceClientTracing.Information("Using AAD auth with service principal and password combination");
-                            testEnv.Credentials = ApplicationTokenProvider.LoginSilentAsync(testEnv.Tenant, 
+                            testEnv.Credentials = ApplicationTokenProvider.LoginSilentAsync(testEnv.Tenant,
                                 testEnv.ServicePrincipal, password, testEnv.AsAzureEnvironment())
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
@@ -92,22 +91,23 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                 if (testEnv.Credentials == null)
                 {
+                    throw new InvalidOperationException("Prompting for credential is not yet supported for cross-platform testing");
                     //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
-                    ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                    var clientSettings = new ActiveDirectoryClientSettings
-                    {
-                        ClientId = testEnv.ClientId,
-                        PromptBehavior = PromptBehavior.Auto,
-                        ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
-                    };
-                    testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant, 
-                            clientSettings, testEnv.AsAzureEnvironment())
-                            .ConfigureAwait(false).GetAwaiter().GetResult();
+                    //ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
+                    //var clientSettings = new ActiveDirectoryClientSettings
+                    //{
+                    //    ClientId = testEnv.ClientId,
+                    //    PromptBehavior = PromptBehavior.Auto,
+                    //    ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
+                    //};
+                    //testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant,
+                    //        clientSettings, testEnv.AsAzureEnvironment())
+                    //        .ConfigureAwait(false).GetAwaiter().GetResult();
                 }
 
                 // Management Clients that are not subscription based should set "SubscriptionId=None" in
                 // the connection string.
-                if (testEnv.SubscriptionId == null || !testEnv.SubscriptionId.Equals("None", StringComparison.InvariantCultureIgnoreCase))
+                if (testEnv.SubscriptionId == null || !testEnv.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase))
                 {
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(

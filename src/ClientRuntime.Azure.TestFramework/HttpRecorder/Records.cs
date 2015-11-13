@@ -65,6 +65,12 @@ namespace Microsoft.Azure.Test.HttpRecorder
             set { sessionRecords[key] = value; }
         }
 
+        private string GetCallingMethodName([System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="Getting_CallingMethodName_Failed_Your_Test_Will_Fail")
+        {
+            return methodName;
+        }
+
         public IEnumerable<RecordEntry> GetAllEntities()
         {
             foreach (var queues in sessionRecords.Values)
@@ -87,37 +93,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 Enqueue(recordEntry);
             }
-        }
-
-        private string GetCallingMethodName()
-        {
-            StackTrace st = new StackTrace();
-            int depth = 3;
-            StackFrame sf = st.GetFrame(depth);
-            string methodName = string.Empty;
-            bool foundSendAsync = false;
-            while (sf != null)
-            {
-                depth++;
-                sf = st.GetFrame(depth);
-                if (sf != null)
-                {
-                    methodName = sf.GetMethod().Name;
-                }
-                if (methodName == "SendAsync")
-                {
-                    foundSendAsync = true;
-                }
-                if (foundSendAsync && 
-                    methodName != "MoveNext" &&
-                    methodName != "SendAsync" &&
-                    methodName != "Start")
-                {
-                    break;
-                }
-            }
-
-            return methodName;
         }
     }
 }

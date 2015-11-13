@@ -11,11 +11,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     public class TestingTracingInterceptor : IServiceClientTracingInterceptor
     {
-        public TestingTracingInterceptor()
-        {
-            Debug.Listeners.Add(new DefaultTraceListener());
-        }
-
         private void Write(string message, params object[] arguments)
         {
             if (arguments == null || arguments.Length == 0)

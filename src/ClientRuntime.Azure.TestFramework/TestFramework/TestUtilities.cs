@@ -20,7 +20,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public static ActiveDirectoryServiceSettings AsAzureEnvironment(this TestEnvironment env)
         {
             return new ActiveDirectoryServiceSettings
-            { 
+            {
                 AuthenticationEndpoint = env.Endpoints.AADAuthUri,
                 TokenAudience = env.Endpoints.AADTokenAudienceUri,
                 ValidateAuthority = false
@@ -36,9 +36,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Generate a name to be used in azure
         /// </summary>
         /// <returns></returns>
-        public static string GenerateName(string prefix = "azsmnet")
+        public static string GenerateName(string prefix = "azsmnet",
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="testframework_failed")
         {
-            return HttpMockServer.GetAssetName(GetCurrentMethodName(2), prefix);
+            return HttpMockServer.GetAssetName(methodName, prefix);
         }
 
         /// <summary>
@@ -91,29 +93,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Get the method name of the calling method
         /// </summary>
-        /// <param name="index">How deep into the stack trace to look - here we want the caller's caller.</param>
         /// <returns>The name of the declaring method</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetCurrentMethodName(int index = 1)
+        public static string GetCurrentMethodName([System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed_to_get_current_method_anem")
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(index);
-
-            return sf.GetMethod().Name;
-        }
-
-        /// <summary>
-        /// Get the typename of the calling class
-        /// </summary>
-        /// <param name="index">How deep into the stack trace to look - here we want the caller's caller.</param>
-        /// <returns>The name of the declaring type</returns>
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetCallingClass(int index = 1)
-        {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(index);
-
-            return sf.GetMethod().ReflectedType.ToString();
+            return methodName;
         }
 
         /// <summary>

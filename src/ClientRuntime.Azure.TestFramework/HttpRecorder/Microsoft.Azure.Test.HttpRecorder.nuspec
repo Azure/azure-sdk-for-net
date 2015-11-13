@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Microsoft.Azure.Test.HttpRecorder</id>
-    <version>1.0.0.0</version>
+    <version>1.1.0-preview</version>
     <authors>Microsoft Corporation</authors>
     <owners>Microsoft Corporation</owners>
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>

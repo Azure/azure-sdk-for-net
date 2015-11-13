@@ -19,7 +19,8 @@ namespace HttpRecorder.Tests
 
         public HttpMockServerTests()
         {
-            currentDir = Environment.CurrentDirectory;
+            currentDir = Directory.GetCurrentDirectory();// Environment.CurrentDirectory;
+            HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
         }
 
         private FakeHttpClient CreateClient()
@@ -52,19 +53,19 @@ namespace HttpRecorder.Tests
         [Fact]
         public void TestRecordingWithOneClientWritesFile()
         {
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client = CreateClient();
             var result = client.DoStuffA().Result;
 
             HttpMockServer.Flush(currentDir);
 
-            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName() + ".json")));
         }
 
         [Fact]
         public void TestRecordingWithVariablesStoresVariable()
         {
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client = CreateClient();
             var result = client.DoStuffA().Result;
             HttpMockServer.Variables["varA"] = "varA-value";
@@ -73,7 +74,7 @@ namespace HttpRecorder.Tests
 
             HttpMockServer.Variables.Clear();
 
-            var recording = RecordEntryPack.Deserialize(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName(1) + ".json"));
+            var recording = RecordEntryPack.Deserialize(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName() + ".json"));
 
             Assert.Equal("varA-value", recording.Variables["varA"]);
         }
@@ -83,7 +84,7 @@ namespace HttpRecorder.Tests
         {
             HttpMockServer.RecordsDirectory = currentDir;
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client = CreateClient();
             var result = client.DoStuffA().Result;
             HttpMockServer.Variables["varA"] = "varA-value";
@@ -92,7 +93,7 @@ namespace HttpRecorder.Tests
 
             HttpMockServer.Variables.Clear();
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
 
             Assert.Equal("varA-value", HttpMockServer.Variables["varA"]);
         }
@@ -100,7 +101,7 @@ namespace HttpRecorder.Tests
         [Fact]
         public void TestRecordingWithTwoClientsWritesFile()
         {
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             FakeHttpClient client2 = CreateClient();
             var result1 = client1.DoStuffA().Result;
@@ -108,38 +109,38 @@ namespace HttpRecorder.Tests
 
             HttpMockServer.Flush(currentDir);
 
-            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName() + ".json")));
         }
 
         [Fact]
         public void TestPlaybackWithOneClient()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var result1A = client1.DoStuffA().Result;
             var result1B = client1.DoStuffB().Result;
-            string assetName1 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
-            string assetName2 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
+            string assetName1 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
+            string assetName2 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.None);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.None);
             FakeHttpClient client2 = CreateClientWithBadResult();
             var result2 = client2.DoStuffA().Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClientWithBadResult();
             var result3B = client3.DoStuffB().Result;
             var result3A = client3.DoStuffA().Result;
-            string assetName1Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
-            string assetName2Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
+            string assetName1Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
+            string assetName2Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
             HttpMockServer.Flush(currentDir);
 
             string result1AConent = JObject.Parse(result1A.Content.ReadAsStringAsync().Result).ToString();
             string result3AConent = JObject.Parse(result3A.Content.ReadAsStringAsync().Result).ToString();
 
-            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName() + ".json")));
             Assert.Equal(result1A.StatusCode, result3A.StatusCode);
             Assert.Equal(result1A.RequestMessage.RequestUri.AbsoluteUri, result3A.RequestMessage.RequestUri.AbsoluteUri);
             Assert.Equal(result1AConent, result3AConent);
@@ -152,12 +153,12 @@ namespace HttpRecorder.Tests
         public void PlaybackWithDifferentBodyIsMatched()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultCOrig = client1.DoStuffC("test", "123", "abc").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             var resultCPlayback = client1.DoStuffC("different", "123", "abc").Result;
             HttpMockServer.Flush(currentDir);
@@ -169,12 +170,12 @@ namespace HttpRecorder.Tests
         public void PlaybackWithDifferentVersionInUrlDoesNotMatch()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultCOrig = client1.DoStuffC("test", "123", "abc").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             Assert.Throws<AggregateException>(() => client1.DoStuffC("test", "123", "xyz").Result);
         }
@@ -183,12 +184,12 @@ namespace HttpRecorder.Tests
         public void NotFoundExceptionContainUrlAndMethodName()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultCOrig = client1.DoStuffC("test", "123", "abc").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             try
             {
@@ -198,7 +199,9 @@ namespace HttpRecorder.Tests
             catch (AggregateException aggregateException)
             {
                 var exception = aggregateException.InnerExceptions[0];
-                Assert.Equal("Unable to find a matching HTTP request for URL 'POST /path/to/resourceB?api-version=xyz (x-ms-version=123)'. Calling method DoStuffC().",
+
+                //TODO: figure out whether exception message ever mentioned 'DoStuffC' 
+                Assert.Equal("Unable to find a matching HTTP request for URL 'POST /path/to/resourceB?api-version=xyz (x-ms-version=123)'. Calling method Item().",
                     exception.Message);
             }
         }
@@ -207,12 +210,12 @@ namespace HttpRecorder.Tests
         public void PlaybackWithDifferentVersionInHeaderDoesNotMatch()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultCOrig = client1.DoStuffC("test", "123", "abc").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             Assert.Throws<AggregateException>(() => client1.DoStuffC("test", "456", "abc").Result);
         }
@@ -221,12 +224,12 @@ namespace HttpRecorder.Tests
         public void PlaybackWithSameContentTypeMatches()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultDOrig = client1.DoStuffD("text/json").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             var resultDPlayback = client1.DoStuffD("text/json").Result;
 
@@ -237,12 +240,12 @@ namespace HttpRecorder.Tests
         public void PlaybackWithDifferentContentTypeDoesNotMatch()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var resultCOrig = client1.DoStuffD("text/json").Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClient();
             Assert.Throws<AggregateException>(() => client1.DoStuffD("text/xml").Result);
         }
@@ -313,7 +316,7 @@ namespace HttpRecorder.Tests
         {
             HttpMockServer.RecordsDirectory = currentDir;
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
             var result1 = client1.DoStuffA().Result;
             var value1 = HttpMockServer.GetVariable("varA", "tst123");
@@ -321,7 +324,7 @@ namespace HttpRecorder.Tests
 
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             var value2 = HttpMockServer.GetVariable("varA", "tst456");
             Assert.Equal("tst123", value2);
         }
@@ -329,19 +332,19 @@ namespace HttpRecorder.Tests
         [Fact]
         public void NoneModeCreatesNoFiles()
         {
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.None);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.None);
             FakeHttpClient client = CreateClient();
             var result = client.DoStuffA().Result;
 
             HttpMockServer.Flush(currentDir);
 
-            Assert.False(File.Exists(TestUtilities.GetCurrentMethodName(1) + ".json"));
+            Assert.False(File.Exists(TestUtilities.GetCurrentMethodName() + ".json"));
         }
 
         [Fact]
         public void TestRecordingWithExplicitDir()
         {
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             HttpMockServer.RecordsDirectory = Path.GetTempPath();
 
             FakeHttpClient client = CreateClient();
@@ -349,7 +352,7 @@ namespace HttpRecorder.Tests
 
             HttpMockServer.Flush();
 
-            Assert.True(File.Exists(Path.Combine(Path.GetTempPath(), this.GetType().Name, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            Assert.True(File.Exists(Path.Combine(Path.GetTempPath(), this.GetType().Name, TestUtilities.GetCurrentMethodName() + ".json")));
             HttpMockServer.RecordsDirectory = currentDir;
         }
 
@@ -357,18 +360,18 @@ namespace HttpRecorder.Tests
         public void TestPlaybackWithAssetInUrlClient()
         {
             HttpMockServer.RecordsDirectory = currentDir;
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Record);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
             FakeHttpClient client1 = CreateClient();
-            string assetName1 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
-            string assetName2 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
+            string assetName1 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
+            string assetName2 = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
             var result1A = client1.DoStuffX(assetName1).Result;
             var result1B = client1.DoStuffX(assetName2).Result;
             HttpMockServer.Flush(currentDir);
 
-            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(1), HttpRecorderMode.Playback);
+            HttpMockServer.Initialize(this.GetType(), TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
             FakeHttpClient client3 = CreateClientWithBadResult();
-            string assetName1Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
-            string assetName2Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(1), "tst");
+            string assetName1Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
+            string assetName2Playback = HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(), "tst");
             var result3A = client3.DoStuffX(assetName1Playback).Result;
             var result3B = client3.DoStuffX(assetName2Playback).Result;
             HttpMockServer.Flush(currentDir);
@@ -376,7 +379,7 @@ namespace HttpRecorder.Tests
             string result1AConent = JObject.Parse(result1A.Content.ReadAsStringAsync().Result).ToString();
             string result3AConent = JObject.Parse(result3A.Content.ReadAsStringAsync().Result).ToString();
 
-            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, TestUtilities.GetCurrentMethodName() + ".json")));
             Assert.Equal(result1A.StatusCode, result3A.StatusCode);
             Assert.Equal(result1A.RequestMessage.RequestUri.AbsoluteUri, result3A.RequestMessage.RequestUri.AbsoluteUri);
             Assert.Equal(result1AConent, result3AConent);
