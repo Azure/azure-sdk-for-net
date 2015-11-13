@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -32,32 +30,32 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ProtectionContainerProperties
     {
-        private IList<ProtectionProfile> _availableProtectionProfiles;
+        private ContainerFabricConfigurationSettings _fabricConfigurationSettings;
         
         /// <summary>
-        /// Required. AvailableProtectionProfiles of protection container.
+        /// Optional. Fabric configuration settings for container.
         /// </summary>
-        public IList<ProtectionProfile> AvailableProtectionProfiles
+        public ContainerFabricConfigurationSettings FabricConfigurationSettings
         {
-            get { return this._availableProtectionProfiles; }
-            set { this._availableProtectionProfiles = value; }
+            get { return this._fabricConfigurationSettings; }
+            set { this._fabricConfigurationSettings = value; }
         }
         
-        private string _fabricObjectId;
+        private string _fabricFriendlyName;
         
         /// <summary>
-        /// Required. FabricObjectId of the protection container.
+        /// Optional. Fabric friendly name.
         /// </summary>
-        public string FabricObjectId
+        public string FabricFriendlyName
         {
-            get { return this._fabricObjectId; }
-            set { this._fabricObjectId = value; }
+            get { return this._fabricFriendlyName; }
+            set { this._fabricFriendlyName = value; }
         }
         
         private string _fabricType;
         
         /// <summary>
-        /// Required. FabricType of protection container.
+        /// Optional. Gets or sets the fabric type.
         /// </summary>
         public string FabricType
         {
@@ -68,7 +66,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Required. FriendlyName of protection container.
+        /// Optional. Gets or sets the friendly name.
         /// </summary>
         public string FriendlyName
         {
@@ -76,26 +74,37 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._friendlyName = value; }
         }
         
+        private string _pairingStatus;
+        
+        /// <summary>
+        /// Optional. Gets or sets the pairing status of this cloud.
+        /// </summary>
+        public string PairingStatus
+        {
+            get { return this._pairingStatus; }
+            set { this._pairingStatus = value; }
+        }
+        
+        private int _protectedItemCount;
+        
+        /// <summary>
+        /// Optional. Number of protected items.
+        /// </summary>
+        public int ProtectedItemCount
+        {
+            get { return this._protectedItemCount; }
+            set { this._protectedItemCount = value; }
+        }
+        
         private string _role;
         
         /// <summary>
-        /// Required. Role of protection container.
+        /// Optional. Gets or sets the pairing role of this cloud.
         /// </summary>
         public string Role
         {
             get { return this._role; }
             set { this._role = value; }
-        }
-        
-        private string _serverId;
-        
-        /// <summary>
-        /// Required. ID of the parent server
-        /// </summary>
-        public string ServerId
-        {
-            get { return this._serverId; }
-            set { this._serverId = value; }
         }
         
         /// <summary>
@@ -104,7 +113,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public ProtectionContainerProperties()
         {
-            this.AvailableProtectionProfiles = new LazyList<ProtectionProfile>();
         }
     }
 }

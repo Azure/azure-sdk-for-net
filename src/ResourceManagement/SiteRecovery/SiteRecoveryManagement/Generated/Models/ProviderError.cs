@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -31,28 +29,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ProviderError
     {
-        private IDictionary<string, string> _affectedObjects;
-        
-        /// <summary>
-        /// Optional. AffectedObjects of the error.
-        /// </summary>
-        public IDictionary<string, string> AffectedObjects
-        {
-            get { return this._affectedObjects; }
-            set { this._affectedObjects = value; }
-        }
-        
-        private DateTime _creationTimeUtc;
-        
-        /// <summary>
-        /// Required. Time, when error was generated.
-        /// </summary>
-        public DateTime CreationTimeUtc
-        {
-            get { return this._creationTimeUtc; }
-            set { this._creationTimeUtc = value; }
-        }
-        
         private int _errorCode;
         
         /// <summary>
@@ -75,17 +51,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._errorId = value; }
         }
         
-        private string _errorLevel;
-        
-        /// <summary>
-        /// Required. Error level.
-        /// </summary>
-        public string ErrorLevel
-        {
-            get { return this._errorLevel; }
-            set { this._errorLevel = value; }
-        }
-        
         private string _errorMessage;
         
         /// <summary>
@@ -97,23 +62,31 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._errorMessage = value; }
         }
         
-        private string _workflowId;
-        
-        /// <summary>
-        /// Required. Workflow Id
-        /// </summary>
-        public string WorkflowId
-        {
-            get { return this._workflowId; }
-            set { this._workflowId = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ProviderError class.
         /// </summary>
         public ProviderError()
         {
-            this.AffectedObjects = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProviderError class with required
+        /// arguments.
+        /// </summary>
+        public ProviderError(int errorCode, string errorMessage, string errorId)
+            : this()
+        {
+            if (errorMessage == null)
+            {
+                throw new ArgumentNullException("errorMessage");
+            }
+            if (errorId == null)
+            {
+                throw new ArgumentNullException("errorId");
+            }
+            this.ErrorCode = errorCode;
+            this.ErrorMessage = errorMessage;
+            this.ErrorId = errorId;
         }
     }
 }

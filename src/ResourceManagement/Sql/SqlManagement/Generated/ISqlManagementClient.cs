@@ -196,6 +196,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Security Alert policy.  Contains operations to:
+        /// Create, Retrieve and Update policy.
+        /// </summary>
+        ISecurityAlertPolicyOperations SecurityAlertPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
         /// Active Directory Administrators.  Contains operations to: Create,
         /// Retrieve, Update, and Delete Azure SQL Server Active Directory
