@@ -752,7 +752,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceType);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2015-08-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -828,7 +828,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["Value"];
+                            JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
