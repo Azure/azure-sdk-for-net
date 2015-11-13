@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='type'>
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailability(this IStorageAccountsOperations operations, string name, string type = default(string))
+            public static CheckNameAvailabilityResult CheckNameAvailability(this IStorageAccountsOperations operations, string name, string type = "Microsoft.Storage/storageAccounts")
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).CheckNameAvailabilityAsync(name, type), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync( this IStorageAccountsOperations operations, string name, string type = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync( this IStorageAccountsOperations operations, string name, string type = "Microsoft.Storage/storageAccounts", CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<CheckNameAvailabilityResult> result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;

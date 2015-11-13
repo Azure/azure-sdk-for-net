@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// <summary>
     /// The parameters to update on the account.
     /// </summary>
-    public partial class StorageAccountUpdateParameters : Resource
+    public partial class StorageAccountUpdateParameters : IResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountUpdateParameters
@@ -31,11 +31,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the StorageAccountUpdateParameters
         /// class.
         /// </summary>
-        public StorageAccountUpdateParameters(AccountType? accountType = default(AccountType?), CustomDomain customDomain = default(CustomDomain))
+        public StorageAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AccountType? accountType = default(AccountType?), CustomDomain customDomain = default(CustomDomain))
         {
+            Tags = tags;
             AccountType = accountType;
             CustomDomain = customDomain;
         }
+
+        /// <summary>
+        /// Resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the account type. Note that StandardZRS and
@@ -60,9 +67,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (this.CustomDomain != null)
+            {
+                this.CustomDomain.Validate();
+            }
         }
     }
 }

@@ -134,9 +134,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (this.CustomDomain != null)
+            {
+                this.CustomDomain.Validate();
+            }
         }
     }
 }
