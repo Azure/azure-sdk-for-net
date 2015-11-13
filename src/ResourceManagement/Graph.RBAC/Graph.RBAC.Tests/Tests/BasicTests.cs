@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void UserTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void FilteredListUsersTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
                 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void GetUserUsingSignInNameTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 //To run this test, you will need to prepare a tenant which contains a MSA based guest user, such as a live id.
                 var client = GetGraphClient(context);
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void ListUsersTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void ListPagedUsersTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
                 List<User> createdUsers = new List<User>();
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void GroupTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact (Skip = "TODO: Fix test")]
         public void FilteredListGroupsTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void ListGroupsTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void ListPagedGroupsTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var graphTestBase = new GraphTestBase();
                 var client = GetGraphClient(context);
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void GroupMemebersTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void QueryServicePrincipalTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void ObjectsByObjectIdsTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
                 
