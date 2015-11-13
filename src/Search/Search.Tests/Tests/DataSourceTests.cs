@@ -1,31 +1,18 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using Hyak.Common;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.TestCategories;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
+
     public sealed class DataSourceTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
@@ -39,14 +26,11 @@ namespace Microsoft.Azure.Search.Tests
 
                 CreateAndValidateDataSource(
                     searchClient,
-                    CreateTestDataSource(
-                        DataSourceType.DocumentDb, 
+                    CreateTestDocDbDataSource(
                         new HighWaterMarkChangeDetectionPolicy("_ts"),
                         new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1")));
 
-                CreateAndValidateDataSource(
-                    searchClient,
-                    CreateTestDataSource(DataSourceType.AzureSql, new SqlIntegratedChangeTrackingPolicy()));
+                CreateAndValidateDataSource(searchClient, CreateTestSqlDataSource());
             });
         }
 
@@ -62,7 +46,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 CloudException e = Assert.Throws<CloudException>(() => searchClient.DataSources.Create(dataSource));
                 Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("Unsupported data source type 'thistypedoesnotexist'", e.Error.Message);
+                Assert.Equal("Unsupported data source type 'thistypedoesnotexist'", e.Body.Message);
             });
         }
 
@@ -77,14 +61,11 @@ namespace Microsoft.Azure.Search.Tests
 
                 CreateAndGetDataSource(
                     searchClient,
-                    CreateTestDataSource(
-                        DataSourceType.DocumentDb,
+                    CreateTestDocDbDataSource(
                         new HighWaterMarkChangeDetectionPolicy("_ts"),
                         new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1")));
 
-                CreateAndGetDataSource(
-                    searchClient,
-                    CreateTestDataSource(DataSourceType.AzureSql, new SqlIntegratedChangeTrackingPolicy()));
+                CreateAndGetDataSource(searchClient, CreateTestSqlDataSource());
             });
         }
 
@@ -109,20 +90,18 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource initial = CreateTestDataSource();
 
-                DataSourceDefinitionResponse createResponse = searchClient.DataSources.Create(initial);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.DataSources.Create(initial);
 
-                DataSource updated = CreateTestDataSource();
-                updated.Name = initial.Name;
-                updated.Container = new DataContainer("somethingdifferent");
-                updated.Description = "somethingdifferent";
-                updated.DataChangeDetectionPolicy = new HighWaterMarkChangeDetectionPolicy("rowversion");
-                updated.DataDeletionDetectionPolicy = new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1");
+                DataSource updatedExpected = CreateTestDataSource();
+                updatedExpected.Name = initial.Name;
+                updatedExpected.Container = new DataContainer("somethingdifferent");
+                updatedExpected.Description = "somethingdifferent";
+                updatedExpected.DataChangeDetectionPolicy = new HighWaterMarkChangeDetectionPolicy("rowversion");
+                updatedExpected.DataDeletionDetectionPolicy = new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1");
 
-                DataSourceDefinitionResponse updateResponse = searchClient.DataSources.CreateOrUpdate(updated);
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+                DataSource updatedActual = searchClient.DataSources.CreateOrUpdate(updatedExpected);
 
-                AssertDataSourcesEqual(updated, updateResponse.DataSource);
+                AssertDataSourcesEqual(updatedExpected, updatedActual);
             });
         }
 
@@ -135,8 +114,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource dataSource = CreateTestDataSource();
 
-                DataSourceDefinitionResponse response = searchClient.DataSources.CreateOrUpdate(dataSource);
-                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                AzureOperationResponse<DataSource> response = 
+                    searchClient.DataSources.CreateOrUpdateWithHttpMessagesAsync(dataSource.Name, dataSource).Result;
+                Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
             });
         }
 
@@ -150,18 +130,18 @@ namespace Microsoft.Azure.Search.Tests
                 DataSource dataSource = CreateTestDataSource();
 
                 // Try delete before the datasource even exists.
-                AzureOperationResponse deleteResponse = searchClient.DataSources.Delete(dataSource.Name);
-                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+                AzureOperationResponse deleteResponse = 
+                    searchClient.DataSources.DeleteWithHttpMessagesAsync(dataSource.Name).Result;
+                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
-                DataSourceDefinitionResponse createResponse = searchClient.DataSources.Create(dataSource);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.DataSources.Create(dataSource);
 
                 // Now delete twice.
-                deleteResponse = searchClient.DataSources.Delete(dataSource.Name);
-                Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+                deleteResponse = searchClient.DataSources.DeleteWithHttpMessagesAsync(dataSource.Name).Result;
+                Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
 
-                deleteResponse = searchClient.DataSources.Delete(dataSource.Name);
-                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+                deleteResponse = searchClient.DataSources.DeleteWithHttpMessagesAsync(dataSource.Name).Result;
+                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
             });
         }
 
@@ -173,17 +153,13 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 // Create a datasource of each supported type
-                DataSource dataSource1 = CreateTestDataSource(DataSourceType.AzureSql);
-                DataSource dataSource2 = CreateTestDataSource(DataSourceType.DocumentDb);
+                DataSource dataSource1 = CreateTestSqlDataSource();
+                DataSource dataSource2 = CreateTestDocDbDataSource();
 
-                DataSourceDefinitionResponse createResponse = searchClient.DataSources.Create(dataSource1);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.DataSources.Create(dataSource1);
+                searchClient.DataSources.Create(dataSource2);
 
-                createResponse = searchClient.DataSources.Create(dataSource2);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-
-                DataSourceListResponse listResponse = searchClient.DataSources.List();
-                Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+                DataSourceListResult listResponse = searchClient.DataSources.List();
                 Assert.Equal(2, listResponse.DataSources.Count);
 
                 IEnumerable<string> dataSourceNames = listResponse.DataSources.Select(i => i.Name);
@@ -215,22 +191,18 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        private void CreateAndValidateDataSource(SearchServiceClient searchClient, DataSource dataSource)
+        private void CreateAndValidateDataSource(SearchServiceClient searchClient, DataSource expectedDataSource)
         {
-            DataSourceDefinitionResponse createResponse = searchClient.DataSources.Create(dataSource);
-            Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-            AssertDataSourcesEqual(dataSource, createResponse.DataSource);
+            DataSource actualDataSource = searchClient.DataSources.Create(expectedDataSource);
+            AssertDataSourcesEqual(expectedDataSource, actualDataSource);
         }
 
-        private void CreateAndGetDataSource(SearchServiceClient searchClient, DataSource dataSource)
+        private void CreateAndGetDataSource(SearchServiceClient searchClient, DataSource expectedDataSource)
         {
-            DataSourceDefinitionResponse createResponse = searchClient.DataSources.Create(dataSource);
-            Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+            searchClient.DataSources.Create(expectedDataSource);
+            DataSource actualDataSource = searchClient.DataSources.Get(expectedDataSource.Name);
 
-            DataSourceDefinitionResponse getResponse = searchClient.DataSources.Get(dataSource.Name);
-            Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-
-            AssertDataSourcesEqual(dataSource, getResponse.DataSource, isGet: true);
+            AssertDataSourcesEqual(expectedDataSource, actualDataSource, isGet: true);
         }
 
         private static void AssertDataSourcesEqual(DataSource expected, DataSource actual, bool isGet = false)
@@ -325,18 +297,34 @@ namespace Microsoft.Azure.Search.Tests
 
         private static DataSource CreateTestDataSource()
         {
-            return CreateTestDataSource(DataSourceType.AzureSql);
+            return CreateTestSqlDataSource();
         }
 
-        private static DataSource CreateTestDataSource(
-            DataSourceType type, 
+        private static DataSource CreateTestSqlDataSource()
+        {
+            const string FakeConnectionString =
+                "Server=tcp:fake,1433;Database=fake;User ID=fake;Password=fake;Trusted_Connection=False;" +
+                "Encrypt=True;Connection Timeout=30;";
+
+            return
+                new DataSource(
+                    TestUtilities.GenerateName(),
+                    DataSourceType.AzureSql,
+                    new DataSourceCredentials(FakeConnectionString),
+                    new DataContainer("faketable"))
+                {
+                    DataChangeDetectionPolicy = new HighWaterMarkChangeDetectionPolicy("fakecolumn")
+                };
+        }
+
+        private static DataSource CreateTestDocDbDataSource(
             DataChangeDetectionPolicy changeDetectionPolicy = null,
             DataDeletionDetectionPolicy deletionDetectionPolicy = null)
         {
-            return 
+            return
                 new DataSource(
                     TestUtilities.GenerateName(),
-                    type,
+                    DataSourceType.DocumentDb,
                     new DataSourceCredentials(connectionString: "fake"),
                     new DataContainer("faketable"))
                 {

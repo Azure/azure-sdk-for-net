@@ -1,25 +1,14 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Linq;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Spatial;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
+    using System.Linq;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Spatial;
+
     [SerializePropertyNamesAsCamelCase]
     public class Hotel
     {
@@ -57,23 +46,23 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             return
-                HotelId == other.HotelId &&
-                BaseRate == other.BaseRate &&
-                Description == other.Description &&
-                DescriptionFr == other.DescriptionFr &&
-                HotelName == other.HotelName &&
-                Category == other.Category &&
-                ((Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : Tags.SequenceEqual(other.Tags ?? new string[0])) &&
-                ParkingIncluded == other.ParkingIncluded &&
-                SmokingAllowed == other.SmokingAllowed &&
-                LastRenovationDate == other.LastRenovationDate &&
-                Rating == other.Rating &&
-                ((Location == null) ? other.Location == null : Location.Equals(other.Location));
+                this.HotelId == other.HotelId &&
+                this.BaseRate == other.BaseRate &&
+                this.Description == other.Description &&
+                this.DescriptionFr == other.DescriptionFr &&
+                this.HotelName == other.HotelName &&
+                this.Category == other.Category &&
+                ((this.Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : this.Tags.SequenceEqual(other.Tags ?? new string[0])) &&
+                this.ParkingIncluded == other.ParkingIncluded &&
+                this.SmokingAllowed == other.SmokingAllowed &&
+                this.LastRenovationDate == other.LastRenovationDate &&
+                this.Rating == other.Rating &&
+                ((this.Location == null) ? other.Location == null : this.Location.Equals(other.Location));
         }
 
         public override int GetHashCode()
         {
-            return (HotelId != null) ? HotelId.GetHashCode() : 0;
+            return (this.HotelId != null) ? this.HotelId.GetHashCode() : 0;
         }
 
         public override string ToString()
@@ -85,37 +74,37 @@ namespace Microsoft.Azure.Search.Tests
 
             return String.Format(
                 Format,
-                HotelId,
-                BaseRate,
-                Description,
-                DescriptionFr,
-                HotelName,
-                Category,
-                (Tags != null) ? String.Join(",", Tags) : "null",
-                ParkingIncluded,
-                SmokingAllowed,
-                LastRenovationDate,
-                Rating,
-                Location != null ? Location.Longitude : 0,
-                Location != null ? Location.Latitude : 0);
+                this.HotelId,
+                this.BaseRate,
+                this.Description,
+                this.DescriptionFr,
+                this.HotelName,
+                this.Category,
+                (this.Tags != null) ? String.Join(",", this.Tags) : "null",
+                this.ParkingIncluded,
+                this.SmokingAllowed,
+                this.LastRenovationDate,
+                this.Rating,
+                this.Location != null ? this.Location.Longitude : 0,
+                this.Location != null ? this.Location.Latitude : 0);
         }
 
         public Document AsDocument()
         {
             return new Document()
             {
-                { "baseRate", BaseRate },
-                { "category", Category },
-                { "description", Description },
-                { "descriptionFr", DescriptionFr },
-                { "hotelId", HotelId },
-                { "hotelName", HotelName },
-                { "lastRenovationDate", LastRenovationDate },
-                { "location", Location },
-                { "parkingIncluded", ParkingIncluded },
-                { "rating", Rating.HasValue ? (long?)Rating.Value : null }, // JSON.NET always deserializes to int64
-                { "smokingAllowed", SmokingAllowed },
-                { "tags", Tags ?? new string[0] }   // OData always gives [] instead of null for collections.
+                { "baseRate", this.BaseRate },
+                { "category", this.Category },
+                { "description", this.Description },
+                { "descriptionFr", this.DescriptionFr },
+                { "hotelId", this.HotelId },
+                { "hotelName", this.HotelName },
+                { "lastRenovationDate", this.LastRenovationDate },
+                { "location", this.Location },
+                { "parkingIncluded", this.ParkingIncluded },
+                { "rating", this.Rating.HasValue ? (long?)this.Rating.Value : null }, // JSON.NET always deserializes to int64
+                { "smokingAllowed", this.SmokingAllowed },
+                { "tags", this.Tags ?? new string[0] }   // OData always gives [] instead of null for collections.
             };
         }
     }

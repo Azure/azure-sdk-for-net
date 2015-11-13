@@ -1,31 +1,19 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using Hyak.Common;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.TestCategories;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
+
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
     public abstract class SuggestTests : QueryTests
@@ -35,10 +23,9 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
@@ -59,9 +46,8 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-            DocumentSuggestResponse response = client.Documents.Suggest("good", "sg", suggestParameters);
+            DocumentSuggestResult response = client.Documents.Suggest("good", "sg", suggestParameters);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
@@ -111,10 +97,9 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestFuzzyIsOffByDefault()
         {
             SearchIndexClient client = GetClientForQuery();
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hitel", "sg");
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Results);
             Assert.Equal(0, response.Results.Count);
         }
@@ -124,10 +109,9 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { UseFuzzyMatching = true };
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hitel", "sg", suggestParameters);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Results);
             Assert.Equal(5, response.Results.Count);
         }
@@ -138,7 +122,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var suggestParameters =
                 new SuggestParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
             AssertKeySequenceEqual(response, "1", "5");
@@ -157,7 +141,7 @@ namespace Microsoft.Azure.Search.Tests
                     Top = 1
                 };
 
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
             AssertKeySequenceEqual(response, "1");
@@ -182,7 +166,7 @@ namespace Microsoft.Azure.Search.Tests
                     }
                 };
 
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
             AssertKeySequenceEqual(response, "1", "4", "3", "5", "2");
@@ -199,7 +183,7 @@ namespace Microsoft.Azure.Search.Tests
                     Top = 3
                 };
 
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
             AssertKeySequenceEqual(response, "1", "2", "3");
@@ -215,12 +199,11 @@ namespace Microsoft.Azure.Search.Tests
                     Select = new[] { "hotelName", "baseRate" }
                 };
 
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
 
             var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(expectedDoc, response.Results.First().Document);
@@ -236,10 +219,9 @@ namespace Microsoft.Azure.Search.Tests
                     SearchFields = new[] { "hotelName" },
                 };
 
-            DocumentSuggestResponse<Hotel> response =
+            DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Results);
             Assert.Equal(0, response.Results.Count);
         }
@@ -249,9 +231,8 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var parameters = new SuggestParameters() { MinimumCoverage = 50 };
-            DocumentSuggestResponse<Hotel> response = client.Documents.Suggest<Hotel>("luxury", "sg", parameters);
+            DocumentSuggestResult<Hotel> response = client.Documents.Suggest<Hotel>("luxury", "sg", parameters);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(100, response.Coverage);
         }
 
@@ -273,8 +254,8 @@ namespace Microsoft.Azure.Search.Tests
                     Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
                 };
 
-            IndexDefinitionResponse createIndexResponse = serviceClient.Indexes.Create(index);
-            SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
@@ -284,54 +265,13 @@ namespace Microsoft.Azure.Search.Tests
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
-            DocumentSuggestResponse<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            DocumentSuggestResult<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc2, response.Results[0].Document);
         }
 
-        [Fact]
-        public void CanSuggestWithDateTimeInStaticModel()
+        private void AssertKeySequenceEqual(DocumentSuggestResult<Hotel> response, params string[] expectedKeys)
         {
-            Run(() =>
-            {
-                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
-
-                Index index =
-                    new Index()
-                    {
-                        Name = TestUtilities.GenerateName(),
-                        Fields = new[]
-                        {
-                            new Field("ISBN", DataType.String) { IsKey = true },
-                            new Field("Title", DataType.String) { IsSearchable = true },
-                            new Field("Author", DataType.String),
-                            new Field("PublishDate", DataType.DateTimeOffset)
-                        },
-                        Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
-                    };
-
-                IndexDefinitionResponse createIndexResponse = serviceClient.Indexes.Create(index);
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
-
-                var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
-                var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-                var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
-
-                indexClient.Documents.Index(batch);
-                SearchTestUtilities.WaitForIndexing();
-
-                var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
-                DocumentSuggestResponse<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Equal(1, response.Results.Count);
-                Assert.Equal(doc2, response.Results[0].Document);
-            });
-        }
-
-        private void AssertKeySequenceEqual(DocumentSuggestResponse<Hotel> response, params string[] expectedKeys)
-        {
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => r.Document.HotelId);
