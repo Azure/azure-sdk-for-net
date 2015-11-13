@@ -33,12 +33,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountCreateTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -75,12 +76,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountDeleteTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -102,12 +104,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountGetTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -155,12 +158,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountListByResourceGroupTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -183,12 +187,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountListBySubscriptionTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
 
                 // Create resource group and storage account
@@ -214,12 +219,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountListKeysTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -246,12 +252,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountRegenerateKeyTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -279,12 +286,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountCheckNameTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -316,12 +324,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountUpdateTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -387,12 +396,13 @@ namespace Storage.Tests
         [Fact]
         public void StorageAccountUsageTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler1);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // Query usage
                 var usages = storageMgmtClient.Usage.List();
