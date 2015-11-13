@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> queryParameters = new List<string>();
             if (filter != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> queryParameters = new List<string>();
             if (filter != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -435,6 +435,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("DELETE");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -737,6 +738,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -872,6 +874,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("DELETE");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -1156,6 +1159,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -1275,7 +1279,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> queryParameters = new List<string>();
             if (filter != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1290,6 +1294,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -1418,7 +1423,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> queryParameters = new List<string>();
             if (filter != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1433,6 +1438,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -1796,6 +1802,7 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {

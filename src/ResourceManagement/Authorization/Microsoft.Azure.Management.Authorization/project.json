@@ -5,6 +5,10 @@
   "tags": [ "Microsoft AutoRest Management REST" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "http://aka.ms/windowsazureapache2",
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
@@ -14,9 +18,9 @@
     "net451": {
       "frameworkAssemblies": {
         "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": {"type": "build"},
-        "System.Linq.Expressions": {"type": "build"},
-        "System.Runtime": {"type": "build"},
+        "System.Threading.Tasks": { "type": "build" },
+        "System.Linq.Expressions": { "type": "build" },
+        "System.Runtime": { "type": "build" },
         "System.Collections": { "type": "build" }
       }
     },

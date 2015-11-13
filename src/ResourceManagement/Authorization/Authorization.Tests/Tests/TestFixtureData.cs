@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Security;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources;
@@ -67,35 +66,24 @@ namespace Authorization.Tests
             }
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                MockContext.Start();
-                
+            {                
                 this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment(), HttpMockServer.CreateInstance()));
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
+
+                TestUtilities.Wait(1000*10);
             }
         }
+
         public ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            var client = context.GetServiceClient<ResourceManagementClient>();
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
-
-            return client;
+            return context.GetServiceClient<ResourceManagementClient>();
         }
 
         public AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context)
         {
-            var client = context.GetServiceClient<AuthorizationManagementClient>();
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
-
-            return client;
+            return context.GetServiceClient<AuthorizationManagementClient>();
         }
 
         public void Dispose()
@@ -146,6 +134,11 @@ namespace Authorization.Tests
             }
         }
 
+        internal void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            this.GraphClient.AddMemberToGroup(groupId, memberObjectId);
+        }
+
         private void CleanupTestData()
         {
             foreach (var user in this.createdUsers)
@@ -172,12 +165,12 @@ namespace Authorization.Tests
                 this.GraphClient.DeleteGroup(group);
             }
 
-            var AuthorizationManagementClient = new AuthorizationManagementClient(
+            var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
                 TestEnvironmentFactory.GetTestEnvironment().Credentials);
-            foreach (var assignment in AuthorizationManagementClient.RoleAssignments.List(null))
+            foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
-                AuthorizationManagementClient.RoleAssignments.DeleteById(assignment.Id);
+                authorizationClient.RoleAssignments.DeleteById(assignment.Id);
             }
         }
     }

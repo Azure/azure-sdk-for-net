@@ -32,7 +32,7 @@ namespace Authorization.Tests
         const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
 
-        public ResourceManagementClient GetResourceManagementClient(MockContext context)
+        public static ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
             var client = context.GetServiceClient<ResourceManagementClient>(); 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
@@ -59,7 +59,6 @@ namespace Authorization.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                MockContext.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
@@ -87,7 +86,6 @@ namespace Authorization.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                MockContext.Start();
                 var authzClient = GetAuthorizationManagementClient(context);
 
                 var resourcePermissions = authzClient.Permissions.ListForResourceGroup("NonExistentResourceGroup");
@@ -108,8 +106,6 @@ namespace Authorization.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                MockContext.Start();
-
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context);
@@ -120,7 +116,7 @@ namespace Authorization.Tests
 
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
                         "Microsoft.Web",
-                        null,
+                        "",
                         "sites",
                         resourceName,
                         WEBSITE_RP_VERSION,
@@ -135,7 +131,7 @@ namespace Authorization.Tests
 
                 var resourcePermissions = authzClient.Permissions.ListForResource(groupName,
                     "Microsoft.Web",
-                    null,
+                    "",
                     "sites",
                     resourceName
                 );
@@ -156,7 +152,6 @@ namespace Authorization.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                MockContext.Start();
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var authzClient = GetAuthorizationManagementClient(context);
 
@@ -165,14 +160,14 @@ namespace Authorization.Tests
                     authzClient.Permissions.ListForResource(
                         "NonExistentResourceGroup",
                         "Microsoft.Web",
-                        null,
+                        "",
                         "sites",
                         resourceName
                     );
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("ResourceGroupNotFound", ce.Response.ToString());
+                    Assert.Equal(HttpStatusCode.NotFound, ce.Response.StatusCode);
                 }
             }
         }

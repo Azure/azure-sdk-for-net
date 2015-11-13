@@ -244,8 +244,13 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static HttpRecorderMode GetCurrentMode()
         {
-            string input = HttpMockServer.FileSystemUtilsObject.GetEnvironmentVariable(ModeEnvironmentVariableName);
+            string input = null;
             HttpRecorderMode mode;
+
+            if(HttpMockServer.FileSystemUtilsObject != null)
+            {
+                input = HttpMockServer.FileSystemUtilsObject.GetEnvironmentVariable(ModeEnvironmentVariableName);
+            }
 
             if (string.IsNullOrEmpty(input))
             {
