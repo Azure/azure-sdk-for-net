@@ -55,7 +55,7 @@ namespace Compute.Tests
         const int UDTooLow = 0;
         const int UDTooHi = 21;
 
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestOperations()
         {
             using (MockContext context = MockContext.Start())

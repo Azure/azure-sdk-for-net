@@ -46,7 +46,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMScaleSetScalingOperations()
         {
             using (MockContext context = MockContext.Start())
@@ -106,7 +106,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMScaleSetUpdateOperations()
         {
             using (MockContext context = MockContext.Start())

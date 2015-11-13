@@ -26,7 +26,7 @@ namespace Compute.Tests
 {
     public class VMDataDiskTests : VMTestBase
     {
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMDataDiskScenario()
         {
             using (MockContext context = MockContext.Start())

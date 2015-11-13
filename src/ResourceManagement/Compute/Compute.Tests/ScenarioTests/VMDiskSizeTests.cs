@@ -27,7 +27,7 @@ namespace Compute.Tests
 {
     public class VMDiskSizeTests : VMTestBase
     {
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMDiskSizeScenario()
         {
             using (MockContext context = MockContext.Start())

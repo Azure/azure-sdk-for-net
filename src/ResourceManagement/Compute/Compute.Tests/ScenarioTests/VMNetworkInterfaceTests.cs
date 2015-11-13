@@ -30,7 +30,7 @@ namespace Compute.Tests
 {
     public class VMNetworkInterfaceTests : VMTestBase
     {
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start())
@@ -93,7 +93,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestMultiNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start())

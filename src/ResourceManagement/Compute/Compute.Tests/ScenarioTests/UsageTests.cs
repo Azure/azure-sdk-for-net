@@ -37,7 +37,7 @@ namespace Compute.Tests
     /// </summary>
     public class UsageTests : VMTestBase
     {
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestListUsages()
         {
             using (MockContext context = MockContext.Start())

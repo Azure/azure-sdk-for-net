@@ -45,7 +45,7 @@ namespace Compute.Tests
             return vmExtension;
         }
 
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start())

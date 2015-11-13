@@ -207,7 +207,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Rerecord test - Network change")]
+        [Fact]
         public void TestVMWithLinuxOSProfile()
         {
             using (MockContext context = MockContext.Start())
