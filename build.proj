@@ -119,17 +119,24 @@
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
-    
-    <CallTarget Targets="BuildDnxLibraries" />
+    <CallTarget Targets="BuildTextFramework" Condition=" @(DnxLibraries) != '' " />
+    <CallTarget Targets="BuildDnxLibraries" Condition=" @(DnxLibraries) != '' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
   
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu restore &quot;%(DnxLibraries.Directory)&quot;"/>
-    <Exec Command="dnu build &quot;%(DnxLibraries.Library)&quot;"/>
-    <Exec Command="dnu build &quot;%(DnxLibraries.Test)&quot;"/>
+    <!--TODO: figure out the right project dependencies through global.json and remove the hard-coded path-->
+    <!--<Exec Command="dnu restore" WorkingDirectory="%(DnxLibraries.RootDir)%(DnxLibraries.Directory)"/>-->
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Resource"/>
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Authorization"/>
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Storage"/>
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Network"/>
+    <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Compute"/>
+    
+    <Exec Command="dnu build" WorkingDirectory="%(DnxLibraries.Library)"/>
+    <Exec Command="dnu build" WorkingDirectory="%(DnxLibraries.Test)"/>
   </Target>
 
   <Target Name="BuildTextFramework">

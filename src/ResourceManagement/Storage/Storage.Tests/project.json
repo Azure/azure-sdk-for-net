@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "HttpRecorder": "",
-    "Microsoft.Azure.Management.Storage": "3.0.2-preview",
+    "Microsoft.Azure.Management.Storage": "",
     "TestFramework": "",
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
     "xunit": "2.1.0",

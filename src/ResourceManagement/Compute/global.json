@@ -1,3 +1,3 @@
 {
-  "projects": [ "../../ClientRuntime.Azure.TestFramework", "./Microsoft.Azure.Management.Compute", "../Storage", "../Resource", "../Network" ]
+  "projects": [ "../../ClientRuntime.Azure.TestFramework", "../Storage/Microsoft.Azure.Management.Storage", "../Resource/Microsoft.Azure.Management.Resources", "../Network", "Microsoft.Azure.Management.Compute", "Compute.Tests"]
 }
