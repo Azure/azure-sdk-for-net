@@ -441,9 +441,9 @@ namespace Microsoft.Azure.Management.Intune
             /// Parameters supplied to the Create or update app to an android policy
             /// operation.
             /// </param>
-            public static void AddGroupForPolicy(this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters)
+            public static void AddGroupForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddGroupForPolicyAsync(hostName, policyId, groupId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddGroupForMAMPolicyAsync(hostName, policyId, groupId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -468,9 +468,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddGroupForPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddGroupForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.AddGroupForPolicyWithHttpMessagesAsync(hostName, policyId, groupId, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.AddGroupForMAMPolicyWithHttpMessagesAsync(hostName, policyId, groupId, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
