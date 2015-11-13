@@ -30,7 +30,7 @@
     "Microsoft.Azure.Management.Storage": "",
     "Microsoft.Azure.Management.Compute": "",
     "Microsoft.Azure.Management.Resources": "",
-    "Microsoft.Azure.Management.Network": "3.0.1-preview"
+    "Microsoft.Azure.Management.Network": ""
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
