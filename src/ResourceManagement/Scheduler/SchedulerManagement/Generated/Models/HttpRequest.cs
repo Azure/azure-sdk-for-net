@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public HttpAuthentication HttpAuthentication { get; set; }
 
         /// <summary>
-        /// Gets or sets the Uri for the request.
+        /// Gets or sets the Uri.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string Body { get; set; }
 
         /// <summary>
-        /// Gets or sets the headers for the request.
+        /// Gets or sets the headers.
         /// </summary>
         [JsonProperty(PropertyName = "headers")]
         public IDictionary<string, string> Headers { get; set; }
