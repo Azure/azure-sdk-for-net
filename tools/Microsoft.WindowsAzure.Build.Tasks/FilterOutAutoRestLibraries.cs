@@ -80,6 +80,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             {
                                 solution.SetMetadata("Library", dir);
                             }
+                            solution.SetMetadata("PackageName", Path.GetFileName(dir));
                         }
                     }
                     else
