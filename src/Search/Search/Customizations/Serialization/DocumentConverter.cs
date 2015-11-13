@@ -1,27 +1,17 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Linq;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Spatial;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Serialization
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Spatial;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
     /// <summary>
     /// Deserializes JSON objects and arrays to .NET types instead of JObject and JArray.
     /// </summary>
@@ -41,7 +31,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(Document).IsAssignableFrom(objectType);
+            return typeof(Document).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         public override object ReadJson(

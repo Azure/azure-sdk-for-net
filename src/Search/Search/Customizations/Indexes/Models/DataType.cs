@@ -1,26 +1,18 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     /// <summary>
     /// Defines the data type of a field in an Azure Search index.
     /// </summary>
-    public sealed class DataType
+    public sealed class DataType : IEquatable<DataType>
     {
         /// <summary>
         /// Indicates that a field contains a string.
@@ -57,6 +49,9 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly DataType GeographyPoint = new DataType("Edm.GeographyPoint");
 
+        private static readonly Lazy<Dictionary<string, DataType>> _typeMap =
+            new Lazy<Dictionary<string, DataType>>(CreateTypeMap, isThreadSafe: true);
+
         private string _name;
 
         private DataType(string typeName)
@@ -86,7 +81,34 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>The name of the DataType as a string.</returns>
         public static implicit operator string(DataType dataType)
         {
-            return dataType.ToString();
+            return (dataType != null) ? dataType.ToString() : null;
+        }
+
+        /// <summary>
+        /// Compares the DataType for equality with another DataType.
+        /// </summary>
+        /// <param name="other">The DataType with which to compare.</param>
+        /// <returns>true if the DataType objects are equal; false otherwise.</returns>
+        public bool Equals(DataType other)
+        {
+            if (object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            return this._name == other._name;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as AnalyzerName);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return _name.GetHashCode();
         }
 
         /// <summary>
@@ -96,6 +118,32 @@ namespace Microsoft.Azure.Search.Models
         public override string ToString()
         {
             return _name;
+        }
+
+        internal static DataType Lookup(string name)
+        {
+            if (name == null)
+            {
+                return null;
+            }
+
+            // If the API sent us an unknown type, it's a bug in the SDK -- just let the dictionary throw.
+            return _typeMap.Value[name];
+        }
+
+        private static Dictionary<string, DataType> CreateTypeMap()
+        {
+            IEnumerable<FieldInfo> allPublicStaticFields =
+                typeof(DataType).GetTypeInfo().DeclaredFields.Where(f => f.IsStatic && f.IsPublic);
+
+            IEnumerable<DataType> allKnownValues =
+                allPublicStaticFields
+                    .Where(f => f.FieldType == typeof(DataType))
+                    .Select(f => f.GetValue(null))
+                    .OfType<DataType>();
+
+            allKnownValues = allKnownValues.Concat(allKnownValues.Select(v => Collection(v)));
+            return allKnownValues.ToDictionary(v => (string)v, v => v);
         }
     }
 }
