@@ -76,7 +76,7 @@ namespace Compute.Tests
         /// Capture VM
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO: Rerecord test - Network change")]
         public void TestVMOperations()
         {
             using (MockContext context = MockContext.Start())
