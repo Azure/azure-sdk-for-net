@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkInterface class.
         /// </summary>
-        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), SubResource networkSecurityGroup = default(SubResource), IList<NetworkInterfaceIpConfiguration> ipConfigurations = default(IList<NetworkInterfaceIpConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
+        public NetworkInterface(string etag = default(string), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             VirtualMachine = virtualMachine;
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
-        public SubResource NetworkSecurityGroup { get; set; }
+        public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets list of IPConfigurations of the NetworkInterface
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<NetworkInterfaceIpConfiguration> IpConfigurations { get; set; }
+        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets DNS Settings in  NetworkInterface
@@ -106,12 +106,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

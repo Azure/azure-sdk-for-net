@@ -64,13 +64,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='routeTableName'>
         /// The name of the route table.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RouteTable>> GetWithHttpMessagesAsync(string resourceGroupName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RouteTable>> GetWithHttpMessagesAsync(string resourceGroupName, string routeTableName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put RouteTable operation creates/updates a route tablein the
         /// specified resource group.

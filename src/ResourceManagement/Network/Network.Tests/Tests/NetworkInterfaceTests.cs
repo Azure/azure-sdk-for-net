@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -10,22 +8,26 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
+    using System.Linq;
+
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class NetworkInterfaceTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkInterfaceApiTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
                 
@@ -40,24 +42,25 @@ namespace Networks.Tests
                 string publicIpName = TestUtilities.GenerateName();
                 string domainNameLabel = TestUtilities.GenerateName();
                 
-                var publicIp = new PublicIpAddress()
+                var publicIp = new PublicIPAddress()
                 {
                     Location = location,
                     Tags = new Dictionary<string, string>()
                     {
                        {"key","value"}
                     },
-                    PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                    DnsSettings = new PublicIpAddressDnsSettings()
+                    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                    DnsSettings = new PublicIPAddressDnsSettings()
                     {
                        DomainNameLabel = domainNameLabel
                     }
                 };
 
                 // Put PublicIPAddress
-                var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
+                var putPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
                 Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
-                var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
+
+                var getPublicIpAddressResponse = networkManagementClient.PublicIPAddresses.Get(resourceGroupName, publicIpName);
 
                 // Create Vnet
                 // Populate parameter for Put Vnet
@@ -93,9 +96,9 @@ namespace Networks.Tests
                     }
                 };
 
-                var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
 
-                var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
 
                 // Create Nic
                 string nicName = TestUtilities.GenerateName();
@@ -108,17 +111,17 @@ namespace Networks.Tests
                         {
                            {"key","value"}
                         },
-                    IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                     {
-                        new NetworkInterfaceIpConfiguration()
+                        new NetworkInterfaceIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             PublicIPAddress = new PublicIPAddress ()
                              {
                                  Id = getPublicIpAddressResponse.Id
                              },
-                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             Subnet = new Subnet()
                              {
                                  Id = getSubnetResponse.Id
                              }
@@ -127,61 +130,58 @@ namespace Networks.Tests
                 };
 
                 // Test NIC apis
-                var putNicResponse = networkResourceProviderClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
-
-                var getNicResponse = networkResourceProviderClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+                
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
                 Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(1, getNicResponse.IpConfigurations.Count);
                 Assert.Equal(ipConfigName, getNicResponse.IpConfigurations[0].Name);
-                Assert.Equal(getPublicIpAddressResponse.Id, getNicResponse.IpConfigurations[0].Id);
-                Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[0].Id);
+                Assert.Equal(getPublicIpAddressResponse.Id, getNicResponse.IpConfigurations[0].PublicIPAddress.Id);
+                Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[0].Subnet.Id);
+                Assert.NotNull(getNicResponse.ResourceGuid);
 
                 // Get all Nics
-                var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
                 Assert.Equal(1, getListNicResponse.Count());
                 Assert.Equal(getNicResponse.Name, getListNicResponse.First().Name);
                 Assert.Equal(getNicResponse.Etag, getListNicResponse.First().Etag);
                 Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
 
                 // Get all Nics in subscription
-                var listNicSubscription = networkResourceProviderClient.NetworkInterfaces.ListAll();
-                Assert.Equal(1, getListNicResponse.Count());
-                Assert.Equal(getNicResponse.Name, listNicSubscription.First().Name);
-                Assert.Equal(getNicResponse.Etag, listNicSubscription.First().Etag);
-                Assert.Equal(listNicSubscription.First().IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
+                var listNicSubscription = networkManagementClient.NetworkInterfaces.ListAll();
+                Assert.NotEqual(0, listNicSubscription.Count());
 
                 // Delete Nic
-                networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
-
-                getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+                
+                getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
                 Assert.Equal(0, getListNicResponse.Count());
 
                 // Delete PublicIPAddress
-                networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
-
+                networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
+                
                 // Delete VirtualNetwork
-                networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
 
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkInterfaceDnsSettingsTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
-                // IDNS is supported only in centralus currently
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
-                var location = "centralus";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -223,9 +223,9 @@ namespace Networks.Tests
                     }
                 };
 
-                var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
 
-                var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
 
                 // Create Nic
                 string nicName = TestUtilities.GenerateName();
@@ -238,13 +238,13 @@ namespace Networks.Tests
                         {
                            {"key","value"}
                         },
-                    IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                     {
-                        new NetworkInterfaceIpConfiguration()
+                        new NetworkInterfaceIPConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                             Subnet = new Microsoft.Azure.Management.Network.Models.SubResource()
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
                              {
                                  Id = getSubnetResponse.Id
                              }
@@ -258,9 +258,9 @@ namespace Networks.Tests
                 };
 
                 // Test NIC apis
-                var putNicResponse = networkResourceProviderClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
-
-                var getNicResponse = networkResourceProviderClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+                
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
                 Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
                 Assert.Null(getNicResponse.VirtualMachine);
@@ -272,16 +272,130 @@ namespace Networks.Tests
                 Assert.Contains("1.0.0.2", getNicResponse.DnsSettings.DnsServers);
                 Assert.Equal("idnstest", getNicResponse.DnsSettings.InternalDnsNameLabel);
                 Assert.Equal(0, getNicResponse.DnsSettings.AppliedDnsServers.Count);
-                Assert.Null(getNicResponse.DnsSettings.InternalFqdn);
+                Assert.NotNull(getNicResponse.DnsSettings.InternalFqdn);
 
                 // Delete Nic
-                networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
-
-                var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Null(getListNicResponse);
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+                
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
 
                 // Delete VirtualNetwork
-                networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
+
+        [Fact]
+        public void NetworkInterfaceEnableIPForwardingTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = MockContext.Start())
+            {
+                
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+                
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // Create Vnet
+                // Populate parameter for Put Vnet
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
+                             {
+                                 Id = getSubnetResponse.Id
+                             }
+                        }
+                    },
+                    EnableIPForwarding = false,
+                };
+
+                // Test NIC apis
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.Name, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Null(getNicResponse.VirtualMachine);
+                Assert.Null(getNicResponse.MacAddress);
+                Assert.Equal(1, getNicResponse.IpConfigurations.Count);
+                Assert.Equal(ipConfigName, getNicResponse.IpConfigurations[0].Name);
+                Assert.False(getNicResponse.EnableIPForwarding);
+
+                getNicResponse.EnableIPForwarding = true;
+                networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, getNicResponse);
+                getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.Name, nicName);
+                Assert.True(getNicResponse.EnableIPForwarding);
+
+                // Delete Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
+
+                // Delete VirtualNetwork
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
     }

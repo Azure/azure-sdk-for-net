@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -9,26 +8,28 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
+    using System.Linq;
+
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class NetworkSecurityGroupTests
     {
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkSecurityGroupApiTest()
         {
-            var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
+            var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
-
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "west us";
-
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -44,12 +45,13 @@ namespace Networks.Tests
                 };
 
                 // Put Nsg
-                var putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
                 Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
                 // Get NSG
-                var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
                 Assert.Equal(networkSecurityGroupName, getNsgResponse.Name);
+                Assert.NotNull(getNsgResponse.ResourceGuid);
                 Assert.Equal(6, getNsgResponse.DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", getNsgResponse.DefaultSecurityRules[0].Name);
                 Assert.Equal("AllowAzureLoadBalancerInBound", getNsgResponse.DefaultSecurityRules[1].Name);
@@ -71,7 +73,7 @@ namespace Networks.Tests
                 Assert.Equal("*", getNsgResponse.DefaultSecurityRules[0].SourcePortRange);
 
                 // List NSG
-                var listNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.List(resourceGroupName);
+                var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(1, listNsgResponse.Count());
                 Assert.Equal(networkSecurityGroupName, listNsgResponse.First().Name);
                 Assert.Equal(6, listNsgResponse.First().DefaultSecurityRules.Count);
@@ -84,41 +86,32 @@ namespace Networks.Tests
                 Assert.Equal(getNsgResponse.Etag, listNsgResponse.First().Etag);
 
                 // List NSG in a subscription
-                var listNsgSubsciptionResponse = networkResourceProviderClient.NetworkSecurityGroups.ListAll();
-                Assert.Equal(1, listNsgSubsciptionResponse.Count());
-                Assert.Equal(networkSecurityGroupName, listNsgSubsciptionResponse.First().Name);
-                Assert.Equal(6, listNsgSubsciptionResponse.First().DefaultSecurityRules.Count);
-                Assert.Equal("AllowVnetInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[0].Name);
-                Assert.Equal("AllowAzureLoadBalancerInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[1].Name);
-                Assert.Equal("DenyAllInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[2].Name);
-                Assert.Equal("AllowVnetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[3].Name);
-                Assert.Equal("AllowInternetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[4].Name);
-                Assert.Equal("DenyAllOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[5].Name);
-                Assert.Equal(getNsgResponse.Etag, listNsgSubsciptionResponse.First().Etag);
+                var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
+                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
 
                 // Delete NSG
-                networkResourceProviderClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
-
+                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+                
                 // List NSG
-                listNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.List(resourceGroupName);
+                listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(0, listNsgResponse.Count());
             }
         }
 
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void NetworkSecurityGroupWithRulesApiTest()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (var context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "west us";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -154,11 +147,11 @@ namespace Networks.Tests
                 };
 
                 // Put Nsg
-                var putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
                 Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
                 // Get NSG
-                var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
                 Assert.Equal(networkSecurityGroupName, getNsgResponse.Name);
                 Assert.Equal(6, getNsgResponse.DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", getNsgResponse.DefaultSecurityRules[0].Name);
@@ -181,7 +174,7 @@ namespace Networks.Tests
                 Assert.Equal("655", getNsgResponse.SecurityRules[0].SourcePortRange);
 
                 // List NSG
-                var listNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.List(resourceGroupName);
+                var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(1, listNsgResponse.Count());
                 Assert.Equal(networkSecurityGroupName, listNsgResponse.First().Name);
                 Assert.Equal(6, listNsgResponse.First().DefaultSecurityRules.Count);
@@ -194,17 +187,8 @@ namespace Networks.Tests
                 Assert.Equal(getNsgResponse.Etag, listNsgResponse.First().Etag);
 
                 // List NSG in a subscription
-                var listNsgSubsciptionResponse = networkResourceProviderClient.NetworkSecurityGroups.ListAll();
-                Assert.Equal(1, listNsgSubsciptionResponse.Count());
-                Assert.Equal(networkSecurityGroupName, listNsgSubsciptionResponse.First().Name);
-                Assert.Equal(6, listNsgSubsciptionResponse.First().DefaultSecurityRules.Count);
-                Assert.Equal("AllowVnetInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[0].Name);
-                Assert.Equal("AllowAzureLoadBalancerInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[1].Name);
-                Assert.Equal("DenyAllInBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[2].Name);
-                Assert.Equal("AllowVnetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[3].Name);
-                Assert.Equal("AllowInternetOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[4].Name);
-                Assert.Equal("DenyAllOutBound", listNsgSubsciptionResponse.First().DefaultSecurityRules[5].Name);
-                Assert.Equal(getNsgResponse.Etag, listNsgSubsciptionResponse.First().Etag);
+                var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
+                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
 
                 // Add a new security rule
                 var SecurityRule = new SecurityRule()
@@ -223,12 +207,11 @@ namespace Networks.Tests
 
                 networkSecurityGroup.SecurityRules.Add(SecurityRule);
 
-                putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
-
+                putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                
                 // Get NSG
-                getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
-
+                getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+                
                 // Verify the security rule
                 Assert.Equal(SecurityRuleAccess.Deny, getNsgResponse.SecurityRules[1].Access);
                 Assert.Equal("Test outbound security rule", getNsgResponse.SecurityRules[1].Description);
@@ -242,10 +225,10 @@ namespace Networks.Tests
                 Assert.Equal("656", getNsgResponse.SecurityRules[1].SourcePortRange);
 
                 // Delete NSG
-                networkResourceProviderClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
-
+                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+                
                 // List NSG
-                listNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.List(resourceGroupName);
+                listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
                 Assert.Equal(0, listNsgResponse.Count());
             }
         }

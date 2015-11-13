@@ -110,9 +110,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkSecurityGroupName'>
             /// The name of the network security group.
             /// </param>
-            public static NetworkSecurityGroup Get(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName)
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
+            public static NetworkSecurityGroup Get(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).GetAsync(resourceGroupName, networkSecurityGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).GetAsync(resourceGroupName, networkSecurityGroupName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,12 +131,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkSecurityGroupName'>
             /// The name of the network security group.
             /// </param>
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkSecurityGroup> GetAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSecurityGroup> GetAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroup> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroup> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

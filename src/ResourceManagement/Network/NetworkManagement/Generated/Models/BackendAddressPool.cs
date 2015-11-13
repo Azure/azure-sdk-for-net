@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the BackendAddressPool class.
         /// </summary>
-        public BackendAddressPool(string name = default(string), string etag = default(string), IList<SubResource> backendIPConfigurations = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string))
+        public BackendAddressPool(string name = default(string), string etag = default(string), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to IPs defined in NICs
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
-        public IList<SubResource> BackendIPConfigurations { get; set; }
+        public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets Load Balancing rules that use this Backend Address Pool

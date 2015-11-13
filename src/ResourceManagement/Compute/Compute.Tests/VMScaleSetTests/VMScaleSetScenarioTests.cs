@@ -48,7 +48,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO: Rerecord test - Network change")]
         [Trait("Name", "TestVMScaleSetScenarioOperations")]
         public void TestVMScaleSetScenarioOperations()
         {

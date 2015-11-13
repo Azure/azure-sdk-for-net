@@ -45,10 +45,10 @@ namespace Compute.Tests
             return client;
         }
 
-        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(MockContext context, RecordedDelegatingHandler handler)
+        public static NetworkManagementClient GetNetworkManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkResourceProviderClient>(handler);
+            var client = context.GetServiceClient<NetworkManagementClient>(handler);
             return client;
         }
 

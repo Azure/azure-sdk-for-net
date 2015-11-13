@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// SubnetsOperations operations.
     /// </summary>
-    internal partial class SubnetsOperations : IServiceOperations<NetworkResourceProviderClient>, ISubnetsOperations
+    internal partial class SubnetsOperations : IServiceOperations<NetworkManagementClient>, ISubnetsOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubnetsOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubnetsOperations(NetworkResourceProviderClient client)
+        internal SubnetsOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete subnet operation deletes the specified subnet.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 204 && (int)statusCode != 202 && (int)statusCode != 200)
+            if ((int)statusCode != 200 && (int)statusCode != 204 && (int)statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -226,13 +226,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetName'>
         /// The name of the subnet.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Subnet>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Subnet>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -264,6 +267,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
@@ -278,6 +282,10 @@ namespace Microsoft.Azure.Management.Network
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (expand != null)
+            {
+                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (queryParameters.Count > 0)
             {
@@ -507,16 +515,16 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(subnetParameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(subnetParameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -530,7 +538,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 201 && (int)statusCode != 200)
+            if ((int)statusCode != 200 && (int)statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -557,13 +565,13 @@ namespace Microsoft.Azure.Management.Network
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 201)
+            if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<Subnet>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)statusCode == 201)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<Subnet>(responseContent, this.Client.DeserializationSettings);

@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for IpAllocationMethod.
+    /// Defines values for IPAllocationMethod.
     /// </summary>
-    public static class IpAllocationMethod
+    public static class IPAllocationMethod
     {
         public const string Static = "Static";
         public const string Dynamic = "Dynamic";

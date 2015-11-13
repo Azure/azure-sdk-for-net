@@ -39,7 +39,7 @@ namespace Compute.Tests
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
         protected StorageManagementClient m_SrpClient;
-        protected NetworkResourceProviderClient m_NrpClient;
+        protected NetworkManagementClient m_NrpClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -58,7 +58,7 @@ namespace Compute.Tests
                         m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
@@ -205,7 +205,7 @@ namespace Compute.Tests
                         Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
-                PublicIpAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
                 
                 Subnet subnetResponse = CreateVNET(rgName);
 
@@ -258,28 +258,28 @@ namespace Compute.Tests
             }
         }
 
-        protected PublicIpAddress CreatePublicIP(string rgName)
+        protected PublicIPAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
             string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
             string domainNameLabel = ComputeManagementTestUtilities.GenerateName("dn");
 
-            var publicIp = new PublicIpAddress()
+            var publicIp = new PublicIPAddress()
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>()
                     {
                         {"key", "value"}
                     },
-                PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                DnsSettings = new PublicIpAddressDnsSettings()
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
                 }
             };
 
-            var putPublicIpAddressResponse = m_NrpClient.PublicIpAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
-            var getPublicIpAddressResponse = m_NrpClient.PublicIpAddresses.Get(rgName, publicIpName);
+            var putPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
+            var getPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.Get(rgName, publicIpName);
             return getPublicIpAddressResponse;
         }
 
@@ -335,12 +335,12 @@ namespace Compute.Tests
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                 {
-                    new NetworkInterfaceIpConfiguration()
+                    new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         Subnet = subnet,
                     }
                 }
@@ -348,7 +348,7 @@ namespace Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource { Id = publicIPaddress };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);

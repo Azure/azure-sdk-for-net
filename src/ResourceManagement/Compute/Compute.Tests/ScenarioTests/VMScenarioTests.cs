@@ -38,7 +38,7 @@ namespace Compute.Tests
         /// Delete VM
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO: Rerecord test - Network change")]
         [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {
