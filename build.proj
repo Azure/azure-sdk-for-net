@@ -60,13 +60,13 @@
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
-  </PropertyGroup>
+</PropertyGroup>
 
   <ItemGroup>
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
     <!--Exclude data plane projects which are managed by parnter service team individually-->
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
-                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln;$(LibrarySourceFolder)\ServiceManagement\**\*.sln;$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\**\*.sln;$(LibrarySourceFolder)\ResourceManagement\Graph.RBAC\**\*.sln"
+                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln;$(LibrarySourceFolder)\ServiceManagement\**\*.sln;$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\**\*.sln"
                       Condition=" '$(Scope)' == 'all' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
@@ -127,8 +127,18 @@
   </Target>
   
   <Target Name="BuildDnxLibraries">
+    <PropertyGroup>
+      <_TemporaryNuGetConfig>$(LibrarySourceFolder)\NuGet.Config</_TemporaryNuGetConfig>
+    </PropertyGroup>
+    <ItemGroup>
+      <_Lines Include="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;" />
+      <_Lines Include="&lt;configuration&gt;&lt;packageSources&gt;" />
+      <_Lines Include="&lt;add key=&quot;local&quot; value=&quot;$(LibraryRoot)localfeed&quot; /&gt;" />
+      <_Lines Include="&lt;/packageSources&gt;&lt;/configuration&gt;" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_TemporaryNuGetConfig)" Lines="@(_Lines)" Overwrite="true" Encoding="Unicode" />
+    
     <!--TODO: figure out the right project dependencies through global.json and remove the hard-coded path-->
-    <!--<Exec Command="dnu restore" WorkingDirectory="%(DnxLibraries.RootDir)%(DnxLibraries.Directory)"/>-->
     <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Resource"/>
     <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Authorization"/>
     <Exec Command="dnu restore" WorkingDirectory="$(LibrarySourceFolder)\ResourceManagement\Storage"/>
