@@ -30,8 +30,8 @@
   </metadata>
   <files>
     <file src="ResourceManagement\Scheduler\SchedulerManagement\**\*.cs" target="src" />
-    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.dll" target="lib\dotnet" />
-    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.pdb" target="lib\dotnet" />
-    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.xml" target="lib\dotnet" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.xml" target="lib\net45" />
   </files>
 </package>

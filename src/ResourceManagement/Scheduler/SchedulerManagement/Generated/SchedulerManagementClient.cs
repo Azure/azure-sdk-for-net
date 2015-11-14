@@ -15,6 +15,8 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 

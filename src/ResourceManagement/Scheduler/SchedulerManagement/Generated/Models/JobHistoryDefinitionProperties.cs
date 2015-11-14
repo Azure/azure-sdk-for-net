@@ -62,8 +62,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
 
         /// <summary>
         /// Gets the job history status. Possible values for this property
-        /// include: 'Completed', 'Failed', 'Cancelled', 'CallbackNotFound',
-        /// 'Postponed'.
+        /// include: 'Completed', 'Failed', 'Postponed'.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobExecutionStatus? Status { get; private set; }

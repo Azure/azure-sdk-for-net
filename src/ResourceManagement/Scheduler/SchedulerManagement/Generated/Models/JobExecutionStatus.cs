@@ -15,10 +15,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         Completed,
         [EnumMember(Value = "Failed")]
         Failed,
-        [EnumMember(Value = "Cancelled")]
-        Cancelled,
-        [EnumMember(Value = "CallbackNotFound")]
-        CallbackNotFound,
         [EnumMember(Value = "Postponed")]
         Postponed
     }

@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -261,9 +262,12 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The (0-based) index of the job history list from which to begin requesting
             /// entries.
             /// </param>
-            public static IPage<JobDefinition> List(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?))
+            /// <param name='filter'>
+            /// The filter to apply on the job state.
+            /// </param>
+            public static IPage<JobDefinition> List(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobStateFilter, bool>> filter = default(Expression<Func<JobStateFilter, bool>>))
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListAsync(resourceGroupName, jobCollectionName, top, skip), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListAsync(resourceGroupName, jobCollectionName, top, skip, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -285,12 +289,15 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The (0-based) index of the job history list from which to begin requesting
             /// entries.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the job state.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobDefinition>> ListAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobDefinition>> ListAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobStateFilter, bool>> filter = default(Expression<Func<JobStateFilter, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobDefinition>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, jobCollectionName, top, skip, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<JobDefinition>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, jobCollectionName, top, skip, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -316,9 +323,12 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The (0-based) index of the job history list from which to begin requesting
             /// entries.
             /// </param>
-            public static IPage<JobHistoryDefinition> ListJobHistory(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?))
+            /// <param name='filter'>
+            /// The filter to apply on the job state.
+            /// </param>
+            public static IPage<JobHistoryDefinition> ListJobHistory(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobHistoryFilter, bool>> filter = default(Expression<Func<JobHistoryFilter, bool>>))
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListJobHistoryAsync(resourceGroupName, jobCollectionName, jobName, top, skip), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListJobHistoryAsync(resourceGroupName, jobCollectionName, jobName, top, skip, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -343,12 +353,15 @@ namespace Microsoft.Azure.Management.Scheduler
             /// The (0-based) index of the job history list from which to begin requesting
             /// entries.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the job state.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobHistoryFilter, bool>> filter = default(Expression<Func<JobHistoryFilter, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobHistoryDefinition>> result = await operations.ListJobHistoryWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, top, skip, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<JobHistoryDefinition>> result = await operations.ListJobHistoryWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, top, skip, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

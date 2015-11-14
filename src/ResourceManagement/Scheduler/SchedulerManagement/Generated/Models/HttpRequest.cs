@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Initializes a new instance of the HttpRequest class.
         /// </summary>
-        public HttpRequest(HttpAuthentication httpAuthentication = default(HttpAuthentication), string uri = default(string), string method = default(string), string body = default(string), IDictionary<string, string> headers = default(IDictionary<string, string>))
+        public HttpRequest(HttpAuthentication authentication = default(HttpAuthentication), string uri = default(string), string method = default(string), string body = default(string), IDictionary<string, string> headers = default(IDictionary<string, string>))
         {
-            HttpAuthentication = httpAuthentication;
+            Authentication = authentication;
             Uri = uri;
             Method = method;
             Body = body;
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Gets or sets the http authentication.
         /// </summary>
-        [JsonProperty(PropertyName = "httpAuthentication")]
-        public HttpAuthentication HttpAuthentication { get; set; }
+        [JsonProperty(PropertyName = "authentication")]
+        public HttpAuthentication Authentication { get; set; }
 
         /// <summary>
         /// Gets or sets the Uri.

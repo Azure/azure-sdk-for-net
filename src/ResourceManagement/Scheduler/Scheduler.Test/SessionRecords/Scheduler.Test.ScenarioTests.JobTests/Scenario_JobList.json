@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE2MTM3P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301?api-version=2014-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxP2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"jc16137\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Minute\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"jc13301\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Minute\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -13,7 +13,7 @@
           "297"
         ],
         "x-ms-client-request-id": [
-          "989e9296-8368-43c1-8e15-2798ac375604"
+          "25d33367-aada-480e-82ae-fa1cab5a0f34"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc16137\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"minute\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc13301\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"minute\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "385"
@@ -37,16 +37,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9e992388-73d1-44ee-87d7-07ffb0cb0c84"
+          "c235a6ee-7975-4449-bd63-ec0090ae7c4b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "64ed3f7a-90f4-4069-96e2-051567a3c932"
+          "720096d3-3949-44c8-9bda-07111aa99dac"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151105T191321Z:64ed3f7a-90f4-4069-96e2-051567a3c932"
+          "WESTUS:20151113T233141Z:720096d3-3949-44c8-9bda-07111aa99dac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -55,7 +55,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Nov 2015 19:13:21 GMT"
+          "Fri, 13 Nov 2015 23:31:41 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -70,8 +70,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j12162?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE2MTM3L2pvYnMvajEyMTYyP2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j11845?api-version=2014-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxL2pvYnMvajExODQ1P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"type\": \"Http\",\r\n      \"request\": {\r\n        \"uri\": \"http://www.bing.com/\",\r\n        \"method\": \"GET\"\r\n      }\r\n    },\r\n    \"state\": \"Enabled\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -82,7 +82,7 @@
           "236"
         ],
         "x-ms-client-request-id": [
-          "154f92de-0573-4baf-bf90-03ea488c9e54"
+          "c674bf33-7081-40ee-b909-9a9a0830884d"
         ],
         "accept-language": [
           "en-US"
@@ -91,7 +91,7 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j12162\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc16137/j12162\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"request\": {\r\n        \"uri\": \"http://www.bing.com/\",\r\n        \"method\": \"GET\"\r\n      },\r\n      \"type\": \"Http\"\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-11-05T19:13:41.3411345Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j11845\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc13301/j11845\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"request\": {\r\n        \"uri\": \"http://www.bing.com/\",\r\n        \"method\": \"GET\"\r\n      },\r\n      \"type\": \"Http\"\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-11-13T23:32:02.1701479Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "505"
@@ -106,16 +106,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "00000000-0000-0000-0000-000000000000"
+          "bf7326fd-e6fe-4191-a29b-8ea0f6bd872c"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "efdc1d2d-9261-4d1f-a11b-9c9ef217f78e"
+          "1f1e0970-3e77-4335-9537-5d4aaf903020"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151105T191321Z:efdc1d2d-9261-4d1f-a11b-9c9ef217f78e"
+          "WESTUS:20151113T233142Z:1f1e0970-3e77-4335-9537-5d4aaf903020"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -124,7 +124,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Nov 2015 19:13:21 GMT"
+          "Fri, 13 Nov 2015 23:31:41 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -139,8 +139,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j28502?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE2MTM3L2pvYnMvajI4NTAyP2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j29838?api-version=2014-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxL2pvYnMvajI5ODM4P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-14T00:00:00Z\",\r\n    \"action\": {\r\n      \"type\": \"Http\",\r\n      \"request\": {\r\n        \"uri\": \"http://www.google.com/\",\r\n        \"method\": \"POST\"\r\n      }\r\n    },\r\n    \"state\": \"Disabled\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -151,7 +151,7 @@
           "240"
         ],
         "x-ms-client-request-id": [
-          "d354c8c0-0b44-4e3c-88c6-d3729fd6ec9a"
+          "f3efb6ce-4ecf-4fb5-9968-0a85953cf520"
         ],
         "accept-language": [
           "en-US"
@@ -160,7 +160,7 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j28502\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc16137/j28502\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-14T00:00:00Z\",\r\n    \"action\": {\r\n      \"request\": {\r\n        \"uri\": \"http://www.google.com/\",\r\n        \"method\": \"POST\"\r\n      },\r\n      \"type\": \"Http\"\r\n    },\r\n    \"state\": \"disabled\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j29838\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc13301/j29838\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-14T00:00:00Z\",\r\n    \"action\": {\r\n      \"request\": {\r\n        \"uri\": \"http://www.google.com/\",\r\n        \"method\": \"POST\"\r\n      },\r\n      \"type\": \"Http\"\r\n    },\r\n    \"state\": \"disabled\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "394"
@@ -175,16 +175,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "00000000-0000-0000-0000-000000000000"
+          "2defc0f7-95eb-4428-8a39-052ff3b8300b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "1a58c2f1-6827-4d32-866f-133a2d28cbe6"
+          "60fda001-554e-48c9-935d-887ca672ff61"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151105T191322Z:1a58c2f1-6827-4d32-866f-133a2d28cbe6"
+          "WESTUS:20151113T233142Z:60fda001-554e-48c9-935d-887ca672ff61"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -193,7 +193,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Nov 2015 19:13:22 GMT"
+          "Fri, 13 Nov 2015 23:31:41 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -208,13 +208,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE2MTM3L2pvYnM/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs?api-version=2014-08-01-preview&$top=5&$filter=state%20eq%20Disabled",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxL2pvYnM/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3JiR0b3A9NSYkZmlsdGVyPXN0YXRlJTIwZXElMjBEaXNhYmxlZA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24e3fd7a-e5e1-46d9-bd49-d7a895b85ddf"
+          "60a52de6-bc85-4908-aed5-30c7e44b1c38"
         ],
         "accept-language": [
           "en-US"
@@ -223,10 +223,10 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j12162\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc16137/j12162\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-13T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.bing.com/\",\r\n            \"method\": \"GET\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"enabled\",\r\n        \"status\": {\r\n          \"nextExecutionTime\": \"2015-11-05T19:13:41.3411345Z\",\r\n          \"executionCount\": 0,\r\n          \"failureCount\": 0,\r\n          \"faultedCount\": 0\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137/jobs/j28502\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc16137/j28502\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-14T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.google.com/\",\r\n            \"method\": \"POST\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"disabled\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j29838\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc13301/j29838\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-14T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.google.com/\",\r\n            \"method\": \"POST\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"disabled\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "928"
+          "422"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -238,16 +238,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d32bda44-4560-4b44-9c0b-e3123a27b4da"
+          "a8981339-b6f7-4329-896e-d12590f1a2e1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14938"
+          "14888"
         ],
         "x-ms-correlation-request-id": [
-          "4f696f63-e647-40b6-aceb-fb38d3ea94e1"
+          "5fc77993-20d1-421b-b5ed-c9a5fd68dad3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151105T191322Z:4f696f63-e647-40b6-aceb-fb38d3ea94e1"
+          "WESTUS:20151113T233142Z:5fc77993-20d1-421b-b5ed-c9a5fd68dad3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -256,7 +256,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Nov 2015 19:13:22 GMT"
+          "Fri, 13 Nov 2015 23:31:42 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -271,13 +271,139 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16137?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE2MTM3P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs?api-version=2014-08-01-preview&$top=5&$filter=state%20eq%20Enabled",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxL2pvYnM/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3JiR0b3A9NSYkZmlsdGVyPXN0YXRlJTIwZXElMjBFbmFibGVk",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ec102cad-ebcd-4c5f-b38f-2e60f405f1f2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j11845\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc13301/j11845\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-13T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.bing.com/\",\r\n            \"method\": \"GET\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"enabled\",\r\n        \"status\": {\r\n          \"nextExecutionTime\": \"2015-11-13T23:32:02.1701479Z\",\r\n          \"executionCount\": 0,\r\n          \"failureCount\": 0,\r\n          \"faultedCount\": 0\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "533"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ba7bc655-b086-408d-a00b-6c82d1f8a332"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14887"
+        ],
+        "x-ms-correlation-request-id": [
+          "714fe34d-5be3-4959-bbcb-e59c27d690a1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151113T233143Z:714fe34d-5be3-4959-bbcb-e59c27d690a1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 23:31:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs?api-version=2014-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxL2pvYnM/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "22bef8d6-3441-472d-baec-de4408cec1ae"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j11845\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc13301/j11845\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-13T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.bing.com/\",\r\n            \"method\": \"GET\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"enabled\",\r\n        \"status\": {\r\n          \"nextExecutionTime\": \"2015-11-13T23:32:02.1701479Z\",\r\n          \"executionCount\": 0,\r\n          \"failureCount\": 0,\r\n          \"faultedCount\": 0\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301/jobs/j29838\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n      \"name\": \"jc13301/j29838\",\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-14T00:00:00Z\",\r\n        \"action\": {\r\n          \"request\": {\r\n            \"uri\": \"http://www.google.com/\",\r\n            \"method\": \"POST\"\r\n          },\r\n          \"type\": \"Http\"\r\n        },\r\n        \"state\": \"disabled\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "928"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5c8e6e23-b26b-437c-9ab8-2dacbc051798"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14886"
+        ],
+        "x-ms-correlation-request-id": [
+          "71457ad1-b42c-4cf3-9c92-2234135a3afe"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151113T233143Z:71457ad1-b42c-4cf3-9c92-2234135a3afe"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 23:31:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13301?api-version=2014-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzEzMzAxP2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "20b1a31a-9058-4d81-b13f-18d3199bc4d4"
+          "e14d8254-c6c0-42c4-9df4-332ddcf7b738"
         ],
         "accept-language": [
           "en-US"
@@ -298,16 +424,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "84346424-9b6c-4e82-b27a-575c3ace68ec"
+          "0f63f727-6955-4050-bd6c-3d8af34d2255"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "c18f7990-d83e-4df2-a95f-0af9f2b0837c"
+          "12ea782a-0cc1-439b-9d32-df1a7810ac6b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151105T191323Z:c18f7990-d83e-4df2-a95f-0af9f2b0837c"
+          "WESTUS:20151113T233144Z:12ea782a-0cc1-439b-9d32-df1a7810ac6b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -316,7 +442,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Nov 2015 19:13:23 GMT"
+          "Fri, 13 Nov 2015 23:31:43 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -333,9 +459,9 @@
   ],
   "Names": {
     "Scenario_JobList": [
-      "jc16137",
-      "j12162",
-      "j28502"
+      "jc13301",
+      "j11845",
+      "j29838"
     ]
   },
   "Variables": {
