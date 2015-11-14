@@ -60,12 +60,23 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
                 if (isAutoRestLibrary)
                 {
+                    string[] nugetProjects = Directory.GetFiles(libFolder, "*.nuget.proj", SearchOption.AllDirectories);
+                    if (nugetProjects.Length > 1)
+                    {
+                        throw new System.InvalidOperationException("We are not able to handle more than 1 nuget projects from the same library");
+                    }
+                    if (nugetProjects.Length == 0)
+                    {
+                        solution.SetMetadata("NugetProj", nugetProjects[0]);
+                        solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
+                    }
                     autoRestOnes.Add(solution);
                 }
                 else
                 {
                     string[] dnxProjectJsonFiles = Directory.GetFiles(libFolder, "project.json", SearchOption.AllDirectories);
-                    if (dnxProjectJsonFiles.Length != 0)
+                    //TODO: find a right place to fix in testframework
+                    if (dnxProjectJsonFiles.Length != 0 && dnxProjectJsonFiles[0].IndexOf("TestFramework") == -1)
                     {
                         dnxLibraryOnes.Add(solution);
                         foreach (var file in dnxProjectJsonFiles)
@@ -78,9 +89,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             }
                             else
                             {
+                                //TODO, this assumption is not reliable, so improve it.
                                 solution.SetMetadata("Library", dir);
+                                solution.SetMetadata("PackageName", Path.GetFileName(dir));
                             }
-                            solution.SetMetadata("PackageName", Path.GetFileName(dir));
                         }
                     }
                     else
