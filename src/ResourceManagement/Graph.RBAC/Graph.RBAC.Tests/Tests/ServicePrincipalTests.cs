@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void CreateDeleteApplicationTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 //Test
                 var passwordCredential = CreatePasswordCredential();
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "TODO: Fix test")]
         public void CreateDeleteServicePrincipalTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ServicePrincipal sp = null;
 

@@ -26,17 +26,17 @@ namespace Microsoft.Azure.Graph.RBAC
     using Models;
 
     /// <summary>
-    /// ApplicationOperations operations.
+    /// ServicePrincipalOperations operations.
     /// </summary>
-    internal partial class ApplicationOperations : IServiceOperations<GraphRbacManagementClient>, IApplicationOperations
+    internal partial class ServicePrincipalOperations : IServiceOperations<GraphRbacManagementClient>, IServicePrincipalOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationOperations class.
+        /// Initializes a new instance of the ServicePrincipalOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ApplicationOperations(GraphRbacManagementClient client)
+        internal ServicePrincipalOperations(GraphRbacManagementClient client)
         {
             if (client == null) 
             {
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Graph.RBAC
         public GraphRbacManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create a new application.
+        /// Creates a service principal in the  directory.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters to create an application.
+        /// Parameters to create a service principal.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(ApplicationCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServicePrincipal>> CreateWithHttpMessagesAsync(ServicePrincipalCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (parameters == null)
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Graph.RBAC
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/applications").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/servicePrincipals").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{tenantID}", Uri.EscapeDataString(this.Client.TenantID));
             List<string> queryParameters = new List<string>();
@@ -135,16 +135,16 @@ namespace Microsoft.Azure.Graph.RBAC
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Application>();
+            var result = new AzureOperationResponse<ServicePrincipal>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Graph.RBAC
             if ((int)statusCode == 201)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Application>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ServicePrincipal>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -198,10 +198,10 @@ namespace Microsoft.Azure.Graph.RBAC
         }
 
         /// <summary>
-        /// Delete an application.
+        /// Gets list of service principals from the current tenant.
         /// </summary>
-        /// <param name='applicationObjectId'>
-        /// Application object id
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -209,11 +209,150 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string applicationObjectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListWithHttpMessagesAsync(Expression<Func<ServicePrincipal, bool>> filter = default(Expression<Func<ServicePrincipal, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (applicationObjectId == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationObjectId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.TenantID == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.TenantID");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/servicePrincipals").ToString();
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            url = url.Replace("{tenantID}", Uri.EscapeDataString(this.Client.TenantID));
+            List<string> queryParameters = new List<string>();
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if ((int)statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<IPage<ServicePrincipal>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)statusCode == 200)
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<Page<ServicePrincipal>>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Deletes service principal from the directory.
+        /// </summary>
+        /// <param name='objectId'>
+        /// Object id to delete service principal information.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (objectId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "objectId");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -234,14 +373,14 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("applicationObjectId", applicationObjectId);
+                tracingParameters.Add("objectId", objectId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/applications/{applicationObjectId}").ToString();
-            url = url.Replace("{applicationObjectId}", applicationObjectId);
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/servicePrincipals/{objectId}").ToString();
+            url = url.Replace("{objectId}", objectId);
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{tenantID}", Uri.EscapeDataString(this.Client.TenantID));
             List<string> queryParameters = new List<string>();
@@ -325,10 +464,10 @@ namespace Microsoft.Azure.Graph.RBAC
         }
 
         /// <summary>
-        /// Get an application by object Id.
+        /// Gets service principal information from the directory.
         /// </summary>
-        /// <param name='applicationObjectId'>
-        /// Application object id
+        /// <param name='objectId'>
+        /// Object id to get service principal information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -336,11 +475,11 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Application>> GetWithHttpMessagesAsync(string applicationObjectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServicePrincipal>> GetWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (applicationObjectId == null)
+            if (objectId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationObjectId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "objectId");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -361,14 +500,14 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("applicationObjectId", applicationObjectId);
+                tracingParameters.Add("objectId", objectId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/applications/{applicationObjectId}").ToString();
-            url = url.Replace("{applicationObjectId}", applicationObjectId);
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/servicePrincipals/{objectId}").ToString();
+            url = url.Replace("{objectId}", objectId);
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             url = url.Replace("{tenantID}", Uri.EscapeDataString(this.Client.TenantID));
             List<string> queryParameters = new List<string>();
@@ -444,7 +583,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<Application>();
+            var result = new AzureOperationResponse<ServicePrincipal>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -455,7 +594,7 @@ namespace Microsoft.Azure.Graph.RBAC
             if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Application>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ServicePrincipal>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -465,13 +604,10 @@ namespace Microsoft.Azure.Graph.RBAC
         }
 
         /// <summary>
-        /// Update existing application.
+        /// Gets list of service principals from the current tenant.
         /// </summary>
-        /// <param name='applicationObjectId'>
-        /// Application object id
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters to create an application.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -479,27 +615,11 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string applicationObjectId, ApplicationCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (applicationObjectId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationObjectId");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.TenantID == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.TenantID");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -508,29 +628,21 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("applicationObjectId", applicationObjectId);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/applications/{applicationObjectId}").ToString();
-            url = url.Replace("{applicationObjectId}", applicationObjectId);
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            url = url.Replace("{tenantID}", Uri.EscapeDataString(this.Client.TenantID));
+            string url = "{nextLink}";
+            url = url.Replace("{nextLink}", nextPageLink);
             List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PATCH");
+            httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
@@ -560,10 +672,6 @@ namespace Microsoft.Azure.Graph.RBAC
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -577,9 +685,16 @@ namespace Microsoft.Azure.Graph.RBAC
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 204)
+            if ((int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -589,12 +704,18 @@ namespace Microsoft.Azure.Graph.RBAC
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
+            var result = new AzureOperationResponse<IPage<ServicePrincipal>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)statusCode == 200)
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<Page<ServicePrincipal>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

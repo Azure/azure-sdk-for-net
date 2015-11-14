@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void CreateDeleteUserTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                //Test
                 User user = CreateUser(context);
