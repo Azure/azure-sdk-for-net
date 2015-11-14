@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
-        public Usage(string unit, int? currentValue, long? limit, UsageName name)
+        public Usage(string unit, long? currentValue, long? limit, UsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the current value of the usage.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public int? CurrentValue { get; set; }
+        public long? CurrentValue { get; set; }
 
         /// <summary>
         /// Gets or sets the limit of usage.

@@ -66,13 +66,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualNetwork>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetwork>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put VirtualNetwork operation creates/updates a virtual network
         /// in the specified resource group.

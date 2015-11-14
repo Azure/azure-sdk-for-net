@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Subnet class.
         /// </summary>
-        public Subnet(string addressPrefix, string name = default(string), string etag = default(string), SubResource networkSecurityGroup = default(SubResource), SubResource routeTable = default(SubResource), IList<SubResource> ipConfigurations = default(IList<SubResource>), string provisioningState = default(string))
+        public Subnet(string addressPrefix, string name = default(string), string etag = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -64,20 +64,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
-        public SubResource NetworkSecurityGroup { get; set; }
+        public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the RouteTable resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeTable")]
-        public SubResource RouteTable { get; set; }
+        public RouteTable RouteTable { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP
         /// configurations using subnet
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<SubResource> IpConfigurations { get; set; }
+        public IList<IPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource
@@ -94,6 +94,16 @@ namespace Microsoft.Azure.Management.Network.Models
             if (AddressPrefix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AddressPrefix");
+            }
+            if (this.IpConfigurations != null)
+            {
+                foreach (var element in this.IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

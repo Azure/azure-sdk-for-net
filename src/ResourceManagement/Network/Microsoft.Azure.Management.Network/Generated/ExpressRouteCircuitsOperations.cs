@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// ExpressRouteCircuitsOperations operations.
     /// </summary>
-    internal partial class ExpressRouteCircuitsOperations : IServiceOperations<NetworkResourceProviderClient>, IExpressRouteCircuitsOperations
+    internal partial class ExpressRouteCircuitsOperations : IServiceOperations<NetworkManagementClient>, IExpressRouteCircuitsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitsOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ExpressRouteCircuitsOperations(NetworkResourceProviderClient client)
+        internal ExpressRouteCircuitsOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete ExpressRouteCircuit operation deletes the specified
@@ -409,10 +409,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -475,16 +471,16 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -592,7 +588,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}arpTable").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/arpTable").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -738,7 +734,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}routesTable").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/routesTable").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -883,7 +879,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}stats").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stats").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));

@@ -106,9 +106,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='loadBalancerName'>
             /// The name of the loadBalancer.
             /// </param>
-            public static LoadBalancer Get(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName)
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
+            public static LoadBalancer Get(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).GetAsync(resourceGroupName, loadBalancerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).GetAsync(resourceGroupName, loadBalancerName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -124,12 +127,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='loadBalancerName'>
             /// The name of the loadBalancer.
             /// </param>
+            /// <param name='expand'>
+            /// expand references resources.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LoadBalancer> GetAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancer> GetAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancer> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, loadBalancerName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancer> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, loadBalancerName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

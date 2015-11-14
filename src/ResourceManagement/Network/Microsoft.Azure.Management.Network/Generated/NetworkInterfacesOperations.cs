@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// NetworkInterfacesOperations operations.
     /// </summary>
-    internal partial class NetworkInterfacesOperations : IServiceOperations<NetworkResourceProviderClient>, INetworkInterfacesOperations
+    internal partial class NetworkInterfacesOperations : IServiceOperations<NetworkManagementClient>, INetworkInterfacesOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfacesOperations class.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal NetworkInterfacesOperations(NetworkResourceProviderClient client)
+        internal NetworkInterfacesOperations(NetworkManagementClient client)
         {
             if (client == null) 
             {
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets a reference to the NetworkResourceProviderClient
+        /// Gets a reference to the NetworkManagementClient
         /// </summary>
-        public NetworkResourceProviderClient Client { get; private set; }
+        public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
         /// The delete netwokInterface operation deletes the specified netwokInterface.
@@ -212,13 +212,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkInterfaceName'>
         /// The name of the network interface.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkInterface>> GetWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkInterface>> GetWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -245,6 +248,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("networkInterfaceName", networkInterfaceName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
@@ -258,6 +262,10 @@ namespace Microsoft.Azure.Management.Network
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (expand != null)
+            {
+                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (queryParameters.Count > 0)
             {
@@ -407,10 +415,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -473,16 +477,16 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Send Request
             if (shouldTrace)
             {
@@ -597,7 +601,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{virtualMachineScaleSetName}", Uri.EscapeDataString(virtualMachineScaleSetName));
             url = url.Replace("{virtualmachineIndex}", Uri.EscapeDataString(virtualmachineIndex));
@@ -743,7 +747,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{virtualMachineScaleSetName}", Uri.EscapeDataString(virtualMachineScaleSetName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -856,13 +860,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkInterfaceName'>
         /// The name of the network interface.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkInterface>> GetVirtualMachineScaleSetNetworkInterfaceWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkInterface>> GetVirtualMachineScaleSetNetworkInterfaceWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -899,12 +906,13 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("virtualMachineScaleSetName", virtualMachineScaleSetName);
                 tracingParameters.Add("virtualmachineIndex", virtualmachineIndex);
                 tracingParameters.Add("networkInterfaceName", networkInterfaceName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetVirtualMachineScaleSetNetworkInterface", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{virtualMachineScaleSetName}", Uri.EscapeDataString(virtualMachineScaleSetName));
             url = url.Replace("{virtualmachineIndex}", Uri.EscapeDataString(virtualmachineIndex));
@@ -914,6 +922,10 @@ namespace Microsoft.Azure.Management.Network
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (expand != null)
+            {
+                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (queryParameters.Count > 0)
             {

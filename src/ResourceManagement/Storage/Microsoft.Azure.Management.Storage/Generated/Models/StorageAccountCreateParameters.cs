@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// <summary>
     /// The parameters to provide for the account.
     /// </summary>
-    public partial class StorageAccountCreateParameters : Resource
+    public partial class StorageAccountCreateParameters : IResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountCreateParameters
@@ -31,10 +31,24 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the StorageAccountCreateParameters
         /// class.
         /// </summary>
-        public StorageAccountCreateParameters(AccountType? accountType = default(AccountType?))
+        public StorageAccountCreateParameters(string location, AccountType? accountType, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Location = location;
+            Tags = tags;
             AccountType = accountType;
         }
+
+        /// <summary>
+        /// Resource location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the account type. Possible values for this property
@@ -47,9 +61,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (AccountType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AccountType");
+            }
         }
     }
 }

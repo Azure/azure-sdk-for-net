@@ -19,28 +19,28 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Frontend IP address of the load balancer
     /// </summary>
-    public partial class FrontendIpConfiguration : SubResource
+    public partial class FrontendIPConfiguration : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the FrontendIpConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfiguration class.
         /// </summary>
-        public FrontendIpConfiguration() { }
+        public FrontendIPConfiguration() { }
 
         /// <summary>
-        /// Initializes a new instance of the FrontendIpConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfiguration class.
         /// </summary>
-        public FrontendIpConfiguration(string name = default(string), string etag = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string provisioningState = default(string))
+        public FrontendIPConfiguration(string name = default(string), string etag = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
             InboundNatRules = inboundNatRules;
             InboundNatPools = inboundNatPools;
             OutboundNatRules = outboundNatRules;
             LoadBalancingRules = loadBalancingRules;
+            PrivateIPAddress = privateIPAddress;
+            PrivateIPAllocationMethod = privateIPAllocationMethod;
+            Subnet = subnet;
+            PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
         }
 
@@ -57,34 +57,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
-
-        /// <summary>
-        /// Gets or sets the IP address of the Load Balancer.This is only
-        /// specified if a specific private IP address shall be allocated
-        /// from the subnet specified in subnetRef
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
-        /// Possible values for this property include: 'Static', 'Dynamic'.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
-        public string PrivateIPAllocationMethod { get; set; }
-
-        /// <summary>
-        /// Gets or sets the reference of the subnet resource.A subnet from
-        /// wher the load balancer gets its private frontend address
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
-        public SubResource Subnet { get; set; }
-
-        /// <summary>
-        /// Gets or sets the reference of the PublicIP resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Read only.Inbound rules URIs that use this frontend IP
@@ -111,11 +83,50 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> LoadBalancingRules { get; set; }
 
         /// <summary>
+        /// Gets or sets the privateIPAddress of the IP Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
+        /// Possible values for this property include: 'Static', 'Dynamic'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
+        public string PrivateIPAllocationMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the subnet resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnet")]
+        public Subnet Subnet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the PublicIP resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPAddress")]
+        public PublicIPAddress PublicIPAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets Provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.Subnet != null)
+            {
+                this.Subnet.Validate();
+            }
+            if (this.PublicIPAddress != null)
+            {
+                this.PublicIPAddress.Validate();
+            }
+        }
     }
 }

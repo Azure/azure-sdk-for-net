@@ -66,13 +66,16 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='loadBalancerName'>
         /// The name of the loadBalancer.
         /// </param>
+        /// <param name='expand'>
+        /// expand references resources.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LoadBalancer>> GetWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoadBalancer>> GetWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put LoadBalancer operation creates/updates a LoadBalancer
         /// </summary>

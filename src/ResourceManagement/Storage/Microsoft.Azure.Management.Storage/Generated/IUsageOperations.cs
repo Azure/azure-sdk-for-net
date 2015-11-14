@@ -26,15 +26,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the current usage count and the limit for the resources under
         /// the subscription.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<Usage>>> ListWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Usage>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the current usage count and the limit for the resources under
         /// the subscription.

@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     using System;
     using System.Linq;
@@ -17,27 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Response for CheckConnectionSharedKey Api servive call
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class ConnectionSharedKeyResult
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the ConnectionSharedKeyResult class.
         /// </summary>
-        public SubResource() { }
+        public ConnectionSharedKeyResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the ConnectionSharedKeyResult class.
         /// </summary>
-        public SubResource(string id = default(string))
+        public ConnectionSharedKeyResult(string value = default(string))
         {
-            Id = id;
+            Value = value;
         }
 
         /// <summary>
-        /// Resource Id
+        /// The virtual network connection shared key value
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }

@@ -113,12 +113,10 @@
     <MSBuild Projects="@(AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
-    
+
     <CallTarget Targets="BuildTestFramework" Condition=" @(DnxLibraries) != '' " />
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(DnxLibraries) != '' " />
-
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
-
   </Target>
 
   <PropertyGroup>
