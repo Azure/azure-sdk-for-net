@@ -75,7 +75,8 @@
   <!--
   Build NuGet packages
   -->
-  <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries;BuildDynamicNuSpecs">
+  <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
+    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' " />
     
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' and '@(SdkNuGetPackage)' != '' "
@@ -85,11 +86,11 @@
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' and '@(SdkNuGetPackage)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
 
-    <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
+    <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
     <ItemGroup>
       <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
-    <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)"  />
+    <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
   </Target>
 
   <Target Name="Publish">

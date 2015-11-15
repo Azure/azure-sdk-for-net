@@ -39,8 +39,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         public override bool Execute()
         {
-            var autoRestOnes = new List<ITaskItem>();
-            var dnxLibraryOnes = new List<ITaskItem>();
+            var nonDnxAutoRestLibraries = new List<ITaskItem>();
+            var dnxAutoRestLibraries = new List<ITaskItem>();
             var dnxLibraryTestOnes = new List<ITaskItem>();
             var others =  new List<ITaskItem>();
             foreach (ITaskItem solution in AllLibraries)
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
                     }
-                    autoRestOnes.Add(solution);
+                    nonDnxAutoRestLibraries.Add(solution);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     //TODO: find a right place to fix in testframework
                     if (dnxProjectJsonFiles.Length != 0 && dnxProjectJsonFiles[0].IndexOf("TestFramework") == -1)
                     {
-                        dnxLibraryOnes.Add(solution);
+                        dnxAutoRestLibraries.Add(solution);
                         foreach (var file in dnxProjectJsonFiles)
                         {
                             string dir = Path.GetDirectoryName(file);
@@ -102,10 +102,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
             }
 
-            Log.LogMessage(MessageImportance.High, "We have found {0} autorest libraries.", autoRestOnes.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} non dnx autorest libraries.", nonDnxAutoRestLibraries.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} dnx autorest libraries.", dnxAutoRestLibraries.Count);
             Log.LogMessage(MessageImportance.High, "we have found {0} Non autorest libraries.", others.Count);
-            Non_Dnx_AutoRestLibraries = autoRestOnes.ToArray();
-            Dnx_AutoRestLibraries = dnxLibraryOnes.ToArray();
+            Non_Dnx_AutoRestLibraries = nonDnxAutoRestLibraries.ToArray();
+            Dnx_AutoRestLibraries = dnxAutoRestLibraries.ToArray();
             NonAutoRestLibraries = others.ToArray();
             return true;
         }

@@ -103,6 +103,7 @@
   <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
+      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</_TemporaryDnxFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -114,23 +115,21 @@
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
+    <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+
     <CallTarget Targets="BuildTestFramework" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
-  <PropertyGroup>
-    <TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</TemporaryDnxFeeds>
-  </PropertyGroup>
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
-    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
   </Target>
 
   <Target Name="BuildTestFramework" Condition="">
-    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework" />
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder" />
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder.Tests" />
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework" />
@@ -175,7 +174,9 @@
 
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <CallTarget Targets="RunTestFrameworkTests" Condition=" @(Dnx_AutoRestLibraries) != '' " />
-    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" />
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" 
+          WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"
+          Condition=" @(Dnx_AutoRestLibraries) != '' "/>
   </Target>
   
   <PropertyGroup>
