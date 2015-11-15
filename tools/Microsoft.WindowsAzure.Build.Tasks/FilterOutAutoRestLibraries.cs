@@ -75,24 +75,35 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 else
                 {
                     string[] dnxProjectJsonFiles = Directory.GetFiles(libFolder, "project.json", SearchOption.AllDirectories);
-                    //TODO: find a right place to fix in testframework
-                    if (dnxProjectJsonFiles.Length != 0 && dnxProjectJsonFiles[0].IndexOf("TestFramework") == -1)
+                    if (dnxProjectJsonFiles.Length != 0 )
                     {
-                        dnxAutoRestLibraries.Add(solution);
+                        var libDirectories = new List<string>();
+                        var testDirectories = new List<string>();
+
                         foreach (var file in dnxProjectJsonFiles)
                         {
                             string dir = Path.GetDirectoryName(file);
-                            if (dir.EndsWith("test", System.StringComparison.OrdinalIgnoreCase) ||
-                                dir.EndsWith("tests", System.StringComparison.OrdinalIgnoreCase))
+                            if (dir.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
+                                dir.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
                             {
-                                solution.SetMetadata("Test", dir);
+                                testDirectories.Add(dir);
                             }
                             else
                             {
-                                //TODO, this assumption is not reliable, so improve it.
-                                solution.SetMetadata("Library", dir);
-                                solution.SetMetadata("PackageName", Path.GetFileName(dir));
+                                libDirectories.Add(dir);
                             }
+                        }
+
+                        for(int i = 0; i < libDirectories.Count; i++)
+                        {
+                            TaskItem dnxLib = new TaskItem(solution);
+                            dnxLib.SetMetadata("Library", libDirectories[i]);
+                            dnxLib.SetMetadata("PackageName", Path.GetFileName(libDirectories[i]));
+                            if (i < testDirectories.Count) {
+                                //the matching might not be very accurate, but enough for now.
+                                dnxLib.SetMetadata("Test", testDirectories[i]);
+                            }
+                            dnxAutoRestLibraries.Add(dnxLib);
                         }
                     }
                     else
