@@ -1,10 +1,10 @@
 {
-  "version": "2.0.1-preview",
+  "version": "3.0.0-preview",
   "description": "Microsoft.Azure.Graph.RBAC",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft AutoRest Management REST" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-  "licenseUrl": "http://aka.ms/windowsazureapache2",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {
     "useOssSigning": true,
@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)"
   },
 
   "frameworks": {

@@ -3,8 +3,8 @@
   "description": "Network.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
   "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "commands": { "test": "xunit.runner.dnx" },
   "compilationOptions": {
     "useOssSigning": true,
@@ -26,7 +26,7 @@
   "dependencies": {
     "HttpRecorder": "",
     "TestFramework": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "xunit": "2.1.0",
     "Microsoft.Azure.Management.Network": "",
     "Microsoft.Azure.Management.Resources": ""

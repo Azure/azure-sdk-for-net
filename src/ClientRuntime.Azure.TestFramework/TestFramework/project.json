@@ -1,10 +1,9 @@
 ﻿{
-  "version": "0.10.2",
+  "version": "1.0.0",
   "description": "Microsoft.Azure.Test.TestFramework",
   "authors": [ "Microsoft Corporation" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "compilationOptions": {
     "useOssSigning": true,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
@@ -32,7 +31,7 @@
     }
   },
   "dependencies": {
-    "HttpRecorder": "1.1.1",
+    "HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview"
   }

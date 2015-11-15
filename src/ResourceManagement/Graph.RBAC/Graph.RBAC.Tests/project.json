@@ -3,8 +3,8 @@
   "description": "Graph.RBAC.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
   "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "commands": { "test": "xunit.runner.dnx" },
   "compilationOptions": {
     "useOssSigning": true,
@@ -24,11 +24,11 @@
   },
   "dependencies": {
     "HttpRecorder": "",
-    "Microsoft.Azure.Management.Resources": "2.0.1-preview",
+    "Microsoft.Azure.Management.Resources": "",
     "TestFramework": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "xunit": "2.1.0",
-    "Microsoft.Azure.Graph.RBAC": "2.0.1-preview",
+    "Microsoft.Azure.Graph.RBAC": "",
     "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23509"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
