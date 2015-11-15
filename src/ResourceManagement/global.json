@@ -1,3 +1,0 @@
-{
-  "projects": ["../ClientRuntime.Azure.TestFramework", "Authorization", "Compute", "Storage", "Network", "Resource" ]
-}

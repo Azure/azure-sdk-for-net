@@ -1,11 +1,11 @@
 {
   "projects": [
-    "ClientRuntime.Azure.TestFramework\\HttpRecorder",
-    "ClientRuntime.Azure.TestFramework\\TestFramework",
-    "ResourceManagement\\Resource\\Microsoft.Azure.Management.Resources",
-    "ResourceManagement\\Storage\\Microsoft.Azure.Management.Storage",
-    "ResourceManagement\\Network\\Microsoft.Azure.Management.Network",
-    "ResourceManagement\\Compute\\Microsoft.Azure.Management.Compute",
-    "ResourceManagement\\Graph.RBAC\\Microsoft.Azure.Graph.RBAC"
+    "TestFramework/Microsoft.Azure.Test.HttpRecorder",
+    "TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
+    "ResourceManagement/Resource/Microsoft.Azure.Management.Resources",
+    "ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
+    "ResourceManagement/Network/Microsoft.Azure.Management.Network",
+    "ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
+    "ResourceManagement/Graph.RBAC/Microsoft.Azure.Graph.RBAC"
   ]
 }
