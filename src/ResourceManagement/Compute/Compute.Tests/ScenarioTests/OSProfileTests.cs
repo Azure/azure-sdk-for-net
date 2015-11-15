@@ -313,9 +313,10 @@ namespace Compute.Tests
         }
 
 
+        //Not used
         public static string ReadFromEmbeddedResource(Type type, string resourceName)
         {
-            throw new NotImplementedException("\'type.Assembly\' is not supported for cross platform");
+            throw new NotSupportedException("\'type.Assembly\' is not supported for cross platform");
             //string result;
             //using (Stream manifestResourceStream = type.Assembly.GetManifestResourceStream(type, resourceName) ?? type.Assembly.GetManifestResourceStream(resourceName))
             //{

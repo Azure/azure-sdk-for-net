@@ -38,8 +38,8 @@ namespace Storage.Tests.Helpers
         private static HttpClientHandler Handler = null;
 
         // These should be filled in only if test tenant is true
-        private static string certName = null;
-        private static string certPassword = null;
+        //private static string certName = null;
+        //private static string certPassword = null;
         private static string testSubscription = null;
         private static Uri testUri = null;
 
@@ -88,7 +88,7 @@ namespace Storage.Tests.Helpers
             if (Handler == null)
             {
                 //Talk to Yugangw-meft if you do need this work.
-                throw new NotImplementedException("Not sufficient support to get the test code work cross platform");
+                throw new NotSupportedException("Not supported by DnxCore");
                 //X509Certificate2 cert = new X509Certificate2(certName, certPassword);
                 //Handler = new System.Net.Http.WebRequestHandler();
                 //((WebRequestHandler)Handler).ClientCertificates.Add(cert);

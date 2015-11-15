@@ -29,13 +29,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public string AutoRestMark { get; set; }
 
         [Output]
-        public ITaskItem[] AutoRestLibraries { get; private set; }
+        public ITaskItem[] Non_Dnx_AutoRestLibraries { get; private set; }
 
         [Output]
         public ITaskItem[] NonAutoRestLibraries { get; private set; }
 
         [Output]
-        public ITaskItem[] DnxLibraries { get; private set; }
+        public ITaskItem[] Dnx_AutoRestLibraries { get; private set; }
 
         public override bool Execute()
         {
@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             Log.LogMessage(MessageImportance.High, "We have found {0} autorest libraries.", autoRestOnes.Count);
             Log.LogMessage(MessageImportance.High, "we have found {0} Non autorest libraries.", others.Count);
-            AutoRestLibraries = autoRestOnes.ToArray();
-            DnxLibraries = dnxLibraryOnes.ToArray();
+            Non_Dnx_AutoRestLibraries = autoRestOnes.ToArray();
+            Dnx_AutoRestLibraries = dnxLibraryOnes.ToArray();
             NonAutoRestLibraries = others.ToArray();
             return true;
         }

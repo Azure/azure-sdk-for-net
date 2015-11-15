@@ -25,6 +25,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             AZURE_TEST_MODE = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
             TEST_ORGID_AUTHENTICATION = Environment.GetEnvironmentVariable("TEST_ORGID_AUTHENTICATION");
             TEST_CSM_ORGID_AUTHENTICATION = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+            if (HttpMockServer.FileSystemUtilsObject == null)
+            {
+                HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
+            }
         }
 
         [Theory]

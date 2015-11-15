@@ -85,10 +85,9 @@
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' and '@(SdkNuGetPackage)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
 
-    <Exec Command="dnu pack" WorkingDirectory="%(DnxLibraries.Library)"/>
+    <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
     <ItemGroup>
-      <!--TODO: configuration should be sorted out. using 'debug' here is wrong for sure. Also fix for 'publish' target before-->
-      <_DnxPackages Include="%(DnxLibraries.Library)\bin\debug\%(DnxLibraries.PackageName)*.nupkg" />
+      <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)"  />
   </Target>
@@ -111,7 +110,7 @@
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
 
     <ItemGroup>
-      <_DnxPackagesToPublish Include="$(PackageOutputDir)\%(DnxLibraries.PackageName)*.nupkg"
+      <_DnxPackagesToPublish Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg"
                              Exclude="$(PackageOutputDir)\*.symbols.nupkg">
       </_DnxPackagesToPublish>
     </ItemGroup>

@@ -91,12 +91,12 @@
 
   <Target Name="PrepareForAutoRestLibraries">
     <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
-      <Output TaskParameter="AutoRestLibraries" ItemName="AutoRestLibraries" />
-      <Output TaskParameter="DnxLibraries" ItemName="DnxLibraries" />
+      <Output TaskParameter="Non_Dnx_AutoRestLibraries" ItemName="Non_Dnx_AutoRestLibraries" />
+      <Output TaskParameter="Dnx_AutoRestLibraries" ItemName="Dnx_AutoRestLibraries" />
       <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
     </FilterOutAutoRestLibraries>
-    <Message Text="AutoRest Libraries: @(AutoRestLibraries)" />
-    <Message Text="Dnx Libraries: @(DnxLibraries)" />
+    <Message Text="Non Dnx based AutoRest Libraries: @(Non_Dnx_AutoRestLibraries)" />
+    <Message Text="Dnx AutoRest Libraries: @(Dnx_AutoRestLibraries)" />
     <!--<Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />-->
   </Target>
   
@@ -110,12 +110,12 @@
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />-->
 
-    <MSBuild Projects="@(AutoRestLibraries)"
+    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
-    <CallTarget Targets="BuildTestFramework" Condition=" @(DnxLibraries) != '' " />
-    <CallTarget Targets="BuildDnxLibraries" Condition=" @(DnxLibraries) != '' " />
+    <CallTarget Targets="BuildTestFramework" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
@@ -123,26 +123,33 @@
     <TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</TemporaryDnxFeeds>
   </PropertyGroup>
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(DnxLibraries.Library)"/>
-    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(DnxLibraries.Test)"/>
-    <Exec Command="dnu build" WorkingDirectory="%(DnxLibraries.Library)"/>
-    <Exec Command="dnu build" WorkingDirectory="%(DnxLibraries.Test)"/>
+    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
+    <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
   </Target>
 
-  <Target Name="BuildTestFramework">
+  <Target Name="BuildTestFramework" Condition="">
     <Exec Command="dnu restore $(TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework" />
-    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder" />
-    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder.Tests" />
-    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework" />
-    <Exec Command="dnu build" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework.Tests" />
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder" />
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder.Tests" />
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework" />
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework.Tests" />
   </Target>
 
+  <Target Name="RunTestFrameworkTests">
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\HttpRecorder.xml&quot;" 
+          WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\HttpRecorder.Tests"  />
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\TestFramework.xml&quot;"
+          WorkingDirectory="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\TestFramework.Tests"  />
+  </Target>
+  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
     <!--<MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
              Targets="Clean" />-->
     
-    <MSBuild Projects="@(AutoRestLibraries)"
+    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Clean" />
     <RemoveDir Directories="$(BinariesFolder)" />
@@ -166,9 +173,9 @@
       Condition=" '@(TestDlls)' != '' "  
       ContinueOnError="false"/>
 
-    <!--TODO: need to sort out where to put testframework's test 
-    Also based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
-    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(DnxLibraries.Filename).xml&quot;" WorkingDirectory="%(DnxLibraries.Test)"  />
+    <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
+    <CallTarget Targets="RunTestFrameworkTests" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" />
   </Target>
   
   <PropertyGroup>
@@ -257,7 +264,7 @@
     <PropertyGroup>
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-    <Exec Command="$(NuGetCommand) restore %(AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
 
