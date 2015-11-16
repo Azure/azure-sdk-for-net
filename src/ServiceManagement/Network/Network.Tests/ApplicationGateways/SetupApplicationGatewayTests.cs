@@ -88,8 +88,7 @@ namespace Network.Tests.ApplicationGateways
 
             var probe1 = new Probe
             {
-                Name = "Probe1",
-                Port = 8080,
+                Name = "Probe1",                
                 Protocol = "http",
                 Host = "127.0.0.1",
                 Path = "/",
@@ -175,8 +174,7 @@ namespace Network.Tests.ApplicationGateways
             foreach (var getVar in setConfig.Probes)
             {
                 Assert.True(getConfig.Probes.Any(setVar =>
-                    (String.Equals(setVar.Name, getVar.Name, StringComparison.InvariantCultureIgnoreCase) &&
-                    (setVar.Port == getVar.Port) &&
+                    (String.Equals(setVar.Name, getVar.Name, StringComparison.InvariantCultureIgnoreCase) &&                    
                     (String.Equals(setVar.Protocol, getVar.Protocol, StringComparison.InvariantCultureIgnoreCase)) &&
                     (String.Equals(setVar.Path, getVar.Path, StringComparison.InvariantCultureIgnoreCase)) &&
                     (String.Equals(setVar.Host, getVar.Host, StringComparison.InvariantCultureIgnoreCase)) &&

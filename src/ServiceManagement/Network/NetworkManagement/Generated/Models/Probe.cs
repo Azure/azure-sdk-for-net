@@ -72,18 +72,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._path = value; }
         }
         
-        private ushort _port;
-        
-        /// <summary>
-        /// Optional. Port to send probe on. Probing  port could be different
-        /// from data port.
-        /// </summary>
-        public ushort Port
-        {
-            get { return this._port; }
-            set { this._port = value; }
-        }
-        
         private string _protocol;
         
         /// <summary>
@@ -111,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private uint _unhealthyThreshold;
         
         /// <summary>
-        /// Optional. Probe  retry count. Backend server is marked down after
+        /// Optional. Probe retry count. Backend server is marked down after
         /// consecutive probe failure count reaches UnhealthyThreshold.
         /// </summary>
         public uint UnhealthyThreshold

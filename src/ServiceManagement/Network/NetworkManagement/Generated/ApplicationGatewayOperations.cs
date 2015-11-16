@@ -1259,10 +1259,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 probeElement.Add(nameElement3);
                             }
                             
-                            XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement2.Value = probesItem.Port.ToString();
-                            probeElement.Add(portElement2);
-                            
                             if (probesItem.Protocol != null)
                             {
                                 XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
@@ -1357,9 +1353,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 backendHttpSettingsElement.Add(nameElement5);
                             }
                             
-                            XElement portElement3 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement3.Value = backendHttpSettingsListItem.Port.ToString();
-                            backendHttpSettingsElement.Add(portElement3);
+                            XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                            portElement2.Value = backendHttpSettingsListItem.Port.ToString();
+                            backendHttpSettingsElement.Add(portElement2);
                             
                             XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
                             protocolElement2.Value = backendHttpSettingsListItem.Protocol.ToString();
@@ -2728,13 +2724,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         probeInstance.Name = nameInstance3;
                                     }
                                     
-                                    XElement portElement2 = probesElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                    if (portElement2 != null)
-                                    {
-                                        ushort portInstance2 = ushort.Parse(portElement2.Value, CultureInfo.InvariantCulture);
-                                        probeInstance.Port = portInstance2;
-                                    }
-                                    
                                     XElement protocolElement = probesElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
                                     if (protocolElement != null)
                                     {
@@ -2824,11 +2813,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         backendHttpSettingsInstance.Name = nameInstance5;
                                     }
                                     
-                                    XElement portElement3 = backendHttpSettingsListElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                    if (portElement3 != null)
+                                    XElement portElement2 = backendHttpSettingsListElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                    if (portElement2 != null)
                                     {
-                                        ushort portInstance3 = ushort.Parse(portElement3.Value, CultureInfo.InvariantCulture);
-                                        backendHttpSettingsInstance.Port = portInstance3;
+                                        ushort portInstance2 = ushort.Parse(portElement2.Value, CultureInfo.InvariantCulture);
+                                        backendHttpSettingsInstance.Port = portInstance2;
                                     }
                                     
                                     XElement protocolElement2 = backendHttpSettingsListElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
