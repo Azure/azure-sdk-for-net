@@ -7,5 +7,8 @@
     "ResourceManagement/Network/Microsoft.Azure.Management.Network",
     "ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
     "ResourceManagement/Graph.RBAC/Microsoft.Azure.Graph.RBAC"
-  ]
+  ],
+  "sdk": {
+    "version": "1.0.0-rc1-final"
+  }
 }
