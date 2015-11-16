@@ -1,27 +1,19 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     /// <summary>
     /// Defines the names of all text analyzers supported by Azure Search.
     /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/>
     /// </summary>
-    public sealed class AnalyzerName
+    public sealed class AnalyzerName : IEquatable<AnalyzerName>
     {
         /// <summary>
         /// Lucene analyzer for Arabic.
@@ -419,6 +411,10 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly AnalyzerName ZhHantMicrosoft = new AnalyzerName("zh-Hant.microsoft");
 
+
+        private static readonly Lazy<Dictionary<string, AnalyzerName>> _analyzerMap =
+            new Lazy<Dictionary<string, AnalyzerName>>(CreateAnalyzerMap, isThreadSafe: true);
+
         private string _name;
 
         private AnalyzerName(string name)
@@ -433,7 +429,34 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>The AnalyzerName as a string.</returns>
         public static implicit operator string(AnalyzerName name)
         {
-            return name.ToString();
+            return (name != null) ? name.ToString() : null;
+        }
+
+        /// <summary>
+        /// Compares the AnalyzerName for equality with another AnalyzerName.
+        /// </summary>
+        /// <param name="other">The AnalyzerName with which to compare.</param>
+        /// <returns>true if the AnalyzerName objects are equal; false otherwise.</returns>
+        public bool Equals(AnalyzerName other)
+        {
+            if (object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            return this._name == other._name;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as AnalyzerName);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return _name.GetHashCode();
         }
 
         /// <summary>
@@ -443,6 +466,39 @@ namespace Microsoft.Azure.Search.Models
         public override string ToString()
         {
             return _name;
+        }
+
+        internal static AnalyzerName Lookup(string name)
+        {
+            if (name == null)
+            {
+                return null;
+            }
+
+            // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
+            AnalyzerName analyzerName;
+            if (_analyzerMap.Value.TryGetValue(name, out analyzerName))
+            {
+                return analyzerName;
+            }
+            else
+            {
+                return new AnalyzerName(name);
+            }
+        }
+
+        private static Dictionary<string, AnalyzerName> CreateAnalyzerMap()
+        {
+            IEnumerable<FieldInfo> allPublicStaticFields =
+                typeof(AnalyzerName).GetTypeInfo().DeclaredFields.Where(f => f.IsStatic && f.IsPublic);
+
+            IEnumerable<AnalyzerName> allKnownValues =
+                allPublicStaticFields
+                    .Where(f => f.FieldType == typeof(AnalyzerName))
+                    .Select(f => f.GetValue(null))
+                    .OfType<AnalyzerName>();
+
+            return allKnownValues.ToDictionary(v => (string)v, v => v);
         }
     }
 }

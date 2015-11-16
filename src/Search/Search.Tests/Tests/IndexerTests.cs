@@ -1,34 +1,21 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Hyak.Common;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.TestCategories;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest.Azure;
+    using Xunit;
+
     public sealed class IndexerTests : SearchTestBase<IndexerFixture>
     {
         [Fact]
@@ -37,13 +24,11 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Indexer expectedIndexer = Data.CreateTestIndexer();
 
-                Indexer indexer = Data.CreateTestIndexer();
+                Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(indexer);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-
-                AssertIndexersEqual(indexer, createResponse.Indexer);
+                AssertIndexersEqual(expectedIndexer, actualIndexer);
             });
         }
 
@@ -59,7 +44,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexers.Create(indexer));
                 Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist", e.Error.Message);
+                Assert.Equal("This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist", e.Body.Message);
             });
         }
 
@@ -83,18 +68,15 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 Indexer initial = Data.CreateTestIndexer();
+                searchClient.Indexers.Create(initial);
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(initial);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                Indexer updatedExpected = Data.CreateTestIndexer();
+                updatedExpected.Name = initial.Name;
+                updatedExpected.Description = "somethingdifferent";
 
-                Indexer updated = Data.CreateTestIndexer();
-                updated.Name = initial.Name;
-                updated.Description = "somethingdifferent";
+                Indexer updateResponse = searchClient.Indexers.CreateOrUpdate(updatedExpected);
 
-                IndexerDefinitionResponse updateResponse = searchClient.Indexers.CreateOrUpdate(updated);
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-
-                AssertIndexersEqual(updated, updateResponse.Indexer);
+                AssertIndexersEqual(updatedExpected, updateResponse);
             });
         }
 
@@ -107,8 +89,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 Indexer indexer = Data.CreateTestIndexer();
 
-                IndexerDefinitionResponse response = searchClient.Indexers.CreateOrUpdate(indexer);
-                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                AzureOperationResponse<Indexer> response = 
+                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer.Name, indexer).Result;
+                Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
             });
         }
 
@@ -122,18 +105,18 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer = Data.CreateTestIndexer();
 
                 // Try delete before the indexer even exists.
-                AzureOperationResponse deleteResponse = searchClient.Indexers.Delete(indexer.Name);
-                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+                AzureOperationResponse deleteResponse = 
+                    searchClient.Indexers.DeleteWithHttpMessagesAsync(indexer.Name).Result;
+                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(indexer);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.Indexers.Create(indexer);
 
                 // Now delete twice.
-                deleteResponse = searchClient.Indexers.Delete(indexer.Name);
-                Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+                deleteResponse = searchClient.Indexers.DeleteWithHttpMessagesAsync(indexer.Name).Result;
+                Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
 
-                deleteResponse = searchClient.Indexers.Delete(indexer.Name);
-                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+                deleteResponse = searchClient.Indexers.DeleteWithHttpMessagesAsync(indexer.Name).Result;
+                Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
             });
         }
 
@@ -147,14 +130,10 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer1 = Data.CreateTestIndexer();
                 Indexer indexer2 = Data.CreateTestIndexer();
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(indexer1);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.Indexers.Create(indexer1);
+                searchClient.Indexers.Create(indexer2);
 
-                createResponse = searchClient.Indexers.Create(indexer2);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-
-                IndexerListResponse listResponse = searchClient.Indexers.List();
-                Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+                IndexerListResult listResponse = searchClient.Indexers.List();
                 Assert.Equal(2, listResponse.Indexers.Count);
 
                 IEnumerable<string> indexerNames = listResponse.Indexers.Select(i => i.Name);
@@ -168,30 +147,22 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(() =>
             {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                // Set handler that injects mock_status query string, which results in service 
+                // returning a well-known mock response
+                SearchServiceClient searchClient = Data.GetSearchServiceClient(new MockStatusDelegatingHandler());
 
                 Indexer indexer = Data.CreateTestIndexer();
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(indexer);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.Indexers.Create(indexer);
 
-                IndexerGetStatusResponse statusResponse = searchClient.Indexers.GetStatus(indexer.Name);
-                Assert.Equal(HttpStatusCode.OK, statusResponse.StatusCode);
-
-                IndexerExecutionInfo info = statusResponse.ExecutionInfo;
+                IndexerExecutionInfo info = searchClient.Indexers.GetStatus(indexer.Name);
                 Assert.Equal(IndexerStatus.Running, info.Status);
 
-                AzureOperationResponse runResponse = searchClient.Indexers.Run(indexer.Name);
-                Assert.Equal(HttpStatusCode.Accepted, runResponse.StatusCode);
+                AzureOperationResponse runResponse = 
+                    searchClient.Indexers.RunWithHttpMessagesAsync(indexer.Name).Result;
+                Assert.Equal(HttpStatusCode.Accepted, runResponse.Response.StatusCode);
 
-                // Set handler that injects mock_status query string, which results in service 
-                // returning a well-known mock response
-                searchClient.AddHandlerToPipeline(new MockStatusDelegatingHandler());
-
-                statusResponse = searchClient.Indexers.GetStatus(indexer.Name);
-                Assert.Equal(HttpStatusCode.OK, statusResponse.StatusCode);
-
-                info = statusResponse.ExecutionInfo;
+                info = searchClient.Indexers.GetStatus(indexer.Name);
                 Assert.Equal(IndexerStatus.Running, info.Status);
 
                 Assert.Equal(IndexerExecutionStatus.InProgress, info.LastResult.Status);
@@ -234,16 +205,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 Indexer indexer = Data.CreateTestIndexer();
 
-                IndexerDefinitionResponse createResponse = searchClient.Indexers.Create(indexer);
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                searchClient.Indexers.Create(indexer);
+                searchClient.Indexers.Reset(indexer.Name);
 
-                AzureOperationResponse resetResponse = searchClient.Indexers.Reset(indexer.Name);
-                Assert.Equal(HttpStatusCode.NoContent, resetResponse.StatusCode);
-
-                IndexerGetStatusResponse statusResponse = searchClient.Indexers.GetStatus(indexer.Name);
-                Assert.Equal(HttpStatusCode.OK, statusResponse.StatusCode);
-
-                IndexerExecutionInfo info = statusResponse.ExecutionInfo;
+                IndexerExecutionInfo info = searchClient.Indexers.GetStatus(indexer.Name);
                 Assert.Equal(IndexerStatus.Running, info.Status);
                 Assert.Equal(IndexerExecutionStatus.Reset, info.LastResult.Status);
             });
@@ -316,7 +281,17 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.NotNull(actual);
                 Assert.Equal(expected.Interval, actual.Interval);
-                Assert.Equal(expected.StartTime, actual.StartTime);
+
+                if (expected.StartTime.HasValue)
+                {
+                    Assert.Equal(expected.StartTime, actual.StartTime);
+                }
+                else
+                {
+                    // There ought to be a start time in the response; We just can't know what it is because it would
+                    // make the test timing-dependent.
+                    Assert.True(actual.StartTime.HasValue);
+                }
             }
         }
 
