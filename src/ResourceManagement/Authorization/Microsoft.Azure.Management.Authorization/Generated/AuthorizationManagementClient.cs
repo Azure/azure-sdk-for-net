@@ -71,6 +71,8 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
+        public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
+
         public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
 
         public virtual IPermissionsOperations Permissions { get; private set; }
@@ -214,10 +216,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-                if (this.Credentials != null)
-                {
-                    this.Credentials.InitializeServiceClient(this);
-                }
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -247,10 +249,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-                if (this.Credentials != null)
-                {
-                    this.Credentials.InitializeServiceClient(this);
-                }
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -258,6 +260,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         private void Initialize()
         {
+            this.ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             this.ClassicAdministrators = new ClassicAdministratorsOperations(this);
             this.Permissions = new PermissionsOperations(this);
             this.RoleAssignments = new RoleAssignmentsOperations(this);
