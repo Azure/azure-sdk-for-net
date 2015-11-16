@@ -65,6 +65,8 @@ namespace Microsoft.Azure.Management.Authorization
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
+        IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
+
         IClassicAdministratorsOperations ClassicAdministrators { get; }
 
         IPermissionsOperations Permissions { get; }
