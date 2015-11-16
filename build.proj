@@ -167,12 +167,11 @@
     <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
       For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
     <CorporateScanPaths>$(LibrarySourceFolder)\Common;$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
+    <!--public token associated with MSSharedLibKey.snk-->
+    <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
   <Target Name="SignBinariesForAFxTarget">
-    <PropertyGroup>
-      <!--public token associated with MSSharedLibKey.snk-->
-      <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
-    </PropertyGroup>
+ 
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
@@ -279,17 +278,62 @@
 
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
 
-
-  <Target Name="CopyAndExtractUnsignedPackages">
+  <Target Name="SignAssembliesInDnxPackages">
     <ItemGroup>
-      <UnsignedPackages Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+      <_DnxPackages Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
-    <Message Text="%(UnsignedPackages.Identity)" Importance="low" />
+    <PropertyGroup>
+      <_UnsignedFolder>$(PackageOutputDir)\unsigned</_UnsignedFolder>
+      <_SignedFolder>$(PackageOutputDir)\signed</_SignedFolder>
+    </PropertyGroup>    
     
-    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(UnsignedPackages->'$(PackageOutputDir)\%(Filename)') %(UnsignedPackages.Identity)" />
+    <Message Text="%(_DnxPackages.Identity)" Importance="low" />
+    
+    <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
+    <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
+    
+    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
 
-    <RemoveDir Directories="@(UnsignedPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
-    <Delete Files="@(UnsignedPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
+    <RemoveDir Directories="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
+    <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
+
+    <ItemGroup>
+      <_TempBinaries Include="$(PackageOutputDir)\**\*.dll"/>
+      <_PackageBinaries Include="@(_TempBinaries)">
+        <!-- Flattened file for signing -->
+        <UnsignedFlatFileName>$(_UnsignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</UnsignedFlatFileName>
+        <SignedFlatFileName>$(_SignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</SignedFlatFileName>
+      </_PackageBinaries>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_PackageBinaries)" DestinationFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')"></Copy>
+
+    <CodeSigningTask
+      Description="Microsoft Azure SDK"
+      Keywords="Microsoft Azure .NET SDK"
+      UnsignedFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')"
+      DestinationPath="$(_SignedFolder)"
+      SigningLogPath="$(PackageOutputDir)\signing.log"
+      ToolsPath="$(CIToolsPath)"
+      Condition="!$(DelaySign)"/>
+
+    <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
+    <Copy SourceFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')" DestinationFolder="$(_SignedFolder)" Condition="$(DelaySign)" />
+
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(_PackageBinaries.SignedFlatFileName)"
+        ExpectedTokenSignature="$(StrongNameToken)"
+        ExpectedDelaySigned="false"
+        ContinueOnError="false"
+        Condition="!$(DelaySign)"/>
+
+    <Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
+
+    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
   </Target>
-
+  
 </Project>
