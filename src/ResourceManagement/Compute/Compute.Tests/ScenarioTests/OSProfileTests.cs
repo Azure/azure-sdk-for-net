@@ -171,7 +171,7 @@ namespace Compute.Tests
         [Fact(Skip = "Secret Vault")]
         public void TestVMWithWindowsOSProfile()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -210,7 +210,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMWithLinuxOSProfile()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -313,18 +313,20 @@ namespace Compute.Tests
         }
 
 
+        //Not used
         public static string ReadFromEmbeddedResource(Type type, string resourceName)
         {
-            string result;
-            using (Stream manifestResourceStream = type.Assembly.GetManifestResourceStream(type, resourceName) ?? type.Assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader streamReader = new StreamReader(manifestResourceStream))
-                {
-                    result = streamReader.ReadToEnd();
-                }
-            }
+            throw new NotSupportedException("\'type.Assembly\' is not supported for cross platform");
+            //string result;
+            //using (Stream manifestResourceStream = type.Assembly.GetManifestResourceStream(type, resourceName) ?? type.Assembly.GetManifestResourceStream(resourceName))
+            //{
+            //    using (StreamReader streamReader = new StreamReader(manifestResourceStream))
+            //    {
+            //        result = streamReader.ReadToEnd();
+            //    }
+            //}
 
-            return result;
+            //return result;
         }
 
         private static string GetAutoLogonContent(uint logonCount, string userName, string password)

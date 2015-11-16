@@ -5,6 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/
+*.lock.json
 developer/
 
 # Build results
@@ -12,6 +14,7 @@ binaries/
 [Dd]ebug*/
 [Rr]elease/
 build/
+src/NuGet.Config
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*

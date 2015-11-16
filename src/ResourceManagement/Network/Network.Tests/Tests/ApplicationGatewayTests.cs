@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
@@ -7,9 +10,7 @@ using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
 using System;
-using Microsoft.Azure.Management.Network;
 using System.Security.Cryptography.X509Certificates;
-using Microsoft.Azure.Management.Network.Models;
 
 namespace Networks.Tests
 {
@@ -40,7 +41,7 @@ namespace Networks.Tests
             ApplicationGatewaySslCertificate sslCert = new ApplicationGatewaySslCertificate()
             {
                 Name = sslCertName,
-                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),                
+                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
                 Password = password
             };
 
@@ -332,7 +333,7 @@ namespace Networks.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);

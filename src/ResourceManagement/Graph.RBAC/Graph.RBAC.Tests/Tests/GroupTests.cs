@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void CreateDeleteGroupTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 //Test
                 ADGroup group = CreateGroup(context);
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact]
         public void AddRemoveMemberTest()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 //Arrange
                 ADGroup group = CreateGroup(context);
