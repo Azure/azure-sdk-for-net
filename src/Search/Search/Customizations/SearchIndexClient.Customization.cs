@@ -1,25 +1,14 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Hyak.Common.Internals;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search
 {
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using Microsoft.Rest;
+
     public partial class SearchIndexClient
     {
         private const string ClientRequestIdHeaderName = "client-request-id";
@@ -50,8 +39,8 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("credentials");
             }
             
-            this._credentials = credentials;
-            this._baseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.Credentials = credentials;
+            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -64,9 +53,20 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
         /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
         /// </param>
-        /// <param name='httpClient'>The Http client</param>
-        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials, HttpClient httpClient)
-            : this(httpClient)
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The set of delegating handlers to insert in the http
+        /// client pipeline.
+        /// </param>
+        public SearchIndexClient(
+            string searchServiceName, 
+            string indexName,
+            SearchCredentials credentials,
+            HttpClientHandler rootHandler,
+            params DelegatingHandler[] handlers)
+            : this(rootHandler, handlers)
         {
             if (searchServiceName == null)
             {
@@ -83,41 +83,25 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("credentials");
             }
             
-            this._credentials = credentials;
-            this._baseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.Credentials = credentials;
+            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
 
         /// <inheritdoc />
-        public bool UseHttpGetForQueries { get; set; }
+        public SearchCredentials SearchCredentials
+        {
+            get { return (SearchCredentials)this.Credentials; }
+        }
 
         /// <inheritdoc />
-        public void SetClientRequestId(Guid guid)
-        {
-            HttpRequestHeaders headers = HttpClient.DefaultRequestHeaders;
-
-            if (headers.Contains(ClientRequestIdHeaderName))
-            {
-                headers.Remove(ClientRequestIdHeaderName);
-            }
-
-            headers.Add(ClientRequestIdHeaderName, guid.ToString());
-        }
-
-        /// <summary>
-        /// Reserved for internal use only.
-        /// </summary>
-        /// <param name="handler">Delegating handler</param>
-        /// <returns>A SearchServiceClient instance</returns>
-        public override SearchIndexClient WithHandler(DelegatingHandler handler)
-        {
-            return (SearchIndexClient)WithHandler(new SearchIndexClient(), handler);
-        }
+        public bool UseHttpGetForQueries { get; set; }
 
         private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
         {
-            return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
+            return TypeConversion.TryParseUri(
+                "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
         }
     }
 }
