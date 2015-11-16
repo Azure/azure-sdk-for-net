@@ -67,9 +67,11 @@ namespace Compute.Tests
             }
         }
 
-        public static string GenerateName(string prefix = null)
+        public static string GenerateName(string prefix = null,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="GenerateName_failed")
         {
-            return HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(2), prefix);
+            return HttpMockServer.GetAssetName(methodName, prefix);
         }
     }
 }

@@ -26,6 +26,7 @@
     <Compile Include="Utilities\SearchServiceFixture.cs" />
     <Compile Include="Utilities\SearchTestBase.cs" />
     <Compile Include="Utilities\SearchTestUtilities.cs" />
+    <Compile Include="Utilities\TestEnvironmentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="generate.cmd" />
@@ -43,22 +44,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj">
-      <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
-      <Name>ClientRuntime.Azure.TestFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ResourceManagement\Resource\ResourceManagement\ResourceManagement.csproj">
-      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
-      <Name>ResourceManagement</Name>
-      <Properties>SkipValidatePackageReferences=true</Properties>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="Microsoft.Azure.Management.Resources, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ResourceManagement\WebSite\WebSites.Tests\Microsoft.Azure.Management.Resources.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
@@ -71,6 +69,14 @@
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.Authentication.0.10.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.HttpRecorder.1.2.0-preview\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.TestFramework.0.10.2-preview\lib\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -92,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Microsoft.Azure.Management.Resources.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using Xunit;
 
 namespace Compute.Tests
@@ -429,8 +430,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
-            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 

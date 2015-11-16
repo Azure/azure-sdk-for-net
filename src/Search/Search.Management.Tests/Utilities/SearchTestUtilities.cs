@@ -1,23 +1,16 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public static class SearchTestUtilities
     {
         public static string GenerateServiceName()
@@ -28,6 +21,47 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         public static void WaitForIndexing()
         {
             TestUtilities.Wait(TimeSpan.FromSeconds(2));
+        }
+
+        public static bool WaitForSearchServiceDns(string searchServiceName, TimeSpan maxDelay)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                // Nothing to wait for when we're running mocked.
+                return true;
+            }
+
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            Uri baseUri = testEnvironment.GetBaseSearchUri(searchServiceName);
+
+            TimeSpan retryDelay = TimeSpan.FromSeconds(1);
+            
+            long maxRetries = (long)(maxDelay.TotalSeconds / retryDelay.TotalSeconds);
+            int retries = 0;
+
+            while (retries < maxRetries)
+            {
+                try
+                {
+                    Dns.GetHostEntry(baseUri.DnsSafeHost);
+                    return true;
+                }
+                catch (SocketException e)
+                {
+                    if (e.Message.Contains("The remote name could not be resolved") ||
+                        e.Message.Contains("No such host is known"))
+                    {
+                        Thread.Sleep(retryDelay);
+                        retries++;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

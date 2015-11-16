@@ -42,7 +42,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMBootDiagnostics")]
         public void TestVMBootDiagnostics()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

@@ -49,7 +49,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetScalingOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -109,7 +109,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetUpdateOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

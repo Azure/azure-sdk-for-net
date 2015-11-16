@@ -83,7 +83,7 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgGet()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
@@ -109,7 +109,7 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgListTypes()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
@@ -127,7 +127,7 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgListVersionsNoFilter()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
@@ -146,7 +146,7 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgListVersionsFilters()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,

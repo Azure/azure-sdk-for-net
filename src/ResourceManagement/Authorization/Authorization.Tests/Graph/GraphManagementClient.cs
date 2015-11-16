@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
@@ -25,6 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Authorization.Tests
 {
@@ -32,7 +33,7 @@ namespace Authorization.Tests
     {
         private const string DefaultUserDomain = "@aad191.ccsctp.net";
 
-        private const string DefaultTenantId = "e80a6e61-8b40-4a0b-9c90-fdc4db897423";
+        private const string DefaultTenantId = "1273adef-00a3-4086-a51a-dbcce1857d36";
         
         private const string GraphApiVersion = "1.42-previewInternal";
 
@@ -42,6 +43,10 @@ namespace Authorization.Tests
 
         private const string GraphGroupsSuffix = "groups";
 
+        private const string GraphDirectoryObjectsSuffix = "directoryObjects";
+
+        private const string GraphGroupMemberSuffix = @"$links/members";
+
         private const string CreateUserJsonFormatter = @"{0}
     ""accountEnabled"": true,
     ""displayName"": ""{2}"",
@@ -50,18 +55,22 @@ namespace Authorization.Tests
     ""userPrincipalName"": ""{2}{3}""
 {1}";
 
-    private const string CreateGroupJsonFormatter = @"{0}
+        private const string CreateGroupJsonFormatter = @"{0}
   ""displayName"":""{2}"",
   ""mailNickname"":""{2}"",
   ""mailEnabled"":false,
   ""securityEnabled"":true
 {1}";
+   
+        private const string AddMemberToGroupJsonFormatter = @"{0}
+  ""url"":""{2}"",
+  {1}";
         private TestEnvironment testEnvironment;
 
         public string UserDomain { get; private set; }
 
-        public GraphManagementClient(TestEnvironment testEnv)
-            : base()
+        public GraphManagementClient(TestEnvironment testEnv, params DelegatingHandler[] handlers)
+            : base(handlers)
         {
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
 
@@ -71,14 +80,14 @@ namespace Authorization.Tests
             }
 
             this.testEnvironment = testEnv;
-            if (testEnv != null && testEnv.AuthorizationContext != null  && testEnv.AuthorizationContext.UserId != null)
+            if (testEnv != null  && testEnv.UserName != null)
             {
-                var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
+                var atIndex = this.testEnvironment.UserName.IndexOf("@");
 
                 if (atIndex != -1 &&
-                    atIndex != this.testEnvironment.AuthorizationContext.UserId.Length - 1)
+                    atIndex != this.testEnvironment.UserName.Length - 1)
                 {
-                    this.UserDomain = this.testEnvironment.AuthorizationContext.UserId.Substring(atIndex);
+                    this.UserDomain = this.testEnvironment.UserName.Substring(atIndex);
                 }
             }
             else
@@ -87,12 +96,6 @@ namespace Authorization.Tests
             }
         }  
         
-
-        public override GraphManagementClient WithHandler(DelegatingHandler handler)
-        {
-            return (GraphManagementClient)WithHandler(new GraphManagementClient(this.testEnvironment), handler);
-        }
-
         public Guid CreateUser(string userName)
         {
             var createBody = string.Format(
@@ -181,6 +184,26 @@ namespace Authorization.Tests
 
             var response = this.CallServerSync(request);
         }
+
+        public void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            var memberObjectUri = this.GetGraphUriString(GraphManagementClient.GraphDirectoryObjectsSuffix + "/" + memberObjectId);
+            var index = memberObjectUri.IndexOf("?", StringComparison.Ordinal);
+            memberObjectUri = memberObjectUri.Remove(index);
+
+            var addGroupMemberRequestBody = string.Format(
+              GraphManagementClient.AddMemberToGroupJsonFormatter,
+              "{",
+              "}",
+              memberObjectUri);
+
+            var request = this.CreateRequest(
+                this.GetGraphUriString(GraphManagementClient.GraphGroupsSuffix + "/" + groupId + "/" + GraphManagementClient.GraphGroupMemberSuffix), 
+                HttpMethod.Post, 
+                addGroupMemberRequestBody);
+
+            this.CallServerSync(request);
+        }
         
         public IEnumerable<string> ListGroups(string groupNameFilter = null)
         {
@@ -219,9 +242,9 @@ namespace Authorization.Tests
             return string.Format(
                 GraphUriFormatter,
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
-                this.testEnvironment.AuthorizationContext == null  || this.testEnvironment.AuthorizationContext.TenantId == null?
-                GraphManagementClient.DefaultTenantId :
-                    this.testEnvironment.AuthorizationContext.TenantId,
+                /*this.testEnvironment == null  || this.testEnvironment.Tenant == null?*/
+                GraphManagementClient.DefaultTenantId /*:
+                    this.testEnvironment.Tenant*/,
                 suffix,
                 GraphManagementClient.GraphApiVersion);
         }
@@ -235,11 +258,13 @@ namespace Authorization.Tests
             httpRequest.Headers.Add("Accept", "application/json;odata=minimalmetadata");
 
 
-            if (this.testEnvironment.AuthorizationContext != null)
+            if (this.testEnvironment != null && this.testEnvironment.Credentials != null)
             {
-                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(
-                                                this.testEnvironment.AuthorizationContext.AccessTokenType,
-                                                this.testEnvironment.AuthorizationContext.AccessToken);
+                // Not Supported in current code
+                // var tokenCredentials = (TokenCredentials)this.testEnvironment.Credentials;
+                // httpRequest.Headers.Authorization = new AuthenticationHeaderValue(
+                //                                this.testEnvironment.AccessTokenType,
+                //                                this.testEnvironment.AuthorizationContext.AccessToken);
             }
 
             if(body != null)

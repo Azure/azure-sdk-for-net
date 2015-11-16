@@ -39,7 +39,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderGetValidateMessage()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -69,7 +69,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderListValidateMessage()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -88,7 +88,7 @@ namespace ResourceGroups.Tests
                 Assert.True(result.Any());
                 var websiteProvider =
                     result.First(
-                        p => p.NamespaceProperty.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
+                        p => p.NamespaceProperty.Equals(ProviderName, StringComparison.OrdinalIgnoreCase));
                 Assert.Equal(ProviderName, websiteProvider.NamespaceProperty);
                 Assert.True("Registered" == websiteProvider.RegistrationState ||
                     "Registering" == websiteProvider.RegistrationState,
@@ -102,7 +102,7 @@ namespace ResourceGroups.Tests
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -118,7 +118,7 @@ namespace ResourceGroups.Tests
         public void VerifyProviderUnregister()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -141,7 +141,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderOperationsList()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 const string DefaultApiVersion = "2014-06-01";
 
@@ -182,7 +182,7 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(operations.Value.First().Name);
                 Assert.NotNull(operations.Value.First().Display);
                 IEnumerable<ResourceProviderOperationDefinition> definitions =
-                    operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
+                    operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(definitions);
                 Assert.NotEmpty(definitions);
                 Assert.Equal(1, definitions.Count());

@@ -1,30 +1,22 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Net;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Test;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
+    using System;
+    using System.Net.Http;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class IndexFixture : SearchServiceFixture
     {
-        public IndexFixture()
+        public string IndexName { get; private set; }
+
+        public override void Initialize(MockContext context)
         {
+            base.Initialize(context);
+
             SearchServiceClient searchClient = this.GetSearchServiceClient();
 
             IndexName = TestUtilities.GenerateName();
@@ -71,40 +63,42 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     }
                 };
 
-            IndexDefinitionResponse createIndexResponse = searchClient.Indexes.Create(index);
-            Assert.Equal(HttpStatusCode.Created, createIndexResponse.StatusCode);
+            searchClient.Indexes.Create(index);
 
             // Give the index time to stabilize before running tests.
             // TODO: Remove this workaround once the retry hang bug is fixed.
             TestUtilities.Wait(TimeSpan.FromSeconds(20));
         }
 
-        public string IndexName { get; private set; }
-
-        public SearchIndexClient GetSearchIndexClient(string indexName = null)
+        public SearchIndexClient GetSearchIndexClient(string indexName = null, params DelegatingHandler[] handlers)
         {
             indexName = indexName ?? IndexName;
             return GetSearchIndexClientForKey(indexName, PrimaryApiKey);
         }
 
-        public SearchIndexClient GetSearchIndexClientForQuery(string indexName = null)
+        public SearchIndexClient GetSearchIndexClientForQuery(
+            string indexName = null, 
+            params DelegatingHandler[] handlers)
         {
             indexName = indexName ?? IndexName;
             return GetSearchIndexClientForKey(indexName, QueryApiKey);
         }
 
-        private SearchIndexClient GetSearchIndexClientForKey(string indexName, string apiKey)
+        private SearchIndexClient GetSearchIndexClientForKey(
+            string indexName, 
+            string apiKey, 
+            params DelegatingHandler[] handlers)
         {
-            var factory = new CSMTestEnvironmentFactory();
-            TestEnvironment currentEnvironment = factory.GetTestEnvironment();
+            TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
 
             Uri baseUri = 
                 new Uri(
-                    currentEnvironment.GetBaseSearchUri(ExecutionMode.CSM, SearchServiceName), 
+                    currentEnvironment.GetBaseSearchUri(SearchServiceName), 
                     String.Format("indexes/{0}/", indexName));
 
-            SearchIndexClient client = new SearchIndexClient(new SearchCredentials(apiKey), baseUri);
-            return TestBaseCopy.AddMockHandler<SearchIndexClient>(ref client);
+            currentEnvironment.BaseUri = baseUri;
+            currentEnvironment.Credentials = new SearchCredentials(apiKey);
+            return MockContext.GetServiceClient<SearchIndexClient>(currentEnvironment, handlers);
         }
     }
 }

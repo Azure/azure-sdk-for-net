@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             cred.StartDate = DateTime.Now;
             cred.EndDate = DateTime.Now.AddMonths(12);
             cred.KeyId = Guid.NewGuid().ToString();
-            cred.Value = Convert.ToBase64String(applicationCertificate.GetRawCertData());
+            cred.Value = Convert.ToBase64String(applicationCertificate.Export(X509ContentType.Cert));
             cred.Type = "AsymmetricX509Cert";
             cred.Usage = "Verify";
             return cred;
@@ -98,18 +98,15 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
         public PasswordCredential CreatePasswordCredential()
         {
-            string DirectoryAccessKey;
-            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
-            {
-                byte[] key = new byte[32];
-                provider.GetBytes(key);
-                DirectoryAccessKey = Convert.ToBase64String(key);
-            }
+            var bytes = new byte[32] { 1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
+                                        1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
+                                        1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
+                                        1, 2 };
             PasswordCredential cred = new PasswordCredential();
             cred.StartDate = DateTime.Now;
             cred.EndDate = DateTime.Now.AddMonths(12);
             cred.KeyId = Guid.NewGuid().ToString();
-            cred.Value = DirectoryAccessKey;
+            cred.Value = Convert.ToBase64String(bytes);
             return cred;
         }
 

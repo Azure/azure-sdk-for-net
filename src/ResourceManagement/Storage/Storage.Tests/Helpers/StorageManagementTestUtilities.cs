@@ -38,8 +38,8 @@ namespace Storage.Tests.Helpers
         private static HttpClientHandler Handler = null;
 
         // These should be filled in only if test tenant is true
-        private static string certName = null;
-        private static string certPassword = null;
+        public static string certName = null;
+        public static string certPassword = null;
         private static string testSubscription = null;
         private static Uri testUri = null;
 
@@ -85,14 +85,16 @@ namespace Storage.Tests.Helpers
 
         private static HttpClientHandler GetHandler() 
         {
+#if DNX451
             if (Handler == null)
             {
+                //talk to yugangw-msft, if the code doesn't work under dnx451 (same with net451)
                 X509Certificate2 cert = new X509Certificate2(certName, certPassword);
                 Handler = new System.Net.Http.WebRequestHandler();
                 ((WebRequestHandler)Handler).ClientCertificates.Add(cert);
                 ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
             }
-
+#endif
             return Handler;
         }
 

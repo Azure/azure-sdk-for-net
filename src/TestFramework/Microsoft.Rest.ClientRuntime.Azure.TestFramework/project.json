@@ -1,0 +1,38 @@
+﻿{
+  "version": "1.0.0",
+  "description": "Microsoft.Azure.Test.TestFramework",
+  "authors": [ "Microsoft Corporation" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "net451": {
+      "System.Net.Http": "",
+      "System.Runtime": { "type": "build" },
+      "System.Threading.Tasks": { "type": "build" }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0.0-beta-23509",
+        "System.Diagnostics.Debug": "4.0.11-beta-23509",
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23509",
+        "System.Threading.Thread": "4.0.0-beta-23509",
+        "Microsoft.CSharp": "4.0.1-beta-23509",
+        "System.Collections": "4.0.11-beta-23509",
+        "System.Linq": "4.0.1-beta-23509",
+        "System.Runtime": "4.0.21-beta-23509",
+        "System.Threading": "4.0.11-beta-23509",
+        "System.Net.Http": "4.0.1-beta-23509"
+        
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.Azure.Test.HttpRecorder": "",
+    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview"
+  }
+}

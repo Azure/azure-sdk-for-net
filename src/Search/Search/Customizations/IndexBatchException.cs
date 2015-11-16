@@ -1,27 +1,15 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using Hyak.Common;
-using Microsoft.Azure.Search.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Rest.Azure;
+
     /// <summary>
     /// Exception thrown when an indexing operation only partially succeeds.
     /// </summary>
@@ -31,41 +19,26 @@ namespace Microsoft.Azure.Search
             "{0} of {1} indexing actions in the batch failed. The remaining actions succeeded and modified the " +
             "index. Check the IndexResponse property for the status of each index action.";
 
-        private readonly DocumentIndexResponse _indexResponse;
+        private readonly IList<IndexingResult> _indexingResults;
 
         /// <summary>
         /// Initializes a new instance of the IndexBatchException class.
         /// </summary>
-        /// <param name="httpRequest">The original HTTP index request.</param>
-        /// <param name="httpResponse">The original HTTP index response.</param>
-        /// <param name="indexResponse">The deserialized response from the index request.</param>
-        public IndexBatchException(
-            HttpRequestMessage httpRequest, 
-            HttpResponseMessage httpResponse, 
-            DocumentIndexResponse indexResponse) : base(CreateMessage(indexResponse))
+        /// <param name="documentIndexResult">The deserialized response from the index request.</param>
+        public IndexBatchException(DocumentIndexResult documentIndexResult) : base(CreateMessage(documentIndexResult))
         {
             // Null check in CreateMessage().
-            _indexResponse = indexResponse;
+            _indexingResults = documentIndexResult.Results;
 
-            Error =
-                new CloudError()
-                {
-                    Code = String.Empty,
-                    Message = this.Message,
-                    OriginalMessage = this.Message,
-                    ResponseBody = String.Empty
-                };
-
-            Request = CloudHttpRequestErrorInfo.Create(httpRequest);
-            Response = CloudHttpResponseErrorInfo.Create(httpResponse);
+            this.Body = new CloudError() { Code = String.Empty, Message = this.Message };
         }
 
         /// <summary>
-        /// Gets the response for the index batch that contains the status for each individual index action.
+        /// Gets the results for the index batch that contains the status for each individual index action.
         /// </summary>
-        public DocumentIndexResponse IndexResponse
+        public IList<IndexingResult> IndexingResults
         {
-            get { return _indexResponse; }
+            get { return _indexingResults; }
         }
 
         /// <summary>
@@ -81,7 +54,7 @@ namespace Microsoft.Azure.Search
         {
             Func<Document, string> getKey = d => d[keyFieldName].ToString();
             IEnumerable<IndexAction> failedActions = 
-                DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
+                this.DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
             return new IndexBatch(failedActions);
         }
 
@@ -101,7 +74,7 @@ namespace Microsoft.Azure.Search
             where T : class
         {
             IEnumerable<IndexAction<T>> failedActions = 
-                DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
+                this.DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
             return IndexBatch.Create(failedActions);
         }
 
@@ -112,22 +85,22 @@ namespace Microsoft.Azure.Search
             where TAction : IndexActionBase<TDoc>
             where TDoc : class
         {
-            var failedKeys = new HashSet<string>(IndexResponse.Results.Where(r => !r.Succeeded).Select(r => r.Key));
+            var failedKeys = new HashSet<string>(this.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key));
             Func<TAction, bool> isFailed = a => a.Document != null && failedKeys.Contains(keySelector(a.Document));
             return originalBatch.Actions.Where(isFailed);
         }
 
-        private static string CreateMessage(DocumentIndexResponse indexResponse)
+        private static string CreateMessage(DocumentIndexResult documentIndexResult)
         {
-            if (indexResponse == null)
+            if (documentIndexResult == null)
             {
-                throw new ArgumentNullException("indexResponse");
+                throw new ArgumentNullException("documentIndexResult");
             }
 
             return String.Format(
                 MessageFormat, 
-                indexResponse.Results.Count(r => !r.Succeeded),
-                indexResponse.Results.Count);
+                documentIndexResult.Results.Count(r => !r.Succeeded),
+                documentIndexResult.Results.Count);
         }
     }
 }
