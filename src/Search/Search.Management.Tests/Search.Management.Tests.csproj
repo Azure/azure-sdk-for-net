@@ -26,6 +26,7 @@
     <Compile Include="Utilities\SearchServiceFixture.cs" />
     <Compile Include="Utilities\SearchTestBase.cs" />
     <Compile Include="Utilities\SearchTestUtilities.cs" />
+    <Compile Include="Utilities\TestEnvironmentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="generate.cmd" />

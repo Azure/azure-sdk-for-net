@@ -1,34 +1,28 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Net;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Test;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
+    using System;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public class IndexerFixture : SearchServiceFixture
     {
-        // The connection string we use here, as well as table name and target index schema, use the usgs database that we set up 
-        // to support our code samples. 
-        private const string AzureSqlReadOnlyConnectionString = "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+        // The connection string we use here, as well as table name and target index schema, use the USGS database
+        // that we set up to support our code samples.
+        private const string AzureSqlReadOnlyConnectionString =
+            "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
-        public IndexerFixture()
+        public string TargetIndexName { get; private set; }
+
+        public string DataSourceName { get; private set; }
+
+        public override void Initialize(MockContext context)
         {
+            base.Initialize(context);
+
             SearchServiceClient searchClient = this.GetSearchServiceClient();
 
             TargetIndexName = TestUtilities.GenerateName();
@@ -42,8 +36,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new Field("feature_id", DataType.String) { IsKey = true },
                 });
 
-            AzureOperationResponse createResponse = searchClient.Indexes.Create(index);
-            Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+            searchClient.Indexes.Create(index);
 
             var dataSource = new DataSource(
                 DataSourceName,
@@ -51,13 +44,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new DataSourceCredentials(AzureSqlReadOnlyConnectionString),
                 new DataContainer("GeoNamesRI"));
 
-            createResponse = searchClient.DataSources.Create(dataSource);
-            Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+            searchClient.DataSources.Create(dataSource);
         }
-
-        public string TargetIndexName { get; private set; }
-
-        public string DataSourceName { get; private set; }
 
         public Indexer CreateTestIndexer()
         {
