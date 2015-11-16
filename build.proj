@@ -251,18 +251,6 @@
     <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
-
-  <!--Smoke test the packages under the output dir-->
-  <Target Name="VerifyPackages">
-    <PropertyGroup>
-      <_TestProject>$(LibraryToolsFolder)\VerifyPackages\VerifyPackages.sln</_TestProject>
-      <_TestExecutable>$(LibraryToolsFolder)\VerifyPackages\bin\debug\VerifyPackages.exe</_TestExecutable>
-    </PropertyGroup>
-    <Error Text="Please provide a publish settings file for the 'Creds' property" Condition=" '$(Creds)' == '' " />
-    <Exec Command="$(NuGetCommand) restore $(_TestProject) -source &quot;$(PackageOutputDir)&quot;"/>
-    <MSBuild Projects="$(_TestProject)" Targets="Build" Properties="Configuration=Debug;Platform=Any CPU" />
-    <Exec Command="$(_TestExecutable) $(Creds)" />
-  </Target>
   
   <!--
   We have some important work to do when building our official Library bits.
@@ -290,5 +278,18 @@
   </Target>
 
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
+
+
+  <Target Name="CopyAndExtractUnsignedPackages">
+    <ItemGroup>
+      <UnsignedPackages Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+    </ItemGroup>
+    <Message Text="%(UnsignedPackages.Identity)" Importance="low" />
+    
+    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(UnsignedPackages->'$(PackageOutputDir)\%(Filename)') %(UnsignedPackages.Identity)" />
+
+    <RemoveDir Directories="@(UnsignedPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
+    <Delete Files="@(UnsignedPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
+  </Target>
 
 </Project>
