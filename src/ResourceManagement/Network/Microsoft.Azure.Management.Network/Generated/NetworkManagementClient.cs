@@ -247,10 +247,10 @@ namespace Microsoft.Azure.Management.Network
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-                if (this.Credentials != null)
-                {
-                    this.Credentials.InitializeServiceClient(this);
-                }
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -280,10 +280,10 @@ namespace Microsoft.Azure.Management.Network
             }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-                if (this.Credentials != null)
-                {
-                    this.Credentials.InitializeServiceClient(this);
-                }
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
