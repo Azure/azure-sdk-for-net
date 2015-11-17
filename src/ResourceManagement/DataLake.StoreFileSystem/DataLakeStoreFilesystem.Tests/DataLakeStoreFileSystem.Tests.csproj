@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{AF8DA0F4-29F8-4F0E-8571-8BBE59E16913}</ProjectGuid>
+    <ProjectGuid>{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>DataLakeStoreFileSystem.Tests</RootNamespace>
