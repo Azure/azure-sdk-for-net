@@ -33,5 +33,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// West US
         /// </summary>
         public const string WestUS = "westus";
+        
+        /// <summary>
+        /// North Europe
+        /// </summary>
+        public const string NorthEurope = "northeurope";
     }
 }

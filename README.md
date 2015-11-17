@@ -17,7 +17,7 @@ Using Visual Studio:
 
   - Open any solution, say, "src\ResourceManagement\Compute\Compute.sln".
   - Invoke "build" command.
-  - Most solutions support 3 solution configurations, "Net40", "Net45", and "Portable". you can use "Configruation Manager" to switch and build.
+  - Most solutions support 3 solution configurations, "Net40", "Net45", and "Portable". you can use "Configuration Manager" to switch and build.
 
 Using the command line:
 
