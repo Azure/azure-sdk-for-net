@@ -5,18 +5,12 @@
   </PropertyGroup>
   
   <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj"
-          Condition=" '$(Scope)' != 'all' "/>
+          Condition=" '$(Scope)' != 'all' " />
 
-  <Import Project="$(LibrarySourceFolder)\ResourceManagement\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\ServiceManagement\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\ClientRuntime.Azure.TestFramework\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>
+  <!--TODO: remove when we convert them to be dnx based-->
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\Logic\LogicManagement\Microsoft.Azure.Management.Logic.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\Scheduler\SchedulerManagement\Microsoft.Azure.Management.Scheduler.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\WebSite\WebSiteManagement\Microsoft.Azure.Management.WebSites.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
@@ -81,15 +75,23 @@
   <!--
   Build NuGet packages
   -->
-  <Target Name="Package" DependsOnTargets="BuildDynamicNuSpecs">
+  <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
+    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' " />
     
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' and '@(SdkNuGetPackage)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
     <Message Text="Generating NuGet packages without symbol + source packages into $(PackageOutputDir)" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' and '@(SdkNuGetPackage)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+
+    <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <ItemGroup>
+      <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="Publish">
@@ -108,6 +110,15 @@
 
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
+
+    <ItemGroup>
+      <_DnxPackagesToPublish Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg"
+                             Exclude="$(PackageOutputDir)\*.symbols.nupkg">
+      </_DnxPackagesToPublish>
+    </ItemGroup>
+    <Exec Command="$(NuGetCommand) push &quot;%(_DnxPackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
+          IgnoreExitCode="true" />
+    
   </Target>
 
 </Project>

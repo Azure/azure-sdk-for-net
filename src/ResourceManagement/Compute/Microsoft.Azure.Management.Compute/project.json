@@ -1,0 +1,52 @@
+{
+  "version": "11.0.0-prerelease",
+  "description": "Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.",
+  "authors": [ "Microsoft" ],
+  "tags": [ "Microsoft Azure resource management", "virtual machine", "compute", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)"
+  },
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Collections": { "type": "build" },
+        "System.Linq.Expressions": {"type": "build"},
+        "System.Runtime": {"type": "build"},
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": {"type": "build"}
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Diagnostics.Tools": "4.0.1-beta-23509",
+        "System.Net.Http": "4.0.1-beta-23509",
+        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23509",
+        "System.Threading.Tasks": "4.0.11-beta-23509",
+        "System.Xml.ReaderWriter": "4.0.11-beta-23509"
+      }
+    },
+    ".NETPortable,Version=v4.5,Profile=Profile111": {
+      "frameworkAssemblies": {
+        "System.Collections": { "type": "build" },
+        "System.Linq": { "type": "build" },
+        "System.Linq.Expressions": { "type": "build" },
+        "System.Net.Http": { "type": "build" },
+        "System.Net.Primitives": { "type": "build" },
+        "System.Resources.ResourceManager":  {"type" : "build"},
+        "System.Runtime": { "type": "build" },
+        "System.Runtime.Serialization.Primitives":  { "type": "build" },
+        "System.Text.Encoding": { "type": "build" },
+        "System.Text.RegularExpressions": { "type": "build" },
+        "System.Threading.Tasks": { "type": "build" }
+      }
+    }
+  }
+}

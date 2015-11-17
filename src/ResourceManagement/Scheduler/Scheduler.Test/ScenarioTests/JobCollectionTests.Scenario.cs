@@ -34,7 +34,16 @@ namespace Scheduler.Test.ScenarioTests
         private const string resourceGroupName = "CS-SouthCentralUS-scheduler";
         private const string type = "Microsoft.Scheduler/jobCollections";
         private const string location = "South Central US";
-        
+
+
+        [Fact]
+        public void Ensure_Microsoft_Rest_ClientRuntime_Azure_Authentication_Get_Deployed()
+        {
+            Microsoft.Rest.Azure.Authentication.AuthenticationException randomType = 
+                new Microsoft.Rest.Azure.Authentication.AuthenticationException();
+            Assert.True(randomType.GetType().ToString().Length != 0);
+        }
+
         [Fact]
         public void Scenario_JobCollectionCreateUpdateDelete()
         {

@@ -40,7 +40,7 @@ namespace ResourceGroups.Tests
 
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));

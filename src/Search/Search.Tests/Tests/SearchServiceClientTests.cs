@@ -1,26 +1,16 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
-using System.Net;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
+    using System.Net;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest.Azure;
+    using Xunit;
+
     public sealed class SearchServiceClientTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
@@ -31,13 +21,13 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient client = Data.GetSearchServiceClient();
                 
                 // We need to use a constant GUID so that this test will still work in playback mode.
-                Guid myRequestId = new Guid("c4cfce79-eb42-4e61-9909-84510c04706f");
-                client.SetClientRequestId(myRequestId);
+                var options = new SearchRequestOptions() { ClientRequestId = "c4cfce79-eb42-4e61-9909-84510c04706f" };
 
-                IndexListResponse listResponse = client.Indexes.List();
-                Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+                AzureOperationResponse<IndexListResult> listResponse =
+                    client.Indexes.ListWithHttpMessagesAsync(searchRequestOptions: options).Result;
+                Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
 
-                Assert.Equal(myRequestId.ToString(), listResponse.RequestId);
+                Assert.Equal(options.ClientRequestId, listResponse.RequestId);
             });
         }
 
@@ -49,7 +39,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
                 SearchIndexClient indexClient = serviceClient.Indexes.GetClient("test");
 
-                Assert.Equal(serviceClient.Credentials.ApiKey, indexClient.Credentials.ApiKey);
+                Assert.Equal(serviceClient.SearchCredentials.ApiKey, indexClient.SearchCredentials.ApiKey);
                 Assert.Equal(new Uri(serviceClient.BaseUri, "/indexes('test')"), indexClient.BaseUri);
             });
         }
