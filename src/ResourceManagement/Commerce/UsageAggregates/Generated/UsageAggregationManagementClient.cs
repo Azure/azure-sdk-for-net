@@ -840,7 +840,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-06-01-preview");
             queryParameters.Add("reportedstartTime=" + Uri.EscapeDataString(reportedStartTime.ToString("O")));
-            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString("O")) + ",");
+            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString("O")));
             queryParameters.Add("showDetails=" + Uri.EscapeDataString(showDetails.ToString().ToLower()));
             queryParameters.Add("aggregationGranularity=" + Uri.EscapeDataString(UsageAggregationManagementClient.AggregationGranularityToString(aggregationGranularity)));
             if (continuationToken != null)
