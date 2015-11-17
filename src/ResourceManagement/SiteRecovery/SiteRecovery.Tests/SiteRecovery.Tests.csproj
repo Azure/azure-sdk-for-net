@@ -21,6 +21,7 @@
     <Compile Include="ScenarioTests\SiteRecoveryTestsBase.cs" />
     <Compile Include="ScenarioTests\UpdateTests.cs" />
     <Compile Include="ScenarioTests\Utilities.cs" />
+    <Compile Include="ScenarioTests\VaultTests.cs" />
     <Compile Include="ScenarioTests\VCenterTests.cs" />
     <Compile Include="Spec.TechSupport.SiteRecovery\SiteRecoveryManagementTestUtilities.cs" />
   </ItemGroup>
@@ -59,6 +60,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\DeleteProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\CreateAndRetrieveVaultExtendedInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\CreateVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\RemoveVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\RetrieveVault.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SiteRecovery.playlist" />
