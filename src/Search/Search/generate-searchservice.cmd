@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.13.0-Nightly20151111
+set autoRestVersion=0.13.0-Nightly20151115
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/search/2015-02-28/swagger/searchservice.json"
 ) else (
@@ -15,3 +15,6 @@ set generateFolder=%~dp0GeneratedSearchService
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
 call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Search %autoRestVersion% %generateFolder% 
+
+:: Delete any extra files generated for types that are shared between SearchServiceClient and SearchIndexClient.
+del "%generateFolder%\Models\SearchRequestOptions.cs"
