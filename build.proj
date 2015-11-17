@@ -292,6 +292,8 @@
     
     <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
     <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
+
+    <MakeDir Directories="$(_UnsignedFolder);$(_SignedFolder)" />
     
     <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
 
@@ -299,7 +301,8 @@
     <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
 
     <ItemGroup>
-      <_PackageBinaries Include="$(PackageOutputDir)\**\*.dll">
+      <_TempBinaries Include="$(PackageOutputDir)\**\*.dll"/>
+      <_PackageBinaries Include="@(_TempBinaries)">
         <!-- Flattened file for signing -->
         <UnsignedFlatFileName>$(_UnsignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</UnsignedFlatFileName>
         <SignedFlatFileName>$(_SignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</SignedFlatFileName>
