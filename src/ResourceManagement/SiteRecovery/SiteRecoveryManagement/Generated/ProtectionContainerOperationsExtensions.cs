@@ -212,9 +212,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// Service response for operation which change status of protection
+        /// container.
         /// </returns>
-        public static LongRunningOperationResponse GetDiscoverProtectableItemStatus(this IProtectionContainerOperations operations, string operationStatusLink)
+        public static DiscoverProtectableItemResponse GetDiscoverProtectableItemStatus(this IProtectionContainerOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -237,9 +238,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// Service response for operation which change status of protection
+        /// container.
         /// </returns>
-        public static Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(this IProtectionContainerOperations operations, string operationStatusLink)
+        public static Task<DiscoverProtectableItemResponse> GetDiscoverProtectableItemStatusAsync(this IProtectionContainerOperations operations, string operationStatusLink)
         {
             return operations.GetDiscoverProtectableItemStatusAsync(operationStatusLink, CancellationToken.None);
         }

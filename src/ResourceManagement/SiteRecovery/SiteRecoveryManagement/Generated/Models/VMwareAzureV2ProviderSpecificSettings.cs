@@ -65,6 +65,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._healthErrorCode = value; }
         }
         
+        private string _infrastructureVmId;
+        
+        /// <summary>
+        /// Optional. Infrastructure VM Id.
+        /// </summary>
+        public string InfrastructureVmId
+        {
+            get { return this._infrastructureVmId; }
+            set { this._infrastructureVmId = value; }
+        }
+        
         private string _ipAddress;
         
         /// <summary>
@@ -274,6 +285,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._uncompressedDataRateInMB; }
             set { this._uncompressedDataRateInMB = value; }
+        }
+        
+        private string _vCenterInfrastructureId;
+        
+        /// <summary>
+        /// Optional. vCenter Infrastructure Id.
+        /// </summary>
+        public string VCenterInfrastructureId
+        {
+            get { return this._vCenterInfrastructureId; }
+            set { this._vCenterInfrastructureId = value; }
         }
         
         private string _vHDName;

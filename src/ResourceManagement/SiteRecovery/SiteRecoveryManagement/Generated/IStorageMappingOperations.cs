@@ -34,6 +34,55 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public partial interface IStorageMappingOperations
     {
         /// <summary>
+        /// Pairs storage to a given storage.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='storageName'>
+        /// Storage name.
+        /// </param>
+        /// <param name='storageMappingName'>
+        /// Storage mapping name.
+        /// </param>
+        /// <param name='input'>
+        /// Create mapping input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginPairStorageAsync(string fabricName, string storageName, string storageMappingName, StorageMappingInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unpairs storage to a given storage.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='storageName'>
+        /// Storage name.
+        /// </param>
+        /// <param name='storageMappingName'>
+        /// Storage mapping name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginUnpairStorageAsync(string fabricName, string storageName, string storageMappingName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the replication storage mapping object by name.
         /// </summary>
         /// <param name='fabricName'>
@@ -57,6 +106,41 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<StorageMappingResponse> GetAsync(string fabricName, string storageName, string storageMappingName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Service response for operation which change status of mapping for
+        /// storage.
+        /// </returns>
+        Task<StorageMappingOperationResponse> GetPairStorageStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> GetUnpairStorageStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the replication storage mapping objects under a storage.
         /// </summary>
         /// <param name='fabricName'>
@@ -75,5 +159,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the list storage mapping operation.
         /// </returns>
         Task<StorageMappingListResponse> ListAsync(string fabricName, string storageName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Pairs storage to a given storage.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='storageName'>
+        /// Storage name.
+        /// </param>
+        /// <param name='storageMappingName'>
+        /// Storage mapping name.
+        /// </param>
+        /// <param name='input'>
+        /// Create mapping input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> PairStorageAsync(string fabricName, string storageName, string storageMappingName, StorageMappingInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Removes storage pairing.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='storageName'>
+        /// Storage name.
+        /// </param>
+        /// <param name='storageMappingName'>
+        /// Storage mapping name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> UnpairStorageAsync(string fabricName, string storageName, string storageMappingName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

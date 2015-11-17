@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            DiscoverProtectableItemResponse result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
@@ -629,9 +629,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// Service response for operation which change status of protection
+        /// container.
         /// </returns>
-        public async Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<DiscoverProtectableItemResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -699,13 +700,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    DiscoverProtectableItemResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new LongRunningOperationResponse();
+                        result = new DiscoverProtectableItemResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -714,11 +715,108 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken locationValue = responseDoc["Location"];
+                            ProtectionContainer protectionContainerInstance = new ProtectionContainer();
+                            result.ProtectionContainer = protectionContainerInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ProtectionContainerProperties propertiesInstance = new ProtectionContainerProperties();
+                                protectionContainerInstance.Properties = propertiesInstance;
+                                
+                                JToken fabricFriendlyNameValue = propertiesValue["fabricFriendlyName"];
+                                if (fabricFriendlyNameValue != null && fabricFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string fabricFriendlyNameInstance = ((string)fabricFriendlyNameValue);
+                                    propertiesInstance.FabricFriendlyName = fabricFriendlyNameInstance;
+                                }
+                                
+                                JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string friendlyNameInstance = ((string)friendlyNameValue);
+                                    propertiesInstance.FriendlyName = friendlyNameInstance;
+                                }
+                                
+                                JToken fabricTypeValue = propertiesValue["fabricType"];
+                                if (fabricTypeValue != null && fabricTypeValue.Type != JTokenType.Null)
+                                {
+                                    string fabricTypeInstance = ((string)fabricTypeValue);
+                                    propertiesInstance.FabricType = fabricTypeInstance;
+                                }
+                                
+                                JToken protectedItemCountValue = propertiesValue["protectedItemCount"];
+                                if (protectedItemCountValue != null && protectedItemCountValue.Type != JTokenType.Null)
+                                {
+                                    int protectedItemCountInstance = ((int)protectedItemCountValue);
+                                    propertiesInstance.ProtectedItemCount = protectedItemCountInstance;
+                                }
+                                
+                                JToken pairingStatusValue = propertiesValue["pairingStatus"];
+                                if (pairingStatusValue != null && pairingStatusValue.Type != JTokenType.Null)
+                                {
+                                    string pairingStatusInstance = ((string)pairingStatusValue);
+                                    propertiesInstance.PairingStatus = pairingStatusInstance;
+                                }
+                                
+                                JToken roleValue = propertiesValue["role"];
+                                if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                {
+                                    string roleInstance = ((string)roleValue);
+                                    propertiesInstance.Role = roleInstance;
+                                }
+                                
+                                JToken fabricSpecificDetailsValue = propertiesValue["fabricSpecificDetails"];
+                                if (fabricSpecificDetailsValue != null && fabricSpecificDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)fabricSpecificDetailsValue["instanceType"]);
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                protectionContainerInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                protectionContainerInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                protectionContainerInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                result.Location = locationInstance;
+                                protectionContainerInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];

@@ -128,6 +128,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._processServerId = value; }
         }
         
+        private string _runAsAccountId;
+        
+        /// <summary>
+        /// Optional. Account Id which has priviliges to discover vCenter.
+        /// </summary>
+        public string RunAsAccountId
+        {
+            get { return this._runAsAccountId; }
+            set { this._runAsAccountId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VCenterProperties class.
         /// </summary>

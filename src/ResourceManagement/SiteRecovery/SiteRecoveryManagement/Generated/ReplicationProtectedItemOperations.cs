@@ -3607,6 +3607,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                         
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
+                                        
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                         {
@@ -4760,6 +4774,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     if (typeName == "VMwareAzureV2")
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                        
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
                                         
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
@@ -6162,6 +6190,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                         
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
+                                        
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                         {
@@ -7374,6 +7416,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     if (typeName == "VMwareAzureV2")
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                        
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
                                         
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
@@ -8776,6 +8832,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                         
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
+                                        
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                         {
@@ -9988,6 +10058,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     if (typeName == "VMwareAzureV2")
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                        
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
                                         
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
@@ -11202,6 +11286,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                         
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
+                                        
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                         {
@@ -12414,6 +12512,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     if (typeName == "VMwareAzureV2")
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                        
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
                                         
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
@@ -13628,6 +13740,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                         
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
+                                        
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                         {
@@ -14840,6 +14966,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     if (typeName == "VMwareAzureV2")
                                     {
                                         VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                        
+                                        JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                        }
                                         
                                         JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                         if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
@@ -16102,6 +16242,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                                 
+                                                JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                                }
+                                                
                                                 JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                                 if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                                 {
@@ -17293,6 +17447,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
                                                 
+                                                JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                                }
+                                                
                                                 JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                                 if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)
                                                 {
@@ -18462,6 +18630,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             if (typeName == "VMwareAzureV2")
                                             {
                                                 VMwareAzureV2ProviderSpecificSettings vMwareAzureV2ProviderSpecificSettingsInstance = new VMwareAzureV2ProviderSpecificSettings();
+                                                
+                                                JToken infrastructureVmIdValue = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue != null && infrastructureVmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance = ((string)infrastructureVmIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue != null && vCenterInfrastructureIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance = ((string)vCenterInfrastructureIdValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance;
+                                                }
                                                 
                                                 JToken protectionStageValue = providerSpecificDetailsValue["protectionStage"];
                                                 if (protectionStageValue != null && protectionStageValue.Type != JTokenType.Null)

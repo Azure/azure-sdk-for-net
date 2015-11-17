@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -875,7 +875,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -1018,6 +1018,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string portInstance = ((string)portValue);
                                     propertiesInstance.Port = portInstance;
+                                }
+                                
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
                                 }
                                 
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
@@ -1259,6 +1266,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string portInstance = ((string)portValue);
                                     propertiesInstance.Port = portInstance;
+                                }
+                                
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
                                 }
                                 
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
@@ -1749,6 +1763,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Port = portInstance;
                                 }
                                 
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                }
+                                
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                 if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                 {
@@ -1938,7 +1959,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters";
+            url = url + "/replicationvCenters";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -2085,6 +2106,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string portInstance = ((string)portValue);
                                             propertiesInstance.Port = portInstance;
+                                        }
+                                        
+                                        JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                        if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                        {
+                                            string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                            propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
                                         }
                                         
                                         JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
@@ -2216,7 +2244,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/vCenters";
+            url = url + "/replicationvCenters";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -2363,6 +2391,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string portInstance = ((string)portValue);
                                             propertiesInstance.Port = portInstance;
+                                        }
+                                        
+                                        JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                        if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                        {
+                                            string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                            propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
                                         }
                                         
                                         JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
