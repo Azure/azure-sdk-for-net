@@ -97,9 +97,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.AzureGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
-                        { AzureEnvironment.Endpoint.AzureKonaCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureKonaCatalogAndJobEndpointSuffix},
-                        { AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeFileSystemEndpointSuffix}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId}
                     }
                 }
             },
@@ -123,7 +121,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
-                        // TODO: Kona and ADL do not have a China endpoint yet. Once they do, add them here.
                     }
                 }
             }
@@ -287,11 +284,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             AzureKeyVaultDnsSuffix,
 
-            AzureKeyVaultServiceEndpointResourceId,
-            
-            AzureKonaCatalogAndJobEndpointSuffix,
-
-            AzureDataLakeFileSystemEndpointSuffix
+            AzureKeyVaultServiceEndpointResourceId
         }
     }
 
@@ -347,9 +340,5 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
-
-        public const string AzureKonaCatalogAndJobEndpointSuffix = "microsoftkonacompute.net";
-
-        public const string AzureDataLakeFileSystemEndpointSuffix = "azuredatalake.net";
     }
 }
