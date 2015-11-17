@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>2e524af5-46a3-4a54-a7b9-61aa663a5666</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.Resources</RootNamespace>
+    <ProjectGuid>be53cf33-9a3d-4101-9dfd-62ac09cadada</ProjectGuid>
+    <RootNamespace>Microsoft.Azure.ResourceManager</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>

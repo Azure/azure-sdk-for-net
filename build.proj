@@ -117,7 +117,7 @@
              Targets="Build" />
 
     <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
 
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />

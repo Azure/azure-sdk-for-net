@@ -2,7 +2,7 @@
   "projects": [
     "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
     "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
-    "src/ResourceManagement/Resource/Microsoft.Azure.Management.Resources",
+    "src/ResourceManagement/Resource/Microsoft.Azure.ResourceManager",
     "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
     "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
     "src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute",

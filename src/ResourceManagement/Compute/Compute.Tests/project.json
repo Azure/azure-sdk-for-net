@@ -29,7 +29,7 @@
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "Microsoft.Azure.Management.Storage": "",
     "Microsoft.Azure.Management.Compute": "",
-    "Microsoft.Azure.Management.Resources": "",
+    "Microsoft.Azure.ResourceManager": "",
     "Microsoft.Azure.Management.Network": ""
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"

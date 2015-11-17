@@ -28,7 +28,7 @@
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "Microsoft.Azure.Management.Authorization": "",
     "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
-    "Microsoft.Azure.Management.Resources": ""
+    "Microsoft.Azure.ResourceManager": ""
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
