@@ -26,26 +26,15 @@ using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog U-SQL secret item.
+    /// A Data Lake Analytics catalog U-SQL credential item.
     /// </summary>
-    public partial class USqlSecret : CatalogItem
+    public partial class USqlCredential : CatalogItem
     {
-        private System.DateTimeOffset? _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the credential object.
-        /// This is the only information returned about a secret from a GET.
-        /// </summary>
-        public System.DateTimeOffset? CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
         private string _databaseName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the database.
+        /// Optional. Gets or sets the name of the database the credential is
+        /// in.
         /// </summary>
         public string DatabaseName
         {
@@ -53,12 +42,13 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
             set { this._databaseName = value; }
         }
         
-        private Guid _identity;
+        private string _identity;
         
         /// <summary>
-        /// Optional. Gets or sets the Identity of the secret.
+        /// Optional. Gets or sets the name of the secret associated with the
+        /// credential.
         /// </summary>
-        public Guid Identity
+        public string Identity
         {
             get { return this._identity; }
             set { this._identity = value; }
@@ -67,7 +57,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the secret.
+        /// Optional. Gets or sets the name of the credential.
         /// </summary>
         public string Name
         {
@@ -78,7 +68,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         private string _userName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the user who set the secret.
+        /// Optional. Gets or sets the user name associated with the credential.
         /// </summary>
         public string UserName
         {
@@ -87,9 +77,9 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the USqlSecret class.
+        /// Initializes a new instance of the USqlCredential class.
         /// </summary>
-        public USqlSecret()
+        public USqlCredential()
         {
         }
     }

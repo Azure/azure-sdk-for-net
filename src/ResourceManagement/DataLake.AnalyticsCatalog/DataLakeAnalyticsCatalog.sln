@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStoreManagement", "..\DataLake.Store\DataLakeStoreManagement\DataLakeStoreManagement.csproj", "{F8DDE40D-B5B4-4A37-8131-9EF8F18A4A6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeAnalyticsManagement", "..\DataLake.Analytics\DataLakeAnalyticsManagement\DataLakeAnalyticsManagement.csproj", "{8D1F3CE6-B697-4CE4-A1A3-38B675D4566B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeAnalyticsJobManagement", "..\DataLake.AnalyticsJob\DataLakeAnalyticsJobManagement\DataLakeAnalyticsJobManagement.csproj", "{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,18 @@ Global
 		{8D1F3CE6-B697-4CE4-A1A3-38B675D4566B}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{8D1F3CE6-B697-4CE4-A1A3-38B675D4566B}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{8D1F3CE6-B697-4CE4-A1A3-38B675D4566B}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

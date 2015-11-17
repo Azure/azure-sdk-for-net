@@ -20,42 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// A Data Lake Analytics catalog U-SQL credential item list.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class USqlCredentialList : CatalogItemList
     {
-        private string _computeAccountName;
+        private IList<USqlCredential> _value;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the list of credentials in the database
         /// </summary>
-        public string ComputeAccountName
+        public IList<USqlCredential> Value
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the USqlCredentialList class.
         /// </summary>
-        public CatalogItem()
+        public USqlCredentialList()
         {
+            this.Value = new LazyList<USqlCredential>();
         }
     }
 }

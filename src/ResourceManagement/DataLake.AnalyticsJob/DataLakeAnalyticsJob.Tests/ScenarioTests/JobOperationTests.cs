@@ -20,6 +20,7 @@ using Microsoft.Azure.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Xunit;
 namespace DataLakeAnalyticsJob.Tests
 {
@@ -91,8 +92,8 @@ namespace DataLakeAnalyticsJob.Tests
 
                 // We need to hardcode the job ID to use for the mocks.
                 // TODO: come up with some way to re-generate this when necessary (i.e. re-running/running the test against the server).
-                Guid jobId = new Guid("e9d3ac6f-86d0-476d-a1ce-e96d4777c053");
-                var secondId = new Guid("a543af0e-166f-4e52-a1ae-70dd7b5a4723");
+                Guid jobId = new Guid("ed59c8c7-0f92-4da2-a3d4-351832624870");
+                var secondId = new Guid("46d8bb29-556a-48f6-9a9a-6b4f5e993090");
                 // Submit a job to the account
                 var jobToSubmit = new JobInformation
                 {
@@ -122,6 +123,16 @@ namespace DataLakeAnalyticsJob.Tests
 
                 // Verify the job was successfully cancelled
                 Assert.NotNull(cancelJobResponse);
+                Assert.Equal(HttpStatusCode.OK, cancelJobResponse.StatusCode);
+
+                // Get the job and ensure that it says it was cancelled.
+                var getCancelledJobResponse = clientToUse.Jobs.Get(commonData.ResourceGroupName,
+                    commonData.DataLakeAnalyticsAccountName, jobCreateResponse.Job.JobId);
+
+                Assert.Equal(HttpStatusCode.OK, getCancelledJobResponse.StatusCode);
+                Assert.Equal(JobResult.Cancelled, getCancelledJobResponse.Job.Result);
+                Assert.NotNull(getCancelledJobResponse.Job.ErrorMessage);
+                Assert.NotEmpty(getCancelledJobResponse.Job.ErrorMessage);
 
                 // Resubmit the job
                 createOrBuildParams.Job.JobId = secondId;

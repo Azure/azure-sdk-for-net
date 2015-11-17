@@ -88,6 +88,178 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         }
         
         /// <summary>
+        /// Initiates a file append request, resulting in a return of the data
+        /// node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to append to.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Data Lake Store account to append to the
+        /// file in
+        /// </param>
+        /// <param name='bufferSize'>
+        /// Required. The optional buffer size to use when appending data
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static FileCreateOpenAndAppendResponse BeginAppend(this IFileSystemOperations operations, string filePath, string accountName, long? bufferSize)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFileSystemOperations)s).BeginAppendAsync(filePath, accountName, bufferSize);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Initiates a file append request, resulting in a return of the data
+        /// node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to append to.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Data Lake Store account to append to the
+        /// file in
+        /// </param>
+        /// <param name='bufferSize'>
+        /// Required. The optional buffer size to use when appending data
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static Task<FileCreateOpenAndAppendResponse> BeginAppendAsync(this IFileSystemOperations operations, string filePath, string accountName, long? bufferSize)
+        {
+            return operations.BeginAppendAsync(filePath, accountName, bufferSize, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Initiates a file creation request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to create.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Data Lake Store account to create the
+        /// file in
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. The optional parameters to use when creating the file
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static FileCreateOpenAndAppendResponse BeginCreate(this IFileSystemOperations operations, string filePath, string accountName, FileCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFileSystemOperations)s).BeginCreateAsync(filePath, accountName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Initiates a file creation request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to create.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Data Lake Store account to create the
+        /// file in
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. The optional parameters to use when creating the file
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static Task<FileCreateOpenAndAppendResponse> BeginCreateAsync(this IFileSystemOperations operations, string filePath, string accountName, FileCreateParameters parameters)
+        {
+            return operations.BeginCreateAsync(filePath, accountName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Initiates a file open (read) request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to open.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. The optional parameters to pass to the open operation
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static FileCreateOpenAndAppendResponse BeginOpen(this IFileSystemOperations operations, string filePath, string accountName, FileOpenParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFileSystemOperations)s).BeginOpenAsync(filePath, accountName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Initiates a file open (read) request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
+        /// </param>
+        /// <param name='filePath'>
+        /// Required. The path to the file to open.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. The optional parameters to pass to the open operation
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        public static Task<FileCreateOpenAndAppendResponse> BeginOpenAsync(this IFileSystemOperations operations, string filePath, string accountName, FileOpenParameters parameters)
+        {
+            return operations.BeginOpenAsync(filePath, accountName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>
         /// <param name='operations'>
@@ -225,11 +397,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse ConccurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, Stream streamContents)
+        public static AzureOperationResponse ConcurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, Stream streamContents)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IFileSystemOperations)s).ConccurrentAppendAsync(accountName, filePath, streamContents);
+                return ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -258,9 +430,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> ConccurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, Stream streamContents)
+        public static Task<AzureOperationResponse> ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, Stream streamContents)
         {
-            return operations.ConccurrentAppendAsync(accountName, filePath, streamContents, CancellationToken.None);
+            return operations.ConcurrentAppendAsync(accountName, filePath, streamContents, CancellationToken.None);
         }
         
         /// <summary>
@@ -803,196 +975,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         public static Task<HomeDirectoryResponse> GetHomeDirectoryAsync(this IFileSystemOperations operations, string accountName)
         {
             return operations.GetHomeDirectoryAsync(accountName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Initiates a file append request, resulting in a return of the data
-        /// node location that will service the request. DO NOT USE DIRECTLY
-        /// in C# (this should be used directly in Node.js). Call BeginAppend
-        /// and BeginAppendAsync instead. This ensures proper following of
-        /// WebHDFS redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to append to.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the Data Lake Store account to append to the
-        /// file in
-        /// </param>
-        /// <param name='bufferSize'>
-        /// Required. The optional buffer size to use when appending data
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static FileCreateOpenAndAppendResponse InternalBeginAppend(this IFileSystemOperations operations, string filePath, string accountName, long? bufferSize)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IFileSystemOperations)s).InternalBeginAppendAsync(filePath, accountName, bufferSize);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Initiates a file append request, resulting in a return of the data
-        /// node location that will service the request. DO NOT USE DIRECTLY
-        /// in C# (this should be used directly in Node.js). Call BeginAppend
-        /// and BeginAppendAsync instead. This ensures proper following of
-        /// WebHDFS redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to append to.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the Data Lake Store account to append to the
-        /// file in
-        /// </param>
-        /// <param name='bufferSize'>
-        /// Required. The optional buffer size to use when appending data
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static Task<FileCreateOpenAndAppendResponse> InternalBeginAppendAsync(this IFileSystemOperations operations, string filePath, string accountName, long? bufferSize)
-        {
-            return operations.InternalBeginAppendAsync(filePath, accountName, bufferSize, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Initiates a file creation request, resulting in a return of the
-        /// data node location that will service the request. DO NOT USE
-        /// DIRECTLY in C# (This should be used directly in Node.js). Call
-        /// BeginCreate and BeginCreateAsync instead. This ensures proper
-        /// following of WebHDFS redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to create.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the Data Lake Store account to create the
-        /// file in
-        /// </param>
-        /// <param name='parameters'>
-        /// Optional. The optional parameters to use when creating the file
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static FileCreateOpenAndAppendResponse InternalBeginCreate(this IFileSystemOperations operations, string filePath, string accountName, FileCreateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IFileSystemOperations)s).InternalBeginCreateAsync(filePath, accountName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Initiates a file creation request, resulting in a return of the
-        /// data node location that will service the request. DO NOT USE
-        /// DIRECTLY in C# (This should be used directly in Node.js). Call
-        /// BeginCreate and BeginCreateAsync instead. This ensures proper
-        /// following of WebHDFS redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to create.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the Data Lake Store account to create the
-        /// file in
-        /// </param>
-        /// <param name='parameters'>
-        /// Optional. The optional parameters to use when creating the file
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static Task<FileCreateOpenAndAppendResponse> InternalBeginCreateAsync(this IFileSystemOperations operations, string filePath, string accountName, FileCreateParameters parameters)
-        {
-            return operations.InternalBeginCreateAsync(filePath, accountName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Gets the data associated with the file handle requested. DO NOT USE
-        /// DIRECTLY in C# (in Node.js, please ONLY call this API to read/open
-        /// the contents of a file. DO NOT call Open). Call BeginOpen and
-        /// BeginOpenAsync instead. This ensures proper following of WebHDFS
-        /// redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to open.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the account to use
-        /// </param>
-        /// <param name='parameters'>
-        /// Optional. The optional parameters to pass to the open operation
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static FileCreateOpenAndAppendResponse InternalBeginOpen(this IFileSystemOperations operations, string filePath, string accountName, FileOpenParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IFileSystemOperations)s).InternalBeginOpenAsync(filePath, accountName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets the data associated with the file handle requested. DO NOT USE
-        /// DIRECTLY in C# (in Node.js, please ONLY call this API to read/open
-        /// the contents of a file. DO NOT call Open). Call BeginOpen and
-        /// BeginOpenAsync instead. This ensures proper following of WebHDFS
-        /// redirects
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.DataLake.StoreFileSystem.IFileSystemOperations.
-        /// </param>
-        /// <param name='filePath'>
-        /// Required. The path to the file to open.
-        /// </param>
-        /// <param name='accountName'>
-        /// Required. The name of the account to use
-        /// </param>
-        /// <param name='parameters'>
-        /// Optional. The optional parameters to pass to the open operation
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        public static Task<FileCreateOpenAndAppendResponse> InternalBeginOpenAsync(this IFileSystemOperations operations, string filePath, string accountName, FileOpenParameters parameters)
-        {
-            return operations.InternalBeginOpenAsync(filePath, accountName, parameters, CancellationToken.None);
         }
         
         /// <summary>

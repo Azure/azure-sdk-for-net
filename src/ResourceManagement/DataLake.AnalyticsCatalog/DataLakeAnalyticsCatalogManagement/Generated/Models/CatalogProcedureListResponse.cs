@@ -21,40 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// The List procedures operation response.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class CatalogProcedureListResponse : AzureOperationResponse
     {
-        private string _computeAccountName;
+        private USqlProcedureList _procedureList;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the resulting list of procedures.
         /// </summary>
-        public string ComputeAccountName
+        public USqlProcedureList ProcedureList
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._procedureList; }
+            set { this._procedureList = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the CatalogProcedureListResponse
+        /// class.
         /// </summary>
-        public CatalogItem()
+        public CatalogProcedureListResponse()
         {
         }
     }

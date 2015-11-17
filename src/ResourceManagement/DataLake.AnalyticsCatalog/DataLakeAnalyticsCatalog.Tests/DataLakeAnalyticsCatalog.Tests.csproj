@@ -47,6 +47,9 @@
     <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\GetCatalogItemsTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\SecretAndCredentialCRUDTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CommonTestFixture\.ctor.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

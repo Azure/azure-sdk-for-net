@@ -20,42 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// A Data Lake Analytics catalog U-SQL procedure item list.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class USqlProcedureList : CatalogItemList
     {
-        private string _computeAccountName;
+        private IList<USqlProcedure> _value;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the list of procedure in the database and
+        /// schema combination
         /// </summary>
-        public string ComputeAccountName
+        public IList<USqlProcedure> Value
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the USqlProcedureList class.
         /// </summary>
-        public CatalogItem()
+        public USqlProcedureList()
         {
+            this.Value = new LazyList<USqlProcedure>();
         }
     }
 }

@@ -389,6 +389,10 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             {
                 return JobState.Paused;
             }
+            if ("WaitingForCapacity".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobState.WaitingForCapacity;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -438,6 +442,10 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             if (value == JobState.Paused)
             {
                 return "Paused";
+            }
+            if (value == JobState.WaitingForCapacity)
+            {
+                return "WaitingForCapacity";
             }
             throw new ArgumentOutOfRangeException("value");
         }

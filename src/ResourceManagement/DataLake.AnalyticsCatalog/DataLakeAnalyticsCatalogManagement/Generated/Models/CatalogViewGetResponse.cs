@@ -21,40 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// The Get view operation response.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class CatalogViewGetResponse : AzureOperationResponse
     {
-        private string _computeAccountName;
+        private USqlView _view;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the resulting view from the get.
         /// </summary>
-        public string ComputeAccountName
+        public USqlView View
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._view; }
+            set { this._view = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the CatalogViewGetResponse class.
         /// </summary>
-        public CatalogItem()
+        public CatalogViewGetResponse()
         {
         }
     }

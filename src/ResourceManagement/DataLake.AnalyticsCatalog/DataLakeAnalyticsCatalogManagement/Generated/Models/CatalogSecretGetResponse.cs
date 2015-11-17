@@ -21,40 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// The Get secret operation response.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class CatalogSecretGetResponse : AzureOperationResponse
     {
-        private string _computeAccountName;
+        private USqlSecret _secret;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the resulting secret from the get.
         /// </summary>
-        public string ComputeAccountName
+        public USqlSecret Secret
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._secret; }
+            set { this._secret = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the CatalogSecretGetResponse class.
         /// </summary>
-        public CatalogItem()
+        public CatalogSecretGetResponse()
         {
         }
     }

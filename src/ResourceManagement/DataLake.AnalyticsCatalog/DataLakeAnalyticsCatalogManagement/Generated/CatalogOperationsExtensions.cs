@@ -158,8 +158,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified assembly from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified assembly from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -191,8 +191,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified assembly from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified assembly from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -220,8 +220,70 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified database from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified credential from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <param name='credentialName'>
+        /// Required. The name of the credential to find.
+        /// </param>
+        /// <returns>
+        /// The Get credential operation response.
+        /// </returns>
+        public static CatalogCredentialGetResponse GetCredential(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string credentialName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).GetCredentialAsync(resourceGroupName, accountName, databaseName, credentialName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the specified credential from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <param name='credentialName'>
+        /// Required. The name of the credential to find.
+        /// </param>
+        /// <returns>
+        /// The Get credential operation response.
+        /// </returns>
+        public static Task<CatalogCredentialGetResponse> GetCredentialAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string credentialName)
+        {
+            return operations.GetCredentialAsync(resourceGroupName, accountName, databaseName, credentialName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the specified database from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -250,8 +312,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified database from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified database from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -276,8 +338,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified external data source from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified external data source from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -310,8 +372,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified external data source from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified external data source from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -340,7 +402,75 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified schema from the current DataLakeAnalytics
+        /// Retrieves the specified procedure from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedure in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedure in.
+        /// </param>
+        /// <param name='procedureName'>
+        /// Required. The name of the procedure to find.
+        /// </param>
+        /// <returns>
+        /// The Get procedure operation response.
+        /// </returns>
+        public static CatalogProcedureGetResponse GetProcedure(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, string procedureName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).GetProcedureAsync(resourceGroupName, accountName, databaseName, schemaName, procedureName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the specified procedure from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedure in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedure in.
+        /// </param>
+        /// <param name='procedureName'>
+        /// Required. The name of the procedure to find.
+        /// </param>
+        /// <returns>
+        /// The Get procedure operation response.
+        /// </returns>
+        public static Task<CatalogProcedureGetResponse> GetProcedureAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, string procedureName)
+        {
+            return operations.GetProcedureAsync(resourceGroupName, accountName, databaseName, schemaName, procedureName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the specified schema from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -373,7 +503,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified schema from the current DataLakeAnalytics
+        /// Retrieves the specified schema from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -402,7 +532,67 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Gets the specified secret in the specified database
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to get the secret from.
+        /// </param>
+        /// <param name='secretName'>
+        /// Required. The name of the secret to get
+        /// </param>
+        /// <returns>
+        /// The Get secret operation response.
+        /// </returns>
+        public static CatalogSecretGetResponse GetSecret(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string secretName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).GetSecretAsync(resourceGroupName, accountName, databaseName, secretName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the specified secret in the specified database
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to get the secret from.
+        /// </param>
+        /// <param name='secretName'>
+        /// Required. The name of the secret to get
+        /// </param>
+        /// <returns>
+        /// The Get secret operation response.
+        /// </returns>
+        public static Task<CatalogSecretGetResponse> GetSecretAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string secretName)
+        {
+            return operations.GetSecretAsync(resourceGroupName, accountName, databaseName, secretName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -438,7 +628,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -470,7 +660,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -509,7 +699,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -544,8 +734,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table valued function from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified table valued function from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -582,8 +772,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table valued function from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified table valued function from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -616,8 +806,76 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of assemblies from the current DataLakeAnalytics
+        /// Retrieves the specified view from the current Data Lake Analytics
         /// catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the view in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the view in.
+        /// </param>
+        /// <param name='viewName'>
+        /// Required. The name of the view to find.
+        /// </param>
+        /// <returns>
+        /// The Get view operation response.
+        /// </returns>
+        public static CatalogViewGetResponse GetView(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, string viewName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).GetViewAsync(resourceGroupName, accountName, databaseName, schemaName, viewName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the specified view from the current Data Lake Analytics
+        /// catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the view in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the view in.
+        /// </param>
+        /// <param name='viewName'>
+        /// Required. The name of the view to find.
+        /// </param>
+        /// <returns>
+        /// The Get view operation response.
+        /// </returns>
+        public static Task<CatalogViewGetResponse> GetViewAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, string viewName)
+        {
+            return operations.GetViewAsync(resourceGroupName, accountName, databaseName, schemaName, viewName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of assemblies from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -646,8 +904,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of assemblies from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the list of assemblies from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -672,8 +930,64 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of databases from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the list of credentials from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <returns>
+        /// The List schema operation response.
+        /// </returns>
+        public static CatalogCredentialListResponse ListCredentials(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).ListCredentialsAsync(resourceGroupName, accountName, databaseName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the list of credentials from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <returns>
+        /// The List schema operation response.
+        /// </returns>
+        public static Task<CatalogCredentialListResponse> ListCredentialsAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName)
+        {
+            return operations.ListCredentialsAsync(resourceGroupName, accountName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of databases from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -699,8 +1013,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of databases from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the list of databases from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -722,8 +1036,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of external data sources from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of external data sources from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -753,8 +1067,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of external data sources from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of external data sources from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -780,7 +1094,69 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of schemas from the current DataLakeAnalytics
+        /// Retrieves the list of procedures from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedures in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedures in.
+        /// </param>
+        /// <returns>
+        /// The List procedures operation response.
+        /// </returns>
+        public static CatalogProcedureListResponse ListProcedures(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).ListProceduresAsync(resourceGroupName, accountName, databaseName, schemaName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the list of procedures from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedures in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedures in.
+        /// </param>
+        /// <returns>
+        /// The List procedures operation response.
+        /// </returns>
+        public static Task<CatalogProcedureListResponse> ListProceduresAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName)
+        {
+            return operations.ListProceduresAsync(resourceGroupName, accountName, databaseName, schemaName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of schemas from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -810,7 +1186,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of schemas from the current DataLakeAnalytics
+        /// Retrieves the list of schemas from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -836,7 +1212,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -869,7 +1245,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -898,7 +1274,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -934,7 +1310,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='operations'>
@@ -966,8 +1342,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of table valued functions from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of table valued functions from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1001,8 +1377,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of table valued functions from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of table valued functions from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1029,6 +1405,138 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         public static Task<CatalogTableValuedFunctionListResponse> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName)
         {
             return operations.ListTableValuedFunctionsAsync(resourceGroupName, accountName, databaseName, schemaName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of catalog types within the specified database
+        /// and schema for the current Data Lake Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the types in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the types in.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Query parameters. If null is passed returns all catalog
+        /// type items.
+        /// </param>
+        /// <returns>
+        /// The List types operation response.
+        /// </returns>
+        public static CatalogTypeListResponse ListTypes(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, TypeListParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).ListTypesAsync(resourceGroupName, accountName, databaseName, schemaName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the list of catalog types within the specified database
+        /// and schema for the current Data Lake Analytics catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the types in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the types in.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Query parameters. If null is passed returns all catalog
+        /// type items.
+        /// </param>
+        /// <returns>
+        /// The List types operation response.
+        /// </returns>
+        public static Task<CatalogTypeListResponse> ListTypesAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName, TypeListParameters parameters)
+        {
+            return operations.ListTypesAsync(resourceGroupName, accountName, databaseName, schemaName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of views from the current Data Lake Analytics
+        /// catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the views in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the views in.
+        /// </param>
+        /// <returns>
+        /// The List views operation response.
+        /// </returns>
+        public static CatalogViewListResponse ListViews(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICatalogOperations)s).ListViewsAsync(resourceGroupName, accountName, databaseName, schemaName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves the list of views from the current Data Lake Analytics
+        /// catalog
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataLake.AnalyticsCatalog.ICatalogOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the views in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the views in.
+        /// </param>
+        /// <returns>
+        /// The List views operation response.
+        /// </returns>
+        public static Task<CatalogViewListResponse> ListViewsAsync(this ICatalogOperations operations, string resourceGroupName, string accountName, string databaseName, string schemaName)
+        {
+            return operations.ListViewsAsync(resourceGroupName, accountName, databaseName, schemaName, CancellationToken.None);
         }
         
         /// <summary>

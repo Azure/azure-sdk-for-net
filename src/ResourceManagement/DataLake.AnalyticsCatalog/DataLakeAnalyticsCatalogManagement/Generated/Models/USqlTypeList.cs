@@ -20,42 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog item.
+    /// A Data Lake Analytics catalog U-SQL type item list.
     /// </summary>
-    public abstract partial class CatalogItem
+    public partial class USqlTypeList : CatalogItemList
     {
-        private string _computeAccountName;
+        private IList<USqlType> _value;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Data Lake Analytics account.
+        /// Optional. Gets or sets the list of types in the database and schema
+        /// combination
         /// </summary>
-        public string ComputeAccountName
+        public IList<USqlType> Value
         {
-            get { return this._computeAccountName; }
-            set { this._computeAccountName = value; }
-        }
-        
-        private Guid _version;
-        
-        /// <summary>
-        /// Optional. Gets or sets the version of the catalog item.
-        /// </summary>
-        public Guid Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CatalogItem class.
+        /// Initializes a new instance of the USqlTypeList class.
         /// </summary>
-        public CatalogItem()
+        public USqlTypeList()
         {
+            this.Value = new LazyList<USqlType>();
         }
     }
 }

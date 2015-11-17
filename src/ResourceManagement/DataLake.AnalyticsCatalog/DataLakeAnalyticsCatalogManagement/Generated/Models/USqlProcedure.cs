@@ -26,22 +26,10 @@ using Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models;
 namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
 {
     /// <summary>
-    /// A Data Lake Analytics catalog U-SQL secret item.
+    /// A Data Lake Analytics catalog U-SQL procedure item.
     /// </summary>
-    public partial class USqlSecret : CatalogItem
+    public partial class USqlProcedure : CatalogItem
     {
-        private System.DateTimeOffset? _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the credential object.
-        /// This is the only information returned about a secret from a GET.
-        /// </summary>
-        public System.DateTimeOffset? CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
         private string _databaseName;
         
         /// <summary>
@@ -53,21 +41,21 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
             set { this._databaseName = value; }
         }
         
-        private Guid _identity;
+        private string _definition;
         
         /// <summary>
-        /// Optional. Gets or sets the Identity of the secret.
+        /// Optional. Gets or sets the defined query of the procedure.
         /// </summary>
-        public Guid Identity
+        public string Definition
         {
-            get { return this._identity; }
-            set { this._identity = value; }
+            get { return this._definition; }
+            set { this._definition = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the secret.
+        /// Optional. Gets or sets the name of the procedure.
         /// </summary>
         public string Name
         {
@@ -75,21 +63,22 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
             set { this._name = value; }
         }
         
-        private string _userName;
+        private string _schemaName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the user who set the secret.
+        /// Optional. Gets or sets the name of the schema associated with this
+        /// procedure and database.
         /// </summary>
-        public string UserName
+        public string SchemaName
         {
-            get { return this._userName; }
-            set { this._userName = value; }
+            get { return this._schemaName; }
+            set { this._schemaName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the USqlSecret class.
+        /// Initializes a new instance of the USqlProcedure class.
         /// </summary>
-        public USqlSecret()
+        public USqlProcedure()
         {
         }
     }

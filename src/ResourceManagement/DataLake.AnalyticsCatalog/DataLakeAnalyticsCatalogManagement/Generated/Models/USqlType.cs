@@ -123,6 +123,17 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
             set { this._isUserDefined = value; }
         }
         
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of type for this type.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
         private int? _principalId;
         
         /// <summary>
@@ -177,17 +188,6 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         {
             get { return this._typeFamily; }
             set { this._typeFamily = value; }
-        }
-        
-        private string _typeName;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of type for this type.
-        /// </summary>
-        public string TypeName
-        {
-            get { return this._typeName; }
-            set { this._typeName = value; }
         }
         
         private int _userTypeId;

@@ -26,6 +26,12 @@ namespace DataLakeAnalyticsCatalog.Tests
         public string DatabaseName { get; set; }
         public string TableName { get; set; }
         public string TvfName { get; set; }
+        public string ViewName { get; set; }
+        public string ProcName { get; set; }
+        public string SecretName { get; set; }
+        public string SecretPwd { get; set; }
+        public string CredentialName { get; set; }
+        public DataLakeAnalyticsCatalogManagementHelper  CatalogManagementHelper { get; set; }
         public string Location = "East US 2";
         
         public CommonTestFixture()
@@ -34,23 +40,28 @@ namespace DataLakeAnalyticsCatalog.Tests
             try
             {
                 UndoContext.Current.Start();
-                var DataLakeAnalyticsCatalogManagementHelper = new DataLakeAnalyticsCatalogManagementHelper(this);
-                DataLakeAnalyticsCatalogManagementHelper.TryRegisterSubscriptionForResource();
+                CatalogManagementHelper = new DataLakeAnalyticsCatalogManagementHelper(this);
+                CatalogManagementHelper.TryRegisterSubscriptionForResource();
                 ResourceGroupName = TestUtilities.GenerateName("abarg1");
                 DataLakeAnalyticsAccountName = TestUtilities.GenerateName("testadlac1");
                 DataLakeStoreAccountName = TestUtilities.GenerateName("testadlsc1");
                 DatabaseName = TestUtilities.GenerateName("testdb1");
                 TableName = TestUtilities.GenerateName("testtbl1");
                 TvfName = TestUtilities.GenerateName("testtvf1");
-                DataLakeAnalyticsCatalogManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                ProcName = TestUtilities.GenerateName("testproc1");
+                ViewName = TestUtilities.GenerateName("testview1");
+                CredentialName = TestUtilities.GenerateName("testcred1");
+                SecretName = TestUtilities.GenerateName("testsecret1");
+                SecretPwd = TestUtilities.GenerateName("testsecretpwd1");
+                CatalogManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
 
                 // create the DataLake accounts in the resource group and establish the host URL to use.
                 this.HostUrl =
-                    DataLakeAnalyticsCatalogManagementHelper.TryCreateDataLakeAnalyticsAccount(this.ResourceGroupName,
+                    CatalogManagementHelper.TryCreateDataLakeAnalyticsAccount(this.ResourceGroupName,
                         this.Location, this.DataLakeStoreAccountName, this.DataLakeAnalyticsAccountName);
                 TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
-                DataLakeAnalyticsCatalogManagementHelper.CreateCatalog(this.ResourceGroupName,
-                    this.DataLakeAnalyticsAccountName, this.DatabaseName, this.TableName, this.TvfName);
+                CatalogManagementHelper.CreateCatalog(this.ResourceGroupName,
+                    this.DataLakeAnalyticsAccountName, this.DatabaseName, this.TableName, this.TvfName, this.ViewName, this.ProcName);
             }
             catch (Exception)
             {

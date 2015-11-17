@@ -757,7 +757,7 @@ namespace DataLakeStoreFileSystem.Tests
 
                     var currentCount = aclGetResponse.AclStatus.Entries.Count;
                     // add an entry to the ACL Entries
-                    var newAce = string.Format(",user:{0}:rwx", commonData.AclUserId);
+                    var newAce = string.Format("user:{0}:rwx", commonData.AclUserId);
 
                     var aclSetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
                         commonData.DataLakeStoreFileSystemAccountName, newAce);

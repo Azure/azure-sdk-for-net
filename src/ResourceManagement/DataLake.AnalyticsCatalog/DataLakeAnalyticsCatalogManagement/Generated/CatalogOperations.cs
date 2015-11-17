@@ -158,8 +158,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -249,6 +249,13 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                             {
                                 string userNameInstance = ((string)userNameValue);
                                 secretInstance.UserName = userNameInstance;
+                            }
+                            
+                            JToken creationTimeValue = responseDoc["creationTime"];
+                            if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                secretInstance.CreationTime = creationTimeInstance;
                             }
                             
                             JToken identityValue = responseDoc["identity"];
@@ -388,8 +395,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -457,8 +464,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified assembly from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified assembly from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -543,8 +550,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -768,8 +775,222 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified database from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified credential from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <param name='credentialName'>
+        /// Required. The name of the credential to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get credential operation response.
+        /// </returns>
+        public async Task<CatalogCredentialGetResponse> GetCredentialAsync(string resourceGroupName, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (credentialName == null)
+            {
+                throw new ArgumentNullException("credentialName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("credentialName", credentialName);
+                TracingAdapter.Enter(invocationId, this, "GetCredentialAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/credentials/";
+            url = url + Uri.EscapeDataString(credentialName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogCredentialGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogCredentialGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlCredential credentialInstance = new USqlCredential();
+                            result.Credential = credentialInstance;
+                            
+                            JToken databaseNameValue = responseDoc["databaseName"];
+                            if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                            {
+                                string databaseNameInstance = ((string)databaseNameValue);
+                                credentialInstance.DatabaseName = databaseNameInstance;
+                            }
+                            
+                            JToken identityValue = responseDoc["identity"];
+                            if (identityValue != null && identityValue.Type != JTokenType.Null)
+                            {
+                                string identityInstance = ((string)identityValue);
+                                credentialInstance.Identity = identityInstance;
+                            }
+                            
+                            JToken credentialNameValue = responseDoc["credentialName"];
+                            if (credentialNameValue != null && credentialNameValue.Type != JTokenType.Null)
+                            {
+                                string credentialNameInstance = ((string)credentialNameValue);
+                                credentialInstance.Name = credentialNameInstance;
+                            }
+                            
+                            JToken userNameValue = responseDoc["userName"];
+                            if (userNameValue != null && userNameValue.Type != JTokenType.Null)
+                            {
+                                string userNameInstance = ((string)userNameValue);
+                                credentialInstance.UserName = userNameInstance;
+                            }
+                            
+                            JToken computeAccountNameValue = responseDoc["computeAccountName"];
+                            if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                            {
+                                string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                credentialInstance.ComputeAccountName = computeAccountNameInstance;
+                            }
+                            
+                            JToken versionValue = responseDoc["version"];
+                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            {
+                                Guid versionInstance = Guid.Parse(((string)versionValue));
+                                credentialInstance.Version = versionInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the specified database from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -844,8 +1065,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -951,8 +1172,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified external data source from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified external data source from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -1038,8 +1259,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1175,7 +1396,231 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified schema from the current DataLakeAnalytics
+        /// Retrieves the specified procedure from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedure in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedure in.
+        /// </param>
+        /// <param name='procedureName'>
+        /// Required. The name of the procedure to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get procedure operation response.
+        /// </returns>
+        public async Task<CatalogProcedureGetResponse> GetProcedureAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string procedureName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException("schemaName");
+            }
+            if (procedureName == null)
+            {
+                throw new ArgumentNullException("procedureName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("schemaName", schemaName);
+                tracingParameters.Add("procedureName", procedureName);
+                TracingAdapter.Enter(invocationId, this, "GetProcedureAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/schemas/";
+            url = url + Uri.EscapeDataString(schemaName);
+            url = url + "/procedures/";
+            url = url + Uri.EscapeDataString(procedureName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogProcedureGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogProcedureGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlProcedure procedureInstance = new USqlProcedure();
+                            result.Procedure = procedureInstance;
+                            
+                            JToken databaseNameValue = responseDoc["databaseName"];
+                            if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                            {
+                                string databaseNameInstance = ((string)databaseNameValue);
+                                procedureInstance.DatabaseName = databaseNameInstance;
+                            }
+                            
+                            JToken schemaNameValue = responseDoc["schemaName"];
+                            if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                            {
+                                string schemaNameInstance = ((string)schemaNameValue);
+                                procedureInstance.SchemaName = schemaNameInstance;
+                            }
+                            
+                            JToken procNameValue = responseDoc["procName"];
+                            if (procNameValue != null && procNameValue.Type != JTokenType.Null)
+                            {
+                                string procNameInstance = ((string)procNameValue);
+                                procedureInstance.Name = procNameInstance;
+                            }
+                            
+                            JToken definitionValue = responseDoc["definition"];
+                            if (definitionValue != null && definitionValue.Type != JTokenType.Null)
+                            {
+                                string definitionInstance = ((string)definitionValue);
+                                procedureInstance.Definition = definitionInstance;
+                            }
+                            
+                            JToken computeAccountNameValue = responseDoc["computeAccountName"];
+                            if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                            {
+                                string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                procedureInstance.ComputeAccountName = computeAccountNameInstance;
+                            }
+                            
+                            JToken versionValue = responseDoc["version"];
+                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            {
+                                Guid versionInstance = Guid.Parse(((string)versionValue));
+                                procedureInstance.Version = versionInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the specified schema from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1261,8 +1706,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1375,7 +1820,227 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Gets the specified secret in the specified database
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to get the secret from.
+        /// </param>
+        /// <param name='secretName'>
+        /// Required. The name of the secret to get
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get secret operation response.
+        /// </returns>
+        public async Task<CatalogSecretGetResponse> GetSecretAsync(string resourceGroupName, string accountName, string databaseName, string secretName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (secretName == null)
+            {
+                throw new ArgumentNullException("secretName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("secretName", secretName);
+                TracingAdapter.Enter(invocationId, this, "GetSecretAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/secrets/";
+            url = url + Uri.EscapeDataString(secretName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogSecretGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogSecretGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlSecret secretInstance = new USqlSecret();
+                            result.Secret = secretInstance;
+                            
+                            JToken databaseNameValue = responseDoc["databaseName"];
+                            if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                            {
+                                string databaseNameInstance = ((string)databaseNameValue);
+                                secretInstance.DatabaseName = databaseNameInstance;
+                            }
+                            
+                            JToken credentialNameValue = responseDoc["credentialName"];
+                            if (credentialNameValue != null && credentialNameValue.Type != JTokenType.Null)
+                            {
+                                string credentialNameInstance = ((string)credentialNameValue);
+                                secretInstance.Name = credentialNameInstance;
+                            }
+                            
+                            JToken userNameValue = responseDoc["userName"];
+                            if (userNameValue != null && userNameValue.Type != JTokenType.Null)
+                            {
+                                string userNameInstance = ((string)userNameValue);
+                                secretInstance.UserName = userNameInstance;
+                            }
+                            
+                            JToken creationTimeValue = responseDoc["creationTime"];
+                            if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                secretInstance.CreationTime = creationTimeInstance;
+                            }
+                            
+                            JToken identityValue = responseDoc["identity"];
+                            if (identityValue != null && identityValue.Type != JTokenType.Null)
+                            {
+                                Guid identityInstance = Guid.Parse(((string)identityValue));
+                                secretInstance.Identity = identityInstance;
+                            }
+                            
+                            JToken computeAccountNameValue = responseDoc["computeAccountName"];
+                            if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                            {
+                                string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                secretInstance.ComputeAccountName = computeAccountNameInstance;
+                            }
+                            
+                            JToken versionValue = responseDoc["version"];
+                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            {
+                                Guid versionInstance = Guid.Parse(((string)versionValue));
+                                secretInstance.Version = versionInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1471,8 +2136,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1829,7 +2494,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1935,8 +2600,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2128,8 +2793,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the specified table valued function from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified table valued function from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -2226,8 +2891,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2354,8 +3019,232 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of assemblies from the current DataLakeAnalytics
+        /// Retrieves the specified view from the current Data Lake Analytics
         /// catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the view in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the view in.
+        /// </param>
+        /// <param name='viewName'>
+        /// Required. The name of the view to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get view operation response.
+        /// </returns>
+        public async Task<CatalogViewGetResponse> GetViewAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string viewName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException("schemaName");
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException("viewName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("schemaName", schemaName);
+                tracingParameters.Add("viewName", viewName);
+                TracingAdapter.Enter(invocationId, this, "GetViewAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/schemas/";
+            url = url + Uri.EscapeDataString(schemaName);
+            url = url + "/views/";
+            url = url + Uri.EscapeDataString(viewName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogViewGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogViewGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlView viewInstance = new USqlView();
+                            result.View = viewInstance;
+                            
+                            JToken databaseNameValue = responseDoc["databaseName"];
+                            if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                            {
+                                string databaseNameInstance = ((string)databaseNameValue);
+                                viewInstance.DatabaseName = databaseNameInstance;
+                            }
+                            
+                            JToken schemaNameValue = responseDoc["schemaName"];
+                            if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                            {
+                                string schemaNameInstance = ((string)schemaNameValue);
+                                viewInstance.SchemaName = schemaNameInstance;
+                            }
+                            
+                            JToken viewNameValue = responseDoc["viewName"];
+                            if (viewNameValue != null && viewNameValue.Type != JTokenType.Null)
+                            {
+                                string viewNameInstance = ((string)viewNameValue);
+                                viewInstance.Name = viewNameInstance;
+                            }
+                            
+                            JToken definitionValue = responseDoc["definition"];
+                            if (definitionValue != null && definitionValue.Type != JTokenType.Null)
+                            {
+                                string definitionInstance = ((string)definitionValue);
+                                viewInstance.Definition = definitionInstance;
+                            }
+                            
+                            JToken computeAccountNameValue = responseDoc["computeAccountName"];
+                            if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                            {
+                                string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                viewInstance.ComputeAccountName = computeAccountNameInstance;
+                            }
+                            
+                            JToken versionValue = responseDoc["version"];
+                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            {
+                                Guid versionInstance = Guid.Parse(((string)versionValue));
+                                viewInstance.Version = versionInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the list of assemblies from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -2431,8 +3320,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2583,8 +3472,244 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of databases from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the list of credentials from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the schema in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List schema operation response.
+        /// </returns>
+        public async Task<CatalogCredentialListResponse> ListCredentialsAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "ListCredentialsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/credentials";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogCredentialListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogCredentialListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlCredentialList credentialListInstance = new USqlCredentialList();
+                            result.CredentialList = credentialListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    USqlCredential uSqlCredentialInstance = new USqlCredential();
+                                    credentialListInstance.Value.Add(uSqlCredentialInstance);
+                                    
+                                    JToken databaseNameValue = valueValue["databaseName"];
+                                    if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                    {
+                                        string databaseNameInstance = ((string)databaseNameValue);
+                                        uSqlCredentialInstance.DatabaseName = databaseNameInstance;
+                                    }
+                                    
+                                    JToken identityValue = valueValue["identity"];
+                                    if (identityValue != null && identityValue.Type != JTokenType.Null)
+                                    {
+                                        string identityInstance = ((string)identityValue);
+                                        uSqlCredentialInstance.Identity = identityInstance;
+                                    }
+                                    
+                                    JToken credentialNameValue = valueValue["credentialName"];
+                                    if (credentialNameValue != null && credentialNameValue.Type != JTokenType.Null)
+                                    {
+                                        string credentialNameInstance = ((string)credentialNameValue);
+                                        uSqlCredentialInstance.Name = credentialNameInstance;
+                                    }
+                                    
+                                    JToken userNameValue = valueValue["userName"];
+                                    if (userNameValue != null && userNameValue.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance = ((string)userNameValue);
+                                        uSqlCredentialInstance.UserName = userNameInstance;
+                                    }
+                                    
+                                    JToken computeAccountNameValue = valueValue["computeAccountName"];
+                                    if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                                    {
+                                        string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                        uSqlCredentialInstance.ComputeAccountName = computeAccountNameInstance;
+                                    }
+                                    
+                                    JToken versionValue = valueValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        Guid versionInstance = Guid.Parse(((string)versionValue));
+                                        uSqlCredentialInstance.Version = versionInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken itemTypeValue = responseDoc["itemType"];
+                            if (itemTypeValue != null && itemTypeValue.Type != JTokenType.Null)
+                            {
+                                string itemTypeInstance = ((string)itemTypeValue);
+                                credentialListInstance.ItemType = itemTypeInstance;
+                            }
+                            
+                            JToken countValue = responseDoc["count"];
+                            if (countValue != null && countValue.Type != JTokenType.Null)
+                            {
+                                int countInstance = ((int)countValue);
+                                credentialListInstance.Count = countInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                credentialListInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the list of databases from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -2650,8 +3775,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2788,8 +3913,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of external data sources from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of external data sources from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -2866,8 +3991,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3034,7 +4159,253 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of schemas from the current DataLakeAnalytics
+        /// Retrieves the list of procedures from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the procedures in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the procedures in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List procedures operation response.
+        /// </returns>
+        public async Task<CatalogProcedureListResponse> ListProceduresAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException("schemaName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("schemaName", schemaName);
+                TracingAdapter.Enter(invocationId, this, "ListProceduresAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/schemas/";
+            url = url + Uri.EscapeDataString(schemaName);
+            url = url + "/procedures";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogProcedureListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogProcedureListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlProcedureList procedureListInstance = new USqlProcedureList();
+                            result.ProcedureList = procedureListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    USqlProcedure uSqlProcedureInstance = new USqlProcedure();
+                                    procedureListInstance.Value.Add(uSqlProcedureInstance);
+                                    
+                                    JToken databaseNameValue = valueValue["databaseName"];
+                                    if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                    {
+                                        string databaseNameInstance = ((string)databaseNameValue);
+                                        uSqlProcedureInstance.DatabaseName = databaseNameInstance;
+                                    }
+                                    
+                                    JToken schemaNameValue = valueValue["schemaName"];
+                                    if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                                    {
+                                        string schemaNameInstance = ((string)schemaNameValue);
+                                        uSqlProcedureInstance.SchemaName = schemaNameInstance;
+                                    }
+                                    
+                                    JToken procNameValue = valueValue["procName"];
+                                    if (procNameValue != null && procNameValue.Type != JTokenType.Null)
+                                    {
+                                        string procNameInstance = ((string)procNameValue);
+                                        uSqlProcedureInstance.Name = procNameInstance;
+                                    }
+                                    
+                                    JToken definitionValue = valueValue["definition"];
+                                    if (definitionValue != null && definitionValue.Type != JTokenType.Null)
+                                    {
+                                        string definitionInstance = ((string)definitionValue);
+                                        uSqlProcedureInstance.Definition = definitionInstance;
+                                    }
+                                    
+                                    JToken computeAccountNameValue = valueValue["computeAccountName"];
+                                    if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                                    {
+                                        string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                        uSqlProcedureInstance.ComputeAccountName = computeAccountNameInstance;
+                                    }
+                                    
+                                    JToken versionValue = valueValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        Guid versionInstance = Guid.Parse(((string)versionValue));
+                                        uSqlProcedureInstance.Version = versionInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken itemTypeValue = responseDoc["itemType"];
+                            if (itemTypeValue != null && itemTypeValue.Type != JTokenType.Null)
+                            {
+                                string itemTypeInstance = ((string)itemTypeValue);
+                                procedureListInstance.ItemType = itemTypeInstance;
+                            }
+                            
+                            JToken countValue = responseDoc["count"];
+                            if (countValue != null && countValue.Type != JTokenType.Null)
+                            {
+                                int countInstance = ((int)countValue);
+                                procedureListInstance.Count = countInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                procedureListInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the list of schemas from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3111,8 +4482,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3256,7 +4627,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3343,8 +4714,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3732,7 +5103,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3829,8 +5200,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4053,8 +5424,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
-        /// Retrieves the list of table valued functions from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of table valued functions from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resourceGroup the Data Lake Analytics
@@ -4142,8 +5513,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4301,6 +5672,600 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         }
         
         /// <summary>
+        /// Retrieves the list of catalog types within the specified database
+        /// and schema for the current Data Lake Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the types in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the types in.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Query parameters. If null is passed returns all catalog
+        /// type items.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List types operation response.
+        /// </returns>
+        public async Task<CatalogTypeListResponse> ListTypesAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, TypeListParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException("schemaName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("schemaName", schemaName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ListTypesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/schemas/";
+            url = url + Uri.EscapeDataString(schemaName);
+            url = url + "/types";
+            List<string> queryParameters = new List<string>();
+            if (parameters != null && parameters.Filter != null)
+            {
+                queryParameters.Add("$filter=" + Uri.EscapeDataString(parameters.Filter));
+            }
+            if (parameters != null && parameters.Top != null)
+            {
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (parameters != null && parameters.Skip != null)
+            {
+                queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
+            }
+            if (parameters != null && parameters.OrderBy != null)
+            {
+                queryParameters.Add("$orderby=" + Uri.EscapeDataString(parameters.OrderBy));
+            }
+            if (parameters != null && parameters.Select != null)
+            {
+                queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.Select));
+            }
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogTypeListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogTypeListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlTypeList typeListInstance = new USqlTypeList();
+                            result.TypeList = typeListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    USqlType uSqlTypeInstance = new USqlType();
+                                    typeListInstance.Value.Add(uSqlTypeInstance);
+                                    
+                                    JToken databaseNameValue = valueValue["databaseName"];
+                                    if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                    {
+                                        string databaseNameInstance = ((string)databaseNameValue);
+                                        uSqlTypeInstance.DatabaseName = databaseNameInstance;
+                                    }
+                                    
+                                    JToken schemaNameValue = valueValue["schemaName"];
+                                    if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                                    {
+                                        string schemaNameInstance = ((string)schemaNameValue);
+                                        uSqlTypeInstance.SchemaName = schemaNameInstance;
+                                    }
+                                    
+                                    JToken typeNameValue = valueValue["typeName"];
+                                    if (typeNameValue != null && typeNameValue.Type != JTokenType.Null)
+                                    {
+                                        string typeNameInstance = ((string)typeNameValue);
+                                        uSqlTypeInstance.Name = typeNameInstance;
+                                    }
+                                    
+                                    JToken typeFamilyValue = valueValue["typeFamily"];
+                                    if (typeFamilyValue != null && typeFamilyValue.Type != JTokenType.Null)
+                                    {
+                                        string typeFamilyInstance = ((string)typeFamilyValue);
+                                        uSqlTypeInstance.TypeFamily = typeFamilyInstance;
+                                    }
+                                    
+                                    JToken cSharpNameValue = valueValue["cSharpName"];
+                                    if (cSharpNameValue != null && cSharpNameValue.Type != JTokenType.Null)
+                                    {
+                                        string cSharpNameInstance = ((string)cSharpNameValue);
+                                        uSqlTypeInstance.CSharpName = cSharpNameInstance;
+                                    }
+                                    
+                                    JToken fullCSharpNameValue = valueValue["fullCSharpName"];
+                                    if (fullCSharpNameValue != null && fullCSharpNameValue.Type != JTokenType.Null)
+                                    {
+                                        string fullCSharpNameInstance = ((string)fullCSharpNameValue);
+                                        uSqlTypeInstance.FullCSharpName = fullCSharpNameInstance;
+                                    }
+                                    
+                                    JToken systemTypeIdValue = valueValue["systemTypeId"];
+                                    if (systemTypeIdValue != null && systemTypeIdValue.Type != JTokenType.Null)
+                                    {
+                                        int systemTypeIdInstance = ((int)systemTypeIdValue);
+                                        uSqlTypeInstance.SystemTypeId = systemTypeIdInstance;
+                                    }
+                                    
+                                    JToken userTypeIdValue = valueValue["userTypeId"];
+                                    if (userTypeIdValue != null && userTypeIdValue.Type != JTokenType.Null)
+                                    {
+                                        int userTypeIdInstance = ((int)userTypeIdValue);
+                                        uSqlTypeInstance.UserTypeId = userTypeIdInstance;
+                                    }
+                                    
+                                    JToken schemaIdValue = valueValue["schemaId"];
+                                    if (schemaIdValue != null && schemaIdValue.Type != JTokenType.Null)
+                                    {
+                                        int schemaIdInstance = ((int)schemaIdValue);
+                                        uSqlTypeInstance.SchemaId = schemaIdInstance;
+                                    }
+                                    
+                                    JToken principalIdValue = valueValue["principalId"];
+                                    if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                    {
+                                        int principalIdInstance = ((int)principalIdValue);
+                                        uSqlTypeInstance.PrincipalId = principalIdInstance;
+                                    }
+                                    
+                                    JToken isNullableValue = valueValue["isNullable"];
+                                    if (isNullableValue != null && isNullableValue.Type != JTokenType.Null)
+                                    {
+                                        bool isNullableInstance = ((bool)isNullableValue);
+                                        uSqlTypeInstance.IsNullable = isNullableInstance;
+                                    }
+                                    
+                                    JToken isUserDefinedValue = valueValue["isUserDefined"];
+                                    if (isUserDefinedValue != null && isUserDefinedValue.Type != JTokenType.Null)
+                                    {
+                                        bool isUserDefinedInstance = ((bool)isUserDefinedValue);
+                                        uSqlTypeInstance.IsUserDefined = isUserDefinedInstance;
+                                    }
+                                    
+                                    JToken isAssemblyTypeValue = valueValue["isAssemblyType"];
+                                    if (isAssemblyTypeValue != null && isAssemblyTypeValue.Type != JTokenType.Null)
+                                    {
+                                        bool isAssemblyTypeInstance = ((bool)isAssemblyTypeValue);
+                                        uSqlTypeInstance.IsAssemblyType = isAssemblyTypeInstance;
+                                    }
+                                    
+                                    JToken isTableTypeValue = valueValue["isTableType"];
+                                    if (isTableTypeValue != null && isTableTypeValue.Type != JTokenType.Null)
+                                    {
+                                        bool isTableTypeInstance = ((bool)isTableTypeValue);
+                                        uSqlTypeInstance.IsTableType = isTableTypeInstance;
+                                    }
+                                    
+                                    JToken isComplexTypeValue = valueValue["isComplexType"];
+                                    if (isComplexTypeValue != null && isComplexTypeValue.Type != JTokenType.Null)
+                                    {
+                                        bool isComplexTypeInstance = ((bool)isComplexTypeValue);
+                                        uSqlTypeInstance.IsComplexType = isComplexTypeInstance;
+                                    }
+                                    
+                                    JToken computeAccountNameValue = valueValue["computeAccountName"];
+                                    if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                                    {
+                                        string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                        uSqlTypeInstance.ComputeAccountName = computeAccountNameInstance;
+                                    }
+                                    
+                                    JToken versionValue = valueValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        Guid versionInstance = Guid.Parse(((string)versionValue));
+                                        uSqlTypeInstance.Version = versionInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken itemTypeValue = responseDoc["itemType"];
+                            if (itemTypeValue != null && itemTypeValue.Type != JTokenType.Null)
+                            {
+                                string itemTypeInstance = ((string)itemTypeValue);
+                                typeListInstance.ItemType = itemTypeInstance;
+                            }
+                            
+                            JToken countValue = responseDoc["count"];
+                            if (countValue != null && countValue.Type != JTokenType.Null)
+                            {
+                                int countInstance = ((int)countValue);
+                                typeListInstance.Count = countInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                typeListInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieves the list of views from the current Data Lake Analytics
+        /// catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resourceGroup the Data Lake Analytics
+        /// account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the database to find the views in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// Required. The name of the schema to find the views in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List views operation response.
+        /// </returns>
+        public async Task<CatalogViewListResponse> ListViewsAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException("schemaName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("schemaName", schemaName);
+                TracingAdapter.Enter(invocationId, this, "ListViewsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + ".";
+            if (this.Client.CatalogServiceUri != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.CatalogServiceUri);
+            }
+            url = url + "/catalog/usql/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/schemas/";
+            url = url + Uri.EscapeDataString(schemaName);
+            url = url + "/views";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
+                httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CatalogViewListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CatalogViewListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            USqlViewList viewListInstance = new USqlViewList();
+                            result.ViewList = viewListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    USqlView uSqlViewInstance = new USqlView();
+                                    viewListInstance.Value.Add(uSqlViewInstance);
+                                    
+                                    JToken databaseNameValue = valueValue["databaseName"];
+                                    if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                    {
+                                        string databaseNameInstance = ((string)databaseNameValue);
+                                        uSqlViewInstance.DatabaseName = databaseNameInstance;
+                                    }
+                                    
+                                    JToken schemaNameValue = valueValue["schemaName"];
+                                    if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                                    {
+                                        string schemaNameInstance = ((string)schemaNameValue);
+                                        uSqlViewInstance.SchemaName = schemaNameInstance;
+                                    }
+                                    
+                                    JToken viewNameValue = valueValue["viewName"];
+                                    if (viewNameValue != null && viewNameValue.Type != JTokenType.Null)
+                                    {
+                                        string viewNameInstance = ((string)viewNameValue);
+                                        uSqlViewInstance.Name = viewNameInstance;
+                                    }
+                                    
+                                    JToken definitionValue = valueValue["definition"];
+                                    if (definitionValue != null && definitionValue.Type != JTokenType.Null)
+                                    {
+                                        string definitionInstance = ((string)definitionValue);
+                                        uSqlViewInstance.Definition = definitionInstance;
+                                    }
+                                    
+                                    JToken computeAccountNameValue = valueValue["computeAccountName"];
+                                    if (computeAccountNameValue != null && computeAccountNameValue.Type != JTokenType.Null)
+                                    {
+                                        string computeAccountNameInstance = ((string)computeAccountNameValue);
+                                        uSqlViewInstance.ComputeAccountName = computeAccountNameInstance;
+                                    }
+                                    
+                                    JToken versionValue = valueValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        Guid versionInstance = Guid.Parse(((string)versionValue));
+                                        uSqlViewInstance.Version = versionInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken itemTypeValue = responseDoc["itemType"];
+                            if (itemTypeValue != null && itemTypeValue.Type != JTokenType.Null)
+                            {
+                                string itemTypeInstance = ((string)itemTypeValue);
+                                viewListInstance.ItemType = itemTypeInstance;
+                            }
+                            
+                            JToken countValue = responseDoc["count"];
+                            if (countValue != null && countValue.Type != JTokenType.Null)
+                            {
+                                int countInstance = ((int)countValue);
+                                viewListInstance.Count = countInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                viewListInstance.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Modifies the specified secret for use with external data sources in
         /// the specified database
         /// </summary>
@@ -4396,8 +6361,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.2-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4487,6 +6452,13 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
                             {
                                 string userNameInstance = ((string)userNameValue);
                                 secretInstance.UserName = userNameInstance;
+                            }
+                            
+                            JToken creationTimeValue = responseDoc["creationTime"];
+                            if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                secretInstance.CreationTime = creationTimeInstance;
                             }
                             
                             JToken identityValue = responseDoc["identity"];
