@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public static partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Gets job details from the specified HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Gets job details from the specified HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Initiates cancel on given running job in the specified HDInsight
+        /// cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -96,7 +97,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Initiates cancel on given running job in the specified HDInsight
+        /// cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -145,6 +147,52 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         public static Task<JobListResponse> ListJobsAsync(this IJobOperations operations)
         {
             return operations.ListJobsAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets numOfJobs after jobId from the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. jobId from where to list jobs.
+        /// </param>
+        /// <param name='numOfJobs'>
+        /// Required. Number of jobs to fetch. Use -1 to get all.
+        /// </param>
+        /// <returns>
+        /// The List Job operation response.
+        /// </returns>
+        public static JobListResponse ListJobsAfterJobId(this IJobOperations operations, string jobId, int numOfJobs)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).ListJobsAfterJobIdAsync(jobId, numOfJobs);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets numOfJobs after jobId from the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. jobId from where to list jobs.
+        /// </param>
+        /// <param name='numOfJobs'>
+        /// Required. Number of jobs to fetch. Use -1 to get all.
+        /// </param>
+        /// <returns>
+        /// The List Job operation response.
+        /// </returns>
+        public static Task<JobListResponse> ListJobsAfterJobIdAsync(this IJobOperations operations, string jobId, int numOfJobs)
+        {
+            return operations.ListJobsAfterJobIdAsync(jobId, numOfJobs, CancellationToken.None);
         }
         
         /// <summary>

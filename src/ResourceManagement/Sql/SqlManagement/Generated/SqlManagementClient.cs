@@ -102,6 +102,17 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._auditingPolicy; }
         }
         
+        private ICapabilitiesOperations _capabilities;
+        
+        /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        public virtual ICapabilitiesOperations Capabilities
+        {
+            get { return this._capabilities; }
+        }
+        
         private IDatabaseActivationOperations _databaseActivation;
         
         /// <summary>
@@ -175,17 +186,6 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._firewallRules; }
         }
         
-        private ILocationCapabilitiesOperations _capabilities;
-        
-        /// <summary>
-        /// Represents all the operations for determining the set of
-        /// capabilites available in a specified region.
-        /// </summary>
-        public virtual ILocationCapabilitiesOperations Capabilities
-        {
-            get { return this._capabilities; }
-        }
-        
         private IRecommendedElasticPoolOperations _recommendedElasticPools;
         
         /// <summary>
@@ -231,6 +231,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISecureConnectionPolicyOperations SecureConnection
         {
             get { return this._secureConnection; }
+        }
+        
+        private ISecurityAlertPolicyOperations _securityAlertPolicy;
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Security Alert policy.  Contains operations to:
+        /// Create, Retrieve and Update policy.
+        /// </summary>
+        public virtual ISecurityAlertPolicyOperations SecurityAlertPolicy
+        {
+            get { return this._securityAlertPolicy; }
         }
         
         private IServerAdministratorOperations _serverAdministrators;
@@ -310,17 +322,18 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
-            this._capabilities = new LocationCapabilitiesOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -393,17 +406,18 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
-            this._capabilities = new LocationCapabilitiesOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);

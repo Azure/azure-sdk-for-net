@@ -1063,6 +1063,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", "*");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

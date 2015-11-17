@@ -31,20 +31,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// <summary>
     /// The list storage accounts operation response.
     /// </summary>
-    public partial class StorageAccountListResponse : AzureOperationResponse
+    public partial class StorageAccountListResponse : AzureOperationResponse, IEnumerable<StorageAccount>
     {
-        private string _nextLink;
-        
-        /// <summary>
-        /// Optional. Gets the link to the next set of results. Currently this
-        /// will always be empty as the API does not support pagination.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
         private IList<StorageAccount> _storageAccounts;
         
         /// <summary>
@@ -62,6 +50,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         public StorageAccountListResponse()
         {
             this.StorageAccounts = new LazyList<StorageAccount>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of StorageAccounts.
+        /// </summary>
+        public IEnumerator<StorageAccount> GetEnumerator()
+        {
+            return this.StorageAccounts.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of StorageAccounts.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

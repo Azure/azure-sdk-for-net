@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\GetJobTests.cs" />
+    <Compile Include="ScenarioTests\JobsEnumerationTests.cs" />
     <Compile Include="ScenarioTests\StorageHelperTests.cs" />
     <Compile Include="ScenarioTests\SubmitJobTests.cs" />
     <Compile Include="TestUtils.cs" />
@@ -53,6 +54,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitPigJob.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\GetJobsPagination.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

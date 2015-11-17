@@ -62,14 +62,14 @@ namespace Microsoft.Azure.Search
         private static DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload) 
             where T : class
         {
-            return JsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
+            return JsonUtility.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
                 payload,
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
         private static DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
         {
-            return JsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
+            return JsonUtility.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
                 payload, 
                 JsonUtility.DocumentDeserializerSettings);
         }
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Search
                 {
                     SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
                     string requestContent =
-                        JsonConvert.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
+                        JsonUtility.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
                     httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                     httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 }

@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Storage
         /// same set of properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + "/providers/Microsoft.Storage/storageAccounts/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -347,6 +347,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                         primaryEndpointsInstance.Table = tableInstance;
                                     }
+                                    
+                                    JToken fileValue = primaryEndpointsValue["file"];
+                                    if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                        primaryEndpointsInstance.File = fileInstance;
+                                    }
                                 }
                                 
                                 JToken primaryLocationValue = propertiesValue2["primaryLocation"];
@@ -438,6 +445,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                         secondaryEndpointsInstance.Table = tableInstance2;
                                     }
+                                    
+                                    JToken fileValue2 = secondaryEndpointsValue["file"];
+                                    if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                        secondaryEndpointsInstance.File = fileInstance2;
+                                    }
                                 }
                             }
                         }
@@ -448,9 +462,9 @@ namespace Microsoft.Azure.Management.Storage
                     {
                         result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
                     }
-                    if (httpResponse.Headers.Contains("RetryAfter"))
+                    if (httpResponse.Headers.Contains("Retry-After"))
                     {
-                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("RetryAfter").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -530,7 +544,7 @@ namespace Microsoft.Azure.Management.Storage
             }
             url = url + "/providers/Microsoft.Storage/checkNameAvailability";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -679,10 +693,10 @@ namespace Microsoft.Azure.Management.Storage
         /// is already created and subsequent create request is issued with
         /// exact same set of properties, the request succeeds.The max number
         /// of storage accounts that can be created per subscription is
-        /// limited to 20.
+        /// limited to 100.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -731,7 +745,7 @@ namespace Microsoft.Azure.Management.Storage
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -760,7 +774,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Deletes a storage account in Microsoft Azure.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -826,7 +840,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + "/providers/Microsoft.Storage/storageAccounts/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -925,7 +939,7 @@ namespace Microsoft.Azure.Management.Storage
         /// keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -990,7 +1004,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + "/providers/Microsoft.Storage/storageAccounts/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1150,6 +1164,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                         primaryEndpointsInstance.Table = tableInstance;
                                     }
+                                    
+                                    JToken fileValue = primaryEndpointsValue["file"];
+                                    if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                        primaryEndpointsInstance.File = fileInstance;
+                                    }
                                 }
                                 
                                 JToken primaryLocationValue = propertiesValue["primaryLocation"];
@@ -1241,6 +1262,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                         secondaryEndpointsInstance.Table = tableInstance2;
                                     }
+                                    
+                                    JToken fileValue2 = secondaryEndpointsValue["file"];
+                                    if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                        secondaryEndpointsInstance.File = fileInstance2;
+                                    }
                                 }
                             }
                         }
@@ -1309,7 +1337,7 @@ namespace Microsoft.Azure.Management.Storage
             }
             url = url + "/providers/Microsoft.Storage/storageAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1474,6 +1502,13 @@ namespace Microsoft.Azure.Management.Storage
                                                 Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                                 primaryEndpointsInstance.Table = tableInstance;
                                             }
+                                            
+                                            JToken fileValue = primaryEndpointsValue["file"];
+                                            if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                            {
+                                                Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                                primaryEndpointsInstance.File = fileInstance;
+                                            }
                                         }
                                         
                                         JToken primaryLocationValue = propertiesValue["primaryLocation"];
@@ -1565,16 +1600,16 @@ namespace Microsoft.Azure.Management.Storage
                                                 Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                                 secondaryEndpointsInstance.Table = tableInstance2;
                                             }
+                                            
+                                            JToken fileValue2 = secondaryEndpointsValue["file"];
+                                            if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                            {
+                                                Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                                secondaryEndpointsInstance.File = fileInstance2;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                            {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -1614,7 +1649,7 @@ namespace Microsoft.Azure.Management.Storage
         /// operation for this.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1653,7 +1688,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Storage/storageAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1818,6 +1853,13 @@ namespace Microsoft.Azure.Management.Storage
                                                 Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                                 primaryEndpointsInstance.Table = tableInstance;
                                             }
+                                            
+                                            JToken fileValue = primaryEndpointsValue["file"];
+                                            if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                            {
+                                                Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                                primaryEndpointsInstance.File = fileInstance;
+                                            }
                                         }
                                         
                                         JToken primaryLocationValue = propertiesValue["primaryLocation"];
@@ -1909,16 +1951,16 @@ namespace Microsoft.Azure.Management.Storage
                                                 Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                                 secondaryEndpointsInstance.Table = tableInstance2;
                                             }
+                                            
+                                            JToken fileValue2 = secondaryEndpointsValue["file"];
+                                            if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                            {
+                                                Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                                secondaryEndpointsInstance.File = fileInstance2;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                            {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -2019,7 +2061,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/listKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2146,7 +2188,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Regenerates the access keys for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -2156,6 +2198,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='regenerateKey'>
         /// Required. Specifies name of the key which should be regenerated.
+        /// key1 or key2 for the default keys
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2163,7 +2206,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <returns>
         /// The RegenerateKey operation response.
         /// </returns>
-        public async Task<StorageAccountRegenerateKeyResponse> RegenerateKeyAsync(string resourceGroupName, string accountName, KeyName regenerateKey, CancellationToken cancellationToken)
+        public async Task<StorageAccountRegenerateKeyResponse> RegenerateKeyAsync(string resourceGroupName, string accountName, string regenerateKey, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2188,6 +2231,10 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     throw new ArgumentOutOfRangeException("accountName");
                 }
+            }
+            if (regenerateKey == null)
+            {
+                throw new ArgumentNullException("regenerateKey");
             }
             
             // Tracing
@@ -2216,7 +2263,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/regenerateKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2256,7 +2303,7 @@ namespace Microsoft.Azure.Management.Storage
                 JObject storageAccountRegenerateKeyParametersValue = new JObject();
                 requestDoc = storageAccountRegenerateKeyParametersValue;
                 
-                storageAccountRegenerateKeyParametersValue["keyName"] = StorageManagementClient.KeyNameToString(regenerateKey);
+                storageAccountRegenerateKeyParametersValue["keyName"] = regenerateKey;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2356,16 +2403,20 @@ namespace Microsoft.Azure.Management.Storage
         /// Updates the account type or tags for a storage account. It can also
         /// be used to add a custom domain (note that custom domains cannot be
         /// added via the Create operation). Only one custom domain is
-        /// supported per storage account. This API can only be used to update
-        /// one of tags, accountType, or customDomain per call. To update
-        /// multiple of these properties, call the API multiple times with one
-        /// change per call. This call does not change the storage keys for
-        /// the account. If you want to change storage account keys, use the
-        /// RegenerateKey operation. The location and name of the storage
-        /// account cannot be changed after creation.
+        /// supported per storage account. In order to replace a custom
+        /// domain, the old value must be cleared before a new value may be
+        /// set. To clear a custom domain, simply update the custom domain
+        /// with empty string. Then call update again with the new cutsom
+        /// domain name. The update API can only be used to update one of
+        /// tags, accountType, or customDomain per call. To update multiple of
+        /// these properties, call the API multiple times with one change per
+        /// call. This call does not change the storage keys for the account.
+        /// If you want to change storage account keys, use the RegenerateKey
+        /// operation. The location and name of the storage account cannot be
+        /// changed after creation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group within the user’s
+        /// Required. The name of the resource group within the user's
         /// subscription.
         /// </param>
         /// <param name='accountName'>
@@ -2446,7 +2497,7 @@ namespace Microsoft.Azure.Management.Storage
             url = url + "/providers/Microsoft.Storage/storageAccounts/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2653,6 +2704,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                         primaryEndpointsInstance.Table = tableInstance;
                                     }
+                                    
+                                    JToken fileValue = primaryEndpointsValue["file"];
+                                    if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                        primaryEndpointsInstance.File = fileInstance;
+                                    }
                                 }
                                 
                                 JToken primaryLocationValue = propertiesValue2["primaryLocation"];
@@ -2743,6 +2801,13 @@ namespace Microsoft.Azure.Management.Storage
                                     {
                                         Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                         secondaryEndpointsInstance.Table = tableInstance2;
+                                    }
+                                    
+                                    JToken fileValue2 = secondaryEndpointsValue["file"];
+                                    if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                        secondaryEndpointsInstance.File = fileInstance2;
                                     }
                                 }
                             }

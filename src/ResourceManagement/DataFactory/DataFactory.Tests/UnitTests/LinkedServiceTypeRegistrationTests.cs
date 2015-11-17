@@ -65,10 +65,10 @@ namespace DataFactory.Tests.UnitTests
         [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringLinkedServiceTypeWithReservedNameThrowsException<T>(Type type, T registeredType)
+        public void CanRegisterLinkedServiceTypeWithReservedName<T>(Type type, T registeredType)
             where T : TypeProperties
         {
-            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+            this.TestCanRegisterTypeWithReservedName<T>();
         }
 
         [Fact]
@@ -93,6 +93,23 @@ namespace DataFactory.Tests.UnitTests
         public void CanGetRegisteredLinkedServiceCaseInsensitive<T>(Type type, T registeredType)
         {
             this.TestCanGetRegisteredTypeCaseInsensitive(this.Operations.Converter, type);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void ClientsDoNotShareTypeMap()
+        {
+            var client = new DataFactoryManagementClient();
+            Assert.False(client.TypeIsRegistered<MyLinkedServiceType>());
+
+            client.RegisterType<MyLinkedServiceType>();
+            Assert.True(client.TypeIsRegistered<MyLinkedServiceType>());
+
+            // Ensure that the backing type map is not static/shared; 
+            // MyLinkedServiceType should not be registered on a second client
+            var client2 = new DataFactoryManagementClient();
+            Assert.False(client2.TypeIsRegistered<MyLinkedServiceType>());
         }
 
         [Fact]

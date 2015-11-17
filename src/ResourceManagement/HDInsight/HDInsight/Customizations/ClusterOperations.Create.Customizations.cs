@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        ClusterType = clusterCreateParameters.ClusterType
+                        ClusterType = clusterCreateParameters.ClusterType.ToString()
                     },
                     ClusterVersion = clusterCreateParameters.Version,
                     OperatingSystemType = clusterCreateParameters.OSType
@@ -308,11 +308,10 @@ namespace Microsoft.Azure.Management.HDInsight
             Dictionary<string, string> gatewayConfig;
             configurations.TryGetValue(ConfigurationKey.Gateway, out gatewayConfig);
 
-            if (gatewayConfig != null)
+            if (gatewayConfig == null)
             {
-                return configurations;
+                gatewayConfig = new Dictionary<string, string>();
             }
-            gatewayConfig = new Dictionary<string, string>();
 
             if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
             {
@@ -327,6 +326,38 @@ namespace Microsoft.Azure.Management.HDInsight
 
             configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
             
+            //datalake configs
+            var datalakeConfigExists = true;
+            Dictionary<string, string> datalakeConfig;
+            configurations.TryGetValue(ConfigurationKey.ClusterIdentity, out datalakeConfig);
+
+            if (datalakeConfig == null)
+            {
+                datalakeConfigExists = false;
+            }
+
+            //Add/override datalake config if principal is provided by user
+            if (clusterCreateParameters.Principal != null)
+            {
+                datalakeConfig = new Dictionary<string, string>();
+                ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
+
+                datalakeConfig.Add("clusterIdentity.applicationId", servicePrincipalObj.ApplicationId.ToString());
+                // converting the tenant Id to URI as RP expects this to be URI
+                datalakeConfig.Add("clusterIdentity.aadTenantId", "https://login.windows.net/" + servicePrincipalObj.AADTenantId.ToString());
+                datalakeConfig.Add("clusterIdentity.certificate", Convert.ToBase64String(servicePrincipalObj.CertificateFileBytes));
+                datalakeConfig.Add("clusterIdentity.certificatePassword", servicePrincipalObj.CertificatePassword);
+                datalakeConfig.Add("clusterIdentity.resourceUri", servicePrincipalObj.ResourceUri.ToString());
+
+                if (!datalakeConfigExists)
+                {
+                    configurations.Add(ConfigurationKey.ClusterIdentity, datalakeConfig);
+                }
+                else
+                {
+                    configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
+                }
+            }
 
             return configurations;
         }
@@ -503,10 +534,18 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                headNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                               clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
-                    ? "Standard_D12"
-                    : "Large";
+                switch (clusterCreateParameters.ClusterType)
+                {
+                    case HDInsightClusterType.Hadoop:
+                        headNodeSize = "Standard_D3";
+                        break;
+                    case HDInsightClusterType.Spark:
+                        headNodeSize = "Standard_D12";
+                        break;
+                    default:
+                        headNodeSize = "Large";
+                        break;
+                }
             }
             return headNodeSize;
         }
@@ -520,8 +559,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                                 clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
+                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
                     ? "Standard_D12"
                     : "Standard_D3";
             }

@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.Resources
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Resources">
-      <PackageVersion>2.18.8-preview</PackageVersion>
+      <PackageVersion>2.18.11-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

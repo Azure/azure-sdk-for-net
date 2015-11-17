@@ -31,14 +31,133 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public static partial class ProtectionContainerOperationsExtensions
     {
         /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginDiscoverProtectableItem(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionContainerOperations)s).BeginDiscoverProtectableItemAsync(fabricName, protectionContainerName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginDiscoverProtectableItemAsync(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginDiscoverProtectableItemAsync(fabricName, protectionContainerName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse DiscoverProtectableItem(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionContainerOperations)s).DiscoverProtectableItemAsync(fabricName, protectionContainerName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> DiscoverProtectableItemAsync(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.DiscoverProtectableItemAsync(fabricName, protectionContainerName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the protected container by Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
         /// </param>
-        /// <param name='protectionContainerId'>
-        /// Required. Protection Container ID.
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection Container Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -46,11 +165,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Protection Container object.
         /// </returns>
-        public static ProtectionContainerResponse Get(this IProtectionContainerOperations operations, string protectionContainerId, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerResponse Get(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionContainerOperations)s).GetAsync(protectionContainerId, customRequestHeaders);
+                return ((IProtectionContainerOperations)s).GetAsync(fabricName, protectionContainerName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,8 +181,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
         /// </param>
-        /// <param name='protectionContainerId'>
-        /// Required. Protection Container ID.
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection Container Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -71,9 +193,55 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Protection Container object.
         /// </returns>
-        public static Task<ProtectionContainerResponse> GetAsync(this IProtectionContainerOperations operations, string protectionContainerId, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerResponse> GetAsync(this IProtectionContainerOperations operations, string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(protectionContainerId, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(fabricName, protectionContainerName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse GetDiscoverProtectableItemStatus(this IProtectionContainerOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionContainerOperations)s).GetDiscoverProtectableItemStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(this IProtectionContainerOperations operations, string operationStatusLink)
+        {
+            return operations.GetDiscoverProtectableItemStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -83,17 +251,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
         /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Unique name.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
-        public static ProtectionContainerListResponse List(this IProtectionContainerOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerListResponse List(this IProtectionContainerOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionContainerOperations)s).ListAsync(customRequestHeaders);
+                return ((IProtectionContainerOperations)s).ListAsync(fabricName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -105,15 +276,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
         /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Unique name.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
-        public static Task<ProtectionContainerListResponse> ListAsync(this IProtectionContainerOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerListResponse> ListAsync(this IProtectionContainerOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(fabricName, customRequestHeaders, CancellationToken.None);
         }
     }
 }

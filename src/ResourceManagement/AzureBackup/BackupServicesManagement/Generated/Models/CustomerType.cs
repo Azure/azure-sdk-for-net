@@ -39,5 +39,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         ManagedContainer = 16,
         
         SqlPaaS = 32,
+        
+        DPMVenus = 64,
     }
 }

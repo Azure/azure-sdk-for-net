@@ -53,18 +53,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the
         /// RedisReadablePropertiesWithAccessKey class with required arguments.
         /// </summary>
-        public RedisReadablePropertiesWithAccessKey(string redisVersion, Sku sku)
+        public RedisReadablePropertiesWithAccessKey(Sku sku)
             : this()
         {
-            if (redisVersion == null)
-            {
-                throw new ArgumentNullException("redisVersion");
-            }
             if (sku == null)
             {
                 throw new ArgumentNullException("sku");
             }
-            this.RedisVersion = redisVersion;
             this.Sku = sku;
         }
     }

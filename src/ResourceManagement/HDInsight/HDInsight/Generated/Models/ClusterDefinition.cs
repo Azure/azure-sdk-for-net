@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
@@ -38,12 +37,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             set { this._blueprintUri = value; }
         }
         
-        private HDInsightClusterType _clusterType;
+        private string _clusterType;
         
         /// <summary>
         /// Optional. Gets or sets the type of cluster.
         /// </summary>
-        public HDInsightClusterType ClusterType
+        public string ClusterType
         {
             get { return this._clusterType; }
             set { this._clusterType = value; }

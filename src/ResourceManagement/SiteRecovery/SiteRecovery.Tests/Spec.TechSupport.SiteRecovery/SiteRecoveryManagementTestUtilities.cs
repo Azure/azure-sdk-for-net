@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Test
             }
 
             return new RecoveryServicesManagementClient(
-                "Microsoft.SiteRecovery",
+                "Microsoft.RecoveryServicesBVTD2",
+                "vaults",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }
@@ -62,23 +63,26 @@ namespace Microsoft.Azure.Test
             }
 
             TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
+            // TestEnvironment environment = new RDFETestEnvironmentFactory().GetTestEnvironment();
+            // environment.BaseUri = new Uri("https://localhost:8443/Rdfeproxy.svc");
+            // environment.BaseUri = new Uri("https://sea-bvtd2-srs1-t56tl.cloudapp.net");
+
 
             SiteRecoveryTestsBase.MyCloudService = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "testsitegroup" :
+                "rg1" :
                 Environment.GetEnvironmentVariable("CLOUD_SERVICE_NAME");
 
             SiteRecoveryTestsBase.MyVaultName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "ppeVault2" :
+                "rsv" :
                 Environment.GetEnvironmentVariable("RESOURCE_NAME");
 
             SiteRecoveryTestsBase.VaultKey = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "tmPfTki5UFSdaEq2JFvzuw==" :
+                "otAYMXSEU7HNR8bjmj2tow==" :
                 Environment.GetEnvironmentVariable("CHANNEL_INTEGRITY_KEY");
 
             SiteRecoveryTestsBase.MyResourceGroupName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "testsitegroup" :
+                "rg1" :
                 Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
-
 
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))
             {
@@ -104,7 +108,8 @@ namespace Microsoft.Azure.Test
             return new SiteRecoveryManagementClient(
                 SiteRecoveryTestsBase.MyVaultName,
                 SiteRecoveryTestsBase.MyResourceGroupName,
-                "Microsoft.SiteRecovery",
+                "Microsoft.RecoveryServicesBVTD2",
+                "vaults",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }
