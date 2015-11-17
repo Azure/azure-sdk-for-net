@@ -51,15 +51,27 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._login = value; }
         }
         
-        private string _sid;
+        private Guid _sid;
         
         /// <summary>
         /// Optional. Gets the Azure SQL Server Administrator Sid.
         /// </summary>
-        public string Sid
+        public Guid Sid
         {
             get { return this._sid; }
             set { this._sid = value; }
+        }
+        
+        private Guid _tenantId;
+        
+        /// <summary>
+        /// Required. Gets the Azure SQL Server Active Directory Administrator
+        /// tenant id.
+        /// </summary>
+        public Guid TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
         }
         
         /// <summary>
@@ -68,6 +80,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public ServerAdministratorProperties()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServerAdministratorProperties
+        /// class with required arguments.
+        /// </summary>
+        public ServerAdministratorProperties(Guid tenantId)
+            : this()
+        {
+            this.TenantId = tenantId;
         }
     }
 }

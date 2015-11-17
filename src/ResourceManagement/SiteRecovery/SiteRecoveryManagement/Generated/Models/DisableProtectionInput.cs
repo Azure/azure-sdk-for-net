@@ -30,26 +30,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class DisableProtectionInput
     {
-        private string _protectionProfileId;
+        private DisableProtectionInputProperties _properties;
         
         /// <summary>
-        /// Optional. The ProtectionProfileId.
+        /// Optional. Disable protection input properties.
         /// </summary>
-        public string ProtectionProfileId
+        public DisableProtectionInputProperties Properties
         {
-            get { return this._protectionProfileId; }
-            set { this._protectionProfileId = value; }
-        }
-        
-        private DisableProtectionProviderSpecificInput _providerSettings;
-        
-        /// <summary>
-        /// Optional. Gets or sets the ProviderSettings.
-        /// </summary>
-        public DisableProtectionProviderSpecificInput ProviderSettings
-        {
-            get { return this._providerSettings; }
-            set { this._providerSettings = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

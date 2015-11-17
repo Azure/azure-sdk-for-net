@@ -108,6 +108,50 @@ namespace Microsoft.Azure.Management.Network
             get { return this._applicationGateways; }
         }
         
+        private IExpressRouteCircuitAuthorizationOperations _expressRouteCircuitAuthorizations;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Authorizations for your subscription.
+        /// </summary>
+        public virtual IExpressRouteCircuitAuthorizationOperations ExpressRouteCircuitAuthorizations
+        {
+            get { return this._expressRouteCircuitAuthorizations; }
+        }
+        
+        private IExpressRouteCircuitOperations _expressRouteCircuits;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteCircuits for your subscription.
+        /// </summary>
+        public virtual IExpressRouteCircuitOperations ExpressRouteCircuits
+        {
+            get { return this._expressRouteCircuits; }
+        }
+        
+        private IExpressRouteCircuitPeeringOperations _expressRouteCircuitPeerings;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Peerings for your subscription.
+        /// </summary>
+        public virtual IExpressRouteCircuitPeeringOperations ExpressRouteCircuitPeerings
+        {
+            get { return this._expressRouteCircuitPeerings; }
+        }
+        
+        private IExpressRouteServiceProviderOperations _expressRouteServiceProviders;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteServiceProviders for your subscription.
+        /// </summary>
+        public virtual IExpressRouteServiceProviderOperations ExpressRouteServiceProviders
+        {
+            get { return this._expressRouteServiceProviders; }
+        }
+        
         private ILoadBalancerOperations _loadBalancers;
         
         /// <summary>
@@ -258,6 +302,10 @@ namespace Microsoft.Azure.Management.Network
             : base()
         {
             this._applicationGateways = new ApplicationGatewayOperations(this);
+            this._expressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationOperations(this);
+            this._expressRouteCircuits = new ExpressRouteCircuitOperations(this);
+            this._expressRouteCircuitPeerings = new ExpressRouteCircuitPeeringOperations(this);
+            this._expressRouteServiceProviders = new ExpressRouteServiceProviderOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);
@@ -340,6 +388,10 @@ namespace Microsoft.Azure.Management.Network
             : base(httpClient)
         {
             this._applicationGateways = new ApplicationGatewayOperations(this);
+            this._expressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationOperations(this);
+            this._expressRouteCircuits = new ExpressRouteCircuitOperations(this);
+            this._expressRouteCircuitPeerings = new ExpressRouteCircuitPeeringOperations(this);
+            this._expressRouteServiceProviders = new ExpressRouteServiceProviderOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);

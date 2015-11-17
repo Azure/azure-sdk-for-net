@@ -55,5 +55,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// How many bytes per second.
         /// </summary>
         BytesPerSecond = 5,
+        
+        /// <summary>
+        /// Unit in milli-seconds.
+        /// </summary>
+        MilliSeconds = 6,
     }
 }

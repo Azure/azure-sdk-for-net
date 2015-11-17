@@ -29,7 +29,7 @@ namespace DataFactory.Tests.UnitTests
         where TRegistered : TypeProperties
         where TGenericTypeProperties : TRegistered, IGenericTypeProperties, new()
     {
-        protected void TestRegisteringTypeWithReservedNameThrowsException<T>() where T : TypeProperties
+        protected void TestCanRegisterTypeWithReservedName<T>() where T : TypeProperties
         {
             // This is a bit of a hack to make the tests work if any reserved types are abstract
             if (typeof(T) == typeof(TGenericTypeProperties))
@@ -37,9 +37,11 @@ namespace DataFactory.Tests.UnitTests
                 return;
             }
 
-            InvalidOperationException ex =
-                Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<T>());
-            Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
+            // Ensure the reserved type was registered already
+            Assert.True(this.Client.TypeIsRegistered<T>());
+
+            this.Client.RegisterType<T>(force: true);
+            Assert.True(this.Client.TypeIsRegistered<T>());
         }
 
         protected void RegisteringTypeTwiceWithoutForceThrowsException<T>() where T : TypeProperties

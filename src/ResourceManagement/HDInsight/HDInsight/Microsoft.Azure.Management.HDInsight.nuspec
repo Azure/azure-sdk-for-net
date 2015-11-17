@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The new HDInsight Management NuGet package. This is the NuGet package for ARM based cluster management.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "resource management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Management.HDInsight.dll" />

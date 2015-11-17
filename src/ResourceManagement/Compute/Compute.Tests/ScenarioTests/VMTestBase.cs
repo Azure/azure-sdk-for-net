@@ -56,12 +56,10 @@ namespace Compute.Tests
                     if (!m_initialized)
                     {
                         var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
                         m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
-
                         m_subId = m_CrpClient.Credentials.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
                     }
@@ -105,6 +103,51 @@ namespace Compute.Tests
                 m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.04");
             }
             return m_linuxImageReference;
+        }
+
+        protected DiagnosticsProfile GetDiagnosticsProfile(string storageAccountName)
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true,
+                    StorageUri = new Uri(string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName))
+                }
+            };
+        }
+
+        protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
+        {
+            string testVaultId =
+                @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
+            string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
+            
+            DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
+            {
+                DiskEncryptionKey = new KeyVaultSecretReference
+                {
+                    SecretUrl = encryptionKeyFakeUri,
+                    SourceVault = new SourceVaultReference
+                    {
+                        ReferenceUri = testVaultId
+                    }
+                }
+            };
+
+            if (addKek)
+            {
+                string nonExistentKekUri = @"https://testvault123.vault.azure.net/keys/TestKey/514ceb769c984379a7e0230bdd703272";
+                diskEncryptionSettings.KeyEncryptionKey = new KeyVaultKeyReference
+                {
+                    KeyUrl = nonExistentKekUri,
+                    SourceVault = new SourceVaultReference
+                    {
+                        ReferenceUri = testVaultId
+                    }
+                };
+            }
+            return diskEncryptionSettings;
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -184,14 +227,14 @@ namespace Compute.Tests
                 }
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
-
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreatingOrUpdating (
-                     rgName,  inputVM);
+                var createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreatingOrUpdating(
+                    rgName, inputVM);
 
                 Assert.True(createOrUpdateResponse.StatusCode == HttpStatusCode.Created);
 
                 Assert.True(createOrUpdateResponse.VirtualMachine.Name == inputVM.Name);
-                Assert.True(createOrUpdateResponse.VirtualMachine.Location == inputVM.Location.ToLower().Replace(" ", "") || createOrUpdateResponse.VirtualMachine.Location.ToLower() == inputVM.Location.ToLower());
+                Assert.True(createOrUpdateResponse.VirtualMachine.Location == inputVM.Location.ToLower().Replace(" ", "") ||
+                            createOrUpdateResponse.VirtualMachine.Location.ToLower() == inputVM.Location.ToLower());
 
                 Assert.True(
                     createOrUpdateResponse.VirtualMachine.AvailabilitySetReference.ReferenceUri
@@ -210,7 +253,6 @@ namespace Compute.Tests
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 Assert.True(getResponse.StatusCode == HttpStatusCode.OK);
                 ValidateVM(inputVM, getResponse.VirtualMachine, expectedVMReferenceId);
-
                 return getResponse.VirtualMachine;
             }
             catch
@@ -348,7 +390,7 @@ namespace Compute.Tests
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
-            var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
+            var vhdContainer = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName) + containerName;
             var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
             var osVhduri = vhdContainer + string.Format("/os{0}.vhd", TestUtilities.GenerateName(TestPrefix));
 
@@ -428,6 +470,22 @@ namespace Compute.Tests
 
                 Assert.True(vmOut.StorageProfile.OSDisk.DiskSizeGB
                     == vm.StorageProfile.OSDisk.DiskSizeGB);
+
+                if (vm.StorageProfile.OSDisk.EncryptionSettings != null)
+                {
+                    var encryptionSettings = vm.StorageProfile.OSDisk.EncryptionSettings;
+                    Assert.NotNull(vmOut.StorageProfile.OSDisk.EncryptionSettings);
+                    var actualEncryptionSettings = vmOut.StorageProfile.OSDisk.EncryptionSettings;
+                    Assert.Equal(encryptionSettings.DiskEncryptionKey.SourceVault.ReferenceUri, actualEncryptionSettings.DiskEncryptionKey.SourceVault.ReferenceUri);
+                    Assert.Equal(encryptionSettings.DiskEncryptionKey.SecretUrl, actualEncryptionSettings.DiskEncryptionKey.SecretUrl);
+
+                    if (encryptionSettings.KeyEncryptionKey != null)
+                    {
+                        Assert.NotNull(encryptionSettings.KeyEncryptionKey);
+                        Assert.Equal(encryptionSettings.KeyEncryptionKey.SourceVault.ReferenceUri, actualEncryptionSettings.KeyEncryptionKey.SourceVault.ReferenceUri);
+                        Assert.Equal(encryptionSettings.KeyEncryptionKey.KeyUrl, actualEncryptionSettings.KeyEncryptionKey.KeyUrl);
+                    }
+                }
             }
 
             if (vm.StorageProfile.DataDisks != null &&
@@ -477,6 +535,12 @@ namespace Compute.Tests
                 }
             }
 
+            if (vm.DiagnosticsProfile != null)
+            {
+                Assert.Equal(vm.DiagnosticsProfile.BootDiagnostics.Enabled, vmOut.DiagnosticsProfile.BootDiagnostics.Enabled);
+                Assert.Equal(vm.DiagnosticsProfile.BootDiagnostics.StorageUri, vmOut.DiagnosticsProfile.BootDiagnostics.StorageUri);
+            }
+
             Assert.NotNull(vmOut.AvailabilitySetReference);
             Assert.True(vm.AvailabilitySetReference.ReferenceUri.ToLowerInvariant() == vmOut.AvailabilitySetReference.ReferenceUri.ToLowerInvariant());
             ValidatePlan(vm.Plan, vmOut.Plan);
@@ -506,6 +570,15 @@ namespace Compute.Tests
             Assert.NotNull(diskInstanceView.Statuses[0].Level);
             //Assert.NotNull(diskInstanceView.Statuses[0].Message); // TODO: it's null somtimes.
             //Assert.NotNull(diskInstanceView.Statuses[0].Time);    // TODO: it's null somtimes.
+            if (vmIn.DiagnosticsProfile != null && vmIn.DiagnosticsProfile.BootDiagnostics != null &&
+                vmIn.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue &&
+                vmIn.DiagnosticsProfile.BootDiagnostics.Enabled.Value)
+            {
+                BootDiagnosticsInstanceView bootDiagnostics = vmOut.InstanceView.BootDiagnostics;
+                Assert.NotNull(bootDiagnostics);
+                Assert.NotNull(bootDiagnostics.ConsoleScreenshotBlobUri);
+                //TODO: validate serialConsoleLog for Linux OsType
+            }
         }
 
         protected void ValidatePlan(Microsoft.Azure.Management.Compute.Models.Plan inputPlan, Microsoft.Azure.Management.Compute.Models.Plan outPutPlan)

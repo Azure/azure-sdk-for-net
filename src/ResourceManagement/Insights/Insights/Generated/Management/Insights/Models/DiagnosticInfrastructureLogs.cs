@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.LogLevel? _scheduledTransferLogLevelFilter;
         
         /// <summary>
-        /// Optional. Configures the minimum severity level of the logs
+        /// Optional. Gets or sets the minimum severity level of the logs
         /// collected.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.LogLevel? ScheduledTransferLogLevelFilter

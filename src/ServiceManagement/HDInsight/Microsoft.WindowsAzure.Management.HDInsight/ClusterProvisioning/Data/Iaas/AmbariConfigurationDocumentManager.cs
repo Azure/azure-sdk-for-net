@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
 
             JObject coreSite = GetOrCreateConfigurationObject(CoreConfigurationKeyName);
 
-            coreSite.Add(new JProperty(String.Format("{0}.{1}", StorageAccountKeyPropertyKeyNamePrefix, storageAccountName), storageAccountKey));
+            coreSite.Add(new JProperty(String.Format("{0}{1}", StorageAccountKeyPropertyKeyNamePrefix, storageAccountName), storageAccountKey));
         }
 
         public void SetCustomConfigurations(string configurationKeyName, ConfigValuesCollection configValues)

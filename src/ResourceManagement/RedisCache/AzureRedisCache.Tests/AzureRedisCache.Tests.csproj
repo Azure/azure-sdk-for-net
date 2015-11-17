@@ -32,6 +32,9 @@
     <Compile Include="SpecTestSupport.RedisCache\RedisCacheManagementTestUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\AzureRedisCache.Tests.CreateUpdateDeleteFunctionalTests\CreateUpdateDeleteClusterCacheTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\AzureRedisCache.Tests.CreateUpdateDeleteFunctionalTests\CreateUpdateDeleteTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

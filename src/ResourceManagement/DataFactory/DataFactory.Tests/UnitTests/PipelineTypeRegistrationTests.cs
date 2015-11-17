@@ -55,10 +55,10 @@ namespace DataFactory.Tests.UnitTests
         [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringActivityTypeForPipelineWithReservedNameThrowsException<T>(Type type, T registeredType)
+        public void CanRegisterActivityTypeForPipelineWithReservedName<T>(Type type, T registeredType)
             where T : ActivityTypeProperties
         {
-            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+            this.TestCanRegisterTypeWithReservedName<T>();
         }
 
         [Theory]

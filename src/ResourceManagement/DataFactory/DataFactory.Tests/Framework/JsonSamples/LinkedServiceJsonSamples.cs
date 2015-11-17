@@ -139,6 +139,22 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureMLLinkedServiceWithOptionalPropertyJson = @"
+{
+    name: ""Test-ML-LinkedService"",
+    properties:
+    {
+        type: ""AzureML"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            mlEndpoint:""https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs"",
+            apiKey:""jOeOfV4/ujgUvU5DB5cC+poDvHmHE/g=="",
+            updateResourceEndpoint:""https://management.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/endpoints/endpoint2""
+        }
+    }
+}";
+        [JsonSample]
         public const string LinkedServiceOptionalHubName = @"
 {
     name: ""Test-BYOC-HDInsight-linkedService"",
@@ -278,6 +294,63 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""DocumentDb"",
         typeProperties: {
             connectionString: ""MyConnectionString""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string TeradataLinkedService = @"
+{
+    name: ""Test-Teradata-linkedService"",
+    properties:
+    {
+        type: ""OnPremisesTeradata"",
+        typeProperties: {
+            server: ""volvo2.teradata.ws"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            gatewayName: ""MSourceDemoGateway"",
+            authenticationType: ""Basic""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataLakeStoreLinkedService = @"
+{
+    name: ""LinkedService-AzureDataLakeStore"",
+    properties:
+    {
+        type: ""AzureDataLakeStore"",
+        typeProperties:
+        {
+            authorization: ""authCode"",
+            sessionId: ""sessionId"",
+            dataLakeStoreUri: ""https://account.azuredatalake.net/webhdfs/v1"",
+            accountName: ""account"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
+        },
+        description: ""test description""
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataLakeAnalyticsLinkedService = @"
+{
+    name: ""LinkedService-AzureDataLakeAnalytics"",
+    properties:
+    {
+        type: ""AzureDataLakeAnalytics"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authorization: ""authCode"",
+            sessionId: ""sessionId"",
+            accountName: ""account"",
+            dataLakeAnalyticsUri: ""microsoftkonacompute.net"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
         }
     }
 }";

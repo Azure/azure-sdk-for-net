@@ -300,13 +300,20 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""SqlDWSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
                     },
                     sink:
                     {
                         type: ""SqlDWSink"",
                         writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00""
+                        writeBatchTimeout: ""01:00:00"",
+                        sqlWriterCleanupScript: ""Script"",
+                        sliceIdentifierColumnName: ""SliceID""
                     },
                 },
                 inputs: 
@@ -626,6 +633,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string AzureMLUpdatePipeline = @"
+{
+    name: ""My updatable machine learning pipeline"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""ML Update Resource Activity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLUpdateResource"",
+                typeProperties: {
+                    trainedModelDatasetName: ""retraining output dataset"",
+                    trainedModelName: ""Decision Tree trained model""
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""retraining output dataset""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""some other output""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
+
 //        [JsonSample("ExtraProperties")]
 //        public const string ExtraPropertiesPipeline = @"
 //{
@@ -669,6 +722,111 @@ namespace DataFactory.Tests.Framework.JsonSamples
 //        ]
 //    }
 //}";
+
+        [JsonSample(propertyBagKeys: new string[]
+                {
+                        "properties.activities[0].typeProperties.globalParameters.oNe",
+                        "properties.activities[0].typeProperties.globalParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceOutputs.output 1",
+                        "properties.activities[0].typeProperties.webServiceInput"
+                })]
+        public const string AzureMLBatchExecutionPipelineWithAllParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                typeProperties:
+                {
+                    globalParameters:
+                    {
+                        ""oNe"": ""one value"",
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                    },
+                    webServiceOutputs:
+                    {
+                        ""output 1"": ""sasCopyBlob"",
+                    },
+                    webServiceInput: ""csvBlob""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureMLBatchExecutionPipelineWithNoParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+            }
+        ]
+    }
+}
+";
 
         [JsonSample(propertyBagKeys: new string[] 
             { 
@@ -779,7 +937,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""SqlSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""$EncryptedString$MyEncryptedQuery"",
+                        storedProcedureParameters: {
+                            stringData: { value: ""str3"" },
+                            id: { value: ""$$Text.Format('{0:yyyy}', SliceStart)"", type: ""Int""}
+                        }
                     },
                     sink:
                     {
@@ -906,6 +1069,96 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyAzureDataLakeToAzureDataLake = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from adl to adl"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""AzureDataLakeStoreSource"",
+                        recursive: true,
+                    },
+                    sink: 
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""adlIn""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""adlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(propertyBagKeys: new string[] 
+            { 
+                // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
+                "properties.activities[0].typeProperties.parameters.parameter1",
+                "properties.activities[0].typeProperties.parameters.Parameter2",
+            })]
+        public const string DataLakeAnalyticsActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Data Lake analytics pipeline"",
+        activities:
+        [
+            {
+                name: ""DataLakeAnalyticsUSQL"",
+                inputs: [ {name: ""DataLake-Table-In""} ],
+                outputs: [ {name: ""DataLake-Table-Out""} ],
+                linkedServiceName: ""Linked-ServiceDataLakeAnalytics"",
+                type: ""DataLakeAnalyticsU-SQL"",
+                typeProperties:
+                {
+                    script: ""CREATE DATABASE test;"",
+                    degreeOfParallelism: 3,
+                    priority: 100,
+                    parameters:
+                    {
+                        ""parameter1"": ""value1"",
+                        ""Parameter2"": ""Value2""
+                    }
+                },
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
             }
         ]
     }

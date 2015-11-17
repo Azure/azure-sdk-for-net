@@ -86,6 +86,48 @@ namespace Microsoft.Azure.Management.OperationalInsights
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Disables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// The name of the intelligence pack to be disabled.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DisableIntelligencePackAsync(string resourceGroupName, string workspaceName, string intelligencePackName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Enables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// The name of the intelligence pack to be enabled.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> EnableIntelligencePackAsync(string resourceGroupName, string workspaceName, string intelligencePackName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets a workspace instance.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -162,6 +204,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The list workspaces operation response.
         /// </returns>
         Task<WorkspaceListResponse> ListInSubscriptionAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Lists all the intelligence packs possible and whether they are
+        /// enabled or disabled for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list intelligence packs operation response.
+        /// </returns>
+        Task<WorkspaceListIntelligencePacksResponse> ListIntelligencePacksAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a list of accounts with administrator privileges that are not

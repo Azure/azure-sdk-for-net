@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
+        public async Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
             CancellationToken cancellationToken)
         {
             try

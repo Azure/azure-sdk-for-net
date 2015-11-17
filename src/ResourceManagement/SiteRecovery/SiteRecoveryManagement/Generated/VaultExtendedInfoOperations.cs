@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -311,9 +311,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -550,9 +550,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
@@ -790,9 +790,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/certificates/";

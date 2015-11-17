@@ -30,5 +30,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VPN Gateways
         /// </summary>
         public const string Vpn = "Vpn";
+        
+        /// <summary>
+        /// Express Route
+        /// </summary>
+        public const string ExpressRoute = "ExpressRoute";
     }
 }

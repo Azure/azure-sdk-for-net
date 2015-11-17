@@ -6671,6 +6671,71 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 configurationSetInstance.AdminUserName = adminUsernameInstance;
                                             }
                                             
+                                            XElement additionalUnattendContentElement = configurationSetsElement.Element(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                            if (additionalUnattendContentElement != null)
+                                            {
+                                                AdditionalUnattendContentSettings additionalUnattendContentInstance = new AdditionalUnattendContentSettings();
+                                                configurationSetInstance.AdditionalUnattendContent = additionalUnattendContentInstance;
+                                                
+                                                XElement passesSequenceElement = additionalUnattendContentElement.Element(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                                if (passesSequenceElement != null)
+                                                {
+                                                    foreach (XElement passesElement in passesSequenceElement.Elements(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure")))
+                                                    {
+                                                        UnattendPassSettings unattendPassInstance = new UnattendPassSettings();
+                                                        additionalUnattendContentInstance.UnattendPasses.Add(unattendPassInstance);
+                                                        
+                                                        XElement passNameElement = passesElement.Element(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (passNameElement != null)
+                                                        {
+                                                            string passNameInstance = passNameElement.Value;
+                                                            unattendPassInstance.PassName = passNameInstance;
+                                                        }
+                                                        
+                                                        XElement componentsSequenceElement = passesElement.Element(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (componentsSequenceElement != null)
+                                                        {
+                                                            foreach (XElement componentsElement in componentsSequenceElement.Elements(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure")))
+                                                            {
+                                                                UnattendComponent unattendComponentInstance = new UnattendComponent();
+                                                                unattendPassInstance.UnattendComponents.Add(unattendComponentInstance);
+                                                                
+                                                                XElement componentNameElement = componentsElement.Element(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (componentNameElement != null)
+                                                                {
+                                                                    string componentNameInstance = componentNameElement.Value;
+                                                                    unattendComponentInstance.ComponentName = componentNameInstance;
+                                                                }
+                                                                
+                                                                XElement componentSettingsSequenceElement = componentsElement.Element(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (componentSettingsSequenceElement != null)
+                                                                {
+                                                                    foreach (XElement componentSettingsElement in componentSettingsSequenceElement.Elements(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure")))
+                                                                    {
+                                                                        ComponentSetting componentSettingInstance = new ComponentSetting();
+                                                                        unattendComponentInstance.UnattendComponentSettings.Add(componentSettingInstance);
+                                                                        
+                                                                        XElement settingNameElement = componentSettingsElement.Element(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                        if (settingNameElement != null)
+                                                                        {
+                                                                            string settingNameInstance = settingNameElement.Value;
+                                                                            componentSettingInstance.SettingName = settingNameInstance;
+                                                                        }
+                                                                        
+                                                                        XElement contentElement = componentSettingsElement.Element(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                        if (contentElement != null)
+                                                                        {
+                                                                            string contentInstance = TypeConversion.FromBase64String(contentElement.Value);
+                                                                            componentSettingInstance.Content = contentInstance;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
                                             XElement hostNameElement2 = configurationSetsElement.Element(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
                                             if (hostNameElement2 != null)
                                             {
@@ -8643,6 +8708,71 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             {
                                                 string adminUsernameInstance = adminUsernameElement.Value;
                                                 configurationSetInstance.AdminUserName = adminUsernameInstance;
+                                            }
+                                            
+                                            XElement additionalUnattendContentElement = configurationSetsElement.Element(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                            if (additionalUnattendContentElement != null)
+                                            {
+                                                AdditionalUnattendContentSettings additionalUnattendContentInstance = new AdditionalUnattendContentSettings();
+                                                configurationSetInstance.AdditionalUnattendContent = additionalUnattendContentInstance;
+                                                
+                                                XElement passesSequenceElement = additionalUnattendContentElement.Element(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                                if (passesSequenceElement != null)
+                                                {
+                                                    foreach (XElement passesElement in passesSequenceElement.Elements(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure")))
+                                                    {
+                                                        UnattendPassSettings unattendPassInstance = new UnattendPassSettings();
+                                                        additionalUnattendContentInstance.UnattendPasses.Add(unattendPassInstance);
+                                                        
+                                                        XElement passNameElement = passesElement.Element(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (passNameElement != null)
+                                                        {
+                                                            string passNameInstance = passNameElement.Value;
+                                                            unattendPassInstance.PassName = passNameInstance;
+                                                        }
+                                                        
+                                                        XElement componentsSequenceElement = passesElement.Element(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (componentsSequenceElement != null)
+                                                        {
+                                                            foreach (XElement componentsElement in componentsSequenceElement.Elements(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure")))
+                                                            {
+                                                                UnattendComponent unattendComponentInstance = new UnattendComponent();
+                                                                unattendPassInstance.UnattendComponents.Add(unattendComponentInstance);
+                                                                
+                                                                XElement componentNameElement = componentsElement.Element(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (componentNameElement != null)
+                                                                {
+                                                                    string componentNameInstance = componentNameElement.Value;
+                                                                    unattendComponentInstance.ComponentName = componentNameInstance;
+                                                                }
+                                                                
+                                                                XElement componentSettingsSequenceElement = componentsElement.Element(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (componentSettingsSequenceElement != null)
+                                                                {
+                                                                    foreach (XElement componentSettingsElement in componentSettingsSequenceElement.Elements(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure")))
+                                                                    {
+                                                                        ComponentSetting componentSettingInstance = new ComponentSetting();
+                                                                        unattendComponentInstance.UnattendComponentSettings.Add(componentSettingInstance);
+                                                                        
+                                                                        XElement settingNameElement = componentSettingsElement.Element(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                        if (settingNameElement != null)
+                                                                        {
+                                                                            string settingNameInstance = settingNameElement.Value;
+                                                                            componentSettingInstance.SettingName = settingNameInstance;
+                                                                        }
+                                                                        
+                                                                        XElement contentElement = componentSettingsElement.Element(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                        if (contentElement != null)
+                                                                        {
+                                                                            string contentInstance = TypeConversion.FromBase64String(contentElement.Value);
+                                                                            componentSettingInstance.Content = contentInstance;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                             
                                             XElement hostNameElement2 = configurationSetsElement.Element(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));

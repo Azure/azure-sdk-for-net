@@ -31,6 +31,64 @@ namespace Microsoft.Azure.Management.Automation
     public static partial class HybridRunbookWorkerGroupOperationsExtensions
     {
         /// <summary>
+        /// Retrieve a hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IHybridRunbookWorkerGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='hybridRunbookWorkerGroupName'>
+        /// Required. The hybrid runbook worker group name
+        /// </param>
+        /// <returns>
+        /// The response model for the get hybrid runbook worker group
+        /// operation.
+        /// </returns>
+        public static HybridRunbookWorkerGroupGetResponse Get(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccount, string hybridRunbookWorkerGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IHybridRunbookWorkerGroupOperations)s).GetAsync(resourceGroupName, automationAccount, hybridRunbookWorkerGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve a hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IHybridRunbookWorkerGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='hybridRunbookWorkerGroupName'>
+        /// Required. The hybrid runbook worker group name
+        /// </param>
+        /// <returns>
+        /// The response model for the get hybrid runbook worker group
+        /// operation.
+        /// </returns>
+        public static Task<HybridRunbookWorkerGroupGetResponse> GetAsync(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccount, string hybridRunbookWorkerGroupName)
+        {
+            return operations.GetAsync(resourceGroupName, automationAccount, hybridRunbookWorkerGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve a list of hybrid runbook worker groups.  (see
         /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
         /// for more information)
@@ -122,6 +180,70 @@ namespace Microsoft.Azure.Management.Automation
         public static Task<HybridRunbookWorkerGroupsListResponse> ListNextAsync(this IHybridRunbookWorkerGroupOperations operations, string nextLink)
         {
             return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update a hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IHybridRunbookWorkerGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='hybridRunbookWorkerGroupName'>
+        /// Required. The hybrid runbook worker group name
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The hybrid runbook worker group
+        /// </param>
+        /// <returns>
+        /// The response model for the patch hybrid runbook worker group
+        /// operation.
+        /// </returns>
+        public static HybridRunbookWorkerGroupPatchResponse Patch(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccount, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupPatchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IHybridRunbookWorkerGroupOperations)s).PatchAsync(resourceGroupName, automationAccount, hybridRunbookWorkerGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update a hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IHybridRunbookWorkerGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='hybridRunbookWorkerGroupName'>
+        /// Required. The hybrid runbook worker group name
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The hybrid runbook worker group
+        /// </param>
+        /// <returns>
+        /// The response model for the patch hybrid runbook worker group
+        /// operation.
+        /// </returns>
+        public static Task<HybridRunbookWorkerGroupPatchResponse> PatchAsync(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccount, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupPatchParameters parameters)
+        {
+            return operations.PatchAsync(resourceGroupName, automationAccount, hybridRunbookWorkerGroupName, parameters, CancellationToken.None);
         }
     }
 }

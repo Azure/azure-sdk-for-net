@@ -161,7 +161,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-        [Fact]
+       [Fact]
         public void SubmitMapReduceStreamingJob()
         {
             using (var context = UndoContext.Current)

@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         private bool? _enableNonSslPort;
         
         /// <summary>
-        /// Optional. Non-ssl redis server port (6379) is enabled or not.
+        /// Optional. If the value is true, then the non-ssl redis server port
+        /// (6379) will be enabled.
         /// </summary>
         public bool? EnableNonSslPort
         {
@@ -47,8 +48,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         
         /// <summary>
         /// Optional. All Redis Settings. Few possible keys:
-        /// <para>maxmemory-delta</para><para>maxmemory-policy</para><para>notify-keyspace-events</para><para>maxmemory-samples</para><para>slowlog-log-slower-than</para><para>slowlog-max-len</para><para>list-max-ziplist-entries</para><para>list-max-ziplist-value</para><para>hash-max-ziplist-entries</para><para>hash-max-ziplist-value</para><para>set-max-intset-entries</para><para>zset-max-ziplist-entries</para><para>zset-max-ziplist-value
-        /// etc.</para>
+        /// <para>rdb-backup-enabled</para><para>rdb-storage-connection-string</para><para>rdb-backup-frequency</para><para>maxmemory-reserved</para><para>maxmemory-policy</para><para>notify-keyspace-events</para>.
         /// </summary>
         public IDictionary<string, string> RedisConfiguration
         {
@@ -59,12 +59,26 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _redisVersion;
         
         /// <summary>
-        /// Required. The version of Redis to deploy. Valid values: (2.8)
+        /// Optional. RedisVersion parameter has been deprecated. As such, it
+        /// is no longer necessary to provide this parameter and any value
+        /// specified is ignored.
         /// </summary>
         public string RedisVersion
         {
             get { return this._redisVersion; }
             set { this._redisVersion = value; }
+        }
+        
+        private int? _shardCount;
+        
+        /// <summary>
+        /// Optional. The number of shards to be created on a Premium Cluster
+        /// Cache.
+        /// </summary>
+        public int? ShardCount
+        {
+            get { return this._shardCount; }
+            set { this._shardCount = value; }
         }
         
         private Sku _sku;
@@ -78,30 +92,74 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._sku = value; }
         }
         
+        private string _staticIP;
+        
+        /// <summary>
+        /// Optional. Required when deploying a redis cache inside an existing
+        /// Azure Virtual Network.
+        /// </summary>
+        public string StaticIP
+        {
+            get { return this._staticIP; }
+            set { this._staticIP = value; }
+        }
+        
+        private string _subnet;
+        
+        /// <summary>
+        /// Optional. Required when deploying a redis cache inside an existing
+        /// Azure Virtual Network.
+        /// </summary>
+        public string Subnet
+        {
+            get { return this._subnet; }
+            set { this._subnet = value; }
+        }
+        
+        private IDictionary<string, string> _tenantSettings;
+        
+        /// <summary>
+        /// Optional. tenantSettings
+        /// </summary>
+        public IDictionary<string, string> TenantSettings
+        {
+            get { return this._tenantSettings; }
+            set { this._tenantSettings = value; }
+        }
+        
+        private string _virtualNetwork;
+        
+        /// <summary>
+        /// Optional. The exact ARM resource ID of the virtual network to
+        /// deploy the redis cache in. Example format:
+        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.ClassicNetwork/VirtualNetworks/vnet1
+        /// </summary>
+        public string VirtualNetwork
+        {
+            get { return this._virtualNetwork; }
+            set { this._virtualNetwork = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RedisProperties class.
         /// </summary>
         public RedisProperties()
         {
             this.RedisConfiguration = new LazyDictionary<string, string>();
+            this.TenantSettings = new LazyDictionary<string, string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the RedisProperties class with
         /// required arguments.
         /// </summary>
-        public RedisProperties(string redisVersion, Sku sku)
+        public RedisProperties(Sku sku)
             : this()
         {
-            if (redisVersion == null)
-            {
-                throw new ArgumentNullException("redisVersion");
-            }
             if (sku == null)
             {
                 throw new ArgumentNullException("sku");
             }
-            this.RedisVersion = redisVersion;
             this.Sku = sku;
         }
     }

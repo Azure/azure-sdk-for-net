@@ -111,6 +111,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._replacementString = value; }
         }
         
+        private string _ruleState;
+        
+        /// <summary>
+        /// Required. Gets or sets the rule state.
+        /// </summary>
+        public string RuleState
+        {
+            get { return this._ruleState; }
+            set { this._ruleState = value; }
+        }
+        
         private string _schemaName;
         
         /// <summary>
@@ -158,18 +169,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DataMaskingRuleProperties class
         /// with required arguments.
         /// </summary>
-        public DataMaskingRuleProperties(string id, string maskingFunction)
+        public DataMaskingRuleProperties(string id, string ruleState, string maskingFunction)
             : this()
         {
             if (id == null)
             {
                 throw new ArgumentNullException("id");
             }
+            if (ruleState == null)
+            {
+                throw new ArgumentNullException("ruleState");
+            }
             if (maskingFunction == null)
             {
                 throw new ArgumentNullException("maskingFunction");
             }
             this.Id = id;
+            this.RuleState = ruleState;
             this.MaskingFunction = maskingFunction;
         }
     }

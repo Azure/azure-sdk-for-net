@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The properties of Sql Azure data source as output.
+    /// The properties of SQL Azure database as output.
     /// </summary>
     public partial class SqlAzureOutputDataSourceProperties
     {
         private string _database;
         
         /// <summary>
-        /// Optional. Gets or sets the database name of the Sql Azure.
+        /// Optional. Gets or sets the name of the SQL Azure database.
         /// </summary>
         public string Database
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _password;
         
         /// <summary>
-        /// Optional. Gets or sets the password of the Sql Azure.
+        /// Optional. Gets or sets the password of the SQL Azure database.
         /// </summary>
         public string Password
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _server;
         
         /// <summary>
-        /// Optional. Gets or sets the server of the Sql Azure.
+        /// Optional. Gets or sets the server of the SQL Azure database.
         /// </summary>
         public string Server
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _table;
         
         /// <summary>
-        /// Optional. Gets or sets the table name of the Sql Azure.
+        /// Optional. Gets or sets the table name of the SQL Azure database.
         /// </summary>
         public string Table
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _user;
         
         /// <summary>
-        /// Optional. Gets or sets the user name of the Sql Azure.
+        /// Optional. Gets or sets the user name of the SQL Azure database.
         /// </summary>
         public string User
         {

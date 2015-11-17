@@ -48,6 +48,8 @@ namespace KeyVault.Management.Tests
                         Properties = new VaultProperties
                         {
                             EnabledForDeployment = true,
+                            EnabledForDiskEncryption = true,
+                            EnabledForTemplateDeployment = true,
                             Sku = new Sku { Family = "A", Name = "Standard" },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
@@ -67,6 +69,8 @@ namespace KeyVault.Management.Tests
                     testBase.location,
                     "A",
                     "Standard",
+                    true,
+                    true,
                     true,
                     new[] { accPol },
                     tags);
@@ -98,6 +102,8 @@ namespace KeyVault.Management.Tests
                     "A",
                     "Premium",
                     true,
+                    true,
+                    true,
                     new[] { accPol },
                     tags);
 
@@ -113,6 +119,8 @@ namespace KeyVault.Management.Tests
                     testBase.location,
                     "A",
                     "Premium",
+                    true,
+                    true,
                     true,
                     new[] { accPol },
                     tags);
@@ -167,6 +175,8 @@ namespace KeyVault.Management.Tests
                         Properties = new VaultProperties
                         {
                             EnabledForDeployment = true,
+                            EnabledForDiskEncryption = true,
+                            EnabledForTemplateDeployment = true,
                             Sku = new Sku { Family = "A", Name = "Standard" },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
@@ -187,6 +197,8 @@ namespace KeyVault.Management.Tests
                     "A",
                     "Standard",
                     true,
+                    true,
+                    true,
                     new[] { accPol },
                     tags);
 
@@ -203,6 +215,8 @@ namespace KeyVault.Management.Tests
                     testBase.location,
                     "A",
                     "Standard",
+                    true,
+                    true,
                     true,
                     new[] { accPol },
                     tags);
@@ -232,6 +246,8 @@ namespace KeyVault.Management.Tests
             string expectedSkuFamily,
             string expectedSku,
             bool expectedEnabledForDeployment,
+            bool expectedEnabledForTemplateDeployment,
+            bool expectedEnabledForDiskEncryption,
             AccessPolicyEntry[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
@@ -250,6 +266,8 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedSku, response.Vault.Properties.Sku.Name);
             Assert.Equal(expectedVaultName, response.Vault.Name);
             Assert.Equal(expectedEnabledForDeployment, response.Vault.Properties.EnabledForDeployment);
+            Assert.Equal(expectedEnabledForTemplateDeployment, response.Vault.Properties.EnabledForTemplateDeployment);
+            Assert.Equal(expectedEnabledForDiskEncryption, response.Vault.Properties.EnabledForDiskEncryption);
             Assert.True(expectedTags.DictionaryEqual(response.Vault.Tags));
             Assert.True(CompareAccessPolicies(expectedPolicies, response.Vault.Properties.AccessPolicies.ToArray()));
 
@@ -324,6 +342,8 @@ namespace KeyVault.Management.Tests
                             Properties = new VaultProperties
                             {
                                 EnabledForDeployment = true,
+                                EnabledForDiskEncryption = true,
+                                EnabledForTemplateDeployment = true,
                                 Sku = new Sku { Family = "A", Name = "Standard" },
                                 TenantId = tenantIdGuid,
                                 VaultUri = "",

@@ -150,9 +150,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             return blobStream;
         }
 
-        public Stream Read(string defaultContainer, string fileName)
+        public Stream Read(string defaultContainer, string fileName, string username, string statusFolder)
         {
-            var blobReference = GetBlob(defaultContainer, fileName);
+            var blobReference = GetBlob(defaultContainer, fileName, username, statusFolder);
 
             var blobStream = new MemoryStream();
             blobReference.DownloadToStream(blobStream);
@@ -161,14 +161,15 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             return blobStream;
         }
 
-        private ICloudBlob GetBlob(string defaultContainer, string fileName)
+        private ICloudBlob GetBlob(string defaultContainer, string fileName, string username, string statusFolder)
         {
             ICloudBlob blobReference;
             try
             {
                 var client = GetStorageClient();
                 var container = client.GetContainerReference(defaultContainer);
-                blobReference = container.GetBlobReferenceFromServer("user/hadoopuser/jobstatus/" + fileName);
+                blobReference = container.GetBlobReferenceFromServer(
+                    string.Format("user/{0}/{1}/{2}", username, statusFolder, fileName));
             }
             catch (WebException blobNotFoundException)
             {
@@ -215,8 +216,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 return new MemoryStream();
             }
-
-            return Read(defaultContainer, fileName);
+           
+            return Read(defaultContainer, fileName, job.JobDetail.User, statusdir);
         }
 
         private static string GetStatusFolder(JobGetResponse job)

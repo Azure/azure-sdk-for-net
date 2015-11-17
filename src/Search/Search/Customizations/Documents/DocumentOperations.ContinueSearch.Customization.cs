@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Search
 
             return DoContinueSearchAsync<DocumentSearchResponse, SearchResult, Document>(
                 continuationToken.NextLink,
+                continuationToken.NextPageParameters,
+                continuationToken.NextPageParameters == null,
                 shouldTrace,
                 invocationId,
                 cancellationToken,
@@ -48,6 +50,8 @@ namespace Microsoft.Azure.Search
 
             return DoContinueSearchAsync<DocumentSearchResponse<T>, SearchResult<T>, T>(
                 continuationToken.NextLink,
+                continuationToken.NextPageParameters,
+                continuationToken.NextPageParameters == null,
                 shouldTrace,
                 invocationId,
                 cancellationToken,

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The properties of the EventHub data source as stream input.
+    /// The properties of the Event Hub data source as stream input.
     /// </summary>
     public partial class EventHubStreamInputDataSourceProperties
     {
@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Optional. Gets or sets the name of an Event Hub Consumer Group by
         /// which to identify this input. Specifying distinct consumer group
         /// names for multiple inputs allows each of those inputs to receive
-        /// the same events from the Event Hub.
+        /// the same events from the Event Hub. If not specified, the input
+        /// uses the Event Hub’s default consumer group.
         /// </summary>
         public string ConsumerGroupName
         {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _eventHubName;
         
         /// <summary>
-        /// Optional. Gets or sets the EventHub name.
+        /// Optional. Gets or sets the Event Hub name.
         /// </summary>
         public string EventHubName
         {
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _serviceBusNamespace;
         
         /// <summary>
-        /// Optional. Gets or sets the service bus namespace of the event hub.
+        /// Optional. Gets or sets the service bus namespace of the Event Hub.
         /// </summary>
         public string ServiceBusNamespace
         {
@@ -68,7 +69,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy key.
+        /// Optional. Gets or sets the shared access policy key for the
+        /// specified shared access policy.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -79,7 +81,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Optional. Gets or sets the shared access policy name.
+        /// Optional. Gets or sets the shared access policy name for the Event
+        /// Hub.
         /// </summary>
         public string SharedAccessPolicyName
         {

@@ -42,20 +42,35 @@ namespace Compute.Tests
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
+            return GetResourceManagementClient(new CSMTestEnvironmentFactory(), handler);
+        }
+
+        public static ResourceManagementClient GetResourceManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
+        {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<ResourceManagementClient>(factory).WithHandler(handler);
         }
 
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
+            return GetNetworkResourceProviderClient(new CSMTestEnvironmentFactory(), handler);
+        }
+
+        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
+        {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<NetworkResourceProviderClient>(factory).WithHandler(handler);
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
+            return GetStorageManagementClient(new CSMTestEnvironmentFactory(), handler);
+        }
+
+        public static StorageManagementClient GetStorageManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
+        {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<StorageManagementClient>(factory).WithHandler(handler);
         }
 
         public static void WaitSeconds(double seconds)

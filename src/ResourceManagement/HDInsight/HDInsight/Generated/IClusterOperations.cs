@@ -146,9 +146,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
+        Task<OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Configures the RDP settings on the specified cluster.
@@ -166,9 +166,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken);
+        Task<OperationResource> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a new HDInsight cluster with the specified parameters.
@@ -203,9 +203,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<ClusterGetResponse> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        Task<OperationResource> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the specified cluster.
@@ -237,6 +237,26 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The Get Capabilities operation response.
         /// </returns>
         Task<CapabilitiesResponse> GetCapabilitiesAsync(string location, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// The type name of the hadoop configuration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        Task<ClusterConfigurationsResponse> GetClusterConfigurationsAsync(string resourceGroupName, string clusterName, string configurationName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the connectivity settings for the specified cluster.
@@ -279,9 +299,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<ClusterGetResponse> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Lists HDInsight clusters under the subscription.
@@ -324,8 +344,8 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken);
+        Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken);
     }
 }

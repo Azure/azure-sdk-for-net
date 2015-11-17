@@ -73,6 +73,16 @@ namespace Microsoft.Azure.Management.RecoveryServices
             get; set; 
         }
         
+        string ResourceNamespace
+        {
+            get; set; 
+        }
+        
+        string ResourceType
+        {
+            get; set; 
+        }
+        
         /// <summary>
         /// Definition of cloud service operations for the Recovery services
         /// extension.

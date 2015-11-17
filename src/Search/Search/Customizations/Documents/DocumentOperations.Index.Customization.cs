@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("batch");
             }
 
-            string payload = JsonConvert.SerializeObject(batch, JsonUtility.DocumentSerializerSettings);
+            string payload = JsonUtility.SerializeObject(batch, JsonUtility.DocumentSerializerSettings);
             return await DoIndexAsync(payload, cancellationToken).ConfigureAwait(false);
         }
 
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search
             }
 
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
-            string payload = JsonConvert.SerializeObject(batch, JsonUtility.CreateSerializerSettings<T>(useCamelCase));
+            string payload = JsonUtility.SerializeObject(batch, JsonUtility.CreateSerializerSettings<T>(useCamelCase));
 
             return await DoIndexAsync(payload, cancellationToken).ConfigureAwait(false);
         }
@@ -144,7 +144,10 @@ namespace Microsoft.Azure.Search
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
                         var deserializedResult = 
-                            JsonConvert.DeserializeObject<DocumentIndexResponseFormat>(responseContent);
+                            JsonUtility.DeserializeObject<DocumentIndexResponsePayload>(
+                                responseContent, 
+                                new JsonSerializerSettings());
+                        
                         result.Results = new LazyList<IndexResult>(deserializedResult.Value);
                     }
 
@@ -188,7 +191,7 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private class DocumentIndexResponseFormat
+        private class DocumentIndexResponsePayload
         {
             public List<IndexResult> Value { get; set; }
         }

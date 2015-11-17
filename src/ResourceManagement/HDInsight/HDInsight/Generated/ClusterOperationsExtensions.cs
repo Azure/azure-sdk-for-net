@@ -306,9 +306,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse ConfigureHttpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
+        public static OperationResource ConfigureHttpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -334,9 +334,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ConfigureHttpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
+        public static Task<OperationResource> ConfigureHttpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters)
         {
             return operations.ConfigureHttpSettingsAsync(resourceGroupName, clusterName, httpSettingsParameters, CancellationToken.None);
         }
@@ -358,9 +358,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The OS profile for RDP. Use null to turn RDP off.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse ConfigureRdpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
+        public static OperationResource ConfigureRdpSettings(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -386,9 +386,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The OS profile for RDP. Use null to turn RDP off.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ConfigureRdpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
+        public static Task<OperationResource> ConfigureRdpSettingsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters)
         {
             return operations.ConfigureRdpSettingsAsync(resourceGroupName, clusterName, rdpParameters, CancellationToken.None);
         }
@@ -459,9 +459,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static ClusterGetResponse Delete(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        public static OperationResource Delete(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -484,9 +484,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The name of the cluster.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<ClusterGetResponse> DeleteAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        public static Task<OperationResource> DeleteAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return operations.DeleteAsync(resourceGroupName, clusterName, CancellationToken.None);
         }
@@ -575,6 +575,58 @@ namespace Microsoft.Azure.Management.HDInsight
         public static Task<CapabilitiesResponse> GetCapabilitiesAsync(this IClusterOperations operations, string location)
         {
             return operations.GetCapabilitiesAsync(location, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The type name of the hadoop configuration.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        public static ClusterConfigurationsResponse GetClusterConfigurations(this IClusterOperations operations, string resourceGroupName, string clusterName, string configurationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).GetClusterConfigurationsAsync(resourceGroupName, clusterName, configurationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The type name of the hadoop configuration.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        public static Task<ClusterConfigurationsResponse> GetClusterConfigurationsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, string configurationName)
+        {
+            return operations.GetClusterConfigurationsAsync(resourceGroupName, clusterName, configurationName, CancellationToken.None);
         }
         
         /// <summary>
@@ -674,9 +726,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static ClusterGetResponse GetDeleteStatus(this IClusterOperations operations, string operationStatusLink)
+        public static OperationResource GetDeleteStatus(this IClusterOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -696,9 +748,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<ClusterGetResponse> GetDeleteStatusAsync(this IClusterOperations operations, string operationStatusLink)
+        public static Task<OperationResource> GetDeleteStatusAsync(this IClusterOperations operations, string operationStatusLink)
         {
             return operations.GetDeleteStatusAsync(operationStatusLink, CancellationToken.None);
         }
@@ -794,9 +846,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The parameters for the resize operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
+        public static OperationResource Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -822,9 +874,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Required. The parameters for the resize operation.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
+        public static Task<OperationResource> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters)
         {
             return operations.ResizeAsync(resourceGroupName, clusterName, resizeParameters, CancellationToken.None);
         }

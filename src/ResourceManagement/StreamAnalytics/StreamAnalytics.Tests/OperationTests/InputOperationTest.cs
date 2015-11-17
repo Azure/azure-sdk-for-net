@@ -47,25 +47,10 @@ namespace StreamAnalytics.Tests.OperationTests
                 {
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
-                    
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
 
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -228,24 +213,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -274,8 +244,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         {
                             Properties = new EventHubStreamInputDataSourceProperties()
                             {
-                                ServiceBusNamespace = "sdktest",
-                                EventHubName = "sdkeventhub",
+                                ServiceBusNamespace = TestHelper.ServiceBusNamespace,
+                                EventHubName = TestHelper.EventHubName,
                                 SharedAccessPolicyName = TestHelper.SharedAccessPolicyName,
                                 SharedAccessPolicyKey = TestHelper.SharedAccessPolicyKey,
                                 ConsumerGroupName = "sdkconsumergroup"
@@ -375,24 +345,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -499,6 +454,159 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotEqual(inputCreateOrUpdateResponse.Input.Properties.Etag, inputPatchResponse.Properties.Etag);
 
                     // Delete the inputs
+                    AzureOperationResponse deleteInputOperationResponse = client.Inputs.Delete(resourceGroupName, resourceName, inputName);
+                    Assert.Equal(HttpStatusCode.OK, deleteInputOperationResponse.StatusCode);
+
+                    // Check that there are 0 inputs in the job
+                    jobGetParameters = new JobGetParameters("inputs");
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(0, jobGetResponse.Job.Properties.Inputs.Count);
+                }
+                finally
+                {
+                    client.StreamingJobs.Delete(resourceGroupName, resourceName);
+                    resourceClient.ResourceGroups.Delete(resourceGroupName);
+                }
+            }
+        }
+
+        [Fact]
+        public void Test_InputOperations_IoTHub()
+        {
+            BasicDelegatingHandler handler = new BasicDelegatingHandler();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                string resourceGroupName = TestUtilities.GenerateName("StreamAnalytics");
+                string resourceName = TestUtilities.GenerateName("MyStreamingJobSubmittedBySDK");
+
+                string serviceLocation = TestHelper.GetDefaultLocation();
+
+                var resourceClient = TestHelper.GetResourceClient(handler);
+                var client = TestHelper.GetStreamAnalyticsManagementClient(handler);
+
+                try
+                {
+                    ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
+
+                    // Construct the JobCreateProperties
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
+
+                    // Create a streaming job
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
+
+                    // Get a streaming job to check
+                    JobGetParameters jobGetParameters = new JobGetParameters(string.Empty);
+                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
+                    Assert.Equal(resourceName, jobGetResponse.Job.Name);
+
+                    // Construct the Input
+                    string sharedAccessPolicyName = "owner";
+                    InputProperties inputProperties = new StreamInputProperties()
+                    {
+                        Serialization = new CsvSerialization()
+                        {
+                            Properties = new CsvSerializationProperties()
+                            {
+                                FieldDelimiter = ",",
+                                Encoding = "UTF8"
+                            }
+                        },
+                        DataSource = new IoTHubStreamInputDataSource()
+                        {
+                            Properties = new IoTHubStreamInputDataSourceProperties()
+                            {
+                                IotHubNamespace = TestHelper.IoTHubNamespace,
+                                SharedAccessPolicyName = sharedAccessPolicyName,
+                                SharedAccessPolicyKey = TestHelper.IotHubSharedAccessPolicyKey
+                            }
+                        }
+                    };
+                    string inputName = TestUtilities.GenerateName("inputtest");
+                    Input input1 = new Input(inputName)
+                    {
+                        Properties = inputProperties
+                    };
+
+                    // Add an input
+                    InputCreateOrUpdateParameters inputCreateOrUpdateParameters = new InputCreateOrUpdateParameters();
+                    inputCreateOrUpdateParameters.Input = input1;
+                    InputCreateOrUpdateResponse inputCreateOrUpdateResponse = client.Inputs.CreateOrUpdate(resourceGroupName, resourceName, inputCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, inputCreateOrUpdateResponse.StatusCode);
+                    Assert.Equal(inputName, inputCreateOrUpdateResponse.Input.Name);
+                    Assert.Equal("Stream", inputCreateOrUpdateResponse.Input.Properties.Type);
+                    Assert.True(inputCreateOrUpdateResponse.Input.Properties.Serialization is CsvSerialization);
+                    CsvSerialization csvSerializationInResponse1 = (CsvSerialization)inputCreateOrUpdateResponse.Input.Properties.Serialization;
+                    Assert.Equal(",", csvSerializationInResponse1.Properties.FieldDelimiter);
+                    Assert.True(inputCreateOrUpdateResponse.Input.Properties is StreamInputProperties);
+                    StreamInputProperties streamInputPropertiesInResponse = (StreamInputProperties)inputCreateOrUpdateResponse.Input.Properties;
+                    Assert.True(streamInputPropertiesInResponse.DataSource is IoTHubStreamInputDataSource);
+                    IoTHubStreamInputDataSource iotHubInputDataSourceInResponse1 = (IoTHubStreamInputDataSource)streamInputPropertiesInResponse.DataSource;
+                    Assert.Equal(sharedAccessPolicyName, iotHubInputDataSourceInResponse1.Properties.SharedAccessPolicyName);
+                    Assert.NotNull(streamInputPropertiesInResponse.Etag);
+
+                    // Get the input
+                    InputGetResponse inputGetResponse = client.Inputs.Get(resourceGroupName, resourceName, inputName);
+                    Assert.Equal(HttpStatusCode.OK, inputGetResponse.StatusCode);
+                    Assert.Equal(inputName, inputGetResponse.Input.Name);
+                    Assert.True(inputGetResponse.Input.Properties is StreamInputProperties);
+                    StreamInputProperties streamInputPropertiesInResponse2 = (StreamInputProperties)inputGetResponse.Input.Properties;
+                    Assert.True(streamInputPropertiesInResponse2.DataSource is IoTHubStreamInputDataSource);
+                    IoTHubStreamInputDataSource iotHubInputDataSourceInResponse2 = (IoTHubStreamInputDataSource)streamInputPropertiesInResponse2.DataSource;
+                    Assert.Equal(sharedAccessPolicyName, iotHubInputDataSourceInResponse2.Properties.SharedAccessPolicyName);
+                    Assert.Equal(inputCreateOrUpdateResponse.Input.Properties.Etag, inputGetResponse.Input.Properties.Etag);
+
+                    // Test input connectivity
+                    DataSourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+
+                    // Update the input
+                    string newSharedPolicyName = TestUtilities.GenerateName("owner");
+                    inputProperties = new StreamInputProperties()
+                    {
+                        Serialization = new CsvSerialization()
+                        {
+                            Properties = new CsvSerializationProperties()
+                            {
+                                FieldDelimiter = "|",
+                                Encoding = "UTF8"
+                            }
+                        },
+                        DataSource = new IoTHubStreamInputDataSource()
+                        {
+                            Properties = new IoTHubStreamInputDataSourceProperties()
+                            {
+                                IotHubNamespace = TestHelper.IoTHubNamespace,
+                                SharedAccessPolicyName = newSharedPolicyName,
+                                SharedAccessPolicyKey = TestHelper.IotHubSharedAccessPolicyKey
+                            }
+                        }
+                    };
+                    inputProperties.Etag = inputCreateOrUpdateResponse.Input.Properties.Etag;
+                    InputPatchParameters inputPatchParameters = new InputPatchParameters(inputProperties);
+                    InputPatchResponse inputPatchResponse = client.Inputs.Patch(resourceGroupName, resourceName, inputName, inputPatchParameters);
+                    Assert.Equal(HttpStatusCode.OK, inputPatchResponse.StatusCode);
+                    Assert.True(inputPatchResponse.Properties.Serialization is CsvSerialization);
+                    CsvSerialization csvSerializationInResponse2 = (CsvSerialization)inputPatchResponse.Properties.Serialization;
+                    Assert.Equal("|", csvSerializationInResponse2.Properties.FieldDelimiter);
+                    Assert.True(inputPatchResponse.Properties is StreamInputProperties);
+                    StreamInputProperties streamInputPropertiesInResponse3 = (StreamInputProperties)inputPatchResponse.Properties;
+                    Assert.True(streamInputPropertiesInResponse3.DataSource is IoTHubStreamInputDataSource);
+                    IoTHubStreamInputDataSource iotHubInputDataSourceInResponse3 = (IoTHubStreamInputDataSource)streamInputPropertiesInResponse3.DataSource;
+                    Assert.Equal(newSharedPolicyName, iotHubInputDataSourceInResponse3.Properties.SharedAccessPolicyName);
+                    Assert.NotNull(inputPatchResponse.Properties.Etag);
+                    Assert.NotEqual(streamInputPropertiesInResponse.Etag, inputPatchResponse.Properties.Etag);
+
+                    // Delete the input
                     AzureOperationResponse deleteInputOperationResponse = client.Inputs.Delete(resourceGroupName, resourceName, inputName);
                     Assert.Equal(HttpStatusCode.OK, deleteInputOperationResponse.StatusCode);
 

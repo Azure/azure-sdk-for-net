@@ -87,6 +87,15 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        ICapabilitiesOperations Capabilities
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating pertaining to
         /// activation on Azure SQL Data Warehouse databases. Contains
         /// operations to: Pause and Resume databases
@@ -167,11 +176,31 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Replication Links.  Contains operations to: Delete and Retrieve
+        /// replication links.
+        /// </summary>
+        IReplicationLinkOperations DatabaseReplicationLinks
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for managing Azure SQL Database
         /// secure connection.  Contains operations to: Create, Retrieve and
         /// Update secure connection policy .
         /// </summary>
         ISecureConnectionPolicyOperations SecureConnection
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Security Alert policy.  Contains operations to:
+        /// Create, Retrieve and Update policy.
+        /// </summary>
+        ISecurityAlertPolicyOperations SecurityAlertPolicy
         {
             get; 
         }

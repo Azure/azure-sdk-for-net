@@ -4,6 +4,7 @@
     <ProjectGuid>{033442D6-65E4-4A90-A6C0-9608B821A13B}</ProjectGuid>
     <RootNamespace>HDInsight.Tests</RootNamespace>
     <AssemblyName>HDInsight.Tests</AssemblyName>
+    <NuGetPackageImportStamp>c7e9322a</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
@@ -12,8 +13,10 @@
     <Compile Include="Helpers\HDInsightManagementTestUtilities.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\CreateClusterTests.cs" />
+    <Compile Include="ScenarioTests\DataLakeTests.cs" />
     <Compile Include="ScenarioTests\GetCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\RdpTests.cs" />
+    <Compile Include="ScenarioTests\GetConfigurationTests.cs" />
     <Compile Include="ScenarioTests\ResizeTests.cs" />
     <Compile Include="ScenarioTests\HttpTests.cs" />
     <Compile Include="ScenarioTests\ListClusterTests.cs" />
@@ -22,6 +25,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithSshUsernamePassword.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
@@ -33,7 +42,16 @@
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestPaasCreateGetDeleteCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterCreateParametersExtended.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterParameters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsight.Tests.GetCapabilitiesTests\TestGetCapabilities.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.GetConfigurationTests\TestGetConfigCoreSiteCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestDisableEnableHttp.json">
