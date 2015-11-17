@@ -16,6 +16,10 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         [EnumMember(Value = "Https")]
         Https,
         [EnumMember(Value = "StorageQueue")]
-        StorageQueue
+        StorageQueue,
+        [EnumMember(Value = "ServiceBusQueue")]
+        ServiceBusQueue,
+        [EnumMember(Value = "ServiceBusTopic")]
+        ServiceBusTopic
     }
 }

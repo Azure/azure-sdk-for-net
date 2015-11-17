@@ -21,6 +21,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -32,7 +33,7 @@ namespace Compute.Tests
         [Fact]
         public void TestNicVirtualMachineReference()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -49,7 +50,8 @@ namespace Compute.Tests
                         rgName,
                         new ResourceGroup
                         {
-                            Location = m_location
+                            Location = m_location,
+                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
 
                     // Create Storage Account, so that both the VMs can share it
@@ -94,7 +96,7 @@ namespace Compute.Tests
         [Fact]
         public void TestMultiNicVirtualMachineReference()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -112,7 +114,8 @@ namespace Compute.Tests
                         rgName,
                         new ResourceGroup
                         {
-                            Location = m_location
+                            Location = m_location,
+                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
 
                     // Create Storage Account, so that both the VMs can share it

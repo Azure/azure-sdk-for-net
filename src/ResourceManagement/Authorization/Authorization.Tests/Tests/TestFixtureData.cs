@@ -22,8 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Security;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Management.Resources;
 
 namespace Authorization.Tests
 {
@@ -36,11 +37,7 @@ namespace Authorization.Tests
         private bool disposed = false;
 
         private GraphManagementClient GraphClient { get; set; }
-
-        private CSMTestEnvironmentFactory EnvironmentFactory { get; set; }
-
-        public TestEnvironment TestEnvironment { get; private set; }
-
+        
         public IReadOnlyCollection<Guid> Users
         {
             get 
@@ -64,31 +61,29 @@ namespace Authorization.Tests
 
             if(HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record )
             {
-                this.EnvironmentFactory = new CSMTestEnvironmentFactory();
-                this.TestEnvironment = this.EnvironmentFactory.GetTestEnvironment();
-
-                this.GraphClient = (new GraphManagementClient(this.TestEnvironment));
+                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment()));
                 this.CleanupTestData();
             }
 
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-
-                this.EnvironmentFactory = new CSMTestEnvironmentFactory();
-                this.TestEnvironment = this.EnvironmentFactory.GetTestEnvironment();
-
-                this.GraphClient = (new GraphManagementClient(this.TestEnvironment))
-                                     .WithHandler(HttpMockServer.CreateInstance());
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {                
+                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment(), HttpMockServer.CreateInstance()));
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
+
+                TestUtilities.Wait(1000*10);
             }
         }
-        
-        public AuthorizationManagementClient GetAuthorizationManagementClient()
+
+        public ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            return TestBase.GetServiceClient<AuthorizationManagementClient>(this.EnvironmentFactory);
+            return context.GetServiceClient<ResourceManagementClient>();
+        }
+
+        public AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context)
+        {
+            return context.GetServiceClient<AuthorizationManagementClient>();
         }
 
         public void Dispose()
@@ -119,7 +114,6 @@ namespace Authorization.Tests
 
         private void Cleanup()
         {
-            UndoContext.Current.UndoAll();
         }
 
         private void CreateUsers(int number)
@@ -138,6 +132,11 @@ namespace Authorization.Tests
                 var objectId = this.GraphClient.CreateGroup("testGroup" + i);
                 this.createdGroups.Add(objectId);
             }
+        }
+
+        internal void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            this.GraphClient.AddMemberToGroup(groupId, memberObjectId);
         }
 
         private void CleanupTestData()
@@ -167,10 +166,9 @@ namespace Authorization.Tests
             }
 
             var authorizationClient = new AuthorizationManagementClient(
-                (SubscriptionCloudCredentials)this.TestEnvironment.Credentials, 
-                this.TestEnvironment.BaseUri);
-
-            foreach(var assignment in authorizationClient.RoleAssignments.List(null).RoleAssignments)
+                TestEnvironmentFactory.GetTestEnvironment().BaseUri,
+                TestEnvironmentFactory.GetTestEnvironment().Credentials);
+            foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
                 authorizationClient.RoleAssignments.DeleteById(assignment.Id);
             }

@@ -1,0 +1,36 @@
+﻿{
+  "version": "2.0.0",
+  "description": "Microsoft.Azure.Test.HttpRecorder",
+  "authors": [ "Microsoft Corporation" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  "compilationOptions": {
+    "useOssSigning": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "dependencies": {
+    "Newtonsoft.Json": "6.0.8"
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Net.Http": "",
+        "System.Xml.Linq": { "type": "build" },
+        "System.Runtime": { "type": "build" },
+        "System.Threading.Tasks": {"type": "build"}
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23509", 
+        "System.Net.Http": "4.0.1-beta-23509",
+        "Microsoft.CSharp": "4.0.1-beta-23509",
+        "System.Collections": "4.0.11-beta-23509",
+        "System.Linq": "4.0.1-beta-23509",
+        "System.Xml.XDocument": "4.0.11-beta-23509",
+        "System.Runtime": "4.0.21-beta-23509",
+        "System.Threading": "4.0.11-beta-23509"
+      }
+    }
+  }
+}

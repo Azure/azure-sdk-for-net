@@ -39,7 +39,7 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: Wait for KMS Client")]
         public void TestVMCertificatesOperations()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

@@ -13,14 +13,17 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Xunit;
+using System.Linq;
 
 namespace Authorization.Tests
 {
@@ -29,24 +32,22 @@ namespace Authorization.Tests
         const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
 
-        public ResourceManagementClient GetResourceManagementClient()
+        public static ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()); 
+            var client = context.GetServiceClient<ResourceManagementClient>(); 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
             return client;
         }
 
-        public AuthorizationManagementClient GetAuthorizationManagementClient()
+        public AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context)
         {
-            var client = TestBase.GetServiceClient<AuthorizationManagementClient>(new CSMTestEnvironmentFactory());
+            var client = context.GetServiceClient<AuthorizationManagementClient>();
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
@@ -56,43 +57,45 @@ namespace Authorization.Tests
         [Fact]
         public void GetResourceGroupPermissions()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
-                var resourceClient = GetResourceManagementClient();
-                var authzClient = GetAuthorizationManagementClient();
+                var resourceClient = GetResourceManagementClient(context);
+                var authzClient = GetAuthorizationManagementClient(context);
 
                 resourceClient.ResourceGroups.CreateOrUpdate(groupName, new Microsoft.Azure.Management.Resources.Models.ResourceGroup
                     { Location = RESOURCE_TEST_LOCATION });
-                var resourcePermissions = authzClient.Permissions.ListForResourceGroup(groupName);
+                var resourcePermissions = authzClient.Permissions
+                    .ListForResourceGroupWithHttpMessagesAsync(groupName)
+                    .ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.NotNull(resourcePermissions);
-                Assert.Equal(HttpStatusCode.OK, resourcePermissions.StatusCode);
-                Assert.NotNull(resourcePermissions.Permissions);
-                Assert.NotNull(resourcePermissions.Permissions[0]);
-                Assert.NotNull(resourcePermissions.Permissions[0].Actions);
-                Assert.NotNull(resourcePermissions.Permissions[0].NotActions);
-                Assert.Equal("*", resourcePermissions.Permissions[0].Actions[0]);
+                Assert.Equal(HttpStatusCode.OK, resourcePermissions.Response.StatusCode);
+                var permissions = ((IPage<Permission>)resourcePermissions.Body);
+                Assert.NotNull(permissions);
+                var permission = permissions.FirstOrDefault();
+                Assert.NotNull(permission);
+                Assert.NotNull(permission.Actions);
+                Assert.NotNull(permission.NotActions);
+                Assert.Equal("*", permission.Actions[0]);
             }
         }
 
         [Fact]
         public void GetNonExistentResourceGroupPermissions()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-                var authzClient = GetAuthorizationManagementClient();
+                var authzClient = GetAuthorizationManagementClient(context);
 
                 var resourcePermissions = authzClient.Permissions.ListForResourceGroup("NonExistentResourceGroup");
 
                 Assert.NotNull(resourcePermissions);
-                Assert.Equal(HttpStatusCode.OK, resourcePermissions.StatusCode);
-                Assert.NotNull(resourcePermissions.Permissions);
-                Assert.NotNull(resourcePermissions.Permissions[0]);
-                Assert.NotNull(resourcePermissions.Permissions[0].Actions);
-                Assert.Equal("*", resourcePermissions.Permissions[0].Actions[0]);
+
+                var permission = resourcePermissions.FirstOrDefault();
+                Assert.NotNull(permission);
+                Assert.NotNull(permission.Actions);
+                Assert.Equal("*", permission.Actions[0]);
             }
         }
 
@@ -101,26 +104,22 @@ namespace Authorization.Tests
         {
             // NEXT environment variables used to record the mock
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var client = GetResourceManagementClient();
+                var client = GetResourceManagementClient(context);
                 var location = RESOURCE_TEST_LOCATION;
 
                 client.ResourceGroups.CreateOrUpdate(groupName, 
                     new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = location });
 
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
-                    new ResourceIdentity
-                    {
-                        ResourceName = resourceName,
-                        ResourceProviderNamespace = "Microsoft.Web",
-                        ResourceType = "sites",
-                        ResourceProviderApiVersion = WEBSITE_RP_VERSION
-                    },
+                        "Microsoft.Web",
+                        "",
+                        "sites",
+                        resourceName,
+                        WEBSITE_RP_VERSION,
                     new Microsoft.Azure.Management.Resources.Models.GenericResource()
                     {
                         Location = location,
@@ -128,24 +127,21 @@ namespace Authorization.Tests
                     }
                 );
 
-                var authzClient = GetAuthorizationManagementClient();
+                var authzClient = GetAuthorizationManagementClient(context);
 
-                var resourcePermissions = authzClient.Permissions.ListForResource(groupName, 
-                    new ResourceIdentity
-                    {
-                        ResourceName = resourceName,
-                        ResourceProviderNamespace = "Microsoft.Web",
-                        ResourceType = "sites",
-                    }
+                var resourcePermissions = authzClient.Permissions.ListForResource(groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName
                 );
 
                 Assert.NotNull(resourcePermissions);
-                Assert.Equal(HttpStatusCode.OK, resourcePermissions.StatusCode);
-                Assert.NotNull(resourcePermissions.Permissions);
-                Assert.NotNull(resourcePermissions.Permissions[0]);
-                Assert.NotNull(resourcePermissions.Permissions[0].Actions);
-                Assert.NotNull(resourcePermissions.Permissions[0].NotActions);
-                Assert.Equal("*", resourcePermissions.Permissions[0].Actions[0]);
+                var permission = resourcePermissions.FirstOrDefault();
+                Assert.NotNull(permission);
+                Assert.NotNull(permission.Actions);
+                Assert.NotNull(permission.NotActions);
+                Assert.Equal("*", permission.Actions[0]);
             }
         }
 
@@ -154,26 +150,24 @@ namespace Authorization.Tests
         {
             // NEXT environment variables used to record the mock
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var authzClient = GetAuthorizationManagementClient();
+                var authzClient = GetAuthorizationManagementClient(context);
 
                 try
                 {
                     authzClient.Permissions.ListForResource(
                         "NonExistentResourceGroup",
-                        new ResourceIdentity
-                        {
-                            ResourceName = resourceName,
-                            ResourceProviderNamespace = "Microsoft.Web",
-                            ResourceType = "sites",
-                        });
+                        "Microsoft.Web",
+                        "",
+                        "sites",
+                        resourceName
+                    );
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("ResourceGroupNotFound", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.NotFound, ce.Response.StatusCode);
                 }
             }
         }

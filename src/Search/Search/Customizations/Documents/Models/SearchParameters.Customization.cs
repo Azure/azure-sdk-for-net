@@ -1,40 +1,25 @@
-﻿// 
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// 
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hyak.Common;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Newtonsoft.Json;
+
     public partial class SearchParameters
     {
-        private IList<string> _facets = new LazyList<string>();
+        private static readonly IList<string> Empty = new string[0];
 
         /// <summary>
         /// Gets or sets the list of facet expressions to apply to the search query. Each facet expression contains a
         /// field name, optionally followed by a comma-separated list of name:value pairs.
         /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
-        public IList<string> Facets
-        {
-            get { return this._facets; }
-            set { this._facets = value; }
-        }
+        [JsonProperty(PropertyName = "facets")]
+        public IList<string> Facets { get; set; }
 
         /// <summary>
         /// Converts the SearchParameters instance to a URL query string.
@@ -42,26 +27,26 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A URL query string containing all the search parameters.</returns>
         public override string ToString()
         {
-            return String.Join("&", GetAllOptions());
+            return String.Join("&", this.GetAllOptions());
         }
 
         internal SearchParametersPayload ToPayload(string searchText)
         {
             return new SearchParametersPayload()
             {
-                Count = IncludeTotalResultCount,
-                Facets = Facets,
+                Count = IncludeTotalResultCount.GetValueOrDefault(),
+                Facets = Facets ?? Empty,
                 Filter = Filter,
                 Highlight = HighlightFields.ToCommaSeparatedString(),
                 HighlightPostTag = HighlightPostTag,
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 OrderBy = OrderBy.ToCommaSeparatedString(),
-                ScoringParameters = ScoringParameters,
+                ScoringParameters = ScoringParameters ?? Empty,
                 ScoringProfile = ScoringProfile,
                 Search = searchText,
                 SearchFields = SearchFields.ToCommaSeparatedString(),
-                SearchMode = SearchMode,
+                SearchMode = SearchMode.GetValueOrDefault(),
                 Select = Select.ToCommaSeparatedString(),
                 Skip = Skip,
                 Top = Top
@@ -70,73 +55,77 @@ namespace Microsoft.Azure.Search.Models
 
         private IEnumerable<QueryOption> GetAllOptions()
         {
-            yield return new QueryOption("$count", IncludeTotalResultCount.ToString().ToLowerInvariant());
+            yield return new QueryOption(
+                "$count", 
+                this.IncludeTotalResultCount.GetValueOrDefault().ToString().ToLowerInvariant());
 
-            foreach (string facetExpr in Facets)
+            foreach (string facetExpr in this.Facets ?? Empty)
             {
                 yield return new QueryOption("facet", Uri.EscapeDataString(facetExpr));
             }
 
-            if (Filter != null)
+            if (this.Filter != null)
             {
-                yield return new QueryOption("$filter", Uri.EscapeDataString(Filter));
+                yield return new QueryOption("$filter", Uri.EscapeDataString(this.Filter));
             }
 
-            if (HighlightFields.Any())
+            if (this.HighlightFields != null && this.HighlightFields.Any())
             {
-                yield return new QueryOption("highlight", HighlightFields);
+                yield return new QueryOption("highlight", this.HighlightFields);
             }
 
-            if (HighlightPreTag != null)
+            if (this.HighlightPreTag != null)
             {
-                yield return new QueryOption("highlightPreTag", Uri.EscapeDataString(HighlightPreTag));
+                yield return new QueryOption("highlightPreTag", Uri.EscapeDataString(this.HighlightPreTag));
             }
 
-            if (HighlightPostTag != null)
+            if (this.HighlightPostTag != null)
             {
-                yield return new QueryOption("highlightPostTag", Uri.EscapeDataString(HighlightPostTag));
+                yield return new QueryOption("highlightPostTag", Uri.EscapeDataString(this.HighlightPostTag));
             }
 
-            if (MinimumCoverage != null)
+            if (this.MinimumCoverage != null)
             {
-                yield return new QueryOption("minimumCoverage", MinimumCoverage.ToString());
+                yield return new QueryOption("minimumCoverage", this.MinimumCoverage.ToString());
             }
 
-            if (OrderBy.Any())
+            if (this.OrderBy != null && this.OrderBy.Any())
             {
-                yield return new QueryOption("$orderby", OrderBy);
+                yield return new QueryOption("$orderby", this.OrderBy);
             }
 
-            foreach (string scoringParameterExpr in ScoringParameters)
+            foreach (string scoringParameterExpr in this.ScoringParameters ?? Empty)
             {
                 yield return new QueryOption("scoringParameter", scoringParameterExpr);
             }
 
-            if (ScoringProfile != null)
+            if (this.ScoringProfile != null)
             {
-                yield return new QueryOption("scoringProfile", ScoringProfile);
+                yield return new QueryOption("scoringProfile", this.ScoringProfile);
             }
 
-            if (SearchFields.Any())
+            if (this.SearchFields != null && this.SearchFields.Any())
             {
-                yield return new QueryOption("searchFields", SearchFields);
+                yield return new QueryOption("searchFields", this.SearchFields);
             }
 
-            yield return new QueryOption("searchMode", SearchIndexClient.SearchModeToString(SearchMode));
+            yield return new QueryOption(
+                "searchMode",
+                (this.SearchMode.GetValueOrDefault() == Models.SearchMode.Any) ? "any" : "all");
 
-            if (Select.Any())
+            if (this.Select != null && this.Select.Any())
             {
-                yield return new QueryOption("$select", Select);
+                yield return new QueryOption("$select", this.Select);
             }
 
-            if (Skip != null)
+            if (this.Skip != null)
             {
-                yield return new QueryOption("$skip", Skip.ToString());
+                yield return new QueryOption("$skip", this.Skip.ToString());
             }
 
-            if (Top != null)
+            if (this.Top != null)
             {
-                yield return new QueryOption("$top", Top.ToString());
+                yield return new QueryOption("$top", this.Top.ToString());
             }
         }
     }

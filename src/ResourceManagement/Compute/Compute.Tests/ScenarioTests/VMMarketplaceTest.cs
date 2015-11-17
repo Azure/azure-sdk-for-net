@@ -38,7 +38,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMMarketplace()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -98,7 +98,7 @@ namespace Compute.Tests
                 {
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
                     // the resources from this test.
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    // m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 }
             }
         }

@@ -42,7 +42,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeleteResourceGroupRemovesGroupResources()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
@@ -76,7 +76,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void CanCreateResourceGroup()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 ResourceManagementClient client = this.GetResourceManagementClient(context, new RecordedDelegatingHandler());
@@ -106,7 +106,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 var client = GetResourceManagementClient(context, handler);
@@ -126,7 +126,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeleteResourceGroupRemovesGroup()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 

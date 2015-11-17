@@ -27,15 +27,15 @@ namespace Compute.Tests
         [Fact]
         public void TestListVMInSubscription()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
-                string rg1Name = baseRGName + "_1";
-                string rg2Name = baseRGName + "_2";
+                string rg1Name = baseRGName + "a";
+                string rg2Name = baseRGName + "b";
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1, inputVM2;

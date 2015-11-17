@@ -1,22 +1,11 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved. 
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-//   http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License. 
-// 
-
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+
     /// <summary>
     /// A single bucket of a facet query result that reports the number of documents with a field falling within a
     /// particular range or having a particular value or interval.
@@ -38,7 +27,7 @@ namespace Microsoft.Azure.Search.Models
         {
             get
             {
-                return (Value != null) ? FacetType.Value : FacetType.Range;
+                return (this.Value != null) ? FacetType.Value : FacetType.Range;
             }
         }
 
@@ -76,12 +65,12 @@ namespace Microsoft.Azure.Search.Models
         /// <exception cref="InvalidCastException">This instance is not a range facet of the given type.</exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (Type != FacetType.Range)
+            if (this.Type != FacetType.Range)
             {
                 throw new InvalidCastException();
             }
 
-            return new RangeFacetResult<T>(Count, (T?)From, (T?)To);
+            return new RangeFacetResult<T>(this.Count, (T?)this.From, (T?)this.To);
         }
 
         /// <summary>
@@ -94,12 +83,12 @@ namespace Microsoft.Azure.Search.Models
         /// <exception cref="InvalidCastException">This instance is not a value facet of the given type.</exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (Type != FacetType.Value)
+            if (this.Type != FacetType.Value)
             {
                 throw new InvalidCastException();
             }
 
-            return new ValueFacetResult<T>(Count, (T)Value);
+            return new ValueFacetResult<T>(this.Count, (T)this.Value);
         }
     }
 }

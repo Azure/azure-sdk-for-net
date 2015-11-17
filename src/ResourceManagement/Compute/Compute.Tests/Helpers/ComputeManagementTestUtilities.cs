@@ -45,10 +45,10 @@ namespace Compute.Tests
             return client;
         }
 
-        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(MockContext context, RecordedDelegatingHandler handler)
+        public static NetworkManagementClient GetNetworkManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkResourceProviderClient>(handler);
+            var client = context.GetServiceClient<NetworkManagementClient>(handler);
             return client;
         }
 
@@ -67,9 +67,11 @@ namespace Compute.Tests
             }
         }
 
-        public static string GenerateName(string prefix = null)
+        public static string GenerateName(string prefix = null,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="GenerateName_failed")
         {
-            return HttpMockServer.GetAssetName(TestUtilities.GetCurrentMethodName(2), prefix);
+            return HttpMockServer.GetAssetName(methodName, prefix);
         }
     }
 }

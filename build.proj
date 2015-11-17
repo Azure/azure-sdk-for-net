@@ -64,12 +64,7 @@
 
   <ItemGroup>
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-    <!--Exclude data plane projects which are managed by parnter service team individually-->
-    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
-                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
-                      Condition=" '$(Scope)' == 'all'  " />
-    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\project.json" Condition=" '$(Scope)' != 'all'  " />
-    <DnxLibrariesToBuild Include="$(LibrarySourceFolder)\**\project.json" Condition=" '$(Scope)' == 'all'  " />
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -96,58 +91,57 @@
 
   <Target Name="PrepareForAutoRestLibraries">
     <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
-      <Output TaskParameter="AutoRestLibraries" ItemName="AutoRestLibraries" />
+      <Output TaskParameter="Non_Dnx_AutoRestLibraries" ItemName="Non_Dnx_AutoRestLibraries" />
+      <Output TaskParameter="Dnx_AutoRestLibraries" ItemName="Dnx_AutoRestLibraries" />
       <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
     </FilterOutAutoRestLibraries>
-    <Message Text="AutoRest Libraries:" />
-    <Message Text="@(AutoRestLibraries)" />
-    <Message Text="Non-AutoRest Libraries:" />
-    <Message Text="@(NonAutoRestLibraries)" />
+    <Message Text="Non Dnx based AutoRest Libraries: @(Non_Dnx_AutoRestLibraries)" />
+    <Message Text="Dnx AutoRest Libraries: @(Dnx_AutoRestLibraries)" />
+    <!--<Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />-->
   </Target>
   
-  <Target Name="Build" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
+  <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
+      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</_TemporaryDnxFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
-    <!--The solution contains configurations for each platform such as Net40-Debug, Net45-Release, etc
-    So when invoke msbuild, feed the right configuration name-->   
-    <MSBuild Projects="@(NonAutoRestLibraries)"
+    <!--<MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />
+             Targets="Build" />-->
 
-    <MSBuild Projects="@(AutoRestLibraries)"
+    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
-             
-    <CallTarget Targets="BuildDnx"
-             Condition=" '@(DnxLibrariesToBuild)' != '' "/>
 
+    <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+
+    <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
-
-  </Target>
-  
-  <Target Name="BuildDnx">
-    <Exec Command="dnu restore &quot;%(DnxLibrariesToBuild.FullPath)&quot;"/>
-    <Exec Command="dnu build &quot;%(DnxLibrariesToBuild.FullPath)&quot; --configuration $(Configuration) --out $(LibraryRoot)dnx"/>
   </Target>
 
-  <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
-    <MSBuild Projects="@(NonAutoRestLibraries)"
+  <Target Name="BuildDnxLibraries">
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
+  </Target>
+ 
+  <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
+    <!--<MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />
+             Targets="Clean" />-->
     
-    <MSBuild Projects="@(AutoRestLibraries)"
+    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Clean" />
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
-   <Target Name="Test">
+  <Target Name="Test" DependsOnTargets="PrepareForAutoRestLibraries">
      <PropertyGroup>
        <!--Extrat out service name from 'Scope' to use as test dll filter-->
-       <!--For example, from 'ServiceManagement\Storage', get 'Storage'. It is expected that the 'Scope' might not be set-->
+       <!--For example, from 'ServiceManagement\Storage', get 'Storage'.-->
        <TestPartialName>$([System.IO.Path]::GetFileName($(Scope)))</TestPartialName>
      </PropertyGroup>
     <ItemGroup>
@@ -159,7 +153,13 @@
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
     <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
-        ContinueOnError="false"/>
+      Condition=" '@(TestDlls)' != '' "  
+      ContinueOnError="false"/>
+
+    <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
+    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" 
+          WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"
+          Condition=" @(Dnx_AutoRestLibraries) != '' "/>
   </Target>
   
   <PropertyGroup>
@@ -167,12 +167,11 @@
     <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
       For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
     <CorporateScanPaths>$(LibrarySourceFolder)\Common;$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
+    <!--public token associated with MSSharedLibKey.snk-->
+    <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
   <Target Name="SignBinariesForAFxTarget">
-    <PropertyGroup>
-      <!--public token associated with MSSharedLibKey.snk-->
-      <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
-    </PropertyGroup>
+ 
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
@@ -238,7 +237,7 @@
   providing date-based build numbers, and processing regular expression
   replacements in files such as NuGet specs.
   -->
-  <Target Name="BuildMsBuildTask" DependsOnTargets="RestoreNugetPackages">
+  <Target Name="BuildMsBuildTask">
     <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
@@ -248,20 +247,8 @@
     <PropertyGroup>
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-    <Exec Command="$(NuGetCommand) restore %(LibrariesToBuild.Identity) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
-  </Target>
-
-  <!--Smoke test the packages under the output dir-->
-  <Target Name="VerifyPackages">
-    <PropertyGroup>
-      <_TestProject>$(LibraryToolsFolder)\VerifyPackages\VerifyPackages.sln</_TestProject>
-      <_TestExecutable>$(LibraryToolsFolder)\VerifyPackages\bin\debug\VerifyPackages.exe</_TestExecutable>
-    </PropertyGroup>
-    <Error Text="Please provide a publish settings file for the 'Creds' property" Condition=" '$(Creds)' == '' " />
-    <Exec Command="$(NuGetCommand) restore $(_TestProject) -source &quot;$(PackageOutputDir)&quot;"/>
-    <MSBuild Projects="$(_TestProject)" Targets="Build" Properties="Configuration=Debug;Platform=Any CPU" />
-    <Exec Command="$(_TestExecutable) $(Creds)" />
   </Target>
   
   <!--
@@ -291,4 +278,62 @@
 
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
 
+  <Target Name="SignAssembliesInDnxPackages">
+    <ItemGroup>
+      <_DnxPackages Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_UnsignedFolder>$(PackageOutputDir)\unsigned</_UnsignedFolder>
+      <_SignedFolder>$(PackageOutputDir)\signed</_SignedFolder>
+    </PropertyGroup>    
+    
+    <Message Text="%(_DnxPackages.Identity)" Importance="low" />
+    
+    <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
+    <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
+    
+    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
+
+    <RemoveDir Directories="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
+    <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
+
+    <ItemGroup>
+      <_TempBinaries Include="$(PackageOutputDir)\**\*.dll"/>
+      <_PackageBinaries Include="@(_TempBinaries)">
+        <!-- Flattened file for signing -->
+        <UnsignedFlatFileName>$(_UnsignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</UnsignedFlatFileName>
+        <SignedFlatFileName>$(_SignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</SignedFlatFileName>
+      </_PackageBinaries>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_PackageBinaries)" DestinationFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')"></Copy>
+
+    <CodeSigningTask
+      Description="Microsoft Azure SDK"
+      Keywords="Microsoft Azure .NET SDK"
+      UnsignedFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')"
+      DestinationPath="$(_SignedFolder)"
+      SigningLogPath="$(PackageOutputDir)\signing.log"
+      ToolsPath="$(CIToolsPath)"
+      Condition="!$(DelaySign)"/>
+
+    <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
+    <Copy SourceFiles="@(_PackageBinaries->'%(UnsignedFlatFileName)')" DestinationFolder="$(_SignedFolder)" Condition="$(DelaySign)" />
+
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(_PackageBinaries.SignedFlatFileName)"
+        ExpectedTokenSignature="$(StrongNameToken)"
+        ExpectedDelaySigned="false"
+        ContinueOnError="false"
+        Condition="!$(DelaySign)"/>
+
+    <Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
+
+    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
+  </Target>
+  
 </Project>

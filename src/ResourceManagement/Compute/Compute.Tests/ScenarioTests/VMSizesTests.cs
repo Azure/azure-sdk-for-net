@@ -25,14 +25,14 @@ namespace Compute.Tests
         [Fact]
         public void TestListVMSizes()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
                 var virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
-                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse.Value);
+                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse);
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Compute.Tests
         [Fact]
         public void TestUtilityFunctions()
         {
-            Assert.True(string.Equals("Compute.Tests.HelpersTests", TestUtilities.GetCallingClass()));
+            Assert.True(string.Equals("Compute.Tests.HelpersTests", this.GetType().FullName));
             Assert.True(string.Equals("TestUtilityFunctions", TestUtilities.GetCurrentMethodName()));
         }
     }

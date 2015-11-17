@@ -33,13 +33,15 @@
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     <AdditionalBinariesFolder>$(LibraryFxTarget)\</AdditionalBinariesFolder>
     <NoWarn>1591;1573;1570;1573</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors Condition=" $(SDKTestProject) != 'true' ">true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <PropertyGroup>
     <SignAssembly>$(CodeSign)</SignAssembly>
     <DelaySign>$(CodeSign)</DelaySign>
+    <SignAssembly Condition=" $(SDKTestProject) == 'true' ">false</SignAssembly>
+    <DelaySign Condition=" $(SDKTestProject) == 'true' ">false</DelaySign>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >

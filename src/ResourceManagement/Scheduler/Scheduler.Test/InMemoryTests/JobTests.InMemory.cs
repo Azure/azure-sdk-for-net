@@ -109,7 +109,12 @@ namespace Scheduler.Test.InMemoryTests
 				                'method': 'GET',
                                 'body': 'some body message!',
 			                },
-			                'type': 'http'
+			                'type': 'http',
+                            'retryPolicy': {
+                                'retryType': 'Fixed',
+                                'retryCount': '2',
+                                'retryInterval': '00:01:00',
+                            },
 		                },
 		                'recurrence': {
 			                'frequency': 'week',
@@ -398,9 +403,9 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.Null(result.NextLink);
+            Assert.Null(result.NextPageLink);
 
-            var job1 = result.Value.Where(job => string.Compare(job.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1") == 0).FirstOrDefault();
+            var job1 = result.Where(job => string.Compare(job.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1") == 0).FirstOrDefault();
             Assert.NotNull(job1);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1", job1.Id);
             Assert.Equal("Microsoft.Scheduler/jobCollections/jobs", job1.Type);
@@ -417,7 +422,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(0, job1.Properties.Status.FailureCount);
             Assert.Equal(0, job1.Properties.Status.FaultedCount);
 
-            var job2 = result.Value.Where(job => string.Compare(job.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j2") == 0).FirstOrDefault();
+            var job2 = result.Where(job => string.Compare(job.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j2") == 0).FirstOrDefault();
             Assert.NotNull(job2);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j2", job2.Id);
             Assert.Equal("Microsoft.Scheduler/jobCollections/jobs", job2.Type);
@@ -480,9 +485,9 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.Null(result.NextLink);
+            Assert.Null(result.NextPageLink);
 
-            var history1 = result.Value.Where(history => string.Compare(history.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680374658540720:09223372036854743747") == 0).FirstOrDefault();
+            var history1 = result.Where(history => string.Compare(history.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680374658540720:09223372036854743747") == 0).FirstOrDefault();
             Assert.NotNull(history1);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680374658540720:09223372036854743747", history1.Id);
             Assert.Equal("Microsoft.Scheduler/jobCollections/jobs/history", history1.Type);
@@ -495,7 +500,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal(727, history1.Properties.RepeatCount);
             Assert.Equal(JobHistoryActionName.MainAction, history1.Properties.ActionName);
 
-            var history2 = result.Value.Where(history => string.Compare(history.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680410779413923:09223372036854745549") == 0).FirstOrDefault();
+            var history2 = result.Where(history => string.Compare(history.Id, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680410779413923:09223372036854745549") == 0).FirstOrDefault();
             Assert.NotNull(history2);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1/history/02519680410779413923:09223372036854745549", history2.Id);
             Assert.Equal("Microsoft.Scheduler/jobCollections/jobs/history", history2.Type);

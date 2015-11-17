@@ -28,18 +28,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using Xunit;
 
 namespace Compute.Tests
 {
     public class VMTestBase
     {
-        protected const string TestPrefix = "pslibtest";
+        protected const string TestPrefix = "crptestar";
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
         protected StorageManagementClient m_SrpClient;
-        protected NetworkResourceProviderClient m_NrpClient;
+        protected NetworkManagementClient m_NrpClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -58,7 +59,7 @@ namespace Compute.Tests
                         m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
@@ -101,6 +102,51 @@ namespace Compute.Tests
             return m_linuxImageReference;
         }
 
+        protected DiagnosticsProfile GetDiagnosticsProfile(string storageAccountName)
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true,
+                    StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                }
+            };
+        }
+
+        protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
+        {
+            string testVaultId =
+                @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
+            string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
+            
+            DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
+            {
+                DiskEncryptionKey = new KeyVaultSecretReference
+                {
+                    SecretUrl = encryptionKeyFakeUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                }
+            };
+
+            if (addKek)
+            {
+                string nonExistentKekUri = @"https://testvault123.vault.azure.net/keys/TestKey/514ceb769c984379a7e0230bdd703272";
+                diskEncryptionSettings.KeyEncryptionKey = new KeyVaultKeyReference
+                {
+                    KeyUrl = nonExistentKekUri,
+                    SourceVault = new Microsoft.Azure.Management.Compute.Models.SubResource
+                    {
+                        Id = testVaultId
+                    }
+                };
+            }
+            return diskEncryptionSettings;
+        }
+
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
         {
             try
@@ -110,7 +156,8 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
                 var stoInput = new StorageAccountCreateParameters
@@ -125,7 +172,7 @@ namespace Compute.Tests
                 while (!created)
                 {
                     ComputeManagementTestUtilities.WaitSeconds(10);
-                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName).Value;
+                    var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
                     created =
                         stos.Any(
                             t =>
@@ -145,7 +192,8 @@ namespace Compute.Tests
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef, 
             out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            bool waitOperation = true)
         {
             try
             {
@@ -154,10 +202,11 @@ namespace Compute.Tests
                     rgName,
                     new ResourceGroup
                     {
-                        Location = m_location
+                        Location = m_location,
+                        Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
-                PublicIpAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
                 
                 Subnet subnetResponse = CreateVNET(rgName);
 
@@ -176,7 +225,15 @@ namespace Compute.Tests
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                VirtualMachine createOrUpdateResponse = null;
+                if (waitOperation)
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
+                else
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreateOrUpdate(rgName, inputVM.Name, inputVM);
+                }
 
                 Assert.True(createOrUpdateResponse.Name == inputVM.Name);
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") || 
@@ -202,28 +259,28 @@ namespace Compute.Tests
             }
         }
 
-        protected PublicIpAddress CreatePublicIP(string rgName)
+        protected PublicIPAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
-            string publicIpName = ComputeManagementTestUtilities.GenerateName(null);
-            string domainNameLabel = ComputeManagementTestUtilities.GenerateName(null);
+            string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
+            string domainNameLabel = ComputeManagementTestUtilities.GenerateName("dn");
 
-            var publicIp = new PublicIpAddress()
+            var publicIp = new PublicIPAddress()
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>()
                     {
                         {"key", "value"}
                     },
-                PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
-                DnsSettings = new PublicIpAddressDnsSettings()
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
                 }
             };
 
-            var putPublicIpAddressResponse = m_NrpClient.PublicIpAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
-            var getPublicIpAddressResponse = m_NrpClient.PublicIpAddresses.Get(rgName, publicIpName);
+            var putPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
+            var getPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.Get(rgName, publicIpName);
             return getPublicIpAddressResponse;
         }
 
@@ -231,8 +288,8 @@ namespace Compute.Tests
         {
             // Create Vnet
             // Populate parameter for Put Vnet
-            string vnetName = ComputeManagementTestUtilities.GenerateName(null);
-            string subnetName = ComputeManagementTestUtilities.GenerateName(null);
+            string vnetName = ComputeManagementTestUtilities.GenerateName("vn");
+            string subnetName = ComputeManagementTestUtilities.GenerateName("sn");
 
             var vnet = new VirtualNetwork()
             {
@@ -269,8 +326,8 @@ namespace Compute.Tests
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
-            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName(null);
-            string ipConfigName = ComputeManagementTestUtilities.GenerateName(null);
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
+            string ipConfigName = ComputeManagementTestUtilities.GenerateName("ip");
 
             var nicParameters = new NetworkInterface()
             {
@@ -279,12 +336,12 @@ namespace Compute.Tests
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                 {
-                    new NetworkInterfaceIpConfiguration()
+                    new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         Subnet = subnet,
                     }
                 }
@@ -292,7 +349,7 @@ namespace Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.SubResource { Id = publicIPaddress };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -373,8 +430,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
-            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
+            typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 

@@ -192,10 +192,12 @@ namespace Microsoft.Azure.Management.Scheduler
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
+                //// NOTE (pinwang): Scheduler supports Non ISO format TimeSpan and 
+                //// SDK Iso8601TimeSpanConverter will only convert ISO format for TimeSpan.
+                ////Converters = new List<JsonConverter>
+                ////    {
+                ////        new Iso8601TimeSpanConverter()
+                ////    }
             };
             SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings = new JsonSerializerSettings{
@@ -204,10 +206,12 @@ namespace Microsoft.Azure.Management.Scheduler
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
+                //// NOTE (pinwang): Scheduler supports Non ISO format TimeSpan and 
+                //// SDK Iso8601TimeSpanConverter will only convert ISO format for TimeSpan.
+                ////Converters = new List<JsonConverter>
+                ////    {
+                ////        new Iso8601TimeSpanConverter()
+                ////    }
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
