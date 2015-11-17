@@ -6,7 +6,7 @@
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "http://aka.ms/windowsazureapache2",
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
