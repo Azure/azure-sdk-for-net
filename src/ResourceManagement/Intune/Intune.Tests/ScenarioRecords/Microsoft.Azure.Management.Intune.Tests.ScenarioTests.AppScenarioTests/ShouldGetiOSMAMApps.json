@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-beta",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LWJldGE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "41c603b3-a020-4cfa-837e-148a85d25d84"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.dmsua01\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "149"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14978"
+        ],
+        "x-ms-request-id": [
+          "ab9c9827-9346-4ec4-b9ca-6e202b02c6d7"
+        ],
+        "x-ms-correlation-request-id": [
+          "d50912e6-78aa-4f9f-8ede-e1a437864674"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151112T232618Z:d50912e6-78aa-4f9f-8ede-e1a437864674"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 12 Nov 2015 23:26:17 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.dmsua01/apps?api-version=2015-01-14-beta&$filter=platform%20eq%20'ios'",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuZG1zdWEwMS9hcHBzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMTQtYmV0YSYkZmlsdGVyPXBsYXRmb3JtJTIwZXElMjAlMjdpb3MlMjc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cc5a9b60-df1f-42b1-8e67-678bdfc4a466"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.skydrive.IOS\",\r\n      \"name\": \"com.microsoft.skydrive.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"af124e86-4e96-495a-b70a-90f90ab96707\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.skydrivedogfood.IOS\",\r\n      \"name\": \"com.microsoft.skydrivedogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"af124e86-4e96-495a-b70a-90f90ab96707\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.excel.IOS\",\r\n      \"name\": \"com.microsoft.office.excel.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Excel\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.excel-dogfood.IOS\",\r\n      \"name\": \"com.microsoft.office.excel-dogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Excel(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.powerpoint.IOS\",\r\n      \"name\": \"com.microsoft.office.powerpoint.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"PowerPoint\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.powerpoint-dogfood.IOS\",\r\n      \"name\": \"com.microsoft.office.powerpoint-dogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"PowerPoint(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.word.IOS\",\r\n      \"name\": \"com.microsoft.office.word.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Word\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.word-dogfood.IOS\",\r\n      \"name\": \"com.microsoft.office.word-dogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Word(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.onenote.IOS\",\r\n      \"name\": \"com.microsoft.onenote.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneNote\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.onenote-dogfood.IOS\",\r\n      \"name\": \"com.microsoft.onenote-dogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneNote(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook-dev.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook-dev.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook-dogfood.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook-dogfood.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook(Dogfood)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook-local.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook-local.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook(Local)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook-stage.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook-stage.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook(Stage)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.outlook-wip.IOS\",\r\n      \"name\": \"com.microsoft.office.outlook-wip.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Outlook(Wip)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"27922004-5251-4030-b22d-91ecd9a37ea4\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.lync15.IOS\",\r\n      \"name\": \"com.microsoft.office.lync15.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Skype for Business\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.lync15.dev.IOS\",\r\n      \"name\": \"com.microsoft.office.lync15.dev.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Skype for Business(Dev)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.office.lync15.beta.IOS\",\r\n      \"name\": \"com.microsoft.office.lync15.beta.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Skype for Business(Beta)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.lyncdogfood.iphone.IOS\",\r\n      \"name\": \"com.microsoft.lyncdogfood.iphone.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Skype for Business(DF)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.skypeforbusinesstp.IOS\",\r\n      \"name\": \"com.microsoft.skypeforbusinesstp.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Skype for Business(TP)\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.dmsua01/apps/com.microsoft.rdc.ios.IOS\",\r\n      \"name\": \"com.microsoft.rdc.ios.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Remote Desktop\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"69b68004-6f36-421c-9d9a-3f202cb8df47\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "6484"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14977"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "39"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "cc5a9b60-df1f-42b1-8e67-678bdfc4a466"
+        ],
+        "unique-request-id": [
+          "6cd49448-4799-422a-be9a-223df472003d"
+        ],
+        "x-ms-request-id": [
+          "6cd49448-4799-422a-be9a-223df472003d"
+        ],
+        "related-activity-id": [
+          "6cd49448-4799-422a-be9a-223df472003d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "1559807f-7fc6-4134-a1b3-65dc3214723b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151112T232619Z:1559807f-7fc6-4134-a1b3-65dc3214723b"
+        ],
+        "Date": [
+          "Thu, 12 Nov 2015 23:26:19 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "None"
+  }
+}
