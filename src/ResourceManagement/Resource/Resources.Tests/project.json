@@ -7,7 +7,7 @@
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "commands": { "test": "xunit.runner.dnx" },
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
   "frameworks": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
-    "Microsoft.Azure.Management.Resources": "",
+    "Microsoft.Azure.ResourceManager": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build198"
