@@ -1,0 +1,14 @@
+{
+  "projects": [
+    "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
+    "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
+    "src/ResourceManagement/Resource/Microsoft.Azure.Management.Resources",
+    "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
+    "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
+    "src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
+    "src/ResourceManagement/Graph.RBAC/Microsoft.Azure.Graph.RBAC"
+  ],
+  "sdk": {
+    "version": "1.0.0-rc1-final"
+  }
+}
