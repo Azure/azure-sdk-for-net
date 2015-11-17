@@ -16,7 +16,7 @@
   },
 
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Collections": { "type": "build" },
         "System.Linq.Expressions": {"type": "build"},

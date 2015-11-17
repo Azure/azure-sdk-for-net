@@ -92,8 +92,29 @@
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
+    
+    <CallTarget Targets="RenameResourceManagementAssemblies" Condition=" @(Dnx_AutoRestLibraries) != '' " />
   </Target>
 
+  <Target Name="RenameResourceManagementAssemblies" DependsOnTargets="PrepareForAutoRestLibraries">
+    <ItemGroup>
+      <_ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources*.nupkg" ></_ResourcePackages>
+    </ItemGroup>
+    <RemoveDir Directories="@(_ResourcePackages->'%(RootDir)%(Directory)\%(Filename)')" />
+    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_ResourcePackages->'%(RootDir)%(Directory)\%(Filename)') %(_ResourcePackages.Identity)" />
+    <!--<RemoveDir Directories="@(_ResourcePackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
+    <Delete Files="@(_ResourcePackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />-->
+
+    <ItemGroup>
+      <_ResourceManagementAssemblies Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources*\lib\*\Microsoft.Azure.Management.Resources.*" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(_ResourceManagementAssemblies)" DestinationFiles="@(_ResourceManagementAssemblies->'%(ROOTDIR)%(Directory)Microsoft.Azure.ResourceManager%(Extension)')" />
+    <Delete Files="@(_ResourceManagementAssemblies)" />
+    <Delete Files="@(_ResourcePackages)" />
+    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_ResourcePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_ResourcePackages.Filename)" />
+  </Target>
+  
   <Target Name="Publish">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 

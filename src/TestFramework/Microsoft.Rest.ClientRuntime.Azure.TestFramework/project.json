@@ -9,7 +9,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "frameworks": {
-    "net451": {
+    "net45": {
       "System.Net.Http": "",
       "System.Runtime": { "type": "build" },
       "System.Threading.Tasks": { "type": "build" }

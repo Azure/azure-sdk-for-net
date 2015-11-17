@@ -60,6 +60,7 @@
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
+    <ZipExe>$(LibraryToolsFolder)\7-Zip\7z.exe</ZipExe>
   </PropertyGroup>
 
   <ItemGroup>
@@ -292,14 +293,13 @@
     <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
     <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
     
-    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
+    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
 
     <RemoveDir Directories="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
     <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
 
     <ItemGroup>
-      <_TempBinaries Include="$(PackageOutputDir)\**\*.dll"/>
-      <_PackageBinaries Include="@(_TempBinaries)">
+      <_PackageBinaries Include="$(PackageOutputDir)\**\*.dll">
         <!-- Flattened file for signing -->
         <UnsignedFlatFileName>$(_UnsignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</UnsignedFlatFileName>
         <SignedFlatFileName>$(_SignedFolder)\$([System.String]::new('%(RecursiveDir)%(FileName)%(Extension)').Replace('\', '__'))</SignedFlatFileName>
@@ -332,8 +332,7 @@
         Condition="!$(DelaySign)"/>
 
     <Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
-
-    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
+    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
   </Target>
   
 </Project>

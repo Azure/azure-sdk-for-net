@@ -12,7 +12,7 @@
     "Newtonsoft.Json": "6.0.8"
   },
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Net.Http": "",
         "System.Xml.Linq": { "type": "build" },
