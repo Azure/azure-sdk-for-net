@@ -94,11 +94,12 @@
     <ItemGroup>
       <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
     </ItemGroup>    
-    <!--<CallTarget Targets="RenameResourceManagementPackage" Condition=" @(ResourcePackages) != '' " />-->
+    <CallTarget Targets="RenameResourceManagementPackage" Condition=" @(ResourcePackages) != '' " />
     
     <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
 
+  <!--TODO: remove this target and its utilities by the end of aspnet-rc2 which exposes the support to configure different assembly name -->
   <Target Name="RenameResourceManagementPackage" DependsOnTargets="PrepareForAutoRestLibraries">
     <ItemGroup>
       <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
@@ -129,8 +130,6 @@
           var contents = File.ReadAllText(NuspecFilePath);
           contents = contents.Replace("<id>Microsoft.Azure.ResourceManager</id>", "<id>Microsoft.Azure.Management.Resources</id>");
           File.WriteAllText(NuspecFilePath, contents);
-          var newFileName = Path.GetFileName(NuspecFilePath).Replace("Microsoft.Azure.ResourceManager", "Microsoft.Azure.Management.Resources");
-          File.Move(NuspecFilePath, Path.Combine(Path.GetDirectoryName(NuspecFilePath), newFileName));
           ]]>
       </Code>
     </Task>
