@@ -91,6 +91,7 @@
       <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="Publish">
