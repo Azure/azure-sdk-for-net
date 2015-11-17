@@ -80,8 +80,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogSecretCreateResponse> DeleteSecretAsync(string resourceGroupName, string accountName, string databaseName, string secretName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified assembly from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified assembly from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -104,8 +104,32 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogAssemblyGetResponse> GetAssemblyAsync(string resourceGroupName, string accountName, string databaseName, string assemblyName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified database from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the specified credential from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the schema in.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get credential operation response.
+        /// </returns>
+        Task<CatalogCredentialGetResponse> GetCredentialAsync(string resourceGroupName, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the specified database from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -125,8 +149,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogDatabaseGetResponse> GetDatabaseAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified external data source from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified external data source from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -149,7 +173,34 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogExternalDataSourceGetResponse> GetExternalDataSourceAsync(string resourceGroupName, string accountName, string databaseName, string externalDataSourceName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified schema from the current DataLakeAnalytics
+        /// Retrieves the specified procedure from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the procedure in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema to find the procedure in.
+        /// </param>
+        /// <param name='procedureName'>
+        /// The name of the procedure to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get procedure operation response.
+        /// </returns>
+        Task<CatalogProcedureGetResponse> GetProcedureAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string procedureName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the specified schema from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -173,7 +224,30 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogSchemaGetResponse> GetSchemaAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Gets the specified secret in the specified database
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to get the secret from.
+        /// </param>
+        /// <param name='secretName'>
+        /// The name of the secret to get
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get secret operation response.
+        /// </returns>
+        Task<CatalogSecretGetResponse> GetSecretAsync(string resourceGroupName, string accountName, string databaseName, string secretName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -200,7 +274,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogTableGetResponse> GetTableAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified table from the current DataLakeAnalytics
+        /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -230,8 +304,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogTableStatisticsGetResponse> GetTableStatisticAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the specified table valued function from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the specified table valued function from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -257,8 +331,35 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogTableValuedFunctionGetResponse> GetTableValuedFunctionAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of assemblies from the current DataLakeAnalytics
+        /// Retrieves the specified view from the current Data Lake Analytics
         /// catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the view in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema to find the view in.
+        /// </param>
+        /// <param name='viewName'>
+        /// The name of the view to find.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get view operation response.
+        /// </returns>
+        Task<CatalogViewGetResponse> GetViewAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string viewName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the list of assemblies from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -278,8 +379,29 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogAssemblyListGetResponse> ListAssembliesAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of databases from the current DataLakeAnalytics
-        /// catalog
+        /// Retrieves the list of credentials from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the schema in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List schema operation response.
+        /// </returns>
+        Task<CatalogCredentialListResponse> ListCredentialsAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the list of databases from the current Data Lake
+        /// Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -296,8 +418,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogDatabaseListResponse> ListDatabasesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of external data sources from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of external data sources from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -317,7 +439,31 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogExternalDataSourceListResponse> ListExternalDataSourcesAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of schemas from the current DataLakeAnalytics
+        /// Retrieves the list of procedures from the current Data Lake
+        /// Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the procedures in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema to find the procedures in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List procedures operation response.
+        /// </returns>
+        Task<CatalogProcedureListResponse> ListProceduresAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the list of schemas from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -338,7 +484,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogSchemaListResponse> ListSchemasAsync(string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -362,7 +508,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogTableListResponse> ListTablesAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of tables from the current DataLakeAnalytics
+        /// Retrieves the list of tables from the current Data Lake Analytics
         /// catalog
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -389,8 +535,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         Task<CatalogTableStatisticsListResponse> ListTableStatisticsAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieves the list of table valued functions from the current
-        /// DataLakeAnalytics catalog
+        /// Retrieves the list of table valued functions from the current Data
+        /// Lake Analytics catalog
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
@@ -411,6 +557,57 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog
         /// The List table valued functions operation response.
         /// </returns>
         Task<CatalogTableValuedFunctionListResponse> ListTableValuedFunctionsAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the list of catalog types within the specified database
+        /// and schema for the current Data Lake Analytics catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the types in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema to find the types in.
+        /// </param>
+        /// <param name='parameters'>
+        /// Query parameters. If null is passed returns all catalog type items.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List types operation response.
+        /// </returns>
+        Task<CatalogTypeListResponse> ListTypesAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, TypeListParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves the list of views from the current Data Lake Analytics
+        /// catalog
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resourceGroup the Data Lake Analytics account is in
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database to find the views in.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema to find the views in.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List views operation response.
+        /// </returns>
+        Task<CatalogViewListResponse> ListViewsAsync(string resourceGroupName, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Modifies the specified secret for use with external data sources in

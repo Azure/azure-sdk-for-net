@@ -54,6 +54,72 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         Task<AzureOperationResponse> AppendAsync(string fileAppendRequestLink, Stream streamContents, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Initiates a file append request, resulting in a return of the data
+        /// node location that will service the request.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to append to.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to append to the file in
+        /// </param>
+        /// <param name='bufferSize'>
+        /// The optional buffer size to use when appending data
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        Task<FileCreateOpenAndAppendResponse> BeginAppendAsync(string filePath, string accountName, long? bufferSize, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Initiates a file creation request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to create.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to create the file in
+        /// </param>
+        /// <param name='parameters'>
+        /// The optional parameters to use when creating the file
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        Task<FileCreateOpenAndAppendResponse> BeginCreateAsync(string filePath, string accountName, FileCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Initiates a file open (read) request, resulting in a return of the
+        /// data node location that will service the request.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to open.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='parameters'>
+        /// The optional parameters to pass to the open operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response recieved after the BeginOpen, BeginCreate and
+        /// BeginAppend requests.
+        /// </returns>
+        Task<FileCreateOpenAndAppendResponse> BeginOpenAsync(string filePath, string accountName, FileOpenParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>
         /// <param name='path'>
@@ -120,7 +186,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> ConccurrentAppendAsync(string accountName, string filePath, Stream streamContents, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ConcurrentAppendAsync(string accountName, string filePath, Stream streamContents, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates the file specified in the link that was returned from
@@ -326,81 +392,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreFileSystem
         /// Data Lake Store filesystem home path response.
         /// </returns>
         Task<HomeDirectoryResponse> GetHomeDirectoryAsync(string accountName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Initiates a file append request, resulting in a return of the data
-        /// node location that will service the request. DO NOT USE DIRECTLY
-        /// in C# (this should be used directly in Node.js). Call BeginAppend
-        /// and BeginAppendAsync instead. This ensures proper following of
-        /// WebHDFS redirects
-        /// </summary>
-        /// <param name='filePath'>
-        /// The path to the file to append to.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account to append to the file in
-        /// </param>
-        /// <param name='bufferSize'>
-        /// The optional buffer size to use when appending data
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        Task<FileCreateOpenAndAppendResponse> InternalBeginAppendAsync(string filePath, string accountName, long? bufferSize, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Initiates a file creation request, resulting in a return of the
-        /// data node location that will service the request. DO NOT USE
-        /// DIRECTLY in C# (This should be used directly in Node.js). Call
-        /// BeginCreate and BeginCreateAsync instead. This ensures proper
-        /// following of WebHDFS redirects
-        /// </summary>
-        /// <param name='filePath'>
-        /// The path to the file to create.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account to create the file in
-        /// </param>
-        /// <param name='parameters'>
-        /// The optional parameters to use when creating the file
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        Task<FileCreateOpenAndAppendResponse> InternalBeginCreateAsync(string filePath, string accountName, FileCreateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the data associated with the file handle requested. DO NOT USE
-        /// DIRECTLY in C# (in Node.js, please ONLY call this API to read/open
-        /// the contents of a file. DO NOT call Open). Call BeginOpen and
-        /// BeginOpenAsync instead. This ensures proper following of WebHDFS
-        /// redirects
-        /// </summary>
-        /// <param name='filePath'>
-        /// The path to the file to open.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the account to use
-        /// </param>
-        /// <param name='parameters'>
-        /// The optional parameters to pass to the open operation
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response recieved after the BeginOpen, BeginCreate and
-        /// BeginAppend requests.
-        /// </returns>
-        Task<FileCreateOpenAndAppendResponse> InternalBeginOpenAsync(string filePath, string accountName, FileOpenParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of file status objects specified by the file path.

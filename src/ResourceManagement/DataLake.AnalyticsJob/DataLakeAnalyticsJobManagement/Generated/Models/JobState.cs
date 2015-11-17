@@ -46,5 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         Starting = 7,
         
         Paused = 8,
+        
+        WaitingForCapacity = 9,
     }
 }

@@ -21,7 +21,7 @@ namespace DataLakeStore.Tests
     {
         public string ResourceGroupName { set; get; }
         public string DataLakeStoreAccountName { get; set; }
-        public string Location = "West US";
+        public string Location = "East US 2";
         
         public CommonTestFixture()
         {

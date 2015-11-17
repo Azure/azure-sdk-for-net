@@ -50,6 +50,21 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         public const string USqlTable = "usqlTable";
         
         /// <summary>
+        /// U-SQL view type
+        /// </summary>
+        public const string USqlView = "uSqlView";
+        
+        /// <summary>
+        /// U-SQL procedure type
+        /// </summary>
+        public const string USqlProcedure = "uSqlProcedure";
+        
+        /// <summary>
+        /// U-SQL credential type
+        /// </summary>
+        public const string USqlCredential = "uSqlCredential";
+        
+        /// <summary>
         /// U-SQL table valued function type
         /// </summary>
         public const string USqlTableValuedFunction = "usqlTableValuedFunction";
@@ -68,5 +83,10 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         /// U-SQL External datasource type
         /// </summary>
         public const string USqlExternalDataSource = "usqlExternalDataSource";
+        
+        /// <summary>
+        /// U-SQL Type type
+        /// </summary>
+        public const string USqlType = "usqlType";
     }
 }

@@ -20,6 +20,14 @@
     <Compile Include="Generated\CatalogOperationsExtensions.cs" />
     <Compile Include="Generated\IDataLakeAnalyticsCatalogManagementClient.cs" />
     <Compile Include="Generated\ICatalogOperations.cs" />
+    <Compile Include="Generated\Models\CatalogCredentialGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogCredentialListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogProcedureGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogProcedureListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogSecretGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTypeListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogViewGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogViewListResponse.cs" />
     <Compile Include="Generated\Models\DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\CatalogAssemblyGetResponse.cs" />
     <Compile Include="Generated\Models\CatalogAssemblyListGetResponse.cs" />
@@ -43,11 +51,14 @@
     <Compile Include="Generated\Models\EntityId.cs" />
     <Compile Include="Generated\Models\ExternalTable.cs" />
     <Compile Include="Generated\Models\FileType.cs" />
+    <Compile Include="Generated\Models\TypeListParameters.cs" />
     <Compile Include="Generated\Models\USqlAssembly.cs" />
     <Compile Include="Generated\Models\USqlAssemblyClr.cs" />
     <Compile Include="Generated\Models\USqlAssemblyDependencyInfo.cs" />
     <Compile Include="Generated\Models\USqlAssemblyFileInfo.cs" />
     <Compile Include="Generated\Models\USqlAssemblyList.cs" />
+    <Compile Include="Generated\Models\USqlCredential.cs" />
+    <Compile Include="Generated\Models\USqlCredentialList.cs" />
     <Compile Include="Generated\Models\USqlDatabase.cs" />
     <Compile Include="Generated\Models\USqlDatabaseList.cs" />
     <Compile Include="Generated\Models\USqlDirectedColumn.cs" />
@@ -55,6 +66,8 @@
     <Compile Include="Generated\Models\USqlExternalDataSource.cs" />
     <Compile Include="Generated\Models\USqlExternalDataSourceList.cs" />
     <Compile Include="Generated\Models\USqlIndex.cs" />
+    <Compile Include="Generated\Models\USqlProcedure.cs" />
+    <Compile Include="Generated\Models\USqlProcedureList.cs" />
     <Compile Include="Generated\Models\USqlSchema.cs" />
     <Compile Include="Generated\Models\USqlSchemaList.cs" />
     <Compile Include="Generated\Models\USqlSecret.cs" />
@@ -66,13 +79,18 @@
     <Compile Include="Generated\Models\USqlTableValuedFunction.cs" />
     <Compile Include="Generated\Models\USqlTableValuedFunctionList.cs" />
     <Compile Include="Generated\Models\USqlType.cs" />
+    <Compile Include="Generated\Models\USqlTypeList.cs" />
+    <Compile Include="Generated\Models\USqlView.cs" />
+    <Compile Include="Generated\Models\USqlViewList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -189,7 +189,6 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(HttpStatusCode.OK, getDataSourceResponse.StatusCode);
                 Assert.Equal(1, getDataSourceResponse.Value.Count);
 
-                /* TODO: Uncomment when supported
                 // Add, list and remove an azure blob source to the first account
                 var addDataSourceBlobResponse =
                     clientToUse.DataLakeAnalyticsAccount.AddStorageAccount(commonData.ResourceGroupName,
@@ -221,7 +220,7 @@ namespace DataLakeAnalytics.Tests
 
                 Assert.Equal(HttpStatusCode.OK, getSingleDataSourceBlobResponse.StatusCode);
                 Assert.Equal(commonData.StorageAccountName, getSingleDataSourceBlobResponse.StorageAccount.Name);
-                Assert.Equal(commonData.StorageAccountAccessKey, getSingleDataSourceBlobResponse.StorageAccount.Properties.AccessKey);
+                Assert.True(string.IsNullOrEmpty(getSingleDataSourceBlobResponse.StorageAccount.Properties.AccessKey));
                 Assert.Equal(commonData.StorageAccountSuffix, getSingleDataSourceBlobResponse.StorageAccount.Properties.Suffix);
 
                 // Remove the data source we added
@@ -238,7 +237,6 @@ namespace DataLakeAnalytics.Tests
 
                 Assert.Equal(HttpStatusCode.OK, getDataSourceResponse.StatusCode);
                 Assert.Equal(0, getDataSourceBlobResponse.Value.Count);
-                */
 
                 // Delete the account and confirm that it is deleted.
                 AzureOperationResponse deleteResponse = clientToUse.DataLakeAnalyticsAccount.Delete(commonData.ResourceGroupName, newAccount.Name);
@@ -261,6 +259,10 @@ namespace DataLakeAnalytics.Tests
 
                 // delete the account with its old name, which should also succeed.
                 deleteResponse = clientToUse.DataLakeAnalyticsAccount.Delete(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);
+                Assert.Contains<HttpStatusCode>(deleteResponse.StatusCode, acceptedStatusCodes);
+
+                // delete the second account that was created to ensure that we properly clean up after ourselves.
+                deleteResponse = clientToUse.DataLakeAnalyticsAccount.Delete(commonData.ResourceGroupName, accountToChange.Name);
                 Assert.Contains<HttpStatusCode>(deleteResponse.StatusCode, acceptedStatusCodes);
             }
             finally

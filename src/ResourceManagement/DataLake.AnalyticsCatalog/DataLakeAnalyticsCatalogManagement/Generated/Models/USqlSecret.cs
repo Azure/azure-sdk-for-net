@@ -30,6 +30,18 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
     /// </summary>
     public partial class USqlSecret : CatalogItem
     {
+        private System.DateTimeOffset? _creationTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the creation time of the credential object.
+        /// This is the only information returned about a secret from a GET.
+        /// </summary>
+        public System.DateTimeOffset? CreationTime
+        {
+            get { return this._creationTime; }
+            set { this._creationTime = value; }
+        }
+        
         private string _databaseName;
         
         /// <summary>

@@ -28,7 +28,7 @@ namespace DataLakeAnalytics.Tests
         public string SecondDataLakeStoreAccountSuffix { get; set; }
         public string DataLakeStoreAccountName { get; set; }
         public string DataLakeStoreAccountSuffix { get; set; }
-        public string Location = "westus";
+        public string Location = "East US 2";
 
         public CommonTestFixture()
         {
@@ -44,10 +44,9 @@ namespace DataLakeAnalytics.Tests
             StorageAccountName = TestUtilities.GenerateName("testazureblob1");
             bigAnalyticsManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
             
-            // TODO: uncomment when we can use it.
-            // string storageSuffix;
-            // this.StorageAccountAccessKey = bigAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
-            // this.StorageAccountSuffix = storageSuffix;
+            string storageSuffix;
+            this.StorageAccountAccessKey = bigAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
+            this.StorageAccountSuffix = storageSuffix;
 
             this.DataLakeStoreAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.DataLakeStoreAccountName, this.Location);
             this.SecondDataLakeStoreAccountSuffix = bigAnalyticsManagementHelper.TryCreateDataLakeAccount(this.ResourceGroupName, this.SecondDataLakeStoreAccountName, this.Location);

@@ -23,8 +23,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
-using Hyak.Common.Internals;
-using Hyak.Common.Platform;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem;
 using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;

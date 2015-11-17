@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsCatalog.Models
         private string _computeAccountName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the catalog item.
+        /// Optional. Gets or sets the name of the Data Lake Analytics account.
         /// </summary>
         public string ComputeAccountName
         {
