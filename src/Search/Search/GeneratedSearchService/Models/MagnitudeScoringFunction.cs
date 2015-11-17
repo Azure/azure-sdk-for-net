@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the MagnitudeScoringFunction class.
         /// </summary>
-        public MagnitudeScoringFunction(MagnitudeScoringParameters magnitude = default(MagnitudeScoringParameters))
+        public MagnitudeScoringFunction(MagnitudeScoringParameters magnitude)
         {
             Magnitude = magnitude;
         }
@@ -48,6 +48,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Magnitude == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Magnitude");
+            }
             if (this.Magnitude != null)
             {
                 this.Magnitude.Validate();

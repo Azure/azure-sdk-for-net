@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the FreshnessScoringFunction class.
         /// </summary>
-        public FreshnessScoringFunction(FreshnessScoringParameters freshness = default(FreshnessScoringParameters))
+        public FreshnessScoringFunction(FreshnessScoringParameters freshness)
         {
             Freshness = freshness;
         }
@@ -48,6 +48,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Freshness == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Freshness");
+            }
             if (this.Freshness != null)
             {
                 this.Freshness.Validate();

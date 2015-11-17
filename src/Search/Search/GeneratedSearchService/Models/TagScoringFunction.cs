@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the TagScoringFunction class.
         /// </summary>
-        public TagScoringFunction(TagScoringParameters tag = default(TagScoringParameters))
+        public TagScoringFunction(TagScoringParameters tag)
         {
             Tag = tag;
         }
@@ -48,6 +48,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Tag == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Tag");
+            }
             if (this.Tag != null)
             {
                 this.Tag.Validate();
