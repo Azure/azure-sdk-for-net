@@ -27,7 +27,7 @@
     "Microsoft.Azure.ResourceManager": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build198"
+    "xunit.runner.dnx": "2.1.0-rc1-build204"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
