@@ -47,7 +47,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void TestUpdateSourceControlUpdates()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
 

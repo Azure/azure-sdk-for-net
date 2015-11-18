@@ -10,7 +10,6 @@
   <!--TODO: remove when we convert them to be dnx based-->
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Logic\LogicManagement\Microsoft.Azure.Management.Logic.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Scheduler\SchedulerManagement\Microsoft.Azure.Management.Scheduler.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\ResourceManagement\WebSite\WebSiteManagement\Microsoft.Azure.Management.WebSites.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>

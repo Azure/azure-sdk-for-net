@@ -33,7 +33,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyWebHostingPlan()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -73,7 +73,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyListOfWebHostingPlan()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -125,7 +125,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndDeleteWebHostingPlan()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -166,7 +166,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void GetAndSetAdminSiteWebHostingPlan()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -220,7 +220,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
         public void GetWebHostingPlanMetrics()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);

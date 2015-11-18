@@ -30,7 +30,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact(Skip = "Backup/Restore feature is not allowed in current site mode.")]
         public void ListBackupsAndScheduledBackupRoundTrip()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);

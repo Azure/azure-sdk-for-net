@@ -330,9 +330,11 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string skuTier = "Shared", string skuName = "D1")
+        private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string skuTier = "Shared", string skuName = "D1",
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed")
         {
-            using (var context = MockContext.Start(3))
+            using (var context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -382,7 +384,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void GetAndSetSiteLimits()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
