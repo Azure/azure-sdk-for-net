@@ -104,7 +104,7 @@
   <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
-      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</_TemporaryDnxFeeds>
+      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2</_TemporaryDnxFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
