@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt1806?op=CREATE&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQxODA2P29wPUNSRUFURSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt7893?op=CREATE&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ3ODkzP29wPUNSRUFURSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.6-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.4-preview"
+          "0.9.6-preview"
         ]
       },
       "ResponseBody": "",
@@ -29,13 +29,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "aeb6412f-be4d-4d06-98eb-18b222610dd7"
+          "a08cd96f-222b-48d1-b629-77ee18f3ad4d"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[aeb6412fbe4d4d0698eb18b222610dd7][ AuthTime::1778.81148533111::PostAuthTime::34734.085004863 ][CREATE :: 00:00:000 ms]%0a"
+          "[a08cd96f222b48d1b62977ee18f3ad4d][ AuthTime::1815.96328383985::PostAuthTime::31546.2675025971 ][CREATE :: 00:00:000 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -47,20 +47,20 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Nov 2015 19:23:44 GMT"
+          "Wed, 18 Nov 2015 19:19:23 GMT"
         ],
         "Location": [
-          "https://testadlfs12471.azuredatalakestore.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt1806?op=CREATE&api-version=2015-10-01-preview&write=true"
+          "https://testadlfs16600.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt7893?op=CREATE&api-version=2015-10-01-preview&write=true"
         ],
         "Set-Cookie": [
-          "UserPrincipalSession=85bfff67-1e47-4abe-aa19-80bae8da0f84; path=/; secure; HttpOnly"
+          "UserPrincipalSession=8448a124-0b2d-4fab-bca5-a4950223ca71; path=/; secure; HttpOnly"
         ]
       },
       "StatusCode": 307
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt1806?op=CREATE&api-version=2015-10-01-preview&write=true",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxL1NES1Rlc3RGaWxlMDEudHh0MTgwNj9vcD1DUkVBVEUmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JndyaXRlPXRydWU=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt7893?op=CREATE&api-version=2015-10-01-preview&write=true",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxL1NES1Rlc3RGaWxlMDEudHh0Nzg5Mz9vcD1DUkVBVEUmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JndyaXRlPXRydWU=",
       "RequestMethod": "PUT",
       "RequestBody": "These are some random test contents 1234!@",
       "RequestHeaders": {
@@ -74,14 +74,14 @@
           "chunked"
         ],
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.6-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.4-preview"
+          "0.9.6-preview"
         ]
       },
       "ResponseBody": "",
@@ -96,13 +96,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e2badc45-cb45-46c7-94de-ce4b419e84d5"
+          "8926a5dd-738c-44ff-9735-5ba20add2646"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[e2badc45cb4546c794dece4b419e84d5][ AuthTime::786.543477163722::PostAuthTime::175.785410067585 ][Open :: 00:00:164 ms]%0a[Write :: 00:00:138 ms]%0a[FlushWrite :: 00:00:050 ms]%0a[CREATE :: 00:00:355 ms]%0a"
+          "[8926a5dd738c44ff97355ba20add2646][ AuthTime::837.840808535626::PostAuthTime::188.610411722415 ][FsOpenStream :: 00:00:266 ms]%0a[Open :: 00:00:266 ms]%0a[FsAppendStream :: 00:00:037 ms]%0a[Write :: 00:00:037 ms]%0a[FsAppendStream :: 00:00:002 ms]%0a[FlushWrite :: 00:00:002 ms]%0a[CREATE :: 00:00:307 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -114,32 +114,32 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Nov 2015 19:23:45 GMT"
+          "Wed, 18 Nov 2015 19:19:23 GMT"
         ],
         "Location": [
-          "https://testadlfs12471.azuredatalakestore.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt1806?op=CREATE&api-version=2015-10-01-preview&write=true"
+          "https://testadlfs16600.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt7893?op=CREATE&api-version=2015-10-01-preview&write=true"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt1806?op=GETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQxODA2P29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt7893?op=GETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ3ODkzP29wPUdFVEZJTEVTVEFUVVMmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.6-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.4-preview"
+          "0.9.6-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 42,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1447356225773,\r\n    \"modificationTime\": 1447356226087,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 42,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1447874364007,\r\n    \"modificationTime\": 1447874364133,\r\n    \"replication\": 0,\r\n    \"permission\": \"777\",\r\n    \"owner\": \"NotSupportYet\",\r\n    \"group\": \"NotSupportYet\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "223"
@@ -154,10 +154,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "70fff293-a67b-439c-a70c-83be49bf8578"
+          "a3e68b93-0c36-4cb7-a7f7-4b03c4d3e0d4"
         ],
         "Server-Perf": [
-          "[70fff293a67b439ca70c83be49bf8578][ AuthTime::829.741351657216::PostAuthTime::187.761058442019 ][IsExist :: 00:00:000 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:083 ms]%0a"
+          "[a3e68b930c364cb7a7f74b03c4d3e0d4][ AuthTime::845.966880696002::PostAuthTime::187.755035705533 ][IsExist :: 00:00:000 ms]%0a[HdfsGetFileStatus :: 00:00:136 ms]%0a[SS Response Process :: 00:00:000 ms]%0a[GETFILESTATUS :: 00:00:136 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -169,26 +169,26 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Nov 2015 19:23:45 GMT"
+          "Wed, 18 Nov 2015 19:19:23 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt1806?op=OPEN&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQxODA2P29wPU9QRU4mYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt7893?op=OPEN&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ3ODkzP29wPU9QRU4mYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.6-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.4-preview"
+          "0.9.6-preview"
         ]
       },
       "ResponseBody": "",
@@ -203,13 +203,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "48461008-4d20-4655-b63d-1e18a3fca704"
+          "7212389e-7bd2-4371-b5c5-4f791ede0544"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[484610084d204655b63d1e18a3fca704][ AuthTime::831.452158567849::PostAuthTime::181.773234254802 ][OPEN :: 00:00:000 ms]%0a"
+          "[7212389e7bd24371b5c54f791ede0544][ AuthTime::801.487327818154::PostAuthTime::190.321163756178 ][OPEN :: 00:00:000 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -221,17 +221,17 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Nov 2015 19:23:45 GMT"
+          "Wed, 18 Nov 2015 19:19:23 GMT"
         ],
         "Location": [
-          "https://testadlfs12471.azuredatalakestore.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt1806?op=OPEN&api-version=2015-10-01-preview&read=true"
+          "https://testadlfs16600.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt7893?op=OPEN&api-version=2015-10-01-preview&read=true"
         ]
       },
       "StatusCode": 307
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt1806?op=OPEN&api-version=2015-10-01-preview&read=true",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxL1NES1Rlc3RGaWxlMDEudHh0MTgwNj9vcD1PUEVOJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZyZWFkPXRydWU=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt7893?op=OPEN&api-version=2015-10-01-preview&read=true",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxL1NES1Rlc3RGaWxlMDEudHh0Nzg5Mz9vcD1PUEVOJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZyZWFkPXRydWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -239,14 +239,14 @@
           "chunked"
         ],
         "useragent": [
-          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.4-preview "
+          "Azure SDK - Microsoft.Azure.Management.DataLake.StoreFileSystem 0.9.6-preview "
         ],
         "User-Agent": [
           "Azure",
           "SDK",
           "-",
           "Microsoft.Azure.Management.DataLake.StoreFileSystem",
-          "0.9.4-preview"
+          "0.9.6-preview"
         ]
       },
       "ResponseBody": "These are some random test contents 1234!@",
@@ -264,10 +264,10 @@
           "chunked"
         ],
         "x-ms-request-id": [
-          "b7034060-0342-413c-97ec-47390c7f7e13"
+          "69347e9d-c365-43fc-a227-4b03ae60be31"
         ],
         "Server-Perf": [
-          "[b70340600342413c97ec47390c7f7e13][ AuthTime::772.857021878654::PostAuthTime::176.213111795244 ][GetCacheEntry :: 00:00:000 ms]%0a[OpenNewHandle :: 00:00:035 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:00:035 ms]%0a[Open :: 00:00:035 ms]%0a[OPEN :: 00:00:058 ms]%0a"
+          "[69347e9dc36543fca2274b03ae60be31][ AuthTime::762.140031041596::PostAuthTime::179.628963545157 ][GetCacheEntry :: 00:00:000 ms]%0a[FsOpenStream :: 00:00:058 ms]%0a[OpenNewHandle :: 00:00:058 ms]%0a[CreateCacheEntry :: 00:00:000 ms]%0a[GetOrCreateHandle :: 00:00:059 ms]%0a[Open :: 00:00:059 ms]%0a[FsReadStream :: 00:00:008 ms]%0a[OPEN :: 00:00:068 ms]%0a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -279,7 +279,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Nov 2015 19:23:45 GMT"
+          "Wed, 18 Nov 2015 19:19:24 GMT"
         ]
       },
       "StatusCode": 200
@@ -287,10 +287,10 @@
   ],
   "Names": {
     "CreateFile": [
-      "SDKTestFolder01/SDKTestFile01.txt1806"
+      "SDKTestFolder01/SDKTestFile01.txt7893"
     ]
   },
   "Variables": {
-    "SubscriptionId": "46153750-fa3b-4140-bf57-8beb7d5c971a"
+    "SubscriptionId": "0353d26d-e338-469a-a87a-bd3507471155"
   }
 }
