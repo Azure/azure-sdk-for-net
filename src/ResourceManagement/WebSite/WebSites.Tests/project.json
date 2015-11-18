@@ -22,13 +22,13 @@
     }
   },
   "dependencies": {
-    "Microsoft.Azure.Test.HttpRecorder": "2.0.0",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.0.0",
-    "Microsoft.Azure.ResourceManager": "3.1.1-preview",
+    "Microsoft.Azure.Test.HttpRecorder": "",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
+    "Microsoft.Azure.Management.Resources": "3.1.1-preview",
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build198",
-    "Microsoft.Azure.Management.Websites": "3.1.1-preview"
+    "Microsoft.Azure.Management.Websites": ""
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
