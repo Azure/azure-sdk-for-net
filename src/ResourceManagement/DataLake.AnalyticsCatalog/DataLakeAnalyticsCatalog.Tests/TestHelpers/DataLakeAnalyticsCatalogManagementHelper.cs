@@ -291,7 +291,7 @@ AS BEGIN
   T(a, b);
 END;", dbName, tableName, tvfName, viewName, procName);
 
-            RunJobToCompletion(dataLakeAnalyticsJobManagementClient, resourceGroupName, dataLakeAnalyticsAccountName, Guid.NewGuid(), scriptToRun);
+            RunJobToCompletion(dataLakeAnalyticsJobManagementClient, resourceGroupName, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
         }
 
         internal void RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string resourceGroupName, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)

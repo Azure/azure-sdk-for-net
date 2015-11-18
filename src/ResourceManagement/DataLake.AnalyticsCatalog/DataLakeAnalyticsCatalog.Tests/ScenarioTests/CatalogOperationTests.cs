@@ -192,7 +192,7 @@ namespace DataLakeAnalyticsCatalog.Tests
                                 @"USE {0}; CREATE CREDENTIAL {1} WITH USER_NAME = ""scope@rkm4grspxa"", IDENTITY = ""{2}"";",
                                 commonData.DatabaseName, commonData.CredentialName, commonData.SecretName);
                         commonData.CatalogManagementHelper.RunJobToCompletion(jobClient, commonData.ResourceGroupName,
-                            commonData.DataLakeAnalyticsAccountName, Guid.NewGuid(),
+                            commonData.DataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
                             credentialCreationScript);
 
                         // Get the Credential list
@@ -215,7 +215,7 @@ namespace DataLakeAnalyticsCatalog.Tests
                             string.Format(
                                 @"USE {0}; DROP CREDENTIAL {1};", commonData.DatabaseName, commonData.CredentialName);
                         commonData.CatalogManagementHelper.RunJobToCompletion(jobClient, commonData.ResourceGroupName,
-                            commonData.DataLakeAnalyticsAccountName, Guid.NewGuid(),
+                            commonData.DataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
                             credentialDropScript);
 
                         // Delete the secret
