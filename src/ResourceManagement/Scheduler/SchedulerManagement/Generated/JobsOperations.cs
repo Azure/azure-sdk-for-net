@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -826,13 +828,16 @@ namespace Microsoft.Azure.Management.Scheduler
         /// The (0-based) index of the job history list from which to begin requesting
         /// entries.
         /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the job state.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobStateFilter, bool>> filter = default(Expression<Func<JobStateFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -861,6 +866,7 @@ namespace Microsoft.Azure.Management.Scheduler
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("skip", skip);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -882,6 +888,10 @@ namespace Microsoft.Azure.Management.Scheduler
             if (skip != null)
             {
                 queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter).Replace("'", string.Empty)));
             }
             if (queryParameters.Count > 0)
             {
@@ -990,13 +1000,16 @@ namespace Microsoft.Azure.Management.Scheduler
         /// The (0-based) index of the job history list from which to begin requesting
         /// entries.
         /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the job state.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobHistoryFilter, bool>> filter = default(Expression<Func<JobHistoryFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1030,6 +1043,7 @@ namespace Microsoft.Azure.Management.Scheduler
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("skip", skip);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListJobHistory", tracingParameters);
             }
@@ -1052,6 +1066,10 @@ namespace Microsoft.Azure.Management.Scheduler
             if (skip != null)
             {
                 queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter).Replace("'", string.Empty)));
             }
             if (queryParameters.Count > 0)
             {
