@@ -103,10 +103,12 @@
   <Target Name="RenameResourceManagementPackage" DependsOnTargets="PrepareForAutoRestLibraries">
     <ItemGroup>
       <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
+      <_NewResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources.*.nupkg" ></_NewResourcePackages>
     </ItemGroup>
     <RemoveDir Directories="@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)')" />
     <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)') %(ResourcePackages.Identity)" />
     <Delete Files="@(ResourcePackages)" />
+    <Delete Files="@(_NewResourcePackages)" />
     <ItemGroup>
       <_NuspecFiles Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*\*.nuspec" />
     </ItemGroup>    

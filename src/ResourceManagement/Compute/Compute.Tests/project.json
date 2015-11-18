@@ -27,10 +27,10 @@
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
-    "Microsoft.Azure.Management.Storage": "",
+    "Microsoft.Azure.Management.Storage": "4.0.0-preview",
+    "Microsoft.Azure.Management.Resources": "3.1.1-preview",
     "Microsoft.Azure.Management.Compute": "",
-    "Microsoft.Azure.ResourceManager": "",
-    "Microsoft.Azure.Management.Network": ""
+    "Microsoft.Azure.Management.Network": "3.0.0-preview"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
