@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38A6741C-77A3-42A8-A846-83373BE57C7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.BackupServicesManagement</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.BackupServicesManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.BackupServices.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.BackupServices.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\BackUpOperations.cs" />
+    <Compile Include="Generated\BackUpOperationsExtensions.cs" />
+    <Compile Include="Generated\BackupServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\ContainerOperations.cs" />
+    <Compile Include="Generated\ContainerOperationsExtensions.cs" />
+    <Compile Include="Generated\CSMOperationErrorInfo.cs" />
+    <Compile Include="Generated\CSMOperationResult.cs" />
+    <Compile Include="Generated\CSMProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\CSMProtectionPolicyOperationsExtensions.cs" />
+    <Compile Include="Generated\DataSourceOperations.cs" />
+    <Compile Include="Generated\DataSourceOperationsExtensions.cs" />
+    <Compile Include="Generated\IBackUpOperations.cs" />
+    <Compile Include="Generated\IBackupServicesManagementClient.cs" />
+    <Compile Include="Generated\IBackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\IContainerOperations.cs" />
+    <Compile Include="Generated\ICSMProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\IDataSourceOperations.cs" />
+    <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\IMarsContainerOperations.cs" />
+    <Compile Include="Generated\IOperationStatus.cs" />
+    <Compile Include="Generated\IProtectableObjectOperations.cs" />
+    <Compile Include="Generated\IRecoveryPointOperations.cs" />
+    <Compile Include="Generated\IRestoreOperations.cs" />
+    <Compile Include="Generated\IVaultOperations.cs" />
+    <Compile Include="Generated\JobOperations.cs" />
+    <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\MarsContainerOperations.cs" />
+    <Compile Include="Generated\MarsContainerOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureBackupVault.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultGetResponse.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultListResponse.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultProperties.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMRecoveryInputsCSMObject.cs" />
+    <Compile Include="Generated\Models\BackupBaseObject.cs" />
+    <Compile Include="Generated\Models\BackupBaseResponse.cs" />
+    <Compile Include="Generated\Models\BackupListResponse.cs" />
+    <Compile Include="Generated\Models\ContainerQueryParameters.cs" />
+    <Compile Include="Generated\Models\ContainerReregistrationState.cs" />
+    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequest.cs" />
+    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMBackupSchedule.cs" />
+    <Compile Include="Generated\Models\CSMBaseObject.cs" />
+    <Compile Include="Generated\Models\CSMBaseRequest.cs" />
+    <Compile Include="Generated\Models\CSMBaseResponse.cs" />
+    <Compile Include="Generated\Models\CSMContainerListOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMContainerListResponse.cs" />
+    <Compile Include="Generated\Models\CSMContainerProperties.cs" />
+    <Compile Include="Generated\Models\CSMContainerResponse.cs" />
+    <Compile Include="Generated\Models\CSMDailyRetentionFormat.cs" />
+    <Compile Include="Generated\Models\CSMDailyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMItemListOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMItemListResponse.cs" />
+    <Compile Include="Generated\Models\CSMItemProperties.cs" />
+    <Compile Include="Generated\Models\CSMItemQueryObject.cs" />
+    <Compile Include="Generated\Models\CSMItemResponse.cs" />
+    <Compile Include="Generated\Models\CSMJobDetailedProperties.cs" />
+    <Compile Include="Generated\Models\CSMJobDetails.cs" />
+    <Compile Include="Generated\Models\CSMJobDetailsResponse.cs" />
+    <Compile Include="Generated\Models\CSMJobErrorInfo.cs" />
+    <Compile Include="Generated\Models\CSMJobList.cs" />
+    <Compile Include="Generated\Models\CSMJobListResponse.cs" />
+    <Compile Include="Generated\Models\CSMJobProperties.cs" />
+    <Compile Include="Generated\Models\CSMJobQueryObject.cs" />
+    <Compile Include="Generated\Models\CSMJobResponse.cs" />
+    <Compile Include="Generated\Models\CSMJobTaskDetails.cs" />
+    <Compile Include="Generated\Models\CSMListResponse.cs" />
+    <Compile Include="Generated\Models\CSMLongTermRetentionPolicy.cs" />
+    <Compile Include="Generated\Models\CSMMonthlyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMProtectedItemListOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMProtectedItemListResponse.cs" />
+    <Compile Include="Generated\Models\CSMProtectedItemProperties.cs" />
+    <Compile Include="Generated\Models\CSMProtectedItemQueryObject.cs" />
+    <Compile Include="Generated\Models\CSMProtectedItemResponse.cs" />
+    <Compile Include="Generated\Models\CSMProtectionPolicyListOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMProtectionPolicyListResponse.cs" />
+    <Compile Include="Generated\Models\CSMProtectionPolicyProperties.cs" />
+    <Compile Include="Generated\Models\CSMProtectionPolicyResponse.cs" />
+    <Compile Include="Generated\Models\CSMQueryObject.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointGetOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointListOperationResponse.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointListResponse.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointProperties.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointResponse.cs" />
+    <Compile Include="Generated\Models\CSMRestoreRequest.cs" />
+    <Compile Include="Generated\Models\CSMRestoreRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMRetentionDuration.cs" />
+    <Compile Include="Generated\Models\CSMRetentionPolicy.cs" />
+    <Compile Include="Generated\Models\CSMRetentionScheduleBase.cs" />
+    <Compile Include="Generated\Models\CSMSetProtectionRequest.cs" />
+    <Compile Include="Generated\Models\CSMSetProtectionRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequest.cs" />
+    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMUpdateProtectionRequest.cs" />
+    <Compile Include="Generated\Models\CSMUpdateProtectionRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMWeeklyRetentionFormat.cs" />
+    <Compile Include="Generated\Models\CSMWeeklyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMYearlyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CustomerType.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\DataSourceInfo.cs" />
+    <Compile Include="Generated\Models\DataSourceResponse.cs" />
+    <Compile Include="Generated\Models\Day.cs" />
+    <Compile Include="Generated\Models\EnableReregistrationRequest.cs" />
+    <Compile Include="Generated\Models\GetResourceStorageConfigResponse.cs" />
+    <Compile Include="Generated\Models\JobSupportedAction.cs" />
+    <Compile Include="Generated\Models\ListMarsContainerOperationResponse.cs" />
+    <Compile Include="Generated\Models\ListMarsContainerResponse.cs" />
+    <Compile Include="Generated\Models\ManagementBaseObject.cs" />
+    <Compile Include="Generated\Models\ManagementResponseObject.cs" />
+    <Compile Include="Generated\Models\MarsContainerProperties.cs" />
+    <Compile Include="Generated\Models\MarsContainerResponse.cs" />
+    <Compile Include="Generated\Models\MarsContainerType.cs" />
+    <Compile Include="Generated\Models\Month.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectInfo.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResponse.cs" />
+    <Compile Include="Generated\Models\RawCertificateData.cs" />
+    <Compile Include="Generated\Models\RecoveryType.cs" />
+    <Compile Include="Generated\Models\RemoveProtectionRequestInput.cs" />
+    <Compile Include="Generated\Models\ResourceCertificateAndACSDetails.cs" />
+    <Compile Include="Generated\Models\RetentionDurationType.cs" />
+    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
+    <Compile Include="Generated\Models\SetProtectionRequestInput.cs" />
+    <Compile Include="Generated\Models\SkuProperties.cs" />
+    <Compile Include="Generated\Models\StorageDetails.cs" />
+    <Compile Include="Generated\Models\StorageTypeProperties.cs" />
+    <Compile Include="Generated\Models\UpdateVaultStorageTypeRequest.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs" />
+    <Compile Include="Generated\Models\WeekNumber.cs" />
+    <Compile Include="Generated\OperationResponse.cs" />
+    <Compile Include="Generated\OperationStatus.cs" />
+    <Compile Include="Generated\OperationStatusExtensions.cs" />
+    <Compile Include="Generated\ProtectableObjectOperations.cs" />
+    <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryPointOperations.cs" />
+    <Compile Include="Generated\RecoveryPointOperationsExtensions.cs" />
+    <Compile Include="Generated\RestoreOperations.cs" />
+    <Compile Include="Generated\RestoreOperationsExtensions.cs" />
+    <Compile Include="Generated\VaultOperations.cs" />
+    <Compile Include="Generated\VaultOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>

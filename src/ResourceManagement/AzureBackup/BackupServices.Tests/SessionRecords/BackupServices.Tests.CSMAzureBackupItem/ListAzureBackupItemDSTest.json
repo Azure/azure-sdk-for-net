@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/protectedItems?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2JhY2t1cHJuL3Byb3RlY3RlZEl0ZW1zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "0417244a-82e5-4740-a6a1-6d591624360f"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"protectionStatus\": \"IRPending\",\r\n        \"protectionPolicyId\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/registeredContainers/iaasvmcontainer;hydrarecordvm;hydrarecordvm/protectedItems/ProtPolicy01\",\r\n        \"policyInconsistent\": true,\r\n        \"recoveryPointsCount\": 0,\r\n        \"lastRecoveryPoint\": null,\r\n        \"lastBackupTime\": null,\r\n        \"lastBackupStatus\": null,\r\n        \"lastBackupJobId\": null,\r\n        \"friendlyName\": \"hydrarecordvm\",\r\n        \"itemType\": \"IaasVM\",\r\n        \"status\": \"Protected\",\r\n        \"containerId\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/registeredContainers/iaasvmcontainer;hydrarecordvm;hydrarecordvm/protectedItems/iaasvmcontainer;hydrarecordvm;hydrarecordvm\"\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/registeredContainers/iaasvmcontainer;hydrarecordvm;hydrarecordvm/protectedItems/iaasvmcontainer;hydrarecordvm;hydrarecordvm\",\r\n      \"name\": \"iaasvmcontainer;hydrarecordvm;hydrarecordvm\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/registeredContainers/protectedItems\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1177"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "47f40e6e-d50f-493d-a35e-615eab373700"
+        ],
+        "x-ms-client-request-id": [
+          "0417244a-82e5-4740-a6a1-6d591624360f",
+          "0417244a-82e5-4740-a6a1-6d591624360f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "47f40e6e-d50f-493d-a35e-615eab373700"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150813T151300Z:47f40e6e-d50f-493d-a35e-615eab373700"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 15:13:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}

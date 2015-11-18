@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/jobs?api-version=2014-09-01&$filter=operation%20eq%20'Register'%20and%20startTime%20eq%20'2015-06-24%2003:25:09%20PM'%20and%20endTime%20eq%20'2015-08-13%2003:25:09%20PM'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2JhY2t1cHJuL2pvYnM/YXBpLXZlcnNpb249MjAxNC0wOS0wMSYkZmlsdGVyPW9wZXJhdGlvbiUyMGVxJTIwJ1JlZ2lzdGVyJyUyMGFuZCUyMHN0YXJ0VGltZSUyMGVxJTIwJzIwMTUtMDYtMjQlMjAwMyUzQTI1JTNBMDklMjBQTSclMjBhbmQlMjBlbmRUaW1lJTIwZXElMjAnMjAxNS0wOC0xMyUyMDAzJTNBMjUlM0EwOSUyMFBNJw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "861ccc2d-a80f-4551-8073-e8c62483b226"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"workloadType\": \"VM\",\r\n        \"operation\": \"Register\",\r\n        \"status\": \"Completed\",\r\n        \"startTimestamp\": \"2015-08-13T14:41:55.8416488Z\",\r\n        \"endTimestamp\": \"2015-08-13T14:42:17.7081414Z\",\r\n        \"duration\": \"00:00:21.8664926\",\r\n        \"entityFriendlyName\": \"hydrarecordvm\",\r\n        \"actionsInfo\": null,\r\n        \"errorDetails\": null\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/jobs/6c6b2a5c-ac49-48d5-b08c-b09eb00255c2\",\r\n      \"name\": \"6c6b2a5c-ac49-48d5-b08c-b09eb00255c2\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/jobs\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"workloadType\": \"VM\",\r\n        \"operation\": \"Register\",\r\n        \"status\": \"Completed\",\r\n        \"startTimestamp\": \"2015-08-13T14:34:41.7879543Z\",\r\n        \"endTimestamp\": \"2015-08-13T14:35:25.0560628Z\",\r\n        \"duration\": \"00:00:43.2681085\",\r\n        \"entityFriendlyName\": \"hydrarecordvm\",\r\n        \"actionsInfo\": null,\r\n        \"errorDetails\": null\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/jobs/2135b3fc-69fc-4f4f-9392-00fc2659e8df\",\r\n      \"name\": \"2135b3fc-69fc-4f4f-9392-00fc2659e8df\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/jobs\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1111"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4e4b8481-1253-4fd7-b672-cd81292cb0f8"
+        ],
+        "x-ms-client-request-id": [
+          "861ccc2d-a80f-4551-8073-e8c62483b226",
+          "861ccc2d-a80f-4551-8073-e8c62483b226"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "4e4b8481-1253-4fd7-b672-cd81292cb0f8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150813T152512Z:4e4b8481-1253-4fd7-b672-cd81292cb0f8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 15:25:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}

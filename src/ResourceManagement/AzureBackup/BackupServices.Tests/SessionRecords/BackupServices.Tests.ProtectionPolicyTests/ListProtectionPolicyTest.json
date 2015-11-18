@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/protectionPolicies?api-version=2014-09-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2JhY2t1cHJuL3Byb3RlY3Rpb25Qb2xpY2llcz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f75ac69c-0e9c-40b0-92be-3a682e91bf58"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"workloadType\": \"IaasVM\",\r\n        \"policyName\": \"DefaultPolicy\",\r\n        \"backupSchedule\": {\r\n          \"backupType\": \"Full\",\r\n          \"scheduleRun\": \"Daily\",\r\n          \"scheduleRunDays\": null,\r\n          \"scheduleRunTimes\": [\r\n            \"2015-08-14T00:00:00\"\r\n          ]\r\n        },\r\n        \"ltrRetentionPolicy\": {\r\n          \"DailySchedule\": {\r\n            \"RetentionTimes\": [\r\n              \"2015-08-14T00:00:00\"\r\n            ],\r\n            \"CSMRetentionDuration\": {\r\n              \"Count\": 30,\r\n              \"DurationType\": 1\r\n            }\r\n          },\r\n          \"WeeklySchedule\": null,\r\n          \"MonthlySchedule\": null,\r\n          \"YearlySchedule\": null\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/protectionPolicies/DefaultPolicy\",\r\n      \"name\": \"DefaultPolicy\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/protectionPolicies\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"workloadType\": \"IaasVM\",\r\n        \"policyName\": \"ProtPolicy01\",\r\n        \"backupSchedule\": {\r\n          \"backupType\": \"Full\",\r\n          \"scheduleRun\": \"Daily\",\r\n          \"scheduleRunDays\": null,\r\n          \"scheduleRunTimes\": [\r\n            \"2015-12-06T19:30:00\"\r\n          ]\r\n        },\r\n        \"ltrRetentionPolicy\": {\r\n          \"DailySchedule\": {\r\n            \"RetentionTimes\": [\r\n              \"2015-12-06T19:30:00\"\r\n            ],\r\n            \"CSMRetentionDuration\": {\r\n              \"Count\": 20,\r\n              \"DurationType\": 1\r\n            }\r\n          },\r\n          \"WeeklySchedule\": {\r\n            \"DaysOfTheWeek\": [\r\n              1\r\n            ],\r\n            \"RetentionTimes\": [\r\n              \"2015-12-06T19:30:00\"\r\n            ],\r\n            \"CSMRetentionDuration\": {\r\n              \"Count\": 4,\r\n              \"DurationType\": 2\r\n            }\r\n          },\r\n          \"MonthlySchedule\": null,\r\n          \"YearlySchedule\": null\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/protectionPolicies/ProtPolicy01\",\r\n      \"name\": \"ProtPolicy01\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/protectionPolicies\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1420"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "268593c6-04f4-451e-8194-dc625cf69a0d"
+        ],
+        "x-ms-client-request-id": [
+          "f75ac69c-0e9c-40b0-92be-3a682e91bf58",
+          "f75ac69c-0e9c-40b0-92be-3a682e91bf58"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "268593c6-04f4-451e-8194-dc625cf69a0d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150813T145715Z:268593c6-04f4-451e-8194-dc625cf69a0d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 14:57:14 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}
