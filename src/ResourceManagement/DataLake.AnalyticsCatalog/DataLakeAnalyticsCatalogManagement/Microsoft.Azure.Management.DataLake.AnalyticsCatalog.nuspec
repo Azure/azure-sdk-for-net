@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.DataLake.AnalyticsCatalog</id>
+    <title>Microsoft Azure Data Lake Analytics Catalog Management Library</title>
+    <releaseNotes>Data Lake Analytics Catalog Service / CSM-compatible preview library</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft, begoldsm</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides management capabilities for the Data Lake Analytics Catalog services.</summary>
+    <description>
+      CSM/Resource Groups-compatible library.
+      Provides management capabilities for Data Lake Analytics Catalog services.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure Data Lake Analytics Catalog management "DataLakeAnalyticsCatalog" "Data Lake Analytics Catalog management" REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\DataLake.AnalyticsCatalog\DataLakeAnalyticsCatalogManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.AnalyticsCatalog.xml" target="lib\net40" />
+  </files>
+</package>
