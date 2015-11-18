@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the
         /// HighWaterMarkChangeDetectionPolicy class.
         /// </summary>
-        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName = default(string))
+        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
         }
@@ -44,5 +44,15 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "highWaterMarkColumnName")]
         public string HighWaterMarkColumnName { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (HighWaterMarkColumnName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "HighWaterMarkColumnName");
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the DistanceScoringFunction class.
         /// </summary>
-        public DistanceScoringFunction(DistanceScoringParameters distance = default(DistanceScoringParameters))
+        public DistanceScoringFunction(DistanceScoringParameters distance)
         {
             Distance = distance;
         }
@@ -48,6 +48,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Distance == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Distance");
+            }
             if (this.Distance != null)
             {
                 this.Distance.Validate();
