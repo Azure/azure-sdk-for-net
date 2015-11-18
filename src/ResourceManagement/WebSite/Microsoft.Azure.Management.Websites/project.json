@@ -1,5 +1,5 @@
 {
-  "version": "3.1.1-preview",
+  "version": "1.0.0-preview",
   "description": "Provides website management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure website management", "website management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
@@ -36,7 +36,7 @@
     },
     ".NETPortable,Version=v4.5,Profile=Profile111": {
       "frameworkAssemblies": {
-        "System.IO":  { "type" : "build"},
+        "System.IO":  { "type" : "build" },
         "System.Collections": { "type": "build" },
         "System.Linq": { "type": "build" },
         "System.Linq.Expressions": { "type": "build" },
