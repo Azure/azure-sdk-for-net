@@ -24,9 +24,9 @@ namespace Network.Tests.ApplicationGateways
 {
     public class SetupApplicationGatewayTests
     {
-        private string gatewayName = "kagapstesting123";
-        private string gatewayDescription = "Application Gateway created to test Hydra script";
-        private string vnet = "kagavnet2";
+        private string gatewayName = "HyakSpecTesting";
+        private string gatewayDescription = "Application Gateway created to test hyak spec";
+        private string vnet = "kagavnet1";
         private string subnet = "Subnet-1";
 
         [Fact]
@@ -77,8 +77,7 @@ namespace Network.Tests.ApplicationGateways
             var frontEndIP1 = new FrontendIPConfiguration
             {
                 Name = "FrontendIP1",
-                Type = "Private",
-                StaticIPAddress = "10.0.0.10"
+                Type = "Private"                
             };
             var frontEndPort1 = new FrontendPort
             {
@@ -89,7 +88,7 @@ namespace Network.Tests.ApplicationGateways
             var probe1 = new Probe
             {
                 Name = "Probe1",                
-                Protocol = "http",
+                Protocol = "Http",
                 Host = "127.0.0.1",
                 Path = "/",
                 Interval = 45,
