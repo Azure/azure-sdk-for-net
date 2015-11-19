@@ -27,24 +27,24 @@ namespace Microsoft.Azure.Search.Models
         /// If present, the count may be greater than the number of results in this response. In that case, use the
         /// ContinuationToken property to fetch the next page of results.
         /// </remarks>
-        public long? Count { get; set; }
+        public long? Count { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the percentage of the index that was included in the query, or null if
         /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.
         /// </summary>
-        public double? Coverage { get; set; }
+        public double? Coverage { get; internal set; }
 
         /// <summary>
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>
-        public FacetResults Facets { get; set; }
+        public FacetResults Facets { get; internal set; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.
         /// </summary>
-        public IList<TResult> Results { get; set; }
+        public IList<TResult> Results { get; internal set; }
 
         /// <summary>
         /// Gets a continuation token that can be used to fetch the next page of search results from an
@@ -59,6 +59,6 @@ namespace Microsoft.Azure.Search.Models
         /// <c cref="IDocumentsOperations.ContinueSearchWithHttpMessagesAsync(SearchContinuationToken, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, System.Threading.CancellationToken)">ContinueSearchAsync</c>
         /// method to retrieve the next page of results.
         /// </remarks>
-        public SearchContinuationToken ContinuationToken { get; set; }
+        public SearchContinuationToken ContinuationToken { get; internal set; }
     }
 }

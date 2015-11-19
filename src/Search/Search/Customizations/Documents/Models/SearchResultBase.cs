@@ -23,17 +23,17 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets the relevance score of the document compared to other documents returned by the query.
         /// </summary>
-        public double Score { get; set; }
+        public double Score { get; internal set; }
 
         /// <summary>
         /// Gets text snippets from the document that indicate the matching search terms; null if hit highlighting
         /// was not enabled for the query.
         /// </summary>
-        public HitHighlights Highlights { get; set; }
+        public HitHighlights Highlights { get; internal set; }
 
         /// <summary>
         /// Gets the document found by the search query.
         /// </summary>
-        public T Document { get; set; }
+        public T Document { get; internal set; }
     }
 }

@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets the text of the suggestion result.
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; internal set; }
 
         /// <summary>
         /// Gets the document on which the suggested text is based.
         /// </summary>
-        public T Document { get; set; }
+        public T Document { get; internal set; }
     }
 }
