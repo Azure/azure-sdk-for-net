@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.LinkedServices, "internalResponse.LinkedServices");
 
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.LinkedServices = internalResponse.LinkedServices.Select(
                     internalLinkedService =>

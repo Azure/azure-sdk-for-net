@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.HDInsight.Job</id>
+    <title>Microsoft Azure HDInsight Job Management Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The HDInsight job management client.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "resource management" REST HTTP client core common azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.0.4,3.0)" />
+      <dependency id="WindowsAzure.Storage" version="4.3.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\HDInsightJob\HDInsightJob\**\*.cs" target="src" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.xml" target="lib\net40" />
+  </files>
+</package>

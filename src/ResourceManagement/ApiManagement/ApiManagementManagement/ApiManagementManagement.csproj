@@ -180,8 +180,6 @@
     <Compile Include="Generated\SmapiModels\Paged.cs" />
     <Compile Include="Generated\SmapiModels\ParameterContract.cs" />
     <Compile Include="Generated\SmapiModels\PatchParameters.cs" />
-    <Compile Include="Generated\SmapiModels\PeriodContract.cs" />
-    <Compile Include="Generated\SmapiModels\PeriodIntervalContract.cs" />
     <Compile Include="Generated\SmapiModels\PolicyGetResponse.cs" />
     <Compile Include="Generated\SmapiModels\PolicyScopeContract.cs" />
     <Compile Include="Generated\SmapiModels\PolicySnippetContract.cs" />

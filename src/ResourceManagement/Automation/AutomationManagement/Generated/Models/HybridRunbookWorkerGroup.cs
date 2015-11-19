@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class HybridRunbookWorkerGroup
     {
+        private CredentialNavigation _credential;
+        
+        /// <summary>
+        /// Optional. Sets the credential of a worker group.
+        /// </summary>
+        public CredentialNavigation Credential
+        {
+            get { return this._credential; }
+            set { this._credential = value; }
+        }
+        
         private IList<HybridRunbookWorker> _hybridRunbookWorkers;
         
         /// <summary>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageLoggingDiagnosticSettings _loggingDiagnosticSettings;
         
         /// <summary>
-        /// Optional. The logging diagnostic settings.
+        /// Optional. Gets or sets the logging diagnostic settings.
         /// </summary>
         public StorageLoggingDiagnosticSettings LoggingDiagnosticSettings
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageMetricDiagnosticSettings _metricDiagnosticSettings;
         
         /// <summary>
-        /// Optional. The metrics diagnostic settings.
+        /// Optional. Gets or sets the metrics diagnostic settings.
         /// </summary>
         public StorageMetricDiagnosticSettings MetricDiagnosticSettings
         {

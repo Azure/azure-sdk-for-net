@@ -32,6 +32,56 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class ResourceOperationsExtensions
     {
         /// <summary>
+        /// Begin moving resources.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginMoving(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IResourceOperations)s).BeginMovingAsync(sourceResourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begin moving resources.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginMovingAsync(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return operations.BeginMovingAsync(sourceResourceGroupName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Checks whether resource exists.
         /// </summary>
         /// <param name='operations'>

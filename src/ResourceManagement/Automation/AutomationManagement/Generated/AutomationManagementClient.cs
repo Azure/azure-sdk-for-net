@@ -354,6 +354,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._testJobs; }
         }
         
+        private IUsageOperations _usages;
+        
+        /// <summary>
+        /// Service operation for automation usages.  (see
+        /// http://aka.ms/azureautomationsdk/usageoperations for more
+        /// information)
+        /// </summary>
+        public virtual IUsageOperations Usages
+        {
+            get { return this._usages; }
+        }
+        
         private IVariableOperations _variables;
         
         /// <summary>
@@ -405,6 +417,7 @@ namespace Microsoft.Azure.Management.Automation
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
+            this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
@@ -494,6 +507,7 @@ namespace Microsoft.Azure.Management.Automation
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
+            this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";

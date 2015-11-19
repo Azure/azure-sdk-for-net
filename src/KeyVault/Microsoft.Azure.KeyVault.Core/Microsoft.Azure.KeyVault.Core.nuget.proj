@@ -5,7 +5,7 @@
     Microsoft.Azure.KeyVault.Core
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.KeyVault.Core">
-      <PackageVersion>0.9.1-preview</PackageVersion>
+      <PackageVersion>1.0.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

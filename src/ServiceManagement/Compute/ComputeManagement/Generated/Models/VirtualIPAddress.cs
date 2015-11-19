@@ -62,6 +62,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._name = value; }
         }
         
+        private string _reservedIPName;
+        
+        /// <summary>
+        /// Optional. The name of the Reserved IP associated with the virtual
+        /// IP.
+        /// </summary>
+        public string ReservedIPName
+        {
+            get { return this._reservedIPName; }
+            set { this._reservedIPName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualIPAddress class.
         /// </summary>

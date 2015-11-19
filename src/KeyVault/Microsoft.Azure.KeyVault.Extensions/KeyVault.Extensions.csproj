@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.KeyVault.Core">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.0.9.1-preview\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
@@ -73,7 +73,7 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net40\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.0.9.1-preview\lib\net40\Microsoft.Azure.KeyVault.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net40\Microsoft.Azure.KeyVault.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
@@ -87,9 +87,9 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.0.9.1-preview\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="'$(LibraryFxTarget)' == 'net40' AND Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>

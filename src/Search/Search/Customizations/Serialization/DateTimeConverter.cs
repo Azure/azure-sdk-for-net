@@ -21,18 +21,8 @@ namespace Microsoft.Azure.Search.Serialization
     /// <summary>
     /// Converts System.DateTime objects to System.DateTimeOffset before serialization.
     /// </summary>
-    internal class DateTimeConverter : JsonConverter
+    internal class DateTimeConverter : ConverterBase
     {
-        public override bool CanRead
-        {
-            get { return false; }
-        }
-
-        public override bool CanWrite
-        {
-            get { return true; }
-        }
-
         public override bool CanConvert(Type objectType)
         {
             return typeof(DateTime).IsAssignableFrom(objectType) || typeof(DateTime?).IsAssignableFrom(objectType);
@@ -44,7 +34,14 @@ namespace Microsoft.Azure.Search.Serialization
             object existingValue,
             JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            // Check for null first.
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
+            DateTimeOffset? dateTimeOffset = Expect<DateTimeOffset?>(reader, JsonToken.Date);
+            return dateTimeOffset.HasValue ? dateTimeOffset.Value.UtcDateTime : (DateTime?)null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

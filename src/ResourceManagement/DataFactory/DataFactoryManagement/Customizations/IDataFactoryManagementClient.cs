@@ -81,13 +81,8 @@ namespace Microsoft.Azure.Management.DataFactories
         IPipelineOperations Pipelines { get; }
 
         /// <summary>
-        /// Operations for managing pipeline runs.
+        /// Operations for managing Datasets.
         /// </summary>
-        IPipelineRunOperations PipelineRuns { get; }
-
-        /// <summary>
-        /// Operations for managing tables.
-        /// </summary>
-        ITableOperations Tables { get; }
+        IDatasetOperations Datasets { get; }
     }
 }

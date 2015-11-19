@@ -172,7 +172,7 @@ namespace DataFactory.Tests.Framework
 
             Assert.Equal(itemType, actualType);
 
-            if ((itemType.IsValueType && !itemType.IsConstructedGenericType) || itemType == typeof(string))
+            if ((itemType.IsValueType && !itemType.IsConstructedGenericType) || itemType == typeof(string) || itemType == typeof(JValue))
             {
                 Assert.Equal(expected, actual);
             }

@@ -151,8 +151,27 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal("Stream", jobGetResponse.Job.Properties.Inputs[0].Properties.Type);
                     Assert.Equal("Microsoft.Storage/Blob", streamInputProperties.DataSource.Type);
                     Assert.Equal("Csv", streamInputProperties.Serialization.Type);
+                    Assert.Equal(EventsOutOfOrderPolicy.Drop, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
                     Assert.NotNull(jobGetResponse.Job.Properties.Etag);
                     Assert.Equal(jobCreateOrUpdateResponse.Job.Properties.Etag, jobGetResponse.Job.Properties.Etag);
+
+                    // Patch the streaming job
+                    JobPatchParameters jobPatchParameters = new JobPatchParameters()
+                    {
+                        JobPatchRequest = new JobPatchRequest()
+                        {
+                            Properties = new JobProperties()
+                            {
+                                EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Adjust
+                            }
+                        }
+                    };
+                    var jobPatchResponse = client.StreamingJobs.Patch(resourceGroupName, resourceName, jobPatchParameters);
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobPatchResponse.StatusCode);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobPatchResponse.Job.Properties.EventsOutOfOrderPolicy);
+                    Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
 
                     JobListParameters parameters = new JobListParameters(string.Empty);
                     JobListResponse response = client.StreamingJobs.ListJobsInResourceGroup(resourceGroupName, parameters);
@@ -302,8 +321,7 @@ namespace StreamAnalytics.Tests.OperationTests
 
         public static bool IsRunning(string jobStatus)
         {
-            return jobStatus == JobRunningState.Idle ||
-                   jobStatus == JobRunningState.Processing ||
+            return jobStatus == JobRunningState.Running ||
                    jobStatus == JobRunningState.Degraded;
         }
     }

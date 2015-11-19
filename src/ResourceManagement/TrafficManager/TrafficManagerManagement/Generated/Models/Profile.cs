@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Describes a WATMv2 profile.
+    /// Class representing a Traffic Manager profile.
     /// </summary>
     public partial class Profile : ResourceBaseExtended
     {

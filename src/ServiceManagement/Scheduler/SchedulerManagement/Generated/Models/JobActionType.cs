@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue.
+    /// Type of action. Can be one of http, https, storageQueue,
+    /// serviceBusQueue, serviceBusTopic.
     /// </summary>
     public enum JobActionType
     {
@@ -34,5 +35,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         Https = 1,
         
         StorageQueue = 2,
+        
+        ServiceBusQueue = 3,
+        
+        ServiceBusTopic = 4,
     }
 }

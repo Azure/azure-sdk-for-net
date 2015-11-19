@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <LibraryFxTarget>net45</LibraryFxTarget>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EAB38A14-211F-4361-A06E-3EC1E07ABE33}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Hadoop.Avro</RootNamespace>
+    <AssemblyName>Microsoft.Hadoop.Avro</AssemblyName>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Common.1.3.0\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AvroEnum.cs" />
+    <Compile Include="AvroFixedAttribute.cs" />
+    <Compile Include="AvroNull.cs" />
+    <Compile Include="AvroRecord.cs" />
+    <Compile Include="AvroSerializer.cs" />
+    <Compile Include="AvroSerializer.Static.cs" />
+    <Compile Include="AvroSerializerSettings.cs" />
+    <Compile Include="AvroUnionAttribute.cs" />
+    <Compile Include="Container\CodecFactory.cs" />
+    <Compile Include="Encoders\ISkipper.cs" />
+    <Compile Include="Encoders\BinaryDecoder.cs" />
+    <Compile Include="Encoders\BinaryEncoder.cs" />
+    <Compile Include="Encoders\IDecoder.cs" />
+    <Compile Include="Encoders\IEncoder.cs" />
+    <Compile Include="Encoders\BufferedBinaryDecoder.cs" />
+    <Compile Include="Encoders\BufferedBinaryEncoder.cs" />
+    <Compile Include="GeneratedSerializer.cs" />
+    <Compile Include="IAvroSerializer.cs" />
+    <Compile Include="IAvroSurrogate.cs" />
+    <Compile Include="MemberSerializationInfo.cs" />
+    <Compile Include="Container\AvroBufferReaderBlock.cs" />
+    <Compile Include="Container\AvroBufferWriterBlock.cs" />
+    <Compile Include="Container\Codec.cs" />
+    <Compile Include="Container\DecompressionStream.cs" />
+    <Compile Include="Container\DeflateCodec.cs" />
+    <Compile Include="Container\CompressionStream.cs" />
+    <Compile Include="Container\IAvroReader.cs" />
+    <Compile Include="Container\IAvroReaderBlock.cs" />
+    <Compile Include="Container\IAvroWriter.cs" />
+    <Compile Include="Container\IAvroWriterBlock.cs" />
+    <Compile Include="Container\NullCodec.cs" />
+    <Compile Include="Container\AvroContainer.Static.cs" />
+    <Compile Include="Container\ObjectContainerHeader.cs" />
+    <Compile Include="Container\SequentialReader.cs" />
+    <Compile Include="Container\SequentialWriter.cs" />
+    <Compile Include="Container\StreamReader.cs" />
+    <Compile Include="Container\StreamWriter.cs" />
+    <Compile Include="NullableSchemaAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Schema\ArraySchema.cs" />
+    <Compile Include="Schema\BooleanSchema.cs" />
+    <Compile Include="Schema\BytesSchema.cs" />
+    <Compile Include="Schema\DoubleSchema.cs" />
+    <Compile Include="Schema\EnumSchema.cs" />
+    <Compile Include="Schema\EvolutionSchemaBuilder.cs" />
+    <Compile Include="Schema\FixedSchema.cs" />
+    <Compile Include="Schema\FloatSchema.cs" />
+    <Compile Include="Schema\IntSchema.cs" />
+    <Compile Include="Schema\JsonExtensions.cs" />
+    <Compile Include="Schema\JsonObjectParser.cs" />
+    <Compile Include="Schema\JsonSchemaBuilder.cs" />
+    <Compile Include="Schema\LongSchema.cs" />
+    <Compile Include="Schema\MapSchema.cs" />
+    <Compile Include="Schema\NamedEntityAttributes.cs" />
+    <Compile Include="Schema\NamedSchema.cs" />
+    <Compile Include="Schema\NullableSchema.cs" />
+    <Compile Include="Schema\NullSchema.cs" />
+    <Compile Include="Schema\PrimitiveTypeSchema.cs" />
+    <Compile Include="Schema\RecordField.cs" />
+    <Compile Include="Schema\RecordSchema.cs" />
+    <Compile Include="Schema\ReflectionSchemaBuilder.cs" />
+    <Compile Include="Schema\Schema.cs" />
+    <Compile Include="Schema\SchemaName.cs" />
+    <Compile Include="Schema\StandardProperties.cs" />
+    <Compile Include="Schema\StringSchema.cs" />
+    <Compile Include="Schema\SurrogateSchema.cs" />
+    <Compile Include="Schema\Token.cs" />
+    <Compile Include="Schema\TypeSchema.cs" />
+    <Compile Include="Schema\UnionSchema.cs" />
+    <Compile Include="AvroContractResolver.cs" />
+    <Compile Include="Serializers\ArraySerializer.cs" />
+    <Compile Include="Serializers\AsStringSerializer.cs" />
+    <Compile Include="Serializers\BooleanSerializer.cs" />
+    <Compile Include="Serializers\NullableSerializer.cs" />
+    <Compile Include="Serializers\SerializerAssigningVisitor.cs" />
+    <Compile Include="Serializers\ByteArraySerializer.cs" />
+    <Compile Include="Serializers\ClassSerializer.cs" />
+    <Compile Include="Serializers\DateTimeOffsetSerializer.cs" />
+    <Compile Include="Serializers\DateTimeSerializer.cs" />
+    <Compile Include="Serializers\DictionarySerializer.cs" />
+    <Compile Include="Serializers\DoubleSerializer.cs" />
+    <Compile Include="Serializers\EnumerableSerializer.cs" />
+    <Compile Include="Serializers\EnumSerializer.cs" />
+    <Compile Include="Serializers\FixedSerializer.cs" />
+    <Compile Include="Serializers\FloatSerializer.cs" />
+    <Compile Include="Serializers\GuidSerializer.cs" />
+    <Compile Include="Serializers\IObjectSerializer.cs" />
+    <Compile Include="Serializers\IFieldSerializer.cs" />
+    <Compile Include="Serializers\IntSerializer.cs" />
+    <Compile Include="Serializers\ListSerializer.cs" />
+    <Compile Include="Serializers\LongSerializer.cs" />
+    <Compile Include="Serializers\MultidimensionalArraySerializer.cs" />
+    <Compile Include="Serializers\NullSerializer.cs" />
+    <Compile Include="Serializers\ObjectSerializerBase.cs" />
+    <Compile Include="Serializers\RecordFieldSerializer.cs" />
+    <Compile Include="Serializers\StringSerializer.cs" />
+    <Compile Include="Serializers\SurrogateSerializer.cs" />
+    <Compile Include="Serializers\UnionSerializer.cs" />
+    <Compile Include="Serializers\UriSerializer.cs" />
+    <Compile Include="Cache.cs" />
+    <Compile Include="SerializerGenerator.cs" />
+    <Compile Include="Resolvers\AvroDataContractResolver.cs" />
+    <Compile Include="Resolvers\AvroPublicMemberContractResolver.cs" />
+    <Compile Include="Utils\CodeGenerator.cs" />
+    <Compile Include="Utils\GeneratorCore.cs" />
+    <Compile Include="Utils\Templates\ClassTemplate-Methods.cs" />
+    <Compile Include="Utils\Templates\ClassTemplate.cs">
+      <DependentUpon>ClassTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Utils\Templates\EnumTemplate-Methods.cs" />
+    <Compile Include="Utils\Templates\EnumTemplate.cs">
+      <DependentUpon>EnumTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Utils\Templates\ITemplate.cs" />
+    <Compile Include="Utils\Utilities.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="TypeSerializationInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Project.FxCop.ruleset" />
+    <None Include="Settings.StyleCop" />
+    <None Include="Utils\Templates\ClassTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ClassTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Utils\Templates\EnumTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EnumTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Utils\Templates\Utilities\DefaultValueTemplate.ttinclude" />
+    <None Include="Utils\Templates\Utilities\TypeTemplate.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>

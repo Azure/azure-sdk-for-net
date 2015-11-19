@@ -13,15 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // 
-// ----------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
@@ -37,25 +36,17 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(RegisteredComputeTypeJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void ComputeTypeJsonConstsToWrappedObjectTest()
+        public void ComputeTypeJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<RegisteredComputeTypeJsonSamples>();
-
-            this.TestComputeTypeJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestComputeTypeJson);
         }
 
-        private void TestComputeTypeJsonSamples(IEnumerable<JsonSampleInfo> samples)
+        private void TestComputeTypeJson(JsonSampleInfo sampleInfo)
         {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestComputeTypeJson(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
-        }
-
-        private void TestComputeTypeJson(string json)
-        {
+            string json = sampleInfo.Json;
             ComputeType computeType = this.ConvertToWrapper(json);
             CoreRegistrationModel.ComputeType actual = this.Operations.Converter.ToCoreType(computeType);
 
@@ -63,6 +54,9 @@ namespace DataFactory.Tests.UnitTests
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.False(actualJson.Contains("ServiceExtraProperties"));
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, sampleInfo.PropertyBagKeys);
         }
 
         private ComputeType ConvertToWrapper(string json)

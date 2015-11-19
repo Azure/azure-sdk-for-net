@@ -25,14 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// A MonitorConfig.
+    /// Class containing endpoint monitoring settings in a Traffic Manager
+    /// profile.
     /// </summary>
     public partial class MonitorConfig
     {
         private string _path;
         
         /// <summary>
-        /// Required. Gets or sets the path of the monitor config.
+        /// Required. Gets or sets the path relative to the endpoint domain
+        /// name used to probe for endpoint health.
         /// </summary>
         public string Path
         {
@@ -43,7 +45,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private uint _port;
         
         /// <summary>
-        /// Required. Gets or sets the port of the monitor config.
+        /// Required. Gets or sets the TCP port used to probe for endpoint
+        /// health.
         /// </summary>
         public uint Port
         {
@@ -54,8 +57,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _profileMonitorStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the profile monitor status of the monitor
-        /// config.
+        /// Optional. Gets or sets the profile-level monitoring status of the
+        /// Traffic Manager profile.
         /// </summary>
         public string ProfileMonitorStatus
         {
@@ -66,7 +69,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _protocol;
         
         /// <summary>
-        /// Required. Gets or sets the protocol of the monitor config.
+        /// Required. Gets or sets the protocol (HTTP or HTTPS) used to probe
+        /// for endpoint health.
         /// </summary>
         public string Protocol
         {

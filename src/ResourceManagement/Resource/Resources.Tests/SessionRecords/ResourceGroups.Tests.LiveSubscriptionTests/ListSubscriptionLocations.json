@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyZGZmYjUtNDViNS00NzVhLTkxYmUtZDNkOTk3M2M4MmQ0L2xvY2F0aW9ucz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Subscriptions.SubscriptionClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/eastasia\",\r\n      \"name\": \"eastasia\",\r\n      \"displayName\": \"East Asia\",\r\n      \"longitude\": \"114.188\",\r\n      \"latitude\": \"22.267\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/southeastasia\",\r\n      \"name\": \"southeastasia\",\r\n      \"displayName\": \"Southeast Asia\",\r\n      \"longitude\": \"103.833\",\r\n      \"latitude\": \"1.283\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/centralus\",\r\n      \"name\": \"centralus\",\r\n      \"displayName\": \"Central US\",\r\n      \"longitude\": \"-93.6208\",\r\n      \"latitude\": \"41.5908\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/eastus\",\r\n      \"name\": \"eastus\",\r\n      \"displayName\": \"East US\",\r\n      \"longitude\": \"-79.8164\",\r\n      \"latitude\": \"37.3719\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/eastus2\",\r\n      \"name\": \"eastus2\",\r\n      \"displayName\": \"East US 2\",\r\n      \"longitude\": \"-78.3889\",\r\n      \"latitude\": \"36.6681\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/westus\",\r\n      \"name\": \"westus\",\r\n      \"displayName\": \"West US\",\r\n      \"longitude\": \"-122.417\",\r\n      \"latitude\": \"37.783\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/northcentralus\",\r\n      \"name\": \"northcentralus\",\r\n      \"displayName\": \"North Central US\",\r\n      \"longitude\": \"-87.6278\",\r\n      \"latitude\": \"41.8819\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/southcentralus\",\r\n      \"name\": \"southcentralus\",\r\n      \"displayName\": \"South Central US\",\r\n      \"longitude\": \"-98.5\",\r\n      \"latitude\": \"29.4167\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/northeurope\",\r\n      \"name\": \"northeurope\",\r\n      \"displayName\": \"North Europe\",\r\n      \"longitude\": \"-6.2597\",\r\n      \"latitude\": \"53.3478\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/westeurope\",\r\n      \"name\": \"westeurope\",\r\n      \"displayName\": \"West Europe\",\r\n      \"longitude\": \"4.9\",\r\n      \"latitude\": \"52.3667\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/japanwest\",\r\n      \"name\": \"japanwest\",\r\n      \"displayName\": \"Japan West\",\r\n      \"longitude\": \"135.5022\",\r\n      \"latitude\": \"34.6939\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/japaneast\",\r\n      \"name\": \"japaneast\",\r\n      \"displayName\": \"Japan East\",\r\n      \"longitude\": \"139.77\",\r\n      \"latitude\": \"35.68\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/brazilsouth\",\r\n      \"name\": \"brazilsouth\",\r\n      \"displayName\": \"Brazil South\",\r\n      \"longitude\": \"-46.633\",\r\n      \"latitude\": \"-23.55\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/australiaeast\",\r\n      \"name\": \"australiaeast\",\r\n      \"displayName\": \"Australia East\",\r\n      \"longitude\": \"151.2094\",\r\n      \"latitude\": \"-33.86\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/australiasoutheast\",\r\n      \"name\": \"australiasoutheast\",\r\n      \"displayName\": \"Australia Southeast\",\r\n      \"longitude\": \"144.9631\",\r\n      \"latitude\": \"-37.8136\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/southindia\",\r\n      \"name\": \"southindia\",\r\n      \"displayName\": \"South India\",\r\n      \"longitude\": \"80.1636\",\r\n      \"latitude\": \"12.9822\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/centralindia\",\r\n      \"name\": \"centralindia\",\r\n      \"displayName\": \"Central India\",\r\n      \"longitude\": \"73.9197\",\r\n      \"latitude\": \"18.5822\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7e2dffb5-45b5-475a-91be-d3d9973c82d4/locations/westindia\",\r\n      \"name\": \"westindia\",\r\n      \"displayName\": \"West India\",\r\n      \"longitude\": \"72.868\",\r\n      \"latitude\": \"19.088\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3147"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14834"
+        ],
+        "x-ms-request-id": [
+          "adf950a3-3471-4624-9e64-ae66280681ce"
+        ],
+        "x-ms-correlation-request-id": [
+          "adf950a3-3471-4624-9e64-ae66280681ce"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150924T223800Z:adf950a3-3471-4624-9e64-ae66280681ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 24 Sep 2015 22:37:59 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "7e2dffb5-45b5-475a-91be-d3d9973c82d4"
+  }
+}

@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricName;
         
         /// <summary>
-        /// Optional. The name of the metric that defines what the rule
-        /// monitors.
+        /// Optional. Gets or sets the name of the metric that defines what the
+        /// rule monitors.
         /// </summary>
         public string MetricName
         {
@@ -45,8 +45,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// Optional. Only should be present for availability level metrics,
-        /// where the value must be WindowsAzure.Availability.
+        /// Optional. Gets or sets the metric namespace. Only should be present
+        /// for availability level metrics, where the value must be
+        /// WindowsAzure.Availability.
         /// </summary>
         public string MetricNamespace
         {
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceUri;
         
         /// <summary>
-        /// Optional. The resource identifier of the resource the rule monitors.
+        /// Optional. Gets or sets the resource identifier of the resource the
+        /// rule monitors.
         /// </summary>
         public string ResourceUri
         {

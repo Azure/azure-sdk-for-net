@@ -58,6 +58,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Represents a black hole. Packets forwarded to a black hole will not
         /// be forwarded at all.
         /// </summary>
-        public const string Null = "Null";
+        public const string None = "None";
     }
 }

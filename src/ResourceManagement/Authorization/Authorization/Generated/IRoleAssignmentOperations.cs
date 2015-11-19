@@ -188,6 +188,34 @@ namespace Microsoft.Azure.Management.Authorization
         Task<RoleAssignmentListResult> ListForResourceGroupAsync(string resourceGroupName, ListAssignmentsFilterParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets role assignments of the resource group.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        Task<RoleAssignmentListResult> ListForResourceGroupNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets role assignments of the resource.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        Task<RoleAssignmentListResult> ListForResourceNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets role assignments of the scope.
         /// </summary>
         /// <param name='scope'>
@@ -204,5 +232,33 @@ namespace Microsoft.Azure.Management.Authorization
         /// Role assignment list operation result.
         /// </returns>
         Task<RoleAssignmentListResult> ListForScopeAsync(string scope, ListAssignmentsFilterParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets role assignments of the scope.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        Task<RoleAssignmentListResult> ListForScopeNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets role assignments of the subscription.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        Task<RoleAssignmentListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }
 }

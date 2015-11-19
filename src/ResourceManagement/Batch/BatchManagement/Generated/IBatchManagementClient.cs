@@ -82,6 +82,15 @@ namespace Microsoft.Azure.Management.Batch
         }
         
         /// <summary>
+        /// Operations for managing Batch service properties at the
+        /// subscription level.
+        /// </summary>
+        ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Account Create Operation Status operation returns the
         /// status of the account creation operation. After calling an
         /// asynchronous operation, you can call this method to determine

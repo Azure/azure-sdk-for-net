@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceId'>
         /// The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -42,8 +45,14 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AntaresSkuGetResponse> GetAntaresCurrentSkuInternalAsync(string resourceId, CancellationToken cancellationToken);
+        Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
         
+        /// <param name='resourceId'>
+        /// The resource id.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -51,6 +60,18 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuUpdateResponse> UpdateAntaresCurrentSkuInternalAsync(string resourceId, AntaresSkuUpdateRequest parameters, CancellationToken cancellationToken);
+        Task<SkuListResponse> ListSkuDefinitionsAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
+        
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken);
     }
 }

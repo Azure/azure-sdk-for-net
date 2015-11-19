@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         public abstract TCore ToCoreType(TWrapper wrappedObject);
 
         /// <summary>
-        /// Converts <paramref name="coreObject"/> from type TWrapper to TCore.
+        /// Converts <paramref name="internalDataset"/> from type TWrapper to TCore.
         /// </summary>
-        /// <param name="coreObject">
+        /// <param name="internalDataset">
         /// The object to convert to its strong/wrapped type equivalent.
         /// </param>
-        /// <returns>The wrapped representation of <paramref name="coreObject"/>.</returns>
-        public abstract TWrapper ToWrapperType(TCore coreObject);
+        /// <returns>The wrapped representation of <paramref name="internalDataset"/>.</returns>
+        public abstract TWrapper ToWrapperType(TCore internalDataset);
 
         /// <summary>
         /// Checks if <paramref name="wrappedObject"/> is valid.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 return;
             }
                 
-            if (ImplementsIDictionary(property) || !ShouldValidateMembers(property))
+            if (!ShouldValidateMembers(property))
             {
                 return;
             }
@@ -177,10 +177,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 #if NET45
         private void ValidateList(IList list)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IList.");
-            }
+            Ensure.IsNotNull(list, "list", "Some properties of the type cannot be cast to IList.");
 
             Type type = list.GetType().GetTypeInfo().GenericTypeArguments[0];
             if (!ShouldValidateMembers(type))
@@ -201,10 +198,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         private void ValidateDictionary(IDictionary list)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IDictionary.");
-            }
+            Ensure.IsNotNull(list, "list", "Some properties of the type cannot be cast to IDictionary.");
 
             Type type = list.GetType().GetTypeInfo().GenericTypeArguments[1];
             if (!ShouldValidateMembers(type))

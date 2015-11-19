@@ -91,6 +91,42 @@ namespace Microsoft.Azure.Management.Network
         
         /// <summary>
         /// The Network Resource Provider API includes operations for managing
+        /// the Authorizations for your subscription.
+        /// </summary>
+        IExpressRouteCircuitAuthorizationOperations ExpressRouteCircuitAuthorizations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteCircuits for your subscription.
+        /// </summary>
+        IExpressRouteCircuitOperations ExpressRouteCircuits
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Peerings for your subscription.
+        /// </summary>
+        IExpressRouteCircuitPeeringOperations ExpressRouteCircuitPeerings
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the ExpressRouteServiceProviders for your subscription.
+        /// </summary>
+        IExpressRouteServiceProviderOperations ExpressRouteServiceProviders
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
         /// the load balancers for your subscription.
         /// </summary>
         ILoadBalancerOperations LoadBalancers

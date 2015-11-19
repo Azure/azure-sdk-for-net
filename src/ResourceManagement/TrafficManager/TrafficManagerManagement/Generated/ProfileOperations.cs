@@ -37,7 +37,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.TrafficManager
 {
     /// <summary>
-    /// Operations for managing WATMv2 profiles.
+    /// Operations for managing Traffic Manager profiles.
     /// </summary>
     internal partial class ProfileOperations : IServiceOperations<TrafficManagerManagementClient>, IProfileOperations
     {
@@ -64,22 +64,223 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Create or update a WATMv2 profile within a resource group.
+        /// Create or update a Traffic Manager endpoint.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='profileName'>
-        /// Required. The name of the zone without a terminating dot.
-        /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the CreateOrUpdate operation.
+        /// Required. The Traffic Manager name parameters supplied to the
+        /// CheckTrafficManagerNameAvailability operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile CreateOrUpdate operation.
+        /// The response to a 'CheckTrafficManagerNameAvailability' operation.
+        /// </returns>
+        public async Task<CheckTrafficManagerRelativeDnsNameAvailabilityResponse> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(CheckTrafficManagerRelativeDnsNameAvailabilityParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            if (parameters.Type == null)
+            {
+                throw new ArgumentNullException("parameters.Type");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CheckTrafficManagerRelativeDnsNameAvailabilityAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "providers/";
+            url = url + "Microsoft.Network";
+            url = url + "/checkTrafficManagerNameAvailability";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject checkTrafficManagerRelativeDnsNameAvailabilityParametersValue = new JObject();
+                requestDoc = checkTrafficManagerRelativeDnsNameAvailabilityParametersValue;
+                
+                checkTrafficManagerRelativeDnsNameAvailabilityParametersValue["name"] = parameters.Name;
+                
+                checkTrafficManagerRelativeDnsNameAvailabilityParametersValue["type"] = parameters.Type;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CheckTrafficManagerRelativeDnsNameAvailabilityResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new CheckTrafficManagerRelativeDnsNameAvailabilityResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            result.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            result.Type = typeInstance;
+                        }
+                        
+                        JToken nameAvailableValue = responseDoc["nameAvailable"];
+                        if (nameAvailableValue != null && nameAvailableValue.Type != JTokenType.Null)
+                        {
+                            bool nameAvailableInstance = ((bool)nameAvailableValue);
+                            result.NameAvailable = nameAvailableInstance;
+                        }
+                        
+                        JToken reasonValue = responseDoc["reason"];
+                        if (reasonValue != null && reasonValue.Type != JTokenType.Null)
+                        {
+                            Reason reasonInstance = ((Reason)Enum.Parse(typeof(Reason), ((string)reasonValue), true));
+                            result.Reason = reasonInstance;
+                        }
+                        
+                        JToken messageValue = responseDoc["message"];
+                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                        {
+                            string messageInstance = ((string)messageValue);
+                            result.Message = messageInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Create or update a Traffic Manager profile.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group containing the Traffic
+        /// Manager profile.
+        /// </param>
+        /// <param name='profileName'>
+        /// Required. The name of the Traffic Manager profile.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Traffic Manager profile parameters supplied to the
+        /// CreateOrUpdate operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Traffic Manager profile 'CreateOrUpdate'
+        /// operation.
         /// </returns>
         public async Task<ProfileCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string profileName, ProfileCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -106,47 +307,23 @@ namespace Microsoft.Azure.Management.TrafficManager
             }
             if (parameters.Profile.Properties != null)
             {
-                if (parameters.Profile.Properties.DnsConfig == null)
+                if (parameters.Profile.Properties.DnsConfig != null)
                 {
-                    throw new ArgumentNullException("parameters.Profile.Properties.DnsConfig");
-                }
-                if (parameters.Profile.Properties.DnsConfig.RelativeName == null)
-                {
-                    throw new ArgumentNullException("parameters.Profile.Properties.DnsConfig.RelativeName");
-                }
-                if (parameters.Profile.Properties.Endpoints != null)
-                {
-                    foreach (Endpoint endpointsParameterItem in parameters.Profile.Properties.Endpoints)
+                    if (parameters.Profile.Properties.DnsConfig.RelativeName == null)
                     {
-                        if (endpointsParameterItem.Properties == null)
-                        {
-                            throw new ArgumentNullException("parameters.Profile.Properties.Endpoints.Properties");
-                        }
-                        if (endpointsParameterItem.Properties.EndpointStatus == null)
-                        {
-                            throw new ArgumentNullException("parameters.Profile.Properties.Endpoints.Properties.EndpointStatus");
-                        }
-                        if (endpointsParameterItem.Properties.Target == null)
-                        {
-                            throw new ArgumentNullException("parameters.Profile.Properties.Endpoints.Properties.Target");
-                        }
+                        throw new ArgumentNullException("parameters.Profile.Properties.DnsConfig.RelativeName");
                     }
                 }
-                if (parameters.Profile.Properties.MonitorConfig == null)
+                if (parameters.Profile.Properties.MonitorConfig != null)
                 {
-                    throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig");
-                }
-                if (parameters.Profile.Properties.MonitorConfig.Path == null)
-                {
-                    throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Path");
-                }
-                if (parameters.Profile.Properties.MonitorConfig.Protocol == null)
-                {
-                    throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Protocol");
-                }
-                if (parameters.Profile.Properties.TrafficRoutingMethod == null)
-                {
-                    throw new ArgumentNullException("parameters.Profile.Properties.TrafficRoutingMethod");
+                    if (parameters.Profile.Properties.MonitorConfig.Path == null)
+                    {
+                        throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Path");
+                    }
+                    if (parameters.Profile.Properties.MonitorConfig.Protocol == null)
+                    {
+                        throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Protocol");
+                    }
                 }
             }
             
@@ -173,11 +350,11 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "microsoft.network";
+            url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -226,33 +403,42 @@ namespace Microsoft.Azure.Management.TrafficManager
                         propertiesValue["profileStatus"] = parameters.Profile.Properties.ProfileStatus;
                     }
                     
-                    propertiesValue["trafficRoutingMethod"] = parameters.Profile.Properties.TrafficRoutingMethod;
-                    
-                    JObject dnsConfigValue = new JObject();
-                    propertiesValue["dnsConfig"] = dnsConfigValue;
-                    
-                    dnsConfigValue["relativeName"] = parameters.Profile.Properties.DnsConfig.RelativeName;
-                    
-                    if (parameters.Profile.Properties.DnsConfig.Fqdn != null)
+                    if (parameters.Profile.Properties.TrafficRoutingMethod != null)
                     {
-                        dnsConfigValue["fqdn"] = parameters.Profile.Properties.DnsConfig.Fqdn;
+                        propertiesValue["trafficRoutingMethod"] = parameters.Profile.Properties.TrafficRoutingMethod;
                     }
                     
-                    dnsConfigValue["ttl"] = parameters.Profile.Properties.DnsConfig.Ttl;
-                    
-                    JObject monitorConfigValue = new JObject();
-                    propertiesValue["monitorConfig"] = monitorConfigValue;
-                    
-                    if (parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus != null)
+                    if (parameters.Profile.Properties.DnsConfig != null)
                     {
-                        monitorConfigValue["profileMonitorStatus"] = parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus;
+                        JObject dnsConfigValue = new JObject();
+                        propertiesValue["dnsConfig"] = dnsConfigValue;
+                        
+                        dnsConfigValue["relativeName"] = parameters.Profile.Properties.DnsConfig.RelativeName;
+                        
+                        if (parameters.Profile.Properties.DnsConfig.Fqdn != null)
+                        {
+                            dnsConfigValue["fqdn"] = parameters.Profile.Properties.DnsConfig.Fqdn;
+                        }
+                        
+                        dnsConfigValue["ttl"] = parameters.Profile.Properties.DnsConfig.Ttl;
                     }
                     
-                    monitorConfigValue["protocol"] = parameters.Profile.Properties.MonitorConfig.Protocol;
-                    
-                    monitorConfigValue["port"] = parameters.Profile.Properties.MonitorConfig.Port;
-                    
-                    monitorConfigValue["path"] = parameters.Profile.Properties.MonitorConfig.Path;
+                    if (parameters.Profile.Properties.MonitorConfig != null)
+                    {
+                        JObject monitorConfigValue = new JObject();
+                        propertiesValue["monitorConfig"] = monitorConfigValue;
+                        
+                        if (parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus != null)
+                        {
+                            monitorConfigValue["profileMonitorStatus"] = parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus;
+                        }
+                        
+                        monitorConfigValue["protocol"] = parameters.Profile.Properties.MonitorConfig.Protocol;
+                        
+                        monitorConfigValue["port"] = parameters.Profile.Properties.MonitorConfig.Port;
+                        
+                        monitorConfigValue["path"] = parameters.Profile.Properties.MonitorConfig.Path;
+                    }
                     
                     if (parameters.Profile.Properties.Endpoints != null)
                     {
@@ -277,36 +463,50 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 endpointValue["type"] = endpointsItem.Type;
                             }
                             
-                            JObject propertiesValue2 = new JObject();
-                            endpointValue["properties"] = propertiesValue2;
-                            
-                            if (endpointsItem.Properties.TargetResourceId != null)
+                            if (endpointsItem.Properties != null)
                             {
-                                propertiesValue2["targetResourceId"] = endpointsItem.Properties.TargetResourceId;
-                            }
-                            
-                            propertiesValue2["target"] = endpointsItem.Properties.Target;
-                            
-                            propertiesValue2["endpointStatus"] = endpointsItem.Properties.EndpointStatus;
-                            
-                            if (endpointsItem.Properties.Weight != null)
-                            {
-                                propertiesValue2["weight"] = endpointsItem.Properties.Weight.Value;
-                            }
-                            
-                            if (endpointsItem.Properties.Priority != null)
-                            {
-                                propertiesValue2["priority"] = endpointsItem.Properties.Priority.Value;
-                            }
-                            
-                            if (endpointsItem.Properties.EndpointLocation != null)
-                            {
-                                propertiesValue2["endpointLocation"] = endpointsItem.Properties.EndpointLocation;
-                            }
-                            
-                            if (endpointsItem.Properties.EndpointMonitorStatus != null)
-                            {
-                                propertiesValue2["endpointMonitorStatus"] = endpointsItem.Properties.EndpointMonitorStatus;
+                                JObject propertiesValue2 = new JObject();
+                                endpointValue["properties"] = propertiesValue2;
+                                
+                                if (endpointsItem.Properties.TargetResourceId != null)
+                                {
+                                    propertiesValue2["targetResourceId"] = endpointsItem.Properties.TargetResourceId;
+                                }
+                                
+                                if (endpointsItem.Properties.Target != null)
+                                {
+                                    propertiesValue2["target"] = endpointsItem.Properties.Target;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointStatus != null)
+                                {
+                                    propertiesValue2["endpointStatus"] = endpointsItem.Properties.EndpointStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.Weight != null)
+                                {
+                                    propertiesValue2["weight"] = endpointsItem.Properties.Weight.Value;
+                                }
+                                
+                                if (endpointsItem.Properties.Priority != null)
+                                {
+                                    propertiesValue2["priority"] = endpointsItem.Properties.Priority.Value;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointLocation != null)
+                                {
+                                    propertiesValue2["endpointLocation"] = endpointsItem.Properties.EndpointLocation;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointMonitorStatus != null)
+                                {
+                                    propertiesValue2["endpointMonitorStatus"] = endpointsItem.Properties.EndpointMonitorStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.MinChildEndpoints != null)
+                                {
+                                    propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
+                                }
                             }
                         }
                         propertiesValue["endpoints"] = endpointsArray;
@@ -556,6 +756,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                             propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                         }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue4["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
                                     }
                                 }
                             }
@@ -631,13 +838,14 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Deletes a WATMv2 profile within a resource group.
+        /// Deletes a Traffic Manager profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group containing the Traffic
+        /// Manager profile to be deleted.
         /// </param>
         /// <param name='profileName'>
-        /// Required. The name of the zone without a terminating dot.
+        /// Required. The name of the Traffic Manager profile to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -680,11 +888,11 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "microsoft.network";
+            url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -776,19 +984,20 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Gets a WATMv2 profile within a resource group.
+        /// Gets a Traffic Manager profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group containing the Traffic
+        /// Manager profile.
         /// </param>
         /// <param name='profileName'>
-        /// Required. The name of the zone without a terminating dot.
+        /// Required. The name of the Traffic Manager profile.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile Create operation.
+        /// The response to a Traffic Manager profile 'Create' operation.
         /// </returns>
         public async Task<ProfileGetResponse> GetAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken)
         {
@@ -824,11 +1033,11 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "microsoft.network";
+            url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1070,6 +1279,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                             propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                         }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1145,13 +1361,14 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Lists all WATMv2 profile within a subscription.
+        /// Lists all Traffic Manager profiles within a subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile ProfileListAll operation.
+        /// The response to a Traffic Manager profile 'ListAll' or
+        /// 'ListAllInResourceGroup' operation.
         /// </returns>
         public async Task<ProfileListResponse> ListAllAsync(CancellationToken cancellationToken)
         {
@@ -1175,10 +1392,10 @@ namespace Microsoft.Azure.Management.TrafficManager
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/providers/";
-            url = url + "microsoft.network";
+            url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1250,15 +1467,15 @@ namespace Microsoft.Azure.Management.TrafficManager
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken valuesArray = responseDoc["values"];
-                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valuesValue in ((JArray)valuesArray))
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Profile profileInstance = new Profile();
                                 result.Profiles.Add(profileInstance);
                                 
-                                JToken propertiesValue = valuesValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     ProfileProperties propertiesInstance = new ProfileProperties();
@@ -1425,40 +1642,47 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                     string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                                     propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                                 }
+                                                
+                                                JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                                if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                                {
+                                                    uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                                    propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
                                 
-                                JToken idValue2 = valuesValue["id"];
+                                JToken idValue2 = valueValue["id"];
                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
                                     string idInstance2 = ((string)idValue2);
                                     profileInstance.Id = idInstance2;
                                 }
                                 
-                                JToken nameValue2 = valuesValue["name"];
+                                JToken nameValue2 = valueValue["name"];
                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
                                     string nameInstance2 = ((string)nameValue2);
                                     profileInstance.Name = nameInstance2;
                                 }
                                 
-                                JToken typeValue2 = valuesValue["type"];
+                                JToken typeValue2 = valueValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
                                     string typeInstance2 = ((string)typeValue2);
                                     profileInstance.Type = typeInstance2;
                                 }
                                 
-                                JToken locationValue = valuesValue["location"];
+                                JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
                                     profileInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valuesValue["tags"]);
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
@@ -1502,16 +1726,18 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Lists all WATMv2 profiles within a resource group.
+        /// Lists all Traffic Manager profiles within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group containing the Traffic
+        /// Manager profiles to be listed.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile ProfileListAll operation.
+        /// The response to a Traffic Manager profile 'ListAll' or
+        /// 'ListAllInResourceGroup' operation.
         /// </returns>
         public async Task<ProfileListResponse> ListAllInResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
@@ -1542,10 +1768,10 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "microsoft.network";
+            url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1617,15 +1843,15 @@ namespace Microsoft.Azure.Management.TrafficManager
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken valuesArray = responseDoc["values"];
-                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valuesValue in ((JArray)valuesArray))
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Profile profileInstance = new Profile();
                                 result.Profiles.Add(profileInstance);
                                 
-                                JToken propertiesValue = valuesValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     ProfileProperties propertiesInstance = new ProfileProperties();
@@ -1792,40 +2018,47 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                     string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                                     propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                                 }
+                                                
+                                                JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                                if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                                {
+                                                    uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                                    propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
                                 
-                                JToken idValue2 = valuesValue["id"];
+                                JToken idValue2 = valueValue["id"];
                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
                                     string idInstance2 = ((string)idValue2);
                                     profileInstance.Id = idInstance2;
                                 }
                                 
-                                JToken nameValue2 = valuesValue["name"];
+                                JToken nameValue2 = valueValue["name"];
                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
                                     string nameInstance2 = ((string)nameValue2);
                                     profileInstance.Name = nameInstance2;
                                 }
                                 
-                                JToken typeValue2 = valuesValue["type"];
+                                JToken typeValue2 = valueValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
                                     string typeInstance2 = ((string)typeValue2);
                                     profileInstance.Type = typeInstance2;
                                 }
                                 
-                                JToken locationValue = valuesValue["location"];
+                                JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
                                     profileInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valuesValue["tags"]);
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
@@ -1835,6 +2068,584 @@ namespace Microsoft.Azure.Management.TrafficManager
                                         profileInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update a Traffic Manager profile.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group containing the Traffic
+        /// Manager profile.
+        /// </param>
+        /// <param name='profileName'>
+        /// Required. The name of the Traffic Manager profile.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Traffic Manager profile parameters supplied to the
+        /// Update operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Parameters supplied to update a Traffic Manager profile.
+        /// </returns>
+        public async Task<ProfileUpdateResponse> UpdateAsync(string resourceGroupName, string profileName, ProfileUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (profileName == null)
+            {
+                throw new ArgumentNullException("profileName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Profile == null)
+            {
+                throw new ArgumentNullException("parameters.Profile");
+            }
+            if (parameters.Profile.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Profile.Location");
+            }
+            if (parameters.Profile.Properties != null)
+            {
+                if (parameters.Profile.Properties.DnsConfig != null)
+                {
+                    if (parameters.Profile.Properties.DnsConfig.RelativeName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Profile.Properties.DnsConfig.RelativeName");
+                    }
+                }
+                if (parameters.Profile.Properties.MonitorConfig != null)
+                {
+                    if (parameters.Profile.Properties.MonitorConfig.Path == null)
+                    {
+                        throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Path");
+                    }
+                    if (parameters.Profile.Properties.MonitorConfig.Protocol == null)
+                    {
+                        throw new ArgumentNullException("parameters.Profile.Properties.MonitorConfig.Protocol");
+                    }
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Network";
+            url = url + "/trafficmanagerprofiles/";
+            url = url + Uri.EscapeDataString(profileName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject profileUpdateParametersValue = new JObject();
+                requestDoc = profileUpdateParametersValue;
+                
+                if (parameters.Profile.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    profileUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Profile.Properties.ProfileStatus != null)
+                    {
+                        propertiesValue["profileStatus"] = parameters.Profile.Properties.ProfileStatus;
+                    }
+                    
+                    if (parameters.Profile.Properties.TrafficRoutingMethod != null)
+                    {
+                        propertiesValue["trafficRoutingMethod"] = parameters.Profile.Properties.TrafficRoutingMethod;
+                    }
+                    
+                    if (parameters.Profile.Properties.DnsConfig != null)
+                    {
+                        JObject dnsConfigValue = new JObject();
+                        propertiesValue["dnsConfig"] = dnsConfigValue;
+                        
+                        dnsConfigValue["relativeName"] = parameters.Profile.Properties.DnsConfig.RelativeName;
+                        
+                        if (parameters.Profile.Properties.DnsConfig.Fqdn != null)
+                        {
+                            dnsConfigValue["fqdn"] = parameters.Profile.Properties.DnsConfig.Fqdn;
+                        }
+                        
+                        dnsConfigValue["ttl"] = parameters.Profile.Properties.DnsConfig.Ttl;
+                    }
+                    
+                    if (parameters.Profile.Properties.MonitorConfig != null)
+                    {
+                        JObject monitorConfigValue = new JObject();
+                        propertiesValue["monitorConfig"] = monitorConfigValue;
+                        
+                        if (parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus != null)
+                        {
+                            monitorConfigValue["profileMonitorStatus"] = parameters.Profile.Properties.MonitorConfig.ProfileMonitorStatus;
+                        }
+                        
+                        monitorConfigValue["protocol"] = parameters.Profile.Properties.MonitorConfig.Protocol;
+                        
+                        monitorConfigValue["port"] = parameters.Profile.Properties.MonitorConfig.Port;
+                        
+                        monitorConfigValue["path"] = parameters.Profile.Properties.MonitorConfig.Path;
+                    }
+                    
+                    if (parameters.Profile.Properties.Endpoints != null)
+                    {
+                        JArray endpointsArray = new JArray();
+                        foreach (Endpoint endpointsItem in parameters.Profile.Properties.Endpoints)
+                        {
+                            JObject endpointValue = new JObject();
+                            endpointsArray.Add(endpointValue);
+                            
+                            if (endpointsItem.Id != null)
+                            {
+                                endpointValue["id"] = endpointsItem.Id;
+                            }
+                            
+                            if (endpointsItem.Name != null)
+                            {
+                                endpointValue["name"] = endpointsItem.Name;
+                            }
+                            
+                            if (endpointsItem.Type != null)
+                            {
+                                endpointValue["type"] = endpointsItem.Type;
+                            }
+                            
+                            if (endpointsItem.Properties != null)
+                            {
+                                JObject propertiesValue2 = new JObject();
+                                endpointValue["properties"] = propertiesValue2;
+                                
+                                if (endpointsItem.Properties.TargetResourceId != null)
+                                {
+                                    propertiesValue2["targetResourceId"] = endpointsItem.Properties.TargetResourceId;
+                                }
+                                
+                                if (endpointsItem.Properties.Target != null)
+                                {
+                                    propertiesValue2["target"] = endpointsItem.Properties.Target;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointStatus != null)
+                                {
+                                    propertiesValue2["endpointStatus"] = endpointsItem.Properties.EndpointStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.Weight != null)
+                                {
+                                    propertiesValue2["weight"] = endpointsItem.Properties.Weight.Value;
+                                }
+                                
+                                if (endpointsItem.Properties.Priority != null)
+                                {
+                                    propertiesValue2["priority"] = endpointsItem.Properties.Priority.Value;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointLocation != null)
+                                {
+                                    propertiesValue2["endpointLocation"] = endpointsItem.Properties.EndpointLocation;
+                                }
+                                
+                                if (endpointsItem.Properties.EndpointMonitorStatus != null)
+                                {
+                                    propertiesValue2["endpointMonitorStatus"] = endpointsItem.Properties.EndpointMonitorStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.MinChildEndpoints != null)
+                                {
+                                    propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
+                                }
+                            }
+                        }
+                        propertiesValue["endpoints"] = endpointsArray;
+                    }
+                }
+                
+                if (parameters.Profile.Id != null)
+                {
+                    profileUpdateParametersValue["id"] = parameters.Profile.Id;
+                }
+                
+                if (parameters.Profile.Name != null)
+                {
+                    profileUpdateParametersValue["name"] = parameters.Profile.Name;
+                }
+                
+                if (parameters.Profile.Type != null)
+                {
+                    profileUpdateParametersValue["type"] = parameters.Profile.Type;
+                }
+                
+                profileUpdateParametersValue["location"] = parameters.Profile.Location;
+                
+                if (parameters.Profile.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Profile.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    profileUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ProfileUpdateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ProfileUpdateResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    JToken profileUpdateResponseValue = responseDoc["ProfileUpdateResponse"];
+                    if (profileUpdateResponseValue != null && profileUpdateResponseValue.Type != JTokenType.Null)
+                    {
+                        ProfileUpdateParameters profileUpdateResponseInstance = new ProfileUpdateParameters();
+                        
+                        Profile profileInstance = new Profile();
+                        result.Profile = profileInstance;
+                        
+                        JToken propertiesValue3 = profileUpdateResponseValue["properties"];
+                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                        {
+                            ProfileProperties propertiesInstance = new ProfileProperties();
+                            profileInstance.Properties = propertiesInstance;
+                            
+                            JToken profileStatusValue = propertiesValue3["profileStatus"];
+                            if (profileStatusValue != null && profileStatusValue.Type != JTokenType.Null)
+                            {
+                                string profileStatusInstance = ((string)profileStatusValue);
+                                propertiesInstance.ProfileStatus = profileStatusInstance;
+                            }
+                            
+                            JToken trafficRoutingMethodValue = propertiesValue3["trafficRoutingMethod"];
+                            if (trafficRoutingMethodValue != null && trafficRoutingMethodValue.Type != JTokenType.Null)
+                            {
+                                string trafficRoutingMethodInstance = ((string)trafficRoutingMethodValue);
+                                propertiesInstance.TrafficRoutingMethod = trafficRoutingMethodInstance;
+                            }
+                            
+                            JToken dnsConfigValue2 = propertiesValue3["dnsConfig"];
+                            if (dnsConfigValue2 != null && dnsConfigValue2.Type != JTokenType.Null)
+                            {
+                                DnsConfig dnsConfigInstance = new DnsConfig();
+                                propertiesInstance.DnsConfig = dnsConfigInstance;
+                                
+                                JToken relativeNameValue = dnsConfigValue2["relativeName"];
+                                if (relativeNameValue != null && relativeNameValue.Type != JTokenType.Null)
+                                {
+                                    string relativeNameInstance = ((string)relativeNameValue);
+                                    dnsConfigInstance.RelativeName = relativeNameInstance;
+                                }
+                                
+                                JToken fqdnValue = dnsConfigValue2["fqdn"];
+                                if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
+                                {
+                                    string fqdnInstance = ((string)fqdnValue);
+                                    dnsConfigInstance.Fqdn = fqdnInstance;
+                                }
+                                
+                                JToken ttlValue = dnsConfigValue2["ttl"];
+                                if (ttlValue != null && ttlValue.Type != JTokenType.Null)
+                                {
+                                    uint ttlInstance = ((uint)ttlValue);
+                                    dnsConfigInstance.Ttl = ttlInstance;
+                                }
+                            }
+                            
+                            JToken monitorConfigValue2 = propertiesValue3["monitorConfig"];
+                            if (monitorConfigValue2 != null && monitorConfigValue2.Type != JTokenType.Null)
+                            {
+                                MonitorConfig monitorConfigInstance = new MonitorConfig();
+                                propertiesInstance.MonitorConfig = monitorConfigInstance;
+                                
+                                JToken profileMonitorStatusValue = monitorConfigValue2["profileMonitorStatus"];
+                                if (profileMonitorStatusValue != null && profileMonitorStatusValue.Type != JTokenType.Null)
+                                {
+                                    string profileMonitorStatusInstance = ((string)profileMonitorStatusValue);
+                                    monitorConfigInstance.ProfileMonitorStatus = profileMonitorStatusInstance;
+                                }
+                                
+                                JToken protocolValue = monitorConfigValue2["protocol"];
+                                if (protocolValue != null && protocolValue.Type != JTokenType.Null)
+                                {
+                                    string protocolInstance = ((string)protocolValue);
+                                    monitorConfigInstance.Protocol = protocolInstance;
+                                }
+                                
+                                JToken portValue = monitorConfigValue2["port"];
+                                if (portValue != null && portValue.Type != JTokenType.Null)
+                                {
+                                    uint portInstance = ((uint)portValue);
+                                    monitorConfigInstance.Port = portInstance;
+                                }
+                                
+                                JToken pathValue = monitorConfigValue2["path"];
+                                if (pathValue != null && pathValue.Type != JTokenType.Null)
+                                {
+                                    string pathInstance = ((string)pathValue);
+                                    monitorConfigInstance.Path = pathInstance;
+                                }
+                            }
+                            
+                            JToken endpointsArray2 = propertiesValue3["endpoints"];
+                            if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
+                            {
+                                propertiesInstance.Endpoints = new List<Endpoint>();
+                                foreach (JToken endpointsValue in ((JArray)endpointsArray2))
+                                {
+                                    Endpoint endpointInstance = new Endpoint();
+                                    propertiesInstance.Endpoints.Add(endpointInstance);
+                                    
+                                    JToken idValue = endpointsValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        endpointInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = endpointsValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        endpointInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = endpointsValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        endpointInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue4 = endpointsValue["properties"];
+                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                    {
+                                        EndpointProperties propertiesInstance2 = new EndpointProperties();
+                                        endpointInstance.Properties = propertiesInstance2;
+                                        
+                                        JToken targetResourceIdValue = propertiesValue4["targetResourceId"];
+                                        if (targetResourceIdValue != null && targetResourceIdValue.Type != JTokenType.Null)
+                                        {
+                                            string targetResourceIdInstance = ((string)targetResourceIdValue);
+                                            propertiesInstance2.TargetResourceId = targetResourceIdInstance;
+                                        }
+                                        
+                                        JToken targetValue = propertiesValue4["target"];
+                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                        {
+                                            string targetInstance = ((string)targetValue);
+                                            propertiesInstance2.Target = targetInstance;
+                                        }
+                                        
+                                        JToken endpointStatusValue = propertiesValue4["endpointStatus"];
+                                        if (endpointStatusValue != null && endpointStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointStatusInstance = ((string)endpointStatusValue);
+                                            propertiesInstance2.EndpointStatus = endpointStatusInstance;
+                                        }
+                                        
+                                        JToken weightValue = propertiesValue4["weight"];
+                                        if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                        {
+                                            uint weightInstance = ((uint)weightValue);
+                                            propertiesInstance2.Weight = weightInstance;
+                                        }
+                                        
+                                        JToken priorityValue = propertiesValue4["priority"];
+                                        if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                        {
+                                            uint priorityInstance = ((uint)priorityValue);
+                                            propertiesInstance2.Priority = priorityInstance;
+                                        }
+                                        
+                                        JToken endpointLocationValue = propertiesValue4["endpointLocation"];
+                                        if (endpointLocationValue != null && endpointLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointLocationInstance = ((string)endpointLocationValue);
+                                            propertiesInstance2.EndpointLocation = endpointLocationInstance;
+                                        }
+                                        
+                                        JToken endpointMonitorStatusValue = propertiesValue4["endpointMonitorStatus"];
+                                        if (endpointMonitorStatusValue != null && endpointMonitorStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
+                                            propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
+                                        }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue4["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        JToken idValue2 = profileUpdateResponseValue["id"];
+                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                        {
+                            string idInstance2 = ((string)idValue2);
+                            profileInstance.Id = idInstance2;
+                        }
+                        
+                        JToken nameValue2 = profileUpdateResponseValue["name"];
+                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                        {
+                            string nameInstance2 = ((string)nameValue2);
+                            profileInstance.Name = nameInstance2;
+                        }
+                        
+                        JToken typeValue2 = profileUpdateResponseValue["type"];
+                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                        {
+                            string typeInstance2 = ((string)typeValue2);
+                            profileInstance.Type = typeInstance2;
+                        }
+                        
+                        JToken locationValue = profileUpdateResponseValue["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            profileInstance.Location = locationInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)profileUpdateResponseValue["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey2 = ((string)property.Name);
+                                string tagsValue2 = ((string)property.Value);
+                                profileInstance.Tags.Add(tagsKey2, tagsValue2);
                             }
                         }
                     }

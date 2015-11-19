@@ -123,10 +123,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters.Properties.ExemptPrincipals");
             }
-            if (parameters.Properties.MaskingLevel == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.MaskingLevel");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -204,8 +200,6 @@ namespace Microsoft.Azure.Management.Sql
                 propertiesValue["dataMaskingState"] = parameters.Properties.DataMaskingState;
                 
                 propertiesValue["exemptPrincipals"] = parameters.Properties.ExemptPrincipals;
-                
-                propertiesValue["maskingLevel"] = parameters.Properties.MaskingLevel;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -334,6 +328,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters.Properties.MaskingFunction");
             }
+            if (parameters.Properties.RuleState == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.RuleState");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -412,6 +410,13 @@ namespace Microsoft.Azure.Management.Sql
                 
                 propertiesValue["id"] = parameters.Properties.Id;
                 
+                propertiesValue["ruleState"] = parameters.Properties.RuleState;
+                
+                if (parameters.Properties.SchemaName != null)
+                {
+                    propertiesValue["schemaName"] = parameters.Properties.SchemaName;
+                }
+                
                 if (parameters.Properties.TableName != null)
                 {
                     propertiesValue["tableName"] = parameters.Properties.TableName;
@@ -420,11 +425,6 @@ namespace Microsoft.Azure.Management.Sql
                 if (parameters.Properties.ColumnName != null)
                 {
                     propertiesValue["columnName"] = parameters.Properties.ColumnName;
-                }
-                
-                if (parameters.Properties.AliasName != null)
-                {
-                    propertiesValue["aliasName"] = parameters.Properties.AliasName;
                 }
                 
                 propertiesValue["maskingFunction"] = parameters.Properties.MaskingFunction;
@@ -848,13 +848,6 @@ namespace Microsoft.Azure.Management.Sql
                                     string exemptPrincipalsInstance = ((string)exemptPrincipalsValue);
                                     propertiesInstance.ExemptPrincipals = exemptPrincipalsInstance;
                                 }
-                                
-                                JToken maskingLevelValue = propertiesValue["maskingLevel"];
-                                if (maskingLevelValue != null && maskingLevelValue.Type != JTokenType.Null)
-                                {
-                                    string maskingLevelInstance = ((string)maskingLevelValue);
-                                    propertiesInstance.MaskingLevel = maskingLevelInstance;
-                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -893,306 +886,6 @@ namespace Microsoft.Azure.Management.Sql
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
                                     dataMaskingPolicyInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns an Azure SQL Database data masking rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
-        /// </param>
-        /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database for which the data
-        /// masking rule applies.
-        /// </param>
-        /// <param name='dataMaskingRule'>
-        /// Required. The name of the Azure SQL Database  data masking rule.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents the response to a data masking rule get request.
-        /// </returns>
-        public async Task<DataMaskingRuleGetResponse> GetRuleAsync(string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException("databaseName");
-            }
-            if (dataMaskingRule == null)
-            {
-                throw new ArgumentNullException("dataMaskingRule");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("dataMaskingRule", dataMaskingRule);
-                TracingAdapter.Enter(invocationId, this, "GetRuleAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/databases/";
-            url = url + Uri.EscapeDataString(databaseName);
-            url = url + "/dataMaskingPolicies/Default/rules/";
-            url = url + Uri.EscapeDataString(dataMaskingRule);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    DataMaskingRuleGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DataMaskingRuleGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            DataMaskingRule dataMaskingRuleInstance = new DataMaskingRule();
-                            result.DataMaskingRule = dataMaskingRuleInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                DataMaskingRuleProperties propertiesInstance = new DataMaskingRuleProperties();
-                                dataMaskingRuleInstance.Properties = propertiesInstance;
-                                
-                                JToken idValue = propertiesValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    propertiesInstance.Id = idInstance;
-                                }
-                                
-                                JToken tableNameValue = propertiesValue["tableName"];
-                                if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
-                                {
-                                    string tableNameInstance = ((string)tableNameValue);
-                                    propertiesInstance.TableName = tableNameInstance;
-                                }
-                                
-                                JToken columnNameValue = propertiesValue["columnName"];
-                                if (columnNameValue != null && columnNameValue.Type != JTokenType.Null)
-                                {
-                                    string columnNameInstance = ((string)columnNameValue);
-                                    propertiesInstance.ColumnName = columnNameInstance;
-                                }
-                                
-                                JToken aliasNameValue = propertiesValue["aliasName"];
-                                if (aliasNameValue != null && aliasNameValue.Type != JTokenType.Null)
-                                {
-                                    string aliasNameInstance = ((string)aliasNameValue);
-                                    propertiesInstance.AliasName = aliasNameInstance;
-                                }
-                                
-                                JToken maskingFunctionValue = propertiesValue["maskingFunction"];
-                                if (maskingFunctionValue != null && maskingFunctionValue.Type != JTokenType.Null)
-                                {
-                                    string maskingFunctionInstance = ((string)maskingFunctionValue);
-                                    propertiesInstance.MaskingFunction = maskingFunctionInstance;
-                                }
-                                
-                                JToken numberFromValue = propertiesValue["numberFrom"];
-                                if (numberFromValue != null && numberFromValue.Type != JTokenType.Null)
-                                {
-                                    string numberFromInstance = ((string)numberFromValue);
-                                    propertiesInstance.NumberFrom = numberFromInstance;
-                                }
-                                
-                                JToken numberToValue = propertiesValue["numberTo"];
-                                if (numberToValue != null && numberToValue.Type != JTokenType.Null)
-                                {
-                                    string numberToInstance = ((string)numberToValue);
-                                    propertiesInstance.NumberTo = numberToInstance;
-                                }
-                                
-                                JToken prefixSizeValue = propertiesValue["prefixSize"];
-                                if (prefixSizeValue != null && prefixSizeValue.Type != JTokenType.Null)
-                                {
-                                    string prefixSizeInstance = ((string)prefixSizeValue);
-                                    propertiesInstance.PrefixSize = prefixSizeInstance;
-                                }
-                                
-                                JToken suffixSizeValue = propertiesValue["suffixSize"];
-                                if (suffixSizeValue != null && suffixSizeValue.Type != JTokenType.Null)
-                                {
-                                    string suffixSizeInstance = ((string)suffixSizeValue);
-                                    propertiesInstance.SuffixSize = suffixSizeInstance;
-                                }
-                                
-                                JToken replacementStringValue = propertiesValue["replacementString"];
-                                if (replacementStringValue != null && replacementStringValue.Type != JTokenType.Null)
-                                {
-                                    string replacementStringInstance = ((string)replacementStringValue);
-                                    propertiesInstance.ReplacementString = replacementStringInstance;
-                                }
-                            }
-                            
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                            {
-                                string idInstance2 = ((string)idValue2);
-                                dataMaskingRuleInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                dataMaskingRuleInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                dataMaskingRuleInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                dataMaskingRuleInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    dataMaskingRuleInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -1389,6 +1082,20 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.Id = idInstance;
                                         }
                                         
+                                        JToken ruleStateValue = propertiesValue["ruleState"];
+                                        if (ruleStateValue != null && ruleStateValue.Type != JTokenType.Null)
+                                        {
+                                            string ruleStateInstance = ((string)ruleStateValue);
+                                            propertiesInstance.RuleState = ruleStateInstance;
+                                        }
+                                        
+                                        JToken schemaNameValue = propertiesValue["schemaName"];
+                                        if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
+                                        {
+                                            string schemaNameInstance = ((string)schemaNameValue);
+                                            propertiesInstance.SchemaName = schemaNameInstance;
+                                        }
+                                        
                                         JToken tableNameValue = propertiesValue["tableName"];
                                         if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
                                         {
@@ -1401,13 +1108,6 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string columnNameInstance = ((string)columnNameValue);
                                             propertiesInstance.ColumnName = columnNameInstance;
-                                        }
-                                        
-                                        JToken aliasNameValue = propertiesValue["aliasName"];
-                                        if (aliasNameValue != null && aliasNameValue.Type != JTokenType.Null)
-                                        {
-                                            string aliasNameInstance = ((string)aliasNameValue);
-                                            propertiesInstance.AliasName = aliasNameInstance;
                                         }
                                         
                                         JToken maskingFunctionValue = propertiesValue["maskingFunction"];

@@ -29,18 +29,6 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class DataMaskingRuleProperties
     {
-        private string _aliasName;
-        
-        /// <summary>
-        /// Optional. Gets or sets the alias name on which the data masking
-        /// rule is applied.
-        /// </summary>
-        public string AliasName
-        {
-            get { return this._aliasName; }
-            set { this._aliasName = value; }
-        }
-        
         private string _columnName;
         
         /// <summary>
@@ -123,6 +111,29 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._replacementString = value; }
         }
         
+        private string _ruleState;
+        
+        /// <summary>
+        /// Required. Gets or sets the rule state.
+        /// </summary>
+        public string RuleState
+        {
+            get { return this._ruleState; }
+            set { this._ruleState = value; }
+        }
+        
+        private string _schemaName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the schema name on which the data masking
+        /// rule is applied.
+        /// </summary>
+        public string SchemaName
+        {
+            get { return this._schemaName; }
+            set { this._schemaName = value; }
+        }
+        
         private string _suffixSize;
         
         /// <summary>
@@ -158,18 +169,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DataMaskingRuleProperties class
         /// with required arguments.
         /// </summary>
-        public DataMaskingRuleProperties(string id, string maskingFunction)
+        public DataMaskingRuleProperties(string id, string ruleState, string maskingFunction)
             : this()
         {
             if (id == null)
             {
                 throw new ArgumentNullException("id");
             }
+            if (ruleState == null)
+            {
+                throw new ArgumentNullException("ruleState");
+            }
             if (maskingFunction == null)
             {
                 throw new ArgumentNullException("maskingFunction");
             }
             this.Id = id;
+            this.RuleState = ruleState;
             this.MaskingFunction = maskingFunction;
         }
     }

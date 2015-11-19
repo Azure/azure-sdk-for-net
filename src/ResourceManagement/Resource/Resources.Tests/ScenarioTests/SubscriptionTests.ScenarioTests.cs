@@ -36,7 +36,6 @@ namespace ResourceGroups.Tests
                 client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
-
             return client;
         }
 
@@ -75,6 +74,30 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(subscription.Subscriptions[0].SubscriptionId);
                 Assert.NotNull(subscription.Subscriptions[0].DisplayName);
                 Assert.NotNull(subscription.Subscriptions[0].State);
+            }
+        }
+
+        [Fact]
+        public void ListSubscriptionLocations()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSubscriptionClient(handler);
+                var rmclient = GetResourceManagementClient(handler);
+                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+
+                var locations = client.Subscriptions.ListLocations(rmclient.Credentials.SubscriptionId);
+
+                Assert.NotNull(locations);
+                Assert.Equal(HttpStatusCode.OK, locations.StatusCode);
+                Assert.NotNull(locations.Locations[0].Id);
+                Assert.NotNull(locations.Locations[0].Name);
+                Assert.NotNull(locations.Locations[0].DisplayName);
+                Assert.NotNull(locations.Locations[0].Latitude);
+                Assert.NotNull(locations.Locations[0].Longitude);
             }
         }
         

@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(location);
             url = url + "/quotas";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

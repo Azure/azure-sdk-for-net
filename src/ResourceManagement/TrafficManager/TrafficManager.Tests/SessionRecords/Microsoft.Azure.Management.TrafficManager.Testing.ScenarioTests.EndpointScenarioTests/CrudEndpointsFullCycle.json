@@ -1,0 +1,358 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourcegroups/hydratestdnsrg2641?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlZ3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641\",\r\n  \"name\": \"hydratestdnsrg2641\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "192"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "999999"
+        ],
+        "x-ms-request-id": [
+          "3d316dd2-b638-4e06-bd6c-16bcc5753839"
+        ],
+        "x-ms-correlation-request-id": [
+          "3d316dd2-b638-4e06-bd6c-16bcc5753839"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185453Z:3d316dd2-b638-4e06-bd6c-16bcc5753839"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:54:53 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile6034?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9oeWRyYXRlc3R3YXRtdjJwcm9maWxlNjAzND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"foohydratestrelativeName7559\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"name\": \"hydratestwatmv2profile6034\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\",\r\n  \"location\": \"global\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "435"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile6034\",\r\n  \"name\": \"hydratestwatmv2profile6034\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"foohydratestrelativename7559\",\r\n      \"fqdn\": \"foohydratestrelativename7559.trafficmanager-stage.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": null,\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "611"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "1e1d8844-4bfc-4b19-9c48-326b8c725e90"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b48c39f-d353-493e-b2c7-cef94c78a96b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185457Z:9b48c39f-d353-493e-b2c7-cef94c78a96b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:54:57 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile6034/ExternalEndpoints/hydratestwatmv2endpoint4008?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9oeWRyYXRlc3R3YXRtdjJwcm9maWxlNjAzNC9FeHRlcm5hbEVuZHBvaW50cy9oeWRyYXRlc3R3YXRtdjJlbmRwb2ludDQwMDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"hydratestwatmv2endpoint4008\",\r\n  \"type\": \"Microsoft.network/TrafficManagerProfiles/ExternalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "254"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile6034/externalEndpoints/hydratestwatmv2endpoint4008\",\r\n  \"name\": \"hydratestwatmv2endpoint4008\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": null,\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "494"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "115717a6-e999-4a0b-9abb-ca088cd10280"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "999999"
+        ],
+        "x-ms-correlation-request-id": [
+          "0b450f45-b63d-43d9-8e4a-f451a74ad558"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185500Z:0b450f45-b63d-43d9-8e4a-f451a74ad558"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:55:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile6034/ExternalEndpoints/hydratestwatmv2endpoint4008?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9oeWRyYXRlc3R3YXRtdjJwcm9maWxlNjAzNC9FeHRlcm5hbEVuZHBvaW50cy9oeWRyYXRlc3R3YXRtdjJlbmRwb2ludDQwMDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile6034/externalEndpoints/hydratestwatmv2endpoint4008\",\r\n  \"name\": \"hydratestwatmv2endpoint4008\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": null,\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "494"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "e6577c4b-3779-4a1a-82e7-883869132f4a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "999999"
+        ],
+        "x-ms-correlation-request-id": [
+          "4f7bda63-1b43-4218-9747-1991b82e8f6b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185501Z:4f7bda63-1b43-4218-9747-1991b82e8f6b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:55:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile6034/ExternalEndpoints/hydratestwatmv2endpoint4008?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9oeWRyYXRlc3R3YXRtdjJwcm9maWxlNjAzNC9FeHRlcm5hbEVuZHBvaW50cy9oeWRyYXRlc3R3YXRtdjJlbmRwb2ludDQwMDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile6034/externalEndpoints/hydratestwatmv2endpoint4008\",\r\n  \"name\": \"hydratestwatmv2endpoint4008\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"another.foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "522"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficManagerProfiles/hydratestwatmv2profile6034/externalEndpoints/hydratestwatmv2endpoint4008\",\r\n  \"name\": \"hydratestwatmv2endpoint4008\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": null,\r\n    \"target\": \"another.foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "502"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "df2f8ca9-4989-4b9b-bedc-2dd3b82bdf53"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "999998"
+        ],
+        "x-ms-correlation-request-id": [
+          "ad8abc40-9211-4c78-b138-f14dc31ba8dc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185504Z:ad8abc40-9211-4c78-b138-f14dc31ba8dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:55:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/hydratestdnsrg2641/providers/Microsoft.Network/trafficmanagerprofiles/hydratestwatmv2profile6034/ExternalEndpoints/hydratestwatmv2endpoint4008?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnMjY0MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9oeWRyYXRlc3R3YXRtdjJwcm9maWxlNjAzNC9FeHRlcm5hbEVuZHBvaW50cy9oeWRyYXRlc3R3YXRtdjJlbmRwb2ludDQwMDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "1bd449d5-aee0-45fa-a1e9-c564bce2352a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "999997"
+        ],
+        "x-ms-correlation-request-id": [
+          "8c55e3ca-1d41-4216-b6b6-56e6aa75d418"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151113T185506Z:8c55e3ca-1d41-4216-b6b6-56e6aa75d418"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 13 Nov 2015 18:55:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CrudEndpointsFullCycle": [
+      "hydratestwatmv2profile6034",
+      "hydratestwatmv2endpoint4008"
+    ],
+    "CreateResourceGroup": [
+      "hydratestdnsrg2641"
+    ],
+    "GenerateDefaultProfile": [
+      "foohydratestrelativeName7559"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "e68d4145-c9ae-4667-925d-c51c8d88ad73"
+  }
+}

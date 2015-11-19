@@ -235,64 +235,6 @@ namespace Sql2.Tests.ScenarioTests
             }
         }
 
-        [Fact]
-        public void ElasticPoolMetricDefinitionsOperations()
-        {
-            var handler = new BasicDelegatingHandler();
-
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-
-                // This test requires that an elastic pool has been created and has metrics ready
-                // To prevent requiring putting something like a Sleep(10 minutes) in the code
-                // this test requires the server/elastic pool be pre-created with metrics data available.
-                string resGroupName = "test-group";
-                string serverName = "groupserver1";
-                string elasticPoolName = "testpool2";
-
-                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
-
-                var metrics = sqlClient.ElasticPools.ListMetricDefinitions(
-                    resGroupName,
-                    serverName,
-                    elasticPoolName);
-                TestUtilities.ValidateOperationResponse(metrics, HttpStatusCode.OK);
-                Assert.True(metrics.MetricDefinitions.Count > 0);
-            }
-        }
-
-        [Fact]
-        public void ElasticPoolMetricsOperations()
-        {
-            var handler = new BasicDelegatingHandler();
-
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-
-                // This test requires that an elastic pool has been created and has metrics ready
-                // To prevent requiring putting something like a Sleep(10 minutes) in the code
-                // this test requires the server/elastic pool be pre-created with metrics data available.
-                string resGroupName = "test-group";
-                string serverName = "groupserver1";
-                string elasticPoolName = "testpool2";
-
-                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
-
-                var metrics = sqlClient.ElasticPools.ListMetrics(
-                    resGroupName,
-                    serverName,
-                    elasticPoolName,
-                    "name.value eq 'cpu_percent' or name.value eq 'log_write_percent'",
-                    "PT5M",
-                    DateTime.Parse("2015-04-22T04:00:00Z").ToUniversalTime().ToString("O"),
-                    DateTime.Parse("2015-04-22T05:00:00Z").ToUniversalTime().ToString("O"));
-                TestUtilities.ValidateOperationResponse(metrics, HttpStatusCode.OK);
-                Assert.True(metrics.Metrics.Count > 0);
-            }
-        }
-
         /// <summary>
         /// Validates the Elastic pool properties
         /// </summary>
@@ -303,7 +245,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="dbDtu">The expected min DTU of a database in the pool</param>
         /// <param name="dtuGuarantee">The expected DTU of the pool</param>
         /// <param name="storageLimit">The expected storage limit of the pool</param>
-        private void ValidateElasticPool(ElasticPool pool, string poolName, string edition, long? dbDtuCap, long? dbDtu, long? dtuGuarantee, long? storageLimit)
+        private void ValidateElasticPool(ElasticPool pool, string poolName, string edition, int? dbDtuCap, int? dbDtu, int? dtuGuarantee, int? storageLimit)
         {
             Assert.Equal(pool.Name, poolName);
 

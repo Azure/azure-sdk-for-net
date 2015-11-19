@@ -25,12 +25,10 @@ using System.Linq;
 namespace Microsoft.Azure.Management.TrafficManager
 {
     /// <summary>
-    /// The Windows Azure Traffic Manager management API provides a RESTful set
-    /// of web services that interact with Windows Azure Traffic Manager
-    /// service for creating, updating, listing, and deleting Traffic Manager
-    /// profiles and definitions.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
-    /// more information)
+    /// Client for creating, updating, listing and deleting Azure Traffic
+    /// Manager profiles  (see
+    /// http://azure.microsoft.com/en-gb/documentation/articles/traffic-manager-overview/
+    /// for more information)
     /// </summary>
     public static partial class TrafficManagerManagementClientExtensions
     {

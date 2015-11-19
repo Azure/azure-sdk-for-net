@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1hZG1pbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=admin&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat MapReduce job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "MapReduce",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0061\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265401576&s=hJowHYoK/hxvspsyMU33MBNOnXc=\"; Path=/; Expires=Thu, 03-Sep-2015 07:30:01 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Wed, 02 Sep 2015 21:30:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

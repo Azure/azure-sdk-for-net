@@ -84,20 +84,14 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private string _resourceGroupName;
+        private IMarsContainerOperations _container;
         
-        public string ResourceGroupName
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IMarsContainerOperations Container
         {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
-        }
-        
-        private string _resourceName;
-        
-        public string ResourceName
-        {
-            get { return this._resourceName; }
-            set { this._resourceName = value; }
+            get { return this._container; }
         }
         
         private IVaultOperations _vault;
@@ -118,6 +112,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient()
             : base()
         {
+            this._container = new MarsContainerOperations(this);
             this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -129,12 +124,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the
         /// BackupVaultServicesManagementClient class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -144,17 +133,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public BackupVaultServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -163,8 +144,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -175,34 +154,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the
         /// BackupVaultServicesManagementClient class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials)
+        public BackupVaultServicesManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -219,6 +182,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._container = new MarsContainerOperations(this);
             this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -230,12 +194,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the
         /// BackupVaultServicesManagementClient class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -248,17 +206,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public BackupVaultServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -267,8 +217,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -279,12 +227,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the
         /// BackupVaultServicesManagementClient class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -293,23 +235,13 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public BackupVaultServicesManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -331,8 +263,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 BackupVaultServicesManagementClient clonedClient = ((BackupVaultServicesManagementClient)client);
                 
-                clonedClient._resourceName = this._resourceName;
-                clonedClient._resourceGroupName = this._resourceGroupName;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;

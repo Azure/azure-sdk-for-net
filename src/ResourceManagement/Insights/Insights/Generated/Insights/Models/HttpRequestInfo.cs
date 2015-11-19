@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _clientIpAddress;
         
         /// <summary>
-        /// Optional. The client Ip Address
+        /// Optional. Gets or sets the client Ip Address
         /// </summary>
         public string ClientIpAddress
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _clientRequestId;
         
         /// <summary>
-        /// Optional. The client request id.
+        /// Optional. Gets or sets the client request id.
         /// </summary>
         public string ClientRequestId
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _method;
         
         /// <summary>
-        /// Optional. The method.
+        /// Optional. Gets or sets the method.
         /// </summary>
         public string Method
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _uri;
         
         /// <summary>
-        /// Optional. The Uri.
+        /// Optional. Gets or sets the Uri.
         /// </summary>
         public string Uri
         {

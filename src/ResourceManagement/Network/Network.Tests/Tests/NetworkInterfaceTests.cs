@@ -139,6 +139,7 @@ namespace Networks.Tests
                 Assert.Equal(ipConfigName, getNicResponse.NetworkInterface.IpConfigurations[0].Name);
                 Assert.Equal(getPublicIpAddressResponse.PublicIpAddress.Id, getNicResponse.NetworkInterface.IpConfigurations[0].PublicIpAddress.Id);
                 Assert.Equal(getSubnetResponse.Subnet.Id, getNicResponse.NetworkInterface.IpConfigurations[0].Subnet.Id);
+                Assert.NotNull(getNicResponse.NetworkInterface.ResourceGuid);
 
                 // Get all Nics
                 var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
@@ -182,10 +183,8 @@ namespace Networks.Tests
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
-                // IDNS is supported only in centralus currently
-                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
-                var location = "centralus";
-
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+                
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
@@ -305,7 +304,6 @@ namespace Networks.Tests
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
-                // IDNS is supported only in centralus currently
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
                 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");

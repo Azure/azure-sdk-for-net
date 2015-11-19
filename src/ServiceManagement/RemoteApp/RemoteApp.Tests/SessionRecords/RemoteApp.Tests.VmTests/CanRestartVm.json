@@ -1,0 +1,143 @@
+{
+    "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections?api-version=2014-09-01",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"AdInfo\": null,\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"Created using AUX portal\",\r\n    \"DiagnosticDetails\": null,\r\n    \"DiagnosticOperations\": null,\r\n    \"DnsServers\": [],\r\n    \"HealthStatus\": null,\r\n    \"IsCustomerVnet\": false,\r\n    \"IsDomainJoined\": false,\r\n    \"IsRDCMInsideVnet\": false,\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-08-07T01:46:07.234Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"astest\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"West US\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"Windows Server RDSHwO13P on Windows Server 2012 R2\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 1,\r\n    \"VirtualNetworkId\": null,\r\n    \"VnetName\": \"simplevnet-wu-d8ab5358-1ba5-4cac-8834-28ee5b15d165\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "725"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "f422743668c3c5b6a2fc49b293c8056e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 07 Aug 2015 18:02:49 GMT"
+        ],
+        "Server": [
+          "1.0.6196.1946",
+          "(rd_rdfe.150803-1905)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/astest/vms?api-version=2014-09-01",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn00\",\r\n      \"UserUpn01\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName0\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn10\",\r\n      \"UserUpn11\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName1\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn20\",\r\n      \"UserUpn21\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName2\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn30\",\r\n      \"UserUpn31\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName3\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn40\",\r\n      \"UserUpn41\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName4\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn50\",\r\n      \"UserUpn51\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName5\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn60\",\r\n      \"UserUpn61\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName6\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn70\",\r\n      \"UserUpn71\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName7\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn80\",\r\n      \"UserUpn81\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName8\"\r\n  },\r\n  {\r\n    \"LoggedOnUserUpn\": [\r\n      \"UserUpn90\",\r\n      \"UserUpn91\"\r\n    ],\r\n    \"VirtualMachineName\": \"VMName9\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "651"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "3ef2bff5b56acda5844dc3e50c44c427"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 07 Aug 2015 18:02:51 GMT"
+        ],
+        "Server": [
+          "1.0.6196.1946",
+          "(rd_rdfe.150803-1905)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/astest/vms/restart?api-version=2014-09-01",
+            "RequestMethod": "POST",
+            "RequestBody": "{\r\n  \"VirtualMachineName\": \"VMName0\",\r\n  \"LogoffMessage\": \"You will be logged off after 2 minutes\",\r\n  \"LogoffWaitTimeInSeconds\": 120\r\n}",
+            "RequestHeaders": {
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Content-Length": [
+                    "135"
+                ],
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+                ]
+            },
+            "ResponseBody": "",
+            "ResponseHeaders": {
+                "Transfer-Encoding": [
+                    "chunked"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "722a4d79cd50c3b5bb3be9b74195de5d"
+                ],
+                "x-remoteapp-operation-tracking-id": [
+                    "722a4d79cd50c3b5bb3be9b75432de5d"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Fri, 07 Aug 2015 18:28:31 GMT"
+                ],
+                "Server": [
+                    "1.0.6196.1946",
+                    "(rd_rdfe.150803-1905)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        }
+    ],
+    "Names": { },
+    "Variables": {
+        "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+    }
+}

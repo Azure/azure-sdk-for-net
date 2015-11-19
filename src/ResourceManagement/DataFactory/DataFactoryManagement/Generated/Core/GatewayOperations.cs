@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Gateway.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -397,6 +397,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+
                     result.Location = url;
                     
                     if (shouldTrace)
@@ -499,7 +504,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/gateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -654,7 +659,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -722,7 +727,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -824,7 +829,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/gateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1066,7 +1071,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1309,7 +1314,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/gateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1587,7 +1592,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/regeneratekey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1778,7 +1783,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/connectioninfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2007,7 +2012,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Gateway.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

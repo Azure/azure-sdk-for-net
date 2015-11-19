@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.Automation
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Automation">
-      <PackageVersion>0.50.1-prerelease</PackageVersion>
+      <PackageVersion>0.50.2-prerelease</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

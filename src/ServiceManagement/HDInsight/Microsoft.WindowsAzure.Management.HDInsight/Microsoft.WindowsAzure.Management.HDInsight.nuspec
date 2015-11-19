@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.WindowsAzure.Management.HDInsight</id>
+    <title>Microsoft Windows Azure HDInsight Management Library</title>
+    <releaseNotes>Adds basic subscription operations.</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides .NET API for cluster management and job submission on Windows Azure HDInsight service.</summary>
+    <description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure HDInsight  management and job submission client.</tags>
+    <references>
+      <group targetFramework="net45">
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Hadoop.Client" />
+      <dependency id="BouncyCastle" version="1.7.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ServiceManagement\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\**\*.cs" target="src" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.xml" target="lib\net45" />
+  </files>
+</package>

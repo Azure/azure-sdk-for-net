@@ -80,6 +80,7 @@ namespace Networks.Tests
                 var getVnetResponse = networkResourceProviderClient.VirtualNetworks.Get(resourceGroupName, vnetName);
                 Assert.Equal(HttpStatusCode.OK, getVnetResponse.StatusCode);
                 Assert.Equal(vnetName, getVnetResponse.VirtualNetwork.Name);
+                Assert.NotNull(getVnetResponse.VirtualNetwork.ResourceGuid);
                 Assert.Equal(Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded, getVnetResponse.VirtualNetwork.ProvisioningState);
                 Assert.Equal("10.1.1.1", getVnetResponse.VirtualNetwork.DhcpOptions.DnsServers[0]);
                 Assert.Equal("10.1.2.4", getVnetResponse.VirtualNetwork.DhcpOptions.DnsServers[1]);

@@ -13,27 +13,61 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.Authorization;
-using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
-using Xunit;
-using System.Collections.Generic;
 using Hyak.Common;
+using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Xunit;
 
 namespace Authorization.Tests
 {
     public class BasicTests : TestBase, IUseFixture<TestExecutionContext>
     {
         private TestExecutionContext testContext;
+        private const int RoleAssignmentPageSize = 20;
 
         public void SetFixture(TestExecutionContext context)
         {
             testContext = context;
+        }
+
+        [Fact]
+        public void ClassicAdministratorListTests()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allClassicAdmins = client.ClassicAdministrators.List();
+
+                Assert.NotNull(allClassicAdmins);
+                Assert.NotNull(allClassicAdmins.ClassicAdministrators);
+
+                foreach (var classicAdmin in allClassicAdmins.ClassicAdministrators)
+                {
+                    Assert.NotNull(classicAdmin);
+                    Assert.NotNull(classicAdmin.Id);
+                    Assert.True(classicAdmin.Id.Contains("/providers/Microsoft.Authorization/classicAdministrators/"));
+                    Assert.True(classicAdmin.Id.Contains("/subscriptions/" + client.Credentials.SubscriptionId));
+                    Assert.NotNull(classicAdmin.Name);
+                    Assert.NotNull(classicAdmin.Type);
+                    Assert.Equal("Microsoft.Authorization/classicAdministrators", classicAdmin.Type);
+                    Assert.NotNull(classicAdmin.Properties);
+                    Assert.NotNull(classicAdmin.Properties.EmailAddress);
+                    Assert.NotNull(classicAdmin.Properties.Role);
+                }
+            }
         }
 
         [Fact]
@@ -239,16 +273,17 @@ namespace Authorization.Tests
 
         [Fact]
         public void RoleAssignmentListByFilterTest()
-        {
-            var principalId = testContext.Users.ElementAt(1);
-           
+        {                     
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = testContext.GetAuthorizationManagementClient();
-
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
+
+                var principalId = testContext.Users.ElementAt(1);
+                // Read/write the PrincipalId from Testcontext to enable Playback mode test execution
+                principalId = GetValueFromTestContext(() => principalId, Guid.Parse, "PrincipalId");                
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId;
                 var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
@@ -292,6 +327,105 @@ namespace Authorization.Tests
             }
         }
 
+        [Fact]
+        public void RoleAssignmentPagingTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var scope = "subscriptions/" + client.Credentials.SubscriptionId;
+                var allBuiltInRoles = client.RoleDefinitions.List().RoleDefinitions.Where(r => r.Properties.Type.Equals("BuiltInRole", StringComparison.OrdinalIgnoreCase));
+                var allBuiltInRolesList = allBuiltInRoles as IList<RoleDefinition> ?? allBuiltInRoles.ToList();
+                int roleCount = allBuiltInRolesList.Count();
+                int userCount = testContext.Users.Count();
+                
+                List<RoleAssignment> createdAssignments = new List<RoleAssignment>();
+
+                try
+                {
+                    for (int i = 0; i < RoleAssignmentPageSize + 2; i++)
+                    {
+                        Random random = new Random();
+
+                        // Get random user
+                        int userIndex = random.Next(0, userCount);
+                        var principalId = testContext.Users.ElementAt(userIndex);
+
+                        // Get random built-in role definition
+                        int roleIndex = random.Next(0, roleCount);
+                        var roleDefinition = allBuiltInRolesList.ElementAt(roleIndex);
+
+                        var newRoleAssignment = new RoleAssignmentCreateParameters()
+                        {
+                            Properties = new RoleAssignmentProperties()
+                            {
+                                RoleDefinitionId = roleDefinition.Id,
+                                PrincipalId = principalId
+                            }
+                        };
+                        var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + i);
+                        RoleAssignmentCreateResult createResult = null;
+                        try
+                        {
+                            createResult = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
+                        }
+                        catch (CloudException e)
+                        {
+                            if (e.Response.StatusCode == HttpStatusCode.Conflict)
+                            {
+                                i--;
+                                continue;
+                            }
+                        }
+
+                        Assert.NotNull(createResult);
+                        Assert.NotNull(createResult.RoleAssignment);
+                        createdAssignments.Add(createResult.RoleAssignment);
+                    }
+
+                    // Validate
+                 
+                    // Get the first page of assignments
+                    var firstPage = client.RoleAssignments.List(null);
+                    Assert.NotNull(firstPage);
+                    Assert.True(firstPage.StatusCode == HttpStatusCode.OK);
+                    Assert.NotNull(firstPage.RoleAssignments);
+                    Assert.NotNull(firstPage.NextLink);
+
+                    // Get the next page of assignments
+                    var nextPage = client.RoleAssignments.ListNext(firstPage.NextLink);
+
+                    Assert.True(nextPage.StatusCode == HttpStatusCode.OK);
+                    Assert.NotNull(nextPage.RoleAssignments);
+                    Assert.NotEqual(0, nextPage.RoleAssignments.Count());
+
+                    foreach (var roleAssignment in nextPage.RoleAssignments)
+                    {
+                        Assert.NotNull(roleAssignment);
+                        Assert.NotNull(roleAssignment.Id);
+                        Assert.NotNull(roleAssignment.Name);
+                        Assert.NotNull(roleAssignment.Type);
+                        Assert.NotNull(roleAssignment.Properties);
+                        Assert.NotNull(roleAssignment.Properties.PrincipalId);
+                        Assert.NotNull(roleAssignment.Properties.RoleDefinitionId);
+                        Assert.NotNull(roleAssignment.Properties.Scope);
+                    }
+                }
+                finally
+                {
+                    foreach (var createdAssignment in createdAssignments)
+                    {
+                        client.RoleAssignments.Delete(createdAssignment.Properties.Scope, createdAssignment.Name);
+                    }
+                }
+            }
+        }
+
 
         [Fact]
         public void RoleAssignmentListForScopeTest()
@@ -325,6 +459,77 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Properties.RoleDefinitionId);
                     Assert.NotNull(assignment.Properties.Scope);
                 }
+            }
+        }
+
+        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]
+        public void RoleAssignmentListWithAssignedToFilterTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var scope = "subscriptions/" + client.Credentials.SubscriptionId;
+                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
+                
+                // Get user and group and add the user to the group
+                var userId = testContext.Users.First();
+                var groupId = testContext.Groups.First();
+                testContext.AddMemberToGroup(groupId, userId.ToString());
+
+                // create assignment to group
+                var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
+                {
+                    Properties = new RoleAssignmentProperties()
+                    {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = Guid.Parse(groupId)
+                    }
+                };
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
+                var assignmentToGroup = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignmentToGroupParams);
+
+                // create assignment to user
+                var newRoleAssignmentToUserParams = new RoleAssignmentCreateParameters()
+                {
+                    Properties = new RoleAssignmentProperties()
+                    {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = userId
+                    }
+                };
+                
+                assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_User");
+                var assignmentToUser = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignmentToUserParams);
+            
+                // List role assignments with AssignedTo filter = user id
+                var allRoleAssignments = client.RoleAssignments.List(new ListAssignmentsFilterParameters
+                {
+                    AssignedToPrincipalId = userId
+                });
+
+                Assert.NotNull(allRoleAssignments);
+                Assert.NotNull(allRoleAssignments.RoleAssignments);
+                Assert.True(allRoleAssignments.RoleAssignments.Count >= 2);
+
+                foreach (var assignment in allRoleAssignments.RoleAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Properties);
+                    Assert.NotNull(assignment.Properties.PrincipalId);
+                    Assert.NotNull(assignment.Properties.RoleDefinitionId);
+                    Assert.NotNull(assignment.Properties.Scope);
+                }
+
+                // Returned assignments contain assignment to group
+                Assert.True(allRoleAssignments.RoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == groupId) >= 1);
             }
         }
 
@@ -381,6 +586,44 @@ namespace Authorization.Tests
         }
 
         [Fact]
+        public void RoleDefinitionsListWithFilterTests()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var ownerRoleDefinition = client.RoleDefinitions.ListWithFilters(
+                    new ListDefinitionFilterParameters
+                    {
+                        RoleName = "Owner"
+                    });
+
+                Assert.NotNull(ownerRoleDefinition);
+                Assert.NotNull(ownerRoleDefinition.RoleDefinitions);
+                Assert.Equal(1, ownerRoleDefinition.RoleDefinitions.Count);
+
+                // Passsing name as null
+                var allRoleDefinition = client.RoleDefinitions.ListWithFilters(
+                    new ListDefinitionFilterParameters
+                    {
+                        RoleName = null
+                    });
+
+                var allRoleDefinitionsByList = client.RoleDefinitions.List();
+
+                Assert.NotNull(allRoleDefinition);
+                Assert.NotNull(allRoleDefinition.RoleDefinitions);
+                Assert.Equal(allRoleDefinitionsByList.RoleDefinitions.Count, allRoleDefinition.RoleDefinitions.Count);
+
+                Assert.Throws<ArgumentNullException>(() => client.RoleDefinitions.ListWithFilters(null));
+            }
+        }
+
+        [Fact]
         public void RoleDefinitionsByIdTests()
         {
             using (UndoContext context = UndoContext.Current)
@@ -420,7 +663,6 @@ namespace Authorization.Tests
         [Fact]
         public void RoleDefinitionUpdateTests()
         {
-            const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
@@ -429,7 +671,6 @@ namespace Authorization.Tests
                 RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
                 string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
-                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
                 // Create a custom role definition
                 try
@@ -455,13 +696,13 @@ namespace Authorization.Tests
                         }
                     };
 
-                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
 
                     // Update role name, permissions for the custom role
                     createOrUpdateParams.RoleDefinition.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
                     createOrUpdateParams.RoleDefinition.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
 
-                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                    
                     // Validate the updated roleDefinition properties.
                     Assert.NotNull(updatedRoleDefinition);
@@ -482,17 +723,17 @@ namespace Authorization.Tests
 
                     try
                     {
-                        client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                        client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                     }
                     catch (CloudException ce)
                     {
-                        Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                        Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
                         Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                     }
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
                     Assert.NotNull(deleteResult);
                 }
 
@@ -513,6 +754,10 @@ namespace Authorization.Tests
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
                 string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
                 string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
+
+                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2"); 
+                var resourceGroup = "newtestrg";   
+                string resourceGroupScope = currentSubscriptionId + "/resourceGroups/" + resourceGroup;
 
                 // Create a custom role definition
                 try
@@ -537,7 +782,7 @@ namespace Authorization.Tests
                         }
                     };
 
-                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
 
                     // Validate the roleDefinition properties.
                     Assert.NotNull(roleDefinition);
@@ -552,28 +797,43 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.RoleDefinition.Properties.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.RoleDefinition.Properties.Permissions.Single().Actions.Single());
 
+                    // create resource group
+                    var resourceClient = PermissionsTests.GetResourceManagementClient();                    
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroup, new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = "westus"});
+                    createOrUpdateParams.RoleDefinition.Properties.AssignableScopes = new List<string> { resourceGroupScope };
+                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
+
+                    roleDefinition = client.RoleDefinitions.CreateOrUpdate(newRoleId, resourceGroupScope, createOrUpdateParams);
+                    Assert.NotNull(roleDefinition);
+
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
+                    Assert.NotNull(deleteResult);
+
+                    deleteResult = client.RoleDefinitions.Delete(newRoleId, resourceGroupScope);
                     Assert.NotNull(deleteResult);
                 }
+
+                
+                TestUtilities.Wait(1000 * 15);
 
                 // Negative test - create a roledefinition with same name (but different id) as an already existing custom role
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
-                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
+                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition3");
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal("RoleDefinitionWithSameNameExists", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
                 }
                 finally
                 {
-                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    var deleteResult = client.RoleDefinitions.Delete(roleDefinitionId, currentSubscriptionId);
                     Assert.NotNull(deleteResult);
                 }
 
@@ -586,12 +846,12 @@ namespace Authorization.Tests
                     RoleDefinition builtInRole = allRoleDefinitions.RoleDefinitions.First(x => x.Properties.Type == "BuiltInRole");
 
                     createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + builtInRole.Name.ToString();
-                    client.RoleDefinitions.CreateOrUpdate(builtInRole.Name, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(builtInRole.Name, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal("RoleDefinitionExists", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
                 }
               
                 // Negative test - create a roledefinition with type=BuiltInRole
@@ -599,7 +859,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch(CloudException ce)
                 {
@@ -614,11 +874,11 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
                     Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
 
@@ -629,7 +889,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -642,7 +902,7 @@ namespace Authorization.Tests
 
                 try
                 {
-                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, currentSubscriptionId, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {

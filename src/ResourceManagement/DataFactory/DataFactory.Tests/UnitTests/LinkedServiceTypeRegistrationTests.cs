@@ -15,18 +15,17 @@
 // 
 
 using System;
-using System.Globalization;
-using System.Reflection;
+using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
-using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 
 namespace DataFactory.Tests.UnitTests
 {
-    public class LinkedServiceTypeRegistrationTests : UnitTestBase
+    public class LinkedServiceTypeRegistrationTests : TypeRegistrationTestBase<LinkedServiceTypeProperties, GenericLinkedService>
     {
         private LinkedServiceOperations Operations
         {
@@ -36,29 +35,40 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Registration)]
-        public void CanRegisterLinkedServiceType()
+        public static IEnumerable<object[]> ReservedTypes
         {
-            this.Client.RegisterType<MyLinkedServiceType>(true);
-
-            Assert.True(
-                this.Client.TypeIsRegistered<MyLinkedServiceType>(),
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "Type '{0}' was not successfully registered.",
-                    typeof(MyLinkedServiceType).Name));
+            get
+            {
+                return ReservedTypesList.Value;
+            }
         }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringLinkedServiceTypeWithReservedNameThrowsException()
+        public void CanRegisterLinkedServiceType()
         {
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.RegisterType<AzureSqlDatabaseLinkedService>());
-            Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
+            this.TestCanRegisterType<MyLinkedServiceType>();
+        }
+
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void ReservedLinkedServiceTypeIsRegisteredTest<T>(Type type, T registeredType)
+            where T : LinkedServiceTypeProperties
+        {
+            this.TestReservedTypeIsRegistered<T>();
+        }
+
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void CanRegisterLinkedServiceTypeWithReservedName<T>(Type type, T registeredType)
+            where T : TypeProperties
+        {
+            this.TestCanRegisterTypeWithReservedName<T>();
         }
 
         [Fact]
@@ -66,11 +76,7 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringLinkedServiceTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.RegisterType<MyLinkedServiceType>(true);
-
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.RegisterType<MyLinkedServiceType>());
-            Assert.True(ex.Message.Contains("is already registered"));
+           this.RegisteringTypeTwiceWithoutForceThrowsException<MyLinkedServiceType>(); 
         }
 
         [Fact]
@@ -78,36 +84,32 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringLinkedServiceTwiceThrowsExceptionCaseInsensitive()
         {
-            AdfTypeNameAttribute attribute =
-                typeof(MyLinkedServiceType).GetCustomAttribute<AdfTypeNameAttribute>(true);
-            Assert.NotNull(attribute);
+            this.TestRegisteringTypeTwiceThrowsExceptionCaseInsensitive<MyLinkedServiceType, MyLinkedServiceType2>();
+        }
 
-            AdfTypeNameAttribute attribute2 =
-                typeof(MyLinkedServiceType2).GetCustomAttribute<AdfTypeNameAttribute>(true);
-            Assert.NotNull(attribute);
-
-            // Ensure the type names are the same when comparing case-insensitively 
-            Assert.Equal(attribute.TypeName, attribute2.TypeName, StringComparer.OrdinalIgnoreCase);
-            Assert.NotEqual(attribute.TypeName, attribute2.TypeName, StringComparer.Ordinal);
-
-            this.Client.RegisterType<MyLinkedServiceType>(true);
-
-            // Validate that trying to register a type with
-            // the same name but different casing is not allowed
-            Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<MyLinkedServiceType2>());
+        [Theory, PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void CanGetRegisteredLinkedServiceCaseInsensitive<T>(Type type, T registeredType)
+        {
+            this.TestCanGetRegisteredTypeCaseInsensitive(this.Operations.Converter, type);
         }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void CanGetRegisteredLinkedServiceCaseInsensitive()
+        public void ClientsDoNotShareTypeMap()
         {
-            string typeName;
-            RegistrationTestUtilities.TestCanGetRegisteredLinkedServiceCaseInsensitive<AzureSqlDatabaseLinkedService>(out typeName);
+            var client = new DataFactoryManagementClient();
+            Assert.False(client.TypeIsRegistered<MyLinkedServiceType>());
 
-            Type type;
-            Assert.True(this.Operations.Converter.TryGetRegisteredType(typeName, out type));
-            Assert.Equal(typeof(AzureSqlDatabaseLinkedService), type);
+            client.RegisterType<MyLinkedServiceType>();
+            Assert.True(client.TypeIsRegistered<MyLinkedServiceType>());
+
+            // Ensure that the backing type map is not static/shared; 
+            // MyLinkedServiceType should not be registered on a second client
+            var client2 = new DataFactoryManagementClient();
+            Assert.False(client2.TypeIsRegistered<MyLinkedServiceType>());
         }
 
         [Fact]
@@ -118,21 +120,11 @@ namespace DataFactory.Tests.UnitTests
             this.Client.RegisterType<MyLinkedServiceType>(true);
 
             string typeName;
-            RegistrationTestUtilities.TestCanGetRegisteredLinkedServiceCaseInsensitive<AzureSqlDatabaseLinkedService>(out typeName);
+            RegistrationTestUtilities.TestCanGetRegisteredLinkedServiceCaseInsensitive<MyLinkedServiceType>(out typeName);
 
             Type type;
             Assert.True(this.Operations.Converter.TryGetRegisteredType(typeName, out type));
-            Assert.Equal(typeof(AzureSqlDatabaseLinkedService), type);
-        }
-
-        private void TestCanGetRegisteredLinkedServiceCaseInsensitive<T>() where T : TypeProperties
-        {
-            string typeName;
-            RegistrationTestUtilities.TestCanGetRegisteredLinkedServiceCaseInsensitive<T>(out typeName);
-
-            Type type;
-            Assert.True(this.Operations.Converter.TryGetRegisteredType(typeName, out type));
-            Assert.Equal(typeof(T), type);
+            Assert.Equal(typeof(MyLinkedServiceType), type); 
         }
     }
 }

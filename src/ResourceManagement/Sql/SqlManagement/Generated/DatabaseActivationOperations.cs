@@ -1024,6 +1024,13 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
+                                
+                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                {
+                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -2067,6 +2074,13 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
+                                
+                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                {
+                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3060,6 +3074,13 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
+                                
+                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
+                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
+                                {
+                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
+                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3189,7 +3210,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3267,7 +3288,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

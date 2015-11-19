@@ -4,19 +4,19 @@
       "RequestUri": "/4d368445-cbb1-42a7-97a6-6850ab99f48e/services/hostedservices",
       "EncodedRequestUri": "LzRkMzY4NDQ1LWNiYjEtNDJhNy05N2E2LTY4NTBhYjk5ZjQ4ZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcw==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>azsmnet8245</ServiceName>\r\n  <Label>YXpzbW5ldDgyNDU=</Label>\r\n  <Location>South Central US</Location>\r\n  <ReverseDnsFqdn>azsmnet8245.cloudapp.net.</ReverseDnsFqdn>\r\n</CreateHostedService>",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>azsmnet677</ServiceName>\r\n  <Label>YXpzbW5ldDY3Nw==</Label>\r\n  <Location>East US</Location>\r\n  <ReverseDnsFqdn>azsmnet677.cloudapp.net.</ReverseDnsFqdn>\r\n</CreateHostedService>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "275"
+          "264"
         ],
         "x-ms-version": [
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -25,34 +25,34 @@
           "0"
         ],
         "x-ms-servedbyregion": [
-          "ussouth3"
+          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2f07563fca448c38a0cc571be762e65c"
+          "48814756a64eb3bc929abd8c91eea152"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 08 Apr 2015 01:45:27 GMT"
+          "Sat, 11 Jul 2015 15:41:31 GMT"
         ],
         "Location": [
-          "https://management.core.windows.net/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/compute/azsmnet8245"
+          "https://ussouth2.management.core.windows.net/subscriptions/4d368445-cbb1-42a7-97a6-6850ab99f48e/compute/azsmnet677"
         ],
         "Server": [
-          "1.0.6198.213",
-          "(rd_rdfe_stable.150402-1703)",
+          "1.0.6198.247",
+          "(rd_rdfe_stable.150630-2348)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/4d368445-cbb1-42a7-97a6-6850ab99f48e/services/hostedservices/azsmnet8245",
-      "EncodedRequestUri": "LzRkMzY4NDQ1LWNiYjEtNDJhNy05N2E2LTY4NTBhYjk5ZjQ4ZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0ODI0NQ==",
+      "RequestUri": "/4d368445-cbb1-42a7-97a6-6850ab99f48e/services/hostedservices/azsmnet677",
+      "EncodedRequestUri": "LzRkMzY4NDQ1LWNiYjEtNDJhNy05N2E2LTY4NTBhYjk5ZjQ4ZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0Njc3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -60,35 +60,35 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<HostedService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/4d368445-cbb1-42a7-97a6-6850ab99f48e/services/hostedservices/azsmnet8245</Url>\r\n  <ServiceName>azsmnet8245</ServiceName>\r\n  <HostedServiceProperties>\r\n    <Description i:nil=\"true\" />\r\n    <Location>South Central US</Location>\r\n    <Label>YXpzbW5ldDgyNDU=</Label>\r\n    <Status>Created</Status>\r\n    <DateCreated>2015-04-08T01:45:27Z</DateCreated>\r\n    <DateLastModified>2015-04-08T01:45:28Z</DateLastModified>\r\n    <ExtendedProperties />\r\n    <ReverseDnsFqdn>azsmnet8245.cloudapp.net.</ReverseDnsFqdn>\r\n  </HostedServiceProperties>\r\n</HostedService>",
+      "ResponseBody": "<HostedService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://ussouth2.management.core.windows.net/4d368445-cbb1-42a7-97a6-6850ab99f48e/services/hostedservices/azsmnet677</Url>\r\n  <ServiceName>azsmnet677</ServiceName>\r\n  <HostedServiceProperties>\r\n    <Description i:nil=\"true\" />\r\n    <Location>East US</Location>\r\n    <Label>YXpzbW5ldDY3Nw==</Label>\r\n    <Status>Created</Status>\r\n    <DateCreated>2015-07-11T15:41:30Z</DateCreated>\r\n    <DateLastModified>2015-07-11T15:41:30Z</DateLastModified>\r\n    <ExtendedProperties />\r\n    <ReverseDnsFqdn>azsmnet677.cloudapp.net.</ReverseDnsFqdn>\r\n  </HostedServiceProperties>\r\n</HostedService>",
       "ResponseHeaders": {
         "Content-Length": [
-          "643"
+          "640"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-servedbyregion": [
-          "ussouth3"
+          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6c808a1eaf108704a9b4a4c548908d75"
+          "9f55c16f0150bf06900abfdafad7a621"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 08 Apr 2015 01:45:27 GMT"
+          "Sat, 11 Jul 2015 15:41:31 GMT"
         ],
         "Server": [
-          "1.0.6198.213",
-          "(rd_rdfe_stable.150402-1703)",
+          "1.0.6198.247",
+          "(rd_rdfe_stable.150630-2348)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -97,7 +97,7 @@
   ],
   "Names": {
     "CanCreateHostedServiceWithReverseDns": [
-      "azsmnet8245"
+      "azsmnet677"
     ]
   },
   "Variables": {

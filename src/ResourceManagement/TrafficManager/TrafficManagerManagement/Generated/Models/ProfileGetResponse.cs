@@ -27,15 +27,15 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Profile Create operation.
+    /// The response to a Traffic Manager profile 'Create' operation.
     /// </summary>
     public partial class ProfileGetResponse : AzureOperationResponse
     {
         private Profile _profile;
         
         /// <summary>
-        /// Optional. Gets or sets information about the profile in the
-        /// response.
+        /// Optional. Gets or sets information about the Traffic Manager
+        /// profile in the response to the 'Create' operation.
         /// </summary>
         public Profile Profile
         {

@@ -94,6 +94,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
+        /// Operations for managing datasets.
+        /// </summary>
+        IDatasetOperations Datasets
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing data slices.
         /// </summary>
         IDataSliceOperations DataSlices
@@ -134,25 +142,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
+        /// Operations for OAuth authorizations.
+        /// </summary>
+        IOAuthOperations OAuth
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing pipelines.
         /// </summary>
         IPipelineOperations Pipelines
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing pipeline runs.
-        /// </summary>
-        IPipelineRunOperations PipelineRuns
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing tables.
-        /// </summary>
-        ITableOperations Tables
         {
             get; 
         }

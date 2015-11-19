@@ -73,7 +73,9 @@ namespace DataFactory.Tests.Framework
                         string propertyName = pair.Key;
                         JToken value = pair.Value;
 
-                        string propertyPath = description + "." + propertyName;
+                        string propertyPath = string.IsNullOrEmpty(description)
+                                                  ? propertyName
+                                                  : description + "." + propertyName;
 
                         if (!string.Equals(propertyName, JsonUtilities.Type, JsonUtilities.PropertyNameComparison))
                         {

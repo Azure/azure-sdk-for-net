@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         private readonly CamelCasePropertyNamesContractResolver camelCaseResolver =
             new CamelCasePropertyNamesContractResolver();
 
-        public override object ReadJson(
+        protected override object ReadJsonWrapper(
             JsonReader reader,
             Type objectType,
             object existingValue,

@@ -33,7 +33,7 @@ namespace KeyVault.Management.Tests
             
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                this.tenantId = testEnv.AuthorizationContext.TenatId;
+                this.tenantId = testEnv.AuthorizationContext.TenantId;
                 this.subscriptionId = testEnv.SubscriptionId;
                 var graphClient = GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
                 this.objectId = graphClient.User.Get(testEnv.AuthorizationContext.UserId).User.ObjectId;

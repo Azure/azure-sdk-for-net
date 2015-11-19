@@ -25,10 +25,21 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// Data element defines the semantics of each column of a table.
+    /// Data element defines the semantics of each column of a dataset.
     /// </summary>
     public partial class DataElement
     {
+        private string _culture;
+        
+        /// <summary>
+        /// Optional. Culture of the data element.
+        /// </summary>
+        public string Culture
+        {
+            get { return this._culture; }
+            set { this._culture = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -40,6 +51,17 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
             set { this._description = value; }
         }
         
+        private string _format;
+        
+        /// <summary>
+        /// Optional. Format of the data element.
+        /// </summary>
+        public string Format
+        {
+            get { return this._format; }
+            set { this._format = value; }
+        }
+        
         private string _name;
         
         /// <summary>
@@ -49,17 +71,6 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         {
             get { return this._name; }
             set { this._name = value; }
-        }
-        
-        private uint _position;
-        
-        /// <summary>
-        /// Optional. Column position of the data element.
-        /// </summary>
-        public uint Position
-        {
-            get { return this._position; }
-            set { this._position = value; }
         }
         
         private string _type;
