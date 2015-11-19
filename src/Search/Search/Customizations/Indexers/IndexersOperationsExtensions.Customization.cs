@@ -59,21 +59,8 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            try
-            {
-                // Get validates indexName.
-                await operations.GetAsync(indexerName, searchRequestOptions, cancellationToken).ConfigureAwait(false);
-                return true;
-            }
-            catch (CloudException e)
-            {
-                if (e.Response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return false;
-                }
-
-                throw;
-            }
+            AzureOperationResponse<bool> result = await operations.ExistsWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+            return result.Body;
         }
     }
 }

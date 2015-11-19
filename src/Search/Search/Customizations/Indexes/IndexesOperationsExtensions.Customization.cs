@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Search.Models;
@@ -61,21 +60,8 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            try
-            {
-                // Get validates indexName.
-                await operations.GetAsync(indexName, searchRequestOptions, cancellationToken).ConfigureAwait(false);
-                return true;
-            }
-            catch (CloudException e)
-            {
-                if (e.Response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return false;
-                }
-
-                throw;
-            }
+            AzureOperationResponse<bool> result = await operations.ExistsWithHttpMessagesAsync(indexName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+            return result.Body;
         }
 
         /// <summary>
