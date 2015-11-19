@@ -28,5 +28,7 @@ namespace Microsoft.Azure.Search.Models
         /// SqlIntegratedChangeTrackingPolicy class.
         /// </summary>
         public SqlIntegratedChangeTrackingPolicy() { }
+
+
     }
 }
