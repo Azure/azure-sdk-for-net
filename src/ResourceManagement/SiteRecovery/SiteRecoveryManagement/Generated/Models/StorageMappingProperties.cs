@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class StorageMappingProperties
     {
-        private string _targetStorageArmId;
+        private string _targetStorageId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets target storage object Id.
         /// </summary>
-        public string TargetStorageArmId
+        public string TargetStorageId
         {
-            get { return this._targetStorageArmId; }
-            set { this._targetStorageArmId = value; }
+            get { return this._targetStorageId; }
+            set { this._targetStorageId = value; }
         }
         
         /// <summary>

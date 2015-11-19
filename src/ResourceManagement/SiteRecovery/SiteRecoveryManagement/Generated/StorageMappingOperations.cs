@@ -186,10 +186,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject propertiesValue = new JObject();
-                requestDoc = propertiesValue;
+                JObject storageMappingInputValue = new JObject();
+                requestDoc = storageMappingInputValue;
                 
-                propertiesValue["targetStorageId"] = propertiesValue;
+                if (input.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    storageMappingInputValue["properties"] = propertiesValue;
+                    
+                    if (input.Properties.TargetStorageId != null)
+                    {
+                        propertiesValue["targetStorageId"] = input.Properties.TargetStorageId;
+                    }
+                }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -602,9 +611,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
+                                StorageMappingProperties propertiesInstance = new StorageMappingProperties();
+                                storageMappingInstance.Properties = propertiesInstance;
+                                
                                 JToken targetStorageIdValue = propertiesValue["targetStorageId"];
                                 if (targetStorageIdValue != null && targetStorageIdValue.Type != JTokenType.Null)
                                 {
+                                    string targetStorageIdInstance = ((string)targetStorageIdValue);
+                                    propertiesInstance.TargetStorageId = targetStorageIdInstance;
                                 }
                             }
                             
@@ -783,9 +797,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
+                                StorageMappingProperties propertiesInstance = new StorageMappingProperties();
+                                storageMappingInstance.Properties = propertiesInstance;
+                                
                                 JToken targetStorageIdValue = propertiesValue["targetStorageId"];
                                 if (targetStorageIdValue != null && targetStorageIdValue.Type != JTokenType.Null)
                                 {
+                                    string targetStorageIdInstance = ((string)targetStorageIdValue);
+                                    propertiesInstance.TargetStorageId = targetStorageIdInstance;
                                 }
                             }
                             
@@ -1196,22 +1215,30 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        JToken storageMappingListResponseValue = responseDoc["StorageMappingListResponse"];
+                        if (storageMappingListResponseValue != null && storageMappingListResponseValue.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
+                            StorageMappingListResponse storageMappingListResponseInstance = new StorageMappingListResponse();
+                            
+                            JToken valueArray = storageMappingListResponseValue["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     StorageMapping storageMappingInstance = new StorageMapping();
-                                    result.StorageMappings.Add(storageMappingInstance);
+                                    storageMappingListResponseInstance.StorageMappings.Add(storageMappingInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
+                                        StorageMappingProperties propertiesInstance = new StorageMappingProperties();
+                                        storageMappingInstance.Properties = propertiesInstance;
+                                        
                                         JToken targetStorageIdValue = propertiesValue["targetStorageId"];
                                         if (targetStorageIdValue != null && targetStorageIdValue.Type != JTokenType.Null)
                                         {
+                                            string targetStorageIdInstance = ((string)targetStorageIdValue);
+                                            propertiesInstance.TargetStorageId = targetStorageIdInstance;
                                         }
                                     }
                                     
@@ -1256,11 +1283,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken nextLinkValue = responseDoc["nextLink"];
+                            JToken nextLinkValue = storageMappingListResponseValue["nextLink"];
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
+                                storageMappingListResponseInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

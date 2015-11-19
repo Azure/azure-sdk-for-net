@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _targetStorageId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the ID of the storage object.
         /// </summary>
         public string TargetStorageId
         {

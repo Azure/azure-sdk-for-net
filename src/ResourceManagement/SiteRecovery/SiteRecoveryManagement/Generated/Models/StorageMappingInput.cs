@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private StorageMappingInputProperties _properties;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets storage mapping input properties.
         /// </summary>
         public StorageMappingInputProperties Properties
         {

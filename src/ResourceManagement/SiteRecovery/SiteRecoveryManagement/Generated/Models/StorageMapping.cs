@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private StorageMappingProperties _properties;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets proprties of the storage mappping object.
         /// </summary>
         public StorageMappingProperties Properties
         {

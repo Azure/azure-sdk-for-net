@@ -36,6 +36,7 @@ namespace SiteRecovery.Tests
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
                 bool pairClouds = true;
+                bool storageMapping = true;
                 bool enableDR = true;
                 bool pfo = true;
                 bool commit = true;
@@ -46,6 +47,7 @@ namespace SiteRecovery.Tests
                 bool rrReverse = true;
                 bool disableDR = true;
                 bool unpair = true;
+                bool storageUnmap = true;
                 bool removePolicy = true;
 
                 var fabrics = client.Fabrics.List(RequestHeaders);
@@ -65,6 +67,7 @@ namespace SiteRecovery.Tests
                 string recCld = string.Empty;
                 string policyName = "Hydra-EndToEndE2ESingleVM-" + (new Random()).Next();
                 string mappingName = "Mapping-EndToEndE2ESingleVM-" + (new Random()).Next();
+                string storageMappingName = "StrgMapping-EndToEndE2ESingleVM-453834979";// "StrgMapping-EndToEndE2ESingleVM-" + (new Random()).Next();
                 string replicationProtectedItemName = "PE" + (new Random()).Next();
                 string enableDRVmName = string.Empty;
                 Policy currentPolicy = null;
@@ -94,6 +97,29 @@ namespace SiteRecovery.Tests
                 else
                 {
                     recCld = client.ProtectionContainer.Get(selectedFabric.Name, recCldGuid, RequestHeaders).ProtectionContainer.Id;
+                }
+
+                Storage selectedStorage = null;
+                if (storageMapping)
+                {
+                    IList<Storage> storages = client.Storage.List(selectedFabric.Name, RequestHeaders).Storages;
+
+                    if (storages.Count > 1)
+                    {
+                        StorageMappingInputProperties strgInputProps = new StorageMappingInputProperties()
+                        {
+                            TargetStorageId = storages[1].Id
+                        };
+
+                        StorageMappingInput strgInput = new StorageMappingInput()
+                        {
+                            Properties = strgInputProps
+                        };
+
+                        var mapStorages = client.StorageMapping.PairStorage(selectedFabric.Name, storages[0].Name, storageMappingName, strgInput, RequestHeaders);
+
+                        selectedStorage = storages[0];
+                    }
                 }
 
                 if (pairClouds)
@@ -381,6 +407,11 @@ namespace SiteRecovery.Tests
                         mappingName, 
                         new RemoveProtectionContainerMappingInput(), 
                         RequestHeaders);
+                }
+
+                if (storageUnmap)
+                {
+                    var unmapStorages = client.StorageMapping.UnpairStorage(selectedFabric.Name, selectedStorage.Name, storageMappingName, RequestHeaders);
                 }
 
                 if (removePolicy)
