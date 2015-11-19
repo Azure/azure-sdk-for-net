@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.DataLake.StoreUploader</id>
+    <title>Microsoft Azure Data Lake Store Uploader Management Library</title>
+    <releaseNotes>Data Lake Store Uploader Service / CSM-compatible preview library</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft, begoldsm</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides management capabilities for the Data Lake Store Uploader services.</summary>
+    <description>
+      Provides tool capabilities for Data Lake Store Uploader services, enabling rapid upload of data into Azure Data Lake Store</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure Data Lake Store Uploader management "Data Lake Store Uploader" "Data Lake Store Uploader management" REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.DataLake.StoreUploader.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+      <dependency id="Microsoft.Azure.Management.DataLake.StoreFileSystem" version="[0.9.0-preview,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\DataLake.StoreUploader\DataLakeStoreUploader\**\*.cs" target="src" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.xml" target="lib\net40" />
+  </files>
+</package>

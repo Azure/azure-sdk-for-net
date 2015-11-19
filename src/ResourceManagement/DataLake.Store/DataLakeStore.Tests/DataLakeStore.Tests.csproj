@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{92C0BB93-E8D9-4152-817F-5BDF38BE405D}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>DataLakeStore.Tests</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\AccountOperationTests.cs" />
+    <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
+    <Compile Include="TestHelpers\CommonTestFixture.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreManagementHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLakeStoreManagement\DataLakeStoreManagement.csproj">
+      <Project>{f8dde40d-b5b4-4a37-8131-9ef8f18a4a6a}</Project>
+      <Name>DataLakeStoreManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\DataLakeStore.Tests.AccountOperationTests\CreateGetUpdateDeleteTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStore.Tests.CommonTestFixture\.ctor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

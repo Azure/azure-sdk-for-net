@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD70673D-5A14-471C-962C-28D5AFD0D900}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.DataLake.StoreFileSystem</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.DataLake.StoreFileSystem</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="Generated\DataLakeStoreFileSystemManagementClient.cs" />
+    <Compile Include="Generated\DataLakeStoreFileSystemManagementClientExtensions.cs" />
+    <Compile Include="Generated\FileSystemOperations.cs" />
+    <Compile Include="Generated\FileSystemOperationsExtensions.cs" />
+    <Compile Include="Generated\IDataLakeStoreFileSystemManagementClient.cs" />
+    <Compile Include="Generated\IFileSystemOperations.cs" />
+    <Compile Include="Generated\Models\AclStatus.cs" />
+    <Compile Include="Generated\Models\AclStatusResponse.cs" />
+    <Compile Include="Generated\Models\ContentSummary.cs" />
+    <Compile Include="Generated\Models\ContentSummaryResponse.cs" />
+    <Compile Include="Generated\Models\FileCreateOpenAndAppendResponse.cs" />
+    <Compile Include="Generated\Models\FileCreateParameters.cs" />
+    <Compile Include="Generated\Models\FileOpenParameters.cs" />
+    <Compile Include="Generated\Models\FileOpenResponse.cs" />
+    <Compile Include="Generated\Models\FileOperationResultResponse.cs" />
+    <Compile Include="Generated\Models\FileStatuses.cs" />
+    <Compile Include="Generated\Models\FileStatusesResponse.cs" />
+    <Compile Include="Generated\Models\FileStatusProperties.cs" />
+    <Compile Include="Generated\Models\FileStatusResponse.cs" />
+    <Compile Include="Generated\Models\FileType.cs" />
+    <Compile Include="Generated\Models\HomeDirectoryResponse.cs" />
+    <Compile Include="Generated\Models\DataLakeStoreFileSystemListParameters.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.DataLake.StoreFileSystem.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.DataLake.StoreFileSystem.nuget.proj" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.3\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>

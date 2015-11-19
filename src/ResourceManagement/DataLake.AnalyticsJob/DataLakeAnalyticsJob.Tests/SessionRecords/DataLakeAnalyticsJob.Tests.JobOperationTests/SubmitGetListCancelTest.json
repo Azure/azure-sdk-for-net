@@ -1,0 +1,1975 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/register?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvcmVnaXN0ZXI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics\",\r\n  \"namespace\": \"Microsoft.DataLakeAnalytics\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"accounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/dataLakeStoreAccounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts/containers\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts/containers/listSasTokens\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationresults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1013"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "2d3df30f-5032-472a-9be8-76de0b799ce3"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d3df30f-5032-472a-9be8-76de0b799ce3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232919Z:2d3df30f-5032-472a-9be8-76de0b799ce3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:18 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3M/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics\",\r\n  \"namespace\": \"Microsoft.DataLakeAnalytics\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"accounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/dataLakeStoreAccounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts/containers\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"accounts/storageAccounts/containers/listSasTokens\",\r\n      \"locations\": [\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationresults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-10-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1013"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14970"
+        ],
+        "x-ms-request-id": [
+          "30e103a0-01c0-4145-a1a3-d66eeb4f71e5"
+        ],
+        "x-ms-correlation-request-id": [
+          "30e103a0-01c0-4145-a1a3-d66eeb4f71e5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232920Z:30e103a0-01c0-4145-a1a3-d66eeb4f71e5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:19 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.Storage/register?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9yZWdpc3Rlcj9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.Storage\",\r\n  \"namespace\": \"Microsoft.Storage\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"storageAccounts\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"North Europe\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"East US 2 (Stage)\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"storageAccounts/services\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"East US 2 (Stage)\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"storageAccounts/services/metricDefinitions\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"East US 2 (Stage)\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1477"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "a918b2d9-e8a2-455c-8f76-736f5763dc66"
+        ],
+        "x-ms-correlation-request-id": [
+          "a918b2d9-e8a2-455c-8f76-736f5763dc66"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232921Z:a918b2d9-e8a2-455c-8f76-736f5763dc66"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.Storage?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.Storage\",\r\n  \"namespace\": \"Microsoft.Storage\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"storageAccounts\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"North Europe\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"East US 2 (Stage)\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"storageAccounts/services\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"East US 2 (Stage)\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"storageAccounts/services/metricDefinitions\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"East US 2 (Stage)\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1477"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14969"
+        ],
+        "x-ms-request-id": [
+          "7db806c6-b82f-4765-90dd-0b1e31311d4b"
+        ],
+        "x-ms-correlation-request-id": [
+          "7db806c6-b82f-4765-90dd-0b1e31311d4b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232921Z:7db806c6-b82f-4765-90dd-0b1e31311d4b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourcegroups/rgaba12144?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlZ3JvdXBzL3JnYWJhMTIxNDQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144\",\r\n  \"name\": \"rgaba12144\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "174"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "7ec1e6f5-a9eb-4861-9625-718705cfa8f2"
+        ],
+        "x-ms-correlation-request-id": [
+          "7ec1e6f5-a9eb-4861-9625-718705cfa8f2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232922Z:7ec1e6f5-a9eb-4861-9625-718705cfa8f2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:21 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourcegroups/rgaba12144?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlZ3JvdXBzL3JnYWJhMTIxNDQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144\",\r\n  \"name\": \"rgaba12144\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "174"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14968"
+        ],
+        "x-ms-request-id": [
+          "9442a055-1e92-4d9e-9d0a-43cf4a875b37"
+        ],
+        "x-ms-correlation-request-id": [
+          "9442a055-1e92-4d9e-9d0a-43cf4a875b37"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232922Z:9442a055-1e92-4d9e-9d0a-43cf4a875b37"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:21 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeStore/accounts/testdatalake16619?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlR3JvdXBzL3JnYWJhMTIxNDQvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE2NjE5P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testdatalake16619\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "63"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ],
+        "x-ms-client-request-id": [
+          "2603c718-9154-40db-8567-11c27ea96a39"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeStore/accounts/testdatalake16619\",\r\n  \"name\": \"testdatalake16619\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "370"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/eadeee61-f77c-4f25-a8f0-59c5f31811140?api-version=2015-10-01-preview&expanded=true"
+        ],
+        "x-ms-request-id": [
+          "15084afe-f73f-41ed-9d21-2caf61d3e331"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "25b88155-dc79-4dff-8a6b-ba72b6190ff3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232925Z:25b88155-dc79-4dff-8a6b-ba72b6190ff3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:25 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourcegroups/rgaba12144/providers/Microsoft.DataLakeStore/accounts/testdatalake16619/operationresults/0?api-version=2015-10-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/eadeee61-f77c-4f25-a8f0-59c5f31811140?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzL2VhZGVlZTYxLWY3N2MtNGYyNS1hOGYwLTU5YzVmMzE4MTExNDA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6e82702e-c873-4451-a22e-be968024d5d1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "b78b46f8-5298-431e-95b6-96ff8c1a6e34"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232926Z:b78b46f8-5298-431e-95b6-96ff8c1a6e34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:25 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/eadeee61-f77c-4f25-a8f0-59c5f31811140?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzL2VhZGVlZTYxLWY3N2MtNGYyNS1hOGYwLTU5YzVmMzE4MTExNDA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1349c3d5-3fe6-4500-8c4a-58467a1c6cf3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d7d6b1a-25bd-4e6a-b5cd-0007e86c1b03"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232936Z:2d7d6b1a-25bd-4e6a-b5cd-0007e86c1b03"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/eadeee61-f77c-4f25-a8f0-59c5f31811140?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzL2VhZGVlZTYxLWY3N2MtNGYyNS1hOGYwLTU5YzVmMzE4MTExNDA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2c6b8223-54af-4329-88ca-65f2d3fac295"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "4874d690-7b9e-4d70-a4fc-b5c93bdd9b5c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T232952Z:4874d690-7b9e-4d70-a4fc-b5c93bdd9b5c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:29:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/eadeee61-f77c-4f25-a8f0-59c5f31811140?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzL2VhZGVlZTYxLWY3N2MtNGYyNS1hOGYwLTU5YzVmMzE4MTExNDA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "88658355-64fa-4295-a82e-9f88b4e98065"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "637d854b-a87b-4e18-9298-a6192f1d20e3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233007Z:637d854b-a87b-4e18-9298-a6192f1d20e3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:07 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeStore/accounts/testdatalake16619?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlR3JvdXBzL3JnYWJhMTIxNDQvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE2NjE5P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Store 0.9.1-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Store",
+          "0.9.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake16619.azuredatalakestore.net\",\r\n    \"creationTime\": \"2015-11-17T23:29:25.9427753Z\",\r\n    \"lastModifiedTime\": \"2015-11-17T23:29:25.9427753Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeStore/accounts/testdatalake16619\",\r\n  \"name\": \"testdatalake16619\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e749e5ea-7159-4a4a-811e-6e778896e1ca"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "452f3975-dd48-4b15-b931-6c851b70ffd2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233007Z:452f3975-dd48-4b15-b931-6c851b70ffd2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:07 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeAnalytics/accounts/testaba1917?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlR3JvdXBzL3JnYWJhMTIxNDQvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMTkxNz9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testaba1917\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  },\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake16619\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"name\": \"testdatalake16619\",\r\n        \"properties\": {\r\n          \"suffix\": \"azuredatalakestore.net\"\r\n        }\r\n      }\r\n    ],\r\n    \"creationTime\": \"0001-01-01T00:00:00\",\r\n    \"lastModifiedTime\": \"0001-01-01T00:00:00\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "455"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.4-preview"
+        ],
+        "x-ms-client-request-id": [
+          "57abf83b-7915-4641-a605-e1beb8930955"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake16619\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"azuredatalakestore.net\"\r\n        },\r\n        \"name\": \"testdatalake16619\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"creationTime\": \"0001-01-01T00:00:00\",\r\n    \"lastModifiedTime\": \"0001-01-01T00:00:00\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  },\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeAnalytics/accounts/testaba1917\",\r\n  \"name\": \"testaba1917\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "573"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/005c89de-f599-4b2c-8ee7-e1f84b948f5e0?api-version=2015-10-01-preview&expanded=true"
+        ],
+        "x-ms-request-id": [
+          "a1e6ab58-de5b-482e-be7c-12e0f029da85"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "247f201f-812c-43e9-84b6-bcda542997aa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233026Z:247f201f-812c-43e9-84b6-bcda542997aa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:25 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourcegroups/rgaba12144/providers/Microsoft.DataLakeAnalytics/accounts/testaba1917/operationresults/0?api-version=2015-10-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/005c89de-f599-4b2c-8ee7-e1f84b948f5e0?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy8wMDVjODlkZS1mNTk5LTRiMmMtOGVlNy1lMWY4NGI5NDhmNWUwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "13a63b77-e399-4a4d-a3a9-4b75858188ad"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "a3bdbfbd-1bd4-4c07-a0ac-efb1906682f2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233027Z:a3bdbfbd-1bd4-4c07-a0ac-efb1906682f2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/005c89de-f599-4b2c-8ee7-e1f84b948f5e0?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy8wMDVjODlkZS1mNTk5LTRiMmMtOGVlNy1lMWY4NGI5NDhmNWUwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ed7ad426-6cab-455f-8a73-695ad1a412b3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8991218-7079-42cc-96d9-52dcb46f28f3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233037Z:e8991218-7079-42cc-96d9-52dcb46f28f3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:37 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/005c89de-f599-4b2c-8ee7-e1f84b948f5e0?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy8wMDVjODlkZS1mNTk5LTRiMmMtOGVlNy1lMWY4NGI5NDhmNWUwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "68359a8f-14e8-45c2-af9a-8a64bf2f4a29"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "26ef1656-9485-4ca8-b958-6e387492a9c0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233053Z:26ef1656-9485-4ca8-b958-6e387492a9c0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:30:52 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/005c89de-f599-4b2c-8ee7-e1f84b948f5e0?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy8wMDVjODlkZS1mNTk5LTRiMmMtOGVlNy1lMWY4NGI5NDhmNWUwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a2907ddb-91db-4ad8-806a-45248f5e30bd"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "69519da3-3248-41d6-ac5c-8fa8851ab68e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233108Z:69519da3-3248-41d6-ac5c-8fa8851ab68e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:31:08 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeAnalytics/accounts/testaba1917?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxNTM3NTAtZmEzYi00MTQwLWJmNTctOGJlYjdkNWM5NzFhL3Jlc291cmNlR3JvdXBzL3JnYWJhMTIxNDQvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMTkxNz9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.Analytics 0.9.4-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.Analytics",
+          "0.9.4-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake16619\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"azuredatalakestore.net\"\r\n        },\r\n        \"name\": \"testdatalake16619\"\r\n      }\r\n    ],\r\n    \"storageAccounts\": [],\r\n    \"maxDegreeOfParallelism\": 20,\r\n    \"maxJobCount\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testaba1917.azuredatalakeanalytics.net\",\r\n    \"creationTime\": \"2015-11-17T23:30:25.960885Z\",\r\n    \"lastModifiedTime\": \"2015-11-17T23:30:25.960885Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {\r\n    \"testkey\": \"testvalue\"\r\n  },\r\n  \"id\": \"/subscriptions/46153750-fa3b-4140-bf57-8beb7d5c971a/resourceGroups/rgaba12144/providers/Microsoft.DataLakeAnalytics/accounts/testaba1917\",\r\n  \"name\": \"testaba1917\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "695"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6248eb32-a0fd-4d2c-aaf1-448ebcf553f9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "ee60d471-518b-4d4b-bcbb-4a57f0b1a605"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151117T233108Z:ee60d471-518b-4d4b-bcbb-4a57f0b1a605"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:31:08 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/a944e62e-855a-47e7-8932-ebb2f2e45bec?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvYTk0NGU2MmUtODU1YS00N2U3LTg5MzItZWJiMmYyZTQ1YmVjP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "270"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:11 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:11 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:00\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "f39630e7-2815-4b88-9b6b-ec527fc644b5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:14 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/a944e62e-855a-47e7-8932-ebb2f2e45bec/CancelJob?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvYTk0NGU2MmUtODU1YS00N2U3LTg5MzItZWJiMmYyZTQ1YmVjL0NhbmNlbEpvYj9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "03a6753c-e4b7-42c2-9350-410f045c9f0b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:15 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/a944e62e-855a-47e7-8932-ebb2f2e45bec?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvYTk0NGU2MmUtODU1YS00N2U3LTg5MzItZWJiMmYyZTQ1YmVjP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:11 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": \"Tue, 17 Nov 2015 23:33:14 GMT\",\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Cancelled\",\r\n  \"errorMessage\": \"Job was canceled per client request.\\r\\nInternal client IP is 25.66.8.75.\",\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:11 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:14 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Ended\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:14 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"result:CanceledByUser\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/a944e62e-855a-47e7-8932-ebb2f2e45bec/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"UserError\",\r\n    \"totalCompilationTime\": \"00:00:02.8281480\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "ab3b69c4-19b0-4fef-8eea-b98dbf46d589"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:15 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "270"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:00\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "48178558-7862-42b0-948e-ca333b62e3fd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:17 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:01.7329887\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "102aef2c-a5b9-4284-89f9-7d39db4eeb86"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:17 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:06.9987027\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "b7dee4e5-4eb2-4eaa-ab26-b5bc4a2cb66f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:23 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:12.2019139\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "50d2db8b-f598-4443-8ac1-99bd7f66775c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:27 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:17.4207529\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "0be735d2-4dda-4666-b641-ff24fcf20d60"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:31 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": null\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessId:aa2a3f8b-5f49-4185-8c62-cf6502409b53\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessNode:;runtimeVersion:kobo_live_4431345\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.scope.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.scope.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.types.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.types.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeengine.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeengine.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeenginemanaged.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeenginemanaged.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scoperuntimelib.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scoperuntimelib.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.native.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.native.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.common.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.common.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.namespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.namespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.async.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.async.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.search.autopilot.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.search.autopilot.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeInternalStatistics.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeInternalStatistics.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeDiagnosisInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeDiagnosisInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeCompilerTrace.log\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeCompilerTrace.log\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"kobo_live_4431345\",\r\n    \"rootProcessNodeId\": \"aa2a3f8b-5f49-4185-8c62-cf6502409b53\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"yarnApplicationId\": 14216,\r\n    \"yarnApplicationTimeStamp\": 1447293800105,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:15.8595169\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:02.4687724\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "54a5ac8f-5d17-4b10-b312-def41b59d287"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:38 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:31 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": null\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessId:aa2a3f8b-5f49-4185-8c62-cf6502409b53\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessNode:;runtimeVersion:kobo_live_4431345\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.scope.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.scope.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.types.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.types.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeengine.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeengine.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeenginemanaged.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeenginemanaged.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scoperuntimelib.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scoperuntimelib.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.native.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.native.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.common.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.common.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.namespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.namespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.async.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.async.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.search.autopilot.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.search.autopilot.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeInternalStatistics.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeInternalStatistics.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeDiagnosisInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeDiagnosisInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeCompilerTrace.log\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeCompilerTrace.log\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"kobo_live_4431345\",\r\n    \"rootProcessNodeId\": \"aa2a3f8b-5f49-4185-8c62-cf6502409b53\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"yarnApplicationId\": 14216,\r\n    \"yarnApplicationTimeStamp\": 1447293800105,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:15.8595169\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:02.4687724\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "e92a9ba2-240f-4024-956a-b9c4d1c17690"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:43 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:31 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": null\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessId:aa2a3f8b-5f49-4185-8c62-cf6502409b53\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessNode:;runtimeVersion:kobo_live_4431345\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.scope.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.scope.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.types.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.types.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeengine.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeengine.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeenginemanaged.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeenginemanaged.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scoperuntimelib.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scoperuntimelib.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.native.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.native.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.common.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.common.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.namespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.namespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.async.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.async.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.search.autopilot.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.search.autopilot.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeInternalStatistics.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeInternalStatistics.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeDiagnosisInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeDiagnosisInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeCompilerTrace.log\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeCompilerTrace.log\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"kobo_live_4431345\",\r\n    \"rootProcessNodeId\": \"aa2a3f8b-5f49-4185-8c62-cf6502409b53\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"yarnApplicationId\": 14216,\r\n    \"yarnApplicationTimeStamp\": 1447293800105,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:15.8595169\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:02.4687724\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "381f7032-53c6-4cac-890b-b50ce1618f56"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:48 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/6be800b7-c8dd-40c9-bed0-b59edd418d7f?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnMvNmJlODAwYjctYzhkZC00MGM5LWJlZDAtYjU5ZWRkNDE4ZDdmP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n  \"startTime\": \"Tue, 17 Nov 2015 23:33:50 GMT\",\r\n  \"endTime\": \"Tue, 17 Nov 2015 23:33:53 GMT\",\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"userName:begoldsm@microsoft.com;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:17 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:31 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": null\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessId:aa2a3f8b-5f49-4185-8c62-cf6502409b53\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:34 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"rootProcessNode:;runtimeVersion:kobo_live_4431345\"\r\n    },\r\n    {\r\n      \"newState\": \"Running\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:50 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"runAttempt:1\"\r\n    },\r\n    {\r\n      \"newState\": \"Ended\",\r\n      \"timeStamp\": \"Tue, 17 Nov 2015 23:33:53 GMT\",\r\n      \"requestedByUser\": null,\r\n      \"details\": \"result:Succeeded\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"begoldsm@microsoft.com\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.scope.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.scope.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.interfaces.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.interfaces.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.analytics.types.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.analytics.types.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeengine.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeengine.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scopeenginemanaged.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scopeenginemanaged.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"scoperuntimelib.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/scoperuntimelib.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.georep.manager.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.native.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.native.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.internal.client.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.contract.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.contract.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.common.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.common.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.namespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.namespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.frontend.globalnamespace.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.cosmos.async.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.cosmos.async.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"microsoft.search.autopilot.dll\",\r\n        \"resourcePath\": \"mafs://accounts/konasystem/fs/kobo01-prod-bn2/system/runtimes/kobo_live_4431345/microsoft.search.autopilot.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeInternalStatistics.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeInternalStatistics.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeDiagnosisInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__ScopeDiagnosisInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeCompilerTrace.log\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/ScopeCompilerTrace.log\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile_System\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/profile_system\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"InternalDebugInfo\",\r\n        \"resourcePath\": \"adl://konasystem.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/InternalDebugInfo\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"kobo_live_4431345\",\r\n    \"rootProcessNodeId\": \"aa2a3f8b-5f49-4185-8c62-cf6502409b53\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake16619.azuredatalakestore.net/system/jobservice/jobs/Usql/2015/11/17/23/33/6be800b7-c8dd-40c9-bed0-b59edd418d7f/algebra.xml\",\r\n    \"yarnApplicationId\": 14216,\r\n    \"yarnApplicationTimeStamp\": 1447293800105,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:15.8595169\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:02.4687724\",\r\n    \"totalRunningTime\": \"00:00:03.1406529\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "1d18b4d4-2fcf-4cbd-98af-6ba25daa7c77"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:54 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnM/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n      \"name\": \"azure sdk data lake analytics job\",\r\n      \"type\": \"USql\",\r\n      \"submitter\": \"begoldsm@microsoft.com\",\r\n      \"account\": \"005c89de-f599-4b2c-8ee7-e1f84b948f5e\",\r\n      \"degreeOfParallelism\": 2,\r\n      \"priority\": 0,\r\n      \"submitTime\": \"Tue, 17 Nov 2015 23:33:15 GMT\",\r\n      \"startTime\": \"Tue, 17 Nov 2015 23:33:50 GMT\",\r\n      \"endTime\": \"Tue, 17 Nov 2015 23:33:53 GMT\",\r\n      \"state\": \"Ended\",\r\n      \"result\": \"Succeeded\",\r\n      \"errorMessage\": null,\r\n      \"storageAccounts\": null,\r\n      \"stateAuditRecords\": null,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\",\r\n      \"name\": \"azure sdk data lake analytics job\",\r\n      \"type\": \"USql\",\r\n      \"submitter\": \"begoldsm@microsoft.com\",\r\n      \"account\": \"005c89de-f599-4b2c-8ee7-e1f84b948f5e\",\r\n      \"degreeOfParallelism\": 2,\r\n      \"priority\": 0,\r\n      \"submitTime\": \"Tue, 17 Nov 2015 23:33:11 GMT\",\r\n      \"startTime\": null,\r\n      \"endTime\": \"Tue, 17 Nov 2015 23:33:14 GMT\",\r\n      \"state\": \"Ended\",\r\n      \"result\": \"Cancelled\",\r\n      \"errorMessage\": null,\r\n      \"storageAccounts\": null,\r\n      \"stateAuditRecords\": null,\r\n      \"properties\": null\r\n    }\r\n  ],\r\n  \"nextLink\": null,\r\n  \"count\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "0fa14e2a-7bab-4ad3-a6e3-44c783088b71"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:33:55 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/BuildJob?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0J1aWxkSm9iP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "270"
+        ],
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"begoldsm@microsoft.com\",\r\n  \"account\": null,\r\n  \"degreeOfParallelism\": 0,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"Mon, 01 Jan 0001 00:00:00 GMT\",\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Succeeded\",\r\n  \"errorMessage\": null,\r\n  \"storageAccounts\": null,\r\n  \"stateAuditRecords\": null,\r\n  \"properties\": {\r\n    \"resources\": [],\r\n    \"runtimeVersion\": \"kobo_live_4431345\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"mafs://accounts/testdatalake16619/fs/system/jobservice/jobs/Sqlip/6be800b7-c8dd-40c9-bed0-b59edd418d7f/2015/11/17/23/33/algebra.xml\",\r\n    \"userPrincipals\": [],\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"00:00:00\",\r\n    \"totalPausedTime\": \"00:00:00\",\r\n    \"totalQueuedTime\": \"00:00:00\",\r\n    \"totalRunningTime\": \"00:00:00\",\r\n    \"diagnostics\": [],\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "9694a4cb-8626-4b6c-b1a7-602d1a81668d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:34:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs?$select=jobId&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnM/JHNlbGVjdD1qb2JJZCZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\"\r\n    },\r\n    {\r\n      \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\"\r\n    }\r\n  ],\r\n  \"nextLink\": null,\r\n  \"count\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "68e3da49-c776-4edd-86b7-0c24a2b9a957"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:34:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs?$select=jobId&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L0pvYnM/JHNlbGVjdD1qb2JJZCZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsJob",
+          "0.9.5-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "rgaba12144"
+        ],
+        "x-ms-client-subscription-id": [
+          "46153750-fa3b-4140-bf57-8beb7d5c971a"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"jobId\": \"6be800b7-c8dd-40c9-bed0-b59edd418d7f\"\r\n    },\r\n    {\r\n      \"jobId\": \"a944e62e-855a-47e7-8932-ebb2f2e45bec\"\r\n    }\r\n  ],\r\n  \"nextLink\": null,\r\n  \"count\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "4952aad5-b5c8-477b-ac2d-b65f26931345"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Nov 2015 23:34:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    ".ctor": [
+      "rgaba12144",
+      "testaba1917",
+      "testdatalake16619"
+    ],
+    "SubmitGetListCancelTest": [
+      "a944e62e-855a-47e7-8932-ebb2f2e45bec",
+      "6be800b7-c8dd-40c9-bed0-b59edd418d7f"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "46153750-fa3b-4140-bf57-8beb7d5c971a"
+  }
+}

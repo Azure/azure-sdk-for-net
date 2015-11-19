@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B9CD76F9-9DDB-47AA-9F22-EE8BA5196233}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.DataLake.AnalyticsCatalog</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.DataLake.AnalyticsCatalog</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="Generated\DataLakeAnalyticsCatalogManagementClient.cs" />
+    <Compile Include="Generated\DataLakeAnalyticsCatalogManagementClientExtensions.cs" />
+    <Compile Include="Generated\CatalogOperations.cs" />
+    <Compile Include="Generated\CatalogOperationsExtensions.cs" />
+    <Compile Include="Generated\IDataLakeAnalyticsCatalogManagementClient.cs" />
+    <Compile Include="Generated\ICatalogOperations.cs" />
+    <Compile Include="Generated\Models\CatalogCredentialGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogCredentialListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogProcedureGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogProcedureListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogSecretGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTypeListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogViewGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogViewListResponse.cs" />
+    <Compile Include="Generated\Models\DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\CatalogAssemblyGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogAssemblyListGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogDatabaseGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogDatabaseListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogExternalDataSourceGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogExternalDataSourceListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogItem.cs" />
+    <Compile Include="Generated\Models\CatalogItemList.cs" />
+    <Compile Include="Generated\Models\CatalogItemType.cs" />
+    <Compile Include="Generated\Models\CatalogSchemaGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogSchemaListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogSecretCreateResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableStatisticsGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableStatisticsListResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableValuedFunctionGetResponse.cs" />
+    <Compile Include="Generated\Models\CatalogTableValuedFunctionListResponse.cs" />
+    <Compile Include="Generated\Models\DdlName.cs" />
+    <Compile Include="Generated\Models\EntityId.cs" />
+    <Compile Include="Generated\Models\ExternalTable.cs" />
+    <Compile Include="Generated\Models\FileType.cs" />
+    <Compile Include="Generated\Models\TypeListParameters.cs" />
+    <Compile Include="Generated\Models\USqlAssembly.cs" />
+    <Compile Include="Generated\Models\USqlAssemblyClr.cs" />
+    <Compile Include="Generated\Models\USqlAssemblyDependencyInfo.cs" />
+    <Compile Include="Generated\Models\USqlAssemblyFileInfo.cs" />
+    <Compile Include="Generated\Models\USqlAssemblyList.cs" />
+    <Compile Include="Generated\Models\USqlCredential.cs" />
+    <Compile Include="Generated\Models\USqlCredentialList.cs" />
+    <Compile Include="Generated\Models\USqlDatabase.cs" />
+    <Compile Include="Generated\Models\USqlDatabaseList.cs" />
+    <Compile Include="Generated\Models\USqlDirectedColumn.cs" />
+    <Compile Include="Generated\Models\USqlDistributionInfo.cs" />
+    <Compile Include="Generated\Models\USqlExternalDataSource.cs" />
+    <Compile Include="Generated\Models\USqlExternalDataSourceList.cs" />
+    <Compile Include="Generated\Models\USqlIndex.cs" />
+    <Compile Include="Generated\Models\USqlProcedure.cs" />
+    <Compile Include="Generated\Models\USqlProcedureList.cs" />
+    <Compile Include="Generated\Models\USqlSchema.cs" />
+    <Compile Include="Generated\Models\USqlSchemaList.cs" />
+    <Compile Include="Generated\Models\USqlSecret.cs" />
+    <Compile Include="Generated\Models\USqlTable.cs" />
+    <Compile Include="Generated\Models\USqlTableColumn.cs" />
+    <Compile Include="Generated\Models\USqlTableList.cs" />
+    <Compile Include="Generated\Models\USqlTableStatistics.cs" />
+    <Compile Include="Generated\Models\USqlTableStatisticsList.cs" />
+    <Compile Include="Generated\Models\USqlTableValuedFunction.cs" />
+    <Compile Include="Generated\Models\USqlTableValuedFunctionList.cs" />
+    <Compile Include="Generated\Models\USqlType.cs" />
+    <Compile Include="Generated\Models\USqlTypeList.cs" />
+    <Compile Include="Generated\Models\USqlView.cs" />
+    <Compile Include="Generated\Models\USqlViewList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.DataLake.AnalyticsCatalog.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.3\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>
