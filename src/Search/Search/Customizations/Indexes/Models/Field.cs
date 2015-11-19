@@ -149,8 +149,8 @@ namespace Microsoft.Azure.Search.Models
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context)
         {
-            this.Type = DataType.Lookup(this.rawType);
-            this.Analyzer = AnalyzerName.Lookup(this.rawAnalyzerName);
+            this.Type = DataType.Create(this.rawType);
+            this.Analyzer = AnalyzerName.Create(this.rawAnalyzerName);
         }
     }
 }
