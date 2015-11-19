@@ -164,7 +164,7 @@
     </Task>
   </UsingTask>
   
-  <Target Name="Publish">
+  <Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
     <PropertyGroup>
@@ -181,14 +181,19 @@
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
 
+    <MSBuild Projects="$(MSBuildProjectFullPath)"
+             Properties="NuGetKey=$(NuGetKey);DnxPackageName=%(Dnx_AutoRestLibraries.PackageName);PackageOutputDir=$(PackageOutputDir)"
+             Targets="PublishDnxPackage" Condition=" %(Dnx_AutoRestLibraries.PackageName) != '' " />
+  </Target>
+
+  <Target Name="PublishDnxPackage">
     <ItemGroup>
-      <_DnxPackagesToPublish Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg"
-                             Exclude="$(PackageOutputDir)\*.symbols.nupkg">
+      <_DnxPackagesToPublish Include="$(PackageOutputDir)\$(DnxPackageName)*.nupkg"
+                             Exclude="$(PackageOutputDir)\$(DnxPackageName)*.symbols.nupkg">
       </_DnxPackagesToPublish>
     </ItemGroup>
     <Exec Command="$(NuGetCommand) push &quot;%(_DnxPackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true" />
-    
   </Target>
-
+  
 </Project>
