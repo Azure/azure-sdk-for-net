@@ -107,7 +107,7 @@
     <ItemGroup>
       <_NuspecFiles Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*\*.nuspec" />
     </ItemGroup>    
-    <UpdateNuspecFiles NuspecFilePath="%(_NuspecFiles.Identity)" />
+    <UpdateNuspecFiles NuspecFilePath="%(_NuspecFiles.Identity)" RelFilePath="%(_NuspecFiles.RootDir)%(_NuspecFiles.Directory)_rels\.rels" />
     <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(ResourcePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(ResourcePackages.Filename)" />
     <RenameResourcePackages PackageDirectory="$(PackageOutputDir)"></RenameResourcePackages>
     <!--Now adjust metadatas for other targets to pick up the new name-->
@@ -124,6 +124,7 @@
       AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <NuspecFilePath ParameterType="System.String" Required="true" />
+      <RelFilePath ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System" />
@@ -133,6 +134,10 @@
           var contents = File.ReadAllText(NuspecFilePath);
           contents = contents.Replace("<id>Microsoft.Azure.ResourceManager</id>", "<id>Microsoft.Azure.Management.Resources</id>");
           File.WriteAllText(NuspecFilePath, contents);
+          contents = File.ReadAllText(RelFilePath);
+          contents = contents.Replace("/Microsoft.Azure.ResourceManager.nuspec", "/Microsoft.Azure.Management.Resources.nuspec");
+          File.WriteAllText(RelFilePath, contents);
+          File.Move(NuspecFilePath, Path.Combine(Path.GetDirectoryName(NuspecFilePath), "Microsoft.Azure.Management.Resources.nuspec"));
           ]]>
       </Code>
     </Task>
