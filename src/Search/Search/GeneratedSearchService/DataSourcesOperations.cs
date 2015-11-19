@@ -52,9 +52,6 @@ namespace Microsoft.Azure.Search
         /// Creates a new Azure Search datasource or updates a datasource if it
         /// already exists.
         /// </summary>
-        /// <param name='dataSourceName'>
-        /// The name of the datasource to create or update.
-        /// </param>
         /// <param name='dataSource'>
         /// The definition of the datasource to create or update.
         /// </param>
@@ -67,12 +64,8 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (dataSourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "dataSourceName");
-            }
             if (dataSource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataSource");
@@ -97,7 +90,6 @@ namespace Microsoft.Azure.Search
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("dataSourceName", dataSourceName);
                 tracingParameters.Add("dataSource", dataSource);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -106,7 +98,7 @@ namespace Microsoft.Azure.Search
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "datasources('{dataSourceName}')").ToString();
-            url = url.Replace("{dataSourceName}", Uri.EscapeDataString(dataSourceName));
+            url = url.Replace("{dataSourceName}", Uri.EscapeDataString(dataSource.Name));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {

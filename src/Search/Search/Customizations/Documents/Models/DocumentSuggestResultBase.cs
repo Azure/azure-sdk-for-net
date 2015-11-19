@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Search.Models
         /// Gets a value indicating the percentage of the index that was included in the query, or null if
         /// MinimumCoverage was not set in the <c cref="SuggestParameters">SuggestParameters</c>.
         /// </summary>
-        public double? Coverage { get; set; }
+        public double? Coverage { get; internal set; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.
         /// </summary>
-        public IList<TResult> Results { get; set; }
+        public IList<TResult> Results { get; internal set; }
     }
 }

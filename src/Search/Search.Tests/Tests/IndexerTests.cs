@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer = Data.CreateTestIndexer();
 
                 AzureOperationResponse<Indexer> response = 
-                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer.Name, indexer).Result;
+                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
             });
         }

@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Search.Models
         where TAction : IndexActionBase<TDoc>
         where TDoc : class
     {
-        // NOTE: We use IEnumerable so callers can stream each batch of documents if they want.
-        [JsonProperty("value")]
-        private IEnumerable<TAction> _actions;
-
         /// <summary>
         /// Initializes a new instance of the IndexBatchBase class.
         /// </summary>
@@ -36,16 +32,18 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("actions");
             }
 
-            _actions = actions;
+            Actions = actions;
         }
 
         /// <summary>
         /// Gets the sequence of actions in the batch.
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty("value")]
         public IEnumerable<TAction> Actions
         {
-            get { return _actions; }
+            // NOTE: We use IEnumerable so callers can stream each batch of documents if they want.
+            get;
+            private set;
         }
     }
 }

@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Models
 {
     using System;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A single bucket of a facet query result that reports the number of documents with a field falling within a
@@ -35,23 +36,27 @@ namespace Microsoft.Azure.Search.Models
         /// Gets a value indicating the inclusive lower bound of the facet's range, or null to indicate that there is
         /// no lower bound (i.e. -- for the first bucket).
         /// </summary>
-        public object From { get; set; }
+        [JsonProperty("from")]
+        public object From { get; private set; }
 
         /// <summary>
         /// Gets a value indicating the exclusive upper bound of the facet's range, or null to indicate that there is
         /// no upper bound (i.e. -- for the last bucket).
         /// </summary>
-        public object To { get; set; }
+        [JsonProperty("to")]
+        public object To { get; private set; }
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's an interval facet.
         /// </summary>
-        public object Value { get; set; }
+        [JsonProperty("value")]
+        public object Value { get; private set; }
 
         /// <summary>
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
-        public long Count { get; set; }
+        [JsonProperty("count")]
+        public long Count { get; private set; }
 
         /// <summary>
         /// Attempts to convert the facet to a range facet of the given type.
