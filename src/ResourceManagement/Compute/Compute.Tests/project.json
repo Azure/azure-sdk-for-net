@@ -7,7 +7,7 @@
   "licenseUrl": "",
   "commands": { "test": "xunit.runner.dnx" },
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
   "frameworks": {
@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build198",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)",
-    "Microsoft.Azure.Management.Storage": "",
+    "Microsoft.Azure.Management.Storage": "4.0.0-preview",
+    "Microsoft.Azure.Management.Resources": "3.1.1-preview",
     "Microsoft.Azure.Management.Compute": "",
-    "Microsoft.Azure.Management.Resources": "",
-    "Microsoft.Azure.Management.Network": ""
+    "Microsoft.Azure.Management.Network": "3.0.0-preview"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }

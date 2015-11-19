@@ -6,7 +6,7 @@
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "http://aka.ms/windowsazureapache2",
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
@@ -15,7 +15,7 @@
   },
 
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Runtime.Serialization": "",
         "System.Threading.Tasks": { "type": "build" },

@@ -40,8 +40,6 @@
   <PropertyGroup>
     <SignAssembly>$(CodeSign)</SignAssembly>
     <DelaySign>$(CodeSign)</DelaySign>
-    <SignAssembly Condition=" $(SDKTestProject) == 'true' ">false</SignAssembly>
-    <DelaySign Condition=" $(SDKTestProject) == 'true' ">false</DelaySign>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >

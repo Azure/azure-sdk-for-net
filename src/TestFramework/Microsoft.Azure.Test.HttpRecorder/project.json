@@ -5,14 +5,14 @@
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
     "Newtonsoft.Json": "6.0.8"
   },
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Net.Http": "",
         "System.Xml.Linq": { "type": "build" },

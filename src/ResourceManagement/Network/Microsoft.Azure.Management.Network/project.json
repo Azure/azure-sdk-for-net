@@ -1,13 +1,13 @@
 {
   "version": "3.0.0-preview",
-  "description": "Microsoft.Azure.Management.Resources",
+  "description": "Provides management capabilities for Network services.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Network management", "Network", "Network management","REST HTTP client",  "windowsazureofficial" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
@@ -16,7 +16,7 @@
   },
 
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Collections": { "type": "build" },
         "System.Linq.Expressions": {"type": "build"},

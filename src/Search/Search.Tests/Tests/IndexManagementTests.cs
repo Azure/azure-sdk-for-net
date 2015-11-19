@@ -48,7 +48,11 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         Functions = new ScoringFunction[]
                         {
-                            new MagnitudeScoringFunction(new MagnitudeScoringParameters(1, 4), "rating", 2.0)
+                            new MagnitudeScoringFunction(
+                                "rating", 
+                                boost: 2.0, 
+                                boostingRangeStart: 1, 
+                                boostingRangeEnd: 4)
                         }
                     }
                 };
@@ -416,17 +420,23 @@ namespace Microsoft.Azure.Search.Tests
                         Functions = new ScoringFunction[]
                         {
                             new MagnitudeScoringFunction(
-                                new MagnitudeScoringParameters(1, 4) { ShouldBoostBeyondRangeByConstant = true },
-                                "rating",
-                                2.0) { Interpolation = ScoringFunctionInterpolation.Constant },
+                                "rating", 
+                                boost: 2.0, 
+                                boostingRangeStart: 1, 
+                                boostingRangeEnd: 4, 
+                                shouldBoostBeyondRangeByConstant: true, 
+                                interpolation: ScoringFunctionInterpolation.Constant),
                             new DistanceScoringFunction(
-                                new DistanceScoringParameters("loc", 5),
-                                "location",
-                                1.5) { Interpolation = ScoringFunctionInterpolation.Linear },
+                                "location", 
+                                boost: 1.5, 
+                                referencePointParameter: "loc", 
+                                boostingDistance: 5, 
+                                interpolation: ScoringFunctionInterpolation.Linear),
                             new FreshnessScoringFunction(
-                                new FreshnessScoringParameters(TimeSpan.FromDays(365)),
-                                "lastRenovationDate",
-                                1.1) { Interpolation = ScoringFunctionInterpolation.Logarithmic }
+                                "lastRenovationDate", 
+                                boost: 1.1, 
+                                boostingDuration: TimeSpan.FromDays(365), 
+                                interpolation: ScoringFunctionInterpolation.Logarithmic)
                         },
                         TextWeights = new TextWeights()
                         {
@@ -438,10 +448,11 @@ namespace Microsoft.Azure.Search.Tests
                         FunctionAggregation = ScoringFunctionAggregation.Maximum,
                         Functions = new[]
                         {
-                            new TagScoringFunction(new TagScoringParameters("mytags"), "tags", 1.5)
-                            {
-                                Interpolation = ScoringFunctionInterpolation.Linear
-                            }
+                            new TagScoringFunction(
+                                "tags", 
+                                boost: 1.5, 
+                                tagsParameter: "mytags", 
+                                interpolation: ScoringFunctionInterpolation.Linear)
                         }
                     },
                     new ScoringProfile("ProfileThree")
@@ -449,7 +460,7 @@ namespace Microsoft.Azure.Search.Tests
                         FunctionAggregation = ScoringFunctionAggregation.Minimum,
                         Functions = new[]
                         {
-                            new MagnitudeScoringFunction(new MagnitudeScoringParameters(0, 10), "rating", 3.0)
+                            new MagnitudeScoringFunction("rating", 3.0, new MagnitudeScoringParameters(0, 10))
                             {
                                 Interpolation = ScoringFunctionInterpolation.Quadratic
                             }
@@ -460,7 +471,7 @@ namespace Microsoft.Azure.Search.Tests
                         FunctionAggregation = ScoringFunctionAggregation.FirstMatching,
                         Functions = new[]
                         {
-                            new MagnitudeScoringFunction(new MagnitudeScoringParameters(1, 5), "rating", 3.14)
+                            new MagnitudeScoringFunction("rating", 3.14, new MagnitudeScoringParameters(1, 5))
                             {
                                 Interpolation = ScoringFunctionInterpolation.Constant
                             }
@@ -604,8 +615,8 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected.Parameters.BoostingRangeEnd, actual.Parameters.BoostingRangeEnd);
             Assert.Equal(expected.Parameters.BoostingRangeStart, actual.Parameters.BoostingRangeStart);
             Assert.Equal(
-                expected.Parameters.ShouldBoostBeyondRangeByConstant, 
-                actual.Parameters.ShouldBoostBeyondRangeByConstant);
+                expected.Parameters.ShouldBoostBeyondRangeByConstant.GetValueOrDefault(), 
+                actual.Parameters.ShouldBoostBeyondRangeByConstant.GetValueOrDefault());
         }
 
         private static void AssertFreshnessScoringFunctionsEqual(

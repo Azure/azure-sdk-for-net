@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Search
 
         private static IList<string> GetIndexNames(IndexListResult indexListResult)
         {
-            return indexListResult.Value.Select(index => index.Name).ToList();
+            return indexListResult.Indexes.Select(index => index.Name).ToList();
         }
     }
 }

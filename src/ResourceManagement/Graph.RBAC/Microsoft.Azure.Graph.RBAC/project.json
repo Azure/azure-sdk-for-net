@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0-preview",
+  "version": "2.0.0-preview",
   "description": "Microsoft.Azure.Graph.RBAC",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft AutoRest Management REST" ],
@@ -7,7 +7,7 @@
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
@@ -16,7 +16,7 @@
   },
 
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Collections": { "type": "build" },
         "System.Linq.Expressions": {"type": "build"},

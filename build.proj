@@ -60,6 +60,7 @@
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
+    <ZipExe>$(LibraryToolsFolder)\7-Zip\7z.exe</ZipExe>
   </PropertyGroup>
 
   <ItemGroup>
@@ -103,7 +104,7 @@
   <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
-      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2 -s $(LibraryRoot)localfeed</_TemporaryDnxFeeds>
+      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2</_TemporaryDnxFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -116,7 +117,7 @@
              Targets="Build" />
 
     <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibrarySourceFolder)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
 
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
@@ -291,8 +292,10 @@
     
     <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
     <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
+
+    <MakeDir Directories="$(_UnsignedFolder);$(_SignedFolder)" />
     
-    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
+    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
 
     <RemoveDir Directories="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
     <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
@@ -332,8 +335,7 @@
         Condition="!$(DelaySign)"/>
 
     <Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
-
-    <Exec Command="$(LibraryToolsFolder)\7-Zip\7z.exe a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
+    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
   </Target>
   
 </Project>

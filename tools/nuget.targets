@@ -10,7 +10,6 @@
   <!--TODO: remove when we convert them to be dnx based-->
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Logic\LogicManagement\Microsoft.Azure.Management.Logic.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Scheduler\SchedulerManagement\Microsoft.Azure.Management.Scheduler.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\ResourceManagement\WebSite\WebSiteManagement\Microsoft.Azure.Management.WebSites.nuget.proj" Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
@@ -78,23 +77,90 @@
   <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
     <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' " />
     
-    <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' and '@(SdkNuGetPackage)' != '' "
+    <Message Text="Generating NuGet library" Importance="high" />
+    <Exec Condition=" '%(SdkNuGetPackage.Identity)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
-
-    <Message Text="Generating NuGet packages without symbol + source packages into $(PackageOutputDir)" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' and '@(SdkNuGetPackage)' != '' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
 
     <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
     <ItemGroup>
       <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <ItemGroup>
+      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
+    </ItemGroup>    
+    <CallTarget Targets="RenameResourceManagementPackage" Condition=" @(ResourcePackages) != '' " />
+    
     <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
 
-  <Target Name="Publish">
+  <!--TODO: remove this target and its utilities by the end of aspnet-rc2 which exposes the support to configure different assembly name -->
+  <Target Name="RenameResourceManagementPackage" DependsOnTargets="PrepareForAutoRestLibraries">
+    <ItemGroup>
+      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
+      <_NewResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources.*.nupkg" ></_NewResourcePackages>
+    </ItemGroup>
+    <RemoveDir Directories="@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)')" />
+    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)') %(ResourcePackages.Identity)" />
+    <Delete Files="@(ResourcePackages)" />
+    <Delete Files="@(_NewResourcePackages)" />
+    <ItemGroup>
+      <_NuspecFiles Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*\*.nuspec" />
+    </ItemGroup>    
+    <UpdateNuspecFiles NuspecFilePath="%(_NuspecFiles.Identity)" />
+    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(ResourcePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(ResourcePackages.Filename)" />
+    <RenameResourcePackages PackageDirectory="$(PackageOutputDir)"></RenameResourcePackages>
+    <!--Now adjust metadatas for other targets to pick up the new name-->
+    <ItemGroup>
+      <Dnx_AutoRestLibraries Condition="'%(Dnx_AutoRestLibraries.PackageName)'=='Microsoft.Azure.ResourceManager'">
+        <PackageName>Microsoft.Azure.Management.Resources</PackageName>
+      </Dnx_AutoRestLibraries>
+    </ItemGroup>
+  </Target>
+
+  <UsingTask
+      TaskName="UpdateNuspecFiles"
+      TaskFactory="CodeTaskFactory"
+      AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <NuspecFilePath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          var contents = File.ReadAllText(NuspecFilePath);
+          contents = contents.Replace("<id>Microsoft.Azure.ResourceManager</id>", "<id>Microsoft.Azure.Management.Resources</id>");
+          File.WriteAllText(NuspecFilePath, contents);
+          ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask
+    TaskName="RenameResourcePackages"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <PackageDirectory ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            string[] resourcePackages = Directory.GetFiles(PackageDirectory, "Microsoft.Azure.ResourceManager*.nupkg", SearchOption.TopDirectoryOnly);
+            foreach( string p in resourcePackages)
+            {
+                File.Move(p, Path.Combine(Path.GetDirectoryName(p), Path.GetFileName(p).Replace("Microsoft.Azure.ResourceManager", "Microsoft.Azure.Management.Resources")));
+            }
+          ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
     <PropertyGroup>
@@ -111,14 +177,19 @@
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
 
+    <MSBuild Projects="$(MSBuildProjectFullPath)"
+             Properties="NuGetKey=$(NuGetKey);DnxPackageName=%(Dnx_AutoRestLibraries.PackageName);PackageOutputDir=$(PackageOutputDir)"
+             Targets="PublishDnxPackage" Condition=" %(Dnx_AutoRestLibraries.PackageName) != '' " />
+  </Target>
+
+  <Target Name="PublishDnxPackage">
     <ItemGroup>
-      <_DnxPackagesToPublish Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg"
-                             Exclude="$(PackageOutputDir)\*.symbols.nupkg">
+      <_DnxPackagesToPublish Include="$(PackageOutputDir)\$(DnxPackageName)*.nupkg"
+                             Exclude="$(PackageOutputDir)\$(DnxPackageName)*.symbols.nupkg">
       </_DnxPackagesToPublish>
     </ItemGroup>
     <Exec Command="$(NuGetCommand) push &quot;%(_DnxPackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true" />
-    
   </Target>
-
+  
 </Project>

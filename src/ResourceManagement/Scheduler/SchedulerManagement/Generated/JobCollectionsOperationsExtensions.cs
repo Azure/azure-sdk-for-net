@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Rest.Azure;
     using Models;
 
