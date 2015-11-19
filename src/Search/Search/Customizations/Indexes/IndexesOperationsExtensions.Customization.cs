@@ -15,50 +15,6 @@ namespace Microsoft.Azure.Search
     public static partial class IndexesOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='index'>
-        /// The definition of the index to create or update.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        public static Index CreateOrUpdate(
-            this IIndexesOperations operations, 
-            Index index,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-        {
-            return operations.CreateOrUpdate(index.Name, index, searchRequestOptions);
-        }
-
-        /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='index'>
-        /// The definition of the index to create or update.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static Task<Index> CreateOrUpdateAsync(
-            this IIndexesOperations operations, 
-            Index index, 
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return operations.CreateOrUpdateAsync(index.Name, index, searchRequestOptions, cancellationToken);
-        }
-
-        /// <summary>
         /// Determines whether or not the given index exists in the Azure Search service.
         /// </summary>
         /// <param name='operations'>

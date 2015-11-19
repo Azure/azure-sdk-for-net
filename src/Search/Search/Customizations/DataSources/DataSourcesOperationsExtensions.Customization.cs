@@ -13,52 +13,6 @@ namespace Microsoft.Azure.Search
     public static partial class DataSourcesOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it
-        /// already exists.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='dataSource'>
-        /// The definition of the datasource to create or update.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        public static DataSource CreateOrUpdate(
-            this IDataSourcesOperations operations, 
-            DataSource dataSource,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-        {
-            return operations.CreateOrUpdate(dataSource.Name, dataSource, searchRequestOptions);
-        }
-
-        /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it
-        /// already exists.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='dataSource'>
-        /// The definition of the datasource to create or update.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static Task<DataSource> CreateOrUpdateAsync(
-            this IDataSourcesOperations operations, 
-            DataSource dataSource, 
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return operations.CreateOrUpdateAsync(dataSource.Name, dataSource, searchRequestOptions, cancellationToken);
-        }
-
-        /// <summary>
         /// Determines whether or not the given data source exists in the Azure Search service.
         /// </summary>
         /// <param name='operations'>

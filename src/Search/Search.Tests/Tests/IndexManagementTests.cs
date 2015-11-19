@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Search.Tests
                 Index index = CreateTestIndex();
 
                 AzureOperationResponse<Index> createOrUpdateResponse = 
-                    searchClient.Indexes.CreateOrUpdateWithHttpMessagesAsync(index.Name, index).Result;
+                    searchClient.Indexes.CreateOrUpdateWithHttpMessagesAsync(index).Result;
                 Assert.Equal(HttpStatusCode.Created, createOrUpdateResponse.Response.StatusCode);
             });
         }
