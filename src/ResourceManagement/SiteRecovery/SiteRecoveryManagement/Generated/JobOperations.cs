@@ -1016,6 +1016,129 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken customDetailsValue = propertiesValue["customDetails"];
+                                if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)customDetailsValue["instanceType"]);
+                                    if (typeName == "TestFailoverJobDetails")
+                                    {
+                                        TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
+                                        
+                                        JToken testFailoverStatusValue = customDetailsValue["testFailoverStatus"];
+                                        if (testFailoverStatusValue != null && testFailoverStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStatusInstance = ((string)testFailoverStatusValue);
+                                            testFailoverJobDetailsInstance.TestFailoverStatus = testFailoverStatusInstance;
+                                        }
+                                        
+                                        JToken commentsValue = customDetailsValue["comments"];
+                                        if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                                        {
+                                            string commentsInstance = ((string)commentsValue);
+                                            testFailoverJobDetailsInstance.Comments = commentsInstance;
+                                        }
+                                        
+                                        JToken networkNameValue = customDetailsValue["networkName"];
+                                        if (networkNameValue != null && networkNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkNameInstance = ((string)networkNameValue);
+                                            testFailoverJobDetailsInstance.NetworkName = networkNameInstance;
+                                        }
+                                        
+                                        JToken networkFriendlyNameValue = customDetailsValue["networkFriendlyName"];
+                                        if (networkFriendlyNameValue != null && networkFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkFriendlyNameInstance = ((string)networkFriendlyNameValue);
+                                            testFailoverJobDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken networkTypeValue = customDetailsValue["networkType"];
+                                        if (networkTypeValue != null && networkTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string networkTypeInstance = ((string)networkTypeValue);
+                                            testFailoverJobDetailsInstance.NetworkType = networkTypeInstance;
+                                        }
+                                        
+                                        JToken protectedItemDetailsArray = customDetailsValue["protectedItemDetails"];
+                                        if (protectedItemDetailsArray != null && protectedItemDetailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken protectedItemDetailsValue in ((JArray)protectedItemDetailsArray))
+                                            {
+                                                TestFailoverReplicationProtectedItemDetails testFailoverReplicationProtectedItemDetailsInstance = new TestFailoverReplicationProtectedItemDetails();
+                                                testFailoverJobDetailsInstance.ProtectedItemDetails.Add(testFailoverReplicationProtectedItemDetailsInstance);
+                                                
+                                                JToken nameValue2 = protectedItemDetailsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken friendlyNameValue3 = protectedItemDetailsValue["friendlyName"];
+                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.FriendlyName = friendlyNameInstance3;
+                                                }
+                                                
+                                                JToken testVmNameValue = protectedItemDetailsValue["testVmName"];
+                                                if (testVmNameValue != null && testVmNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmNameInstance = ((string)testVmNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmName = testVmNameInstance;
+                                                }
+                                                
+                                                JToken testVmFriendlyNameValue = protectedItemDetailsValue["testVmFriendlyName"];
+                                                if (testVmFriendlyNameValue != null && testVmFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmFriendlyNameInstance = ((string)testVmFriendlyNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmFriendlyName = testVmFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken networkConnectionStatusValue = protectedItemDetailsValue["networkConnectionStatus"];
+                                                if (networkConnectionStatusValue != null && networkConnectionStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkConnectionStatusInstance = ((string)networkConnectionStatusValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkConnectionStatus = networkConnectionStatusInstance;
+                                                }
+                                                
+                                                JToken networkFriendlyNameValue2 = protectedItemDetailsValue["networkFriendlyName"];
+                                                if (networkFriendlyNameValue2 != null && networkFriendlyNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string networkFriendlyNameInstance2 = ((string)networkFriendlyNameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance2;
+                                                }
+                                                
+                                                JToken subnetValue = protectedItemDetailsValue["subnet"];
+                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                {
+                                                    string subnetInstance = ((string)subnetValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Subnet = subnetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken instanceTypeValue = customDetailsValue["instanceType"];
+                                        if (instanceTypeValue != null && instanceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance = ((string)instanceTypeValue);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
+                                    }
+                                }
+                                
                                 JToken idValue = propertiesValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
@@ -1023,11 +1146,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                JToken nameValue3 = propertiesValue["name"];
+                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
+                                    string nameInstance3 = ((string)nameValue3);
+                                    propertiesInstance.Name = nameInstance3;
                                 }
                                 
                                 JToken typeValue = propertiesValue["type"];
@@ -1047,10 +1170,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    foreach (JProperty property2 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
+                                        string tagsKey = ((string)property2.Name);
+                                        string tagsValue = ((string)property2.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -1063,11 +1186,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 jobInstance.Id = idInstance2;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                jobInstance.Name = nameInstance3;
+                                string nameInstance4 = ((string)nameValue4);
+                                jobInstance.Name = nameInstance4;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
@@ -1087,10 +1210,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property3 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
+                                    string tagsKey2 = ((string)property3.Name);
+                                    string tagsValue2 = ((string)property3.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -1474,6 +1597,129 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken customDetailsValue = propertiesValue["customDetails"];
+                                if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)customDetailsValue["instanceType"]);
+                                    if (typeName == "TestFailoverJobDetails")
+                                    {
+                                        TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
+                                        
+                                        JToken testFailoverStatusValue = customDetailsValue["testFailoverStatus"];
+                                        if (testFailoverStatusValue != null && testFailoverStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStatusInstance = ((string)testFailoverStatusValue);
+                                            testFailoverJobDetailsInstance.TestFailoverStatus = testFailoverStatusInstance;
+                                        }
+                                        
+                                        JToken commentsValue = customDetailsValue["comments"];
+                                        if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                                        {
+                                            string commentsInstance = ((string)commentsValue);
+                                            testFailoverJobDetailsInstance.Comments = commentsInstance;
+                                        }
+                                        
+                                        JToken networkNameValue = customDetailsValue["networkName"];
+                                        if (networkNameValue != null && networkNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkNameInstance = ((string)networkNameValue);
+                                            testFailoverJobDetailsInstance.NetworkName = networkNameInstance;
+                                        }
+                                        
+                                        JToken networkFriendlyNameValue = customDetailsValue["networkFriendlyName"];
+                                        if (networkFriendlyNameValue != null && networkFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkFriendlyNameInstance = ((string)networkFriendlyNameValue);
+                                            testFailoverJobDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken networkTypeValue = customDetailsValue["networkType"];
+                                        if (networkTypeValue != null && networkTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string networkTypeInstance = ((string)networkTypeValue);
+                                            testFailoverJobDetailsInstance.NetworkType = networkTypeInstance;
+                                        }
+                                        
+                                        JToken protectedItemDetailsArray = customDetailsValue["protectedItemDetails"];
+                                        if (protectedItemDetailsArray != null && protectedItemDetailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken protectedItemDetailsValue in ((JArray)protectedItemDetailsArray))
+                                            {
+                                                TestFailoverReplicationProtectedItemDetails testFailoverReplicationProtectedItemDetailsInstance = new TestFailoverReplicationProtectedItemDetails();
+                                                testFailoverJobDetailsInstance.ProtectedItemDetails.Add(testFailoverReplicationProtectedItemDetailsInstance);
+                                                
+                                                JToken nameValue2 = protectedItemDetailsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken friendlyNameValue3 = protectedItemDetailsValue["friendlyName"];
+                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.FriendlyName = friendlyNameInstance3;
+                                                }
+                                                
+                                                JToken testVmNameValue = protectedItemDetailsValue["testVmName"];
+                                                if (testVmNameValue != null && testVmNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmNameInstance = ((string)testVmNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmName = testVmNameInstance;
+                                                }
+                                                
+                                                JToken testVmFriendlyNameValue = protectedItemDetailsValue["testVmFriendlyName"];
+                                                if (testVmFriendlyNameValue != null && testVmFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmFriendlyNameInstance = ((string)testVmFriendlyNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmFriendlyName = testVmFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken networkConnectionStatusValue = protectedItemDetailsValue["networkConnectionStatus"];
+                                                if (networkConnectionStatusValue != null && networkConnectionStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkConnectionStatusInstance = ((string)networkConnectionStatusValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkConnectionStatus = networkConnectionStatusInstance;
+                                                }
+                                                
+                                                JToken networkFriendlyNameValue2 = protectedItemDetailsValue["networkFriendlyName"];
+                                                if (networkFriendlyNameValue2 != null && networkFriendlyNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string networkFriendlyNameInstance2 = ((string)networkFriendlyNameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance2;
+                                                }
+                                                
+                                                JToken subnetValue = protectedItemDetailsValue["subnet"];
+                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                {
+                                                    string subnetInstance = ((string)subnetValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Subnet = subnetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken instanceTypeValue = customDetailsValue["instanceType"];
+                                        if (instanceTypeValue != null && instanceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance = ((string)instanceTypeValue);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
+                                    }
+                                }
+                                
                                 JToken idValue = propertiesValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
@@ -1481,11 +1727,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                JToken nameValue3 = propertiesValue["name"];
+                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
+                                    string nameInstance3 = ((string)nameValue3);
+                                    propertiesInstance.Name = nameInstance3;
                                 }
                                 
                                 JToken typeValue = propertiesValue["type"];
@@ -1505,10 +1751,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    foreach (JProperty property2 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
+                                        string tagsKey = ((string)property2.Name);
+                                        string tagsValue = ((string)property2.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -1521,11 +1767,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 jobInstance.Id = idInstance2;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                jobInstance.Name = nameInstance3;
+                                string nameInstance4 = ((string)nameValue4);
+                                jobInstance.Name = nameInstance4;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
@@ -1545,10 +1791,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property3 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
+                                    string tagsKey2 = ((string)property3.Name);
+                                    string tagsValue2 = ((string)property3.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -1987,6 +2233,129 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken customDetailsValue = propertiesValue["customDetails"];
+                                if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)customDetailsValue["instanceType"]);
+                                    if (typeName == "TestFailoverJobDetails")
+                                    {
+                                        TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
+                                        
+                                        JToken testFailoverStatusValue = customDetailsValue["testFailoverStatus"];
+                                        if (testFailoverStatusValue != null && testFailoverStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStatusInstance = ((string)testFailoverStatusValue);
+                                            testFailoverJobDetailsInstance.TestFailoverStatus = testFailoverStatusInstance;
+                                        }
+                                        
+                                        JToken commentsValue = customDetailsValue["comments"];
+                                        if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                                        {
+                                            string commentsInstance = ((string)commentsValue);
+                                            testFailoverJobDetailsInstance.Comments = commentsInstance;
+                                        }
+                                        
+                                        JToken networkNameValue = customDetailsValue["networkName"];
+                                        if (networkNameValue != null && networkNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkNameInstance = ((string)networkNameValue);
+                                            testFailoverJobDetailsInstance.NetworkName = networkNameInstance;
+                                        }
+                                        
+                                        JToken networkFriendlyNameValue = customDetailsValue["networkFriendlyName"];
+                                        if (networkFriendlyNameValue != null && networkFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkFriendlyNameInstance = ((string)networkFriendlyNameValue);
+                                            testFailoverJobDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken networkTypeValue = customDetailsValue["networkType"];
+                                        if (networkTypeValue != null && networkTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string networkTypeInstance = ((string)networkTypeValue);
+                                            testFailoverJobDetailsInstance.NetworkType = networkTypeInstance;
+                                        }
+                                        
+                                        JToken protectedItemDetailsArray = customDetailsValue["protectedItemDetails"];
+                                        if (protectedItemDetailsArray != null && protectedItemDetailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken protectedItemDetailsValue in ((JArray)protectedItemDetailsArray))
+                                            {
+                                                TestFailoverReplicationProtectedItemDetails testFailoverReplicationProtectedItemDetailsInstance = new TestFailoverReplicationProtectedItemDetails();
+                                                testFailoverJobDetailsInstance.ProtectedItemDetails.Add(testFailoverReplicationProtectedItemDetailsInstance);
+                                                
+                                                JToken nameValue2 = protectedItemDetailsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken friendlyNameValue3 = protectedItemDetailsValue["friendlyName"];
+                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.FriendlyName = friendlyNameInstance3;
+                                                }
+                                                
+                                                JToken testVmNameValue = protectedItemDetailsValue["testVmName"];
+                                                if (testVmNameValue != null && testVmNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmNameInstance = ((string)testVmNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmName = testVmNameInstance;
+                                                }
+                                                
+                                                JToken testVmFriendlyNameValue = protectedItemDetailsValue["testVmFriendlyName"];
+                                                if (testVmFriendlyNameValue != null && testVmFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmFriendlyNameInstance = ((string)testVmFriendlyNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmFriendlyName = testVmFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken networkConnectionStatusValue = protectedItemDetailsValue["networkConnectionStatus"];
+                                                if (networkConnectionStatusValue != null && networkConnectionStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkConnectionStatusInstance = ((string)networkConnectionStatusValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkConnectionStatus = networkConnectionStatusInstance;
+                                                }
+                                                
+                                                JToken networkFriendlyNameValue2 = protectedItemDetailsValue["networkFriendlyName"];
+                                                if (networkFriendlyNameValue2 != null && networkFriendlyNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string networkFriendlyNameInstance2 = ((string)networkFriendlyNameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance2;
+                                                }
+                                                
+                                                JToken subnetValue = protectedItemDetailsValue["subnet"];
+                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                {
+                                                    string subnetInstance = ((string)subnetValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Subnet = subnetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken instanceTypeValue = customDetailsValue["instanceType"];
+                                        if (instanceTypeValue != null && instanceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance = ((string)instanceTypeValue);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
+                                    }
+                                }
+                                
                                 JToken idValue = propertiesValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
@@ -1994,11 +2363,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                JToken nameValue3 = propertiesValue["name"];
+                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
+                                    string nameInstance3 = ((string)nameValue3);
+                                    propertiesInstance.Name = nameInstance3;
                                 }
                                 
                                 JToken typeValue = propertiesValue["type"];
@@ -2018,10 +2387,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    foreach (JProperty property2 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
+                                        string tagsKey = ((string)property2.Name);
+                                        string tagsValue = ((string)property2.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -2034,11 +2403,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 jobInstance.Id = idInstance2;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                jobInstance.Name = nameInstance3;
+                                string nameInstance4 = ((string)nameValue4);
+                                jobInstance.Name = nameInstance4;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
@@ -2058,10 +2427,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property3 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
+                                    string tagsKey2 = ((string)property3.Name);
+                                    string tagsValue2 = ((string)property3.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -2504,6 +2873,129 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken customDetailsValue = propertiesValue["customDetails"];
+                                if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)customDetailsValue["instanceType"]);
+                                    if (typeName == "TestFailoverJobDetails")
+                                    {
+                                        TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
+                                        
+                                        JToken testFailoverStatusValue = customDetailsValue["testFailoverStatus"];
+                                        if (testFailoverStatusValue != null && testFailoverStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStatusInstance = ((string)testFailoverStatusValue);
+                                            testFailoverJobDetailsInstance.TestFailoverStatus = testFailoverStatusInstance;
+                                        }
+                                        
+                                        JToken commentsValue = customDetailsValue["comments"];
+                                        if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                                        {
+                                            string commentsInstance = ((string)commentsValue);
+                                            testFailoverJobDetailsInstance.Comments = commentsInstance;
+                                        }
+                                        
+                                        JToken networkNameValue = customDetailsValue["networkName"];
+                                        if (networkNameValue != null && networkNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkNameInstance = ((string)networkNameValue);
+                                            testFailoverJobDetailsInstance.NetworkName = networkNameInstance;
+                                        }
+                                        
+                                        JToken networkFriendlyNameValue = customDetailsValue["networkFriendlyName"];
+                                        if (networkFriendlyNameValue != null && networkFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string networkFriendlyNameInstance = ((string)networkFriendlyNameValue);
+                                            testFailoverJobDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken networkTypeValue = customDetailsValue["networkType"];
+                                        if (networkTypeValue != null && networkTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string networkTypeInstance = ((string)networkTypeValue);
+                                            testFailoverJobDetailsInstance.NetworkType = networkTypeInstance;
+                                        }
+                                        
+                                        JToken protectedItemDetailsArray = customDetailsValue["protectedItemDetails"];
+                                        if (protectedItemDetailsArray != null && protectedItemDetailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken protectedItemDetailsValue in ((JArray)protectedItemDetailsArray))
+                                            {
+                                                TestFailoverReplicationProtectedItemDetails testFailoverReplicationProtectedItemDetailsInstance = new TestFailoverReplicationProtectedItemDetails();
+                                                testFailoverJobDetailsInstance.ProtectedItemDetails.Add(testFailoverReplicationProtectedItemDetailsInstance);
+                                                
+                                                JToken nameValue2 = protectedItemDetailsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken friendlyNameValue3 = protectedItemDetailsValue["friendlyName"];
+                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.FriendlyName = friendlyNameInstance3;
+                                                }
+                                                
+                                                JToken testVmNameValue = protectedItemDetailsValue["testVmName"];
+                                                if (testVmNameValue != null && testVmNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmNameInstance = ((string)testVmNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmName = testVmNameInstance;
+                                                }
+                                                
+                                                JToken testVmFriendlyNameValue = protectedItemDetailsValue["testVmFriendlyName"];
+                                                if (testVmFriendlyNameValue != null && testVmFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string testVmFriendlyNameInstance = ((string)testVmFriendlyNameValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.TestVmFriendlyName = testVmFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken networkConnectionStatusValue = protectedItemDetailsValue["networkConnectionStatus"];
+                                                if (networkConnectionStatusValue != null && networkConnectionStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkConnectionStatusInstance = ((string)networkConnectionStatusValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkConnectionStatus = networkConnectionStatusInstance;
+                                                }
+                                                
+                                                JToken networkFriendlyNameValue2 = protectedItemDetailsValue["networkFriendlyName"];
+                                                if (networkFriendlyNameValue2 != null && networkFriendlyNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string networkFriendlyNameInstance2 = ((string)networkFriendlyNameValue2);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance2;
+                                                }
+                                                
+                                                JToken subnetValue = protectedItemDetailsValue["subnet"];
+                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                {
+                                                    string subnetInstance = ((string)subnetValue);
+                                                    testFailoverReplicationProtectedItemDetailsInstance.Subnet = subnetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken instanceTypeValue = customDetailsValue["instanceType"];
+                                        if (instanceTypeValue != null && instanceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance = ((string)instanceTypeValue);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
+                                    }
+                                }
+                                
                                 JToken idValue = propertiesValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
@@ -2511,11 +3003,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                JToken nameValue3 = propertiesValue["name"];
+                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
+                                    string nameInstance3 = ((string)nameValue3);
+                                    propertiesInstance.Name = nameInstance3;
                                 }
                                 
                                 JToken typeValue = propertiesValue["type"];
@@ -2535,10 +3027,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    foreach (JProperty property2 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
+                                        string tagsKey = ((string)property2.Name);
+                                        string tagsValue = ((string)property2.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -2551,11 +3043,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 jobInstance.Id = idInstance2;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                jobInstance.Name = nameInstance3;
+                                string nameInstance4 = ((string)nameValue4);
+                                jobInstance.Name = nameInstance4;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
@@ -2575,10 +3067,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property3 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
+                                    string tagsKey2 = ((string)property3.Name);
+                                    string tagsValue2 = ((string)property3.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -3049,6 +3541,129 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
+                                        JToken customDetailsValue = propertiesValue["customDetails"];
+                                        if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)customDetailsValue["instanceType"]);
+                                            if (typeName == "TestFailoverJobDetails")
+                                            {
+                                                TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
+                                                
+                                                JToken testFailoverStatusValue = customDetailsValue["testFailoverStatus"];
+                                                if (testFailoverStatusValue != null && testFailoverStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string testFailoverStatusInstance = ((string)testFailoverStatusValue);
+                                                    testFailoverJobDetailsInstance.TestFailoverStatus = testFailoverStatusInstance;
+                                                }
+                                                
+                                                JToken commentsValue = customDetailsValue["comments"];
+                                                if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                                                {
+                                                    string commentsInstance = ((string)commentsValue);
+                                                    testFailoverJobDetailsInstance.Comments = commentsInstance;
+                                                }
+                                                
+                                                JToken networkNameValue = customDetailsValue["networkName"];
+                                                if (networkNameValue != null && networkNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkNameInstance = ((string)networkNameValue);
+                                                    testFailoverJobDetailsInstance.NetworkName = networkNameInstance;
+                                                }
+                                                
+                                                JToken networkFriendlyNameValue = customDetailsValue["networkFriendlyName"];
+                                                if (networkFriendlyNameValue != null && networkFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkFriendlyNameInstance = ((string)networkFriendlyNameValue);
+                                                    testFailoverJobDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken networkTypeValue = customDetailsValue["networkType"];
+                                                if (networkTypeValue != null && networkTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string networkTypeInstance = ((string)networkTypeValue);
+                                                    testFailoverJobDetailsInstance.NetworkType = networkTypeInstance;
+                                                }
+                                                
+                                                JToken protectedItemDetailsArray = customDetailsValue["protectedItemDetails"];
+                                                if (protectedItemDetailsArray != null && protectedItemDetailsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken protectedItemDetailsValue in ((JArray)protectedItemDetailsArray))
+                                                    {
+                                                        TestFailoverReplicationProtectedItemDetails testFailoverReplicationProtectedItemDetailsInstance = new TestFailoverReplicationProtectedItemDetails();
+                                                        testFailoverJobDetailsInstance.ProtectedItemDetails.Add(testFailoverReplicationProtectedItemDetailsInstance);
+                                                        
+                                                        JToken nameValue2 = protectedItemDetailsValue["name"];
+                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance2 = ((string)nameValue2);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.Name = nameInstance2;
+                                                        }
+                                                        
+                                                        JToken friendlyNameValue3 = protectedItemDetailsValue["friendlyName"];
+                                                        if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.FriendlyName = friendlyNameInstance3;
+                                                        }
+                                                        
+                                                        JToken testVmNameValue = protectedItemDetailsValue["testVmName"];
+                                                        if (testVmNameValue != null && testVmNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string testVmNameInstance = ((string)testVmNameValue);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.TestVmName = testVmNameInstance;
+                                                        }
+                                                        
+                                                        JToken testVmFriendlyNameValue = protectedItemDetailsValue["testVmFriendlyName"];
+                                                        if (testVmFriendlyNameValue != null && testVmFriendlyNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string testVmFriendlyNameInstance = ((string)testVmFriendlyNameValue);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.TestVmFriendlyName = testVmFriendlyNameInstance;
+                                                        }
+                                                        
+                                                        JToken networkConnectionStatusValue = protectedItemDetailsValue["networkConnectionStatus"];
+                                                        if (networkConnectionStatusValue != null && networkConnectionStatusValue.Type != JTokenType.Null)
+                                                        {
+                                                            string networkConnectionStatusInstance = ((string)networkConnectionStatusValue);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.NetworkConnectionStatus = networkConnectionStatusInstance;
+                                                        }
+                                                        
+                                                        JToken networkFriendlyNameValue2 = protectedItemDetailsValue["networkFriendlyName"];
+                                                        if (networkFriendlyNameValue2 != null && networkFriendlyNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string networkFriendlyNameInstance2 = ((string)networkFriendlyNameValue2);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.NetworkFriendlyName = networkFriendlyNameInstance2;
+                                                        }
+                                                        
+                                                        JToken subnetValue = protectedItemDetailsValue["subnet"];
+                                                        if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                        {
+                                                            string subnetInstance = ((string)subnetValue);
+                                                            testFailoverReplicationProtectedItemDetailsInstance.Subnet = subnetInstance;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken instanceTypeValue = customDetailsValue["instanceType"];
+                                                if (instanceTypeValue != null && instanceTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance = ((string)instanceTypeValue);
+                                                    testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance;
+                                                }
+                                                
+                                                JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue["affectedObjectDetails"]);
+                                                if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                                    {
+                                                        string affectedObjectDetailsKey = ((string)property.Name);
+                                                        string affectedObjectDetailsValue = ((string)property.Value);
+                                                        testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                    }
+                                                }
+                                                propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
+                                            }
+                                        }
+                                        
                                         JToken idValue = propertiesValue["id"];
                                         if (idValue != null && idValue.Type != JTokenType.Null)
                                         {
@@ -3056,11 +3671,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.Id = idInstance;
                                         }
                                         
-                                        JToken nameValue2 = propertiesValue["name"];
-                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        JToken nameValue3 = propertiesValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
-                                            string nameInstance2 = ((string)nameValue2);
-                                            propertiesInstance.Name = nameInstance2;
+                                            string nameInstance3 = ((string)nameValue3);
+                                            propertiesInstance.Name = nameInstance3;
                                         }
                                         
                                         JToken typeValue = propertiesValue["type"];
@@ -3080,10 +3695,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in tagsSequenceElement)
+                                            foreach (JProperty property2 in tagsSequenceElement)
                                             {
-                                                string tagsKey = ((string)property.Name);
-                                                string tagsValue = ((string)property.Value);
+                                                string tagsKey = ((string)property2.Name);
+                                                string tagsValue = ((string)property2.Value);
                                                 propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                             }
                                         }
@@ -3096,11 +3711,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         jobInstance.Id = idInstance2;
                                     }
                                     
-                                    JToken nameValue3 = jobsValue["name"];
-                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    JToken nameValue4 = jobsValue["name"];
+                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = ((string)nameValue3);
-                                        jobInstance.Name = nameInstance3;
+                                        string nameInstance4 = ((string)nameValue4);
+                                        jobInstance.Name = nameInstance4;
                                     }
                                     
                                     JToken typeValue2 = jobsValue["type"];
@@ -3120,10 +3735,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JToken tagsSequenceElement2 = ((JToken)jobsValue["tags"]);
                                     if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in tagsSequenceElement2)
+                                        foreach (JProperty property3 in tagsSequenceElement2)
                                         {
-                                            string tagsKey2 = ((string)property2.Name);
-                                            string tagsValue2 = ((string)property2.Value);
+                                            string tagsKey2 = ((string)property3.Name);
+                                            string tagsValue2 = ((string)property3.Value);
                                             jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                         }
                                     }

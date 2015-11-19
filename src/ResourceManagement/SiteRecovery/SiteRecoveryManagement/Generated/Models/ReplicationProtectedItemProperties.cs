@@ -66,6 +66,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._currentScenario = value; }
         }
         
+        private string _failoverRecoveryPointId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the recovery point Id used by failover
+        /// operation.
+        /// </summary>
+        public string FailoverRecoveryPointId
+        {
+            get { return this._failoverRecoveryPointId; }
+            set { this._failoverRecoveryPointId = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>

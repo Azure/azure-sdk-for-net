@@ -34,6 +34,58 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public partial interface IReplicationProtectedItemOperations
     {
         /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> ApplyRecoveryPointAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginApplyRecoveryPointAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Execute commit failover for the given Replication protected item.
         /// </summary>
         /// <param name='fabricName'>
@@ -408,6 +460,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the fabric object
         /// </returns>
         Task<ReplicationProtectedItemResponse> GetAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
+        Task<ReplicationProtectedItemOperationResponse> GetApplyRecoveryPointStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Operation Status operation returns the status of the

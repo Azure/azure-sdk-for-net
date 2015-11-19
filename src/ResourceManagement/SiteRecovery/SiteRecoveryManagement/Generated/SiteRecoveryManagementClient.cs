@@ -221,6 +221,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get { return this._protectionContainer; }
         }
         
+        private IRecoveryPointOperations _recoveryPoint;
+        
+        /// <summary>
+        /// Definition of recovery point operations for Site recovery extension.
+        /// </summary>
+        public virtual IRecoveryPointOperations RecoveryPoint
+        {
+            get { return this._recoveryPoint; }
+        }
+        
         private IRecoveryServicesProviderOperations _recoveryServicesProvider;
         
         /// <summary>
@@ -291,6 +301,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._protectableItem = new ProtectableItemOperations(this);
             this._protectionContainerMapping = new ProtectionContainerMappingOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
             this._storageMapping = new StorageMappingOperations(this);
@@ -438,6 +449,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._protectableItem = new ProtectableItemOperations(this);
             this._protectionContainerMapping = new ProtectionContainerMappingOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
             this._storageMapping = new StorageMappingOperations(this);

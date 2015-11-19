@@ -55,6 +55,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._allowedActions = value; }
         }
         
+        private JobDetails _customDetails;
+        
+        /// <summary>
+        /// Required. Custom details about the job.
+        /// </summary>
+        public JobDetails CustomDetails
+        {
+            get { return this._customDetails; }
+            set { this._customDetails = value; }
+        }
+        
         private System.DateTime? _endTime;
         
         /// <summary>
