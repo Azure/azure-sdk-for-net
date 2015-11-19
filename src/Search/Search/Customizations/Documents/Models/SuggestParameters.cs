@@ -20,34 +20,19 @@ namespace Microsoft.Azure.Search.Models
     /// Parameters for filtering, sorting, fuzzy matching, and other
     /// suggestions query behaviors.
     /// </summary>
-    public partial class SuggestParameters
+    public class SuggestParameters
     {
+        private static readonly IList<string> Empty = new string[0];
+
         /// <summary>
         /// Initializes a new instance of the SuggestParameters class.
         /// </summary>
         public SuggestParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the SuggestParameters class.
-        /// </summary>
-        public SuggestParameters(string filter = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> orderBy = default(IList<string>), IList<string> searchFields = default(IList<string>), IList<string> select = default(IList<string>), int? top = default(int?), bool? useFuzzyMatching = default(bool?))
-        {
-            Filter = filter;
-            HighlightPostTag = highlightPostTag;
-            HighlightPreTag = highlightPreTag;
-            MinimumCoverage = minimumCoverage;
-            OrderBy = orderBy;
-            SearchFields = searchFields;
-            Select = select;
-            Top = top;
-            UseFuzzyMatching = useFuzzyMatching;
-        }
-
-        /// <summary>
         /// Gets or sets the OData $filter expression to apply to the
         /// suggestions query.
         /// </summary>
-        [JsonProperty(PropertyName = "filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -55,7 +40,6 @@ namespace Microsoft.Azure.Search.Models
         /// be set with HighlightPreTag. If omitted, hit highlighting of
         /// suggestions is disabled.
         /// </summary>
-        [JsonProperty(PropertyName = "highlightPostTag")]
         public string HighlightPostTag { get; set; }
 
         /// <summary>
@@ -63,7 +47,6 @@ namespace Microsoft.Azure.Search.Models
         /// Must be set with HighlightPostTag. If omitted, hit highlighting
         /// of suggestions is disabled.
         /// </summary>
-        [JsonProperty(PropertyName = "highlightPreTag")]
         public string HighlightPreTag { get; set; }
 
         /// <summary>
@@ -73,7 +56,6 @@ namespace Microsoft.Azure.Search.Models
         /// useful for ensuring search availability even for services with
         /// only one replica. The default is 80.
         /// </summary>
-        [JsonProperty(PropertyName = "minimumCoverage")]
         public double? MinimumCoverage { get; set; }
 
         /// <summary>
@@ -86,28 +68,24 @@ namespace Microsoft.Azure.Search.Models
         /// default sort order is descending by document match score. There
         /// can be at most 32 Orderby clauses.
         /// </summary>
-        [JsonProperty(PropertyName = "orderBy")]
         public IList<string> OrderBy { get; set; }
 
         /// <summary>
         /// Gets or sets the list of field names to consider when querying for
         /// suggestions.
         /// </summary>
-        [JsonProperty(PropertyName = "searchFields")]
         public IList<string> SearchFields { get; set; }
 
         /// <summary>
         /// Gets or sets the list of fields to retrieve. If unspecified, all
         /// fields marked as retrievable in the schema are included.
         /// </summary>
-        [JsonProperty(PropertyName = "select")]
         public IList<string> Select { get; set; }
 
         /// <summary>
         /// Gets or sets the number of suggestions to retrieve. This must be a
         /// value between 1 and 100. The default is to 5.
         /// </summary>
-        [JsonProperty(PropertyName = "top")]
         public int? Top { get; set; }
 
         /// <summary>
@@ -119,8 +97,82 @@ namespace Microsoft.Azure.Search.Models
         /// cost as fuzzy suggestion searches are slower and consume more
         /// resources.
         /// </summary>
-        [JsonProperty(PropertyName = "useFuzzyMatching")]
-        public bool? UseFuzzyMatching { get; set; }
+        public bool UseFuzzyMatching { get; set; }
 
+        /// <summary>
+        /// Converts the SuggestParameters instance to a URL query string.
+        /// </summary>
+        /// <returns>A URL query string containing all the suggestion parameters.</returns>
+        public override string ToString()
+        {
+            return String.Join("&", this.GetAllOptions());
+        }
+
+        internal SuggestParametersPayload ToPayload(string searchText, string suggesterName)
+        {
+            return new SuggestParametersPayload()
+            {
+                Filter = this.Filter,
+                Fuzzy = this.UseFuzzyMatching,
+                HighlightPostTag = this.HighlightPostTag,
+                HighlightPreTag = this.HighlightPreTag,
+                MinimumCoverage = this.MinimumCoverage,
+                OrderBy = this.OrderBy.ToCommaSeparatedString(),
+                Search = searchText,
+                SearchFields = this.SearchFields.ToCommaSeparatedString(),
+                Select = (this.Select != null && this.Select.Any()) ? this.Select.ToCommaSeparatedString() : "*",
+                SuggesterName = suggesterName,
+                Top = this.Top
+            };
+        }
+
+        private IEnumerable<QueryOption> GetAllOptions()
+        {
+            if (this.Filter != null)
+            {
+                yield return new QueryOption("$filter", Uri.EscapeDataString(this.Filter));
+            }
+
+            if (this.HighlightPreTag != null)
+            {
+                yield return new QueryOption("highlightPreTag", Uri.EscapeDataString(this.HighlightPreTag));
+            }
+
+            if (this.HighlightPostTag != null)
+            {
+                yield return new QueryOption("highlightPostTag", Uri.EscapeDataString(this.HighlightPostTag));
+            }
+
+            if (this.MinimumCoverage != null)
+            {
+                yield return new QueryOption("minimumCoverage", this.MinimumCoverage.ToString());
+            }
+
+            if (this.OrderBy != null && this.OrderBy.Any())
+            {
+                yield return new QueryOption("$orderby", this.OrderBy);
+            }
+
+            if (this.SearchFields != null && this.SearchFields.Any())
+            {
+                yield return new QueryOption("searchFields", this.SearchFields);
+            }
+
+            if (this.Select != null && this.Select.Any())
+            {
+                yield return new QueryOption("$select", this.Select);
+            }
+            else
+            {
+                yield return new QueryOption("$select", "*");
+            }
+
+            if (this.Top != null)
+            {
+                yield return new QueryOption("$top", this.Top.ToString());
+            }
+
+            yield return new QueryOption("fuzzy", this.UseFuzzyMatching.ToString().ToLowerInvariant());
+        }
     }
 }

@@ -52,8 +52,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="generate-searchindex.cmd" />
-    <None Include="generate-searchservice.cmd" />
+    <None Include="generate-searchindexclient.cmd" />
+    <None Include="generate-searchserviceclient.cmd" />
     <None Include="Microsoft.Azure.Search.nuget.proj" />
     <None Include="Microsoft.Azure.Search.nuspec" />
     <None Include="packages.config" />
