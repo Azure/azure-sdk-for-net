@@ -26,5 +26,7 @@ namespace Microsoft.Azure.Search.Models
         /// class.
         /// </summary>
         public DataDeletionDetectionPolicy() { }
+
+
     }
 }

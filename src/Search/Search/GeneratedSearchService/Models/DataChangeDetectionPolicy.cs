@@ -25,5 +25,7 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the DataChangeDetectionPolicy class.
         /// </summary>
         public DataChangeDetectionPolicy() { }
+
+
     }
 }
