@@ -172,6 +172,39 @@ namespace Microsoft.Azure.Test.HttpRecorder
         }
 
         /// <summary>
+        /// Gets the asset unique identifier. This is used to store the GUID in the recording so it can be easily retrieved.
+        /// This behaves the same as name generation, but if useful if the client is required to generate Guids for the service.
+        /// </summary>
+        /// <param name="testName">Name of the test.</param>
+        /// <returns></returns>
+        public static Guid GetAssetGuid(string testName)
+        {
+            if (Mode == HttpRecorderMode.Playback)
+            {
+                return new Guid(names[testName].Dequeue());
+            }
+            else
+            {
+                string generated = Guid.NewGuid().ToString();
+
+                if (Mode == HttpRecorderMode.Record)
+                {
+                    if (names.ContainsKey(testName))
+                    {
+                        // this should never happen, but just in case.
+                        while (names[testName].Any(n => n.Equals(generated)))
+                        {
+                            generated = Guid.NewGuid().ToString();
+                        }
+                    }
+                    names.Enqueue(testName, generated);
+                }
+
+                return new Guid(generated);
+            }
+        }
+
+        /// <summary>
         /// Returns stored variable or variableValue if variableName is not found.
         /// </summary>
         /// <param name="variableName">Variable name</param>
