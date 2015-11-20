@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStoreManagement", "DataLakeStoreManagement\DataLakeStoreManagement.csproj", "{F8DDE40D-B5B4-4A37-8131-9EF8F18A4A6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStore.Tests", "DataLakeStore.Tests\DataLakeStore.Tests.csproj", "{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStore.Tests", "DataLakeStore.Tests\DataLakeStore.Tests.csproj", "{92C0BB93-E8D9-4152-817F-5BDF38BE405D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,14 +39,14 @@ Global
 		{F8DDE40D-B5B4-4A37-8131-9EF8F18A4A6A}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{F8DDE40D-B5B4-4A37-8131-9EF8F18A4A6A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{F8DDE40D-B5B4-4A37-8131-9EF8F18A4A6A}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{95C2D9FB-CC82-4719-90AE-3BEDB95F277A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{92C0BB93-E8D9-4152-817F-5BDF38BE405D}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
