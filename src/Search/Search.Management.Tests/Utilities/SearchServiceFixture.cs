@@ -86,8 +86,15 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, createServiceParameters);
 
                 // In the common case, DNS propagation happens in less than 15 seconds. In the uncommon case, it can
-                // take many minutes. Rather than force all tests to wait several minutes, we fail fast here.
-                TimeSpan maxDelay = TimeSpan.FromSeconds(15);
+                // take many minutes. The timeout we use depends on the mock mode. If we're in Playback, the delay is
+                // irrelevant. If we're in Record mode, we can't delete and re-create the service, so we get more
+                // reliable results if we wait longer. In "None" mode, we can delete and re-create, which is often
+                // faster than waiting a long time for DNS propagation. In that case, rather than force all tests to
+                // wait several minutes, we fail fast here.
+                TimeSpan maxDelay = 
+                    (HttpMockServer.Mode == HttpRecorderMode.Record) ? 
+                        TimeSpan.FromMinutes(5) : TimeSpan.FromSeconds(15);
+                
                 if (SearchTestUtilities.WaitForSearchServiceDns(searchServiceName, maxDelay))
                 {
                     return searchServiceName;
