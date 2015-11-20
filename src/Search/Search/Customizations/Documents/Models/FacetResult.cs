@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
         [JsonProperty("count")]
-        public long Count { get; private set; }
+        public long? Count { get; private set; }
 
         /// <summary>
         /// Attempts to convert the facet to a range facet of the given type.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Search.Models
                 throw new InvalidCastException();
             }
 
-            return new RangeFacetResult<T>(this.Count, (T?)this.From, (T?)this.To);
+            return new RangeFacetResult<T>(this.Count.GetValueOrDefault(), (T?)this.From, (T?)this.To);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Search.Models
                 throw new InvalidCastException();
             }
 
-            return new ValueFacetResult<T>(this.Count, (T)this.Value);
+            return new ValueFacetResult<T>(this.Count.GetValueOrDefault(), (T)this.Value);
         }
     }
 }

@@ -39,14 +39,14 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the key of the item for which indexing failed.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
-        public string Key { get; set; }
+        public string Key { get; private set; }
 
         /// <summary>
         /// Gets the message describing the error that occurred while
         /// attempting to index the item.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; private set; }
 
     }
 }
