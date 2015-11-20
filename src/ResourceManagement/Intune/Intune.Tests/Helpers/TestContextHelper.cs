@@ -14,6 +14,7 @@
 
 using System;
 using Microsoft.Azure.Test.HttpRecorder;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Intune.Tests.Helpers
 {
@@ -43,5 +44,33 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
 
             return retValue;
         }
+
+        public static string GetAdGroupFromTestContext(AADClientHelper aadClient, string mockName)
+        {
+            string retValue = string.Empty;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var adGroups = aadClient.GetUserGroups().GetAwaiter().GetResult();
+                var adGroupList = adGroups.Where(x => x.Keys.Contains("ID")).Select(x => x["ID"]).ToList();
+                if (adGroupList.Count >= 1)
+                {
+                    retValue = HttpMockServer.Variables[mockName] = adGroupList.ElementAt(0);
+                }
+                else
+                {
+                    throw new Exception(string.Format("Unexpected number of Groups. Expected: adGroupList.Count >= 1 but actual = {0}", adGroupList.Count));
+                }
+            }
+            else
+            {
+                if (HttpMockServer.Variables.ContainsKey(mockName))
+                {
+                    retValue = HttpMockServer.Variables[mockName];
+                }
+            }
+
+            return retValue;
+        }
+
     }
 }

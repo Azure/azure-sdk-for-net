@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
     /// <summary>
     /// Types of environment in Intune
     /// </summary>
-    internal enum EnvironmentType
+    public enum EnvironmentType
     {
         OneBox,
         Dogfood,
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
     /// <summary>
     /// Azure Active directory related operations helper class.
     /// </summary>
-    internal class AADClientHelper
+    public class AADClientHelper
     {
         public const string AadAuthDogfoodEnpoint = "https://login.windows-ppe.net/";
 

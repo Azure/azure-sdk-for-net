@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using Microsoft.Azure.Management.Intune.Tests.Helpers;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
 {
@@ -25,28 +26,36 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
     /// Test class for linking/Unlinking groups to an Intune Policy
     /// </summary>
     public class GroupScenarioTests : TestBase
-    {
-        private AADClientHelper aadClient;
+    {        
         public GroupScenarioTests()
         {
-            IntuneClientHelper.InitializeEnvironment();
-            var orgIdAuth = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
-            var parts = orgIdAuth.Split(new char[] { ';' }).ToList();
-            var authParams = new Dictionary<string, string>();
-            parts.ForEach(a => { var splitVal = a.Split(new char[] { '=' }); authParams.Add(splitVal[0], splitVal[1]); });
-            EnvironmentType enType = EnvironmentType.Dogfood;
-            if(authParams["Environment"] == "Dogfood")
-            {
-                enType = EnvironmentType.Dogfood;
-            }
-            else if(authParams["Environment"] == "Prod")
-            {
-                enType = EnvironmentType.Prod;
-            }
-
-            aadClient = new AADClientHelper(authParams["UserId"], authParams["Password"], enType);            
+            IntuneClientHelper.InitializeEnvironment();            
         }
 
+        private AADClientHelper InitializeAadClient()
+        {
+            //Initialize aadClient if the test mode is not Playback
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                var orgIdAuth = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+                var parts = orgIdAuth.Split(new char[] { ';' }).ToList();
+                var authParams = new Dictionary<string, string>();
+                parts.ForEach(a => { var splitVal = a.Split(new char[] { '=' }); authParams.Add(splitVal[0], splitVal[1]); });
+                EnvironmentType enType = EnvironmentType.Dogfood;
+                if (authParams["Environment"] == "Dogfood")
+                {
+                    enType = EnvironmentType.Dogfood;
+                }
+                else if (authParams["Environment"] == "Prod")
+                {
+                    enType = EnvironmentType.Prod;
+                }
+
+                return new AADClientHelper(authParams["UserId"], authParams["Password"], enType);
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Verifies that you can Add a tenant group to android policy & also query for them, remove them
@@ -56,6 +65,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
+                var aadClient = InitializeAadClient();
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 
                 //Create a policy              
@@ -70,28 +80,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                         payload);
 
                     //Get groups for tenant
-                    var adGroups = aadClient.GetUserGroups().GetAwaiter().GetResult();
-                    var adGroupList = adGroups.Where(x => x.Keys.Contains("ID")).Select(x => x["ID"]).ToList();
-                    Assert.True(adGroupList.Count >= 2);
-
+                    var adGroup = TestContextHelper.GetAdGroupFromTestContext(aadClient, "adGroup");
+                    
                     //Add group for the policy
-                    var groupPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroupList.ElementAt(0));
-                    client.Android.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(0), groupPayload1);
-
-                    var groupPayload2 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroupList.ElementAt(1));
-                    client.Android.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(1), groupPayload2);
-
+                    var groupPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroup);
+                    client.Android.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroup, groupPayload1);
+                    
                     //Get groups for the policy
                     var groups = client.Android.GetGroupsForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(groups.Count == 2);
+                    Assert.True(groups.Count == 1, string.Format("Expected groups.Count == 1 and actual:{0}", groups.Count));
 
                     //Remove groups from the policy
-                    client.Android.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(0));
-                    client.Android.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(1));
+                    client.Android.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroup);
 
                     //Get groups for the policy & verify groups are removed.
                     groups = client.Android.GetGroupsForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(groups.Count == 0);
+                    Assert.True(groups.Count == 0, string.Format("Expected groups.Count == 0 but actual groups.Count = {0}", groups.Count));
                 }
                 finally
                 {
@@ -108,8 +112,8 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                
+                var aadClient = InitializeAadClient();
+                var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);                
                 //Create a policy              
                 string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName = TestUtilities.GenerateName(IntuneConstants.IntuneiOSPolicy);
@@ -120,30 +124,24 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                         IntuneClientHelper.AsuHostName,
                         policyId,
                         payload);
-
+                    
                     //Get groups for tenant
-                    var adGroups = aadClient.GetUserGroups().GetAwaiter().GetResult();
-                    var adGroupList = adGroups.Where(x => x.Keys.Contains("ID")).Select(x => x["ID"]).ToList();
-                    Assert.True(adGroupList.Count >= 2);
+                    var adGroup = TestContextHelper.GetAdGroupFromTestContext(aadClient, "adGroup");
 
                     //Add group for the policy
-                    var groupPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroupList.ElementAt(0));
-                    client.Ios.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(0), groupPayload1);
-
-                    var groupPayload2 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroupList.ElementAt(1));
-                    client.Ios.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(1), groupPayload2);
+                    var groupPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.GroupType, adGroup);
+                    client.Ios.AddGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroup, groupPayload1);
 
                     //Get groups for the policy
                     var groups = client.Ios.GetGroupsForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(groups.Count == 2);
+                    Assert.True(groups.Count == 1, string.Format("Expected groups.Count == 1 and actual:{0}", groups.Count));
 
                     //Remove groups for the policy
-                    client.Ios.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(0));
-                    client.Ios.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroupList.ElementAt(1));
+                    client.Ios.DeleteGroupForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, adGroup);
 
                     //Get groups for the policy & verify unlinking
                     groups = client.Ios.GetGroupsForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(groups.Count == 0);
+                    Assert.True(groups.Count == 0, string.Format("Expected groups.Count == 0 and actual:{0}", groups.Count));
                 }
                 finally
                 {

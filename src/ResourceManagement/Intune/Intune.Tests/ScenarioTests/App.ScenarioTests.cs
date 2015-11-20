@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.iOS.ToString().ToLower());
                 var iOSApps = client.GetApps(IntuneClientHelper.AsuHostName, filter).ToList();
-                Assert.True(iOSApps.Count > 0);
+                Assert.True(iOSApps.Count >= 1, string.Format("Expected iOSApps.Count>=1 and actual:{0}", iOSApps.Count));
             }
         }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.Android.ToString().ToLower());
                 var androidApps = client.GetApps(IntuneClientHelper.AsuHostName, filter).ToList();
-                Assert.True(androidApps.Count > 0);
+                Assert.True(androidApps.Count >= 1, string.Format("Expected androidApps.Count>=1 and actual:{0}", androidApps.Count));
             }
         }
 
@@ -84,26 +84,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                     //Get apps for Android
                     string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.Android.ToString().ToLower());
                     var androidApps = client.GetApps(IntuneClientHelper.AsuHostName, filter).ToList();
-                    Assert.True(androidApps.Count >= 2);
+                    Assert.True(androidApps.Count >= 1, string.Format("Expected androidApps.Count>=1 and actual:{0}", androidApps.Count));
 
                     //Add app for the policy
                     var appPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, androidApps[0].Name);
                     client.Android.AddAppForPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[0].Name, appPayload1);
 
-                    var appPayload2 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, androidApps[1].Name);
-                    client.Android.AddAppForPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[1].Name, appPayload2);
-
                     //Get Apps for the policy
                     var apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(apps.Count == 2);
+                    Assert.True(apps.Count == 1, string.Format("Expected apps.Count==1 and actual:{0}", apps.Count));
 
                     //Remove Apps for the policy
-                    client.Android.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[0].Name);
-                    client.Android.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[1].Name);
+                    client.Android.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[0].Name);                    
 
                     //Get Apps for the policy
                     apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(apps.Count == 0);
+                    Assert.True(apps.Count == 0, string.Format("Expected apps.Count==0 and actual:{0}", apps.Count));
                 }
                 finally
                 {
@@ -137,26 +133,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                     //Get apps for iOS
                     string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.iOS.ToString().ToLower());
                     var iosApps = client.GetApps(IntuneClientHelper.AsuHostName, filter).ToList();
-                    Assert.True(iosApps.Count >= 2, string.Format("Expected iOSAppsCount>=2 and actual:{0}", iosApps.Count));
+                    Assert.True(iosApps.Count >= 1, string.Format("Expected iosApps.Count>=1 and actual:{0}", iosApps.Count));
 
                     //Add app for the policy
                     var payload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, iosApps[0].Name);
                     client.Ios.AddAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[0].Name, payload1);
 
-                    var payload2 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, iosApps[1].Name);
-                    client.Ios.AddAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[1].Name, payload2);
-
                     //Get Apps for the policy
                     var apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(apps.Count == 2);
+                    Assert.True(apps.Count == 1, string.Format("Expected apps.Count==1 and actual:{0}", apps.Count));
 
                     //Remove Apps for the policy
-                    client.Ios.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[0].Name);
-                    client.Ios.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[1].Name);
+                    client.Ios.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[0].Name);                    
 
                     //Get Apps for the policy
                     apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
-                    Assert.True(apps.Count == 0);
+                    Assert.True(apps.Count == 0, string.Format("Expected apps.Count==0 and actual:{0}", apps.Count));
                 }
                 finally
                 {
