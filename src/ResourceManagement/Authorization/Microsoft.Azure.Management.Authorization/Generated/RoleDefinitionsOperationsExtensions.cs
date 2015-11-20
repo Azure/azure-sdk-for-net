@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -166,33 +167,39 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Get all role definitions.
+            /// Get role definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations)
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations, Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>))
             {
-                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).ListAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get all role definitions.
+            /// Get role definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleDefinition>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleDefinition>> result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
-            /// Get all role definitions.
+            /// Get role definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -206,7 +213,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Get all role definitions.
+            /// Get role definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
