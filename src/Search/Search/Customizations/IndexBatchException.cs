@@ -85,7 +85,10 @@ namespace Microsoft.Azure.Search
             where TAction : IndexActionBase<TDoc>
             where TDoc : class
         {
-            var failedKeys = new HashSet<string>(this.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key));
+            var failedKeys = 
+                new HashSet<string>(
+                    this.IndexingResults.Where(r => !r.Succeeded.GetValueOrDefault()).Select(r => r.Key));
+
             Func<TAction, bool> isFailed = a => a.Document != null && failedKeys.Contains(keySelector(a.Document));
             return originalBatch.Actions.Where(isFailed);
         }
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.Search
 
             return String.Format(
                 MessageFormat, 
-                documentIndexResult.Results.Count(r => !r.Succeeded),
+                documentIndexResult.Results.Count(r => !r.Succeeded.GetValueOrDefault()),
                 documentIndexResult.Results.Count);
         }
     }

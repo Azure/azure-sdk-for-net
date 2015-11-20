@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Globalization;
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
@@ -21,13 +22,15 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient client = Data.GetSearchServiceClient();
                 
                 // We need to use a constant GUID so that this test will still work in playback mode.
-                var options = new SearchRequestOptions() { ClientRequestId = "c4cfce79-eb42-4e61-9909-84510c04706f" };
+                var options = new SearchRequestOptions(new Guid("c4cfce79-eb42-4e61-9909-84510c04706f"));
 
                 AzureOperationResponse<IndexListResult> listResponse =
                     client.Indexes.ListWithHttpMessagesAsync(searchRequestOptions: options).Result;
                 Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
 
-                Assert.Equal(options.ClientRequestId, listResponse.RequestId);
+                Assert.Equal(
+                    options.RequestId.Value.ToString("D", CultureInfo.InvariantCulture), 
+                    listResponse.RequestId);
             });
         }
 

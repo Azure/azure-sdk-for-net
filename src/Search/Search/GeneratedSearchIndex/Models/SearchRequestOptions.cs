@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchRequestOptions class.
         /// </summary>
-        public SearchRequestOptions(string clientRequestId = default(string))
+        internal SearchRequestOptions(string clientRequestId = default(string))
         {
             ClientRequestId = clientRequestId;
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Models
         /// Tracking ID sent with the request to help with debugging.
         /// </summary>
         [JsonProperty(PropertyName = "")]
-        public string ClientRequestId { get; set; }
+        internal string ClientRequestId { get; set; }
 
     }
 }
