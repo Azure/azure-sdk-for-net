@@ -109,6 +109,177 @@ namespace Microsoft.Azure.Management.Intune
         Task<AzureOperationResponse<IPage<Application>>> GetAppsWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Get devices for a user.
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='userName'>
+        /// user unique Id
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Device>>> GetUserDevicesWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Get a unique device for a user.
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='userName'>
+        /// unique user name
+        /// </param>
+        /// <param name='deviceName'>
+        /// device name
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Device>> GetUserDeviceByDeviceNameWithHttpMessagesAsync(string hostName, string userName, string deviceName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Wipe a device for a user.
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='userName'>
+        /// unique user name
+        /// </param>
+        /// <param name='deviceName'>
+        /// device name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<WipeDeviceOperationResult>> WipeUserDeviceWithHttpMessagesAsync(string hostName, string userName, string deviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns operationResults.
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<OperationResult>>> GetOperationResultsWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune Tenant level statuses.
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<StatusesDefault>> GetDefaultStatusesWithHttpMessagesAsync(string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged user collection
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedUserCollection>> GetFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged user details
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='userName'>
+        /// Flagged userName
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedUser>> GetFlaggedUserByNameWithHttpMessagesAsync(string hostName, string userName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged enrolled app collection for the User
+        /// </summary>
+        /// <param name='hostName'>
+        /// Location hostName for the tenant
+        /// </param>
+        /// <param name='userName'>
+        /// User name for the tenant
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='select'>
+        /// select specific fields in entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Returns location for user tenant.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -135,6 +306,90 @@ namespace Microsoft.Azure.Management.Intune
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<Application>>> GetAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Get devices for a user.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Device>>> GetUserDevicesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns operationResults.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<OperationResult>>> GetOperationResultsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune Tenant level statuses.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<StatusesDefault>> GetDefaultStatusesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged user collection
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedUserCollection>> GetFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged user details
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedUser>> GetFlaggedUserByNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged enrolled app collection for the User
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
