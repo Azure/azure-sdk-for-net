@@ -5,7 +5,6 @@
 namespace Microsoft.Azure.Search.Models
 {
     using System;
-    using System.Globalization;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -37,9 +36,7 @@ namespace Microsoft.Azure.Search.Models
             set
             {
                 this._requestId = value;
-                this.ClientRequestId =
-                    this._requestId.HasValue ? 
-                        this._requestId.Value.ToString("D", CultureInfo.InvariantCulture) : null;
+                this.ClientRequestId = this._requestId.HasValue ? this._requestId.Value.ToString() : null;
             }
         }
     }
