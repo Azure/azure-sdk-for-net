@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Get the replication protectable object by Id.
+        /// Enumerate all replication protectable items in a container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -106,23 +106,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// only, Unprotected to fetch unprotected only, All to fetch both
         /// unprotected and protected.
         /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
+        /// <param name='take'>
+        /// Optional. Maximum number of items to be fetched in a request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        public static ProtectableItemListResponse List(this IProtectableItemOperations operations, string fabricName, string protectionContainerName, string typeOfEntities, CustomRequestHeaders customRequestHeaders)
+        public static ProtectableItemListResponse List(this IProtectableItemOperations operations, string fabricName, string protectionContainerName, string typeOfEntities, string skipToken, string take, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectableItemOperations)s).ListAsync(fabricName, protectionContainerName, typeOfEntities, customRequestHeaders);
+                return ((IProtectableItemOperations)s).ListAsync(fabricName, protectionContainerName, typeOfEntities, skipToken, take, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Get the replication protectable object by Id.
+        /// Enumerate all replication protectable items in a container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -139,15 +145,67 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// only, Unprotected to fetch unprotected only, All to fetch both
         /// unprotected and protected.
         /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
+        /// <param name='take'>
+        /// Optional. Maximum number of items to be fetched in a request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        public static Task<ProtectableItemListResponse> ListAsync(this IProtectableItemOperations operations, string fabricName, string protectionContainerName, string typeOfEntities, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectableItemListResponse> ListAsync(this IProtectableItemOperations operations, string fabricName, string protectionContainerName, string typeOfEntities, string skipToken, string take, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(fabricName, protectionContainerName, typeOfEntities, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(fabricName, protectionContainerName, typeOfEntities, skipToken, take, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Enumerate all replication protectable items in a container.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectableItemOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static ProtectableItemListResponse ListNext(this IProtectableItemOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectableItemOperations)s).ListNextAsync(nextLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Enumerate all replication protectable items in a container.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectableItemOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static Task<ProtectableItemListResponse> ListNextAsync(this IProtectableItemOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListNextAsync(nextLink, customRequestHeaders, CancellationToken.None);
         }
     }
 }

@@ -226,12 +226,12 @@ namespace SiteRecovery.Tests
                     EnableProtectionInputProperties enableDRProp = new EnableProtectionInputProperties();
                     if (string.IsNullOrEmpty(enableDRVmName))
                     {
-                        var protectableItems = client.ProtectableItem.List(selectedFabric.Name, priCld, "Unprotected", RequestHeaders);
+                        var protectableItem = GetUnprotectedItem(client, selectedFabric.Name, priCld);
 
                         enableDRProp = new EnableProtectionInputProperties()
                         {
                             PolicyId = currentPolicy.Id,
-                            ProtectableItemId = protectableItems.ProtectableItems[0].Id,
+                            ProtectableItemId = protectableItem.Id,
                             ProviderSpecificDetails = new EnableProtectionProviderSpecificInput()
                         };
                     }
@@ -553,7 +553,8 @@ namespace SiteRecovery.Tests
                 {
                     if (string.IsNullOrEmpty(enableDRName))
                     {
-                        protectableItem = client.ProtectableItem.List(selectedFabric.Name, primaryCloud.Name, "Unprotected", RequestHeaders).ProtectableItems[0];
+
+                        protectableItem = GetUnprotectedItem(client, selectedFabric.Name, primaryCloud.Name);
                         enableDRName = protectableItem.Name;
                     }
                     else
@@ -865,7 +866,7 @@ namespace SiteRecovery.Tests
                 {
                     if (string.IsNullOrEmpty(enableDRName))
                     {
-                        protectableItem = client.ProtectableItem.List(selectedFabric.Name, primaryCloud.Name, "Unprotected", RequestHeaders).ProtectableItems[0];
+                        protectableItem = GetUnprotectedItem(client, selectedFabric.Name, primaryCloud.Name);
                         enableDRName = protectableItem.Name;
                     }
                     else
@@ -1060,6 +1061,27 @@ namespace SiteRecovery.Tests
                     var policyDeletion = client.Policies.Delete(selectedPolicy.Name, RequestHeaders);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns an unprotected item.
+        /// </summary>
+        /// <param name="client">Site Recovery management client.</param>
+        /// <param name="fabricId">Fabric Id.</param>
+        /// <param name="containerId">Container Id.</param>
+        /// <returns>Unprotected VM.</returns>
+        private ProtectableItem GetUnprotectedItem(SiteRecoveryManagementClient client, string fabricId, string containerId)
+        {
+            List<ProtectableItem> protectableItemList = new List<ProtectableItem>();
+            ProtectableItemListResponse protectableItemListResponse = client.ProtectableItem.List(fabricId, containerId, "Unprotected", null, "1000", RequestHeaders);
+            protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+            while (protectableItemListResponse.NextLink != null)
+            {
+                protectableItemListResponse = client.ProtectableItem.ListNext(protectableItemListResponse.NextLink, RequestHeaders);
+                protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+            }
+
+            return protectableItemList[0];
         }
     }
 }

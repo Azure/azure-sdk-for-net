@@ -148,6 +148,8 @@ namespace SiteRecovery.Tests
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
                     "Unprotected",
+                    "",
+                    "1000",
                     RequestHeaders);
                 Assert.NotNull(protectableItemsResponse);
                 Assert.NotEmpty(protectableItemsResponse.ProtectableItems);

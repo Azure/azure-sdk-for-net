@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._providerSpecificDetails = value; }
         }
         
+        private string _sourceProtectionContainerFriendlyName;
+        
+        /// <summary>
+        /// Optional. Friendly name of source container.
+        /// </summary>
+        public string SourceProtectionContainerFriendlyName
+        {
+            get { return this._sourceProtectionContainerFriendlyName; }
+            set { this._sourceProtectionContainerFriendlyName = value; }
+        }
+        
         private string _state;
         
         /// <summary>

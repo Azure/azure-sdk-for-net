@@ -14,6 +14,7 @@
 //
 
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Management.RecoveryServices;
@@ -125,7 +126,14 @@ namespace SiteRecovery.Tests
                 //string containerId = "4f94127d-2eb3-449d-a708-250752e93cb4";
                 string containerId = "8cc5a958-d437-41d0-9411-fad0841c0445";
 
-                var response = client.ProtectableItem.List(fabricId, containerId, "All", RequestHeaders);
+                List<ProtectableItem> protectableItemList = new List<ProtectableItem>();
+                ProtectableItemListResponse protectableItemListResponse = client.ProtectableItem.List(fabricId, containerId, "All", null, "1000", RequestHeaders);
+                protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+                while (protectableItemListResponse.NextLink != null)
+                {
+                    protectableItemListResponse = client.ProtectableItem.ListNext(protectableItemListResponse.NextLink, RequestHeaders);
+                    protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+                }
             }
         }
 

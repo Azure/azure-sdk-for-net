@@ -913,6 +913,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 ProtectionContainerMappingProperties propertiesInstance = new ProtectionContainerMappingProperties();
                                 protectionContainerMappingInstance.Properties = propertiesInstance;
                                 
+                                JToken sourceProtectionContainerFriendlyNameValue = propertiesValue["sourceProtectionContainerFriendlyName"];
+                                if (sourceProtectionContainerFriendlyNameValue != null && sourceProtectionContainerFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string sourceProtectionContainerFriendlyNameInstance = ((string)sourceProtectionContainerFriendlyNameValue);
+                                    propertiesInstance.SourceProtectionContainerFriendlyName = sourceProtectionContainerFriendlyNameInstance;
+                                }
+                                
                                 JToken targetProtectionContainerIdValue = propertiesValue["targetProtectionContainerId"];
                                 if (targetProtectionContainerIdValue != null && targetProtectionContainerIdValue.Type != JTokenType.Null)
                                 {
@@ -1198,6 +1205,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 ProtectionContainerMappingProperties propertiesInstance = new ProtectionContainerMappingProperties();
                                 protectionContainerMappingInstance.Properties = propertiesInstance;
+                                
+                                JToken sourceProtectionContainerFriendlyNameValue = propertiesValue["sourceProtectionContainerFriendlyName"];
+                                if (sourceProtectionContainerFriendlyNameValue != null && sourceProtectionContainerFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string sourceProtectionContainerFriendlyNameInstance = ((string)sourceProtectionContainerFriendlyNameValue);
+                                    propertiesInstance.SourceProtectionContainerFriendlyName = sourceProtectionContainerFriendlyNameInstance;
+                                }
                                 
                                 JToken targetProtectionContainerIdValue = propertiesValue["targetProtectionContainerId"];
                                 if (targetProtectionContainerIdValue != null && targetProtectionContainerIdValue.Type != JTokenType.Null)
@@ -1683,6 +1697,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 ProtectionContainerMappingProperties propertiesInstance = new ProtectionContainerMappingProperties();
                                 protectionContainerMappingInstance.Properties = propertiesInstance;
                                 
+                                JToken sourceProtectionContainerFriendlyNameValue = propertiesValue["sourceProtectionContainerFriendlyName"];
+                                if (sourceProtectionContainerFriendlyNameValue != null && sourceProtectionContainerFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string sourceProtectionContainerFriendlyNameInstance = ((string)sourceProtectionContainerFriendlyNameValue);
+                                    propertiesInstance.SourceProtectionContainerFriendlyName = sourceProtectionContainerFriendlyNameInstance;
+                                }
+                                
                                 JToken targetProtectionContainerIdValue = propertiesValue["targetProtectionContainerId"];
                                 if (targetProtectionContainerIdValue != null && targetProtectionContainerIdValue.Type != JTokenType.Null)
                                 {
@@ -2076,6 +2097,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         ProtectionContainerMappingProperties propertiesInstance = new ProtectionContainerMappingProperties();
                                         protectionContainerMappingInstance.Properties = propertiesInstance;
                                         
+                                        JToken sourceProtectionContainerFriendlyNameValue = propertiesValue["sourceProtectionContainerFriendlyName"];
+                                        if (sourceProtectionContainerFriendlyNameValue != null && sourceProtectionContainerFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string sourceProtectionContainerFriendlyNameInstance = ((string)sourceProtectionContainerFriendlyNameValue);
+                                            propertiesInstance.SourceProtectionContainerFriendlyName = sourceProtectionContainerFriendlyNameInstance;
+                                        }
+                                        
                                         JToken targetProtectionContainerIdValue = propertiesValue["targetProtectionContainerId"];
                                         if (targetProtectionContainerIdValue != null && targetProtectionContainerIdValue.Type != JTokenType.Null)
                                         {
@@ -2396,6 +2424,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         ProtectionContainerMappingProperties propertiesInstance = new ProtectionContainerMappingProperties();
                                         protectionContainerMappingInstance.Properties = propertiesInstance;
+                                        
+                                        JToken sourceProtectionContainerFriendlyNameValue = propertiesValue["sourceProtectionContainerFriendlyName"];
+                                        if (sourceProtectionContainerFriendlyNameValue != null && sourceProtectionContainerFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string sourceProtectionContainerFriendlyNameInstance = ((string)sourceProtectionContainerFriendlyNameValue);
+                                            propertiesInstance.SourceProtectionContainerFriendlyName = sourceProtectionContainerFriendlyNameInstance;
+                                        }
                                         
                                         JToken targetProtectionContainerIdValue = propertiesValue["targetProtectionContainerId"];
                                         if (targetProtectionContainerIdValue != null && targetProtectionContainerIdValue.Type != JTokenType.Null)
