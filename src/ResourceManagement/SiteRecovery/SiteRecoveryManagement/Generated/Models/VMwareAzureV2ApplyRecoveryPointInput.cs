@@ -26,32 +26,10 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// HyperVReplicaAzure provider specific input to apply recovery point.
+    /// VMwareAzureV2 provider specific input to apply recovery point.
     /// </summary>
-    public partial class HyperVReplicaAzureApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
+    public partial class VMwareAzureV2ApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
     {
-        private string _primaryKekCertificatePfx;
-        
-        /// <summary>
-        /// Optional. The primary Kek Pfx certificate.
-        /// </summary>
-        public string PrimaryKekCertificatePfx
-        {
-            get { return this._primaryKekCertificatePfx; }
-            set { this._primaryKekCertificatePfx = value; }
-        }
-        
-        private string _secondaryKekCertificatePfx;
-        
-        /// <summary>
-        /// Optional. The secondary Kek Pfx certificate.
-        /// </summary>
-        public string SecondaryKekCertificatePfx
-        {
-            get { return this._secondaryKekCertificatePfx; }
-            set { this._secondaryKekCertificatePfx = value; }
-        }
-        
         private string _vaultLocation;
         
         /// <summary>
@@ -65,18 +43,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// HyperVReplicaAzureApplyRecoveryPointInput class.
+        /// VMwareAzureV2ApplyRecoveryPointInput class.
         /// </summary>
-        public HyperVReplicaAzureApplyRecoveryPointInput()
+        public VMwareAzureV2ApplyRecoveryPointInput()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// HyperVReplicaAzureApplyRecoveryPointInput class with required
-        /// arguments.
+        /// VMwareAzureV2ApplyRecoveryPointInput class with required arguments.
         /// </summary>
-        public HyperVReplicaAzureApplyRecoveryPointInput(string vaultLocation)
+        public VMwareAzureV2ApplyRecoveryPointInput(string vaultLocation)
             : this()
         {
             if (vaultLocation == null)

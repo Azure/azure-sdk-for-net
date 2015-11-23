@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._agentVersion = value; }
         }
         
+        private IList<AzureVmDiskDetails> _azureVMDiskDetails;
+        
+        /// <summary>
+        /// Optional. Gets or sets Azure VM Disk details.
+        /// </summary>
+        public IList<AzureVmDiskDetails> AzureVMDiskDetails
+        {
+            get { return this._azureVMDiskDetails; }
+            set { this._azureVMDiskDetails = value; }
+        }
+        
         private double _compressedDataRateInMB;
         
         /// <summary>
@@ -221,6 +232,39 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._protectionStage = value; }
         }
         
+        private string _recoveryAzureStorageAccount;
+        
+        /// <summary>
+        /// Optional. Gets or sets the recovery Azure storage account.
+        /// </summary>
+        public string RecoveryAzureStorageAccount
+        {
+            get { return this._recoveryAzureStorageAccount; }
+            set { this._recoveryAzureStorageAccount = value; }
+        }
+        
+        private string _recoveryAzureVMName;
+        
+        /// <summary>
+        /// Optional. Gets or sets Recovery Azure given name.
+        /// </summary>
+        public string RecoveryAzureVMName
+        {
+            get { return this._recoveryAzureVMName; }
+            set { this._recoveryAzureVMName = value; }
+        }
+        
+        private string _recoveryAzureVMSize;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Recovery Azure VM size.
+        /// </summary>
+        public string RecoveryAzureVMSize
+        {
+            get { return this._recoveryAzureVMSize; }
+            set { this._recoveryAzureVMSize = value; }
+        }
+        
         private int _resyncProgressPercentage;
         
         /// <summary>
@@ -252,6 +296,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._rpoInSeconds; }
             set { this._rpoInSeconds = value; }
+        }
+        
+        private string _selectedRecoveryAzureNetworkId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the selected recovery azure network Id.
+        /// </summary>
+        public string SelectedRecoveryAzureNetworkId
+        {
+            get { return this._selectedRecoveryAzureNetworkId; }
+            set { this._selectedRecoveryAzureNetworkId = value; }
         }
         
         private int _sourceVmCPUCount;
@@ -309,6 +364,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._vHDName = value; }
         }
         
+        private IList<VMNicDetails> _vMNics;
+        
+        /// <summary>
+        /// Optional. Gets or sets the network details.
+        /// </summary>
+        public IList<VMNicDetails> VMNics
+        {
+            get { return this._vMNics; }
+            set { this._vMNics = value; }
+        }
+        
         private bool _volumeResized;
         
         /// <summary>
@@ -327,7 +393,9 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public VMwareAzureV2ProviderSpecificSettings()
         {
+            this.AzureVMDiskDetails = new LazyList<AzureVmDiskDetails>();
             this.ProtectedVolumes = new LazyList<VMwareAzureV2ProtectedVolumeDetails>();
+            this.VMNics = new LazyList<VMNicDetails>();
         }
     }
 }

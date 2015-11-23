@@ -285,10 +285,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             providerSpecificDetailsValue["instanceType"] = "HyperVReplicaAzure";
                             HyperVReplicaAzureApplyRecoveryPointInput derived = ((HyperVReplicaAzureApplyRecoveryPointInput)input.Properties.ProviderSpecificDetails);
                             
-                            if (derived.VaultLocation != null)
-                            {
-                                providerSpecificDetailsValue["vaultLocation"] = derived.VaultLocation;
-                            }
+                            providerSpecificDetailsValue["vaultLocation"] = derived.VaultLocation;
                             
                             if (derived.PrimaryKekCertificatePfx != null)
                             {
@@ -299,6 +296,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 providerSpecificDetailsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
                             }
+                        }
+                        if (input.Properties.ProviderSpecificDetails is VMwareAzureV2ApplyRecoveryPointInput)
+                        {
+                            providerSpecificDetailsValue["instanceType"] = "VMwareAzureV2";
+                            VMwareAzureV2ApplyRecoveryPointInput derived2 = ((VMwareAzureV2ApplyRecoveryPointInput)input.Properties.ProviderSpecificDetails);
+                            
+                            providerSpecificDetailsValue["vaultLocation"] = derived2.VaultLocation;
                         }
                     }
                 }
@@ -4201,25 +4205,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -4276,49 +4268,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -4327,7 +4291,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -4391,7 +4355,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -5376,25 +5533,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -5451,49 +5596,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -5502,7 +5619,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -5566,7 +5683,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -6610,25 +6920,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -6685,49 +6983,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -6736,7 +7006,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -6800,7 +7070,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -8032,25 +8495,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -8107,49 +8558,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -8158,7 +8581,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -8222,7 +8645,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -9266,25 +9882,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -9341,49 +9945,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -9392,7 +9968,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -9456,7 +10032,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -10688,25 +11457,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -10763,49 +11520,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -10814,7 +11543,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -10878,7 +11607,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -11922,25 +12844,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -11997,49 +12907,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -12048,7 +12930,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -12112,7 +12994,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -13156,25 +14231,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -13231,49 +14294,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -13282,7 +14317,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -13346,7 +14381,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -14390,25 +15618,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -14465,49 +15681,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -14516,7 +15704,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -14580,7 +15768,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -15624,25 +17005,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -15699,49 +17068,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -15750,7 +17091,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -15814,7 +17155,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -16858,25 +18392,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                         }
                                         
-                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                        {
-                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                        }
-                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                    }
-                                    if (typeName == "HyperVReplicaAzure")
-                                    {
-                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                        
                                         JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                         if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                             {
                                                 AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                 
                                                 JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                 if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -16933,49 +18455,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                         }
                                         
                                         JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                         if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                         }
                                         
                                         JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                         if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                         {
                                             string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                        }
-                                        
-                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                        {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                        }
-                                        
-                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                        {
-                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                            
-                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                            }
-                                            
-                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                            {
-                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                            }
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                         }
                                         
                                         JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -16984,7 +18478,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                             {
                                                 VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                 
                                                 JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                 if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -17048,7 +18542,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                    }
+                                    if (typeName == "HyperVReplicaAzure")
+                                    {
+                                        HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                        
+                                        JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                        if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                            {
+                                                AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                
+                                                JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                    azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                }
+                                                
+                                                JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                    azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                }
+                                                
+                                                JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                    azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                }
+                                                
+                                                JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                {
+                                                    string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                    azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                }
+                                                
+                                                JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                }
+                                                
+                                                JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string lunIdInstance2 = ((string)lunIdValue2);
+                                                    azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                }
+                                                
+                                                JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                    azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                        }
+                                        
+                                        JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                        if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                        }
+                                        
+                                        JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                        if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                        {
+                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                        if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                        {
+                                            InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                            hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                            
+                                            JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                            if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                            }
+                                            
+                                            JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                            if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                            {
+                                                string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -18140,25 +19827,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                                 }
                                                 
-                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                                }
-                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                            }
-                                            if (typeName == "HyperVReplicaAzure")
-                                            {
-                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                                
                                                 JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                                 if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                                     {
                                                         AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                         
                                                         JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                         if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -18215,49 +19890,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                                 if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                                 if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                                }
-                                                
-                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                                }
-                                                
-                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                                {
-                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                                    
-                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                                    }
-                                                    
-                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                                    }
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                                 }
                                                 
                                                 JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -18266,7 +19913,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                                     {
                                                         VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                         
                                                         JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                         if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -18330,7 +19977,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                                 {
                                                     string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                }
+                                                
+                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                                }
+                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                            }
+                                            if (typeName == "HyperVReplicaAzure")
+                                            {
+                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                                
+                                                JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                                if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                                    {
+                                                        AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                        
+                                                        JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                        if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                            azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                        if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                            azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                        if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                            azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                        }
+                                                        
+                                                        JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                        if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                            azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                        }
+                                                        
+                                                        JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                        if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                        }
+                                                        
+                                                        JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                        if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string lunIdInstance2 = ((string)lunIdValue2);
+                                                            azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                        }
+                                                        
+                                                        JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                        if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                                if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                                if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                                if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                                }
+                                                
+                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                                {
+                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                                    
+                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                                    }
+                                                    
+                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                                if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                                 }
                                                 
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -19352,25 +21192,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                                 }
                                                 
-                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                                }
-                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                            }
-                                            if (typeName == "HyperVReplicaAzure")
-                                            {
-                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                                
                                                 JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                                 if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                                     {
                                                         AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                         
                                                         JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                         if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -19427,49 +21255,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                                 if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                                 if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                                }
-                                                
-                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                                }
-                                                
-                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                                {
-                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                                    
-                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                                    }
-                                                    
-                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                                    }
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                                 }
                                                 
                                                 JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -19478,7 +21278,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                                     {
                                                         VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                         
                                                         JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                         if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -19542,7 +21342,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                                 {
                                                     string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                }
+                                                
+                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                                }
+                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                            }
+                                            if (typeName == "HyperVReplicaAzure")
+                                            {
+                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                                
+                                                JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                                if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                                    {
+                                                        AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                        
+                                                        JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                        if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                            azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                        if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                            azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                        if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                            azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                        }
+                                                        
+                                                        JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                        if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                            azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                        }
+                                                        
+                                                        JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                        if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                        }
+                                                        
+                                                        JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                        if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string lunIdInstance2 = ((string)lunIdValue2);
+                                                            azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                        }
+                                                        
+                                                        JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                        if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                                if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                                if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                                if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                                }
+                                                
+                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                                {
+                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                                    
+                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                                    }
+                                                    
+                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                                if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                                 }
                                                 
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
@@ -20543,25 +22536,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.OSDiskId = osDiskIdInstance;
                                                 }
                                                 
-                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
-                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
-                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
-                                                }
-                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
-                                            }
-                                            if (typeName == "HyperVReplicaAzure")
-                                            {
-                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
-                                                
                                                 JToken azureVMDiskDetailsArray = providerSpecificDetailsValue["azureVMDiskDetails"];
                                                 if (azureVMDiskDetailsArray != null && azureVMDiskDetailsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken azureVMDiskDetailsValue in ((JArray)azureVMDiskDetailsArray))
                                                     {
                                                         AzureVmDiskDetails azureVmDiskDetailsInstance = new AzureVmDiskDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance);
                                                         
                                                         JToken vhdTypeValue3 = azureVMDiskDetailsValue["vhdType"];
                                                         if (vhdTypeValue3 != null && vhdTypeValue3.Type != JTokenType.Null)
@@ -20618,49 +22599,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureVMSizeValue = providerSpecificDetailsValue["recoveryAzureVMSize"];
                                                 if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
                                                 }
                                                 
                                                 JToken recoveryAzureStorageAccountValue = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
                                                 if (recoveryAzureStorageAccountValue != null && recoveryAzureStorageAccountValue.Type != JTokenType.Null)
                                                 {
                                                     string recoveryAzureStorageAccountInstance = ((string)recoveryAzureStorageAccountValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
-                                                }
-                                                
-                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
-                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
-                                                {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
-                                                }
-                                                
-                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
-                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
-                                                {
-                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
-                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
-                                                    
-                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
-                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
-                                                    }
-                                                    
-                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
-                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
-                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
-                                                    }
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance;
                                                 }
                                                 
                                                 JToken vmNicsArray3 = providerSpecificDetailsValue["vmNics"];
@@ -20669,7 +22622,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     foreach (JToken vmNicsValue3 in ((JArray)vmNicsArray3))
                                                     {
                                                         VMNicDetails vMNicDetailsInstance3 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance3);
+                                                        vMwareAzureV2ProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance3);
                                                         
                                                         JToken nicIdValue3 = vmNicsValue3["nicId"];
                                                         if (nicIdValue3 != null && nicIdValue3.Type != JTokenType.Null)
@@ -20733,7 +22686,200 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
                                                 {
                                                     string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
-                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                }
+                                                
+                                                JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
+                                                if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance3 = ((string)instanceTypeValue3);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.InstanceType = instanceTypeInstance3;
+                                                }
+                                                propertiesInstance.ProviderSpecificDetails = vMwareAzureV2ProviderSpecificSettingsInstance;
+                                            }
+                                            if (typeName == "HyperVReplicaAzure")
+                                            {
+                                                HyperVReplicaAzureReplicationDetails hyperVReplicaAzureReplicationDetailsInstance = new HyperVReplicaAzureReplicationDetails();
+                                                
+                                                JToken azureVMDiskDetailsArray2 = providerSpecificDetailsValue["azureVMDiskDetails"];
+                                                if (azureVMDiskDetailsArray2 != null && azureVMDiskDetailsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken azureVMDiskDetailsValue2 in ((JArray)azureVMDiskDetailsArray2))
+                                                    {
+                                                        AzureVmDiskDetails azureVmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.AzureVMDiskDetails.Add(azureVmDiskDetailsInstance2);
+                                                        
+                                                        JToken vhdTypeValue4 = azureVMDiskDetailsValue2["vhdType"];
+                                                        if (vhdTypeValue4 != null && vhdTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdTypeInstance4 = ((string)vhdTypeValue4);
+                                                            azureVmDiskDetailsInstance2.VhdType = vhdTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdIdValue4 = azureVMDiskDetailsValue2["vhdId"];
+                                                        if (vhdIdValue4 != null && vhdIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdIdInstance4 = ((string)vhdIdValue4);
+                                                            azureVmDiskDetailsInstance2.VhdId = vhdIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vhdNameValue5 = azureVMDiskDetailsValue2["vhdName"];
+                                                        if (vhdNameValue5 != null && vhdNameValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string vhdNameInstance5 = ((string)vhdNameValue5);
+                                                            azureVmDiskDetailsInstance2.VhdName = vhdNameInstance5;
+                                                        }
+                                                        
+                                                        JToken maxSizeMBValue4 = azureVMDiskDetailsValue2["maxSizeMB"];
+                                                        if (maxSizeMBValue4 != null && maxSizeMBValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string maxSizeMBInstance4 = ((string)maxSizeMBValue4);
+                                                            azureVmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance4;
+                                                        }
+                                                        
+                                                        JToken targetDiskLocationValue2 = azureVMDiskDetailsValue2["targetDiskLocation"];
+                                                        if (targetDiskLocationValue2 != null && targetDiskLocationValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskLocationInstance2 = ((string)targetDiskLocationValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskLocation = targetDiskLocationInstance2;
+                                                        }
+                                                        
+                                                        JToken lunIdValue2 = azureVMDiskDetailsValue2["lunId"];
+                                                        if (lunIdValue2 != null && lunIdValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string lunIdInstance2 = ((string)lunIdValue2);
+                                                            azureVmDiskDetailsInstance2.LunId = lunIdInstance2;
+                                                        }
+                                                        
+                                                        JToken targetDiskNameValue2 = azureVMDiskDetailsValue2["targetDiskName"];
+                                                        if (targetDiskNameValue2 != null && targetDiskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string targetDiskNameInstance2 = ((string)targetDiskNameValue2);
+                                                            azureVmDiskDetailsInstance2.TargetDiskName = targetDiskNameInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken recoveryAzureVMNameValue2 = providerSpecificDetailsValue["recoveryAzureVMName"];
+                                                if (recoveryAzureVMNameValue2 != null && recoveryAzureVMNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMNameInstance2 = ((string)recoveryAzureVMNameValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureVMSizeValue2 = providerSpecificDetailsValue["recoveryAzureVMSize"];
+                                                if (recoveryAzureVMSizeValue2 != null && recoveryAzureVMSizeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMSizeInstance2 = ((string)recoveryAzureVMSizeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance2;
+                                                }
+                                                
+                                                JToken recoveryAzureStorageAccountValue2 = providerSpecificDetailsValue["recoveryAzureStorageAccount"];
+                                                if (recoveryAzureStorageAccountValue2 != null && recoveryAzureStorageAccountValue2.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureStorageAccountInstance2 = ((string)recoveryAzureStorageAccountValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.RecoveryAzureStorageAccount = recoveryAzureStorageAccountInstance2;
+                                                }
+                                                
+                                                JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
+                                                if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
+                                                if (initialReplicationDetailsValue3 != null && initialReplicationDetailsValue3.Type != JTokenType.Null)
+                                                {
+                                                    InitialReplicationDetails initialReplicationDetailsInstance3 = new InitialReplicationDetails();
+                                                    hyperVReplicaAzureReplicationDetailsInstance.InitialReplicationDetails = initialReplicationDetailsInstance3;
+                                                    
+                                                    JToken initialReplicationTypeValue3 = initialReplicationDetailsValue3["initialReplicationType"];
+                                                    if (initialReplicationTypeValue3 != null && initialReplicationTypeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationTypeInstance3 = ((string)initialReplicationTypeValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationType = initialReplicationTypeInstance3;
+                                                    }
+                                                    
+                                                    JToken initialReplicationProgressPercentageValue3 = initialReplicationDetailsValue3["initialReplicationProgressPercentage"];
+                                                    if (initialReplicationProgressPercentageValue3 != null && initialReplicationProgressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationProgressPercentageInstance3 = ((string)initialReplicationProgressPercentageValue3);
+                                                        initialReplicationDetailsInstance3.InitialReplicationProgressPercentage = initialReplicationProgressPercentageInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken selectedRecoveryAzureNetworkIdValue2 = providerSpecificDetailsValue["selectedRecoveryAzureNetworkId"];
+                                                if (selectedRecoveryAzureNetworkIdValue2 != null && selectedRecoveryAzureNetworkIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string selectedRecoveryAzureNetworkIdInstance2 = ((string)selectedRecoveryAzureNetworkIdValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance2;
                                                 }
                                                 
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
