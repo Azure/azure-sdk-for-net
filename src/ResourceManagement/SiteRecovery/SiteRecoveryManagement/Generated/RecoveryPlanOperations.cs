@@ -271,9 +271,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         JArray groupsArray = new JArray();
                         foreach (RecoveryPlanGroup groupsItem in input.Properties.Groups)
                         {
-                            requestDoc = groupsItem.GroupName;
+                            JObject recoveryPlanGroupValue = new JObject();
+                            groupsArray.Add(recoveryPlanGroupValue);
                             
-                            requestDoc = groupsItem.GroupType;
+                            recoveryPlanGroupValue["groupName"] = groupsItem.GroupName;
+                            
+                            recoveryPlanGroupValue["groupType"] = groupsItem.GroupType;
                             
                             if (groupsItem.ReplicationProtectedItems != null)
                             {
@@ -284,7 +287,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         replicationProtectedItemsArray.Add(replicationProtectedItemsItem);
                                     }
-                                    requestDoc = replicationProtectedItemsArray;
+                                    recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
                             }
                             
@@ -295,7 +298,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JArray startGroupActionsArray = new JArray();
                                     foreach (RecoveryPlanAction startGroupActionsItem in groupsItem.StartGroupActions)
                                     {
-                                        requestDoc = startGroupActionsItem.ActionName;
+                                        JObject recoveryPlanActionValue = new JObject();
+                                        startGroupActionsArray.Add(recoveryPlanActionValue);
+                                        
+                                        recoveryPlanActionValue["actionName"] = startGroupActionsItem.ActionName;
                                         
                                         if (startGroupActionsItem.FailoverTypesList != null)
                                         {
@@ -306,7 +312,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverTypesListArray.Add(failoverTypesListItem);
                                                 }
-                                                requestDoc = failoverTypesListArray;
+                                                recoveryPlanActionValue["failoverTypesList"] = failoverTypesListArray;
                                             }
                                         }
                                         
@@ -319,12 +325,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverDirectionsListArray.Add(failoverDirectionsListItem);
                                                 }
-                                                requestDoc = failoverDirectionsListArray;
+                                                recoveryPlanActionValue["failoverDirectionsList"] = failoverDirectionsListArray;
                                             }
                                         }
                                         
                                         JObject customDetailsValue = new JObject();
-                                        requestDoc = customDetailsValue;
+                                        recoveryPlanActionValue["customDetails"] = customDetailsValue;
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanScriptActionDetails)
                                         {
                                             customDetailsValue["instanceType"] = "ScriptActionDetails";
@@ -370,7 +376,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue["instanceType"] = derived3.InstanceType;
                                         }
                                     }
-                                    requestDoc = startGroupActionsArray;
+                                    recoveryPlanGroupValue["startGroupActions"] = startGroupActionsArray;
                                 }
                             }
                             
@@ -381,7 +387,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JArray endGroupActionsArray = new JArray();
                                     foreach (RecoveryPlanAction endGroupActionsItem in groupsItem.EndGroupActions)
                                     {
-                                        requestDoc = endGroupActionsItem.ActionName;
+                                        JObject recoveryPlanActionValue2 = new JObject();
+                                        endGroupActionsArray.Add(recoveryPlanActionValue2);
+                                        
+                                        recoveryPlanActionValue2["actionName"] = endGroupActionsItem.ActionName;
                                         
                                         if (endGroupActionsItem.FailoverTypesList != null)
                                         {
@@ -392,7 +401,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverTypesListArray2.Add(failoverTypesListItem2);
                                                 }
-                                                requestDoc = failoverTypesListArray2;
+                                                recoveryPlanActionValue2["failoverTypesList"] = failoverTypesListArray2;
                                             }
                                         }
                                         
@@ -405,12 +414,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverDirectionsListArray2.Add(failoverDirectionsListItem2);
                                                 }
-                                                requestDoc = failoverDirectionsListArray2;
+                                                recoveryPlanActionValue2["failoverDirectionsList"] = failoverDirectionsListArray2;
                                             }
                                         }
                                         
                                         JObject customDetailsValue2 = new JObject();
-                                        requestDoc = customDetailsValue2;
+                                        recoveryPlanActionValue2["customDetails"] = customDetailsValue2;
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanScriptActionDetails)
                                         {
                                             customDetailsValue2["instanceType"] = "ScriptActionDetails";
@@ -456,7 +465,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue2["instanceType"] = derived6.InstanceType;
                                         }
                                     }
-                                    requestDoc = endGroupActionsArray;
+                                    recoveryPlanGroupValue["endGroupActions"] = endGroupActionsArray;
                                 }
                             }
                         }
@@ -889,9 +898,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         JArray groupsArray = new JArray();
                         foreach (RecoveryPlanGroup groupsItem in input.Properties.Groups)
                         {
-                            requestDoc = groupsItem.GroupName;
+                            JObject recoveryPlanGroupValue = new JObject();
+                            groupsArray.Add(recoveryPlanGroupValue);
                             
-                            requestDoc = groupsItem.GroupType;
+                            recoveryPlanGroupValue["groupName"] = groupsItem.GroupName;
+                            
+                            recoveryPlanGroupValue["groupType"] = groupsItem.GroupType;
                             
                             if (groupsItem.ReplicationProtectedItems != null)
                             {
@@ -902,7 +914,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         replicationProtectedItemsArray.Add(replicationProtectedItemsItem);
                                     }
-                                    requestDoc = replicationProtectedItemsArray;
+                                    recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
                             }
                             
@@ -913,7 +925,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JArray startGroupActionsArray = new JArray();
                                     foreach (RecoveryPlanAction startGroupActionsItem in groupsItem.StartGroupActions)
                                     {
-                                        requestDoc = startGroupActionsItem.ActionName;
+                                        JObject recoveryPlanActionValue = new JObject();
+                                        startGroupActionsArray.Add(recoveryPlanActionValue);
+                                        
+                                        recoveryPlanActionValue["actionName"] = startGroupActionsItem.ActionName;
                                         
                                         if (startGroupActionsItem.FailoverTypesList != null)
                                         {
@@ -924,7 +939,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverTypesListArray.Add(failoverTypesListItem);
                                                 }
-                                                requestDoc = failoverTypesListArray;
+                                                recoveryPlanActionValue["failoverTypesList"] = failoverTypesListArray;
                                             }
                                         }
                                         
@@ -937,12 +952,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverDirectionsListArray.Add(failoverDirectionsListItem);
                                                 }
-                                                requestDoc = failoverDirectionsListArray;
+                                                recoveryPlanActionValue["failoverDirectionsList"] = failoverDirectionsListArray;
                                             }
                                         }
                                         
                                         JObject customDetailsValue = new JObject();
-                                        requestDoc = customDetailsValue;
+                                        recoveryPlanActionValue["customDetails"] = customDetailsValue;
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanScriptActionDetails)
                                         {
                                             customDetailsValue["instanceType"] = "ScriptActionDetails";
@@ -988,7 +1003,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue["instanceType"] = derived3.InstanceType;
                                         }
                                     }
-                                    requestDoc = startGroupActionsArray;
+                                    recoveryPlanGroupValue["startGroupActions"] = startGroupActionsArray;
                                 }
                             }
                             
@@ -999,7 +1014,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JArray endGroupActionsArray = new JArray();
                                     foreach (RecoveryPlanAction endGroupActionsItem in groupsItem.EndGroupActions)
                                     {
-                                        requestDoc = endGroupActionsItem.ActionName;
+                                        JObject recoveryPlanActionValue2 = new JObject();
+                                        endGroupActionsArray.Add(recoveryPlanActionValue2);
+                                        
+                                        recoveryPlanActionValue2["actionName"] = endGroupActionsItem.ActionName;
                                         
                                         if (endGroupActionsItem.FailoverTypesList != null)
                                         {
@@ -1010,7 +1028,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverTypesListArray2.Add(failoverTypesListItem2);
                                                 }
-                                                requestDoc = failoverTypesListArray2;
+                                                recoveryPlanActionValue2["failoverTypesList"] = failoverTypesListArray2;
                                             }
                                         }
                                         
@@ -1023,12 +1041,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     failoverDirectionsListArray2.Add(failoverDirectionsListItem2);
                                                 }
-                                                requestDoc = failoverDirectionsListArray2;
+                                                recoveryPlanActionValue2["failoverDirectionsList"] = failoverDirectionsListArray2;
                                             }
                                         }
                                         
                                         JObject customDetailsValue2 = new JObject();
-                                        requestDoc = customDetailsValue2;
+                                        recoveryPlanActionValue2["customDetails"] = customDetailsValue2;
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanScriptActionDetails)
                                         {
                                             customDetailsValue2["instanceType"] = "ScriptActionDetails";
@@ -1074,7 +1092,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue2["instanceType"] = derived6.InstanceType;
                                         }
                                     }
-                                    requestDoc = endGroupActionsArray;
+                                    recoveryPlanGroupValue["endGroupActions"] = endGroupActionsArray;
                                 }
                             }
                         }
