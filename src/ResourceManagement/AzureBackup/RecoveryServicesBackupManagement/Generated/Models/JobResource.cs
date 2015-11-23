@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class JobResource : Resource
     {
-        private Job _item;
+        private JobBase _properties;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Properties
         /// </summary>
-        public Job Item
+        public JobBase Properties
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

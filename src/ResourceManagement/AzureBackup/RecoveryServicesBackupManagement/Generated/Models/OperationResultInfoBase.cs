@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobProperties object.
+    /// The definition of a OperationResultInfoBase object.
     /// </summary>
-    public partial class JobProperties
+    public partial class OperationResultInfoBase
     {
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the OperationResultInfoBase class.
         /// </summary>
-        public JobProperties()
+        public OperationResultInfoBase()
         {
         }
     }

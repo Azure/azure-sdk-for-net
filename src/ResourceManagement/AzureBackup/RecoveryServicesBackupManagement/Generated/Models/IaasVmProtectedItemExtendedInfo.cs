@@ -21,52 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial interface IRecoveryServicesBackupVaultManagementClient : IDisposable
+    /// <summary>
+    /// The definition of a IaasVmProtectedItemExtendedInfo object.
+    /// </summary>
+    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
+        private string _oldestRecoveryPoint;
+        
         /// <summary>
-        /// Gets the API version.
+        /// Optional. OldestRecoveryPoint for the protected item
         /// </summary>
-        string ApiVersion
+        public string OldestRecoveryPoint
         {
-            get; 
+            get { return this._oldestRecoveryPoint; }
+            set { this._oldestRecoveryPoint = value; }
+        }
+        
+        private int _recoveryPointCount;
+        
+        /// <summary>
+        /// Optional. RecoveryPointCount for the protected item
+        /// </summary>
+        public int RecoveryPointCount
+        {
+            get { return this._recoveryPointCount; }
+            set { this._recoveryPointCount = value; }
         }
         
         /// <summary>
-        /// Gets the URI used as the base for all cloud service requests.
+        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
+        /// class.
         /// </summary>
-        Uri BaseUri
+        public IaasVmProtectedItemExtendedInfo()
         {
-            get; 
-        }
-        
-        /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
-        /// </summary>
-        SubscriptionCloudCredentials Credentials
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the initial timeout for Long Running Operations.
-        /// </summary>
-        int LongRunningOperationInitialTimeout
-        {
-            get; set; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the retry timeout for Long Running Operations.
-        /// </summary>
-        int LongRunningOperationRetryTimeout
-        {
-            get; set; 
         }
     }
 }

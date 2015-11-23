@@ -22,9 +22,18 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupVaultManagementClientExtensions
+    /// <summary>
+    /// The definition of a ProtectedItemExtendedInfo object.
+    /// </summary>
+    public partial class ProtectedItemExtendedInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the ProtectedItemExtendedInfo class.
+        /// </summary>
+        public ProtectedItemExtendedInfo()
+        {
+        }
     }
 }

@@ -21,18 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a Job base object.
+    /// The definition of a GetOperationResultResponse.
     /// </summary>
-    public partial class JobBase
+    public partial class GetOperationResultResponse : BaseRecoveryServicesJobResponse
     {
+        private OperationResultInfoBase _operation;
+        
         /// <summary>
-        /// Initializes a new instance of the JobBase class.
+        /// Optional. Operation
         /// </summary>
-        public JobBase()
+        public OperationResultInfoBase Operation
+        {
+            get { return this._operation; }
+            set { this._operation = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GetOperationResultResponse class.
+        /// </summary>
+        public GetOperationResultResponse()
         {
         }
     }

@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + null;
             url = url + "/";
             url = url + "recoveryServicesVault";
             url = url + "/";

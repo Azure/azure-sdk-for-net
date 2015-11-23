@@ -20,33 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobDetailsResponse.
+    /// The definition for OperationResultInfo class.
     /// </summary>
-    public partial class JobDetailsResponse : AzureOperationResponse
+    public partial class OperationResultInfo : OperationResultInfoBase
     {
-        private JobDetailsResource _item;
+        private IList<string> _jobList;
         
         /// <summary>
-        /// Optional. JobDetailsResource.
+        /// Optional. List of jobs
         /// </summary>
-        public JobDetailsResource Item
+        public IList<string> JobList
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._jobList; }
+            set { this._jobList = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobDetailsResponse class.
+        /// Initializes a new instance of the OperationResultInfo class.
         /// </summary>
-        public JobDetailsResponse()
+        public OperationResultInfo()
         {
+            this.JobList = new LazyList<string>();
         }
     }
 }

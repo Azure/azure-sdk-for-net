@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a IaaSVMJob object.
     /// </summary>
-    public partial class IaaSVMJob : JobBase
+    public partial class IaaSVMJob : Job
     {
         private IList<JobSupportedAction> _actionsInfo;
         
