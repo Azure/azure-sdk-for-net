@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Lake Analytics management functions for managing the Microsoft Azure Data Lake Analytics compute service.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.4.0")]
+[assembly: AssemblyFileVersion("0.9.5.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

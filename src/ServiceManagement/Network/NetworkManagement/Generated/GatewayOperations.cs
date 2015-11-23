@@ -4481,7 +4481,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4577,7 +4577,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4667,7 +4667,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4799,14 +4799,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
                     {
-                        XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
-                        XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
-                        var addressSpaceSequenceElement = new XElement(defaultNs + "AddressSpace");
-                        addressSpaceSequenceElement.Add(new XAttribute(XNamespace.Xmlns + "a", array));
-
+                        XElement addressSpaceSequenceElement = new XElement(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                         foreach (string addressSpaceItem in parameters.AddressSpace)
                         {
-                            var addressSpaceItemElement = new XElement(array + "string", addressSpaceItem);
+                            XElement addressSpaceItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                            addressSpaceItemElement.Value = addressSpaceItem;
                             addressSpaceSequenceElement.Add(addressSpaceItemElement);
                         }
                         createLocalNetworkGatewayParametersElement.Add(addressSpaceSequenceElement);
@@ -4945,7 +4942,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5036,7 +5033,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5129,7 +5126,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5353,7 +5350,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5444,7 +5441,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5541,7 +5538,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6979,16 +6976,10 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement localNetworkGatewayElement = responseDoc.Element(XName.Get("LocalNetworkGateway", "http://schemas.microsoft.com/windowsazure"));
                         if (localNetworkGatewayElement != null)
                         {
-                            XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
-                            XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
-                            var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
-                            addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
-                            XElement addressSpaceSequenceElement = localNetworkGatewayElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
-
+                            XElement addressSpaceSequenceElement = localNetworkGatewayElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                             if (addressSpaceSequenceElement != null)
                             {
-                                var addressSpaceElementFormat = new XElement(array + "string");
-                                foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get(addressSpaceElementFormat.Name.ToString())))
+                                foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
                                     result.AddressSpace.Add(addressSpaceElement.Value);
                                 }
@@ -8356,17 +8347,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     string ipAddressInstance = ipAddressElement.Value;
                                     localNetworkGatewayInstance.IpAddress = ipAddressInstance;
                                 }
-
-                                XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
-                                XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
-                                var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
-                                addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
-                                XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
                                 
+                                XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                                 if (addressSpaceSequenceElement != null)
                                 {
-                                    var addressSpaceElementFormat = new XElement(array + "string");
-                                    foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get(addressSpaceElementFormat.Name.ToString())))
+                                    foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                     {
                                         localNetworkGatewayInstance.AddressSpace.Add(addressSpaceElement.Value);
                                     }
@@ -8893,7 +8878,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8987,7 +8972,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9089,7 +9074,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9187,7 +9172,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9281,7 +9266,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9375,7 +9360,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9469,7 +9454,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9564,7 +9549,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9663,7 +9648,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9762,7 +9747,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9864,7 +9849,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9963,7 +9948,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10058,7 +10043,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10151,7 +10136,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10594,7 +10579,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            while (result.Status == GatewayOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10736,14 +10721,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
                     {
-                        XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
-                        XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
-                        var addressSpaceSequenceElement = new XElement(defaultNs + "AddressSpace");
-                        addressSpaceSequenceElement.Add(new XAttribute(XNamespace.Xmlns + "a", array));
-
+                        XElement addressSpaceSequenceElement = new XElement(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                         foreach (string addressSpaceItem in parameters.AddressSpace)
                         {
-                            var addressSpaceItemElement = new XElement(array + "string", addressSpaceItem);
+                            XElement addressSpaceItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                            addressSpaceItemElement.Value = addressSpaceItem;
                             addressSpaceSequenceElement.Add(addressSpaceItemElement);
                         }
                         updateLocalNetworkGatewayParametersElement.Add(addressSpaceSequenceElement);
