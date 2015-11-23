@@ -92,7 +92,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void UpdateProtection()
         {
             using (UndoContext context = UndoContext.Current)
@@ -125,7 +125,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void EnableProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)

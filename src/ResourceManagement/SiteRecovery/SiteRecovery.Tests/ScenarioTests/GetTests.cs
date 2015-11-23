@@ -167,7 +167,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetVMwareAzureV2ReplicationProtectedItem()
         {
             using (UndoContext context = UndoContext.Current)
@@ -186,7 +186,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)

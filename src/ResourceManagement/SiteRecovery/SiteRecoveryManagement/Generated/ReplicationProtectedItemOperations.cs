@@ -3077,7 +3077,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3152,7 +3152,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3227,7 +3227,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -20880,7 +20880,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -20951,7 +20951,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -21098,7 +21098,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -21173,7 +21173,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -21248,7 +21248,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -21323,7 +21323,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -21398,7 +21398,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

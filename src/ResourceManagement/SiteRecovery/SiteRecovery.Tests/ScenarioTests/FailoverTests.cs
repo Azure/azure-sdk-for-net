@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -161,6 +161,76 @@ namespace SiteRecovery.Tests
                 };
 
                 var ufoResp = client.ReplicationProtectedItem.UnplannedFailover(fabricId, containerId, pgs.ReplicationProtectedItems[0].Name, ufoInput, RequestHeaders);
+            }
+        }
+
+        [Fact]
+        public void ApplyRecoveryPoint()
+        {
+            using (UndoContext context = UndoContext.Current)
+           {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var fabrics = client.Fabrics.List(RequestHeaders);
+
+                Fabric selectedFabric = null;
+                ProtectionContainer selectedContainer = null;
+
+                foreach (var fabric in fabrics.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType.Contains("VMM"))
+                    {
+                        selectedFabric = fabric;
+                        break;
+                    }
+                }
+
+                var containers = client.ProtectionContainer.List(selectedFabric.Name, RequestHeaders);
+
+                foreach (var container in containers.ProtectionContainers)
+                {
+                    if (container.Properties.ProtectedItemCount > 0
+                        && container.Properties.Role.Equals("Primary"))
+                    {
+                        selectedContainer = container;
+                        break;
+                    }
+                }
+
+                string fabricId = selectedFabric.Name;
+                string containerId = selectedContainer.Name;
+
+                if (selectedContainer != null)
+                {
+                    var pgs = client.ReplicationProtectedItem.List(fabricId, containerId, RequestHeaders);
+                    var rps = client.RecoveryPoint.List(fabricId, containerId, pgs.ReplicationProtectedItems[0].Name, RequestHeaders);
+
+                    ApplyRecoveryPointInputProperties applyRpProp = new ApplyRecoveryPointInputProperties()
+                    {
+                        RecoveryPointId = rps.RecoveryPoints[rps.RecoveryPoints.Count - 2].Id,
+                        ProviderSpecificDetails = new HyperVReplicaAzureApplyRecoveryPointInput()
+                        {
+                            VaultLocation = "SoutheastAsia"
+                        }
+                    };
+
+                    ApplyRecoveryPointInput applyRpInput = new ApplyRecoveryPointInput()
+                    {
+                        Properties = applyRpProp
+                    };
+
+                    var applyRpResp = client.ReplicationProtectedItem.ApplyRecoveryPoint(
+                        fabricId,
+                        containerId,
+                        pgs.ReplicationProtectedItems[0].Name,
+                        applyRpInput,
+                        RequestHeaders);
+                }
+                else
+                {
+                    throw new System.Exception("Container not found.");
+                }
             }
         }
 

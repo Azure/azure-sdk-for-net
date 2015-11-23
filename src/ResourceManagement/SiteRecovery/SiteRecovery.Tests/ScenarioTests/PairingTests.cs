@@ -180,6 +180,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
         public void CreateHyperV2012Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -220,6 +221,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
         public void CreateHyperV2012R2Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -261,6 +263,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
         public void CreateVMwareAzureV2Profile()
         {
             using (UndoContext context = UndoContext.Current)
