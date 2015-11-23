@@ -26,9 +26,9 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMJobQueryFilters object.
+    /// The definition of a CommonJobQueryFilter object.
     /// </summary>
-    public partial class IaaSVMJobQueryFilters : JobQueryFilters
+    public partial class CommonJobQueryFilters : JobQueryFilters
     {
         private DateTime _endTime;
         
@@ -107,10 +107,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._topToken = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the IaaSVMJobQueryFilters class.
+        /// Optional. Type query parameter
         /// </summary>
-        public IaaSVMJobQueryFilters()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CommonJobQueryFilters class.
+        /// </summary>
+        public CommonJobQueryFilters()
         {
         }
     }

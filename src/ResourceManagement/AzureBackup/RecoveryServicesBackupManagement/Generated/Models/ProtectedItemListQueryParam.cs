@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._datasourceType = value; }
         }
         
+        private string _policyName;
+        
+        /// <summary>
+        /// Optional. PolicyName query parameter
+        /// </summary>
+        public string PolicyName
+        {
+            get { return this._policyName; }
+            set { this._policyName = value; }
+        }
+        
         private string _providerType;
         
         /// <summary>

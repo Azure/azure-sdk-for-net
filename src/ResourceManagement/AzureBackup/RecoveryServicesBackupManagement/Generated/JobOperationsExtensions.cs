@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a JobDetailsResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static JobDetailsResponse Get(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse Get(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -191,9 +191,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a JobDetailsResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static Task<JobDetailsResponse> GetAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> GetAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(resourceGroupName, resourceName, jobName, customRequestHeaders, CancellationToken.None);
         }
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        public static JobListResponse List(this IJobOperations operations, string resourceGroupName, string resourceName, IaaSVMJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static JobListResponse List(this IJobOperations operations, string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        public static Task<JobListResponse> ListAsync(this IJobOperations operations, string resourceGroupName, string resourceName, IaaSVMJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobListResponse> ListAsync(this IJobOperations operations, string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(resourceGroupName, resourceName, queryFilter, customRequestHeaders, CancellationToken.None);
         }
