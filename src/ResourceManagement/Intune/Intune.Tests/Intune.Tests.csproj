@@ -154,6 +154,7 @@
     <Compile Include="ScenarioTests\App.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Group.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Policy.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Wipe.ScenarioTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Intune\Intune.csproj">
@@ -198,6 +199,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldPatchiOSPolicy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.WipeScenarioTests\ShouldWipeDevices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

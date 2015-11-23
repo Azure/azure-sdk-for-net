@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Intune
             /// Location hostName for the tenant
             /// </param>
             /// <param name='userName'>
-            /// user unique Id
+            /// user unique Name
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -139,9 +139,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static IPage<Device> GetUserDevices(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static IPage<Device> GetMAMUserDevices(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetUserDevicesAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDevicesAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Intune
             /// Location hostName for the tenant
             /// </param>
             /// <param name='userName'>
-            /// user unique Id
+            /// user unique Name
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -167,9 +167,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Device>> GetUserDevicesAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Device>> GetMAMUserDevicesAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Device>> result = await operations.GetUserDevicesWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<Device>> result = await operations.GetMAMUserDevicesWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -191,9 +191,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static Device GetUserDeviceByDeviceName(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string))
+            public static Device GetMAMUserDeviceByDeviceName(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetUserDeviceByDeviceNameAsync(hostName, userName, deviceName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDeviceByDeviceNameAsync(hostName, userName, deviceName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -217,9 +217,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Device> GetUserDeviceByDeviceNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Device> GetMAMUserDeviceByDeviceNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Device> result = await operations.GetUserDeviceByDeviceNameWithHttpMessagesAsync(hostName, userName, deviceName, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Device> result = await operations.GetMAMUserDeviceByDeviceNameWithHttpMessagesAsync(hostName, userName, deviceName, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -238,9 +238,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='deviceName'>
             /// device name
             /// </param>
-            public static WipeDeviceOperationResult WipeUserDevice(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName)
+            public static WipeDeviceOperationResult WipeMAMUserDevice(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).WipeUserDeviceAsync(hostName, userName, deviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).WipeMAMUserDeviceAsync(hostName, userName, deviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -261,9 +261,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WipeDeviceOperationResult> WipeUserDeviceAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WipeDeviceOperationResult> WipeMAMUserDeviceAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<WipeDeviceOperationResult> result = await operations.WipeUserDeviceWithHttpMessagesAsync(hostName, userName, deviceName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<WipeDeviceOperationResult> result = await operations.WipeMAMUserDeviceWithHttpMessagesAsync(hostName, userName, deviceName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -324,9 +324,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            public static StatusesDefault GetDefaultStatuses(this IIntuneResourceManagementClient operations, string hostName)
+            public static StatusesDefault GetMAMStatuses(this IIntuneResourceManagementClient operations, string hostName)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetDefaultStatusesAsync(hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMStatusesAsync(hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -341,9 +341,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StatusesDefault> GetDefaultStatusesAsync( this IIntuneResourceManagementClient operations, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StatusesDefault> GetMAMStatusesAsync( this IIntuneResourceManagementClient operations, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StatusesDefault> result = await operations.GetDefaultStatusesWithHttpMessagesAsync(hostName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StatusesDefault> result = await operations.GetMAMStatusesWithHttpMessagesAsync(hostName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -364,9 +364,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static FlaggedUserCollection GetFlaggedUsers(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static FlaggedUserCollection GetMAMFlaggedUsers(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetFlaggedUsersAsync(hostName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersAsync(hostName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -389,9 +389,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUserCollection> GetFlaggedUsersAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedUserCollection> GetMAMFlaggedUsersAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetFlaggedUsersWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetMAMFlaggedUsersWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -410,9 +410,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static FlaggedUser GetFlaggedUserByName(this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string))
+            public static FlaggedUser GetMAMFlaggedUserByName(this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetFlaggedUserByNameAsync(hostName, userName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUserByNameAsync(hostName, userName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -433,9 +433,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUser> GetFlaggedUserByNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedUser> GetMAMFlaggedUserByNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUser> result = await operations.GetFlaggedUserByNameWithHttpMessagesAsync(hostName, userName, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedUser> result = await operations.GetMAMFlaggedUserByNameWithHttpMessagesAsync(hostName, userName, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -459,9 +459,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static FlaggedEnrolledAppCollection GetUserFlaggedEnrolledApps(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static FlaggedEnrolledAppCollection GetMAMUserFlaggedEnrolledApps(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetUserFlaggedEnrolledAppsAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -487,9 +487,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedEnrolledAppCollection> GetUserFlaggedEnrolledAppsAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedEnrolledAppCollection> GetMAMUserFlaggedEnrolledAppsAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedEnrolledAppCollection> result = await operations.GetUserFlaggedEnrolledAppsWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedEnrolledAppCollection> result = await operations.GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -566,9 +566,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Device> GetUserDevicesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static IPage<Device> GetMAMUserDevicesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetUserDevicesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDevicesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -583,9 +583,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Device>> GetUserDevicesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Device>> GetMAMUserDevicesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Device>> result = await operations.GetUserDevicesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<Device>> result = await operations.GetMAMUserDevicesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -630,9 +630,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static StatusesDefault GetDefaultStatusesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static StatusesDefault GetMAMStatusesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetDefaultStatusesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMStatusesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -647,9 +647,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StatusesDefault> GetDefaultStatusesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StatusesDefault> GetMAMStatusesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StatusesDefault> result = await operations.GetDefaultStatusesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StatusesDefault> result = await operations.GetMAMStatusesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -662,9 +662,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static FlaggedUserCollection GetFlaggedUsersNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static FlaggedUserCollection GetMAMFlaggedUsersNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetFlaggedUsersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -679,9 +679,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUserCollection> GetFlaggedUsersNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedUserCollection> GetMAMFlaggedUsersNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetFlaggedUsersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetMAMFlaggedUsersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -694,9 +694,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static FlaggedUser GetFlaggedUserByNameNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static FlaggedUser GetMAMFlaggedUserByNameNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetFlaggedUserByNameNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUserByNameNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -711,9 +711,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUser> GetFlaggedUserByNameNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedUser> GetMAMFlaggedUserByNameNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUser> result = await operations.GetFlaggedUserByNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedUser> result = await operations.GetMAMFlaggedUserByNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -726,9 +726,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static FlaggedEnrolledAppCollection GetUserFlaggedEnrolledAppsNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static FlaggedEnrolledAppCollection GetMAMUserFlaggedEnrolledAppsNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetUserFlaggedEnrolledAppsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -743,9 +743,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedEnrolledAppCollection> GetUserFlaggedEnrolledAppsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FlaggedEnrolledAppCollection> GetMAMUserFlaggedEnrolledAppsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedEnrolledAppCollection> result = await operations.GetUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FlaggedEnrolledAppCollection> result = await operations.GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

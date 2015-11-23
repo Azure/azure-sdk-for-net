@@ -611,7 +611,7 @@ namespace Microsoft.Azure.Management.Intune
         /// Location hostName for the tenant
         /// </param>
         /// <param name='userName'>
-        /// user unique Id
+        /// user unique Name
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Device>>> GetUserDevicesWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Device>>> GetMAMUserDevicesWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -654,7 +654,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUserDevices", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserDevices", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -786,7 +786,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Device>> GetUserDeviceByDeviceNameWithHttpMessagesAsync(string hostName, string userName, string deviceName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Device>> GetMAMUserDeviceByDeviceNameWithHttpMessagesAsync(string hostName, string userName, string deviceName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -816,7 +816,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUserDeviceByDeviceName", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserDeviceByDeviceName", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -938,7 +938,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<WipeDeviceOperationResult>> WipeUserDeviceWithHttpMessagesAsync(string hostName, string userName, string deviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WipeDeviceOperationResult>> WipeMAMUserDeviceWithHttpMessagesAsync(string hostName, string userName, string deviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("userName", userName);
                 tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "WipeUserDevice", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "WipeMAMUserDevice", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -1231,7 +1231,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StatusesDefault>> GetDefaultStatusesWithHttpMessagesAsync(string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StatusesDefault>> GetMAMStatusesWithHttpMessagesAsync(string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1250,7 +1250,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetDefaultStatuses", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMStatuses", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -1368,7 +1368,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1390,7 +1390,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetFlaggedUsers", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMFlaggedUsers", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -1518,7 +1518,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUser>> GetFlaggedUserByNameWithHttpMessagesAsync(string hostName, string userName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedUser>> GetMAMFlaggedUserByNameWithHttpMessagesAsync(string hostName, string userName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1543,7 +1543,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("userName", userName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetFlaggedUserByName", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMFlaggedUserByName", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -1669,7 +1669,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1696,7 +1696,7 @@ namespace Microsoft.Azure.Management.Intune
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUserFlaggedEnrolledApps", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserFlaggedEnrolledApps", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.BaseUri.AbsoluteUri;
@@ -2059,7 +2059,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Device>>> GetUserDevicesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Device>>> GetMAMUserDevicesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2074,7 +2074,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUserDevicesNext", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserDevicesNext", tracingParameters);
             }
             // Construct URL
             string url = "{nextLink}";
@@ -2299,7 +2299,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StatusesDefault>> GetDefaultStatusesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StatusesDefault>> GetMAMStatusesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2314,7 +2314,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetDefaultStatusesNext", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMStatusesNext", tracingParameters);
             }
             // Construct URL
             string url = "{nextLink}";
@@ -2419,7 +2419,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2434,7 +2434,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetFlaggedUsersNext", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMFlaggedUsersNext", tracingParameters);
             }
             // Construct URL
             string url = "{nextLink}";
@@ -2539,7 +2539,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUser>> GetFlaggedUserByNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedUser>> GetMAMFlaggedUserByNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2554,7 +2554,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetFlaggedUserByNameNext", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMFlaggedUserByNameNext", tracingParameters);
             }
             // Construct URL
             string url = "{nextLink}";
@@ -2659,7 +2659,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2674,7 +2674,7 @@ namespace Microsoft.Azure.Management.Intune
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetUserFlaggedEnrolledAppsNext", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserFlaggedEnrolledAppsNext", tracingParameters);
             }
             // Construct URL
             string url = "{nextLink}";

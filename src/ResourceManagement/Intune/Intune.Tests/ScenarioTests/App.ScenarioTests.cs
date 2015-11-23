@@ -71,14 +71,14 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 
                 //Create a policy              
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();                
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();                
                 string friendlyName1 = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);
                 var payload = DefaultAndroidPolicy.GetPayload(friendlyName1);
                 try
                 {
                     var policyCreated1 = client.Android.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         payload);
 
                     //Get apps for Android
@@ -88,22 +88,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
 
                     //Add app for the policy
                     var appPayload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, androidApps[0].Name);
-                    client.Android.AddAppForPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[0].Name, appPayload1);
+                    client.Android.AddAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName, androidApps[0].Name, appPayload1);
 
                     //Get Apps for the policy
-                    var apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
+                    var apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName).ToList();
                     Assert.True(apps.Count == 1, string.Format("Expected apps.Count==1 and actual:{0}", apps.Count));
 
                     //Remove Apps for the policy
-                    client.Android.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, androidApps[0].Name);                    
+                    client.Android.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName, androidApps[0].Name);                    
 
                     //Get Apps for the policy
-                    apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
+                    apps = client.Android.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName).ToList();
                     Assert.True(apps.Count == 0, string.Format("Expected apps.Count==0 and actual:{0}", apps.Count));
                 }
                 finally
                 {
-                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
                 }
             }
         }
@@ -120,14 +120,14 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
 
                 //Create a policy              
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName1 = TestUtilities.GenerateName(IntuneConstants.IntuneiOSPolicy);
                 var payload = DefaultiOSPolicy.GetPayload(friendlyName1);
                 try
                 {
                     var policyCreated1 = client.Ios.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         payload);
 
                     //Get apps for iOS
@@ -137,22 +137,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
 
                     //Add app for the policy
                     var payload1 = AppOrGroupPayloadMaker.PrepareMAMPolicyPayload(client, LinkType.AppType, iosApps[0].Name);
-                    client.Ios.AddAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[0].Name, payload1);
+                    client.Ios.AddAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName, iosApps[0].Name, payload1);
 
                     //Get Apps for the policy
-                    var apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
+                    var apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName).ToList();
                     Assert.True(apps.Count == 1, string.Format("Expected apps.Count==1 and actual:{0}", apps.Count));
 
                     //Remove Apps for the policy
-                    client.Ios.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId, iosApps[0].Name);                    
+                    client.Ios.DeleteAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName, iosApps[0].Name);                    
 
                     //Get Apps for the policy
-                    apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyId).ToList();
+                    apps = client.Ios.GetAppForMAMPolicy(IntuneClientHelper.AsuHostName, policyName).ToList();
                     Assert.True(apps.Count == 0, string.Format("Expected apps.Count==0 and actual:{0}", apps.Count));
                 }
                 finally
                 {
-                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
                 }
             }
         }

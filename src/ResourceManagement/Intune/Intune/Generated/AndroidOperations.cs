@@ -201,13 +201,13 @@ namespace Microsoft.Azure.Management.Intune
         }
 
         /// <summary>
-        /// Returns AndroidMAMPolicy with given Id.
+        /// Returns AndroidMAMPolicy with given name.
         /// </summary>
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='select'>
         /// select specific fields in entity.
@@ -218,15 +218,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AndroidMAMPolicy>> GetMAMPolicyByIdWithHttpMessagesAsync(string hostName, string policyId, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AndroidMAMPolicy>> GetMAMPolicyByNameWithHttpMessagesAsync(string hostName, string policyName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -240,16 +240,16 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetMAMPolicyById", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMPolicyByName", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -352,8 +352,8 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create or update an android policy operation.
@@ -364,15 +364,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AndroidMAMPolicy>> CreateOrUpdateMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, AndroidMAMPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AndroidMAMPolicy>> CreateOrUpdateMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, AndroidMAMPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -394,16 +394,16 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -506,8 +506,8 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create or update an android policy operation.
@@ -518,15 +518,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AndroidMAMPolicy>> PatchMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, AndroidMAMPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AndroidMAMPolicy>> PatchMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, AndroidMAMPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -544,16 +544,16 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "PatchMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -656,8 +656,8 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -665,15 +665,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -687,15 +687,15 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "DeleteMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -788,8 +788,8 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
@@ -805,15 +805,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Application>>> GetAppForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Application>>> GetAppForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -827,7 +827,7 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("select", select);
@@ -836,9 +836,9 @@ namespace Microsoft.Azure.Management.Intune
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/AndroidPolicies/{policyId}/apps").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/AndroidPolicies/{policyName}/apps").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -949,11 +949,11 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
-        /// <param name='appId'>
-        /// application unique Id
+        /// <param name='appName'>
+        /// application unique Name
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create or update app to an android policy
@@ -965,19 +965,19 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AddAppForPolicyWithHttpMessagesAsync(string hostName, string policyId, string appId, MAMPolicyAppIdOrGroupIdPayload parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AddAppForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, string appName, MAMPolicyAppIdOrGroupIdPayload parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
-            if (appId == null)
+            if (appName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "appName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -999,18 +999,18 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
-                tracingParameters.Add("appId", appId);
+                tracingParameters.Add("policyName", policyName);
+                tracingParameters.Add("appName", appName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "AddAppForPolicy", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "AddAppForMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}/apps/{appId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}/apps/{appName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
-            url = url.Replace("{appId}", Uri.EscapeDataString(appId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
+            url = url.Replace("{appName}", Uri.EscapeDataString(appName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1107,11 +1107,11 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
-        /// <param name='appId'>
-        /// application unique Id
+        /// <param name='appName'>
+        /// application unique Name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1119,19 +1119,19 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteAppForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteAppForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, string appName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
-            if (appId == null)
+            if (appName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "appName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1145,17 +1145,17 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
-                tracingParameters.Add("appId", appId);
+                tracingParameters.Add("policyName", policyName);
+                tracingParameters.Add("appName", appName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "DeleteAppForMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}/apps/{appId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}/apps/{appName}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
-            url = url.Replace("{appId}", Uri.EscapeDataString(appId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
+            url = url.Replace("{appName}", Uri.EscapeDataString(appName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1248,7 +1248,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
+        /// <param name='policyName'>
         /// policy name for the tenant
         /// </param>
         /// <param name='customHeaders'>
@@ -1257,15 +1257,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<GroupItem>>> GetGroupsForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GroupItem>>> GetGroupsForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1279,15 +1279,15 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetGroupsForMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}/groups").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}/groups").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1386,8 +1386,8 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='groupId'>
         /// group Id
@@ -1402,15 +1402,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AddGroupForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AddGroupForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (groupId == null)
             {
@@ -1436,7 +1436,7 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1444,9 +1444,9 @@ namespace Microsoft.Azure.Management.Intune
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}/groups/{groupId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}/groups/{groupId}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             url = url.Replace("{groupId}", Uri.EscapeDataString(groupId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1544,11 +1544,11 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='hostName'>
         /// Location hostName for the tenant
         /// </param>
-        /// <param name='policyId'>
-        /// policy unique Id
+        /// <param name='policyName'>
+        /// Unique name for the policy
         /// </param>
         /// <param name='groupId'>
-        /// application unique Id
+        /// application unique Name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1556,15 +1556,15 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteGroupForMAMPolicyWithHttpMessagesAsync(string hostName, string policyId, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteGroupForMAMPolicyWithHttpMessagesAsync(string hostName, string policyName, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            if (policyId == null)
+            if (policyName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
             if (groupId == null)
             {
@@ -1582,16 +1582,16 @@ namespace Microsoft.Azure.Management.Intune
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("hostName", hostName);
-                tracingParameters.Add("policyId", policyId);
+                tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "DeleteGroupForMAMPolicy", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyId}/groups/{groupId}").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Intune/locations/{hostName}/androidPolicies/{policyName}/groups/{groupId}").ToString();
             url = url.Replace("{hostName}", Uri.EscapeDataString(hostName));
-            url = url.Replace("{policyId}", Uri.EscapeDataString(policyId));
+            url = url.Replace("{policyName}", Uri.EscapeDataString(policyName));
             url = url.Replace("{groupId}", Uri.EscapeDataString(groupId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

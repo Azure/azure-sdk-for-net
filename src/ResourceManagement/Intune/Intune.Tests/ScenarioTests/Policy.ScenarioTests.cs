@@ -41,17 +41,17 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);
                 var payload = DefaultAndroidPolicy.GetPayload(friendlyName);
                 var policyCreated = client.Android.CreateOrUpdateMAMPolicy(
                     IntuneClientHelper.AsuHostName,
-                    policyId,
+                    policyName,
                     payload);
 
-                var policy = client.Android.GetMAMPolicyById(IntuneClientHelper.AsuHostName, policyId);
+                var policy = client.Android.GetMAMPolicyByName(IntuneClientHelper.AsuHostName, policyName);
                     
-                Assert.True(policy.Id.Contains(policyId));
+                Assert.True(policy.Id.Contains(policyName));
                 Assert.Equal(policy.FriendlyName, friendlyName);
 
                 //Verify defaults                
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 Assert.Equal(policy.FileEncryption, ChoiceType.required.ToString());
                 Assert.Equal(policy.ScreenCapture, FilterType.allow.ToString());
 
-                client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
             }
         }
 
@@ -87,18 +87,18 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName = TestUtilities.GenerateName(IntuneConstants.IntuneiOSPolicy);
                 var payload = DefaultiOSPolicy.GetPayload(friendlyName);
                 try
                 {
                     var policyCreated = client.Ios.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         payload);
 
-                    var policy = client.Ios.GetMAMPolicyById(IntuneClientHelper.AsuHostName, policyId);
-                    Assert.True(policy.Id.Contains(policyId));
+                    var policy = client.Ios.GetMAMPolicyByName(IntuneClientHelper.AsuHostName, policyName);
+                    Assert.True(policy.Id.Contains(policyName));
                     Assert.Equal(policy.FriendlyName, friendlyName);
 
                     //Verify defaults                
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 }
                 finally
                 {
-                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
                 }
             }
         }
@@ -137,14 +137,14 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);
                 var payload = DefaultAndroidPolicy.GetPayload(friendlyName);
                 try
                 {
                     var policyCreated = client.Android.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         payload);
 
                     //Modified properties to patch..
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                     var accessRecheckOfflineTimeoutUpdated = new TimeSpan(24, 0, 0);
                     int pinNumRetryUpdated = 50;
                     client.Android.PatchMAMPolicy(IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         new Models.AndroidMAMPolicy
                         {
                             AppSharingFromLevel = appSharingFromLevelUpdated,
@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                             PinNumRetry = pinNumRetryUpdated
                         });
 
-                    var policy = client.Android.GetMAMPolicyById(IntuneClientHelper.AsuHostName, policyId);
+                    var policy = client.Android.GetMAMPolicyByName(IntuneClientHelper.AsuHostName, policyName);
 
-                    Assert.True(policy.Id.Contains(policyId));
+                    Assert.True(policy.Id.Contains(policyName));
                     Assert.Equal(policy.FriendlyName, friendlyName);
 
                     //Verify updated properties
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 }
                 finally
                 {
-                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
                 }
                 
             }
@@ -191,14 +191,14 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                 string friendlyName = TestUtilities.GenerateName(IntuneConstants.IntuneiOSPolicy);
                 var payload = DefaultiOSPolicy.GetPayload(friendlyName);
                 try
                 {
                     var policyCreated = client.Ios.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         payload);
 
                     //Modified properties to patch..
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                     var accessRecheckOfflineTimeoutUpdated = new TimeSpan(24, 0, 0);
                     int pinNumRetryUpdated = 50;
                     client.Ios.PatchMAMPolicy(IntuneClientHelper.AsuHostName,
-                        policyId,
+                        policyName,
                         new Models.IOSMAMPolicy
                         {
                             AppSharingFromLevel = appSharingFromLevelUpdated,
@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                             PinNumRetry = pinNumRetryUpdated
                         });
 
-                    var policy = client.Ios.GetMAMPolicyById(IntuneClientHelper.AsuHostName, policyId);
+                    var policy = client.Ios.GetMAMPolicyByName(IntuneClientHelper.AsuHostName, policyName);
 
-                    Assert.True(policy.Id.Contains(policyId));
+                    Assert.True(policy.Id.Contains(policyName));
                     Assert.Equal(policy.FriendlyName, friendlyName);
 
                     //Verify updated properties
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 }
                 finally
                 {
-                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId);
+                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName);
                 }
             }
         }
@@ -244,22 +244,22 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();
-                string policyId2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy2").ToString();
+                string policyName1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();
+                string policyName2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy2").ToString();
                 try
                 {
                     string friendlyName1 = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);                    
                     var payload1 = DefaultAndroidPolicy.GetPayload(friendlyName1);
                     var policyCreated1 = client.Android.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId1,
+                        policyName1,
                         payload1);
 
                     string friendlyName2 = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);                    
                     var payload2 = DefaultAndroidPolicy.GetPayload(friendlyName2);
                     var policyCreated2 = client.Android.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId2,
+                        policyName2,
                         payload2);
 
                     var policies = client.Android.GetMAMPolicies(IntuneClientHelper.AsuHostName, null).ToList();
@@ -269,8 +269,8 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 }
                 finally
                 {
-                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId1);
-                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId2);
+                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName1);
+                    client.Android.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName2);
                 }
             }
         }
@@ -285,8 +285,8 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             using (MockContext context = MockContext.Start())
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
-                string policyId1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();
-                string policyId2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy2").ToString();
+                string policyName1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();
+                string policyName2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy2").ToString();
                 try
                 {                    
                     string friendlyName1 = TestUtilities.GenerateName(IntuneConstants.IntuneAndroidPolicy);
@@ -295,15 +295,15 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                     var payload1 = DefaultiOSPolicy.GetPayload(friendlyName1);
                     var policyCreated1 = client.Ios.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId1,
+                        policyName1,
                         payload1);
 
-                    policyId2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
+                    policyName2 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
                     
                     var payload2 = DefaultiOSPolicy.GetPayload(friendlyName1);
                     var policyCreated2 = client.Ios.CreateOrUpdateMAMPolicy(
                         IntuneClientHelper.AsuHostName,
-                        policyId2,
+                        policyName2,
                         payload2);
 
                     policies = client.Ios.GetMAMPolicies(IntuneClientHelper.AsuHostName, null).ToList();
@@ -313,8 +313,8 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 }
                 finally
                 {
-                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId1);                    
-                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyId2);                    
+                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName1);                    
+                    client.Ios.DeleteMAMPolicy(IntuneClientHelper.AsuHostName, policyName2);                    
                 }
 
             }

@@ -45,11 +45,12 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
             return retValue;
         }
 
-        public static string GetAdGroupFromTestContext(AADClientHelper aadClient, string mockName)
+        public static string GetAdGroupFromTestContext(string mockName)
         {
             string retValue = string.Empty;
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {
+                var aadClient = new AADClientHelper();
                 var adGroups = aadClient.GetUserGroups().GetAwaiter().GetResult();
                 var adGroupList = adGroups.Where(x => x.Keys.Contains("ID")).Select(x => x["ID"]).ToList();
                 if (adGroupList.Count >= 1)
@@ -67,10 +68,36 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
                 {
                     retValue = HttpMockServer.Variables[mockName];
                 }
+                else
+                {
+                    throw new Exception(string.Format("HttpMockServer.Variables does not have a value to retrieve for mockName={0}", mockName));
+                }
             }
 
             return retValue;
         }
 
+        public static string GetAdUserFromTestContext(string mockName)
+        {
+            string retValue = string.Empty;
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                var aadClient = new AADClientHelper();
+                retValue = HttpMockServer.Variables[mockName] = aadClient.UserId;                
+            }
+            else
+            {
+                if (HttpMockServer.Variables.ContainsKey(mockName))
+                {
+                    retValue = HttpMockServer.Variables[mockName];
+                }
+                else
+                {
+                    throw new Exception(string.Format("HttpMockServer.Variables does not have a value to retrieve for mockName={0}", mockName));
+                }
+            }
+
+            return retValue;
+        }
     }
 }
