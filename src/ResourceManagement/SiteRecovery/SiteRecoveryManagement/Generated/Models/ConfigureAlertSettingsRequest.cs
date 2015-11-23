@@ -21,32 +21,32 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
-namespace Microsoft.Azure.Management.SiteRecovery
+namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Definition of event operations for the Site Recovery extension.
+    /// Request to configure alerts for the system.
     /// </summary>
-    public partial interface IEventOperations
+    public partial class ConfigureAlertSettingsRequest
     {
+        private ConfigureAlertSettingsRequestProperties _properties;
+        
         /// <summary>
-        /// Get the list of events under the vault.
+        /// Optional. Properties of a configure alert request.
         /// </summary>
-        /// <param name='filter'>
-        /// Filter for the events to be fetched.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list events operation.
-        /// </returns>
-        Task<EventListResponse> ListAsync(string filter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        public ConfigureAlertSettingsRequestProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ConfigureAlertSettingsRequest
+        /// class.
+        /// </summary>
+        public ConfigureAlertSettingsRequest()
+        {
+        }
     }
 }

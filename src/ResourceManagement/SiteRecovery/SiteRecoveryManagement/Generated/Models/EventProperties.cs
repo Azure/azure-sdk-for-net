@@ -44,26 +44,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._affectedObjectName = value; }
         }
         
-        private string _affectedObjectServerId;
+        private string _description;
         
         /// <summary>
-        /// Optional. The effected object server Id.
+        /// Optional. The event name.
         /// </summary>
-        public string AffectedObjectServerId
+        public string Description
         {
-            get { return this._affectedObjectServerId; }
-            set { this._affectedObjectServerId = value; }
-        }
-        
-        private string _eventNameResourceId;
-        
-        /// <summary>
-        /// Optional. The resource Id of the event name.
-        /// </summary>
-        public string EventNameResourceId
-        {
-            get { return this._eventNameResourceId; }
-            set { this._eventNameResourceId = value; }
+            get { return this._description; }
+            set { this._description = value; }
         }
         
         private string _eventType;
@@ -78,26 +67,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._eventType = value; }
         }
         
-        private string _fabricId;
+        private string _fabricName;
         
         /// <summary>
         /// Optional. The site Id.
         /// </summary>
-        public string FabricId
+        public string FabricName
         {
-            get { return this._fabricId; }
-            set { this._fabricId = value; }
-        }
-        
-        private string _friendlyName;
-        
-        /// <summary>
-        /// Optional. The event name.
-        /// </summary>
-        public string FriendlyName
-        {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
+            get { return this._fabricName; }
+            set { this._fabricName = value; }
         }
         
         private IList<HealthError> _healthErrors;

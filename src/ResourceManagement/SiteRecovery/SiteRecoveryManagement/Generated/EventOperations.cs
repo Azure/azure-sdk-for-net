@@ -63,6 +63,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Get the list of events under the vault.
         /// </summary>
+        /// <param name='filter'>
+        /// Optional. Filter for the events to be fetched.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -72,7 +75,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list events operation.
         /// </returns>
-        public async Task<EventListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<EventListResponse> ListAsync(string filter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -202,11 +206,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.SourceId = sourceIdInstance;
                                         }
                                         
-                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
-                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                         {
-                                            string friendlyNameInstance = ((string)friendlyNameValue);
-                                            propertiesInstance.FriendlyName = friendlyNameInstance;
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
                                         }
                                         
                                         JToken eventTypeValue = propertiesValue["eventType"];
@@ -223,13 +227,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.AffectedObjectName = affectedObjectNameInstance;
                                         }
                                         
-                                        JToken affectedObjectServerIdValue = propertiesValue["affectedObjectServerId"];
-                                        if (affectedObjectServerIdValue != null && affectedObjectServerIdValue.Type != JTokenType.Null)
-                                        {
-                                            string affectedObjectServerIdInstance = ((string)affectedObjectServerIdValue);
-                                            propertiesInstance.AffectedObjectServerId = affectedObjectServerIdInstance;
-                                        }
-                                        
                                         JToken severityValue = propertiesValue["severity"];
                                         if (severityValue != null && severityValue.Type != JTokenType.Null)
                                         {
@@ -244,18 +241,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.TimeOfOccurrence = timeOfOccurrenceInstance;
                                         }
                                         
-                                        JToken eventNameResourceIdValue = propertiesValue["eventNameResourceId"];
-                                        if (eventNameResourceIdValue != null && eventNameResourceIdValue.Type != JTokenType.Null)
+                                        JToken fabricNameValue = propertiesValue["fabricName"];
+                                        if (fabricNameValue != null && fabricNameValue.Type != JTokenType.Null)
                                         {
-                                            string eventNameResourceIdInstance = ((string)eventNameResourceIdValue);
-                                            propertiesInstance.EventNameResourceId = eventNameResourceIdInstance;
-                                        }
-                                        
-                                        JToken fabricIdValue = propertiesValue["fabricId"];
-                                        if (fabricIdValue != null && fabricIdValue.Type != JTokenType.Null)
-                                        {
-                                            string fabricIdInstance = ((string)fabricIdValue);
-                                            propertiesInstance.FabricId = fabricIdInstance;
+                                            string fabricNameInstance = ((string)fabricNameValue);
+                                            propertiesInstance.FabricName = fabricNameInstance;
                                         }
                                         
                                         JToken providerSpecificDetailsValue = propertiesValue["providerSpecificDetails"];
@@ -273,11 +263,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     hyperVReplica2012EventDetailsInstance.ContainerName = containerNameInstance;
                                                 }
                                                 
-                                                JToken fabricNameValue = providerSpecificDetailsValue["fabricName"];
-                                                if (fabricNameValue != null && fabricNameValue.Type != JTokenType.Null)
+                                                JToken fabricNameValue2 = providerSpecificDetailsValue["fabricName"];
+                                                if (fabricNameValue2 != null && fabricNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string fabricNameInstance = ((string)fabricNameValue);
-                                                    hyperVReplica2012EventDetailsInstance.FabricName = fabricNameInstance;
+                                                    string fabricNameInstance2 = ((string)fabricNameValue2);
+                                                    hyperVReplica2012EventDetailsInstance.FabricName = fabricNameInstance2;
                                                 }
                                                 
                                                 JToken remoteContainerNameValue = providerSpecificDetailsValue["remoteContainerName"];
@@ -325,11 +315,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     hyperVReplicaAzureEventDetailsInstance.ContainerName = containerNameInstance2;
                                                 }
                                                 
-                                                JToken fabricNameValue2 = providerSpecificDetailsValue["fabricName"];
-                                                if (fabricNameValue2 != null && fabricNameValue2.Type != JTokenType.Null)
+                                                JToken fabricNameValue3 = providerSpecificDetailsValue["fabricName"];
+                                                if (fabricNameValue3 != null && fabricNameValue3.Type != JTokenType.Null)
                                                 {
-                                                    string fabricNameInstance2 = ((string)fabricNameValue2);
-                                                    hyperVReplicaAzureEventDetailsInstance.FabricName = fabricNameInstance2;
+                                                    string fabricNameInstance3 = ((string)fabricNameValue3);
+                                                    hyperVReplicaAzureEventDetailsInstance.FabricName = fabricNameInstance3;
                                                 }
                                                 
                                                 JToken remoteContainerNameValue2 = providerSpecificDetailsValue["remoteContainerName"];

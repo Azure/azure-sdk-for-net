@@ -116,6 +116,17 @@ namespace Microsoft.Azure.Management.SiteRecovery
             set { this._resourceType = value; }
         }
         
+        private IAlertSettingsOperations _alertSettings;
+        
+        /// <summary>
+        /// Definition of alert settings operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IAlertSettingsOperations AlertSettings
+        {
+            get { return this._alertSettings; }
+        }
+        
         private IEventOperations _events;
         
         /// <summary>
@@ -291,6 +302,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient()
             : base()
         {
+            this._alertSettings = new AlertSettingsOperations(this);
             this._events = new EventOperations(this);
             this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);
@@ -439,6 +451,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._alertSettings = new AlertSettingsOperations(this);
             this._events = new EventOperations(this);
             this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);

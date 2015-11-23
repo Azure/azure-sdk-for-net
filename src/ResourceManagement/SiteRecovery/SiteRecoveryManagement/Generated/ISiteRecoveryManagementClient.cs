@@ -91,6 +91,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of alert settings operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IAlertSettingsOperations AlertSettings
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of event operations for the Site Recovery extension.
         /// </summary>
         IEventOperations Events

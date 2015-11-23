@@ -28,15 +28,18 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery
 {
     /// <summary>
-    /// Definition of event operations for the Site Recovery extension.
+    /// Definition of alert settings operations for the Site Recovery extension.
     /// </summary>
-    public partial interface IEventOperations
+    public partial interface IAlertSettingsOperations
     {
         /// <summary>
-        /// Get the list of events under the vault.
+        /// Updates the alert settings for the vault.
         /// </summary>
-        /// <param name='filter'>
-        /// Filter for the events to be fetched.
+        /// <param name='alertSettingsName'>
+        /// Alert Settings name.
+        /// </param>
+        /// <param name='input'>
+        /// Configure Alerts Request.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -45,8 +48,22 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list events operation.
+        /// Model class for alerts response.
         /// </returns>
-        Task<EventListResponse> ListAsync(string filter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AlertSettingsResponse> ConfigureAsync(string alertSettingsName, ConfigureAlertSettingsRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of events under the vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Model class for list alerts response.
+        /// </returns>
+        Task<AlertSettingsListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
