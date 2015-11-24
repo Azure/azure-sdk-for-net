@@ -9,7 +9,7 @@ that take advantage of scalable cloud computing resources.
     * .NET Portable Framework, using profile 102
 
 ### Prerequisites:
-    * Visual Studio 2013 RTM with update 2 at minimum
+    * Visual Studio 2013 RTM with update 2 at minimum.
 
 ### To build:
 
