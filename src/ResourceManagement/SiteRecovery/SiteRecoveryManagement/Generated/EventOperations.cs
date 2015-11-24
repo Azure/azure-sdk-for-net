@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken healthErrorsArray = propertiesValue;
+                                        JToken healthErrorsArray = propertiesValue["healthErrors"];
                                         if (healthErrorsArray != null && healthErrorsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken healthErrorsValue in ((JArray)healthErrorsArray))

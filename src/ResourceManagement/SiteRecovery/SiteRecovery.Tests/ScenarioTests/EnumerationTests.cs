@@ -201,5 +201,19 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(response.Policies);
             }
         }
+
+        [Fact]
+        public void EnumerateEventsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(string.Empty, RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
+            }
+        }
     }
 }
