@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
-        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string))
+        public VirtualNetworkGateway(string etag = default(string), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             IpConfigurations = ipConfigurations;
@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnType = vpnType;
             EnableBgp = enableBgp;
             GatewayDefaultSite = gatewayDefaultSite;
+            Sku = sku;
+            VpnClientConfiguration = vpnClientConfiguration;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
@@ -81,6 +83,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayDefaultSite")]
         public SubResource GatewayDefaultSite { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the VirtualNetworkGatewaySku
+        /// resource which represents the sku selected for Virtual network
+        /// gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public VirtualNetworkGatewaySku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the VpnClientConfiguration resource
+        /// which represents the P2S VpnClient configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
+        public VpnClientConfiguration VpnClientConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the VirtualNetworkGateway
