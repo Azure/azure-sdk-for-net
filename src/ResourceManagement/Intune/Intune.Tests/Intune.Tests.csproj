@@ -152,6 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ScenarioTests\App.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\FlaggedUser.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Group.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Policy.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Wipe.ScenarioTests.cs" />
@@ -177,6 +178,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetiOSMAMApps.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetDefaultStatuses.json" />
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedDevices.json" />
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUsers.json" />
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests\ShouldAddAndRemoveAndroidMAMGroupsForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

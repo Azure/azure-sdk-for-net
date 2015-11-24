@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static FlaggedUserCollection GetMAMFlaggedUsers(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static IPage<FlaggedUser> GetMAMFlaggedUsers(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
                 return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersAsync(hostName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -389,9 +389,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUserCollection> GetMAMFlaggedUsersAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FlaggedUser>> GetMAMFlaggedUsersAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetMAMFlaggedUsersWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<FlaggedUser>> result = await operations.GetMAMFlaggedUsersWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static FlaggedEnrolledAppCollection GetMAMUserFlaggedEnrolledApps(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static IPage<FlaggedEnrolledApp> GetMAMUserFlaggedEnrolledApps(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
                 return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -487,9 +487,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedEnrolledAppCollection> GetMAMUserFlaggedEnrolledAppsAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FlaggedEnrolledApp>> GetMAMUserFlaggedEnrolledAppsAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedEnrolledAppCollection> result = await operations.GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<FlaggedEnrolledApp>> result = await operations.GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -662,7 +662,7 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static FlaggedUserCollection GetMAMFlaggedUsersNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            public static IPage<FlaggedUser> GetMAMFlaggedUsersNext(this IIntuneResourceManagementClient operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -679,9 +679,41 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FlaggedUserCollection> GetMAMFlaggedUsersNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FlaggedUser>> GetMAMFlaggedUsersNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FlaggedUserCollection> result = await operations.GetMAMFlaggedUsersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<FlaggedUser>> result = await operations.GetMAMFlaggedUsersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FlaggedEnrolledApp> GetMAMUserFlaggedEnrolledAppsNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FlaggedEnrolledApp>> GetMAMUserFlaggedEnrolledAppsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<FlaggedEnrolledApp>> result = await operations.GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

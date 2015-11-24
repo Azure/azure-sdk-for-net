@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "37e60105-1925-4b39-893b-565aaeed0caa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.bmsua01\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "149"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "7822c498-4e38-41aa-b5ca-7bcb5ff415e6"
+        ],
+        "x-ms-correlation-request-id": [
+          "4295e2d5-9251-4cd5-8882-09e71b83f067"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151124T021446Z:4295e2d5-9251-4cd5-8882-09e71b83f067"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Nov 2015 02:14:46 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9mbGFnZ2VkVXNlcnM/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "46e59399-6eda-4bc7-8146-65b7846ab088"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers/f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n      \"name\": \"f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n      \"type\": \"Microsoft.Intune/locations/flaggedUsers\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"(株)パソナ　パソナキャリアカンパニー 鹿島建設株式会社\",\r\n        \"errorCount\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "341"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14995"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "3759"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "46e59399-6eda-4bc7-8146-65b7846ab088"
+        ],
+        "unique-request-id": [
+          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+        ],
+        "x-ms-request-id": [
+          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+        ],
+        "related-activity-id": [
+          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "8efcfa3c-f5fb-49ce-a9a2-a6054aba63a2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151124T021450Z:8efcfa3c-f5fb-49ce-a9a2-a6054aba63a2"
+        ],
+        "Date": [
+          "Tue, 24 Nov 2015 02:14:50 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "None"
+  }
+}

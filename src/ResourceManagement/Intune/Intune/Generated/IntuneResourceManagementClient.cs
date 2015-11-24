@@ -1368,7 +1368,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FlaggedUser>>> GetMAMFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1480,7 +1480,7 @@ namespace Microsoft.Azure.Management.Intune
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FlaggedUserCollection>();
+            var result = new AzureOperationResponse<IPage<FlaggedUser>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1491,7 +1491,7 @@ namespace Microsoft.Azure.Management.Intune
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<FlaggedUserCollection>(responseContent, this.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<FlaggedUser>>(responseContent, this.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1669,7 +1669,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FlaggedEnrolledApp>>> GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostName == null)
             {
@@ -1787,7 +1787,7 @@ namespace Microsoft.Azure.Management.Intune
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FlaggedEnrolledAppCollection>();
+            var result = new AzureOperationResponse<IPage<FlaggedEnrolledApp>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1798,7 +1798,7 @@ namespace Microsoft.Azure.Management.Intune
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<FlaggedEnrolledAppCollection>(responseContent, this.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<FlaggedEnrolledApp>>(responseContent, this.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -2419,7 +2419,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FlaggedUser>>> GetMAMFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2507,7 +2507,7 @@ namespace Microsoft.Azure.Management.Intune
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FlaggedUserCollection>();
+            var result = new AzureOperationResponse<IPage<FlaggedUser>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2518,7 +2518,127 @@ namespace Microsoft.Azure.Management.Intune
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<FlaggedUserCollection>(responseContent, this.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<Page<FlaggedUser>>(responseContent, this.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns Intune flagged enrolled app collection for the User
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<IPage<FlaggedEnrolledApp>>> GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetMAMUserFlaggedEnrolledAppsNext", tracingParameters);
+            }
+            // Construct URL
+            string url = "{nextLink}";
+            url = url.Replace("{nextLink}", nextPageLink);
+            List<string> queryParameters = new List<string>();
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                Error errorBody = JsonConvert.DeserializeObject<Error>(responseContent, this.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<IPage<FlaggedEnrolledApp>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<Page<FlaggedEnrolledApp>>(responseContent, this.DeserializationSettings);
             }
             if (shouldTrace)
             {

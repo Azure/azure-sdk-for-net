@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FlaggedUser>>> GetMAMFlaggedUsersWithHttpMessagesAsync(string hostName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns Intune flagged user details
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FlaggedEnrolledAppCollection>> GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FlaggedEnrolledApp>>> GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns location for user tenant.
@@ -361,7 +361,21 @@ namespace Microsoft.Azure.Management.Intune
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FlaggedUserCollection>> GetMAMFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FlaggedUser>>> GetMAMFlaggedUsersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns Intune flagged enrolled app collection for the User
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<FlaggedEnrolledApp>>> GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
