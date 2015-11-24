@@ -178,9 +178,15 @@
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetiOSMAMApps.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetDefaultStatuses.json" />
-    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedDevices.json" />
-    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUsers.json" />
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetDefaultStatuses.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedDevices.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUsers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests\ShouldAddAndRemoveAndroidMAMGroupsForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
