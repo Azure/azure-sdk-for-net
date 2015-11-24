@@ -87,10 +87,10 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
             }
         }
         /// <summary>
-        /// Verifies that Get flagged devices works
+        /// Verifies that Get flagged enrolled Apps works
         /// </summary>
         [Fact]
-        public void ShouldGetFlaggedDevices()
+        public void ShouldGetFlaggedEnrolledApps()
         {
             using (MockContext context = MockContext.Start())
             {
@@ -98,16 +98,14 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 var flaggedUsers = client.GetMAMFlaggedUsers(IntuneClientHelper.AsuHostName).ToList();
                 Assert.True(flaggedUsers.Count > 0, "Zero flagged users");
 
-                var flaggedDevices = client.GetMAMUserDevices(IntuneClientHelper.AsuHostName, flaggedUsers[0].Name).ToList();
-                Assert.True(flaggedDevices.Count > 0, "Zero flagged devices");
+                var flaggedEnrolledApps = client.GetMAMUserFlaggedEnrolledApps(IntuneClientHelper.AsuHostName, flaggedUsers[0].Name).ToList();
+                Assert.True(flaggedEnrolledApps.Count > 0, "Zero flagged enrolled Apps");
 
-                Assert.Equal("Microsoft.Intune/locations/users/devices", flaggedDevices[0].Type);
-                Assert.NotNull(flaggedDevices[0].Name);
-                Assert.NotNull(flaggedDevices[0].FriendlyName);
-                Assert.NotNull(flaggedDevices[0].Platform);
-                Assert.NotNull(flaggedDevices[0].PlatformVersion);
-                Assert.NotNull(flaggedDevices[0].UserId);
-                Assert.NotNull(flaggedDevices[0].Id);
+                Assert.Equal("Microsoft.Intune/locations/flaggedUsers/flaggedEnrolledApps", flaggedEnrolledApps[0].Type);
+                Assert.NotNull(flaggedEnrolledApps[0].Name);
+                Assert.NotNull(flaggedEnrolledApps[0].FriendlyName);
+                Assert.NotNull(flaggedEnrolledApps[0].Platform);
+                Assert.NotNull(flaggedEnrolledApps[0].Id);                
             }
         }
     }

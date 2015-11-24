@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dfbf0ca8-c7e4-47d9-86ec-1ee153b01604"
+          "4576014a-b6a3-4e1c-81af-fce175dad0a0"
         ],
         "accept-language": [
           "en-US"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "14999"
         ],
         "x-ms-request-id": [
-          "7082921e-835b-4221-aa1d-015cd20b585b"
+          "d68da47c-f9f7-4648-92d5-4ded139d8f58"
         ],
         "x-ms-correlation-request-id": [
-          "2f4d8b20-9915-4510-8e32-f58d4327ccc9"
+          "26c83dde-3e9f-4468-a10a-f568509e610f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151124T021503Z:2f4d8b20-9915-4510-8e32-f58d4327ccc9"
+          "WESTUS:20151124T212842Z:26c83dde-3e9f-4468-a10a-f568509e610f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Nov 2015 02:15:02 GMT"
+          "Tue, 24 Nov 2015 21:28:42 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -64,7 +64,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "19bf44dc-6c1b-4a10-be70-2fd8e1239e82"
+          "7cda6102-d4e1-4fc6-a2cf-e44a13cd59f4"
         ],
         "accept-language": [
           "en-US"
@@ -88,25 +88,25 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "14998"
         ],
         "Elapsed-Time-Milliseconds": [
-          "657"
+          "121"
         ],
         "service-name": [
           "AdminExperienceService"
         ],
         "client-request-id": [
-          "19bf44dc-6c1b-4a10-be70-2fd8e1239e82"
+          "7cda6102-d4e1-4fc6-a2cf-e44a13cd59f4"
         ],
         "unique-request-id": [
-          "652407e2-a07e-497c-ac65-9eefa4248792"
+          "363984a8-62b6-4ce1-b6a1-1b722cd258f2"
         ],
         "x-ms-request-id": [
-          "652407e2-a07e-497c-ac65-9eefa4248792"
+          "363984a8-62b6-4ce1-b6a1-1b722cd258f2"
         ],
         "related-activity-id": [
-          "652407e2-a07e-497c-ac65-9eefa4248792"
+          "363984a8-62b6-4ce1-b6a1-1b722cd258f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -122,25 +122,25 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "9bd6acaf-3009-4076-b4d6-bd48b59fedf3"
+          "a6fee744-9481-4a98-958f-fae1c6576d03"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151124T021504Z:9bd6acaf-3009-4076-b4d6-bd48b59fedf3"
+          "WESTUS:20151124T212843Z:a6fee744-9481-4a98-958f-fae1c6576d03"
         ],
         "Date": [
-          "Tue, 24 Nov 2015 02:15:04 GMT"
+          "Tue, 24 Nov 2015 21:28:42 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/users/f4058390-f6d0-459b-9c36-3cf9d88e87f5/devices?api-version=2015-01-14-privatepreview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS91c2Vycy9mNDA1ODM5MC1mNmQwLTQ1OWItOWMzNi0zY2Y5ZDg4ZTg3ZjUvZGV2aWNlcz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers/f4058390-f6d0-459b-9c36-3cf9d88e87f5/flaggedEnrolledApps?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9mbGFnZ2VkVXNlcnMvZjQwNTgzOTAtZjZkMC00NTliLTljMzYtM2NmOWQ4OGU4N2Y1L2ZsYWdnZWRFbnJvbGxlZEFwcHM/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcml2YXRlcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cc18ad55-f4a1-4f30-bbbb-3f60cc63a2eb"
+          "e4155f37-a2b4-49c5-a746-dd46000b37ab"
         ],
         "accept-language": [
           "en-US"
@@ -149,10 +149,10 @@
           "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/users/f4058390-f6d0-459b-9c36-3cf9d88e87f5/devices/8693b393-a69c-4d12-a9c8-a1a415884fd2\",\r\n      \"name\": \"8693b393-a69c-4d12-a9c8-a1a415884fd2\",\r\n      \"type\": \"Microsoft.Intune/locations/users/devices\",\r\n      \"properties\": {\r\n        \"userId\": \"f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n        \"friendlyName\": \"TestIpad\",\r\n        \"platform\": \"IOS\",\r\n        \"platformVersion\": \"9.0\",\r\n        \"deviceType\": \"TestIpad\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/users/f4058390-f6d0-459b-9c36-3cf9d88e87f5/devices/38BBFA62-371F-4AA8-BFDB-846EBD47A86A\",\r\n      \"name\": \"38BBFA62-371F-4AA8-BFDB-846EBD47A86A\",\r\n      \"type\": \"Microsoft.Intune/locations/users/devices\",\r\n      \"properties\": {\r\n        \"userId\": \"f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n        \"friendlyName\": \"iPad\",\r\n        \"platform\": \"IOS\",\r\n        \"platformVersion\": \"8.1\",\r\n        \"deviceType\": \"iPad\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers/f4058390-f6d0-459b-9c36-3cf9d88e87f5/flaggedEnrolledApps/04045141-9ec3-4ecd-a302-3efca2b0be54\",\r\n      \"name\": \"04045141-9ec3-4ecd-a302-3efca2b0be54\",\r\n      \"type\": \"Microsoft.Intune/locations/flaggedUsers/flaggedEnrolledApps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive\",\r\n        \"deviceType\": \"TestIpad\",\r\n        \"platform\": \"ios\",\r\n        \"errors\": [\r\n          {\r\n            \"severity\": \"warning\",\r\n            \"errorCode\": \"err_rootedDevice\"\r\n          }\r\n        ],\r\n        \"lastModifiedTime\": \"2015-11-19T01:00:14.3952221\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers/f4058390-f6d0-459b-9c36-3cf9d88e87f5/flaggedEnrolledApps/197103ab-43cf-46e9-87cc-a59a375a9f6c\",\r\n      \"name\": \"197103ab-43cf-46e9-87cc-a59a375a9f6c\",\r\n      \"type\": \"Microsoft.Intune/locations/flaggedUsers/flaggedEnrolledApps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Excel\",\r\n        \"deviceType\": \"TestIpad\",\r\n        \"platform\": \"ios\",\r\n        \"errors\": [\r\n          {\r\n            \"severity\": \"warning\",\r\n            \"errorCode\": \"err_rootedDevice\"\r\n          }\r\n        ],\r\n        \"lastModifiedTime\": \"2015-11-19T21:31:44.5201421\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "797"
+          "962"
         ],
         "Content-Type": [
           "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
@@ -164,25 +164,25 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14996"
+          "14997"
         ],
         "Elapsed-Time-Milliseconds": [
-          "774"
+          "69"
         ],
         "service-name": [
           "AdminExperienceService"
         ],
         "client-request-id": [
-          "cc18ad55-f4a1-4f30-bbbb-3f60cc63a2eb"
+          "e4155f37-a2b4-49c5-a746-dd46000b37ab"
         ],
         "unique-request-id": [
-          "b7ef7069-de69-4cf4-9282-1ac0741d1d34"
+          "b4f2787c-8f0a-4d81-98e3-38ab938c01a2"
         ],
         "x-ms-request-id": [
-          "b7ef7069-de69-4cf4-9282-1ac0741d1d34"
+          "b4f2787c-8f0a-4d81-98e3-38ab938c01a2"
         ],
         "related-activity-id": [
-          "b7ef7069-de69-4cf4-9282-1ac0741d1d34"
+          "b4f2787c-8f0a-4d81-98e3-38ab938c01a2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -198,13 +198,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "03c34bae-cdea-468f-83c8-aee17266457c"
+          "f4e65140-b17d-452b-9e98-4f215f7c82d3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151124T021505Z:03c34bae-cdea-468f-83c8-aee17266457c"
+          "WESTUS:20151124T212843Z:f4e65140-b17d-452b-9e98-4f215f7c82d3"
         ],
         "Date": [
-          "Tue, 24 Nov 2015 02:15:05 GMT"
+          "Tue, 24 Nov 2015 21:28:43 GMT"
         ]
       },
       "StatusCode": 200
