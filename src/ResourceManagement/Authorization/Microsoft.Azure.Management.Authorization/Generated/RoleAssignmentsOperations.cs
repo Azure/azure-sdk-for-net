@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -66,7 +68,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='resourceName'>
         /// Resource identity.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='atScope'>
+        /// if true atScope() method will be used in filtering
+        /// </param>
+        /// <param name='principalId'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='assignedTo'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -75,7 +83,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -117,7 +125,9 @@ namespace Microsoft.Azure.Management.Authorization
                 tracingParameters.Add("parentResourcePath", parentResourcePath);
                 tracingParameters.Add("resourceType", resourceType);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("atScope", atScope);
+                tracingParameters.Add("principalId", principalId);
+                tracingParameters.Add("assignedTo", assignedTo);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForResource", tracingParameters);
             }
@@ -131,9 +141,19 @@ namespace Microsoft.Azure.Management.Authorization
             url = url.Replace("{resourceName}", Uri.EscapeDataString(resourceName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (atScope != null && atScope.Value)
             {
-                queryParameters.Add(string.Format("$filter={0}", filter));
+                queryParameters.Add(string.Format("$filter=atScope()"));
+            }
+            if (assignedTo != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("assignedTo('{0}')", assignedTo)));
+            }
+            if (principalId != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("principalId eq '{0}'", principalId)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -233,7 +253,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='resourceGroupName'>
         /// Resource group name.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='atScope'>
+        /// if true atScope() method will be used in filtering
+        /// </param>
+        /// <param name='principalId'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='assignedTo'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -242,7 +268,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -264,7 +290,9 @@ namespace Microsoft.Azure.Management.Authorization
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("atScope", atScope);
+                tracingParameters.Add("principalId", principalId);
+                tracingParameters.Add("assignedTo", assignedTo);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForResourceGroup", tracingParameters);
             }
@@ -274,9 +302,19 @@ namespace Microsoft.Azure.Management.Authorization
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (atScope != null && atScope.Value)
             {
-                queryParameters.Add(string.Format("$filter={0}", filter));
+                queryParameters.Add(string.Format("$filter=atScope()"));
+            }
+            if (assignedTo != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("assignedTo('{0}')", assignedTo)));
+            }
+            if (principalId != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("principalId eq '{0}'", principalId)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1242,7 +1280,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Gets role assignments of the subscription.
         /// </summary>
-        /// <param name='filter'>
+        /// <param name='atScope'>
+        /// if true atScope() method will be used in filtering
+        /// </param>
+        /// <param name='principalId'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='assignedTo'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -1251,7 +1295,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListWithHttpMessagesAsync(bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -1268,7 +1312,9 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("atScope", atScope);
+                tracingParameters.Add("principalId", principalId);
+                tracingParameters.Add("assignedTo", assignedTo);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -1277,9 +1323,19 @@ namespace Microsoft.Azure.Management.Authorization
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (atScope != null && atScope.Value)
             {
-                queryParameters.Add(string.Format("$filter={0}", filter));
+                queryParameters.Add(string.Format("$filter=atScope()"));
+            }
+            if (assignedTo != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("assignedTo('{0}')", assignedTo)));
+            }
+            if (principalId != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("principalId eq '{0}'", principalId)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1380,7 +1436,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='scope'>
         /// Scope.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='atScope'>
+        /// if true atScope() method will be used in filtering
+        /// </param>
+        /// <param name='principalId'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='assignedTo'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -1389,7 +1451,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -1411,7 +1473,9 @@ namespace Microsoft.Azure.Management.Authorization
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("atScope", atScope);
+                tracingParameters.Add("principalId", principalId);
+                tracingParameters.Add("assignedTo", assignedTo);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForScope", tracingParameters);
             }
@@ -1421,9 +1485,19 @@ namespace Microsoft.Azure.Management.Authorization
             url = url.Replace("{scope}", scope);
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (atScope != null && atScope.Value)
             {
-                queryParameters.Add(string.Format("$filter={0}", filter));
+                queryParameters.Add(string.Format("$filter=atScope()"));
+            }
+            if (assignedTo != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("assignedTo('{0}')", assignedTo)));
+            }
+            if (principalId != null)
+            {
+                queryParameters.Add(
+                    string.Format("$filter={0}", string.Format("principalId eq '{0}'", principalId)));
             }
             if (this.Client.ApiVersion != null)
             {

@@ -26,18 +26,15 @@ namespace Microsoft.Azure.Search
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='dataSourceName'>
-            /// The name of the datasource to create or update.
-            /// </param>
             /// <param name='dataSource'>
             /// The definition of the datasource to create or update.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
-                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSourceName, dataSource, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSource, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,9 +43,6 @@ namespace Microsoft.Azure.Search
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='dataSourceName'>
-            /// The name of the datasource to create or update.
             /// </param>
             /// <param name='dataSource'>
             /// The definition of the datasource to create or update.
@@ -59,9 +53,9 @@ namespace Microsoft.Azure.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataSource> CreateOrUpdateAsync( this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataSource> CreateOrUpdateAsync( this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataSource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSourceName, dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataSource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

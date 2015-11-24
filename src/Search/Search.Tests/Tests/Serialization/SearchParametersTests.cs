@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Search.Models;
+    using Microsoft.Spatial;
     using Xunit;
 
     public sealed class SearchParametersTests
@@ -32,7 +33,11 @@ namespace Microsoft.Azure.Search.Tests
                     HighlightPostTag = "</b>",
                     MinimumCoverage = 66.67,
                     OrderBy = new[] { "field1 asc", "field2 desc" },
-                    ScoringParameters = new[] { "name:value" },
+                    ScoringParameters = new[] 
+                    { 
+                        new ScoringParameter("name", "value"), 
+                        new ScoringParameter("point", GeographyPoint.Create(48.5, -120.1))
+                    },
                     ScoringProfile = "myprofile",
                     SearchFields = new[] { "field1", "field2" },
                     SearchMode = SearchMode.All,
@@ -44,8 +49,9 @@ namespace Microsoft.Azure.Search.Tests
             const string ExpectedQueryString =
                 "$count=true&facet=field%2Coption%3Avalue&$filter=field%20eq%20value&highlight=field1,field2&" +
                 "highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&minimumCoverage=66.67&" +
-                "$orderby=field1 asc,field2 desc&scoringParameter=name:value&scoringProfile=myprofile&" +
-                "searchFields=field1,field2&searchMode=all&$select=field1,field2&$skip=10&$top=5";
+                "$orderby=field1 asc,field2 desc&scoringParameter=name:value&scoringParameter=point:-120.1,48.5&" +
+                "scoringProfile=myprofile&searchFields=field1,field2&searchMode=all&$select=field1,field2&$skip=10&" +
+                "$top=5";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
         }
@@ -57,7 +63,7 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     Facets = new[] { "field,option:value", "field2,option2:value2" },
-                    ScoringParameters = new[] { "name:value", "name2:value2" }
+                    ScoringParameters = new[] { new ScoringParameter("name", "value"), new ScoringParameter("name2", "value2") }
                 };
 
             const string ExpectedQueryString =
@@ -109,7 +115,11 @@ namespace Microsoft.Azure.Search.Tests
                     IncludeTotalResultCount = true,
                     MinimumCoverage = 33.3,
                     OrderBy = new[] { "a", "b desc" },
-                    ScoringParameters = new[] { "a:b", "c:d" },
+                    ScoringParameters = new[] 
+                    { 
+                        new ScoringParameter("a", "b"), 
+                        new ScoringParameter("c", GeographyPoint.Create(-16, 55))
+                    },
                     ScoringProfile = "xyz",
                     SearchFields = new[] { "a", "b", "c" },
                     SearchMode = SearchMode.All,
@@ -128,7 +138,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(parameters.IncludeTotalResultCount, payload.Count);
             Assert.Equal(parameters.MinimumCoverage, payload.MinimumCoverage);
             Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), payload.OrderBy);
-            Assert.True(parameters.ScoringParameters.SequenceEqual(payload.ScoringParameters));
+            Assert.True(parameters.ScoringParameters.Select(p => p.ToString()).SequenceEqual(payload.ScoringParameters));
             Assert.Equal(parameters.ScoringProfile, payload.ScoringProfile);
             Assert.Equal("find me", payload.Search);
             Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), payload.SearchFields);

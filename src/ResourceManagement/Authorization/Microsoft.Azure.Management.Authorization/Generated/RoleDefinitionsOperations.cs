@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -625,15 +627,18 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get all role definitions.
+        /// Get role definitions.
         /// </summary>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -650,6 +655,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -658,6 +664,10 @@ namespace Microsoft.Azure.Management.Authorization
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -752,7 +762,7 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get all role definitions.
+        /// Get role definitions.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

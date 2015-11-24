@@ -31,7 +31,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyGetOnAWebsiteSlot()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -86,7 +86,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyListOfSlots()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);
@@ -143,7 +143,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndDeleteWebSiteSlot()
         {
-            using (var context = MockContext.Start())
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
                 var resourcesClient = this.GetResourceManagementClient(context);

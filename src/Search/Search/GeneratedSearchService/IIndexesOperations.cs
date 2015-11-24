@@ -60,9 +60,6 @@ namespace Microsoft.Azure.Search
         /// Creates a new Azure Search index or updates an index if it already
         /// exists.
         /// </summary>
-        /// <param name='indexName'>
-        /// The definition of the index to create or update.
-        /// </param>
         /// <param name='index'>
         /// The definition of the index to create or update.
         /// </param>
@@ -75,7 +72,7 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Azure Search index and all the documents it contains.
         /// </summary>

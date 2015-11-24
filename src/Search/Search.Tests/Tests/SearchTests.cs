@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Spatial;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
@@ -236,7 +237,7 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters() 
                 { 
                     ScoringProfile = "nearest", 
-                    ScoringParameters = new[] { "myloc:-122,49" },
+                    ScoringParameters = new[] { new ScoringParameter("myloc", GeographyPoint.Create(49, -122)) },
                     Filter = "rating eq 5 or rating eq 1"
                 };
 

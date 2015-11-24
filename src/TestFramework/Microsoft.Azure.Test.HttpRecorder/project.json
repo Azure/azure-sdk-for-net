@@ -5,14 +5,14 @@
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "compilationOptions": {
-    "useOssSigning": true,
+    "delaySign": true,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
     "Newtonsoft.Json": "6.0.8"
   },
   "frameworks": {
-    "net451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Net.Http": "",
         "System.Xml.Linq": { "type": "build" },
@@ -22,14 +22,14 @@
     },
     "dnxcore50": {
       "dependencies": {
-        "System.Diagnostics.StackTrace": "4.0.1-beta-23509", 
-        "System.Net.Http": "4.0.1-beta-23509",
-        "Microsoft.CSharp": "4.0.1-beta-23509",
-        "System.Collections": "4.0.11-beta-23509",
-        "System.Linq": "4.0.1-beta-23509",
-        "System.Xml.XDocument": "4.0.11-beta-23509",
-        "System.Runtime": "4.0.21-beta-23509",
-        "System.Threading": "4.0.11-beta-23509"
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23516", 
+        "System.Net.Http": "4.0.1-beta-23516",
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Xml.XDocument": "4.0.11-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516"
       }
     }
   }

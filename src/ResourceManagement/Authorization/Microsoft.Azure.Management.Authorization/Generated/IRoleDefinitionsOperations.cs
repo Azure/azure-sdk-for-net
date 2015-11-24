@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -84,17 +86,20 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         Task<AzureOperationResponse<RoleDefinition>> GetByIdWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all role definitions.
+        /// Get role definitions.
         /// </summary>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all role definitions.
+        /// Get role definitions.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

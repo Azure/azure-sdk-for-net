@@ -105,18 +105,15 @@ namespace Microsoft.Azure.Search
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='indexName'>
-            /// The definition of the index to create or update.
-            /// </param>
             /// <param name='index'>
             /// The definition of the index to create or update.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
-                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -124,9 +121,6 @@ namespace Microsoft.Azure.Search
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexName'>
-            /// The definition of the index to create or update.
             /// </param>
             /// <param name='index'>
             /// The definition of the index to create or update.
@@ -137,9 +131,9 @@ namespace Microsoft.Azure.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Index> CreateOrUpdateAsync( this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Index> CreateOrUpdateAsync( this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Index> result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Index> result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

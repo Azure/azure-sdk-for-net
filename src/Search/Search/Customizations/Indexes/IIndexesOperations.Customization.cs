@@ -4,6 +4,12 @@
 
 namespace Microsoft.Azure.Search
 {
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Rest.Azure;
+
     public partial interface IIndexesOperations
     {
         /// <summary>
@@ -17,5 +23,25 @@ namespace Microsoft.Azure.Search
         /// <c cref="Microsoft.Azure.Search.SearchIndexClient">SearchIndexClient</c> instance instead.
         /// </remarks>
         SearchIndexClient GetClient(string indexName);
+
+        /// <summary>
+        /// Determines whether or not the given index exists in the Azure Search service.
+        /// </summary>
+        /// <param name="indexName">
+        /// The name of the index.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <returns>
+        /// A response with the value <c>true</c> if the index exists; <c>false</c> otherwise.
+        /// </returns>
+        Task<AzureOperationResponse<bool>> ExistsWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

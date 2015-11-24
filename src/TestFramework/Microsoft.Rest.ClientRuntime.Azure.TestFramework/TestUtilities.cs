@@ -44,11 +44,21 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         /// <summary>
-        /// Used for mthod traces - format method arguments as a string for output or tracing
+        /// Generate a name to be used in azure
         /// </summary>
-        /// <param name="parameters">A dictionary representing the parameters of a method call</param>
-        /// <returns>A string representation of the parameters</returns>
-        public static string AsFormattedString(this IDictionary<string, object> parameters)
+        /// <returns></returns>
+        public static Guid GenerateGuid([System.Runtime.CompilerServices.CallerMemberName]
+            string methodName="testframework_failed")
+        {
+            return HttpMockServer.GetAssetGuid(methodName);
+        }
+
+    /// <summary>
+    /// Used for mthod traces - format method arguments as a string for output or tracing
+    /// </summary>
+    /// <param name="parameters">A dictionary representing the parameters of a method call</param>
+    /// <returns>A string representation of the parameters</returns>
+    public static string AsFormattedString(this IDictionary<string, object> parameters)
         {
             StringBuilder builder = new StringBuilder("(");
             if (parameters != null)

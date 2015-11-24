@@ -225,7 +225,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var allRoleAssignments = client.RoleAssignments.List("atScope()");
+                var allRoleAssignments = client.RoleAssignments.List(true);
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -272,7 +272,7 @@ namespace Authorization.Tests
                     var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 }
 
-                var allRoleAssignments = client.RoleAssignments.List("principalId%20eq%20'7966e989-e94c-4bda-8f2b-b94f65803d39'");
+                var allRoleAssignments = client.RoleAssignments.List(false, "7966e989-e94c-4bda-8f2b-b94f65803d39");
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -402,7 +402,7 @@ namespace Authorization.Tests
 
                 var allRoleAssignments = client.RoleAssignments.ListForScope(
                     "subscriptions/" + client.SubscriptionId,
-                    "atScope()"
+                    true
                     );
 
 
@@ -469,12 +469,11 @@ namespace Authorization.Tests
                 var assignmentToUser = client.RoleAssignments.Create(scope, 
                     assignmentName.ToString(), 
                     newRoleAssignmentToUserParams.Properties);
-            
+
                 // List role assignments with AssignedTo filter = user id
-                var allRoleAssignments = client.RoleAssignments.List(""
-                /*{
-                    AssignedToPrincipalId = userId
-                }*/);
+                var allRoleAssignments = client.RoleAssignments.List(
+                    false,
+                    userId.ToString());
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 2);

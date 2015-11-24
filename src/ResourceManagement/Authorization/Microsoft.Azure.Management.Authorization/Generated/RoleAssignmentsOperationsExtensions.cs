@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -40,12 +41,18 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceName'>
             /// Resource identity.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResource(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string))
+            /// <param name='assignedTo'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<RoleAssignment> ListForResource(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, atScope, principalId, assignedTo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -69,15 +76,21 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceName'>
             /// Resource identity.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='assignedTo'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForResourceAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, atScope, principalId, assignedTo, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -90,12 +103,18 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceGroupName'>
             /// Resource group name.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, string filter = default(string))
+            /// <param name='assignedTo'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<RoleAssignment> ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForResourceGroupAsync(resourceGroupName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForResourceGroupAsync(resourceGroupName, atScope, principalId, assignedTo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,15 +126,21 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceGroupName'>
             /// Resource group name.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='assignedTo'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, atScope, principalId, assignedTo, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -347,12 +372,18 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<RoleAssignment> List(this IRoleAssignmentsOperations operations, string filter = default(string))
+            /// <param name='assignedTo'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<RoleAssignment> List(this IRoleAssignmentsOperations operations, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListAsync(atScope, principalId, assignedTo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -361,15 +392,21 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='assignedTo'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListAsync( this IRoleAssignmentsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListAsync( this IRoleAssignmentsOperations operations, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListWithHttpMessagesAsync(atScope, principalId, assignedTo, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -382,12 +419,18 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='scope'>
             /// Scope.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, string filter = default(string))
+            /// <param name='assignedTo'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForScopeAsync(scope, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleAssignmentsOperations)s).ListForScopeAsync(scope, atScope, principalId, assignedTo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -399,15 +442,21 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='scope'>
             /// Scope.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='atScope'>
+            /// if true atScope() method will be used in filtering
+            /// </param>
+            /// <param name='principalId'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='assignedTo'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForScopeAsync( this IRoleAssignmentsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForScopeAsync( this IRoleAssignmentsOperations operations, string scope, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForScopeWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleAssignment>> result = await operations.ListForScopeWithHttpMessagesAsync(scope, atScope, principalId, assignedTo, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

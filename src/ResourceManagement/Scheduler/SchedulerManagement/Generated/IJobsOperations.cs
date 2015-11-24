@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -132,13 +134,16 @@ namespace Microsoft.Azure.Management.Scheduler
         /// The (0-based) index of the job history list from which to begin
         /// requesting entries.
         /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the job state.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobStateFilter, bool>> filter = default(Expression<Func<JobStateFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists job history.
         /// </summary>
@@ -158,13 +163,16 @@ namespace Microsoft.Azure.Management.Scheduler
         /// The (0-based) index of the job history list from which to begin
         /// requesting entries.
         /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the job state.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobHistoryFilter, bool>> filter = default(Expression<Func<JobHistoryFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all jobs under the specified job collection.
         /// </summary>

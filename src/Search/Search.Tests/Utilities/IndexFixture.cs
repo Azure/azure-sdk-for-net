@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                             FunctionAggregation = ScoringFunctionAggregation.Sum,
                             Functions = new[]
                             {
-                                new DistanceScoringFunction(new DistanceScoringParameters("myloc", 100), "location", 2)
+                                new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100))
                             }
                         }
                     }

@@ -8,6 +8,8 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 

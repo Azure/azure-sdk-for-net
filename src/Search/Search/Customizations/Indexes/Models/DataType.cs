@@ -60,6 +60,41 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
+        /// Defines implicit conversion from DataType to string.
+        /// </summary>
+        /// <param name="dataType">DataType to convert.</param>
+        /// <returns>The name of the DataType as a string.</returns>
+        public static implicit operator string(DataType dataType)
+        {
+            return (dataType != null) ? dataType.ToString() : null;
+        }
+
+        /// <summary>
+        /// Creates a new DataType instance, or returns an existing instance if the given name matches that of a
+        /// known data type.
+        /// </summary>
+        /// <param name="name">Name of the data type.</param>
+        /// <returns>A DataType instance with the given name, or null if name is null.</returns>
+        public static DataType Create(string name)
+        {
+            if (name == null)
+            {
+                return null;
+            }
+
+            // Data types are purposefully open-ended. If we get one we don't recognize, just create a new object.
+            DataType dataType;
+            if (_typeMap.Value.TryGetValue(name, out dataType))
+            {
+                return dataType;
+            }
+            else
+            {
+                return new DataType(name);
+            }
+        }
+
+        /// <summary>
         /// Creates a DataType for a collection of the given type.
         /// </summary>
         /// <param name="elementType">The DataType of the elements of the collection.</param>
@@ -72,16 +107,6 @@ namespace Microsoft.Azure.Search.Models
             }
 
             return new DataType(System.String.Format("Collection({0})", elementType.ToString()));
-        }
-
-        /// <summary>
-        /// Defines implicit conversion from DataType to string.
-        /// </summary>
-        /// <param name="dataType">DataType to convert.</param>
-        /// <returns>The name of the DataType as a string.</returns>
-        public static implicit operator string(DataType dataType)
-        {
-            return (dataType != null) ? dataType.ToString() : null;
         }
 
         /// <summary>
@@ -118,17 +143,6 @@ namespace Microsoft.Azure.Search.Models
         public override string ToString()
         {
             return _name;
-        }
-
-        internal static DataType Lookup(string name)
-        {
-            if (name == null)
-            {
-                return null;
-            }
-
-            // If the API sent us an unknown type, it's a bug in the SDK -- just let the dictionary throw.
-            return _typeMap.Value[name];
         }
 
         private static Dictionary<string, DataType> CreateTypeMap()

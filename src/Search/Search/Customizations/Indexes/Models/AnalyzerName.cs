@@ -433,6 +433,31 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
+        /// Creates a new AnalyzerName instance, or returns an existing instance if the given name matches that of a
+        /// known analyzer.
+        /// </summary>
+        /// <param name="name">Name of the analyzer.</param>
+        /// <returns>An AnalyzerName instance with the given name, or null if name is null.</returns>
+        public static AnalyzerName Create(string name)
+        {
+            if (name == null)
+            {
+                return null;
+            }
+
+            // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
+            AnalyzerName analyzerName;
+            if (_analyzerMap.Value.TryGetValue(name, out analyzerName))
+            {
+                return analyzerName;
+            }
+            else
+            {
+                return new AnalyzerName(name);
+            }
+        }
+
+        /// <summary>
         /// Compares the AnalyzerName for equality with another AnalyzerName.
         /// </summary>
         /// <param name="other">The AnalyzerName with which to compare.</param>
@@ -466,25 +491,6 @@ namespace Microsoft.Azure.Search.Models
         public override string ToString()
         {
             return _name;
-        }
-
-        internal static AnalyzerName Lookup(string name)
-        {
-            if (name == null)
-            {
-                return null;
-            }
-
-            // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            AnalyzerName analyzerName;
-            if (_analyzerMap.Value.TryGetValue(name, out analyzerName))
-            {
-                return analyzerName;
-            }
-            else
-            {
-                return new AnalyzerName(name);
-            }
         }
 
         private static Dictionary<string, AnalyzerName> CreateAnalyzerMap()

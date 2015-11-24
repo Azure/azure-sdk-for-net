@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Search.Tests
                 DataSource dataSource = CreateTestDataSource();
 
                 AzureOperationResponse<DataSource> response = 
-                    searchClient.DataSources.CreateOrUpdateWithHttpMessagesAsync(dataSource.Name, dataSource).Result;
+                    searchClient.DataSources.CreateOrUpdateWithHttpMessagesAsync(dataSource).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
             });
         }

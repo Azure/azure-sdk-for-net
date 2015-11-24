@@ -26,9 +26,6 @@ namespace Microsoft.Azure.Search
         /// Creates a new Azure Search datasource or updates a datasource if
         /// it already exists.
         /// </summary>
-        /// <param name='dataSourceName'>
-        /// The name of the datasource to create or update.
-        /// </param>
         /// <param name='dataSource'>
         /// The definition of the datasource to create or update.
         /// </param>
@@ -41,7 +38,7 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Azure Search datasource.
         /// </summary>
