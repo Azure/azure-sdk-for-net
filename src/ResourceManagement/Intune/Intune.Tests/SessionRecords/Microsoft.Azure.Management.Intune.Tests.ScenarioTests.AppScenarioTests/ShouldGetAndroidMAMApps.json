@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ac26232f-7836-46a7-96ab-04e9bc0b2375"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.bmsua01\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "149"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "bc0e6a9d-b7c6-43cf-9d64-5feb30e74b10"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd9c0946-b473-4cad-b197-da3886e13aee"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231145Z:bd9c0946-b473-4cad-b197-da3886e13aee"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/apps?api-version=2015-01-14-privatepreview&$filter=platform%20eq%20'android'",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9hcHBzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMTQtcHJpdmF0ZXByZXZpZXcmJGZpbHRlcj1wbGF0Zm9ybSUyMGVxJTIwJTI3YW5kcm9pZCUyNw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0e32f231-3ce2-431c-bc32-24b9f369274d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.skydrive.Android\",\r\n      \"name\": \"com.microsoft.skydrive.Android\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive\",\r\n        \"platform\": \"android\",\r\n        \"appId\": \"b26aadf8-566f-4478-926f-589f601d9c74\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "296"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14995"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "1038"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "0e32f231-3ce2-431c-bc32-24b9f369274d"
+        ],
+        "unique-request-id": [
+          "1b677b2a-d9ed-406b-a2ac-7656e2845357"
+        ],
+        "x-ms-request-id": [
+          "1b677b2a-d9ed-406b-a2ac-7656e2845357"
+        ],
+        "related-activity-id": [
+          "1b677b2a-d9ed-406b-a2ac-7656e2845357"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "69274a1c-4a81-426c-992e-58cc597984f9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231147Z:69274a1c-4a81-426c-992e-58cc597984f9"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:46 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "None"
+  }
+}

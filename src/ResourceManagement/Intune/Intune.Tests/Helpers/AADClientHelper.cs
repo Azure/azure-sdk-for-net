@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
     /// <summary>
     /// Types of environment in Intune
     /// </summary>
-    internal enum EnvironmentType
+    public enum EnvironmentType
     {
         OneBox,
         Dogfood,
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
     /// <summary>
     /// Azure Active directory related operations helper class.
     /// </summary>
-    internal class AADClientHelper
+    public class AADClientHelper
     {
         public const string AadAuthDogfoodEnpoint = "https://login.windows-ppe.net/";
 
@@ -87,7 +87,25 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
             }
         }
 
-        public AADClientHelper(string userName, string password, EnvironmentType env)
+        public AADClientHelper()
+        {
+            var orgIdAuth = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+            var parts = orgIdAuth.Split(new char[] { ';' }).ToList();
+            var authParams = new Dictionary<string, string>();
+            parts.ForEach(a => { var splitVal = a.Split(new char[] { '=' }); authParams.Add(splitVal[0], splitVal[1]); });
+            EnvironmentType enType = EnvironmentType.Dogfood;
+            if (authParams["Environment"] == "Dogfood")
+            {
+                enType = EnvironmentType.Dogfood;
+            }
+            else if (authParams["Environment"] == "Prod")
+            {
+                enType = EnvironmentType.Prod;
+            }
+
+            InitializeAADClient(authParams["UserId"], authParams["Password"], enType);
+        }
+        private void InitializeAADClient(string userName, string password, EnvironmentType env)
         {
             this.userName = userName;
             this.password = password;

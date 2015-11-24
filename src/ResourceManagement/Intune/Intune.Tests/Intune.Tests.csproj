@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
-	<Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -152,8 +152,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ScenarioTests\App.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\FlaggedUser.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Group.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Policy.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Wipe.ScenarioTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Intune\Intune.csproj">
@@ -164,35 +166,52 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldAddAndRemoveAndroidMAMAppForPolicy.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldAddAndRemoveAndroidMAMAppForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldAddAndRemoveiOSMAMAppForPolicy.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldAddAndRemoveiOSMAMAppForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetAndroidMAMApps.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetAndroidMAMApps.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetiOSMAMApps.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests\ShouldGetiOSMAMApps.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests\ShouldAddAndRemoveiOSMAMGroupsForPolicy.json" />
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldCreateAndroidPolicyWithDefaults.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetDefaultStatuses.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldCreateiOSPolicyWithDefaults.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedDevices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldGetMultipleAndroidPolicies.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUsers.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldGetMultipleiOSPolicies.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests\ShouldAddAndRemoveAndroidMAMGroupsForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldPatchAndroidPolicy.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests\ShouldAddAndRemoveiOSMAMGroupsForPolicy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldPatchiOSPolicy.json">
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldCreateAndroidPolicyWithDefaults.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldCreateiOSPolicyWithDefaults.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldGetMultipleAndroidPolicies.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldGetMultipleiOSPolicies.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldPatchAndroidPolicy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests\ShouldPatchiOSPolicy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.WipeScenarioTests\ShouldWipeDevices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -222,7 +241,7 @@
     </When>
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />  
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

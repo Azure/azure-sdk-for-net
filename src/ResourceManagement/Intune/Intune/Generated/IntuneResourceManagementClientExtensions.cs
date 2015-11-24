@@ -120,6 +120,380 @@ namespace Microsoft.Azure.Management.Intune
             }
 
             /// <summary>
+            /// Get devices for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// user unique Name
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static IPage<Device> GetMAMUserDevices(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDevicesAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get devices for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// user unique Name
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Device>> GetMAMUserDevicesAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<Device>> result = await operations.GetMAMUserDevicesWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get a unique device for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// unique user name
+            /// </param>
+            /// <param name='deviceName'>
+            /// device name
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static Device GetMAMUserDeviceByDeviceName(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDeviceByDeviceNameAsync(hostName, userName, deviceName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a unique device for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// unique user name
+            /// </param>
+            /// <param name='deviceName'>
+            /// device name
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Device> GetMAMUserDeviceByDeviceNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<Device> result = await operations.GetMAMUserDeviceByDeviceNameWithHttpMessagesAsync(hostName, userName, deviceName, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Wipe a device for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// unique user name
+            /// </param>
+            /// <param name='deviceName'>
+            /// device name
+            /// </param>
+            public static WipeDeviceOperationResult WipeMAMUserDevice(this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).WipeMAMUserDeviceAsync(hostName, userName, deviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Wipe a device for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// unique user name
+            /// </param>
+            /// <param name='deviceName'>
+            /// device name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WipeDeviceOperationResult> WipeMAMUserDeviceAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string deviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<WipeDeviceOperationResult> result = await operations.WipeMAMUserDeviceWithHttpMessagesAsync(hostName, userName, deviceName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns operationResults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static IPage<OperationResult> GetOperationResults(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetOperationResultsAsync(hostName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns operationResults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OperationResult>> GetOperationResultsAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<OperationResult>> result = await operations.GetOperationResultsWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune Tenant level statuses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            public static StatusesDefault GetMAMStatuses(this IIntuneResourceManagementClient operations, string hostName)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMStatusesAsync(hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune Tenant level statuses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StatusesDefault> GetMAMStatusesAsync( this IIntuneResourceManagementClient operations, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<StatusesDefault> result = await operations.GetMAMStatusesWithHttpMessagesAsync(hostName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static IPage<FlaggedUser> GetMAMFlaggedUsers(this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersAsync(hostName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FlaggedUser>> GetMAMFlaggedUsersAsync( this IIntuneResourceManagementClient operations, string hostName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<FlaggedUser>> result = await operations.GetMAMFlaggedUsersWithHttpMessagesAsync(hostName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user details
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// Flagged userName
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static FlaggedUser GetMAMFlaggedUserByName(this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUserByNameAsync(hostName, userName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user details
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// Flagged userName
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FlaggedUser> GetMAMFlaggedUserByNameAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<FlaggedUser> result = await operations.GetMAMFlaggedUserByNameWithHttpMessagesAsync(hostName, userName, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// User name for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            public static IPage<FlaggedEnrolledApp> GetMAMUserFlaggedEnrolledApps(this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsAsync(hostName, userName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='hostName'>
+            /// Location hostName for the tenant
+            /// </param>
+            /// <param name='userName'>
+            /// User name for the tenant
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='select'>
+            /// select specific fields in entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FlaggedEnrolledApp>> GetMAMUserFlaggedEnrolledAppsAsync( this IIntuneResourceManagementClient operations, string hostName, string userName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<FlaggedEnrolledApp>> result = await operations.GetMAMUserFlaggedEnrolledAppsWithHttpMessagesAsync(hostName, userName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Returns location for user tenant.
             /// </summary>
             /// <param name='operations'>
@@ -180,6 +554,166 @@ namespace Microsoft.Azure.Management.Intune
             public static async Task<IPage<Application>> GetAppsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<Application>> result = await operations.GetAppsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get devices for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Device> GetMAMUserDevicesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserDevicesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get devices for a user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Device>> GetMAMUserDevicesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<Device>> result = await operations.GetMAMUserDevicesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns operationResults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<OperationResult> GetOperationResultsNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetOperationResultsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns operationResults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OperationResult>> GetOperationResultsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<OperationResult>> result = await operations.GetOperationResultsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune Tenant level statuses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static StatusesDefault GetMAMStatusesNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMStatusesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune Tenant level statuses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StatusesDefault> GetMAMStatusesNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<StatusesDefault> result = await operations.GetMAMStatusesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FlaggedUser> GetMAMFlaggedUsersNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMFlaggedUsersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged user collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FlaggedUser>> GetMAMFlaggedUsersNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<FlaggedUser>> result = await operations.GetMAMFlaggedUsersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FlaggedEnrolledApp> GetMAMUserFlaggedEnrolledAppsNext(this IIntuneResourceManagementClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IIntuneResourceManagementClient)s).GetMAMUserFlaggedEnrolledAppsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns Intune flagged enrolled app collection for the User
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FlaggedEnrolledApp>> GetMAMUserFlaggedEnrolledAppsNextAsync( this IIntuneResourceManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IPage<FlaggedEnrolledApp>> result = await operations.GetMAMUserFlaggedEnrolledAppsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

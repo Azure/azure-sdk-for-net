@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Intune
             }
 
             /// <summary>
-            /// Returns AndroidMAMPolicy with given Id.
+            /// Returns AndroidMAMPolicy with given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,19 +76,19 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static AndroidMAMPolicy GetMAMPolicyById(this IAndroidOperations operations, string hostName, string policyId, string select = default(string))
+            public static AndroidMAMPolicy GetMAMPolicyByName(this IAndroidOperations operations, string hostName, string policyName, string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetMAMPolicyByIdAsync(hostName, policyId, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetMAMPolicyByNameAsync(hostName, policyName, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns AndroidMAMPolicy with given Id.
+            /// Returns AndroidMAMPolicy with given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,8 +96,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='select'>
             /// select specific fields in entity.
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AndroidMAMPolicy> GetMAMPolicyByIdAsync( this IAndroidOperations operations, string hostName, string policyId, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AndroidMAMPolicy> GetMAMPolicyByNameAsync( this IAndroidOperations operations, string hostName, string policyName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AndroidMAMPolicy> result = await operations.GetMAMPolicyByIdWithHttpMessagesAsync(hostName, policyId, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AndroidMAMPolicy> result = await operations.GetMAMPolicyByNameWithHttpMessagesAsync(hostName, policyName, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -120,15 +120,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update an android policy operation.
             /// </param>
-            public static AndroidMAMPolicy CreateOrUpdateMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, AndroidMAMPolicy parameters)
+            public static AndroidMAMPolicy CreateOrUpdateMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, AndroidMAMPolicy parameters)
             {
-                return Task.Factory.StartNew(s => ((IAndroidOperations)s).CreateOrUpdateMAMPolicyAsync(hostName, policyId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAndroidOperations)s).CreateOrUpdateMAMPolicyAsync(hostName, policyName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,8 +140,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update an android policy operation.
@@ -149,9 +149,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AndroidMAMPolicy> CreateOrUpdateMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, AndroidMAMPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AndroidMAMPolicy> CreateOrUpdateMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, AndroidMAMPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AndroidMAMPolicy> result = await operations.CreateOrUpdateMAMPolicyWithHttpMessagesAsync(hostName, policyId, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AndroidMAMPolicy> result = await operations.CreateOrUpdateMAMPolicyWithHttpMessagesAsync(hostName, policyName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -164,15 +164,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update an android policy operation.
             /// </param>
-            public static AndroidMAMPolicy PatchMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, AndroidMAMPolicy parameters)
+            public static AndroidMAMPolicy PatchMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, AndroidMAMPolicy parameters)
             {
-                return Task.Factory.StartNew(s => ((IAndroidOperations)s).PatchMAMPolicyAsync(hostName, policyId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAndroidOperations)s).PatchMAMPolicyAsync(hostName, policyName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,8 +184,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update an android policy operation.
@@ -193,9 +193,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AndroidMAMPolicy> PatchMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, AndroidMAMPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AndroidMAMPolicy> PatchMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, AndroidMAMPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AndroidMAMPolicy> result = await operations.PatchMAMPolicyWithHttpMessagesAsync(hostName, policyId, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AndroidMAMPolicy> result = await operations.PatchMAMPolicyWithHttpMessagesAsync(hostName, policyName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -208,12 +208,12 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
-            public static void DeleteMAMPolicy(this IAndroidOperations operations, string hostName, string policyId)
+            public static void DeleteMAMPolicy(this IAndroidOperations operations, string hostName, string policyName)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteMAMPolicyAsync(hostName, policyId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteMAMPolicyAsync(hostName, policyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -225,15 +225,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteMAMPolicyWithHttpMessagesAsync(hostName, policyId, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteMAMPolicyWithHttpMessagesAsync(hostName, policyName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -245,8 +245,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -256,9 +256,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='select'>
             /// select specific fields in entity.
             /// </param>
-            public static IPage<Application> GetAppForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, string filter = default(string), int? top = default(int?), string select = default(string))
+            public static IPage<Application> GetAppForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, string filter = default(string), int? top = default(int?), string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetAppForMAMPolicyAsync(hostName, policyId, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetAppForMAMPolicyAsync(hostName, policyName, filter, top, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -270,8 +270,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -284,9 +284,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Application>> GetAppForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Application>> GetAppForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, string filter = default(string), int? top = default(int?), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Application>> result = await operations.GetAppForMAMPolicyWithHttpMessagesAsync(hostName, policyId, filter, top, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<Application>> result = await operations.GetAppForMAMPolicyWithHttpMessagesAsync(hostName, policyName, filter, top, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -299,19 +299,19 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
-            /// <param name='appId'>
-            /// application unique Id
+            /// <param name='appName'>
+            /// application unique Name
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update app to an android policy
             /// operation.
             /// </param>
-            public static void AddAppForPolicy(this IAndroidOperations operations, string hostName, string policyId, string appId, MAMPolicyAppIdOrGroupIdPayload parameters)
+            public static void AddAppForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, string appName, MAMPolicyAppIdOrGroupIdPayload parameters)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddAppForPolicyAsync(hostName, policyId, appId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddAppForMAMPolicyAsync(hostName, policyName, appName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,11 +323,11 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
-            /// <param name='appId'>
-            /// application unique Id
+            /// <param name='appName'>
+            /// application unique Name
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create or update app to an android policy
@@ -336,9 +336,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddAppForPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string appId, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddAppForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, string appName, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.AddAppForPolicyWithHttpMessagesAsync(hostName, policyId, appId, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.AddAppForMAMPolicyWithHttpMessagesAsync(hostName, policyName, appName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -350,15 +350,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
-            /// <param name='appId'>
-            /// application unique Id
+            /// <param name='appName'>
+            /// application unique Name
             /// </param>
-            public static void DeleteAppForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, string appId)
+            public static void DeleteAppForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, string appName)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteAppForMAMPolicyAsync(hostName, policyId, appId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteAppForMAMPolicyAsync(hostName, policyName, appName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -370,18 +370,18 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
-            /// <param name='appId'>
-            /// application unique Id
+            /// <param name='appName'>
+            /// application unique Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAppForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAppForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, string appName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteAppForMAMPolicyWithHttpMessagesAsync(hostName, policyId, appId, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteAppForMAMPolicyWithHttpMessagesAsync(hostName, policyName, appName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -393,12 +393,12 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
+            /// <param name='policyName'>
             /// policy name for the tenant
             /// </param>
-            public static IPage<GroupItem> GetGroupsForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId)
+            public static IPage<GroupItem> GetGroupsForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName)
             {
-                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetGroupsForMAMPolicyAsync(hostName, policyId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAndroidOperations)s).GetGroupsForMAMPolicyAsync(hostName, policyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -410,15 +410,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
+            /// <param name='policyName'>
             /// policy name for the tenant
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GroupItem>> GetGroupsForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GroupItem>> GetGroupsForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<GroupItem>> result = await operations.GetGroupsForMAMPolicyWithHttpMessagesAsync(hostName, policyId, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<GroupItem>> result = await operations.GetGroupsForMAMPolicyWithHttpMessagesAsync(hostName, policyName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -431,8 +431,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='groupId'>
             /// group Id
@@ -441,9 +441,9 @@ namespace Microsoft.Azure.Management.Intune
             /// Parameters supplied to the Create or update app to an android policy
             /// operation.
             /// </param>
-            public static void AddGroupForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters)
+            public static void AddGroupForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddGroupForMAMPolicyAsync(hostName, policyId, groupId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).AddGroupForMAMPolicyAsync(hostName, policyName, groupId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -455,8 +455,8 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='groupId'>
             /// group Id
@@ -468,9 +468,9 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddGroupForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddGroupForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, string groupId, MAMPolicyAppIdOrGroupIdPayload parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.AddGroupForMAMPolicyWithHttpMessagesAsync(hostName, policyId, groupId, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.AddGroupForMAMPolicyWithHttpMessagesAsync(hostName, policyName, groupId, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -482,15 +482,15 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='groupId'>
-            /// application unique Id
+            /// application unique Name
             /// </param>
-            public static void DeleteGroupForMAMPolicy(this IAndroidOperations operations, string hostName, string policyId, string groupId)
+            public static void DeleteGroupForMAMPolicy(this IAndroidOperations operations, string hostName, string policyName, string groupId)
             {
-                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteGroupForMAMPolicyAsync(hostName, policyId, groupId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAndroidOperations)s).DeleteGroupForMAMPolicyAsync(hostName, policyName, groupId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -502,18 +502,18 @@ namespace Microsoft.Azure.Management.Intune
             /// <param name='hostName'>
             /// Location hostName for the tenant
             /// </param>
-            /// <param name='policyId'>
-            /// policy unique Id
+            /// <param name='policyName'>
+            /// Unique name for the policy
             /// </param>
             /// <param name='groupId'>
-            /// application unique Id
+            /// application unique Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteGroupForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyId, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteGroupForMAMPolicyAsync( this IAndroidOperations operations, string hostName, string policyName, string groupId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteGroupForMAMPolicyWithHttpMessagesAsync(hostName, policyId, groupId, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteGroupForMAMPolicyWithHttpMessagesAsync(hostName, policyName, groupId, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

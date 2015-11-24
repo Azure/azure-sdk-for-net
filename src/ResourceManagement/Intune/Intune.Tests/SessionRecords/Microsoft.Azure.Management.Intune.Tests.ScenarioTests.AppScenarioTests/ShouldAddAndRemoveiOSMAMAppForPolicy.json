@@ -1,0 +1,605 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "adbd29f0-1a5d-4f87-bc5e-c6a06a06f326"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.bmsua01\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "149"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "baa490de-678b-4ba4-919b-d5f93ccd961e"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec88f916-860b-42f0-bfc1-dbf3d94689ee"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231117Z:ec88f916-860b-42f0-bfc1-dbf3d94689ee"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzI/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"fileEncryptionLevel\": \"deviceLocked\",\r\n    \"touchId\": \"enable\",\r\n    \"friendlyName\": \"IntuneiOSPolicy8146\",\r\n    \"description\": \"New Android Policy\",\r\n    \"appSharingFromLevel\": \"none\",\r\n    \"appSharingToLevel\": \"none\",\r\n    \"authentication\": \"required\",\r\n    \"clipboardSharingLevel\": \"blocked\",\r\n    \"dataBackup\": \"allow\",\r\n    \"fileSharingSaveAs\": \"allow\",\r\n    \"pin\": \"required\",\r\n    \"pinNumRetry\": 15,\r\n    \"deviceCompliance\": \"enable\",\r\n    \"managedBrowser\": \"required\",\r\n    \"accessRecheckOfflineTimeout\": \"PT12H\",\r\n    \"accessRecheckOnlineTimeout\": \"PT30M\",\r\n    \"offlineWipeTimeout\": \"P1D\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "633"
+        ],
+        "x-ms-client-request-id": [
+          "baf2606d-e0f4-4341-b43d-56b22dd9c3f3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72\",\r\n  \"name\": \"16da92e4-4b6e-435f-b72e-2075dd39da72\",\r\n  \"type\": \"Microsoft.Intune/locations/iosPolicies\",\r\n  \"properties\": {\r\n    \"touchId\": \"enable\",\r\n    \"fileEncryptionLevel\": \"deviceLocked\",\r\n    \"friendlyName\": \"IntuneiOSPolicy8146\",\r\n    \"description\": \"New Android Policy\",\r\n    \"accessRecheckOfflineTimeout\": \"P0DT12H00M\",\r\n    \"accessRecheckOnlineTimeout\": \"P0DT00H30M\",\r\n    \"appSharingFromLevel\": \"none\",\r\n    \"appSharingToLevel\": \"none\",\r\n    \"authentication\": \"required\",\r\n    \"clipboardSharingLevel\": \"blocked\",\r\n    \"dataBackup\": \"allow\",\r\n    \"deviceCompliance\": \"enable\",\r\n    \"managedBrowser\": \"required\",\r\n    \"fileSharingSaveAs\": \"allow\",\r\n    \"offlineWipeTimeout\": \"P1D\",\r\n    \"pin\": \"required\",\r\n    \"pinNumRetry\": 15,\r\n    \"numOfApps\": 0,\r\n    \"groupStatus\": \"notTargeted\",\r\n    \"lastModifiedTime\": \"2015-11-23T23:11:17.9662688Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "805"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Mon, 23 Nov 2015 23:11:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "2798"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "baf2606d-e0f4-4341-b43d-56b22dd9c3f3"
+        ],
+        "unique-request-id": [
+          "a55eee38-4dce-49ae-9870-9cdc8903d31d"
+        ],
+        "x-ms-request-id": [
+          "a55eee38-4dce-49ae-9870-9cdc8903d31d"
+        ],
+        "related-activity-id": [
+          "a55eee38-4dce-49ae-9870-9cdc8903d31d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"da340395-a714-4891-b9d8-a5f28aa497b3\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "de952221-56d2-483e-9f08-4f1c84fb8c43"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231120Z:de952221-56d2-483e-9f08-4f1c84fb8c43"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/apps?api-version=2015-01-14-privatepreview&$filter=platform%20eq%20'ios'",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9hcHBzP2FwaS12ZXJzaW9uPTIwMTUtMDEtMTQtcHJpdmF0ZXByZXZpZXcmJGZpbHRlcj1wbGF0Zm9ybSUyMGVxJTIwJTI3aW9zJTI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "33e5062d-111e-4ae5-aabb-6ae5ba272e9e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.skydrive.IOS\",\r\n      \"name\": \"com.microsoft.skydrive.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"af124e86-4e96-495a-b70a-90f90ab96707\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.office.excel.IOS\",\r\n      \"name\": \"com.microsoft.office.excel.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Excel\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.office.powerpoint.IOS\",\r\n      \"name\": \"com.microsoft.office.powerpoint.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"PowerPoint\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.office.word.IOS\",\r\n      \"name\": \"com.microsoft.office.word.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Word\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"d3590ed6-52b3-4102-aeff-aad2292ab01c\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1130"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "400"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "33e5062d-111e-4ae5-aabb-6ae5ba272e9e"
+        ],
+        "unique-request-id": [
+          "b29b1ea9-ae16-4a9d-91e2-d7676b3261ab"
+        ],
+        "x-ms-request-id": [
+          "b29b1ea9-ae16-4a9d-91e2-d7676b3261ab"
+        ],
+        "related-activity-id": [
+          "b29b1ea9-ae16-4a9d-91e2-d7676b3261ab"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa0f4de3-806f-4873-be09-bd7b16df7dbc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231121Z:aa0f4de3-806f-4873-be09-bd7b16df7dbc"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72/apps/com.microsoft.skydrive.IOS?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzIvYXBwcy9jb20ubWljcm9zb2Z0LnNreWRyaXZlLklPUz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"url\": \"https://management.azure.com/providers/Microsoft.Intune/locations/fef.bmsua01/apps/com.microsoft.skydrive.IOS\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ],
+        "x-ms-client-request-id": [
+          "3429ecab-4cdf-471e-832e-664274feb331"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "2017"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "3429ecab-4cdf-471e-832e-664274feb331"
+        ],
+        "unique-request-id": [
+          "d3131c22-dd17-4afa-9d61-e4bef63c8db4"
+        ],
+        "x-ms-request-id": [
+          "d3131c22-dd17-4afa-9d61-e4bef63c8db4"
+        ],
+        "related-activity-id": [
+          "d3131c22-dd17-4afa-9d61-e4bef63c8db4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "8288ce73-8f92-4033-b442-17c12732a77f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231124Z:8288ce73-8f92-4033-b442-17c12732a77f"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:23 GMT"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72/apps?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzIvYXBwcz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "36639b0f-9587-46bb-8a78-c475725e0409"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72/apps/com.microsoft.skydrive.IOS\",\r\n      \"name\": \"com.microsoft.skydrive.IOS\",\r\n      \"type\": \"Microsoft.Intune/locations/iosPolicies/apps\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"OneDrive\",\r\n        \"platform\": \"ios\",\r\n        \"appId\": \"af124e86-4e96-495a-b70a-90f90ab96707\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "6964"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "36639b0f-9587-46bb-8a78-c475725e0409"
+        ],
+        "unique-request-id": [
+          "1fc7ac7f-0dc3-4b0b-b84a-50ee02399aef"
+        ],
+        "x-ms-request-id": [
+          "1fc7ac7f-0dc3-4b0b-b84a-50ee02399aef"
+        ],
+        "related-activity-id": [
+          "1fc7ac7f-0dc3-4b0b-b84a-50ee02399aef"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd9663ba-eaf5-46d4-b413-89f995f275b0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231132Z:dd9663ba-eaf5-46d4-b413-89f995f275b0"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:32 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72/apps?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzIvYXBwcz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "96629da7-ba41-4a9d-b3ed-541f6e2e4af1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "458"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "96629da7-ba41-4a9d-b3ed-541f6e2e4af1"
+        ],
+        "unique-request-id": [
+          "448f683a-9985-4953-af88-483e552d03c7"
+        ],
+        "x-ms-request-id": [
+          "448f683a-9985-4953-af88-483e552d03c7"
+        ],
+        "related-activity-id": [
+          "448f683a-9985-4953-af88-483e552d03c7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "59b228ec-1756-4636-bb60-30d411910a05"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231135Z:59b228ec-1756-4636-bb60-30d411910a05"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72/apps/com.microsoft.skydrive.IOS?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzIvYXBwcy9jb20ubWljcm9zb2Z0LnNreWRyaXZlLklPUz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "40f7a855-7606-478b-85c4-925cfbf052d2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1197"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "1712"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "40f7a855-7606-478b-85c4-925cfbf052d2"
+        ],
+        "unique-request-id": [
+          "46d3fb33-8170-4072-9ec2-5a71cafc5361"
+        ],
+        "x-ms-request-id": [
+          "46d3fb33-8170-4072-9ec2-5a71cafc5361"
+        ],
+        "related-activity-id": [
+          "46d3fb33-8170-4072-9ec2-5a71cafc5361"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "372e1e79-dbb7-411a-b345-d09bbeb80688"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231134Z:372e1e79-dbb7-411a-b345-d09bbeb80688"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/iosPolicies/16da92e4-4b6e-435f-b72e-2075dd39da72?api-version=2015-01-14-privatepreview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9pb3NQb2xpY2llcy8xNmRhOTJlNC00YjZlLTQzNWYtYjcyZS0yMDc1ZGQzOWRhNzI/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d9f30910-3ca3-4035-be31-20c9a43df810"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1196"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "922"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "d9f30910-3ca3-4035-be31-20c9a43df810"
+        ],
+        "unique-request-id": [
+          "337f7b9f-ed9f-446d-b94b-4346d68e597b"
+        ],
+        "x-ms-request-id": [
+          "337f7b9f-ed9f-446d-b94b-4346d68e597b"
+        ],
+        "related-activity-id": [
+          "337f7b9f-ed9f-446d-b94b-4346d68e597b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "a5e87094-f826-45db-ac74-b13791b0598c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151123T231136Z:a5e87094-f826-45db-ac74-b13791b0598c"
+        ],
+        "Date": [
+          "Mon, 23 Nov 2015 23:11:36 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ShouldAddAndRemoveiOSMAMAppForPolicy": [
+      "IntuneiOSPolicy8146"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "None",
+    "IntunePolicy": "16da92e4-4b6e-435f-b72e-2075dd39da72"
+  }
+}

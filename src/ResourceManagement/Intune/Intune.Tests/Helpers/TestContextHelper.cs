@@ -14,6 +14,7 @@
 
 using System;
 using Microsoft.Azure.Test.HttpRecorder;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Intune.Tests.Helpers
 {
@@ -38,6 +39,61 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
                 if (HttpMockServer.Variables.ContainsKey(mockName))
                 {
                     retValue = parser.Invoke(HttpMockServer.Variables[mockName]);
+                }
+            }
+
+            return retValue;
+        }
+
+        public static string GetAdGroupFromTestContext(string mockName)
+        {
+            string retValue = string.Empty;
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                var aadClient = new AADClientHelper();
+                var adGroups = aadClient.GetUserGroups().GetAwaiter().GetResult();
+                var adGroupList = adGroups.Where(x => x.Keys.Contains("ID")).Select(x => x["ID"]).ToList();
+                if (adGroupList.Count >= 1)
+                {
+                    retValue = HttpMockServer.Variables[mockName] = adGroupList.ElementAt(0);
+                }
+                else
+                {
+                    throw new Exception(string.Format("Unexpected number of Groups. Expected: adGroupList.Count >= 1 but actual = {0}", adGroupList.Count));
+                }
+            }
+            else
+            {
+                if (HttpMockServer.Variables.ContainsKey(mockName))
+                {
+                    retValue = HttpMockServer.Variables[mockName];
+                }
+                else
+                {
+                    throw new Exception(string.Format("HttpMockServer.Variables does not have a value to retrieve for mockName={0}", mockName));
+                }
+            }
+
+            return retValue;
+        }
+
+        public static string GetAdUserFromTestContext(string mockName)
+        {
+            string retValue = string.Empty;
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                var aadClient = new AADClientHelper();
+                retValue = HttpMockServer.Variables[mockName] = aadClient.UserId;                
+            }
+            else
+            {
+                if (HttpMockServer.Variables.ContainsKey(mockName))
+                {
+                    retValue = HttpMockServer.Variables[mockName];
+                }
+                else
+                {
+                    throw new Exception(string.Format("HttpMockServer.Variables does not have a value to retrieve for mockName={0}", mockName));
                 }
             }
 
