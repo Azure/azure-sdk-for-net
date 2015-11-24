@@ -63,11 +63,29 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
                 Assert.True(flaggedUsers[0].ErrorCount > 0, "Zero errors for the flagged user");
                 Assert.NotNull(flaggedUsers[0].FriendlyName);
                 Assert.NotNull(flaggedUsers[0].Id);
-                Assert.NotNull(flaggedUsers[0].Name);                
+                Assert.NotNull(flaggedUsers[0].Name);
             }
         }
 
+        /// <summary>
+        /// Verifies that Get flagged user by name works
+        /// </summary>
+        [Fact]
+        public void ShouldGetFlaggedUserByName()
+        {
+            using (MockContext context = MockContext.Start())
+            {
+                var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
+                var flaggedUsers = client.GetMAMFlaggedUsers(IntuneClientHelper.AsuHostName).ToList();
 
+                Assert.True(flaggedUsers.Count > 0, "Zero flagged users");
+                var flaggedUser = client.GetMAMFlaggedUserByName(IntuneClientHelper.AsuHostName, flaggedUsers[0].Name);
+                Assert.True(flaggedUser.ErrorCount > 0, "Zero errors for the flagged user");
+                Assert.NotNull(flaggedUser.FriendlyName);
+                Assert.NotNull(flaggedUser.Id);
+                Assert.NotNull(flaggedUser.Name);
+            }
+        }
         /// <summary>
         /// Verifies that Get flagged devices works
         /// </summary>

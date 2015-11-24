@@ -184,6 +184,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedDevices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUserByName.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests\ShouldGetFlaggedUsers.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
