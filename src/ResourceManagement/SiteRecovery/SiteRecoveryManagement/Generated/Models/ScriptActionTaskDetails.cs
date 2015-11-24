@@ -20,47 +20,65 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of script action task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class ScriptActionTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private bool _isPrimarySideScript;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Indicates whether it is a primary side script or not.
         /// </summary>
-        public IList<Job> Jobs
+        public bool IsPrimarySideScript
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._isPrimarySideScript; }
+            set { this._isPrimarySideScript = value; }
         }
         
-        private string _nextLink;
+        private string _name;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Required. Name of the task.
         /// </summary>
-        public string NextLink
+        public string Name
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _output;
+        
+        /// <summary>
+        /// Required. Output of the task.
+        /// </summary>
+        public string Output
+        {
+            get { return this._output; }
+            set { this._output = value; }
+        }
+        
+        private string _path;
+        
+        /// <summary>
+        /// Required. Path for script.
+        /// </summary>
+        public string Path
+        {
+            get { return this._path; }
+            set { this._path = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the ScriptActionTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public ScriptActionTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
         }
     }
 }

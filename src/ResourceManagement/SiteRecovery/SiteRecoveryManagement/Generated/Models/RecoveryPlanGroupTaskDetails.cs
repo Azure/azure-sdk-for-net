@@ -20,47 +20,55 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of recovery plan group task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class RecoveryPlanGroupTaskDetails : GroupTaskDetails
     {
-        private IList<Job> _jobs;
+        private string _groupId;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Group Identifier.
         /// </summary>
-        public IList<Job> Jobs
+        public string GroupId
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._groupId; }
+            set { this._groupId = value; }
         }
         
-        private string _nextLink;
+        private string _name;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Required. Name of recovery plan group task.
         /// </summary>
-        public string NextLink
+        public string Name
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _rpGroupType;
+        
+        /// <summary>
+        /// Required. Group type.
+        /// </summary>
+        public string RpGroupType
+        {
+            get { return this._rpGroupType; }
+            set { this._rpGroupType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the RecoveryPlanGroupTaskDetails
+        /// class.
         /// </summary>
-        public JobListResponse()
+        public RecoveryPlanGroupTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
         }
     }
 }

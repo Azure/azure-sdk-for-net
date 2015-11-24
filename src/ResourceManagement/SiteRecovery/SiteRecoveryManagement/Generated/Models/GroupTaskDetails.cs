@@ -23,44 +23,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of group task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class GroupTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private IList<AsrTaskBase> _childTasks;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. List of child tasks.
         /// </summary>
-        public IList<Job> Jobs
+        public IList<AsrTaskBase> ChildTasks
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
-        private string _nextLink;
-        
-        /// <summary>
-        /// Optional. The nextLink value.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._childTasks; }
+            set { this._childTasks = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the GroupTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public GroupTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
+            this.ChildTasks = new LazyList<AsrTaskBase>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GroupTaskDetails class with
+        /// required arguments.
+        /// </summary>
+        public GroupTaskDetails(List<AsrTaskBase> childTasks, string type)
+            : this()
+        {
+            if (childTasks == null)
+            {
+                throw new ArgumentNullException("childTasks");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.ChildTasks = childTasks;
+            this.Type = type;
         }
     }
 }

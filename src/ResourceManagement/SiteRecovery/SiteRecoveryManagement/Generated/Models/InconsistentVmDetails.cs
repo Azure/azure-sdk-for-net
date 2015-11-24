@@ -20,75 +20,69 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a ProviderError object.
+    /// The definition of inconsistent VM details object.
     /// </summary>
-    public partial class ProviderError
+    public partial class InconsistentVmDetails
     {
-        private int _errorCode;
+        private string _cloudName;
         
         /// <summary>
-        /// Required. Error code.
+        /// Required. Cloud name.
         /// </summary>
-        public int ErrorCode
+        public string CloudName
         {
-            get { return this._errorCode; }
-            set { this._errorCode = value; }
+            get { return this._cloudName; }
+            set { this._cloudName = value; }
         }
         
-        private string _errorId;
+        private IList<string> _details;
         
         /// <summary>
-        /// Required. Error ID.
+        /// Required. Details regarding state of the Protected Entity in ASR
+        /// and On prem.
         /// </summary>
-        public string ErrorId
+        public IList<string> Details
         {
-            get { return this._errorId; }
-            set { this._errorId = value; }
+            get { return this._details; }
+            set { this._details = value; }
         }
         
-        private string _errorMessage;
+        private IList<string> _errorIds;
         
         /// <summary>
-        /// Required. Error message.
+        /// Required. List of Error IDs.
         /// </summary>
-        public string ErrorMessage
+        public IList<string> ErrorIds
         {
-            get { return this._errorMessage; }
-            set { this._errorMessage = value; }
+            get { return this._errorIds; }
+            set { this._errorIds = value; }
         }
         
-        private string _possibleCauses;
+        private string _vmName;
         
         /// <summary>
-        /// Required. Possible causes for the error.
+        /// Required. Name of the VM.
         /// </summary>
-        public string PossibleCauses
+        public string VmName
         {
-            get { return this._possibleCauses; }
-            set { this._possibleCauses = value; }
-        }
-        
-        private string _recommendedAction;
-        
-        /// <summary>
-        /// Required. Recommended action to resolve the error.
-        /// </summary>
-        public string RecommendedAction
-        {
-            get { return this._recommendedAction; }
-            set { this._recommendedAction = value; }
+            get { return this._vmName; }
+            set { this._vmName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProviderError class.
+        /// Initializes a new instance of the InconsistentVmDetails class.
         /// </summary>
-        public ProviderError()
+        public InconsistentVmDetails()
         {
+            this.Details = new LazyList<string>();
+            this.ErrorIds = new LazyList<string>();
         }
     }
 }

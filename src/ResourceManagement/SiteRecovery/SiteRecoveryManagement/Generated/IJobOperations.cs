@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        Task<JobListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, JobQueryParameter queryParameter, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restart the job .

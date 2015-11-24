@@ -23,44 +23,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of consistency check task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private IList<InconsistentVmDetails> _vmDetails;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. List of inconsistent VM details.
         /// </summary>
-        public IList<Job> Jobs
+        public IList<InconsistentVmDetails> VmDetails
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
-        private string _nextLink;
-        
-        /// <summary>
-        /// Optional. The nextLink value.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._vmDetails; }
+            set { this._vmDetails = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the ConsistencyCheckTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public ConsistencyCheckTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
+            this.VmDetails = new LazyList<InconsistentVmDetails>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ConsistencyCheckTaskDetails class
+        /// with required arguments.
+        /// </summary>
+        public ConsistencyCheckTaskDetails(List<InconsistentVmDetails> vmDetails, string type)
+            : this()
+        {
+            if (vmDetails == null)
+            {
+                throw new ArgumentNullException("vmDetails");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.VmDetails = vmDetails;
+            this.Type = type;
         }
     }
 }

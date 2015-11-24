@@ -489,18 +489,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken alertSettingsListResponseValue = responseDoc["AlertSettingsListResponse"];
-                        if (alertSettingsListResponseValue != null && alertSettingsListResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            AlertSettingsListResponse alertSettingsListResponseInstance = new AlertSettingsListResponse();
-                            
-                            JToken valueArray = alertSettingsListResponseValue["value"];
+                            JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     AlertSettings alertSettingsInstance = new AlertSettings();
-                                    alertSettingsListResponseInstance.Alerts.Add(alertSettingsInstance);
+                                    result.Alerts.Add(alertSettingsInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -587,11 +584,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken nextLinkValue = alertSettingsListResponseValue["nextLink"];
+                            JToken nextLinkValue = responseDoc["nextLink"];
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
-                                alertSettingsListResponseInstance.NextLink = nextLinkInstance;
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         

@@ -20,47 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of VM NIC updates task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class VmNicUpdatesTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private string _name;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Name of the task.
         /// </summary>
-        public IList<Job> Jobs
+        public string Name
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private string _nextLink;
+        private string _nicId;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Required. ID of VM NIC.
         /// </summary>
-        public string NextLink
+        public string NicId
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._nicId; }
+            set { this._nicId = value; }
+        }
+        
+        private string _vmId;
+        
+        /// <summary>
+        /// Required. ID of the VM.
+        /// </summary>
+        public string VmId
+        {
+            get { return this._vmId; }
+            set { this._vmId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the VmNicUpdatesTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public VmNicUpdatesTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
         }
     }
 }

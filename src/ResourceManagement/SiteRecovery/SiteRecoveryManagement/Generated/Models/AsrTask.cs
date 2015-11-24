@@ -20,92 +20,25 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Task object.
+    /// The definition of a task object.
     /// </summary>
-    public partial class AsrTask
+    public partial class AsrTask : AsrTaskBase
     {
-        private IList<string> _actions;
+        private TaskTypeDetails _customDetails;
         
         /// <summary>
-        /// Required. Actions applicable on this task.
+        /// Required. The custom task details based on the task type.
         /// </summary>
-        public IList<string> Actions
+        public TaskTypeDetails CustomDetails
         {
-            get { return this._actions; }
-            set { this._actions = value; }
-        }
-        
-        private DateTime _endTime;
-        
-        /// <summary>
-        /// Required. End time of the task.
-        /// </summary>
-        public DateTime EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Required. Id of the task.
-        /// </summary>
-        public string ID
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Required. Task name.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// Required. Start time of the task.
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Required. State of the task.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _taskFriendlyName;
-        
-        /// <summary>
-        /// Required. Name of the task.
-        /// </summary>
-        public string TaskFriendlyName
-        {
-            get { return this._taskFriendlyName; }
-            set { this._taskFriendlyName = value; }
+            get { return this._customDetails; }
+            set { this._customDetails = value; }
         }
         
         /// <summary>
@@ -113,7 +46,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public AsrTask()
         {
-            this.Actions = new LazyList<string>();
         }
     }
 }

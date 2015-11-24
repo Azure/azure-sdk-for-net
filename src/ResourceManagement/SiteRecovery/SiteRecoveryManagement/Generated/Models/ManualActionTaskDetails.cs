@@ -20,47 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of manual action task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class ManualActionTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private string _instructions;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Instructions for the task.
         /// </summary>
-        public IList<Job> Jobs
+        public string Instructions
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._instructions; }
+            set { this._instructions = value; }
         }
         
-        private string _nextLink;
+        private string _name;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Required. Name of the task.
         /// </summary>
-        public string NextLink
+        public string Name
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _observation;
+        
+        /// <summary>
+        /// Required. Observation in the task.
+        /// </summary>
+        public string Observation
+        {
+            get { return this._observation; }
+            set { this._observation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the ManualActionTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public ManualActionTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
         }
     }
 }

@@ -20,47 +20,51 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// Model class for job task details object which is actually a job.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class JobTaskDetails : TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private JobEntity _jobTask;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Job task.
         /// </summary>
-        public IList<Job> Jobs
+        public JobEntity JobTask
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
-        private string _nextLink;
-        
-        /// <summary>
-        /// Optional. The nextLink value.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._jobTask; }
+            set { this._jobTask = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the JobTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public JobTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobTaskDetails class with
+        /// required arguments.
+        /// </summary>
+        public JobTaskDetails(JobEntity jobTask, string type)
+            : this()
+        {
+            if (jobTask == null)
+            {
+                throw new ArgumentNullException("jobTask");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.JobTask = jobTask;
+            this.Type = type;
         }
     }
 }

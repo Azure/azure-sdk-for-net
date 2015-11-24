@@ -20,47 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// Model class for task specific details based on the task type.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class TaskTypeDetails
     {
-        private IList<Job> _jobs;
+        private string _type;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. The task type. Overriden in derived classes.
         /// </summary>
-        public IList<Job> Jobs
+        public string Type
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
-        private string _nextLink;
-        
-        /// <summary>
-        /// Optional. The nextLink value.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the TaskTypeDetails class.
         /// </summary>
-        public JobListResponse()
+        public TaskTypeDetails()
         {
-            this.Jobs = new LazyList<Job>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TaskTypeDetails class with
+        /// required arguments.
+        /// </summary>
+        public TaskTypeDetails(string type)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.Type = type;
         }
     }
 }

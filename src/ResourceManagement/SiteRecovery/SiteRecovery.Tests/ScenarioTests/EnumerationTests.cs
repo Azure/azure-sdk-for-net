@@ -102,7 +102,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var response = client.Jobs.List(RequestHeaders);
+                var response = client.Jobs.List(RequestHeaders, null);
 
                 Assert.True(response.Jobs.Count > 0, "Jobs count can't be less than 1");
                 Assert.True(response.Jobs.All(
@@ -238,6 +238,20 @@ namespace SiteRecovery.Tests
                 var response = client.Events.List(string.Empty, RequestHeaders);
                 Assert.NotNull(response);
                 Assert.NotEmpty(response.Events);
+            }
+        }
+
+        [Fact]
+        public void EnumerateAlertSettingsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.AlertSettings.List(RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Alerts);
             }
         }
     }

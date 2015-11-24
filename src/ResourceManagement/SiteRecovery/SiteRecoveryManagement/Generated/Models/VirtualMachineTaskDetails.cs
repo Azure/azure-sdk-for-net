@@ -20,47 +20,43 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list Jobs operation.
+    /// The definition of virtual machine task details object.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class VirtualMachineTaskDetails : JobTaskDetails
     {
-        private IList<Job> _jobs;
+        private string _skippedReason;
         
         /// <summary>
-        /// Optional. The list of Jobs.
+        /// Required. Skipped reason.
         /// </summary>
-        public IList<Job> Jobs
+        public string SkippedReason
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._skippedReason; }
+            set { this._skippedReason = value; }
         }
         
-        private string _nextLink;
+        private string _skippedReasonString;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Required. Skipped reason string.
         /// </summary>
-        public string NextLink
+        public string SkippedReasonString
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._skippedReasonString; }
+            set { this._skippedReasonString = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
+        /// Initializes a new instance of the VirtualMachineTaskDetails class.
         /// </summary>
-        public JobListResponse()
+        public VirtualMachineTaskDetails()
         {
-            this.Jobs = new LazyList<Job>();
         }
     }
 }
