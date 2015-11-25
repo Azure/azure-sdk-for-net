@@ -26,6 +26,8 @@
     <Compile Include="Tests\LookupTests.cs" />
     <Compile Include="Tests\Models\Book.cs" />
     <Compile Include="Tests\Models\Hotel.cs" />
+    <Compile Include="Tests\Models\ModelWithInt.cs" />
+    <Compile Include="Tests\Models\ModelWithNullableInt.cs" />
     <Compile Include="Tests\PostSearchTests.cs" />
     <Compile Include="Tests\PostSuggestTests.cs" />
     <Compile Include="Tests\QueryTests.cs" />
@@ -36,6 +38,7 @@
     <Compile Include="Tests\Serialization\GeographyPointConverterTests.cs" />
     <Compile Include="Tests\Serialization\SearchParametersTests.cs" />
     <Compile Include="Tests\Serialization\SuggestParametersTests.cs" />
+    <Compile Include="Tests\Serialization\ValueTypePreservingContractResolverTests.cs" />
     <Compile Include="Tests\SoftDeleteColumnDeletionDetectionPolicyTests.cs" />
     <Compile Include="Tests\SuggestTests.cs" />
     <Compile Include="Utilities\DocumentsFixture.cs" />
@@ -89,7 +92,13 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanFilter.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanFilterNonNullableType.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanGetResultCountInSearch.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanRoundTripNonNullableValueTypes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchDynamicDocuments.json">
@@ -123,6 +132,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\DefaultSearchModeIsAny.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\NullCannotBeConvertedToValueType.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\OrderByProgressivelyBreaksTies.json">
@@ -323,7 +335,13 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanFilter.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanFilterNonNullableType.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanGetResultCountInSearch.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanRoundTripNonNullableValueTypes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchDynamicDocuments.json">
@@ -357,6 +375,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\DefaultSearchModeIsAny.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\NullCannotBeConvertedToValueType.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\OrderByProgressivelyBreaksTies.json">
