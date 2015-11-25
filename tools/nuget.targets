@@ -75,7 +75,7 @@
   Build NuGet packages
   -->
   <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
-    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' " />
+    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' OR @(NonAutoRestLibraries) != ''" />
     
     <Message Text="Generating NuGet library" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.Identity)' != '' "

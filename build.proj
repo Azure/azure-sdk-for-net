@@ -108,9 +108,9 @@
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
-    <!--<MSBuild Projects="@(NonAutoRestLibraries)"
+    <MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />-->
+             Targets="Build" />
 
     <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
