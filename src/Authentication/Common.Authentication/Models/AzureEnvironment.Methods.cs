@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string USGovernmentSqlDatabaseDnsSuffix = ".database.usgovcloudapi.net";
 
-        public const string AzureActiveDirectoryEndpoint = "https://login.windows.net/";
+        public const string AzureActiveDirectoryEndpoint = "https://login.microsoftonline.com/";
 
         public const string ChinaActiveDirectoryEndpoint = "https://login.chinacloudapi.cn/";
 
