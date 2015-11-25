@@ -26,27 +26,27 @@ namespace StreamAnalytics.Tests.OperationTests
     {
         // Azure Storage secrets
         public const string AccountName = "exchangeevent";
-        public const string AccountKey = @"LVn3eQSK8GoBkPG4zpHEESzaoI3L2HnzuWIm2rkEA9ybnxlA1EJ3VeB6kld4OH+aR1COn0/aeZz+ynldcgMJSg==";
+        public const string AccountKey = @"$TestStringToBeReplaced";
 
         // Event Hub/Service Bus secrets
         public const string EventHubName = "sdkeventhub";
         public const string ServiceBusNamespace = "sdktest";
         public const string SharedAccessPolicyName = "RootManageSharedAccessKey";
-        public const string SharedAccessPolicyKey = @"CnZzqHjkAx2HKXVtnmMvCtbFGq+iFyvzhjO7rBAEaOE=";
+        public const string SharedAccessPolicyKey = @"$TestStringToBeReplaced";
 
         // IoT Hub secrets
         public const string IoTHubNamespace = "ZivIoTHub";
-        public const string IotHubSharedAccessPolicyKey = @"caL8uCB0BxnPUnbmACgENpuqdyGLig5P5IoJLT4pIQ9=";
+        public const string IotHubSharedAccessPolicyKey = @"$TestStringToBeReplaced";
         
         // DocumentDB secrets
         public const string DocDbAccountId = "ibizaloctest001docdb";
-        public const string DocDbAccountKey = @"0slkXPyx4q97Q+QxCtT1TnvP+XEfbfVG3qG+1B+uzD0TA+IQ5/VSi49y2gS4pRrqe+hXj704zvTR5x59R3H0Hg==";
+        public const string DocDbAccountKey = @"$TestStringToBeReplaced";
 
         // SQL Azure secrets
         public const string Server = "z102fk12be";
         public const string Database = "HydraSdkTest";
         public const string User = "customersolution";
-        public const string Password = "y3%rNk9*";
+        public const string Password = "$TestStringToBeReplaced";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
