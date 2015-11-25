@@ -58,7 +58,8 @@ namespace Networks.Tests
             var backendHttpSettingsName = TestUtilities.GenerateName();
             var requestRoutingRuleName = TestUtilities.GenerateName();
             var httpListenerName = TestUtilities.GenerateName();
-            
+            var probeName = TestUtilities.GenerateName();
+
             var appGw = new ApplicationGateway()
             {
                 Location = location,
@@ -99,6 +100,19 @@ namespace Networks.Tests
                             Port = 80
                         }
                     },
+                Probes = new List<ApplicationGatewayProbe>
+                    {
+                        new ApplicationGatewayProbe()
+                        {
+                            Name = probeName,
+                            Protocol = ApplicationGatewayProtocol.Http,
+                            Host = "probe.com",
+                            Path = "/path/path.htm",
+                            Interval = 17,
+                            Timeout = 17,
+                            UnhealthyThreshold = 5
+                        }
+                    },
                 BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
                     {
                         new ApplicationGatewayBackendAddressPool()
@@ -124,7 +138,13 @@ namespace Networks.Tests
                             Name = backendHttpSettingsName,
                             Port = 80,
                             Protocol = ApplicationGatewayProtocol.Http,
-                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled
+                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
+                            RequestTimeout = 69,
+                            Probe = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "probes", probeName)
+                            }
                         }
                     },
                 HttpListeners = new List<ApplicationGatewayHttpListener>
@@ -319,6 +339,7 @@ namespace Networks.Tests
             //Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
             //Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
+            Assert.Equal(gw1.Probes.Count, gw2.Probes.Count);
             Assert.Equal(gw1.SslCertificates.Count, gw2.SslCertificates.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
@@ -327,7 +348,7 @@ namespace Networks.Tests
             //Assert.Equal(gw1.ResourceGuid, gw2.ResourceGuid);
         }
 
-        [Fact(Skip = "TODO: Autorest")]
+        [Fact]
         public void ApplicationGatewayApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

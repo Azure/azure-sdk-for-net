@@ -17,29 +17,28 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Backend address pool settings of application gateway
+    /// Probe of application gateway
     /// </summary>
-    public partial class ApplicationGatewayBackendHttpSettings : SubResource
+    public partial class ApplicationGatewayProbe : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ApplicationGatewayBackendHttpSettings class.
+        /// Initializes a new instance of the ApplicationGatewayProbe class.
         /// </summary>
-        public ApplicationGatewayBackendHttpSettings() { }
+        public ApplicationGatewayProbe() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ApplicationGatewayBackendHttpSettings class.
+        /// Initializes a new instance of the ApplicationGatewayProbe class.
         /// </summary>
-        public ApplicationGatewayBackendHttpSettings(string name = default(string), string etag = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayProbe(string name = default(string), string etag = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
-            Port = port;
             Protocol = protocol;
-            CookieBasedAffinity = cookieBasedAffinity;
-            RequestTimeout = requestTimeout;
-            Probe = probe;
+            Host = host;
+            Path = path;
+            Interval = interval;
+            Timeout = timeout;
+            UnhealthyThreshold = unhealthyThreshold;
             ProvisioningState = provisioningState;
         }
 
@@ -58,12 +57,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the port
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.port")]
-        public int? Port { get; set; }
-
-        /// <summary>
         /// Gets or sets the protocol. Possible values for this property
         /// include: 'Http', 'Https'.
         /// </summary>
@@ -71,23 +64,34 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the cookie affinity. Possible values for this
-        /// property include: 'Enabled', 'Disabled'.
+        /// Gets or sets the host to send probe to
         /// </summary>
-        [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
-        public string CookieBasedAffinity { get; set; }
+        [JsonProperty(PropertyName = "properties.host")]
+        public string Host { get; set; }
 
         /// <summary>
-        /// Gets or sets request timeout
+        /// Gets or sets the relative path of probe
         /// </summary>
-        [JsonProperty(PropertyName = "properties.requestTimeout")]
-        public int? RequestTimeout { get; set; }
+        [JsonProperty(PropertyName = "properties.path")]
+        public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets probe resource of application gateway
+        /// Gets or sets probing interval in seconds
         /// </summary>
-        [JsonProperty(PropertyName = "properties.probe")]
-        public SubResource Probe { get; set; }
+        [JsonProperty(PropertyName = "properties.interval")]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// Gets or sets probing timeout in seconds
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timeout")]
+        public int? Timeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets probing unhealthy threshold
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unhealthyThreshold")]
+        public int? UnhealthyThreshold { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the backend http settings
