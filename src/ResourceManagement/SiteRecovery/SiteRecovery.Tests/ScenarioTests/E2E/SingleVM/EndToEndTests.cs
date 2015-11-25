@@ -27,7 +27,7 @@ namespace SiteRecovery.Tests
 {
     public class EndToEndTests : SiteRecoveryTestsBase
     {
-        
+        [Fact]
         public void EndToEndE2ESingleVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -421,7 +421,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void EndToEndE2ASingleVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -751,7 +751,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void EndToEndB2ASingleVM()
         {
             using (UndoContext context = UndoContext.Current)

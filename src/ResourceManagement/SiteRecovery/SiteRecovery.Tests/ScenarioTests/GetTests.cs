@@ -104,6 +104,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+	[Fact]
         public void GetReplicationProtectedItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -118,7 +119,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetVMwareAzureV2ReplicationProtectableItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -200,7 +201,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetNetworkMappingTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -219,7 +220,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetContainerMappings()
         {
             using (UndoContext context = UndoContext.Current)
@@ -234,7 +235,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void GetVMwareAzureV2ContainerMapping()
         {
             using (UndoContext context = UndoContext.Current)

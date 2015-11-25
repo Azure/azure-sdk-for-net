@@ -28,7 +28,7 @@ namespace SiteRecovery.Tests
 {
     public class PairingTests : SiteRecoveryTestsBase
     {
-        
+        [Fact]
         public void PairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -113,7 +113,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void UnpairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -301,7 +301,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void PairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -329,7 +329,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void UnPairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -349,7 +349,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void PurgeCloudPair()
         {
             using (UndoContext context = UndoContext.Current)
@@ -392,6 +392,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+	[Fact]
         public void CreateVMwareAzureV2Mapping()
         {
             using (UndoContext context = UndoContext.Current)

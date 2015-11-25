@@ -27,19 +27,19 @@ namespace SiteRecovery.Tests
 {
     public class ProtectionTests : SiteRecoveryTestsBase
     {
-        
+        [Fact]
         public void EnableDR()
         {
             
         }
 
-        
+        [Fact]
         public void DisableDR()
         {
             
         }
 
-        
+        [Fact]
         public void PurgeDR()
         {
             using (UndoContext context = UndoContext.Current)

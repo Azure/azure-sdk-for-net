@@ -68,12 +68,12 @@ namespace SiteRecovery.Tests
                     "Servers count can't be less than 1");
 
                 var vmWareFabric = responseServers.Fabrics.First(
-                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMM");
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
                 Assert.NotNull(vmWareFabric);
 
-                //var vmWareDetails =
-                //   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
-                //Assert.NotNull(vmWareDetails);
+                var vmWareDetails =
+                   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
+                Assert.NotNull(vmWareDetails);
 
                 var response = client.ProtectionContainer.List(
                     vmWareFabric.Name,
@@ -115,7 +115,7 @@ namespace SiteRecovery.Tests
             }
         }
         
-        
+        [Fact]
         public void EnumerateProtectableItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -187,7 +187,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        [Fact]
         public void EnumerateNetworkMappingsUnderNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)
