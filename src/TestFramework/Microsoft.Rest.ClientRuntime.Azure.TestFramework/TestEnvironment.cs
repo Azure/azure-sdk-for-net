@@ -82,7 +82,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             EnvEndpoints.Add(EnvironmentNames.Prod, new TestEndpoints
             {
                 Name = EnvironmentNames.Prod,
-                AADAuthUri = new Uri("https://login.windows.net"),
+                AADAuthUri = new Uri("https://login.microsoftonline.com"),
                 GalleryUri = new Uri("https://gallery.azure.com/"),
                 GraphUri = new Uri("https://graph.windows.net/"),
                 IbizaPortalUri = new Uri("https://portal.azure.com/"),
