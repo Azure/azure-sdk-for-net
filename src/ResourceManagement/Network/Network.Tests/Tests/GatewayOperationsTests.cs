@@ -758,7 +758,7 @@ namespace Networks.Tests
                 // 5.Generate P2S Vpnclient package
                 var vpnClientParameters = new VpnClientParameters()
                 {
-                    ProcessorArchitecture = Architecture.Amd64
+                    ProcessorArchitecture = ProcessorArchitecture.Amd64
                 };
                 string packageUrl = networkManagementClient.VirtualNetworkGateways.Generatevpnclientpackage(resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
                 //Assert.NotNull(packageUrl);

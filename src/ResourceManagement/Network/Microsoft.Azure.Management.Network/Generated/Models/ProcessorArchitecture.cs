@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Architecture.
+    /// Defines values for ProcessorArchitecture.
     /// </summary>
-    public static class Architecture
+    public static class ProcessorArchitecture
     {
         public const string Amd64 = "Amd64";
         public const string X86 = "X86";
