@@ -66,6 +66,27 @@ namespace RecoveryServices.Tests
         }
 
         [Fact]
+        public void RetrieveVaultUsages()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var rsmClient = GetRecoveryServicesClient(CustomHttpHandler);
+                ReplicationUsagesResponse response = rsmClient.ReplicationUsages.Get(
+                    resourceGroupName,
+                    resourceName,
+                    RequestHeaders);
+
+                Assert.NotNull(response.ReplicationVaultUsages);
+                Assert.NotNull(response.ReplicationVaultUsages.JobsSummary);
+                Assert.NotNull(response.ReplicationVaultUsages.MonitoringSummary);
+                Assert.NotNull(response.ReplicationVaultUsages.ProtectedItemCount);
+                Assert.NotNull(response.ReplicationVaultUsages.RecoveryPlanCount);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }
+        }
+
+        [Fact]
         public void RemoveVault()
         {
             using (UndoContext context = UndoContext.Current)
