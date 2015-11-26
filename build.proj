@@ -48,7 +48,6 @@
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
-    <CommonSolution>src\Common\Common.sln</CommonSolution>
     <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
@@ -65,7 +64,10 @@
 
   <ItemGroup>
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all' " />
+    <!--Exclude data plane projects which are managed by parnter service team individually-->
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
+                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
+                      Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -108,9 +110,9 @@
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
-    <!--<MSBuild Projects="@(NonAutoRestLibraries)"
+    <MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />-->
+             Targets="Build" />
 
     <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
@@ -167,7 +169,7 @@
     <!--This property is used by build script at CI server. Do not remove it unless you will update CI as well -->
     <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
       For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
-    <CorporateScanPaths>$(LibrarySourceFolder)\Common;$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
+    <CorporateScanPaths>$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
     <!--public token associated with MSSharedLibKey.snk-->
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
@@ -249,6 +251,7 @@
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
     <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="$(NuGetCommand) restore %(NonAutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(NonAutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
   
@@ -271,7 +274,6 @@
 
     <!-- Useful variables to log -->
     <Message Text="Build Properties and Variables" Importance="high" />
-    <Message Text="Common Solution    : $(CommonSolution)" />
     <Message Text="Libraries Solution : $(ManagementLibrariesSolution)" />
     <Message Text="Library            : $(LibraryFriendlyName)" />
     <Message Text="Source folder      : $(LibrarySourceFolder)" />
