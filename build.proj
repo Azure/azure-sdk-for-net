@@ -251,6 +251,7 @@
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
     <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="$(NuGetCommand) restore %(NonAutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(NonAutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
   
