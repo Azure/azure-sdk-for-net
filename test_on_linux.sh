@@ -1,13 +1,17 @@
-#!bin/sh
-
-for item in src/ResourceManagement/*
+#!/bin/sh
+dnu restore
+set -e
+armdir=`pwd`/src/ResourceManagement
+for item in Authorization Graph.RBAC Network Resource Storage #Compute
 do
-  if [ -d $item ]
+  if [ -d $armdir/$item ]
   then
-    if [ -d $item/$item.Tests ] && [ -f $item\$item.Tests\project.json ]
+    if [ -d $armdir/$item/$item.Tests ] && [ -f $armdir/$item/$item.Tests/project.json ]
     then
-      dnu $item/$item.Tests/project.json build --framework dnxcore50
-      dnx $item/$item.Tests/project.json test
+      cd $armdir/$item/$item.Tests
+      dnu build --framework dnxcore50
+      dnx test
+      cd $armdir 
     fi
   fi
 done
