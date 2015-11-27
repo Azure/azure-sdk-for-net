@@ -2,7 +2,7 @@
 dnu restore
 set -e
 armdir=`pwd`/src/ResourceManagement
-for item in Authorization Graph.RBAC Network Resource Storage #Compute
+for item in Compute Authorization Graph.RBAC Network Resource Storage WebSite
 do
   if [ -d $armdir/$item ]
   then
