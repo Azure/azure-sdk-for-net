@@ -244,98 +244,91 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken alertSettingsResponseValue = responseDoc["AlertSettingsResponse"];
-                        if (alertSettingsResponseValue != null && alertSettingsResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            AlertSettingsResponse alertSettingsResponseInstance = new AlertSettingsResponse();
+                            AlertSettings alertInstance = new AlertSettings();
+                            result.Alert = alertInstance;
                             
-                            JToken valueValue = alertSettingsResponseValue["value"];
-                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                AlertSettings valueInstance = new AlertSettings();
-                                alertSettingsResponseInstance.Alert = valueInstance;
+                                AlertSettingsProperties propertiesInstance = new AlertSettingsProperties();
+                                alertInstance.Properties = propertiesInstance;
                                 
-                                JToken propertiesValue2 = valueValue["properties"];
-                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                JToken sendToSubscriptionAdminValue = propertiesValue2["sendToSubscriptionAdmin"];
+                                if (sendToSubscriptionAdminValue != null && sendToSubscriptionAdminValue.Type != JTokenType.Null)
                                 {
-                                    AlertSettingsProperties propertiesInstance = new AlertSettingsProperties();
-                                    valueInstance.Properties = propertiesInstance;
-                                    
-                                    JToken sendToSubscriptionAdminValue = propertiesValue2["sendToSubscriptionAdmin"];
-                                    if (sendToSubscriptionAdminValue != null && sendToSubscriptionAdminValue.Type != JTokenType.Null)
+                                    string sendToSubscriptionAdminInstance = ((string)sendToSubscriptionAdminValue);
+                                    propertiesInstance.SendToSubscriptionAdmin = sendToSubscriptionAdminInstance;
+                                }
+                                
+                                JToken sendToSubscriptionCoAdminsValue = propertiesValue2["sendToSubscriptionCoAdmins"];
+                                if (sendToSubscriptionCoAdminsValue != null && sendToSubscriptionCoAdminsValue.Type != JTokenType.Null)
+                                {
+                                    string sendToSubscriptionCoAdminsInstance = ((string)sendToSubscriptionCoAdminsValue);
+                                    propertiesInstance.SendToSubscriptionCoAdmins = sendToSubscriptionCoAdminsInstance;
+                                }
+                                
+                                JToken customEmailAddressesArray2 = propertiesValue2["customEmailAddresses"];
+                                if (customEmailAddressesArray2 != null && customEmailAddressesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken customEmailAddressesValue in ((JArray)customEmailAddressesArray2))
                                     {
-                                        string sendToSubscriptionAdminInstance = ((string)sendToSubscriptionAdminValue);
-                                        propertiesInstance.SendToSubscriptionAdmin = sendToSubscriptionAdminInstance;
-                                    }
-                                    
-                                    JToken sendToSubscriptionCoAdminsValue = propertiesValue2["sendToSubscriptionCoAdmins"];
-                                    if (sendToSubscriptionCoAdminsValue != null && sendToSubscriptionCoAdminsValue.Type != JTokenType.Null)
-                                    {
-                                        string sendToSubscriptionCoAdminsInstance = ((string)sendToSubscriptionCoAdminsValue);
-                                        propertiesInstance.SendToSubscriptionCoAdmins = sendToSubscriptionCoAdminsInstance;
-                                    }
-                                    
-                                    JToken customEmailAddressesArray2 = propertiesValue2["customEmailAddresses"];
-                                    if (customEmailAddressesArray2 != null && customEmailAddressesArray2.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken customEmailAddressesValue in ((JArray)customEmailAddressesArray2))
-                                        {
-                                            propertiesInstance.CustomEmailAddresses.Add(((string)customEmailAddressesValue));
-                                        }
-                                    }
-                                    
-                                    JToken serverIdValue = propertiesValue2["serverId"];
-                                    if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
-                                    {
-                                        string serverIdInstance = ((string)serverIdValue);
-                                        propertiesInstance.ServerId = serverIdInstance;
-                                    }
-                                    
-                                    JToken localeValue = propertiesValue2["locale"];
-                                    if (localeValue != null && localeValue.Type != JTokenType.Null)
-                                    {
-                                        string localeInstance = ((string)localeValue);
-                                        propertiesInstance.Locale = localeInstance;
+                                        propertiesInstance.CustomEmailAddresses.Add(((string)customEmailAddressesValue));
                                     }
                                 }
                                 
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken serverIdValue = propertiesValue2["serverId"];
+                                if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    valueInstance.Id = idInstance;
+                                    string serverIdInstance = ((string)serverIdValue);
+                                    propertiesInstance.ServerId = serverIdInstance;
                                 }
                                 
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken localeValue = propertiesValue2["locale"];
+                                if (localeValue != null && localeValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    valueInstance.Name = nameInstance;
+                                    string localeInstance = ((string)localeValue);
+                                    propertiesInstance.Locale = localeInstance;
                                 }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                alertInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                alertInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                alertInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                alertInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    valueInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    valueInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        valueInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    alertInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }

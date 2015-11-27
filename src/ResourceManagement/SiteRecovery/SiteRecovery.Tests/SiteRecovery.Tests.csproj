@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="Helpers\RecordedDelegationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\AlertsTests.cs" />
     <Compile Include="ScenarioTests\DeletionTests.cs" />
     <Compile Include="ScenarioTests\E2E\SingleVM\EndToEndTests.cs" />
     <Compile Include="ScenarioTests\EnumerationTests.cs" />
