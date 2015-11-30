@@ -424,7 +424,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// Parse enum values for type DeviceHAState.
+        /// Parse enum values for type DevicePath.
         /// </summary>
         /// <param name='value'>
         /// The value to parse.
@@ -432,21 +432,21 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The enum value.
         /// </returns>
-        internal static DeviceHAState ParseDeviceHAState(string value)
+        internal static DevicePath ParseDevicePath(string value)
         {
             if ("primary".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
-                return DeviceHAState.Primary;
+                return DevicePath.Primary;
             }
             if ("secondary".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
-                return DeviceHAState.Secondary;
+                return DevicePath.Secondary;
             }
             throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>
-        /// Convert an enum of type DeviceHAState to a string.
+        /// Convert an enum of type DevicePath to a string.
         /// </summary>
         /// <param name='value'>
         /// The value to convert to a string.
@@ -454,13 +454,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The enum value as a string.
         /// </returns>
-        internal static string DeviceHAStateToString(DeviceHAState value)
+        internal static string DevicePathToString(DevicePath value)
         {
-            if (value == DeviceHAState.Primary)
+            if (value == DevicePath.Primary)
             {
                 return "primary";
             }
-            if (value == DeviceHAState.Secondary)
+            if (value == DevicePath.Secondary)
             {
                 return "secondary";
             }

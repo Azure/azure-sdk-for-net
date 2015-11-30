@@ -53,18 +53,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
-        /// <param name='deviceHAState'>
+        /// <param name='devicePath'>
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Peering Routing Summary operation
         /// response.
         /// </returns>
-        public static DedicatedCircuitPeeringRoutingSummaryGetResponse Get(this IDedicatedCircuitPeeringRoutingSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DeviceHAState deviceHAState)
+        public static DedicatedCircuitPeeringRoutingSummaryGetResponse Get(this IDedicatedCircuitPeeringRoutingSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDedicatedCircuitPeeringRoutingSummaryOperations)s).GetAsync(serviceKey, accessType, deviceHAState);
+                return ((IDedicatedCircuitPeeringRoutingSummaryOperations)s).GetAsync(serviceKey, accessType, devicePath);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -83,16 +83,16 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
-        /// <param name='deviceHAState'>
+        /// <param name='devicePath'>
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Peering Routing Summary operation
         /// response.
         /// </returns>
-        public static Task<DedicatedCircuitPeeringRoutingSummaryGetResponse> GetAsync(this IDedicatedCircuitPeeringRoutingSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DeviceHAState deviceHAState)
+        public static Task<DedicatedCircuitPeeringRoutingSummaryGetResponse> GetAsync(this IDedicatedCircuitPeeringRoutingSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
-            return operations.GetAsync(serviceKey, accessType, deviceHAState, CancellationToken.None);
+            return operations.GetAsync(serviceKey, accessType, devicePath, CancellationToken.None);
         }
     }
 }

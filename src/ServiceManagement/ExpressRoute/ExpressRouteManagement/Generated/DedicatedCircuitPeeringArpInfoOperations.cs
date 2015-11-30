@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
-        /// <param name='deviceHAState'>
+        /// <param name='devicePath'>
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <param name='cancellationToken'>
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit Peering Arp Info operation response.
         /// </returns>
-        public async Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DeviceHAState deviceHAState, CancellationToken cancellationToken)
+        public async Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceKey", serviceKey);
                 tracingParameters.Add("accessType", accessType);
-                tracingParameters.Add("deviceHAState", deviceHAState);
+                tracingParameters.Add("devicePath", devicePath);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             url = url + "/bgppeerings/";
             url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
             url = url + "/arpInfo/";
-            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.DeviceHAStateToString(deviceHAState));
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.DevicePathToString(devicePath));
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=1.0");
             if (queryParameters.Count > 0)

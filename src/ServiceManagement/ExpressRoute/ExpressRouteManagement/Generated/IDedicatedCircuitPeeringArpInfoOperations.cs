@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='accessType'>
         /// Whether the peering is private or public or microsoft.
         /// </param>
-        /// <param name='deviceHAState'>
+        /// <param name='devicePath'>
         /// Whether the device is primary or secondary.
         /// </param>
         /// <param name='cancellationToken'>
@@ -48,6 +48,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit Peering Arp Info operation response.
         /// </returns>
-        Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DeviceHAState deviceHAState, CancellationToken cancellationToken);
+        Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
     }
 }
