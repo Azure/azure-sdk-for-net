@@ -30,18 +30,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public partial class DataDisk : Disk
     {
-        private int? _diskSizeGB;
-        
-        /// <summary>
-        /// Optional. Gets or sets the disk size in GB for a blank data disk to
-        /// be created.
-        /// </summary>
-        public int? DiskSizeGB
-        {
-            get { return this._diskSizeGB; }
-            set { this._diskSizeGB = value; }
-        }
-        
         private int _lun;
         
         /// <summary>

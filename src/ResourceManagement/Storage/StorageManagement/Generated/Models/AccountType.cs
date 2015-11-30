@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    /// <summary>
+    /// The account type of the storage account.
+    /// </summary>
     public enum AccountType
     {
         /// <summary>

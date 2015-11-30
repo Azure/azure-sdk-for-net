@@ -27,6 +27,9 @@
     <None Include="SessionRecords\Features.Tests.LiveFeatureTests\RegisterFeature.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CheckExistenceReturnsCorrectValue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateDeploymentAndValidateProperties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -55,6 +58,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderListValidateMessage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderOperationsMetadataGetAll.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderOperationsMetadataGetById.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\VerifyProviderRegister.json">
@@ -115,6 +124,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\GetResourceSubscriptionPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptionLocations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptions.json">

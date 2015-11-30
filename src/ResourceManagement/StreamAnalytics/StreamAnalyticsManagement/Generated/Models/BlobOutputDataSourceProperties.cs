@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
@@ -32,18 +31,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class BlobOutputDataSourceProperties
     {
-        private string _blobPathPrefix;
-        
-        /// <summary>
-        /// Optional. Gets or sets the prefix for the desired blob output path,
-        /// Includes terminating ‘/’.
-        /// </summary>
-        public string BlobPathPrefix
-        {
-            get { return this._blobPathPrefix; }
-            set { this._blobPathPrefix = value; }
-        }
-        
         private string _container;
         
         /// <summary>
@@ -53,6 +40,33 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         {
             get { return this._container; }
             set { this._container = value; }
+        }
+        
+        private string _dateFormat;
+        
+        /// <summary>
+        /// Optional. Gets or sets the date format. Wherever {date} appears in
+        /// pathPattern, the value of this property is used as the date format
+        /// instead.
+        /// </summary>
+        public string DateFormat
+        {
+            get { return this._dateFormat; }
+            set { this._dateFormat = value; }
+        }
+        
+        private string _pathPattern;
+        
+        /// <summary>
+        /// Optional. Gets or sets the blob path pattern. Not a regular
+        /// expression. Value is a pattern against which blob names are
+        /// matched to determine whether to include data from the associated
+        /// blobs in the streaming job output.
+        /// </summary>
+        public string PathPattern
+        {
+            get { return this._pathPattern; }
+            set { this._pathPattern = value; }
         }
         
         private IList<StorageAccount> _storageAccounts;
@@ -66,13 +80,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._storageAccounts = value; }
         }
         
+        private string _timeFormat;
+        
+        /// <summary>
+        /// Optional. Gets or sets the time format. Wherever {time} appears in
+        /// pathPattern, the value of this property is used as the time format
+        /// instead.
+        /// </summary>
+        public string TimeFormat
+        {
+            get { return this._timeFormat; }
+            set { this._timeFormat = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BlobOutputDataSourceProperties
         /// class.
         /// </summary>
         public BlobOutputDataSourceProperties()
         {
-            this.StorageAccounts = new LazyList<StorageAccount>();
         }
     }
 }

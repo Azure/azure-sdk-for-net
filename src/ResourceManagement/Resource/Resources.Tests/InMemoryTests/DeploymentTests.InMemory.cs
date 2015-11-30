@@ -177,7 +177,7 @@ namespace ResourceGroups.Tests
                           }
                        }
                     ],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }
 ")
             };
@@ -212,7 +212,7 @@ namespace ResourceGroups.Tests
                 {
                     Content = new StringContent(@"{
                     'value': [],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }")
                 };
 
@@ -353,7 +353,7 @@ namespace ResourceGroups.Tests
                           }
                        }
                     ],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }
 ")
             };
@@ -834,7 +834,7 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
@@ -941,7 +941,7 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1054,7 +1054,7 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };

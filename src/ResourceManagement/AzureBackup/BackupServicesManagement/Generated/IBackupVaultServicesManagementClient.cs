@@ -70,20 +70,10 @@ namespace Microsoft.Azure.Management.BackupServices
             get; set; 
         }
         
-        string ResourceGroupName
-        {
-            get; set; 
-        }
-        
-        string ResourceName
-        {
-            get; set; 
-        }
-        
         /// <summary>
         /// Definition of Container operations for the Azure Backup extension.
         /// </summary>
-        IContainerOperations Container
+        IMarsContainerOperations Container
         {
             get; 
         }

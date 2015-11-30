@@ -148,6 +148,15 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        ILocationCapabilitiesOperations Capabilities
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>
@@ -167,11 +176,32 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Replication Links.  Contains operations to: Delete and Retrieve
+        /// replication links.
+        /// </summary>
+        IReplicationLinkOperations DatabaseReplicationLinks
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for managing Azure SQL Database
         /// secure connection.  Contains operations to: Create, Retrieve and
         /// Update secure connection policy .
         /// </summary>
         ISecureConnectionPolicyOperations SecureConnection
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// Active Directory Administrators.  Contains operations to: Create,
+        /// Retrieve, Update, and Delete Azure SQL Server Active Directory
+        /// Administrators.
+        /// </summary>
+        IServerAdministratorOperations ServerAdministrators
         {
             get; 
         }

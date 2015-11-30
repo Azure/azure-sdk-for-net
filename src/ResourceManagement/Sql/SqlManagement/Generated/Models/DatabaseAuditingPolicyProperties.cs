@@ -21,134 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL Database auditing policy.
+    /// Represents the properties of an Azure SQL auditing policy.
     /// </summary>
-    public partial class DatabaseAuditingPolicyProperties
+    public partial class DatabaseAuditingPolicyProperties : BaseAuditingPolicyProperties
     {
-        private string _auditingState;
-        
-        /// <summary>
-        /// Optional. Gets the auditing state of the Azure SQL Database
-        /// auditing policy.
-        /// </summary>
-        public string AuditingState
-        {
-            get { return this._auditingState; }
-            set { this._auditingState = value; }
-        }
-        
-        private string _auditLogsTableName;
-        
-        /// <summary>
-        /// Optional. Gets the name of the table audit logs are written to in
-        /// the Azure SQL Database auditing policy.
-        /// </summary>
-        public string AuditLogsTableName
-        {
-            get { return this._auditLogsTableName; }
-            set { this._auditLogsTableName = value; }
-        }
-        
-        private string _eventTypesToAudit;
-        
-        /// <summary>
-        /// Optional. Gets the events types of the Azure SQL Database auditing
-        /// policy.
-        /// </summary>
-        public string EventTypesToAudit
-        {
-            get { return this._eventTypesToAudit; }
-            set { this._eventTypesToAudit = value; }
-        }
-        
-        private string _retentionDays;
-        
-        /// <summary>
-        /// Optional. Gets the retention in days of the Azure SQL Database
-        /// auditing policy.
-        /// </summary>
-        public string RetentionDays
-        {
-            get { return this._retentionDays; }
-            set { this._retentionDays = value; }
-        }
-        
-        private string _storageAccountKey;
-        
-        /// <summary>
-        /// Optional. Gets the primary storage account key of the Azure SQL
-        /// Database auditing policy.
-        /// </summary>
-        public string StorageAccountKey
-        {
-            get { return this._storageAccountKey; }
-            set { this._storageAccountKey = value; }
-        }
-        
-        private string _storageAccountName;
-        
-        /// <summary>
-        /// Optional. Gets the storage account name of the Azure SQL Database
-        /// auditing policy.
-        /// </summary>
-        public string StorageAccountName
-        {
-            get { return this._storageAccountName; }
-            set { this._storageAccountName = value; }
-        }
-        
-        private string _storageAccountResourceGroupName;
-        
-        /// <summary>
-        /// Optional. Gets the resource group of the storage account of the
-        /// Azure SQL Database auditing policy.
-        /// </summary>
-        public string StorageAccountResourceGroupName
-        {
-            get { return this._storageAccountResourceGroupName; }
-            set { this._storageAccountResourceGroupName = value; }
-        }
-        
-        private string _storageAccountSecondaryKey;
-        
-        /// <summary>
-        /// Optional. Gets secondary key of the storage account of the Azure
-        /// SQL Database auditing policy.
-        /// </summary>
-        public string StorageAccountSecondaryKey
-        {
-            get { return this._storageAccountSecondaryKey; }
-            set { this._storageAccountSecondaryKey = value; }
-        }
-        
-        private string _storageAccountSubscriptionId;
-        
-        /// <summary>
-        /// Optional. Gets the subscription Id of the storage account of the
-        /// Azure SQL Database auditing policy.
-        /// </summary>
-        public string StorageAccountSubscriptionId
-        {
-            get { return this._storageAccountSubscriptionId; }
-            set { this._storageAccountSubscriptionId = value; }
-        }
-        
-        private string _storageTableEndpoint;
-        
-        /// <summary>
-        /// Optional. Gets the storage table endpoint of the Azure SQL Database
-        /// auditing policy.
-        /// </summary>
-        public string StorageTableEndpoint
-        {
-            get { return this._storageTableEndpoint; }
-            set { this._storageTableEndpoint = value; }
-        }
-        
         private string _useServerDefault;
         
         /// <summary>

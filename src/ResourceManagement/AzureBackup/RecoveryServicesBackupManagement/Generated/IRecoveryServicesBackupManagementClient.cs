@@ -21,11 +21,8 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -73,6 +70,54 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get; set; 
         }
         
+        string ResourceNamespace
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Definition of Backup operations for the Azure Backup extension.
+        /// </summary>
+        IBackupOperations Backup
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        IContainerOperation Container
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Job operations for the Azure Backup extension.
+        /// </summary>
+        IJobOperations Job
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Protectable Object operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IProtectableObjectOperations ProtectableObject
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of ProtectedItem operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IProtectedItemOperations ProtectedItem
+        {
+            get; 
+        }
+        
         /// <summary>
         /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
@@ -83,52 +128,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// The protection policy Name to be fetched.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        Task<ProtectionPolicyResponse> GetAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        IRecoveryPointOperations RecoveryPoint
+        {
+            get; 
+        }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Definition of Restore operations for the Azure Backup extension.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// The protection policy Name to be updated.
-        /// </param>
-        /// <param name='operationId'>
-        /// OperationId to get operation result.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        Task<ProtectionPolicyResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        IRestoreOperations Restore
+        {
+            get; 
+        }
     }
 }

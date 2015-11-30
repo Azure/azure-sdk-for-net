@@ -66,7 +66,7 @@
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
     <!--Exclude data plane projects which are managed by parnter service team individually-->
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
-                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
+                      Exclude="$(LibrarySourceFolder)\ServiceManagement\HDInsight\Microsoft.Hadoop.Avro.Samples\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
                       Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>

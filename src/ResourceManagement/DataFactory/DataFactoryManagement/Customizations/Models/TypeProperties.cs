@@ -23,6 +23,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 {
     public abstract class TypeProperties : IRegisteredType
     {
+        private static readonly DictionaryConverter DictionaryConverter = new DictionaryConverter();
+
         protected TypeProperties()
         {
         }
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                            DataFactoryManagementClient.CopyLocationConverter,
                            DataFactoryManagementClient.CopyTranslatorConverter,
                            DataFactoryManagementClient.PartitionValueConverter,
-                           DataFactoryManagementClient.StorageFormatConverter
+                           DataFactoryManagementClient.StorageFormatConverter, TypeProperties.DictionaryConverter
                        };
         }
     }

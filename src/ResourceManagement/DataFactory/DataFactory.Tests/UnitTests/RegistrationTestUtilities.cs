@@ -23,9 +23,15 @@ namespace DataFactory.Tests.UnitTests
 {
     internal static class RegistrationTestUtilities
     {
-        public static void TestCanGetRegisteredLinkedServiceCaseInsensitive<T>(out string typeName) where T : TypeProperties
+        public static void TestCanGetRegisteredLinkedServiceCaseInsensitive(Type type, out string typeName)
         {
-            AdfTypeNameAttribute att = typeof(T).GetCustomAttribute<AdfTypeNameAttribute>(true);
+            AdfTypeNameAttribute att = type.GetCustomAttribute<AdfTypeNameAttribute>(true);
+            if (att == null)
+            {
+                typeName = type.Name;
+                return;
+            }
+
             Assert.NotNull(att);
 
             // Get the type named used for de/ser
@@ -36,6 +42,12 @@ namespace DataFactory.Tests.UnitTests
             // Ensure that the type name is not already all lowercase
             string typeNameLower = typeName.ToLowerInvariant();
             Assert.NotEqual(typeName, typeNameLower, StringComparer.Ordinal);
+        }
+
+        public static void TestCanGetRegisteredLinkedServiceCaseInsensitive<T>(out string typeName)
+            where T : TypeProperties
+        {
+            TestCanGetRegisteredLinkedServiceCaseInsensitive(typeof(T), out typeName);
         }
     }
 }

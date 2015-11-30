@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.NotificationHubs</id>
+    <title>Microsoft Azure NotificationHubs Service Management Library</title>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides NotificationHubs Service management capabilities for Microsoft Azure.</summary>
+    <description>Provides NotificationHubs Service management capabilities for Microsoft Azure.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure NotificationHubs Service management REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+wp8+wpa81+win">
+        <reference file="Microsoft.Azure.Management.NotificationHubs.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\NotificationHubs\NotificationHubsManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.xml" target="lib\portable-net45+wp8+wpa81+win" />
+  </files>
+</package>

@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public IList<ActivityOutput> Outputs { get; set; }
 
+        /// <summary>
+        /// Optional. Scheduler of the activity.
+        /// </summary>
+        public Scheduler Scheduler { get; set;  }
+
         public Activity()
         {
             this.Initialize();

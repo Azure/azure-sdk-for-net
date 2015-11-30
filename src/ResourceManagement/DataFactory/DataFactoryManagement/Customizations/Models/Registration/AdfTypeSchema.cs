@@ -13,8 +13,11 @@
 // limitations under the License.
 //
 
+using System;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
@@ -38,6 +41,8 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public IDictionary<string, AdfSchemaProperty> Definitions { get; set; }
 
+        private static readonly Lazy<JsonConverter[]> Converters = new Lazy<JsonConverter[]>(GetConverters);
+
         public AdfTypeSchema()
         {
             this.Properties = new Dictionary<string, AdfSchemaProperty>();
@@ -47,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 
         internal static AdfTypeSchema Deserialize(string json)
         {
-            return JsonConvert.DeserializeObject<AdfTypeSchema>(json);
+            return JsonConvert.DeserializeObject<AdfTypeSchema>(json, GetConverters());
         }
 
         internal string Serialize()
@@ -55,7 +60,17 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             return JsonConvert.SerializeObject(
                 this,
                 Formatting.Indented,
-                new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                new JsonSerializerSettings()
+                    {
+                        Converters = AdfTypeSchema.Converters.Value,
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(), 
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+        }
+        
+        private static JsonConverter[] GetConverters()
+        {
+            return new JsonConverter[] { new DictionaryConverter() };
         }
     }
 }

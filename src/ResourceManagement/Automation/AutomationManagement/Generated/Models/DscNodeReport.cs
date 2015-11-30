@@ -21,15 +21,25 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// Definition of the dsc node report type.
     /// </summary>
-    public partial class DscNodeReport : ResourceBase
+    public partial class DscNodeReport
     {
+        private string _configurationVersion;
+        
+        /// <summary>
+        /// Optional. Gets or sets the configurationVersion of the node report.
+        /// </summary>
+        public string ConfigurationVersion
+        {
+            get { return this._configurationVersion; }
+            set { this._configurationVersion = value; }
+        }
+        
         private DateTimeOffset _endTime;
         
         /// <summary>
@@ -39,6 +49,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._endTime; }
             set { this._endTime = value; }
+        }
+        
+        private Guid _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the node report.
+        /// </summary>
+        public Guid Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private DateTimeOffset _lastModifiedTime;
@@ -52,6 +73,39 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._lastModifiedTime = value; }
         }
         
+        private string _rebootRequested;
+        
+        /// <summary>
+        /// Optional. Gets or sets the rebootRequested of the node report.
+        /// </summary>
+        public string RebootRequested
+        {
+            get { return this._rebootRequested; }
+            set { this._rebootRequested = value; }
+        }
+        
+        private string _refreshMode;
+        
+        /// <summary>
+        /// Optional. Gets or sets the refreshMode of the node report.
+        /// </summary>
+        public string RefreshMode
+        {
+            get { return this._refreshMode; }
+            set { this._refreshMode = value; }
+        }
+        
+        private string _reportFormatVersion;
+        
+        /// <summary>
+        /// Optional. Gets or sets the reportFormatVersion of the node report.
+        /// </summary>
+        public string ReportFormatVersion
+        {
+            get { return this._reportFormatVersion; }
+            set { this._reportFormatVersion = value; }
+        }
+        
         private DateTimeOffset _startTime;
         
         /// <summary>
@@ -61,6 +115,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
+        }
+        
+        private string _status;
+        
+        /// <summary>
+        /// Optional. Gets or sets the status of the node report.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         private string _type;

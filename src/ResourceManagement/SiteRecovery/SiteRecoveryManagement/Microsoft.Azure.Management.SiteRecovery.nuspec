@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.SiteRecovery</id>
+    <title>Microsoft Azure Site Recovery Management Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides site recovery management capabilities</summary>
+    <description>Provides site recovery management capabilities.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure site recovery management "site recovery management" REST HTTP client azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+wp8+wpa81+win">
+        <reference file="Microsoft.Azure.Management.SiteRecovery.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.SiteRecovery.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\SiteRecovery\SiteRecoveryManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.SiteRecovery.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.SiteRecovery.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.SiteRecovery.xml" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.SiteRecovery.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.SiteRecovery.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.SiteRecovery.xml" target="lib\net40" />
+  </files>
+</package>

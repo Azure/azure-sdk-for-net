@@ -16,7 +16,7 @@
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Contains a document found by a search query, plus associated metadata.
+    /// Contains a document found by a suggestion query, plus associated metadata.
     /// </summary>
     public class SuggestResult : SuggestResultBase<Document>
     {

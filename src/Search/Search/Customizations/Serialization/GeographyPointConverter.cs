@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// <summary>
     /// Serializes Microsoft.Spatial.GeographyPoint objects to Geo-JSON and vice-versa.
     /// </summary>
-    internal class GeographyPointConverter : JsonConverter
+    internal class GeographyPointConverter : ConverterBase
     {
         public override bool CanConvert(Type objectType)
         {
@@ -41,30 +41,30 @@ namespace Microsoft.Azure.Search.Serialization
                 return null;
             }
 
-            Expect(reader, JsonToken.PropertyName, "type");
-            Expect(reader, JsonToken.String, "Point");
-            Expect(reader, JsonToken.PropertyName, "coordinates");
-            Expect(reader, JsonToken.StartArray);
-            double longitude = Expect<double>(reader, JsonToken.Float);
-            double latitude = Expect<double>(reader, JsonToken.Float);
-            Expect(reader, JsonToken.EndArray);
-
-            Advance(reader);
+            ExpectAndAdvance(reader, JsonToken.StartObject);
+            ExpectAndAdvance(reader, JsonToken.PropertyName, "type");
+            ExpectAndAdvance(reader, JsonToken.String, "Point");
+            ExpectAndAdvance(reader, JsonToken.PropertyName, "coordinates");
+            ExpectAndAdvance(reader, JsonToken.StartArray);
+            double longitude = ExpectAndAdvance<double>(reader, JsonToken.Float);
+            double latitude = ExpectAndAdvance<double>(reader, JsonToken.Float);
+            ExpectAndAdvance(reader, JsonToken.EndArray);
 
             if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals("crs"))
             {
-                Expect(reader, JsonToken.StartObject);
-                Expect(reader, JsonToken.PropertyName, "type");
-                Expect(reader, JsonToken.String, "name");
-                Expect(reader, JsonToken.PropertyName, "properties");
-                Expect(reader, JsonToken.StartObject);
-                Expect(reader, JsonToken.PropertyName, "name");
-                Expect(reader, JsonToken.String, "EPSG:4326");
-                Expect(reader, JsonToken.EndObject);
-                Expect(reader, JsonToken.EndObject);
                 Advance(reader);
+                ExpectAndAdvance(reader, JsonToken.StartObject);
+                ExpectAndAdvance(reader, JsonToken.PropertyName, "type");
+                ExpectAndAdvance(reader, JsonToken.String, "name");
+                ExpectAndAdvance(reader, JsonToken.PropertyName, "properties");
+                ExpectAndAdvance(reader, JsonToken.StartObject);
+                ExpectAndAdvance(reader, JsonToken.PropertyName, "name");
+                ExpectAndAdvance(reader, JsonToken.String, "EPSG:4326");
+                ExpectAndAdvance(reader, JsonToken.EndObject);
+                ExpectAndAdvance(reader, JsonToken.EndObject);
             }
-            
+
+            Expect(reader, JsonToken.EndObject);
             return GeographyPoint.Create(latitude, longitude);
         }
 
@@ -80,58 +80,6 @@ namespace Microsoft.Azure.Search.Serialization
             writer.WriteValue(point.Latitude);
             writer.WriteEndArray();
             writer.WriteEndObject();
-        }
-
-        private void Expect(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
-        {
-            Expect<object>(reader, expectedToken, expectedValue);
-        }
-
-        private TValue Expect<TValue>(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
-        {
-            Advance(reader);
-            if (reader.TokenType != expectedToken)
-            {
-                throw new JsonSerializationException(
-                    String.Format("Deserialization failed. Expected token: '{0}'", expectedToken));
-            }
-
-            if (expectedValue != null && !reader.Value.Equals(expectedValue))
-            {
-                string message =
-                    String.Format(
-                        "Deserialization failed. Expected value: '{0}'. Actual: '{1}'",
-                        expectedValue,
-                        reader.Value);
-
-                throw new JsonSerializationException(message);
-            }
-
-            if (reader.Value != null)
-            {
-                if (!typeof(TValue).IsAssignableFrom(reader.ValueType))
-                {
-                    string message =
-                        String.Format(
-                            "Deserialization failed. Value '{0}' is not of expected type '{1}'.",
-                            reader.Value,
-                            typeof(TValue));
-
-                    throw new JsonSerializationException(message);
-                }
-
-                return (TValue)reader.Value;
-            }
-
-            return default(TValue);
-        }
-
-        private void Advance(JsonReader reader)
-        {
-            if (!reader.Read())
-            {
-                throw new JsonSerializationException("Deserialization failed. Unexpected end of input.");
-            }
         }
     }
 }

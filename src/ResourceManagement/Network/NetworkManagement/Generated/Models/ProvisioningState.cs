@@ -36,5 +36,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string Failed = "Failed";
         
         public const string Succeeded = "Succeeded";
+        
+        public const string Cancelled = "Cancelled";
+        
+        public const string Disabled = "Disabled";
+        
+        public const string Disabling = "Disabling";
+        
+        public const string Enabled = "Enabled";
+        
+        public const string Enabling = "Enabling";
     }
 }

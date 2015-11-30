@@ -64,6 +64,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
+        private string _resourceGuid;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource guid property of the
+        /// LocalNetworkGateway resource
+        /// </summary>
+        public string ResourceGuid
+        {
+            get { return this._resourceGuid; }
+            set { this._resourceGuid = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGateway class.
         /// </summary>

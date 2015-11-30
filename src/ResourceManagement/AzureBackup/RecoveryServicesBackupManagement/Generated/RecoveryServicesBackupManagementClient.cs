@@ -20,17 +20,11 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -90,6 +84,67 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private string _resourceNamespace;
+        
+        public string ResourceNamespace
+        {
+            get { return this._resourceNamespace; }
+            set { this._resourceNamespace = value; }
+        }
+        
+        private IBackupOperations _backup;
+        
+        /// <summary>
+        /// Definition of Backup operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IBackupOperations Backup
+        {
+            get { return this._backup; }
+        }
+        
+        private IContainerOperation _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        public virtual IContainerOperation Container
+        {
+            get { return this._container; }
+        }
+        
+        private IJobOperations _job;
+        
+        /// <summary>
+        /// Definition of Job operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IJobOperations Job
+        {
+            get { return this._job; }
+        }
+        
+        private IProtectableObjectOperations _protectableObject;
+        
+        /// <summary>
+        /// Definition of Protectable Object operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IProtectableObjectOperations ProtectableObject
+        {
+            get { return this._protectableObject; }
+        }
+        
+        private IProtectedItemOperations _protectedItem;
+        
+        /// <summary>
+        /// Definition of ProtectedItem operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IProtectedItemOperations ProtectedItem
+        {
+            get { return this._protectedItem; }
+        }
+        
         private IProtectionPolicyOperations _protectionPolicy;
         
         /// <summary>
@@ -101,6 +156,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get { return this._protectionPolicy; }
         }
         
+        private IRecoveryPointOperations _recoveryPoint;
+        
+        /// <summary>
+        /// Definition of Backup operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IRecoveryPointOperations RecoveryPoint
+        {
+            get { return this._recoveryPoint; }
+        }
+        
+        private IRestoreOperations _restore;
+        
+        /// <summary>
+        /// Definition of Restore operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IRestoreOperations Restore
+        {
+            get { return this._restore; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// RecoveryServicesBackupManagementClient class.
@@ -108,8 +183,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient()
             : base()
         {
+            this._backup = new BackupOperations(this);
+            this._container = new ContainerOperation(this);
+            this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
+            this._protectedItem = new ProtectedItemOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._restore = new RestoreOperations(this);
+            this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -119,6 +201,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Initializes a new instance of the
         /// RecoveryServicesBackupManagementClient class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -128,9 +213,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public RecoveryServicesBackupManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public RecoveryServicesBackupManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -139,6 +228,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("baseUri");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -149,18 +239,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Initializes a new instance of the
         /// RecoveryServicesBackupManagementClient class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public RecoveryServicesBackupManagementClient(SubscriptionCloudCredentials credentials)
+        public RecoveryServicesBackupManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials)
             : this()
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -177,8 +275,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._backup = new BackupOperations(this);
+            this._container = new ContainerOperation(this);
+            this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
+            this._protectedItem = new ProtectedItemOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._restore = new RestoreOperations(this);
+            this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -188,6 +293,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Initializes a new instance of the
         /// RecoveryServicesBackupManagementClient class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -200,9 +308,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesBackupManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public RecoveryServicesBackupManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -211,6 +323,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("baseUri");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -221,6 +334,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Initializes a new instance of the
         /// RecoveryServicesBackupManagementClient class.
         /// </summary>
+        /// <param name='resourceNamespace'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -229,13 +345,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesBackupManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public RecoveryServicesBackupManagementClient(string resourceNamespace, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
+            this._resourceNamespace = resourceNamespace;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -257,6 +378,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 RecoveryServicesBackupManagementClient clonedClient = ((RecoveryServicesBackupManagementClient)client);
                 
+                clonedClient._resourceNamespace = this._resourceNamespace;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;
@@ -264,1186 +386,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
-            }
-        }
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// Required. The protection policy Name to be fetched.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        public async Task<ProtectionPolicyResponse> GetAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (policyName == null)
-            {
-                throw new ArgumentNullException("policyName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("policyName", policyName);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/Subscriptions/";
-            if (this.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId.ToString());
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
-            url = url + "/";
-            url = url + "recoveryServicesVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/backupPolicies/";
-            url = url + Uri.EscapeDataString(policyName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", "en-us");
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProtectionPolicyResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProtectionPolicyResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
-                            {
-                                ProtectionPolicyResource itemInstance = new ProtectionPolicyResource();
-                                result.Item = itemInstance;
-                                
-                                JToken propertiesValue = itemValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    string typeName = ((string)propertiesValue["ObjectType"]);
-                                    if (typeName == "ProtectionPolicy")
-                                    {
-                                        ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
-                                        
-                                        JToken schedulePolicyValue = propertiesValue["SchedulePolicy"];
-                                        if (schedulePolicyValue != null && schedulePolicyValue.Type != JTokenType.Null)
-                                        {
-                                            string typeName2 = ((string)schedulePolicyValue["ObjectType"]);
-                                            if (typeName2 == "SimpleSchedulePolicy")
-                                            {
-                                                SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
-                                                
-                                                JToken scheduleRunTypeValue = schedulePolicyValue["scheduleRunType"];
-                                                if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                    simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
-                                                }
-                                                
-                                                JToken scheduleRunDaysArray = schedulePolicyValue["scheduleRunDays"];
-                                                if (scheduleRunDaysArray != null && scheduleRunDaysArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray))
-                                                    {
-                                                        simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
-                                                    }
-                                                }
-                                                
-                                                JToken scheduleRunTimesArray = schedulePolicyValue["scheduleRunTimes"];
-                                                if (scheduleRunTimesArray != null && scheduleRunTimesArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken scheduleRunTimesValue in ((JArray)scheduleRunTimesArray))
-                                                    {
-                                                        simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
-                                                    }
-                                                }
-                                                protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
-                                            }
-                                            if (typeName2 == "LongTermSchedulePolicy")
-                                            {
-                                                LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                                protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
-                                            }
-                                        }
-                                        
-                                        JToken retentionPolicyValue = propertiesValue["RetentionPolicy"];
-                                        if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
-                                        {
-                                            string typeName3 = ((string)retentionPolicyValue["ObjectType"]);
-                                            if (typeName3 == "SimpleRetentionPolicy")
-                                            {
-                                                SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                                protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
-                                            }
-                                            if (typeName3 == "LongTermRetentionPolicy")
-                                            {
-                                                LongTermRetentionPolicy longTermRetentionPolicyInstance = new LongTermRetentionPolicy();
-                                                
-                                                JToken dailyScheduleValue = retentionPolicyValue["DailySchedule"];
-                                                if (dailyScheduleValue != null && dailyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    DailyRetentionSchedule dailyScheduleInstance = new DailyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.DailySchedule = dailyScheduleInstance;
-                                                    
-                                                    JToken retentionTimesArray = dailyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray != null && retentionTimesArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue in ((JArray)retentionTimesArray))
-                                                        {
-                                                            dailyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue = dailyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                        dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
-                                                        
-                                                        JToken countValue = retentionDurationValue["Count"];
-                                                        if (countValue != null && countValue.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance = ((int)countValue);
-                                                            retentionDurationInstance.Count = countInstance;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue = retentionDurationValue["DurationType"];
-                                                        if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
-                                                            retentionDurationInstance.DurationType = durationTypeInstance;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken weeklyScheduleValue = retentionPolicyValue["WeeklySchedule"];
-                                                if (weeklyScheduleValue != null && weeklyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    WeeklyRetentionSchedule weeklyScheduleInstance = new WeeklyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.WeeklySchedule = weeklyScheduleInstance;
-                                                    
-                                                    JToken daysOfTheWeekArray = weeklyScheduleValue["DaysOfTheWeek"];
-                                                    if (daysOfTheWeekArray != null && daysOfTheWeekArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray))
-                                                        {
-                                                            weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray2 = weeklyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray2 != null && retentionTimesArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue2 in ((JArray)retentionTimesArray2))
-                                                        {
-                                                            weeklyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue2));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue2 = weeklyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                        weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
-                                                        
-                                                        JToken countValue2 = retentionDurationValue2["Count"];
-                                                        if (countValue2 != null && countValue2.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance2 = ((int)countValue2);
-                                                            retentionDurationInstance2.Count = countInstance2;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue2 = retentionDurationValue2["DurationType"];
-                                                        if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
-                                                            retentionDurationInstance2.DurationType = durationTypeInstance2;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken monthlyScheduleValue = retentionPolicyValue["MonthlySchedule"];
-                                                if (monthlyScheduleValue != null && monthlyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
-                                                    
-                                                    JToken retentionScheduleFormatValue = monthlyScheduleValue["RetentionScheduleFormat"];
-                                                    if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                        monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
-                                                    }
-                                                    
-                                                    JToken retentionScheduleDailyValue = monthlyScheduleValue["RetentionScheduleDaily"];
-                                                    if (retentionScheduleDailyValue != null && retentionScheduleDailyValue.Type != JTokenType.Null)
-                                                    {
-                                                        DailyRetentionFormat retentionScheduleDailyInstance = new DailyRetentionFormat();
-                                                        monthlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance;
-                                                        
-                                                        JToken daysOfTheMonthArray = retentionScheduleDailyValue["DaysOfTheMonth"];
-                                                        if (daysOfTheMonthArray != null && daysOfTheMonthArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheMonthValue in ((JArray)daysOfTheMonthArray))
-                                                            {
-                                                                Day dayInstance = new Day();
-                                                                retentionScheduleDailyInstance.DaysOfTheMonth.Add(dayInstance);
-                                                                
-                                                                JToken dateValue = daysOfTheMonthValue["Date"];
-                                                                if (dateValue != null && dateValue.Type != JTokenType.Null)
-                                                                {
-                                                                    int dateInstance = ((int)dateValue);
-                                                                    dayInstance.Date = dateInstance;
-                                                                }
-                                                                
-                                                                JToken isLastValue = daysOfTheMonthValue["IsLast"];
-                                                                if (isLastValue != null && isLastValue.Type != JTokenType.Null)
-                                                                {
-                                                                    bool isLastInstance = ((bool)isLastValue);
-                                                                    dayInstance.IsLast = isLastInstance;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleWeeklyValue = monthlyScheduleValue["RetentionScheduleWeekly"];
-                                                    if (retentionScheduleWeeklyValue != null && retentionScheduleWeeklyValue.Type != JTokenType.Null)
-                                                    {
-                                                        WeeklyRetentionFormat retentionScheduleWeeklyInstance = new WeeklyRetentionFormat();
-                                                        monthlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance;
-                                                        
-                                                        JToken daysOfTheWeekArray2 = retentionScheduleWeeklyValue["DaysOfTheWeek"];
-                                                        if (daysOfTheWeekArray2 != null && daysOfTheWeekArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray2))
-                                                            {
-                                                                retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
-                                                            }
-                                                        }
-                                                        
-                                                        JToken weeksOfTheMonthArray = retentionScheduleWeeklyValue["WeeksOfTheMonth"];
-                                                        if (weeksOfTheMonthArray != null && weeksOfTheMonthArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray))
-                                                            {
-                                                                retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray3 = monthlyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray3 != null && retentionTimesArray3.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue3 in ((JArray)retentionTimesArray3))
-                                                        {
-                                                            monthlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue3));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue3 = monthlyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                        monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
-                                                        
-                                                        JToken countValue3 = retentionDurationValue3["Count"];
-                                                        if (countValue3 != null && countValue3.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance3 = ((int)countValue3);
-                                                            retentionDurationInstance3.Count = countInstance3;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue3 = retentionDurationValue3["DurationType"];
-                                                        if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
-                                                            retentionDurationInstance3.DurationType = durationTypeInstance3;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken yearlyScheduleValue = retentionPolicyValue["YearlySchedule"];
-                                                if (yearlyScheduleValue != null && yearlyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
-                                                    
-                                                    JToken retentionScheduleFormatValue2 = yearlyScheduleValue["RetentionScheduleFormat"];
-                                                    if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                        yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
-                                                    }
-                                                    
-                                                    JToken monthsOfYearArray = yearlyScheduleValue["MonthsOfYear"];
-                                                    if (monthsOfYearArray != null && monthsOfYearArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray))
-                                                        {
-                                                            yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleDailyValue2 = yearlyScheduleValue["RetentionScheduleDaily"];
-                                                    if (retentionScheduleDailyValue2 != null && retentionScheduleDailyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        DailyRetentionFormat retentionScheduleDailyInstance2 = new DailyRetentionFormat();
-                                                        yearlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance2;
-                                                        
-                                                        JToken daysOfTheMonthArray2 = retentionScheduleDailyValue2["DaysOfTheMonth"];
-                                                        if (daysOfTheMonthArray2 != null && daysOfTheMonthArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheMonthValue2 in ((JArray)daysOfTheMonthArray2))
-                                                            {
-                                                                Day dayInstance2 = new Day();
-                                                                retentionScheduleDailyInstance2.DaysOfTheMonth.Add(dayInstance2);
-                                                                
-                                                                JToken dateValue2 = daysOfTheMonthValue2["Date"];
-                                                                if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
-                                                                {
-                                                                    int dateInstance2 = ((int)dateValue2);
-                                                                    dayInstance2.Date = dateInstance2;
-                                                                }
-                                                                
-                                                                JToken isLastValue2 = daysOfTheMonthValue2["IsLast"];
-                                                                if (isLastValue2 != null && isLastValue2.Type != JTokenType.Null)
-                                                                {
-                                                                    bool isLastInstance2 = ((bool)isLastValue2);
-                                                                    dayInstance2.IsLast = isLastInstance2;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleWeeklyValue2 = yearlyScheduleValue["RetentionScheduleWeekly"];
-                                                    if (retentionScheduleWeeklyValue2 != null && retentionScheduleWeeklyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        WeeklyRetentionFormat retentionScheduleWeeklyInstance2 = new WeeklyRetentionFormat();
-                                                        yearlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance2;
-                                                        
-                                                        JToken daysOfTheWeekArray3 = retentionScheduleWeeklyValue2["DaysOfTheWeek"];
-                                                        if (daysOfTheWeekArray3 != null && daysOfTheWeekArray3.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray3))
-                                                            {
-                                                                retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
-                                                            }
-                                                        }
-                                                        
-                                                        JToken weeksOfTheMonthArray2 = retentionScheduleWeeklyValue2["WeeksOfTheMonth"];
-                                                        if (weeksOfTheMonthArray2 != null && weeksOfTheMonthArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray2))
-                                                            {
-                                                                retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray4 = yearlyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray4 != null && retentionTimesArray4.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue4 in ((JArray)retentionTimesArray4))
-                                                        {
-                                                            yearlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue4));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue4 = yearlyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                        yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
-                                                        
-                                                        JToken countValue4 = retentionDurationValue4["Count"];
-                                                        if (countValue4 != null && countValue4.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance4 = ((int)countValue4);
-                                                            retentionDurationInstance4.Count = countInstance4;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue4 = retentionDurationValue4["DurationType"];
-                                                        if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
-                                                            retentionDurationInstance4.DurationType = durationTypeInstance4;
-                                                        }
-                                                    }
-                                                }
-                                                protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
-                                            }
-                                        }
-                                        itemInstance.Properties = protectionPolicyInstance;
-                                    }
-                                }
-                                
-                                JToken idValue = itemValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    itemInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = itemValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    itemInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = itemValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    itemInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = itemValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    itemInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)itemValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        itemInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken eTagValue = itemValue["eTag"];
-                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                {
-                                    string eTagInstance = ((string)eTagValue);
-                                    itemInstance.ETag = eTagInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// Required. The protection policy Name to be updated.
-        /// </param>
-        /// <param name='operationId'>
-        /// Required. OperationId to get operation result.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
-        /// </returns>
-        public async Task<ProtectionPolicyResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (policyName == null)
-            {
-                throw new ArgumentNullException("policyName");
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException("operationId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("policyName", policyName);
-                tracingParameters.Add("operationId", operationId);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "GetOperationResultAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/Subscriptions/";
-            if (this.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId.ToString());
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
-            url = url + "/";
-            url = url + "recoveryServicesVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/backupPolicies/";
-            url = url + Uri.EscapeDataString(policyName);
-            url = url + "/operations/";
-            url = url + Uri.EscapeDataString(operationId);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", "en-us");
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProtectionPolicyResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProtectionPolicyResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
-                            {
-                                ProtectionPolicyResource itemInstance = new ProtectionPolicyResource();
-                                result.Item = itemInstance;
-                                
-                                JToken propertiesValue = itemValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    string typeName = ((string)propertiesValue["ObjectType"]);
-                                    if (typeName == "ProtectionPolicy")
-                                    {
-                                        ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
-                                        
-                                        JToken schedulePolicyValue = propertiesValue["SchedulePolicy"];
-                                        if (schedulePolicyValue != null && schedulePolicyValue.Type != JTokenType.Null)
-                                        {
-                                            string typeName2 = ((string)schedulePolicyValue["ObjectType"]);
-                                            if (typeName2 == "SimpleSchedulePolicy")
-                                            {
-                                                SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
-                                                
-                                                JToken scheduleRunTypeValue = schedulePolicyValue["scheduleRunType"];
-                                                if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                    simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
-                                                }
-                                                
-                                                JToken scheduleRunDaysArray = schedulePolicyValue["scheduleRunDays"];
-                                                if (scheduleRunDaysArray != null && scheduleRunDaysArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray))
-                                                    {
-                                                        simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
-                                                    }
-                                                }
-                                                
-                                                JToken scheduleRunTimesArray = schedulePolicyValue["scheduleRunTimes"];
-                                                if (scheduleRunTimesArray != null && scheduleRunTimesArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken scheduleRunTimesValue in ((JArray)scheduleRunTimesArray))
-                                                    {
-                                                        simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
-                                                    }
-                                                }
-                                                protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
-                                            }
-                                            if (typeName2 == "LongTermSchedulePolicy")
-                                            {
-                                                LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                                protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
-                                            }
-                                        }
-                                        
-                                        JToken retentionPolicyValue = propertiesValue["RetentionPolicy"];
-                                        if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
-                                        {
-                                            string typeName3 = ((string)retentionPolicyValue["ObjectType"]);
-                                            if (typeName3 == "SimpleRetentionPolicy")
-                                            {
-                                                SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                                protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
-                                            }
-                                            if (typeName3 == "LongTermRetentionPolicy")
-                                            {
-                                                LongTermRetentionPolicy longTermRetentionPolicyInstance = new LongTermRetentionPolicy();
-                                                
-                                                JToken dailyScheduleValue = retentionPolicyValue["DailySchedule"];
-                                                if (dailyScheduleValue != null && dailyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    DailyRetentionSchedule dailyScheduleInstance = new DailyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.DailySchedule = dailyScheduleInstance;
-                                                    
-                                                    JToken retentionTimesArray = dailyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray != null && retentionTimesArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue in ((JArray)retentionTimesArray))
-                                                        {
-                                                            dailyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue = dailyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                        dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
-                                                        
-                                                        JToken countValue = retentionDurationValue["Count"];
-                                                        if (countValue != null && countValue.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance = ((int)countValue);
-                                                            retentionDurationInstance.Count = countInstance;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue = retentionDurationValue["DurationType"];
-                                                        if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
-                                                            retentionDurationInstance.DurationType = durationTypeInstance;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken weeklyScheduleValue = retentionPolicyValue["WeeklySchedule"];
-                                                if (weeklyScheduleValue != null && weeklyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    WeeklyRetentionSchedule weeklyScheduleInstance = new WeeklyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.WeeklySchedule = weeklyScheduleInstance;
-                                                    
-                                                    JToken daysOfTheWeekArray = weeklyScheduleValue["DaysOfTheWeek"];
-                                                    if (daysOfTheWeekArray != null && daysOfTheWeekArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray))
-                                                        {
-                                                            weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray2 = weeklyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray2 != null && retentionTimesArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue2 in ((JArray)retentionTimesArray2))
-                                                        {
-                                                            weeklyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue2));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue2 = weeklyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                        weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
-                                                        
-                                                        JToken countValue2 = retentionDurationValue2["Count"];
-                                                        if (countValue2 != null && countValue2.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance2 = ((int)countValue2);
-                                                            retentionDurationInstance2.Count = countInstance2;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue2 = retentionDurationValue2["DurationType"];
-                                                        if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
-                                                            retentionDurationInstance2.DurationType = durationTypeInstance2;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken monthlyScheduleValue = retentionPolicyValue["MonthlySchedule"];
-                                                if (monthlyScheduleValue != null && monthlyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
-                                                    
-                                                    JToken retentionScheduleFormatValue = monthlyScheduleValue["RetentionScheduleFormat"];
-                                                    if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                        monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
-                                                    }
-                                                    
-                                                    JToken retentionScheduleDailyValue = monthlyScheduleValue["RetentionScheduleDaily"];
-                                                    if (retentionScheduleDailyValue != null && retentionScheduleDailyValue.Type != JTokenType.Null)
-                                                    {
-                                                        DailyRetentionFormat retentionScheduleDailyInstance = new DailyRetentionFormat();
-                                                        monthlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance;
-                                                        
-                                                        JToken daysOfTheMonthArray = retentionScheduleDailyValue["DaysOfTheMonth"];
-                                                        if (daysOfTheMonthArray != null && daysOfTheMonthArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheMonthValue in ((JArray)daysOfTheMonthArray))
-                                                            {
-                                                                Day dayInstance = new Day();
-                                                                retentionScheduleDailyInstance.DaysOfTheMonth.Add(dayInstance);
-                                                                
-                                                                JToken dateValue = daysOfTheMonthValue["Date"];
-                                                                if (dateValue != null && dateValue.Type != JTokenType.Null)
-                                                                {
-                                                                    int dateInstance = ((int)dateValue);
-                                                                    dayInstance.Date = dateInstance;
-                                                                }
-                                                                
-                                                                JToken isLastValue = daysOfTheMonthValue["IsLast"];
-                                                                if (isLastValue != null && isLastValue.Type != JTokenType.Null)
-                                                                {
-                                                                    bool isLastInstance = ((bool)isLastValue);
-                                                                    dayInstance.IsLast = isLastInstance;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleWeeklyValue = monthlyScheduleValue["RetentionScheduleWeekly"];
-                                                    if (retentionScheduleWeeklyValue != null && retentionScheduleWeeklyValue.Type != JTokenType.Null)
-                                                    {
-                                                        WeeklyRetentionFormat retentionScheduleWeeklyInstance = new WeeklyRetentionFormat();
-                                                        monthlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance;
-                                                        
-                                                        JToken daysOfTheWeekArray2 = retentionScheduleWeeklyValue["DaysOfTheWeek"];
-                                                        if (daysOfTheWeekArray2 != null && daysOfTheWeekArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray2))
-                                                            {
-                                                                retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
-                                                            }
-                                                        }
-                                                        
-                                                        JToken weeksOfTheMonthArray = retentionScheduleWeeklyValue["WeeksOfTheMonth"];
-                                                        if (weeksOfTheMonthArray != null && weeksOfTheMonthArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray))
-                                                            {
-                                                                retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray3 = monthlyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray3 != null && retentionTimesArray3.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue3 in ((JArray)retentionTimesArray3))
-                                                        {
-                                                            monthlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue3));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue3 = monthlyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                        monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
-                                                        
-                                                        JToken countValue3 = retentionDurationValue3["Count"];
-                                                        if (countValue3 != null && countValue3.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance3 = ((int)countValue3);
-                                                            retentionDurationInstance3.Count = countInstance3;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue3 = retentionDurationValue3["DurationType"];
-                                                        if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
-                                                            retentionDurationInstance3.DurationType = durationTypeInstance3;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken yearlyScheduleValue = retentionPolicyValue["YearlySchedule"];
-                                                if (yearlyScheduleValue != null && yearlyScheduleValue.Type != JTokenType.Null)
-                                                {
-                                                    YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
-                                                    longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
-                                                    
-                                                    JToken retentionScheduleFormatValue2 = yearlyScheduleValue["RetentionScheduleFormat"];
-                                                    if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                        yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
-                                                    }
-                                                    
-                                                    JToken monthsOfYearArray = yearlyScheduleValue["MonthsOfYear"];
-                                                    if (monthsOfYearArray != null && monthsOfYearArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray))
-                                                        {
-                                                            yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleDailyValue2 = yearlyScheduleValue["RetentionScheduleDaily"];
-                                                    if (retentionScheduleDailyValue2 != null && retentionScheduleDailyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        DailyRetentionFormat retentionScheduleDailyInstance2 = new DailyRetentionFormat();
-                                                        yearlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance2;
-                                                        
-                                                        JToken daysOfTheMonthArray2 = retentionScheduleDailyValue2["DaysOfTheMonth"];
-                                                        if (daysOfTheMonthArray2 != null && daysOfTheMonthArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheMonthValue2 in ((JArray)daysOfTheMonthArray2))
-                                                            {
-                                                                Day dayInstance2 = new Day();
-                                                                retentionScheduleDailyInstance2.DaysOfTheMonth.Add(dayInstance2);
-                                                                
-                                                                JToken dateValue2 = daysOfTheMonthValue2["Date"];
-                                                                if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
-                                                                {
-                                                                    int dateInstance2 = ((int)dateValue2);
-                                                                    dayInstance2.Date = dateInstance2;
-                                                                }
-                                                                
-                                                                JToken isLastValue2 = daysOfTheMonthValue2["IsLast"];
-                                                                if (isLastValue2 != null && isLastValue2.Type != JTokenType.Null)
-                                                                {
-                                                                    bool isLastInstance2 = ((bool)isLastValue2);
-                                                                    dayInstance2.IsLast = isLastInstance2;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionScheduleWeeklyValue2 = yearlyScheduleValue["RetentionScheduleWeekly"];
-                                                    if (retentionScheduleWeeklyValue2 != null && retentionScheduleWeeklyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        WeeklyRetentionFormat retentionScheduleWeeklyInstance2 = new WeeklyRetentionFormat();
-                                                        yearlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance2;
-                                                        
-                                                        JToken daysOfTheWeekArray3 = retentionScheduleWeeklyValue2["DaysOfTheWeek"];
-                                                        if (daysOfTheWeekArray3 != null && daysOfTheWeekArray3.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray3))
-                                                            {
-                                                                retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
-                                                            }
-                                                        }
-                                                        
-                                                        JToken weeksOfTheMonthArray2 = retentionScheduleWeeklyValue2["WeeksOfTheMonth"];
-                                                        if (weeksOfTheMonthArray2 != null && weeksOfTheMonthArray2.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray2))
-                                                            {
-                                                                retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionTimesArray4 = yearlyScheduleValue["RetentionTimes"];
-                                                    if (retentionTimesArray4 != null && retentionTimesArray4.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken retentionTimesValue4 in ((JArray)retentionTimesArray4))
-                                                        {
-                                                            yearlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue4));
-                                                        }
-                                                    }
-                                                    
-                                                    JToken retentionDurationValue4 = yearlyScheduleValue["RetentionDuration"];
-                                                    if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
-                                                    {
-                                                        RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                        yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
-                                                        
-                                                        JToken countValue4 = retentionDurationValue4["Count"];
-                                                        if (countValue4 != null && countValue4.Type != JTokenType.Null)
-                                                        {
-                                                            int countInstance4 = ((int)countValue4);
-                                                            retentionDurationInstance4.Count = countInstance4;
-                                                        }
-                                                        
-                                                        JToken durationTypeValue4 = retentionDurationValue4["DurationType"];
-                                                        if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
-                                                        {
-                                                            RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
-                                                            retentionDurationInstance4.DurationType = durationTypeInstance4;
-                                                        }
-                                                    }
-                                                }
-                                                protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
-                                            }
-                                        }
-                                        itemInstance.Properties = protectionPolicyInstance;
-                                    }
-                                }
-                                
-                                JToken idValue = itemValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    itemInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = itemValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    itemInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = itemValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    itemInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = itemValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    itemInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)itemValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        itemInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken eTagValue = itemValue["eTag"];
-                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                {
-                                    string eTagInstance = ((string)eTagValue);
-                                    itemInstance.ETag = eTagInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
             }
         }
     }

@@ -53,7 +53,7 @@ namespace Compute.Tests
                     Action<VirtualMachine> addDataDiskToVM = vm =>
                     {
                         string containerName = TestUtilities.GenerateName(TestPrefix);
-                        var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
+                        var vhdContainer = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName) + containerName;
                         var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
 
                         vm.HardwareProfile.VirtualMachineSize = VirtualMachineSizeTypes.StandardA4;

@@ -325,6 +325,7 @@ namespace Networks.Tests
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
+            //Assert.Equal(gw1.ResourceGuid, gw2.ResourceGuid);
         }
 
         [Fact]

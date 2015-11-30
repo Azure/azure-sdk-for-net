@@ -32,5 +32,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Script = "Script";
         
         public const string Graph = "Graph";
+        
+        public const string PowerShellWorkflow = "PowerShellWorkflow";
+        
+        public const string PowerShell = "PowerShell";
     }
 }

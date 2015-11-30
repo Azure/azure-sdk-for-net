@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='parameters'>
@@ -52,11 +52,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static AzureBackupVaultGetResponse CreateOrUpdate(this IVaultOperations operations, string resourceGroupName, string vaultName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders)
+        public static AzureBackupVaultGetResponse CreateOrUpdate(this IVaultOperations operations, string resourceGroupName, string resourceName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).CreateOrUpdateAsync(resourceGroupName, vaultName, parameters, customRequestHeaders);
+                return ((IVaultOperations)s).CreateOrUpdateAsync(resourceGroupName, resourceName, parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='parameters'>
@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(this IVaultOperations operations, string resourceGroupName, string vaultName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, vaultName, parameters, customRequestHeaders, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -107,11 +107,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static AzureBackupVaultGetResponse Delete(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static AzureBackupVaultGetResponse Delete(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).DeleteAsync(resourceGroupName, vaultName, customRequestHeaders);
+                return ((IVaultOperations)s).DeleteAsync(resourceGroupName, resourceName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -135,9 +135,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static Task<AzureBackupVaultGetResponse> DeleteAsync(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureBackupVaultGetResponse> DeleteAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.DeleteAsync(resourceGroupName, vaultName, customRequestHeaders, CancellationToken.None);
+            return operations.DeleteAsync(resourceGroupName, resourceName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -159,11 +159,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static AzureBackupVaultGetResponse Get(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static AzureBackupVaultGetResponse Get(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).GetAsync(resourceGroupName, vaultName, customRequestHeaders);
+                return ((IVaultOperations)s).GetAsync(resourceGroupName, resourceName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -187,9 +187,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public static Task<AzureBackupVaultGetResponse> GetAsync(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureBackupVaultGetResponse> GetAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(resourceGroupName, vaultName, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, resourceName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -211,11 +211,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a get resource storage config response.
         /// </returns>
-        public static GetResourceStorageConfigResponse GetResourceStorageConfig(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static GetResourceStorageConfigResponse GetResourceStorageConfig(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).GetResourceStorageConfigAsync(resourceGroupName, vaultName, customRequestHeaders);
+                return ((IVaultOperations)s).GetResourceStorageConfigAsync(resourceGroupName, resourceName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// Required. The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// Required. The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -239,9 +239,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a get resource storage config response.
         /// </returns>
-        public static Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(this IVaultOperations operations, string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders)
+        public static Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetResourceStorageConfigAsync(resourceGroupName, vaultName, customRequestHeaders, CancellationToken.None);
+            return operations.GetResourceStorageConfigAsync(resourceGroupName, resourceName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -353,6 +353,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IVaultOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='updateVaultStorageTypeRequest'>
         /// Required. Update Vault Storage Type Request
         /// </param>
@@ -362,11 +368,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse UpdateStorageType(this IVaultOperations operations, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse UpdateStorageType(this IVaultOperations operations, string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).UpdateStorageTypeAsync(updateVaultStorageTypeRequest, customRequestHeaders);
+                return ((IVaultOperations)s).UpdateStorageTypeAsync(resourceGroupName, resourceName, updateVaultStorageTypeRequest, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -378,6 +384,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IVaultOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='updateVaultStorageTypeRequest'>
         /// Required. Update Vault Storage Type Request
         /// </param>
@@ -387,9 +399,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> UpdateStorageTypeAsync(this IVaultOperations operations, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> UpdateStorageTypeAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UpdateStorageTypeAsync(updateVaultStorageTypeRequest, customRequestHeaders, CancellationToken.None);
+            return operations.UpdateStorageTypeAsync(resourceGroupName, resourceName, updateVaultStorageTypeRequest, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -398,6 +410,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IVaultOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='certificateName'>
         /// Required. Name of the certificate.
@@ -411,11 +429,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a certificate response.
         /// </returns>
-        public static VaultCredUploadCertResponse UploadCertificate(this IVaultOperations operations, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
+        public static VaultCredUploadCertResponse UploadCertificate(this IVaultOperations operations, string resourceGroupName, string resourceName, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultOperations)s).UploadCertificateAsync(certificateName, vaultCredUploadCertRequest, customRequestHeaders);
+                return ((IVaultOperations)s).UploadCertificateAsync(resourceGroupName, resourceName, certificateName, vaultCredUploadCertRequest, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -427,6 +445,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IVaultOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='certificateName'>
         /// Required. Name of the certificate.
         /// </param>
@@ -439,9 +463,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a certificate response.
         /// </returns>
-        public static Task<VaultCredUploadCertResponse> UploadCertificateAsync(this IVaultOperations operations, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<VaultCredUploadCertResponse> UploadCertificateAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UploadCertificateAsync(certificateName, vaultCredUploadCertRequest, customRequestHeaders, CancellationToken.None);
+            return operations.UploadCertificateAsync(resourceGroupName, resourceName, certificateName, vaultCredUploadCertRequest, customRequestHeaders, CancellationToken.None);
         }
     }
 }

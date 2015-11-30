@@ -59,6 +59,15 @@ namespace DataFactory.Tests.Framework
             {
                 this.Version = version;
             }
+        }
+
+        public JsonSampleAttribute(string version, params string[] propertyBagKeys)
+            : this(propertyBagKeys)
+        {
+            if (!string.IsNullOrEmpty(version))
+            {
+                this.Version = version;
+            }
         }        
 
         /// <summary>

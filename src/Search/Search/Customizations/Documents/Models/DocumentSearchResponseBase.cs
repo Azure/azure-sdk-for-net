@@ -78,8 +78,11 @@ namespace Microsoft.Azure.Search.Models
         /// Azure Search index.
         /// </summary>
         /// <remarks>
-        /// This property will be null unless you request more than 1000 results, and the number of results exceeds
-        /// 1000. In that case, you can pass the value of this property to the
+        /// This property will be null unless you request more results than the page size. This can happen either when
+        /// you do not specify <c cref="SearchParameters.Top">Top</c> and there are more than 50 results (default page
+        /// size is 50), or when you specify a value greater than 1000 for <c cref="SearchParameters.Top">Top</c> and
+        /// there are more than 1000 results (maximum page size is 1000). In either case, you can pass the value of
+        /// this property to the
         /// <c cref="IDocumentOperations.ContinueSearchAsync(SearchContinuationToken, System.Threading.CancellationToken)">ContinueSearchAsync</c>
         /// method to retrieve the next page of results.
         /// </remarks>

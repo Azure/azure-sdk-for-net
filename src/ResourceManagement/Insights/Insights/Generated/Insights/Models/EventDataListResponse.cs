@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private EventDataCollection _eventDataCollection;
         
         /// <summary>
-        /// Optional. The retrieved events.
+        /// Optional. Gets or sets the retrieved events.
         /// </summary>
         public EventDataCollection EventDataCollection
         {

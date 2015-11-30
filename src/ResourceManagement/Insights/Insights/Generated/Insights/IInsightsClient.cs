@@ -80,6 +80,22 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// Operations for log definitions.
+        /// </summary>
+        ILogDefinitionOperations LogDefinitionOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for logs.
+        /// </summary>
+        ILogOperations LogOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for metric definitions.
         /// </summary>
         IMetricDefinitionOperations MetricDefinitionOperations

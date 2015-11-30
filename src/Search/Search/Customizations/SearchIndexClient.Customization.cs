@@ -90,6 +90,9 @@ namespace Microsoft.Azure.Search
         }
 
         /// <inheritdoc />
+        public bool UseHttpGetForQueries { get; set; }
+
+        /// <inheritdoc />
         public void SetClientRequestId(Guid guid)
         {
             HttpRequestHeaders headers = HttpClient.DefaultRequestHeaders;

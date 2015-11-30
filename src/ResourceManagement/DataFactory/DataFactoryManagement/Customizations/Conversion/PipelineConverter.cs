@@ -145,7 +145,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                            Inputs = activity.Inputs,
                            Outputs = activity.Outputs,
                            LinkedServiceName = activity.LinkedServiceName,
-                           Policy = activity.Policy
+                           Policy = activity.Policy,
+                           Scheduler = activity.Scheduler
                        };
         }
 
@@ -168,7 +169,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                            Inputs = internalActivity.Inputs,
                            Outputs = internalActivity.Outputs,
                            LinkedServiceName = internalActivity.LinkedServiceName,
-                           Policy = internalActivity.Policy
+                           Policy = internalActivity.Policy, 
+                           Scheduler = internalActivity.Scheduler
                        };
         }
 

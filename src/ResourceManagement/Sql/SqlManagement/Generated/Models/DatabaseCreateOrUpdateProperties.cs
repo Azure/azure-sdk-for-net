@@ -42,6 +42,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._collation = value; }
         }
         
+        private string _createMode;
+        
+        /// <summary>
+        /// Optional. Gets or sets the create Mode for the Azure Sql Database
+        /// database being created.
+        /// </summary>
+        public string CreateMode
+        {
+            get { return this._createMode; }
+            set { this._createMode = value; }
+        }
+        
         private string _edition;
         
         /// <summary>
@@ -100,6 +112,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._requestedServiceObjectiveName; }
             set { this._requestedServiceObjectiveName = value; }
+        }
+        
+        private string _sourceDatabaseId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource id of the database to use as
+        /// the source for the copy being created.
+        /// </summary>
+        public string SourceDatabaseId
+        {
+            get { return this._sourceDatabaseId; }
+            set { this._sourceDatabaseId = value; }
         }
         
         /// <summary>

@@ -417,6 +417,14 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 return JobActionType.StorageQueue;
             }
+            if ("serviceBusQueue".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobActionType.ServiceBusQueue;
+            }
+            if ("serviceBusTopic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobActionType.ServiceBusTopic;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -442,6 +450,14 @@ namespace Microsoft.WindowsAzure.Scheduler
             if (value == JobActionType.StorageQueue)
             {
                 return "storageQueue";
+            }
+            if (value == JobActionType.ServiceBusQueue)
+            {
+                return "serviceBusQueue";
+            }
+            if (value == JobActionType.ServiceBusTopic)
+            {
+                return "serviceBusTopic";
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -698,6 +714,102 @@ namespace Microsoft.WindowsAzure.Scheduler
             if (value == JobScheduleDay.Sunday)
             {
                 return "sunday";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobServiceBusAuthenticationType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobServiceBusAuthenticationType ParseJobServiceBusAuthenticationType(string value)
+        {
+            if ("NotSpecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobServiceBusAuthenticationType.NotSpecified;
+            }
+            if ("SharedAccessKey".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobServiceBusAuthenticationType.SharedAccessKey;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobServiceBusAuthenticationType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobServiceBusAuthenticationTypeToString(JobServiceBusAuthenticationType value)
+        {
+            if (value == JobServiceBusAuthenticationType.NotSpecified)
+            {
+                return "NotSpecified";
+            }
+            if (value == JobServiceBusAuthenticationType.SharedAccessKey)
+            {
+                return "SharedAccessKey";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobServiceBusTransportType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobServiceBusTransportType ParseJobServiceBusTransportType(string value)
+        {
+            if ("NotSpecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobServiceBusTransportType.NotSpecified;
+            }
+            if ("NetMessaging".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobServiceBusTransportType.NetMessaging;
+            }
+            if ("AMQP".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobServiceBusTransportType.AMQP;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobServiceBusTransportType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobServiceBusTransportTypeToString(JobServiceBusTransportType value)
+        {
+            if (value == JobServiceBusTransportType.NotSpecified)
+            {
+                return "NotSpecified";
+            }
+            if (value == JobServiceBusTransportType.NetMessaging)
+            {
+                return "NetMessaging";
+            }
+            if (value == JobServiceBusTransportType.AMQP)
+            {
+                return "AMQP";
             }
             throw new ArgumentOutOfRangeException("value");
         }

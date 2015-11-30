@@ -303,6 +303,11 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
+                if (parameters.ResourceGuid != null)
+                {
+                    propertiesValue["resourceGuid"] = parameters.ResourceGuid;
+                }
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -518,6 +523,13 @@ namespace Microsoft.Azure.Management.Network
                                             subnetJsonFormatInstance.Id = idInstance4;
                                         }
                                     }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue3["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    virtualNetworkInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
@@ -892,7 +904,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -961,7 +973,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            while (result.Status == NetworkOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1244,6 +1256,13 @@ namespace Microsoft.Azure.Management.Network
                                             subnetJsonFormatInstance.Id = idInstance4;
                                         }
                                     }
+                                }
+                                
+                                JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGuidInstance = ((string)resourceGuidValue);
+                                    virtualNetworkInstance.ResourceGuid = resourceGuidInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue["provisioningState"];
@@ -1587,6 +1606,13 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            virtualNetworkJsonFormatInstance.ResourceGuid = resourceGuidInstance;
+                                        }
+                                        
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];
                                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                         {
@@ -1925,6 +1951,13 @@ namespace Microsoft.Azure.Management.Network
                                                     subnetJsonFormatInstance.Id = idInstance4;
                                                 }
                                             }
+                                        }
+                                        
+                                        JToken resourceGuidValue = propertiesValue["resourceGuid"];
+                                        if (resourceGuidValue != null && resourceGuidValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGuidInstance = ((string)resourceGuidValue);
+                                            virtualNetworkJsonFormatInstance.ResourceGuid = resourceGuidInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];

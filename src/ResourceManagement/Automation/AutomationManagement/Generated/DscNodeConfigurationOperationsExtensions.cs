@@ -31,6 +31,62 @@ namespace Microsoft.Azure.Management.Automation
     public static partial class DscNodeConfigurationOperationsExtensions
     {
         /// <summary>
+        /// Create the node configuration identified by node configuration
+        /// name.  (see http://aka.ms/azureautomationsdk/dscnodeconfigurations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The create or update parameters for configuration.
+        /// </param>
+        /// <returns>
+        /// The response model for the get Dsc node configuration operation.
+        /// </returns>
+        public static DscNodeConfigurationGetResponse CreateOrUpdate(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, DscNodeConfigurationCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDscNodeConfigurationOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create the node configuration identified by node configuration
+        /// name.  (see http://aka.ms/azureautomationsdk/dscnodeconfigurations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The create or update parameters for configuration.
+        /// </param>
+        /// <returns>
+        /// The response model for the get Dsc node configuration operation.
+        /// </returns>
+        public static Task<DscNodeConfigurationGetResponse> CreateOrUpdateAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, DscNodeConfigurationCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve the Dsc node configurations by node configuration.  (see
         /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
         /// information)

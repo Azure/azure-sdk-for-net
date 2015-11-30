@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             DataFactoryManagementClient client)
             : this()
         {
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ActivityType = ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalResponse.ActivityType);
             this.Status = internalResponse.Status;
         }
