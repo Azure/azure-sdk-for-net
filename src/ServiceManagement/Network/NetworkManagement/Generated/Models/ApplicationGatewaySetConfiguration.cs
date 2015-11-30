@@ -99,6 +99,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._httpLoadBalancingRules = value; }
         }
         
+        private IList<Probe> _probes;
+        
+        /// <summary>
+        /// Optional. Probes of application gateway.
+        /// </summary>
+        public IList<Probe> Probes
+        {
+            get { return this._probes; }
+            set { this._probes = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// ApplicationGatewaySetConfiguration class.
@@ -111,6 +122,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             this.FrontendPorts = new LazyList<FrontendPort>();
             this.HttpListeners = new LazyList<AGHttpListener>();
             this.HttpLoadBalancingRules = new LazyList<HttpLoadBalancingRule>();
+            this.Probes = new LazyList<Probe>();
         }
     }
 }

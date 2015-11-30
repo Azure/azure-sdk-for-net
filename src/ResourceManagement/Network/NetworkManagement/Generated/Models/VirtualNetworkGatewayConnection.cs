@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class VirtualNetworkGatewayConnection : TopLevelResource
     {
+        private string _authorizationKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the authorization key
+        /// </summary>
+        public string AuthorizationKey
+        {
+            get { return this._authorizationKey; }
+            set { this._authorizationKey = value; }
+        }
+        
         private string _connectionStatus;
         
         /// <summary>

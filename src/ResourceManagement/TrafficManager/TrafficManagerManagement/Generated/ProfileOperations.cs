@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/checkTrafficManagerNameAvailability";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -501,6 +501,11 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 if (endpointsItem.Properties.EndpointMonitorStatus != null)
                                 {
                                     propertiesValue2["endpointMonitorStatus"] = endpointsItem.Properties.EndpointMonitorStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.MinChildEndpoints != null)
+                                {
+                                    propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
                                 }
                             }
                         }
@@ -751,6 +756,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                             propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                         }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue4["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
                                     }
                                 }
                             }
@@ -880,7 +892,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1025,7 +1037,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1267,6 +1279,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                             propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                         }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1376,7 +1395,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1448,15 +1467,15 @@ namespace Microsoft.Azure.Management.TrafficManager
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken valuesArray = responseDoc["values"];
-                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valuesValue in ((JArray)valuesArray))
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Profile profileInstance = new Profile();
                                 result.Profiles.Add(profileInstance);
                                 
-                                JToken propertiesValue = valuesValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     ProfileProperties propertiesInstance = new ProfileProperties();
@@ -1623,40 +1642,47 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                     string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                                     propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                                 }
+                                                
+                                                JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                                if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                                {
+                                                    uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                                    propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
                                 
-                                JToken idValue2 = valuesValue["id"];
+                                JToken idValue2 = valueValue["id"];
                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
                                     string idInstance2 = ((string)idValue2);
                                     profileInstance.Id = idInstance2;
                                 }
                                 
-                                JToken nameValue2 = valuesValue["name"];
+                                JToken nameValue2 = valueValue["name"];
                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
                                     string nameInstance2 = ((string)nameValue2);
                                     profileInstance.Name = nameInstance2;
                                 }
                                 
-                                JToken typeValue2 = valuesValue["type"];
+                                JToken typeValue2 = valueValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
                                     string typeInstance2 = ((string)typeValue2);
                                     profileInstance.Type = typeInstance2;
                                 }
                                 
-                                JToken locationValue = valuesValue["location"];
+                                JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
                                     profileInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valuesValue["tags"]);
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
@@ -1745,7 +1771,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1817,15 +1843,15 @@ namespace Microsoft.Azure.Management.TrafficManager
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken valuesArray = responseDoc["values"];
-                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valuesValue in ((JArray)valuesArray))
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Profile profileInstance = new Profile();
                                 result.Profiles.Add(profileInstance);
                                 
-                                JToken propertiesValue = valuesValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     ProfileProperties propertiesInstance = new ProfileProperties();
@@ -1992,40 +2018,47 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                     string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                                     propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
                                                 }
+                                                
+                                                JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                                                if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                                {
+                                                    uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                                    propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
                                 
-                                JToken idValue2 = valuesValue["id"];
+                                JToken idValue2 = valueValue["id"];
                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
                                     string idInstance2 = ((string)idValue2);
                                     profileInstance.Id = idInstance2;
                                 }
                                 
-                                JToken nameValue2 = valuesValue["name"];
+                                JToken nameValue2 = valueValue["name"];
                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
                                     string nameInstance2 = ((string)nameValue2);
                                     profileInstance.Name = nameInstance2;
                                 }
                                 
-                                JToken typeValue2 = valuesValue["type"];
+                                JToken typeValue2 = valueValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
                                     string typeInstance2 = ((string)typeValue2);
                                     profileInstance.Type = typeInstance2;
                                 }
                                 
-                                JToken locationValue = valuesValue["location"];
+                                JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
                                     profileInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valuesValue["tags"]);
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
@@ -2160,7 +2193,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2307,6 +2340,11 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 if (endpointsItem.Properties.EndpointMonitorStatus != null)
                                 {
                                     propertiesValue2["endpointMonitorStatus"] = endpointsItem.Properties.EndpointMonitorStatus;
+                                }
+                                
+                                if (endpointsItem.Properties.MinChildEndpoints != null)
+                                {
+                                    propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
                                 }
                             }
                         }
@@ -2559,6 +2597,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                         {
                                             string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                             propertiesInstance2.EndpointMonitorStatus = endpointMonitorStatusInstance;
+                                        }
+                                        
+                                        JToken minChildEndpointsValue = propertiesValue4["minChildEndpoints"];
+                                        if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                                        {
+                                            uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                            propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
                                         }
                                     }
                                 }

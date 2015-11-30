@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1242,6 +1242,60 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                 }
                 
+                if (config.Probes != null)
+                {
+                    if (config.Probes is ILazyCollection == false || ((ILazyCollection)config.Probes).IsInitialized)
+                    {
+                        XElement probesSequenceElement = new XElement(XName.Get("Probes", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (Probe probesItem in config.Probes)
+                        {
+                            XElement probeElement = new XElement(XName.Get("Probe", "http://schemas.microsoft.com/windowsazure"));
+                            probesSequenceElement.Add(probeElement);
+                            
+                            if (probesItem.Name != null)
+                            {
+                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement3.Value = probesItem.Name;
+                                probeElement.Add(nameElement3);
+                            }
+                            
+                            if (probesItem.Protocol != null)
+                            {
+                                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement.Value = probesItem.Protocol;
+                                probeElement.Add(protocolElement);
+                            }
+                            
+                            if (probesItem.Host != null)
+                            {
+                                XElement hostElement = new XElement(XName.Get("Host", "http://schemas.microsoft.com/windowsazure"));
+                                hostElement.Value = probesItem.Host;
+                                probeElement.Add(hostElement);
+                            }
+                            
+                            if (probesItem.Path != null)
+                            {
+                                XElement pathElement = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
+                                pathElement.Value = probesItem.Path;
+                                probeElement.Add(pathElement);
+                            }
+                            
+                            XElement intervalElement = new XElement(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
+                            intervalElement.Value = probesItem.Interval.ToString();
+                            probeElement.Add(intervalElement);
+                            
+                            XElement timeoutElement = new XElement(XName.Get("Timeout", "http://schemas.microsoft.com/windowsazure"));
+                            timeoutElement.Value = probesItem.Timeout.ToString();
+                            probeElement.Add(timeoutElement);
+                            
+                            XElement unhealthyThresholdElement = new XElement(XName.Get("UnhealthyThreshold", "http://schemas.microsoft.com/windowsazure"));
+                            unhealthyThresholdElement.Value = probesItem.UnhealthyThreshold.ToString();
+                            probeElement.Add(unhealthyThresholdElement);
+                        }
+                        applicationGatewayConfigurationElement.Add(probesSequenceElement);
+                    }
+                }
+                
                 if (config.BackendAddressPools != null)
                 {
                     if (config.BackendAddressPools is ILazyCollection == false || ((ILazyCollection)config.BackendAddressPools).IsInitialized)
@@ -1254,9 +1308,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                             
                             if (backendAddressPoolsItem.Name != null)
                             {
-                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement3.Value = backendAddressPoolsItem.Name;
-                                backendAddressPoolElement.Add(nameElement3);
+                                XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement4.Value = backendAddressPoolsItem.Name;
+                                backendAddressPoolElement.Add(nameElement4);
                             }
                             
                             if (backendAddressPoolsItem.BackendServers != null)
@@ -1294,24 +1348,35 @@ namespace Microsoft.WindowsAzure.Management.Network
                             
                             if (backendHttpSettingsListItem.Name != null)
                             {
-                                XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement4.Value = backendHttpSettingsListItem.Name;
-                                backendHttpSettingsElement.Add(nameElement4);
+                                XElement nameElement5 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement5.Value = backendHttpSettingsListItem.Name;
+                                backendHttpSettingsElement.Add(nameElement5);
                             }
                             
                             XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
                             portElement2.Value = backendHttpSettingsListItem.Port.ToString();
                             backendHttpSettingsElement.Add(portElement2);
                             
-                            XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement.Value = backendHttpSettingsListItem.Protocol.ToString();
-                            backendHttpSettingsElement.Add(protocolElement);
+                            XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                            protocolElement2.Value = backendHttpSettingsListItem.Protocol.ToString();
+                            backendHttpSettingsElement.Add(protocolElement2);
                             
                             if (backendHttpSettingsListItem.CookieBasedAffinity != null)
                             {
                                 XElement cookieBasedAffinityElement = new XElement(XName.Get("CookieBasedAffinity", "http://schemas.microsoft.com/windowsazure"));
                                 cookieBasedAffinityElement.Value = backendHttpSettingsListItem.CookieBasedAffinity;
                                 backendHttpSettingsElement.Add(cookieBasedAffinityElement);
+                            }
+                            
+                            XElement requestTimeoutElement = new XElement(XName.Get("RequestTimeout", "http://schemas.microsoft.com/windowsazure"));
+                            requestTimeoutElement.Value = backendHttpSettingsListItem.RequestTimeout.ToString();
+                            backendHttpSettingsElement.Add(requestTimeoutElement);
+                            
+                            if (backendHttpSettingsListItem.Probe != null)
+                            {
+                                XElement probeElement2 = new XElement(XName.Get("Probe", "http://schemas.microsoft.com/windowsazure"));
+                                probeElement2.Value = backendHttpSettingsListItem.Probe;
+                                backendHttpSettingsElement.Add(probeElement2);
                             }
                         }
                         applicationGatewayConfigurationElement.Add(backendHttpSettingsListSequenceElement);
@@ -1330,9 +1395,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                             
                             if (httpListenersItem.Name != null)
                             {
-                                XElement nameElement5 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement5.Value = httpListenersItem.Name;
-                                httpListenerElement.Add(nameElement5);
+                                XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement6.Value = httpListenersItem.Name;
+                                httpListenerElement.Add(nameElement6);
                             }
                             
                             if (httpListenersItem.FrontendIP != null)
@@ -1349,9 +1414,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 httpListenerElement.Add(frontendPortElement2);
                             }
                             
-                            XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement2.Value = httpListenersItem.Protocol.ToString();
-                            httpListenerElement.Add(protocolElement2);
+                            XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                            protocolElement3.Value = httpListenersItem.Protocol.ToString();
+                            httpListenerElement.Add(protocolElement3);
                             
                             if (httpListenersItem.SslCert != null)
                             {
@@ -1376,9 +1441,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                             
                             if (httpLoadBalancingRulesItem.Name != null)
                             {
-                                XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement6.Value = httpLoadBalancingRulesItem.Name;
-                                httpLoadBalancingRuleElement.Add(nameElement6);
+                                XElement nameElement7 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement7.Value = httpLoadBalancingRulesItem.Name;
+                                httpLoadBalancingRuleElement.Add(nameElement7);
                             }
                             
                             if (httpLoadBalancingRulesItem.Type != null)
@@ -1754,7 +1819,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1845,7 +1910,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1939,7 +2004,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2034,7 +2099,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -2644,6 +2709,65 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 }
                             }
                             
+                            XElement probesSequenceElement = applicationGatewayConfigurationElement.Element(XName.Get("Probes", "http://schemas.microsoft.com/windowsazure"));
+                            if (probesSequenceElement != null)
+                            {
+                                foreach (XElement probesElement in probesSequenceElement.Elements(XName.Get("Probe", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    Probe probeInstance = new Probe();
+                                    result.Probes.Add(probeInstance);
+                                    
+                                    XElement nameElement3 = probesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement3 != null)
+                                    {
+                                        string nameInstance3 = nameElement3.Value;
+                                        probeInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    XElement protocolElement = probesElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    if (protocolElement != null)
+                                    {
+                                        string protocolInstance = protocolElement.Value;
+                                        probeInstance.Protocol = protocolInstance;
+                                    }
+                                    
+                                    XElement hostElement = probesElement.Element(XName.Get("Host", "http://schemas.microsoft.com/windowsazure"));
+                                    if (hostElement != null)
+                                    {
+                                        string hostInstance = hostElement.Value;
+                                        probeInstance.Host = hostInstance;
+                                    }
+                                    
+                                    XElement pathElement = probesElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
+                                    if (pathElement != null)
+                                    {
+                                        string pathInstance = pathElement.Value;
+                                        probeInstance.Path = pathInstance;
+                                    }
+                                    
+                                    XElement intervalElement = probesElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
+                                    if (intervalElement != null)
+                                    {
+                                        uint intervalInstance = uint.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
+                                        probeInstance.Interval = intervalInstance;
+                                    }
+                                    
+                                    XElement timeoutElement = probesElement.Element(XName.Get("Timeout", "http://schemas.microsoft.com/windowsazure"));
+                                    if (timeoutElement != null)
+                                    {
+                                        uint timeoutInstance = uint.Parse(timeoutElement.Value, CultureInfo.InvariantCulture);
+                                        probeInstance.Timeout = timeoutInstance;
+                                    }
+                                    
+                                    XElement unhealthyThresholdElement = probesElement.Element(XName.Get("UnhealthyThreshold", "http://schemas.microsoft.com/windowsazure"));
+                                    if (unhealthyThresholdElement != null)
+                                    {
+                                        uint unhealthyThresholdInstance = uint.Parse(unhealthyThresholdElement.Value, CultureInfo.InvariantCulture);
+                                        probeInstance.UnhealthyThreshold = unhealthyThresholdInstance;
+                                    }
+                                }
+                            }
+                            
                             XElement backendAddressPoolsSequenceElement = applicationGatewayConfigurationElement.Element(XName.Get("BackendAddressPools", "http://schemas.microsoft.com/windowsazure"));
                             if (backendAddressPoolsSequenceElement != null)
                             {
@@ -2652,11 +2776,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     BackendAddressPool backendAddressPoolInstance = new BackendAddressPool();
                                     result.BackendAddressPools.Add(backendAddressPoolInstance);
                                     
-                                    XElement nameElement3 = backendAddressPoolsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement3 != null)
+                                    XElement nameElement4 = backendAddressPoolsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement4 != null)
                                     {
-                                        string nameInstance3 = nameElement3.Value;
-                                        backendAddressPoolInstance.Name = nameInstance3;
+                                        string nameInstance4 = nameElement4.Value;
+                                        backendAddressPoolInstance.Name = nameInstance4;
                                     }
                                     
                                     XElement iPAddressesSequenceElement = backendAddressPoolsElement.Element(XName.Get("IPAddresses", "http://schemas.microsoft.com/windowsazure"));
@@ -2682,11 +2806,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     BackendHttpSettings backendHttpSettingsInstance = new BackendHttpSettings();
                                     result.BackendHttpSettingsList.Add(backendHttpSettingsInstance);
                                     
-                                    XElement nameElement4 = backendHttpSettingsListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement4 != null)
+                                    XElement nameElement5 = backendHttpSettingsListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement5 != null)
                                     {
-                                        string nameInstance4 = nameElement4.Value;
-                                        backendHttpSettingsInstance.Name = nameInstance4;
+                                        string nameInstance5 = nameElement5.Value;
+                                        backendHttpSettingsInstance.Name = nameInstance5;
                                     }
                                     
                                     XElement portElement2 = backendHttpSettingsListElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
@@ -2696,11 +2820,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         backendHttpSettingsInstance.Port = portInstance2;
                                     }
                                     
-                                    XElement protocolElement = backendHttpSettingsListElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                    if (protocolElement != null)
+                                    XElement protocolElement2 = backendHttpSettingsListElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    if (protocolElement2 != null)
                                     {
-                                        Protocol protocolInstance = ((Protocol)Enum.Parse(typeof(Protocol), protocolElement.Value, true));
-                                        backendHttpSettingsInstance.Protocol = protocolInstance;
+                                        Protocol protocolInstance2 = ((Protocol)Enum.Parse(typeof(Protocol), protocolElement2.Value, true));
+                                        backendHttpSettingsInstance.Protocol = protocolInstance2;
                                     }
                                     
                                     XElement cookieBasedAffinityElement = backendHttpSettingsListElement.Element(XName.Get("CookieBasedAffinity", "http://schemas.microsoft.com/windowsazure"));
@@ -2708,6 +2832,20 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     {
                                         string cookieBasedAffinityInstance = cookieBasedAffinityElement.Value;
                                         backendHttpSettingsInstance.CookieBasedAffinity = cookieBasedAffinityInstance;
+                                    }
+                                    
+                                    XElement requestTimeoutElement = backendHttpSettingsListElement.Element(XName.Get("RequestTimeout", "http://schemas.microsoft.com/windowsazure"));
+                                    if (requestTimeoutElement != null)
+                                    {
+                                        uint requestTimeoutInstance = uint.Parse(requestTimeoutElement.Value, CultureInfo.InvariantCulture);
+                                        backendHttpSettingsInstance.RequestTimeout = requestTimeoutInstance;
+                                    }
+                                    
+                                    XElement probeElement = backendHttpSettingsListElement.Element(XName.Get("Probe", "http://schemas.microsoft.com/windowsazure"));
+                                    if (probeElement != null)
+                                    {
+                                        string probeInstance2 = probeElement.Value;
+                                        backendHttpSettingsInstance.Probe = probeInstance2;
                                     }
                                 }
                             }
@@ -2720,11 +2858,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     AGHttpListener httpListenerInstance = new AGHttpListener();
                                     result.HttpListeners.Add(httpListenerInstance);
                                     
-                                    XElement nameElement5 = httpListenersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement5 != null)
+                                    XElement nameElement6 = httpListenersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement6 != null)
                                     {
-                                        string nameInstance5 = nameElement5.Value;
-                                        httpListenerInstance.Name = nameInstance5;
+                                        string nameInstance6 = nameElement6.Value;
+                                        httpListenerInstance.Name = nameInstance6;
                                     }
                                     
                                     XElement frontendIPElement = httpListenersElement.Element(XName.Get("FrontendIP", "http://schemas.microsoft.com/windowsazure"));
@@ -2741,11 +2879,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         httpListenerInstance.FrontendPort = frontendPortInstance2;
                                     }
                                     
-                                    XElement protocolElement2 = httpListenersElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                    if (protocolElement2 != null)
+                                    XElement protocolElement3 = httpListenersElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    if (protocolElement3 != null)
                                     {
-                                        Protocol protocolInstance2 = ((Protocol)Enum.Parse(typeof(Protocol), protocolElement2.Value, true));
-                                        httpListenerInstance.Protocol = protocolInstance2;
+                                        Protocol protocolInstance3 = ((Protocol)Enum.Parse(typeof(Protocol), protocolElement3.Value, true));
+                                        httpListenerInstance.Protocol = protocolInstance3;
                                     }
                                     
                                     XElement sslCertElement = httpListenersElement.Element(XName.Get("SslCert", "http://schemas.microsoft.com/windowsazure"));
@@ -2765,11 +2903,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     HttpLoadBalancingRule httpLoadBalancingRuleInstance = new HttpLoadBalancingRule();
                                     result.HttpLoadBalancingRules.Add(httpLoadBalancingRuleInstance);
                                     
-                                    XElement nameElement6 = httpLoadBalancingRulesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement6 != null)
+                                    XElement nameElement7 = httpLoadBalancingRulesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement7 != null)
                                     {
-                                        string nameInstance6 = nameElement6.Value;
-                                        httpLoadBalancingRuleInstance.Name = nameInstance6;
+                                        string nameInstance7 = nameElement7.Value;
+                                        httpLoadBalancingRuleInstance.Name = nameInstance7;
                                     }
                                     
                                     XElement typeElement2 = httpLoadBalancingRulesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
@@ -3470,7 +3608,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3565,7 +3703,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != AsyncOperationStatus.InProgress) == false)
+            while (result.Status == AsyncOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
