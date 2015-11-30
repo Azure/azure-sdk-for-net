@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Get the vault extended info.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the job collection.
+        /// The name of the resource group containing the vault.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the resource.
         /// </param>
         /// <param name='extendedInfoArgs'>
-        /// Create resource exnteded info input parameters.
+        /// Create resource extended info input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -77,6 +77,29 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// The response model for the resource extended information object
         /// </returns>
         Task<ResourceExtendedInformationResponse> GetExtendedInfoAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update the vault extended info.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource.
+        /// </param>
+        /// <param name='extendedInfoArgs'>
+        /// Update resource extended info input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the resource extended information object
+        /// </returns>
+        Task<ResourceExtendedInformationResponse> UpdateExtendedInfoAsync(string resourceGroupName, string resourceName, ResourceExtendedInformationArgs extendedInfoArgs, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the vault extended info.

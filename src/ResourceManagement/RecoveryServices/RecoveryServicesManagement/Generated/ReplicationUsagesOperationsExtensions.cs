@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Microsoft.Azure.Management.RecoveryServices.IReplicationUsagesOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (resource group?) cloud service
-        /// containing the vault collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// Required. The name of the resource.
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Microsoft.Azure.Management.RecoveryServices.IReplicationUsagesOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (resource group?) cloud service
-        /// containing the vault collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// Required. The name of the resource.
