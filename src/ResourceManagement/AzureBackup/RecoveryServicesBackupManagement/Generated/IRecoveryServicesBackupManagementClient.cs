@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get; set; 
         }
         
+        string ResourceNamespace
+        {
+            get; set; 
+        }
+        
         /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>

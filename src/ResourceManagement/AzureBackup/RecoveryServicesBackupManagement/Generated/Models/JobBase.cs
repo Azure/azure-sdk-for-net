@@ -21,81 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The Base class for JobsBase.
+    /// The definition of a Job base object.
     /// </summary>
-    public partial class JobBase : Job
+    public partial class JobBase
     {
-        private string _backupManagementType;
-        
-        /// <summary>
-        /// Optional. Job Type
-        /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
-        
-        private DateTime _endTime;
-        
-        /// <summary>
-        /// Optional. Job EndTimestamp
-        /// </summary>
-        public DateTime EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
-        
-        private string _entityFriendlyName;
-        
-        /// <summary>
-        /// Optional. Job EntityFriendlyName
-        /// </summary>
-        public string EntityFriendlyName
-        {
-            get { return this._entityFriendlyName; }
-            set { this._entityFriendlyName = value; }
-        }
-        
-        private string _operation;
-        
-        /// <summary>
-        /// Optional. Job Operation
-        /// </summary>
-        public string Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// Optional. Job StartTimestamp
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. Job Status
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the JobBase class.
         /// </summary>

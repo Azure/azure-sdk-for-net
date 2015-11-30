@@ -21,31 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a OperationResultInfoBase object.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class OperationResultInfoBase
     {
-        private ProtectedItemResource _item;
-        
         /// <summary>
-        /// Optional. Item
+        /// Initializes a new instance of the OperationResultInfoBase class.
         /// </summary>
-        public ProtectedItemResource Item
-        {
-            get { return this._item; }
-            set { this._item = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
-        /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public OperationResultInfoBase()
         {
         }
     }

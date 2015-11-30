@@ -128,9 +128,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -291,9 +291,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
             url = url + "/protectionContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -332,7 +332,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -599,9 +598,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -611,7 +610,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
             url = url + "/refreshContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -640,7 +639,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

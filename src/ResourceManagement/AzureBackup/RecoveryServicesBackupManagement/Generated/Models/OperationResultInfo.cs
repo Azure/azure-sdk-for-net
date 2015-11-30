@@ -20,33 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition for OperationResultInfo class.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class OperationResultInfo : OperationResultInfoBase
     {
-        private ProtectedItemResource _item;
+        private IList<string> _jobList;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. List of jobs
         /// </summary>
-        public ProtectedItemResource Item
+        public IList<string> JobList
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._jobList; }
+            set { this._jobList = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the OperationResultInfo class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public OperationResultInfo()
         {
+            this.JobList = new LazyList<string>();
         }
     }
 }

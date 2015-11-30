@@ -28,8 +28,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a ProtectionPolicyRequest.
     /// </summary>
-    public partial class ProtectionPolicyRequest : ProtectionPolicyResource
+    public partial class ProtectionPolicyRequest
     {
+        private ProtectionPolicyResource _item;
+        
+        /// <summary>
+        /// Optional. Item
+        /// </summary>
+        public ProtectionPolicyResource Item
+        {
+            get { return this._item; }
+            set { this._item = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProtectionPolicyRequest class.
         /// </summary>

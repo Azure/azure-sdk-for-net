@@ -126,16 +126,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -215,76 +215,164 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JobResource itemInstance = new JobResource();
                             result.Item = itemInstance;
                             
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)itemValue["ObjectType"]);
-                                if (typeName == "JobBase")
+                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                if (typeName == "Job")
                                 {
-                                    JobBase jobBaseInstance = new JobBase();
+                                    Job jobInstance = new Job();
                                     
-                                    JToken entityFriendlyNameValue = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                        jobBaseInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
                                     }
                                     
-                                    JToken backupManagementTypeValue = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                        jobBaseInstance.BackupManagementType = backupManagementTypeInstance;
+                                        jobInstance.BackupManagementType = backupManagementTypeInstance;
                                     }
                                     
-                                    JToken operationValue = itemValue["operation"];
+                                    JToken operationValue = propertiesValue["operation"];
                                     if (operationValue != null && operationValue.Type != JTokenType.Null)
                                     {
                                         string operationInstance = ((string)operationValue);
-                                        jobBaseInstance.Operation = operationInstance;
+                                        jobInstance.Operation = operationInstance;
                                     }
                                     
-                                    JToken statusValue = itemValue["status"];
+                                    JToken statusValue = propertiesValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
                                         string statusInstance = ((string)statusValue);
-                                        jobBaseInstance.Status = statusInstance;
+                                        jobInstance.Status = statusInstance;
                                     }
                                     
-                                    JToken startTimeValue = itemValue["startTime"];
+                                    JToken startTimeValue = propertiesValue["startTime"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        jobBaseInstance.StartTime = startTimeInstance;
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken endTimeValue = itemValue["endTime"];
+                                    JToken endTimeValue = propertiesValue["endTime"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        jobBaseInstance.EndTime = endTimeInstance;
+                                        jobInstance.EndTime = endTimeInstance;
                                     }
-                                    itemInstance.Item = jobBaseInstance;
+                                    
+                                    JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        if (typeName2 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray = extendedInfoValue["tasksList"];
+                                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                                    
+                                                    JToken taskIdValue = tasksListValue["taskId"];
+                                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance = ((string)taskIdValue);
+                                                        iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                    }
+                                                    
+                                                    JToken startTimeValue2 = tasksListValue["startTime"];
+                                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken endTimeValue2 = tasksListValue["endTime"];
+                                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken durationValue = tasksListValue["duration"];
+                                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance.Duration = durationInstance;
+                                                    }
+                                                    
+                                                    JToken statusValue2 = tasksListValue["status"];
+                                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance2 = ((string)statusValue2);
+                                                        iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                    if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance = ((double)progressPercentageValue);
+                                                        iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertyBagSequenceElement)
+                                                {
+                                                    string propertyBagKey = ((string)property.Name);
+                                                    string propertyBagValue = ((string)property.Value);
+                                                    iaaSVMJobExtendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                            if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                                iaaSVMJobExtendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                                iaaSVMJobExtendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                            }
+                                            jobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance;
+                                        }
+                                    }
+                                    itemInstance.Properties = jobInstance;
                                 }
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
                                     
-                                    JToken instanceIdValue = itemValue["instanceId"];
+                                    JToken instanceIdValue = propertiesValue["instanceId"];
                                     if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                     {
                                         string instanceIdInstance = ((string)instanceIdValue);
                                         iaaSVMJobInstance.InstanceId = instanceIdInstance;
                                     }
                                     
-                                    JToken durationValue = itemValue["duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    JToken durationValue2 = propertiesValue["duration"];
+                                    if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        iaaSVMJobInstance.Duration = durationInstance;
+                                        TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                        iaaSVMJobInstance.Duration = durationInstance2;
                                     }
                                     
-                                    JToken actionsInfoArray = itemValue["actionsInfo"];
+                                    JToken actionsInfoArray = propertiesValue["actionsInfo"];
                                     if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
@@ -293,7 +381,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken errorDetailsArray = itemValue["errorDetails"];
+                                    JToken errorDetailsArray = propertiesValue["errorDetails"];
                                     if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
@@ -333,55 +421,143 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken virtualMachineVersionValue = itemValue["virtualMachineVersion"];
+                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
                                         iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                     }
                                     
-                                    JToken entityFriendlyNameValue2 = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
                                         iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
                                     }
                                     
-                                    JToken backupManagementTypeValue2 = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
                                         iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
-                                    JToken operationValue2 = itemValue["operation"];
+                                    JToken operationValue2 = propertiesValue["operation"];
                                     if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
                                     {
                                         string operationInstance2 = ((string)operationValue2);
                                         iaaSVMJobInstance.Operation = operationInstance2;
                                     }
                                     
-                                    JToken statusValue2 = itemValue["status"];
-                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                    JToken statusValue3 = propertiesValue["status"];
+                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
                                     {
-                                        string statusInstance2 = ((string)statusValue2);
-                                        iaaSVMJobInstance.Status = statusInstance2;
+                                        string statusInstance3 = ((string)statusValue3);
+                                        iaaSVMJobInstance.Status = statusInstance3;
                                     }
                                     
-                                    JToken startTimeValue2 = itemValue["startTime"];
-                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                    JToken startTimeValue3 = propertiesValue["startTime"];
+                                    if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                        iaaSVMJobInstance.StartTime = startTimeInstance2;
+                                        DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                        iaaSVMJobInstance.StartTime = startTimeInstance3;
                                     }
                                     
-                                    JToken endTimeValue2 = itemValue["endTime"];
-                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                    JToken endTimeValue3 = propertiesValue["endTime"];
+                                    if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                        iaaSVMJobInstance.EndTime = endTimeInstance2;
+                                        DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                        iaaSVMJobInstance.EndTime = endTimeInstance3;
                                     }
-                                    itemInstance.Item = iaaSVMJobInstance;
+                                    
+                                    JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        if (typeName3 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray2 = extendedInfoValue2["tasksList"];
+                                            if (tasksListArray2 != null && tasksListArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue2 in ((JArray)tasksListArray2))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance2 = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance2.TasksList.Add(iaaSVMJobTaskDetailsInstance2);
+                                                    
+                                                    JToken taskIdValue2 = tasksListValue2["taskId"];
+                                                    if (taskIdValue2 != null && taskIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance2 = ((string)taskIdValue2);
+                                                        iaaSVMJobTaskDetailsInstance2.TaskId = taskIdInstance2;
+                                                    }
+                                                    
+                                                    JToken startTimeValue4 = tasksListValue2["startTime"];
+                                                    if (startTimeValue4 != null && startTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance4 = ((DateTime)startTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.StartTime = startTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken endTimeValue4 = tasksListValue2["endTime"];
+                                                    if (endTimeValue4 != null && endTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance4 = ((DateTime)endTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.EndTime = endTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken durationValue3 = tasksListValue2["duration"];
+                                                    if (durationValue3 != null && durationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance3 = TimeSpan.Parse(((string)durationValue3), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance2.Duration = durationInstance3;
+                                                    }
+                                                    
+                                                    JToken statusValue4 = tasksListValue2["status"];
+                                                    if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance4 = ((string)statusValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.Status = statusInstance4;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue3 = tasksListValue2["progressPercentage"];
+                                                    if (progressPercentageValue3 != null && progressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance3 = ((double)progressPercentageValue3);
+                                                        iaaSVMJobTaskDetailsInstance2.ProgressPercentage = progressPercentageInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement2 = ((JToken)extendedInfoValue2["propertyBag"]);
+                                            if (propertyBagSequenceElement2 != null && propertyBagSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in propertyBagSequenceElement2)
+                                                {
+                                                    string propertyBagKey2 = ((string)property2.Name);
+                                                    string propertyBagValue2 = ((string)property2.Value);
+                                                    iaaSVMJobExtendedInfoInstance2.PropertyBag.Add(propertyBagKey2, propertyBagValue2);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue4 = extendedInfoValue2["progressPercentage"];
+                                            if (progressPercentageValue4 != null && progressPercentageValue4.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance4 = ((double)progressPercentageValue4);
+                                                iaaSVMJobExtendedInfoInstance2.ProgressPercentage = progressPercentageInstance4;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue2 = extendedInfoValue2["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue2 != null && dynamicErrorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance2 = ((string)dynamicErrorMessageValue2);
+                                                iaaSVMJobExtendedInfoInstance2.DynamicErrorMessage = dynamicErrorMessageInstance2;
+                                            }
+                                            iaaSVMJobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance2;
+                                        }
+                                    }
+                                    itemInstance.Properties = iaaSVMJobInstance;
                                 }
                             }
                             
@@ -416,10 +592,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property3 in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
+                                    string tagsKey = ((string)property3.Name);
+                                    string tagsValue = ((string)property3.Value);
                                     itemInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
@@ -548,14 +724,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/exportBackupJobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -584,7 +760,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -635,76 +811,164 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JobResource itemInstance = new JobResource();
                             result.Item = itemInstance;
                             
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)itemValue["ObjectType"]);
-                                if (typeName == "JobBase")
+                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                if (typeName == "Job")
                                 {
-                                    JobBase jobBaseInstance = new JobBase();
+                                    Job jobInstance = new Job();
                                     
-                                    JToken entityFriendlyNameValue = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                        jobBaseInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
                                     }
                                     
-                                    JToken backupManagementTypeValue = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                        jobBaseInstance.BackupManagementType = backupManagementTypeInstance;
+                                        jobInstance.BackupManagementType = backupManagementTypeInstance;
                                     }
                                     
-                                    JToken operationValue = itemValue["operation"];
+                                    JToken operationValue = propertiesValue["operation"];
                                     if (operationValue != null && operationValue.Type != JTokenType.Null)
                                     {
                                         string operationInstance = ((string)operationValue);
-                                        jobBaseInstance.Operation = operationInstance;
+                                        jobInstance.Operation = operationInstance;
                                     }
                                     
-                                    JToken statusValue = itemValue["status"];
+                                    JToken statusValue = propertiesValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
                                         string statusInstance = ((string)statusValue);
-                                        jobBaseInstance.Status = statusInstance;
+                                        jobInstance.Status = statusInstance;
                                     }
                                     
-                                    JToken startTimeValue = itemValue["startTime"];
+                                    JToken startTimeValue = propertiesValue["startTime"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        jobBaseInstance.StartTime = startTimeInstance;
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken endTimeValue = itemValue["endTime"];
+                                    JToken endTimeValue = propertiesValue["endTime"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        jobBaseInstance.EndTime = endTimeInstance;
+                                        jobInstance.EndTime = endTimeInstance;
                                     }
-                                    itemInstance.Item = jobBaseInstance;
+                                    
+                                    JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        if (typeName2 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray = extendedInfoValue["tasksList"];
+                                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                                    
+                                                    JToken taskIdValue = tasksListValue["taskId"];
+                                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance = ((string)taskIdValue);
+                                                        iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                    }
+                                                    
+                                                    JToken startTimeValue2 = tasksListValue["startTime"];
+                                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken endTimeValue2 = tasksListValue["endTime"];
+                                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken durationValue = tasksListValue["duration"];
+                                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance.Duration = durationInstance;
+                                                    }
+                                                    
+                                                    JToken statusValue2 = tasksListValue["status"];
+                                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance2 = ((string)statusValue2);
+                                                        iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                    if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance = ((double)progressPercentageValue);
+                                                        iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertyBagSequenceElement)
+                                                {
+                                                    string propertyBagKey = ((string)property.Name);
+                                                    string propertyBagValue = ((string)property.Value);
+                                                    iaaSVMJobExtendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                            if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                                iaaSVMJobExtendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                                iaaSVMJobExtendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                            }
+                                            jobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance;
+                                        }
+                                    }
+                                    itemInstance.Properties = jobInstance;
                                 }
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
                                     
-                                    JToken instanceIdValue = itemValue["instanceId"];
+                                    JToken instanceIdValue = propertiesValue["instanceId"];
                                     if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                     {
                                         string instanceIdInstance = ((string)instanceIdValue);
                                         iaaSVMJobInstance.InstanceId = instanceIdInstance;
                                     }
                                     
-                                    JToken durationValue = itemValue["duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    JToken durationValue2 = propertiesValue["duration"];
+                                    if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        iaaSVMJobInstance.Duration = durationInstance;
+                                        TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                        iaaSVMJobInstance.Duration = durationInstance2;
                                     }
                                     
-                                    JToken actionsInfoArray = itemValue["actionsInfo"];
+                                    JToken actionsInfoArray = propertiesValue["actionsInfo"];
                                     if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
@@ -713,7 +977,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken errorDetailsArray = itemValue["errorDetails"];
+                                    JToken errorDetailsArray = propertiesValue["errorDetails"];
                                     if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
@@ -753,55 +1017,143 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken virtualMachineVersionValue = itemValue["virtualMachineVersion"];
+                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
                                         iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                     }
                                     
-                                    JToken entityFriendlyNameValue2 = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
                                         iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
                                     }
                                     
-                                    JToken backupManagementTypeValue2 = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
                                         iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
-                                    JToken operationValue2 = itemValue["operation"];
+                                    JToken operationValue2 = propertiesValue["operation"];
                                     if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
                                     {
                                         string operationInstance2 = ((string)operationValue2);
                                         iaaSVMJobInstance.Operation = operationInstance2;
                                     }
                                     
-                                    JToken statusValue2 = itemValue["status"];
-                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                    JToken statusValue3 = propertiesValue["status"];
+                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
                                     {
-                                        string statusInstance2 = ((string)statusValue2);
-                                        iaaSVMJobInstance.Status = statusInstance2;
+                                        string statusInstance3 = ((string)statusValue3);
+                                        iaaSVMJobInstance.Status = statusInstance3;
                                     }
                                     
-                                    JToken startTimeValue2 = itemValue["startTime"];
-                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                    JToken startTimeValue3 = propertiesValue["startTime"];
+                                    if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                        iaaSVMJobInstance.StartTime = startTimeInstance2;
+                                        DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                        iaaSVMJobInstance.StartTime = startTimeInstance3;
                                     }
                                     
-                                    JToken endTimeValue2 = itemValue["endTime"];
-                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                    JToken endTimeValue3 = propertiesValue["endTime"];
+                                    if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                        iaaSVMJobInstance.EndTime = endTimeInstance2;
+                                        DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                        iaaSVMJobInstance.EndTime = endTimeInstance3;
                                     }
-                                    itemInstance.Item = iaaSVMJobInstance;
+                                    
+                                    JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        if (typeName3 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray2 = extendedInfoValue2["tasksList"];
+                                            if (tasksListArray2 != null && tasksListArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue2 in ((JArray)tasksListArray2))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance2 = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance2.TasksList.Add(iaaSVMJobTaskDetailsInstance2);
+                                                    
+                                                    JToken taskIdValue2 = tasksListValue2["taskId"];
+                                                    if (taskIdValue2 != null && taskIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance2 = ((string)taskIdValue2);
+                                                        iaaSVMJobTaskDetailsInstance2.TaskId = taskIdInstance2;
+                                                    }
+                                                    
+                                                    JToken startTimeValue4 = tasksListValue2["startTime"];
+                                                    if (startTimeValue4 != null && startTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance4 = ((DateTime)startTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.StartTime = startTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken endTimeValue4 = tasksListValue2["endTime"];
+                                                    if (endTimeValue4 != null && endTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance4 = ((DateTime)endTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.EndTime = endTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken durationValue3 = tasksListValue2["duration"];
+                                                    if (durationValue3 != null && durationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance3 = TimeSpan.Parse(((string)durationValue3), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance2.Duration = durationInstance3;
+                                                    }
+                                                    
+                                                    JToken statusValue4 = tasksListValue2["status"];
+                                                    if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance4 = ((string)statusValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.Status = statusInstance4;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue3 = tasksListValue2["progressPercentage"];
+                                                    if (progressPercentageValue3 != null && progressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance3 = ((double)progressPercentageValue3);
+                                                        iaaSVMJobTaskDetailsInstance2.ProgressPercentage = progressPercentageInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement2 = ((JToken)extendedInfoValue2["propertyBag"]);
+                                            if (propertyBagSequenceElement2 != null && propertyBagSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in propertyBagSequenceElement2)
+                                                {
+                                                    string propertyBagKey2 = ((string)property2.Name);
+                                                    string propertyBagValue2 = ((string)property2.Value);
+                                                    iaaSVMJobExtendedInfoInstance2.PropertyBag.Add(propertyBagKey2, propertyBagValue2);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue4 = extendedInfoValue2["progressPercentage"];
+                                            if (progressPercentageValue4 != null && progressPercentageValue4.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance4 = ((double)progressPercentageValue4);
+                                                iaaSVMJobExtendedInfoInstance2.ProgressPercentage = progressPercentageInstance4;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue2 = extendedInfoValue2["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue2 != null && dynamicErrorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance2 = ((string)dynamicErrorMessageValue2);
+                                                iaaSVMJobExtendedInfoInstance2.DynamicErrorMessage = dynamicErrorMessageInstance2;
+                                            }
+                                            iaaSVMJobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance2;
+                                        }
+                                    }
+                                    itemInstance.Properties = iaaSVMJobInstance;
                                 }
                             }
                             
@@ -836,10 +1188,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property3 in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
+                                    string tagsKey = ((string)property3.Name);
+                                    string tagsValue = ((string)property3.Value);
                                     itemInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
@@ -930,9 +1282,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a JobDetailsResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public async Task<JobDetailsResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<JobResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -972,15 +1324,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1041,13 +1393,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    JobDetailsResponse result = null;
+                    JobResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobDetailsResponse();
+                        result = new JobResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1056,213 +1408,352 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JobDetailsResource itemInstance = new JobDetailsResource();
+                            JobResource itemInstance = new JobResource();
                             result.Item = itemInstance;
                             
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)itemValue["ObjectType"]);
-                                if (typeName == "IaaSVMJobProperties")
+                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                if (typeName == "Job")
                                 {
-                                    IaaSVMJobProperties iaaSVMJobPropertiesInstance = new IaaSVMJobProperties();
+                                    Job jobInstance = new Job();
                                     
-                                    JToken iaaSVMJobValue = itemValue["iaaSVMJob"];
-                                    if (iaaSVMJobValue != null && iaaSVMJobValue.Type != JTokenType.Null)
+                                    JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
+                                    if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
                                     {
-                                        IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                        iaaSVMJobPropertiesInstance.IaaSVMJob = iaaSVMJobInstance;
-                                        
-                                        JToken instanceIdValue = iaaSVMJobValue["instanceId"];
-                                        if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
+                                        string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
+                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        jobInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
+                                    JToken operationValue = propertiesValue["operation"];
+                                    if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                    {
+                                        string operationInstance = ((string)operationValue);
+                                        jobInstance.Operation = operationInstance;
+                                    }
+                                    
+                                    JToken statusValue = propertiesValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        jobInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = propertiesValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = propertiesValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        jobInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
-                                            string instanceIdInstance = ((string)instanceIdValue);
-                                            iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                        }
-                                        
-                                        JToken durationValue = iaaSVMJobValue["duration"];
-                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                            iaaSVMJobInstance.Duration = durationInstance;
-                                        }
-                                        
-                                        JToken actionsInfoArray = iaaSVMJobValue["actionsInfo"];
-                                        if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray = extendedInfoValue["tasksList"];
+                                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
                                             {
-                                                iaaSVMJobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
-                                            }
-                                        }
-                                        
-                                        JToken errorDetailsArray = iaaSVMJobValue["errorDetails"];
-                                        if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
-                                            {
-                                                IaaSVMErrorInfo iaaSVMErrorInfoInstance = new IaaSVMErrorInfo();
-                                                iaaSVMJobInstance.ErrorDetails.Add(iaaSVMErrorInfoInstance);
-                                                
-                                                JToken errorCodeValue = errorDetailsValue["errorCode"];
-                                                if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
                                                 {
-                                                    int errorCodeInstance = ((int)errorCodeValue);
-                                                    iaaSVMErrorInfoInstance.ErrorCode = errorCodeInstance;
-                                                }
-                                                
-                                                JToken errorTitleValue = errorDetailsValue["errorTitle"];
-                                                if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
-                                                {
-                                                    string errorTitleInstance = ((string)errorTitleValue);
-                                                    iaaSVMErrorInfoInstance.ErrorTitle = errorTitleInstance;
-                                                }
-                                                
-                                                JToken errorStringValue = errorDetailsValue["errorString"];
-                                                if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
-                                                {
-                                                    string errorStringInstance = ((string)errorStringValue);
-                                                    iaaSVMErrorInfoInstance.ErrorString = errorStringInstance;
-                                                }
-                                                
-                                                JToken recommendationsArray = errorDetailsValue["recommendations"];
-                                                if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                                    
+                                                    JToken taskIdValue = tasksListValue["taskId"];
+                                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
                                                     {
-                                                        iaaSVMErrorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                        string taskIdInstance = ((string)taskIdValue);
+                                                        iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                    }
+                                                    
+                                                    JToken startTimeValue2 = tasksListValue["startTime"];
+                                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken endTimeValue2 = tasksListValue["endTime"];
+                                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken durationValue = tasksListValue["duration"];
+                                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance.Duration = durationInstance;
+                                                    }
+                                                    
+                                                    JToken statusValue2 = tasksListValue["status"];
+                                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance2 = ((string)statusValue2);
+                                                        iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                    if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance = ((double)progressPercentageValue);
+                                                        iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
                                                     }
                                                 }
                                             }
+                                            
+                                            JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertyBagSequenceElement)
+                                                {
+                                                    string propertyBagKey = ((string)property.Name);
+                                                    string propertyBagValue = ((string)property.Value);
+                                                    iaaSVMJobExtendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                            if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                                iaaSVMJobExtendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                                iaaSVMJobExtendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                            }
+                                            jobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance;
                                         }
-                                        
-                                        JToken virtualMachineVersionValue = iaaSVMJobValue["virtualMachineVersion"];
-                                        if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                    }
+                                    itemInstance.Properties = jobInstance;
+                                }
+                                if (typeName == "IaaSVMJob")
+                                {
+                                    IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
+                                    
+                                    JToken instanceIdValue = propertiesValue["instanceId"];
+                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string instanceIdInstance = ((string)instanceIdValue);
+                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
+                                    }
+                                    
+                                    JToken durationValue2 = propertiesValue["duration"];
+                                    if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                        iaaSVMJobInstance.Duration = durationInstance2;
+                                    }
+                                    
+                                    JToken actionsInfoArray = propertiesValue["actionsInfo"];
+                                    if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
                                         {
-                                            string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                            iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                        }
-                                        
-                                        JToken entityFriendlyNameValue = iaaSVMJobValue["entityFriendlyName"];
-                                        if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                            iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance;
-                                        }
-                                        
-                                        JToken backupManagementTypeValue = iaaSVMJobValue["backupManagementType"];
-                                        if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                            iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance;
-                                        }
-                                        
-                                        JToken operationValue = iaaSVMJobValue["operation"];
-                                        if (operationValue != null && operationValue.Type != JTokenType.Null)
-                                        {
-                                            string operationInstance = ((string)operationValue);
-                                            iaaSVMJobInstance.Operation = operationInstance;
-                                        }
-                                        
-                                        JToken statusValue = iaaSVMJobValue["status"];
-                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                        {
-                                            string statusInstance = ((string)statusValue);
-                                            iaaSVMJobInstance.Status = statusInstance;
-                                        }
-                                        
-                                        JToken startTimeValue = iaaSVMJobValue["startTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            iaaSVMJobInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken endTimeValue = iaaSVMJobValue["endTime"];
-                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                            iaaSVMJobInstance.EndTime = endTimeInstance;
+                                            iaaSVMJobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
                                         }
                                     }
                                     
-                                    JToken tasksListArray = itemValue["tasksList"];
-                                    if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                    JToken errorDetailsArray = propertiesValue["errorDetails"];
+                                    if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                        foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
                                         {
-                                            IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
-                                            iaaSVMJobPropertiesInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                            IaaSVMErrorInfo iaaSVMErrorInfoInstance = new IaaSVMErrorInfo();
+                                            iaaSVMJobInstance.ErrorDetails.Add(iaaSVMErrorInfoInstance);
                                             
-                                            JToken taskIdValue = tasksListValue["taskId"];
-                                            if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                            JToken errorCodeValue = errorDetailsValue["errorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                                             {
-                                                string taskIdInstance = ((string)taskIdValue);
-                                                iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                int errorCodeInstance = ((int)errorCodeValue);
+                                                iaaSVMErrorInfoInstance.ErrorCode = errorCodeInstance;
                                             }
                                             
-                                            JToken startTimeValue2 = tasksListValue["startTime"];
-                                            if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                            JToken errorTitleValue = errorDetailsValue["errorTitle"];
+                                            if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
                                             {
-                                                DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                                iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                string errorTitleInstance = ((string)errorTitleValue);
+                                                iaaSVMErrorInfoInstance.ErrorTitle = errorTitleInstance;
                                             }
                                             
-                                            JToken endTimeValue2 = tasksListValue["endTime"];
-                                            if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                            JToken errorStringValue = errorDetailsValue["errorString"];
+                                            if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
                                             {
-                                                DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                                iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                string errorStringInstance = ((string)errorStringValue);
+                                                iaaSVMErrorInfoInstance.ErrorString = errorStringInstance;
                                             }
                                             
-                                            JToken durationValue2 = tasksListValue["duration"];
-                                            if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
+                                            JToken recommendationsArray = errorDetailsValue["recommendations"];
+                                            if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
                                             {
-                                                TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
-                                                iaaSVMJobTaskDetailsInstance.Duration = durationInstance2;
-                                            }
-                                            
-                                            JToken statusValue2 = tasksListValue["status"];
-                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
-                                            {
-                                                string statusInstance2 = ((string)statusValue2);
-                                                iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
-                                            }
-                                            
-                                            JToken progressPercentageValue = tasksListValue["progressPercentage"];
-                                            if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
-                                            {
-                                                double progressPercentageInstance = ((double)progressPercentageValue);
-                                                iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                {
+                                                    iaaSVMErrorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                }
                                             }
                                         }
                                     }
                                     
-                                    JToken propertyBagSequenceElement = ((JToken)itemValue["propertyBag"]);
-                                    if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
+                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in propertyBagSequenceElement)
+                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                        iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                    }
+                                    
+                                    JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
+                                    if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
+                                        iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
+                                    }
+                                    
+                                    JToken operationValue2 = propertiesValue["operation"];
+                                    if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
+                                    {
+                                        string operationInstance2 = ((string)operationValue2);
+                                        iaaSVMJobInstance.Operation = operationInstance2;
+                                    }
+                                    
+                                    JToken statusValue3 = propertiesValue["status"];
+                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance3 = ((string)statusValue3);
+                                        iaaSVMJobInstance.Status = statusInstance3;
+                                    }
+                                    
+                                    JToken startTimeValue3 = propertiesValue["startTime"];
+                                    if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                        iaaSVMJobInstance.StartTime = startTimeInstance3;
+                                    }
+                                    
+                                    JToken endTimeValue3 = propertiesValue["endTime"];
+                                    if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                        iaaSVMJobInstance.EndTime = endTimeInstance3;
+                                    }
+                                    
+                                    JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
-                                            string propertyBagKey = ((string)property.Name);
-                                            string propertyBagValue = ((string)property.Value);
-                                            iaaSVMJobPropertiesInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray2 = extendedInfoValue2["tasksList"];
+                                            if (tasksListArray2 != null && tasksListArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue2 in ((JArray)tasksListArray2))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance2 = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance2.TasksList.Add(iaaSVMJobTaskDetailsInstance2);
+                                                    
+                                                    JToken taskIdValue2 = tasksListValue2["taskId"];
+                                                    if (taskIdValue2 != null && taskIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance2 = ((string)taskIdValue2);
+                                                        iaaSVMJobTaskDetailsInstance2.TaskId = taskIdInstance2;
+                                                    }
+                                                    
+                                                    JToken startTimeValue4 = tasksListValue2["startTime"];
+                                                    if (startTimeValue4 != null && startTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance4 = ((DateTime)startTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.StartTime = startTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken endTimeValue4 = tasksListValue2["endTime"];
+                                                    if (endTimeValue4 != null && endTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance4 = ((DateTime)endTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.EndTime = endTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken durationValue3 = tasksListValue2["duration"];
+                                                    if (durationValue3 != null && durationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance3 = TimeSpan.Parse(((string)durationValue3), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance2.Duration = durationInstance3;
+                                                    }
+                                                    
+                                                    JToken statusValue4 = tasksListValue2["status"];
+                                                    if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance4 = ((string)statusValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.Status = statusInstance4;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue3 = tasksListValue2["progressPercentage"];
+                                                    if (progressPercentageValue3 != null && progressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance3 = ((double)progressPercentageValue3);
+                                                        iaaSVMJobTaskDetailsInstance2.ProgressPercentage = progressPercentageInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement2 = ((JToken)extendedInfoValue2["propertyBag"]);
+                                            if (propertyBagSequenceElement2 != null && propertyBagSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in propertyBagSequenceElement2)
+                                                {
+                                                    string propertyBagKey2 = ((string)property2.Name);
+                                                    string propertyBagValue2 = ((string)property2.Value);
+                                                    iaaSVMJobExtendedInfoInstance2.PropertyBag.Add(propertyBagKey2, propertyBagValue2);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue4 = extendedInfoValue2["progressPercentage"];
+                                            if (progressPercentageValue4 != null && progressPercentageValue4.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance4 = ((double)progressPercentageValue4);
+                                                iaaSVMJobExtendedInfoInstance2.ProgressPercentage = progressPercentageInstance4;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue2 = extendedInfoValue2["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue2 != null && dynamicErrorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance2 = ((string)dynamicErrorMessageValue2);
+                                                iaaSVMJobExtendedInfoInstance2.DynamicErrorMessage = dynamicErrorMessageInstance2;
+                                            }
+                                            iaaSVMJobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance2;
                                         }
                                     }
-                                    
-                                    JToken progressPercentageValue2 = itemValue["progressPercentage"];
-                                    if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
-                                    {
-                                        double progressPercentageInstance2 = ((double)progressPercentageValue2);
-                                        iaaSVMJobPropertiesInstance.ProgressPercentage = progressPercentageInstance2;
-                                    }
-                                    
-                                    JToken dynamicErrorMessageValue = itemValue["dynamicErrorMessage"];
-                                    if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
-                                    {
-                                        string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
-                                        iaaSVMJobPropertiesInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
-                                    }
-                                    itemInstance.Item = iaaSVMJobPropertiesInstance;
+                                    itemInstance.Properties = iaaSVMJobInstance;
                                 }
                             }
                             
@@ -1297,10 +1788,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement)
+                                foreach (JProperty property3 in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property2.Name);
-                                    string tagsValue = ((string)property2.Value);
+                                    string tagsKey = ((string)property3.Name);
+                                    string tagsValue = ((string)property3.Value);
                                     itemInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
@@ -1310,6 +1801,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 string eTagInstance = ((string)eTagValue);
                                 itemInstance.ETag = eTagInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
                             }
                         }
                         
@@ -1408,9 +1920,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
@@ -1418,7 +1930,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1497,76 +2009,164 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JobResource itemInstance = new JobResource();
                             result.Item = itemInstance;
                             
-                            JToken itemValue = responseDoc["item"];
-                            if (itemValue != null && itemValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)itemValue["ObjectType"]);
-                                if (typeName == "JobBase")
+                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                if (typeName == "Job")
                                 {
-                                    JobBase jobBaseInstance = new JobBase();
+                                    Job jobInstance = new Job();
                                     
-                                    JToken entityFriendlyNameValue = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                        jobBaseInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
                                     }
                                     
-                                    JToken backupManagementTypeValue = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                        jobBaseInstance.BackupManagementType = backupManagementTypeInstance;
+                                        jobInstance.BackupManagementType = backupManagementTypeInstance;
                                     }
                                     
-                                    JToken operationValue = itemValue["operation"];
+                                    JToken operationValue = propertiesValue["operation"];
                                     if (operationValue != null && operationValue.Type != JTokenType.Null)
                                     {
                                         string operationInstance = ((string)operationValue);
-                                        jobBaseInstance.Operation = operationInstance;
+                                        jobInstance.Operation = operationInstance;
                                     }
                                     
-                                    JToken statusValue = itemValue["status"];
+                                    JToken statusValue = propertiesValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
                                         string statusInstance = ((string)statusValue);
-                                        jobBaseInstance.Status = statusInstance;
+                                        jobInstance.Status = statusInstance;
                                     }
                                     
-                                    JToken startTimeValue = itemValue["startTime"];
+                                    JToken startTimeValue = propertiesValue["startTime"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        jobBaseInstance.StartTime = startTimeInstance;
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken endTimeValue = itemValue["endTime"];
+                                    JToken endTimeValue = propertiesValue["endTime"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        jobBaseInstance.EndTime = endTimeInstance;
+                                        jobInstance.EndTime = endTimeInstance;
                                     }
-                                    itemInstance.Item = jobBaseInstance;
+                                    
+                                    JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        if (typeName2 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray = extendedInfoValue["tasksList"];
+                                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                                    
+                                                    JToken taskIdValue = tasksListValue["taskId"];
+                                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance = ((string)taskIdValue);
+                                                        iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                    }
+                                                    
+                                                    JToken startTimeValue2 = tasksListValue["startTime"];
+                                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken endTimeValue2 = tasksListValue["endTime"];
+                                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                        iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken durationValue = tasksListValue["duration"];
+                                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance.Duration = durationInstance;
+                                                    }
+                                                    
+                                                    JToken statusValue2 = tasksListValue["status"];
+                                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance2 = ((string)statusValue2);
+                                                        iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                    if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance = ((double)progressPercentageValue);
+                                                        iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertyBagSequenceElement)
+                                                {
+                                                    string propertyBagKey = ((string)property.Name);
+                                                    string propertyBagValue = ((string)property.Value);
+                                                    iaaSVMJobExtendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                            if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                                iaaSVMJobExtendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                                iaaSVMJobExtendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                            }
+                                            jobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance;
+                                        }
+                                    }
+                                    itemInstance.Properties = jobInstance;
                                 }
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
                                     
-                                    JToken instanceIdValue = itemValue["instanceId"];
+                                    JToken instanceIdValue = propertiesValue["instanceId"];
                                     if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                     {
                                         string instanceIdInstance = ((string)instanceIdValue);
                                         iaaSVMJobInstance.InstanceId = instanceIdInstance;
                                     }
                                     
-                                    JToken durationValue = itemValue["duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    JToken durationValue2 = propertiesValue["duration"];
+                                    if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        iaaSVMJobInstance.Duration = durationInstance;
+                                        TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                        iaaSVMJobInstance.Duration = durationInstance2;
                                     }
                                     
-                                    JToken actionsInfoArray = itemValue["actionsInfo"];
+                                    JToken actionsInfoArray = propertiesValue["actionsInfo"];
                                     if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
@@ -1575,7 +2175,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken errorDetailsArray = itemValue["errorDetails"];
+                                    JToken errorDetailsArray = propertiesValue["errorDetails"];
                                     if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
@@ -1615,55 +2215,143 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken virtualMachineVersionValue = itemValue["virtualMachineVersion"];
+                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
                                         iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                     }
                                     
-                                    JToken entityFriendlyNameValue2 = itemValue["entityFriendlyName"];
+                                    JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
                                     if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
                                     {
                                         string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
                                         iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
                                     }
                                     
-                                    JToken backupManagementTypeValue2 = itemValue["backupManagementType"];
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
                                         iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
-                                    JToken operationValue2 = itemValue["operation"];
+                                    JToken operationValue2 = propertiesValue["operation"];
                                     if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
                                     {
                                         string operationInstance2 = ((string)operationValue2);
                                         iaaSVMJobInstance.Operation = operationInstance2;
                                     }
                                     
-                                    JToken statusValue2 = itemValue["status"];
-                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                    JToken statusValue3 = propertiesValue["status"];
+                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
                                     {
-                                        string statusInstance2 = ((string)statusValue2);
-                                        iaaSVMJobInstance.Status = statusInstance2;
+                                        string statusInstance3 = ((string)statusValue3);
+                                        iaaSVMJobInstance.Status = statusInstance3;
                                     }
                                     
-                                    JToken startTimeValue2 = itemValue["startTime"];
-                                    if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                    JToken startTimeValue3 = propertiesValue["startTime"];
+                                    if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                        iaaSVMJobInstance.StartTime = startTimeInstance2;
+                                        DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                        iaaSVMJobInstance.StartTime = startTimeInstance3;
                                     }
                                     
-                                    JToken endTimeValue2 = itemValue["endTime"];
-                                    if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                    JToken endTimeValue3 = propertiesValue["endTime"];
+                                    if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                        iaaSVMJobInstance.EndTime = endTimeInstance2;
+                                        DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                        iaaSVMJobInstance.EndTime = endTimeInstance3;
                                     }
-                                    itemInstance.Item = iaaSVMJobInstance;
+                                    
+                                    JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        if (typeName3 == "IaaSVMJobExtendedInfo")
+                                        {
+                                            IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
+                                            
+                                            JToken tasksListArray2 = extendedInfoValue2["tasksList"];
+                                            if (tasksListArray2 != null && tasksListArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tasksListValue2 in ((JArray)tasksListArray2))
+                                                {
+                                                    IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance2 = new IaaSVMJobTaskDetails();
+                                                    iaaSVMJobExtendedInfoInstance2.TasksList.Add(iaaSVMJobTaskDetailsInstance2);
+                                                    
+                                                    JToken taskIdValue2 = tasksListValue2["taskId"];
+                                                    if (taskIdValue2 != null && taskIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string taskIdInstance2 = ((string)taskIdValue2);
+                                                        iaaSVMJobTaskDetailsInstance2.TaskId = taskIdInstance2;
+                                                    }
+                                                    
+                                                    JToken startTimeValue4 = tasksListValue2["startTime"];
+                                                    if (startTimeValue4 != null && startTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime startTimeInstance4 = ((DateTime)startTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.StartTime = startTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken endTimeValue4 = tasksListValue2["endTime"];
+                                                    if (endTimeValue4 != null && endTimeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime endTimeInstance4 = ((DateTime)endTimeValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.EndTime = endTimeInstance4;
+                                                    }
+                                                    
+                                                    JToken durationValue3 = tasksListValue2["duration"];
+                                                    if (durationValue3 != null && durationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan durationInstance3 = TimeSpan.Parse(((string)durationValue3), CultureInfo.InvariantCulture);
+                                                        iaaSVMJobTaskDetailsInstance2.Duration = durationInstance3;
+                                                    }
+                                                    
+                                                    JToken statusValue4 = tasksListValue2["status"];
+                                                    if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string statusInstance4 = ((string)statusValue4);
+                                                        iaaSVMJobTaskDetailsInstance2.Status = statusInstance4;
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue3 = tasksListValue2["progressPercentage"];
+                                                    if (progressPercentageValue3 != null && progressPercentageValue3.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance3 = ((double)progressPercentageValue3);
+                                                        iaaSVMJobTaskDetailsInstance2.ProgressPercentage = progressPercentageInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken propertyBagSequenceElement2 = ((JToken)extendedInfoValue2["propertyBag"]);
+                                            if (propertyBagSequenceElement2 != null && propertyBagSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in propertyBagSequenceElement2)
+                                                {
+                                                    string propertyBagKey2 = ((string)property2.Name);
+                                                    string propertyBagValue2 = ((string)property2.Value);
+                                                    iaaSVMJobExtendedInfoInstance2.PropertyBag.Add(propertyBagKey2, propertyBagValue2);
+                                                }
+                                            }
+                                            
+                                            JToken progressPercentageValue4 = extendedInfoValue2["progressPercentage"];
+                                            if (progressPercentageValue4 != null && progressPercentageValue4.Type != JTokenType.Null)
+                                            {
+                                                double progressPercentageInstance4 = ((double)progressPercentageValue4);
+                                                iaaSVMJobExtendedInfoInstance2.ProgressPercentage = progressPercentageInstance4;
+                                            }
+                                            
+                                            JToken dynamicErrorMessageValue2 = extendedInfoValue2["dynamicErrorMessage"];
+                                            if (dynamicErrorMessageValue2 != null && dynamicErrorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string dynamicErrorMessageInstance2 = ((string)dynamicErrorMessageValue2);
+                                                iaaSVMJobExtendedInfoInstance2.DynamicErrorMessage = dynamicErrorMessageInstance2;
+                                            }
+                                            iaaSVMJobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance2;
+                                        }
+                                    }
+                                    itemInstance.Properties = iaaSVMJobInstance;
                                 }
                             }
                             
@@ -1698,10 +2386,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JProperty property3 in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
+                                    string tagsKey = ((string)property3.Name);
+                                    string tagsValue = ((string)property3.Value);
                                     itemInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
@@ -1782,7 +2470,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, IaaSVMJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1818,20 +2506,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.Status != null)
             {
                 odataFilter.Add("status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
             }
-            odataFilter.Add("type eq 'AzureIaasVM'");
+            if (queryFilter != null && queryFilter.Type != null)
+            {
+                odataFilter.Add("type eq '" + Uri.EscapeDataString(queryFilter.Type) + "'");
+            }
             if (queryFilter != null && queryFilter.Operation != null)
             {
                 odataFilter.Add("operation eq '" + Uri.EscapeDataString(queryFilter.Operation) + "'");
@@ -1946,76 +2637,164 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JobResource jobResourceInstance = new JobResource();
                                     itemListInstance.Value.Add(jobResourceInstance);
                                     
-                                    JToken itemValue = valueValue["item"];
-                                    if (itemValue != null && itemValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)itemValue["ObjectType"]);
-                                        if (typeName == "JobBase")
+                                        string typeName = ((string)propertiesValue["ObjectType"]);
+                                        if (typeName == "Job")
                                         {
-                                            JobBase jobBaseInstance = new JobBase();
+                                            Job jobInstance = new Job();
                                             
-                                            JToken entityFriendlyNameValue = itemValue["entityFriendlyName"];
+                                            JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
                                             if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
                                             {
                                                 string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                                jobBaseInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                                jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
                                             }
                                             
-                                            JToken backupManagementTypeValue = itemValue["backupManagementType"];
+                                            JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance = ((string)backupManagementTypeValue);
-                                                jobBaseInstance.BackupManagementType = backupManagementTypeInstance;
+                                                jobInstance.BackupManagementType = backupManagementTypeInstance;
                                             }
                                             
-                                            JToken operationValue = itemValue["operation"];
+                                            JToken operationValue = propertiesValue["operation"];
                                             if (operationValue != null && operationValue.Type != JTokenType.Null)
                                             {
                                                 string operationInstance = ((string)operationValue);
-                                                jobBaseInstance.Operation = operationInstance;
+                                                jobInstance.Operation = operationInstance;
                                             }
                                             
-                                            JToken statusValue = itemValue["status"];
+                                            JToken statusValue = propertiesValue["status"];
                                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                                             {
                                                 string statusInstance = ((string)statusValue);
-                                                jobBaseInstance.Status = statusInstance;
+                                                jobInstance.Status = statusInstance;
                                             }
                                             
-                                            JToken startTimeValue = itemValue["startTime"];
+                                            JToken startTimeValue = propertiesValue["startTime"];
                                             if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                             {
                                                 DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                                jobBaseInstance.StartTime = startTimeInstance;
+                                                jobInstance.StartTime = startTimeInstance;
                                             }
                                             
-                                            JToken endTimeValue = itemValue["endTime"];
+                                            JToken endTimeValue = propertiesValue["endTime"];
                                             if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                             {
                                                 DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                                jobBaseInstance.EndTime = endTimeInstance;
+                                                jobInstance.EndTime = endTimeInstance;
                                             }
-                                            jobResourceInstance.Item = jobBaseInstance;
+                                            
+                                            JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                            if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                                if (typeName2 == "IaaSVMJobExtendedInfo")
+                                                {
+                                                    IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
+                                                    
+                                                    JToken tasksListArray = extendedInfoValue["tasksList"];
+                                                    if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                                        {
+                                                            IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance = new IaaSVMJobTaskDetails();
+                                                            iaaSVMJobExtendedInfoInstance.TasksList.Add(iaaSVMJobTaskDetailsInstance);
+                                                            
+                                                            JToken taskIdValue = tasksListValue["taskId"];
+                                                            if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                                            {
+                                                                string taskIdInstance = ((string)taskIdValue);
+                                                                iaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                            }
+                                                            
+                                                            JToken startTimeValue2 = tasksListValue["startTime"];
+                                                            if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                            {
+                                                                DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                                iaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                            }
+                                                            
+                                                            JToken endTimeValue2 = tasksListValue["endTime"];
+                                                            if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                            {
+                                                                DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                                iaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                            }
+                                                            
+                                                            JToken durationValue = tasksListValue["duration"];
+                                                            if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                                                iaaSVMJobTaskDetailsInstance.Duration = durationInstance;
+                                                            }
+                                                            
+                                                            JToken statusValue2 = tasksListValue["status"];
+                                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string statusInstance2 = ((string)statusValue2);
+                                                                iaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                            }
+                                                            
+                                                            JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                            if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                            {
+                                                                double progressPercentageInstance = ((double)progressPercentageValue);
+                                                                iaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                                    if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property in propertyBagSequenceElement)
+                                                        {
+                                                            string propertyBagKey = ((string)property.Name);
+                                                            string propertyBagValue = ((string)property.Value);
+                                                            iaaSVMJobExtendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                                        }
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                                    if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                                        iaaSVMJobExtendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                                    }
+                                                    
+                                                    JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                                    if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                                    {
+                                                        string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                                        iaaSVMJobExtendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                                    }
+                                                    jobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance;
+                                                }
+                                            }
+                                            jobResourceInstance.Properties = jobInstance;
                                         }
                                         if (typeName == "IaaSVMJob")
                                         {
                                             IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
                                             
-                                            JToken instanceIdValue = itemValue["instanceId"];
+                                            JToken instanceIdValue = propertiesValue["instanceId"];
                                             if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                             {
                                                 string instanceIdInstance = ((string)instanceIdValue);
                                                 iaaSVMJobInstance.InstanceId = instanceIdInstance;
                                             }
                                             
-                                            JToken durationValue = itemValue["duration"];
-                                            if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                            JToken durationValue2 = propertiesValue["duration"];
+                                            if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
                                             {
-                                                TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                                iaaSVMJobInstance.Duration = durationInstance;
+                                                TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                                iaaSVMJobInstance.Duration = durationInstance2;
                                             }
                                             
-                                            JToken actionsInfoArray = itemValue["actionsInfo"];
+                                            JToken actionsInfoArray = propertiesValue["actionsInfo"];
                                             if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
@@ -2024,7 +2803,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 }
                                             }
                                             
-                                            JToken errorDetailsArray = itemValue["errorDetails"];
+                                            JToken errorDetailsArray = propertiesValue["errorDetails"];
                                             if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
@@ -2064,55 +2843,143 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 }
                                             }
                                             
-                                            JToken virtualMachineVersionValue = itemValue["virtualMachineVersion"];
+                                            JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                             if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
                                                 iaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                             }
                                             
-                                            JToken entityFriendlyNameValue2 = itemValue["entityFriendlyName"];
+                                            JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
                                             if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
                                             {
                                                 string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
                                                 iaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
                                             }
                                             
-                                            JToken backupManagementTypeValue2 = itemValue["backupManagementType"];
+                                            JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
                                                 iaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
                                             }
                                             
-                                            JToken operationValue2 = itemValue["operation"];
+                                            JToken operationValue2 = propertiesValue["operation"];
                                             if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
                                             {
                                                 string operationInstance2 = ((string)operationValue2);
                                                 iaaSVMJobInstance.Operation = operationInstance2;
                                             }
                                             
-                                            JToken statusValue2 = itemValue["status"];
-                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                            JToken statusValue3 = propertiesValue["status"];
+                                            if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
                                             {
-                                                string statusInstance2 = ((string)statusValue2);
-                                                iaaSVMJobInstance.Status = statusInstance2;
+                                                string statusInstance3 = ((string)statusValue3);
+                                                iaaSVMJobInstance.Status = statusInstance3;
                                             }
                                             
-                                            JToken startTimeValue2 = itemValue["startTime"];
-                                            if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                            JToken startTimeValue3 = propertiesValue["startTime"];
+                                            if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
                                             {
-                                                DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                                iaaSVMJobInstance.StartTime = startTimeInstance2;
+                                                DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                                iaaSVMJobInstance.StartTime = startTimeInstance3;
                                             }
                                             
-                                            JToken endTimeValue2 = itemValue["endTime"];
-                                            if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                            JToken endTimeValue3 = propertiesValue["endTime"];
+                                            if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
                                             {
-                                                DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                                iaaSVMJobInstance.EndTime = endTimeInstance2;
+                                                DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                                iaaSVMJobInstance.EndTime = endTimeInstance3;
                                             }
-                                            jobResourceInstance.Item = iaaSVMJobInstance;
+                                            
+                                            JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
+                                            if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                                if (typeName3 == "IaaSVMJobExtendedInfo")
+                                                {
+                                                    IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
+                                                    
+                                                    JToken tasksListArray2 = extendedInfoValue2["tasksList"];
+                                                    if (tasksListArray2 != null && tasksListArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken tasksListValue2 in ((JArray)tasksListArray2))
+                                                        {
+                                                            IaaSVMJobTaskDetails iaaSVMJobTaskDetailsInstance2 = new IaaSVMJobTaskDetails();
+                                                            iaaSVMJobExtendedInfoInstance2.TasksList.Add(iaaSVMJobTaskDetailsInstance2);
+                                                            
+                                                            JToken taskIdValue2 = tasksListValue2["taskId"];
+                                                            if (taskIdValue2 != null && taskIdValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string taskIdInstance2 = ((string)taskIdValue2);
+                                                                iaaSVMJobTaskDetailsInstance2.TaskId = taskIdInstance2;
+                                                            }
+                                                            
+                                                            JToken startTimeValue4 = tasksListValue2["startTime"];
+                                                            if (startTimeValue4 != null && startTimeValue4.Type != JTokenType.Null)
+                                                            {
+                                                                DateTime startTimeInstance4 = ((DateTime)startTimeValue4);
+                                                                iaaSVMJobTaskDetailsInstance2.StartTime = startTimeInstance4;
+                                                            }
+                                                            
+                                                            JToken endTimeValue4 = tasksListValue2["endTime"];
+                                                            if (endTimeValue4 != null && endTimeValue4.Type != JTokenType.Null)
+                                                            {
+                                                                DateTime endTimeInstance4 = ((DateTime)endTimeValue4);
+                                                                iaaSVMJobTaskDetailsInstance2.EndTime = endTimeInstance4;
+                                                            }
+                                                            
+                                                            JToken durationValue3 = tasksListValue2["duration"];
+                                                            if (durationValue3 != null && durationValue3.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan durationInstance3 = TimeSpan.Parse(((string)durationValue3), CultureInfo.InvariantCulture);
+                                                                iaaSVMJobTaskDetailsInstance2.Duration = durationInstance3;
+                                                            }
+                                                            
+                                                            JToken statusValue4 = tasksListValue2["status"];
+                                                            if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string statusInstance4 = ((string)statusValue4);
+                                                                iaaSVMJobTaskDetailsInstance2.Status = statusInstance4;
+                                                            }
+                                                            
+                                                            JToken progressPercentageValue3 = tasksListValue2["progressPercentage"];
+                                                            if (progressPercentageValue3 != null && progressPercentageValue3.Type != JTokenType.Null)
+                                                            {
+                                                                double progressPercentageInstance3 = ((double)progressPercentageValue3);
+                                                                iaaSVMJobTaskDetailsInstance2.ProgressPercentage = progressPercentageInstance3;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken propertyBagSequenceElement2 = ((JToken)extendedInfoValue2["propertyBag"]);
+                                                    if (propertyBagSequenceElement2 != null && propertyBagSequenceElement2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in propertyBagSequenceElement2)
+                                                        {
+                                                            string propertyBagKey2 = ((string)property2.Name);
+                                                            string propertyBagValue2 = ((string)property2.Value);
+                                                            iaaSVMJobExtendedInfoInstance2.PropertyBag.Add(propertyBagKey2, propertyBagValue2);
+                                                        }
+                                                    }
+                                                    
+                                                    JToken progressPercentageValue4 = extendedInfoValue2["progressPercentage"];
+                                                    if (progressPercentageValue4 != null && progressPercentageValue4.Type != JTokenType.Null)
+                                                    {
+                                                        double progressPercentageInstance4 = ((double)progressPercentageValue4);
+                                                        iaaSVMJobExtendedInfoInstance2.ProgressPercentage = progressPercentageInstance4;
+                                                    }
+                                                    
+                                                    JToken dynamicErrorMessageValue2 = extendedInfoValue2["dynamicErrorMessage"];
+                                                    if (dynamicErrorMessageValue2 != null && dynamicErrorMessageValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string dynamicErrorMessageInstance2 = ((string)dynamicErrorMessageValue2);
+                                                        iaaSVMJobExtendedInfoInstance2.DynamicErrorMessage = dynamicErrorMessageInstance2;
+                                                    }
+                                                    iaaSVMJobInstance.ExtendedInfo = iaaSVMJobExtendedInfoInstance2;
+                                                }
+                                            }
+                                            jobResourceInstance.Properties = iaaSVMJobInstance;
                                         }
                                     }
                                     
@@ -2147,10 +3014,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        foreach (JProperty property3 in tagsSequenceElement)
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
+                                            string tagsKey = ((string)property3.Name);
+                                            string tagsValue = ((string)property3.Value);
                                             jobResourceInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }

@@ -26,26 +26,25 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a GetOperationResultResponse.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class GetOperationResultResponse : BaseRecoveryServicesJobResponse
     {
-        private ProtectedItemResource _item;
+        private OperationResultInfoBase _operation;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Operation
         /// </summary>
-        public ProtectedItemResource Item
+        public OperationResultInfoBase Operation
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._operation; }
+            set { this._operation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the GetOperationResultResponse class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public GetOperationResultResponse()
         {
         }
     }

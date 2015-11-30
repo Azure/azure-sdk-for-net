@@ -21,45 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemListQueryParam object.
+    /// The definition of a CommonJobQueryFilter object.
     /// </summary>
-    public partial class ProtectedItemListQueryParam
+    public partial class CommonJobQueryFilters : JobQueryFilters
     {
-        private string _datasourceType;
+        private DateTime _endTime;
         
         /// <summary>
-        /// Optional. Datasource Type query parameter
+        /// Optional. EndTime query parameter
         /// </summary>
-        public string DatasourceType
+        public DateTime EndTime
         {
-            get { return this._datasourceType; }
-            set { this._datasourceType = value; }
+            get { return this._endTime; }
+            set { this._endTime = value; }
         }
         
-        private string _policyName;
+        private string _jobId;
         
         /// <summary>
-        /// Optional. PolicyName query parameter
+        /// Optional. JobId query parameter
         /// </summary>
-        public string PolicyName
+        public string JobId
         {
-            get { return this._policyName; }
-            set { this._policyName = value; }
+            get { return this._jobId; }
+            set { this._jobId = value; }
         }
         
-        private string _providerType;
+        private string _operation;
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Optional. Operation query parameter
         /// </summary>
-        public string ProviderType
+        public string Operation
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._operation; }
+            set { this._operation = value; }
         }
         
         private string _skipToken;
@@ -73,6 +74,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._skipToken = value; }
         }
         
+        private DateTime _startTime;
+        
+        /// <summary>
+        /// Optional. StartTime query parameter
+        /// </summary>
+        public DateTime StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private string _status;
+        
+        /// <summary>
+        /// Optional. Status query parameter
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
         private string _topToken;
         
         /// <summary>
@@ -84,10 +107,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._topToken = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemListQueryParam class.
+        /// Optional. Type query parameter
         /// </summary>
-        public ProtectedItemListQueryParam()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CommonJobQueryFilters class.
+        /// </summary>
+        public CommonJobQueryFilters()
         {
         }
     }
