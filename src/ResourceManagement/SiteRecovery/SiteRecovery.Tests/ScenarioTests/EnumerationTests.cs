@@ -124,13 +124,9 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                ////string fabricId = "6adf9420-b02f-4377-8ab7-ff384e6d792f";
-                //////string containerId = "4f94127d-2eb3-449d-a708-250752e93cb4";
-                ////string containerId = "8cc5a958-d437-41d0-9411-fad0841c0445";
-
-                string fabricId = "332ef14f4ba397490601076e38b80f7fe4139f8dcc22a3996c16a01060637050";
+                string fabricId = "6adf9420-b02f-4377-8ab7-ff384e6d792f";
                 //string containerId = "4f94127d-2eb3-449d-a708-250752e93cb4";
-                string containerId = "08bd0c6c-fa5e-46dc-bfd6-f596eb82d3cc";
+                string containerId = "8cc5a958-d437-41d0-9411-fad0841c0445";
 
                 List<ProtectableItem> protectableItemList = new List<ProtectableItem>();
                 ProtectableItemListResponse protectableItemListResponse = client.ProtectableItem.List(fabricId, containerId, "All", null, "1000", RequestHeaders);
