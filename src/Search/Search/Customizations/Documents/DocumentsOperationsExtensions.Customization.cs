@@ -29,11 +29,26 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The non-generic overloads of the ContinueSearch, ContinueSearchAsync, and
         /// ContinueSearchWithHttpMessagesAsync methods make a best-effort attempt to map JSON types in the response
         /// payload to .NET types. See
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// Note that this method is not meant to help you implement paging of search results. You can implement
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
+        /// parameters to the
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
+        /// method.
+        /// </para>
         /// </remarks>
         public static DocumentSearchResult ContinueSearch(
             this IDocumentsOperations operations, 
@@ -63,11 +78,26 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The non-generic overloads of the ContinueSearch, ContinueSearchAsync, and
         /// ContinueSearchWithHttpMessagesAsync methods make a best-effort attempt to map JSON types in the response
         /// payload to .NET types. See
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// Note that this method is not meant to help you implement paging of search results. You can implement
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
+        /// parameters to the
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
+        /// method.
+        /// </para>
         /// </remarks>
         public static async Task<DocumentSearchResult> ContinueSearchAsync(
             this IDocumentsOperations operations,
@@ -100,10 +130,25 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The generic overloads of the ContinueSearch, ContinueSearchAsync, and ContinueSearchWithHttpMessagesAsync
         /// methods support mapping of Azure Search field types to .NET types via the type parameter T. See 
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync&lt;T&gt;(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// Note that this method is not meant to help you implement paging of search results. You can implement
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
+        /// parameters to the
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
+        /// method.
+        /// </para>
         /// </remarks>
         public static DocumentSearchResult<T> ContinueSearch<T>(
             this IDocumentsOperations operations, 
@@ -138,10 +183,25 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The generic overloads of the ContinueSearch, ContinueSearchAsync, and ContinueSearchWithHttpMessagesAsync
         /// methods support mapping of Azure Search field types to .NET types via the type parameter T. See 
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync&lt;T&gt;(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// Note that this method is not meant to help you implement paging of search results. You can implement
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
+        /// parameters to the
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
+        /// method.
+        /// </para>
         /// </remarks>
         public static async Task<DocumentSearchResult<T>> ContinueSearchAsync<T>(
             this IDocumentsOperations operations,
@@ -513,10 +573,18 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The non-generic overloads of the Search, SearchAsync, and SearchWithHttpMessagesAsync methods make a
         /// best-effort attempt to map JSON types in the response payload to .NET types. See
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
         /// </remarks>
         public static DocumentSearchResult Search(
             this IDocumentsOperations operations,
@@ -552,10 +620,18 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The non-generic overloads of the Search, SearchAsync, and SearchWithHttpMessagesAsync methods make a
         /// best-effort attempt to map JSON types in the response payload to .NET types. See
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
         /// </remarks>
         public static async Task<DocumentSearchResult> SearchAsync(
             this IDocumentsOperations operations,
@@ -594,10 +670,18 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The generic overloads of the Search, SearchAsync, and SearchWithHttpMessagesAsync methods support mapping
         /// of Azure Search field types to .NET types via the type parameter T. See 
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync&lt;T&gt;(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
         /// </remarks>
         public static DocumentSearchResult<T> Search<T>(
             this IDocumentsOperations operations,
@@ -638,10 +722,18 @@ namespace Microsoft.Azure.Search
         /// Response containing the documents matching the query.
         /// </returns>
         /// <remarks>
+        /// <para>
         /// The generic overloads of the Search, SearchAsync, and SearchWithHttpMessagesAsync methods support mapping
         /// of Azure Search field types to .NET types via the type parameter T. See 
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync&lt;T&gt;(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// If Azure Search can't include all results in a single response, the response returned will include a
+        /// continuation token that can be passed to ContinueSearch to retrieve more results.
+        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// for more information.
+        /// </para>
         /// </remarks>
         public static async Task<DocumentSearchResult<T>> SearchAsync<T>(
             this IDocumentsOperations operations,
