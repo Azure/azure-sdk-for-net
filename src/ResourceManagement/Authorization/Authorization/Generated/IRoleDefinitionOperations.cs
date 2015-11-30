@@ -75,13 +75,16 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Role definition Id
         /// </param>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition get operation result.
         /// </returns>
-        Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionId, CancellationToken cancellationToken);
+        Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionId, string scope, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get role definition by name (GUID).
@@ -98,19 +101,12 @@ namespace Microsoft.Azure.Management.Authorization
         Task<RoleDefinitionGetResult> GetByIdAsync(string roleDefinitionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get all role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='scope'>
+        /// Scope
         /// </param>
-        /// <returns>
-        /// Role definition list operation result.
-        /// </returns>
-        Task<RoleDefinitionListResult> ListAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get role definitions.
-        /// </summary>
         /// <param name='parameters'>
         /// List role definitions filters.
         /// </param>
@@ -120,6 +116,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        Task<RoleDefinitionListResult> ListWithFiltersAsync(ListDefinitionFilterParameters parameters, CancellationToken cancellationToken);
+        Task<RoleDefinitionListResult> ListAsync(string scope, ListDefinitionFilterParameters parameters, CancellationToken cancellationToken);
     }
 }
