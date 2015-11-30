@@ -61,7 +61,7 @@ namespace Microsoft.Azure.KeyVault
         /// with the provided authentication callback and only resolves keys for the 
         /// specified key vault
         /// </summary>
-        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.azure.net/ </param>
         /// <param name="authenticationCallback">Key Vault authentication callback</param>
         public KeyVaultKeyResolver( string vaultName, KeyVaultClient.AuthenticationCallback authenticationCallback )
             : this( vaultName, new KeyVaultClient( authenticationCallback ) )
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.KeyVault
         /// Creates a new Key Vault KeyResolver that uses the specified KeyVaultClient
         /// and only resolves keys for the specified key vault
         /// </summary>
-        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.azure.net/ </param>
         /// <param name="client">Key Vault client</param>
         public KeyVaultKeyResolver( string vaultName, KeyVaultClient client )
         {
@@ -122,8 +122,8 @@ namespace Microsoft.Azure.KeyVault
             if ( vaultUri.Scheme != Uri.UriSchemeHttps )
                 throw new ArgumentException( "The vaultName must use the https scheme" );
 
-            if ( !vaultUri.Host.EndsWith( "vault.net") )
-                throw new ArgumentException( "The vaultName must end with vault.net" );
+            if ( !vaultUri.Host.EndsWith( "vault.azure.net" ) )
+                throw new ArgumentException( "The vaultName must end with vault.azure.net" );
 
             if ( !string.IsNullOrWhiteSpace( vaultUri.PathAndQuery) )
                 throw new ArgumentException( "The vaultName cannot contain a path or query string" );
