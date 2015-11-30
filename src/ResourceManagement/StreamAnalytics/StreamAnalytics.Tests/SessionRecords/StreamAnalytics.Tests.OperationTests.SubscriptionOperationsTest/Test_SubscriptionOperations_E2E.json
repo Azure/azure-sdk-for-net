@@ -25,25 +25,25 @@
           "uswest"
         ],
         "x-ms-request-id": [
-          "d6e7c903a44414db9a07c4103fde3d5e"
+          "05618a0599e63a4eabffff08f43bb5e1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:35 GMT"
+          "Wed, 25 Nov 2015 00:10:31 GMT"
         ],
         "Server": [
-          "1.0.6198.270",
-          "(rd_rdfe_stable.151006-1109)",
+          "1.0.6190.6722",
+          "(rd_rdfe_n.151116-1515)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics7633?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczc2MzM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics137?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczEzNz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics7633\",\r\n  \"name\": \"StreamAnalytics7633\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/StreamAnalytics137\",\r\n  \"name\": \"StreamAnalytics137\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "191"
+          "189"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -72,16 +72,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1157"
+          "1180"
         ],
         "x-ms-request-id": [
-          "703f90d1-e479-4053-a974-fbf7eb093db2"
+          "7e900429-bfeb-4333-af7a-144a966e290e"
         ],
         "x-ms-correlation-request-id": [
-          "703f90d1-e479-4053-a974-fbf7eb093db2"
+          "7e900429-bfeb-4333-af7a-144a966e290e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023737Z:703f90d1-e479-4053-a974-fbf7eb093db2"
+          "CENTRALUS:20151125T001001Z:7e900429-bfeb-4333-af7a-144a966e290e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:37 GMT"
+          "Wed, 25 Nov 2015 00:10:01 GMT"
         ]
       },
       "StatusCode": 201
@@ -102,7 +102,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1308ecd6-2e52-4e8b-9316-4b2a771c7cd2"
+          "d68a83f0-91da-4bfd-91a0-56b59057b969"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient/1.0.0.0"
@@ -126,16 +126,16 @@
           "5.0"
         ],
         "x-ms-request-id": [
-          "1308ecd6-2e52-4e8b-9316-4b2a771c7cd2"
+          "d68a83f0-91da-4bfd-91a0-56b59057b969"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14957"
+          "14966"
         ],
         "x-ms-correlation-request-id": [
-          "34ae3957-1645-49f4-addb-602ed2b71fb5"
+          "7380b1a3-6793-4892-af06-5f6f9bdc0252"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023738Z:34ae3957-1645-49f4-addb-602ed2b71fb5"
+          "CENTRALUS:20151125T001002Z:7380b1a3-6793-4892-af06-5f6f9bdc0252"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -144,7 +144,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:38 GMT"
+          "Wed, 25 Nov 2015 00:10:02 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -156,8 +156,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics7633?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczc2MzM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/StreamAnalytics137?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL1N0cmVhbUFuYWx5dGljczEzNz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -180,16 +180,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1156"
+          "1179"
         ],
         "x-ms-request-id": [
-          "0de962a7-587d-433d-be32-df6b2cee4c88"
+          "5a0c6504-dd55-4982-a4a7-d5325f12105d"
         ],
         "x-ms-correlation-request-id": [
-          "0de962a7-587d-433d-be32-df6b2cee4c88"
+          "5a0c6504-dd55-4982-a4a7-d5325f12105d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023738Z:0de962a7-587d-433d-be32-df6b2cee4c88"
+          "CENTRALUS:20151125T001002Z:5a0c6504-dd55-4982-a4a7-d5325f12105d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -198,17 +198,17 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:38 GMT"
+          "Wed, 25 Nov 2015 00:10:02 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTTNOak16TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhNemN0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -234,16 +234,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14956"
+          "14965"
         ],
         "x-ms-request-id": [
-          "79ccd726-5dc3-4115-856d-39e3f871c08d"
+          "e5750663-215b-42ac-bd0e-983c51e8440c"
         ],
         "x-ms-correlation-request-id": [
-          "79ccd726-5dc3-4115-856d-39e3f871c08d"
+          "e5750663-215b-42ac-bd0e-983c51e8440c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023738Z:79ccd726-5dc3-4115-856d-39e3f871c08d"
+          "CENTRALUS:20151125T001002Z:e5750663-215b-42ac-bd0e-983c51e8440c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,17 +252,17 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:38 GMT"
+          "Wed, 25 Nov 2015 00:10:02 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTTNOak16TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhNemN0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -288,16 +288,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14955"
+          "14964"
         ],
         "x-ms-request-id": [
-          "d688d020-8a14-467b-b97d-cfdf6f887995"
+          "0d0f3cbd-78c8-4f16-946b-1c621d588435"
         ],
         "x-ms-correlation-request-id": [
-          "d688d020-8a14-467b-b97d-cfdf6f887995"
+          "0d0f3cbd-78c8-4f16-946b-1c621d588435"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023753Z:d688d020-8a14-467b-b97d-cfdf6f887995"
+          "CENTRALUS:20151125T001017Z:0d0f3cbd-78c8-4f16-946b-1c621d588435"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -306,17 +306,17 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:37:52 GMT"
+          "Wed, 25 Nov 2015 00:10:17 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTTNOak16TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhNemN0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -342,16 +342,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14954"
+          "14963"
         ],
         "x-ms-request-id": [
-          "7e89f2fd-8716-4114-9cef-27052ce4bf62"
+          "7f85e938-b303-4beb-8895-a89406a63259"
         ],
         "x-ms-correlation-request-id": [
-          "7e89f2fd-8716-4114-9cef-27052ce4bf62"
+          "7f85e938-b303-4beb-8895-a89406a63259"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023808Z:7e89f2fd-8716-4114-9cef-27052ce4bf62"
+          "CENTRALUS:20151125T001032Z:7f85e938-b303-4beb-8895-a89406a63259"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -360,17 +360,17 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:38:08 GMT"
+          "Wed, 25 Nov 2015 00:10:32 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1M3NjMzLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTTNOak16TFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVFJFQU1BTkFMWVRJQ1MxMzctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUVkZKRlFVMUJUa0ZNV1ZSSlExTXhNemN0VjBWVFZGVlRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNaWZRP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -393,16 +393,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14953"
+          "14962"
         ],
         "x-ms-request-id": [
-          "1a812f20-e7bf-43ed-87b8-9ccaccf08510"
+          "f58b4413-d425-4037-b1d2-7359ec447e32"
         ],
         "x-ms-correlation-request-id": [
-          "1a812f20-e7bf-43ed-87b8-9ccaccf08510"
+          "f58b4413-d425-4037-b1d2-7359ec447e32"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151008T023823Z:1a812f20-e7bf-43ed-87b8-9ccaccf08510"
+          "CENTRALUS:20151125T001048Z:f58b4413-d425-4037-b1d2-7359ec447e32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -411,7 +411,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Oct 2015 02:38:22 GMT"
+          "Wed, 25 Nov 2015 00:10:47 GMT"
         ]
       },
       "StatusCode": 200
@@ -419,7 +419,7 @@
   ],
   "Names": {
     "Test_SubscriptionOperations_E2E": [
-      "StreamAnalytics7633"
+      "StreamAnalytics137"
     ]
   },
   "Variables": {

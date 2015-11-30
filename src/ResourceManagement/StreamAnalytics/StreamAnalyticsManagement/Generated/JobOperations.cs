@@ -192,15 +192,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.NotFound)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
