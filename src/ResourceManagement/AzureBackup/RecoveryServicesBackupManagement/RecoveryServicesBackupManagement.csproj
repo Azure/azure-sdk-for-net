@@ -82,9 +82,6 @@
     <Compile Include="Generated\IRecoveryServicesBackupManagementClient.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\IRecoveryServicesBackupVaultManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\IRestoreOperations.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +90,7 @@
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,18 +106,14 @@
     <Compile Include="Generated\Models\ErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\IaaSVMErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\IaaSVMJob.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\IaaSVMJobProperties.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\IaaSVMJobQueryFilters.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -129,6 +123,7 @@
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,16 +133,8 @@
     <Compile Include="Generated\Models\JobBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\JobDetailsResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobDetailsResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Generated\Models\JobExtendedInfo.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobProperties.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\JobQueryFilters.cs">
@@ -183,6 +170,8 @@
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\OperationResultInfo.cs" />
+    <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -216,6 +205,7 @@
     <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\ProtectedItemListQueryParam.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -223,9 +213,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectedItemResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectedItemResourceList.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectedItemResponse.cs">
@@ -259,9 +246,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs">
@@ -361,12 +345,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\RecoveryServicesBackupManagementClientExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClientExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\RestoreOperations.cs">
