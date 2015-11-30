@@ -13,6 +13,7 @@
     <Compile Include="Helpers\UndoContextDiscoveryExtensions.cs" />
     <Compile Include="Helpers\WorkspaceUndoHandler.cs" />
     <Compile Include="OperationTests\BasicDelegatingHandler.cs" />
+    <Compile Include="OperationTests\SearchOperationsTest.cs" />
     <Compile Include="OperationTests\StorageInsightOperationsTest.cs" />
     <Compile Include="OperationTests\WorkspaceOperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
