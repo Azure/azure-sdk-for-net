@@ -24059,6 +24059,249 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Required. Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        public async Task<TargetComputeSizeResponse> ListTargetComputeSizesAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException("protectionContainerName");
+            }
+            if (replicationProtectedItemName == null)
+            {
+                throw new ArgumentNullException("replicationProtectedItemName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("protectionContainerName", protectionContainerName);
+                tracingParameters.Add("replicationProtectedItemName", replicationProtectedItemName);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ListTargetComputeSizesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/replicationFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/replicationProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerName);
+            url = url + "/replicationProtectedItems/";
+            url = url + Uri.EscapeDataString(replicationProtectedItemName);
+            url = url + "/targetComputeSizes";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-10");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    TargetComputeSizeResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TargetComputeSizeResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    TargetComputeSize targetComputeSizeInstance = new TargetComputeSize();
+                                    result.TargetComputeSizes.Add(targetComputeSizeInstance);
+                                    
+                                    JToken nameValue = valueValue["Name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        targetComputeSizeInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken friendlyNameValue = valueValue["FriendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        targetComputeSizeInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
+                                    JToken cpuCoresCountValue = valueValue["cpuCoresCount"];
+                                    if (cpuCoresCountValue != null && cpuCoresCountValue.Type != JTokenType.Null)
+                                    {
+                                        int cpuCoresCountInstance = ((int)cpuCoresCountValue);
+                                        targetComputeSizeInstance.CpuCoresCount = cpuCoresCountInstance;
+                                    }
+                                    
+                                    JToken memoryInGBValue = valueValue["memoryInGB"];
+                                    if (memoryInGBValue != null && memoryInGBValue.Type != JTokenType.Null)
+                                    {
+                                        double memoryInGBInstance = ((double)memoryInGBValue);
+                                        targetComputeSizeInstance.MemoryInGB = memoryInGBInstance;
+                                    }
+                                    
+                                    JToken maxDataDiskCountValue = valueValue["maxDataDiskCount"];
+                                    if (maxDataDiskCountValue != null && maxDataDiskCountValue.Type != JTokenType.Null)
+                                    {
+                                        int maxDataDiskCountInstance = ((int)maxDataDiskCountValue);
+                                        targetComputeSizeInstance.MaxDataDiskCount = maxDataDiskCountInstance;
+                                    }
+                                    
+                                    JToken maxNicsCountValue = valueValue["maxNicsCount"];
+                                    if (maxNicsCountValue != null && maxNicsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int maxNicsCountInstance = ((int)maxNicsCountValue);
+                                        targetComputeSizeInstance.MaxNicsCount = maxNicsCountInstance;
+                                    }
+                                    
+                                    JToken highIopsSupportedValue = valueValue["highIopsSupported"];
+                                    if (highIopsSupportedValue != null && highIopsSupportedValue.Type != JTokenType.Null)
+                                    {
+                                        string highIopsSupportedInstance = ((string)highIopsSupportedValue);
+                                        targetComputeSizeInstance.HighIopsSupported = highIopsSupportedInstance;
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Execute planned failover for the given Replication protected item.
         /// </summary>
         /// <param name='fabricName'>

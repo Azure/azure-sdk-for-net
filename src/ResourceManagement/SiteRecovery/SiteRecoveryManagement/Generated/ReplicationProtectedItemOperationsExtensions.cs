@@ -1789,6 +1789,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        public static TargetComputeSizeResponse ListTargetComputeSizes(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).ListTargetComputeSizesAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        public static Task<TargetComputeSizeResponse> ListTargetComputeSizesAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListTargetComputeSizesAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Execute planned failover for the given Replication protected item.
         /// </summary>
         /// <param name='operations'>

@@ -721,6 +721,30 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ReplicationProtectedItemListResponse> ListAllNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        Task<TargetComputeSizeResponse> ListTargetComputeSizesAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Execute planned failover for the given Replication protected item.
         /// </summary>
         /// <param name='fabricName'>

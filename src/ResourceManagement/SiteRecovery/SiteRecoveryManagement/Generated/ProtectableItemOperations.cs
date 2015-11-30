@@ -250,6 +250,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken supportedReplicationProvidersArray = propertiesValue["supportedReplicationProviders"];
+                                if (supportedReplicationProvidersArray != null && supportedReplicationProvidersArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken supportedReplicationProvidersValue in ((JArray)supportedReplicationProvidersArray))
+                                    {
+                                        propertiesInstance.SupportedReplicationProviders.Add(((string)supportedReplicationProvidersValue));
+                                    }
+                                }
+                                
                                 JToken customDetailsValue = propertiesValue["customDetails"];
                                 if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
                                 {
@@ -761,6 +770,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
+                                        JToken supportedReplicationProvidersArray = propertiesValue["supportedReplicationProviders"];
+                                        if (supportedReplicationProvidersArray != null && supportedReplicationProvidersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken supportedReplicationProvidersValue in ((JArray)supportedReplicationProvidersArray))
+                                            {
+                                                propertiesInstance.SupportedReplicationProviders.Add(((string)supportedReplicationProvidersValue));
+                                            }
+                                        }
+                                        
                                         JToken customDetailsValue = propertiesValue["customDetails"];
                                         if (customDetailsValue != null && customDetailsValue.Type != JTokenType.Null)
                                         {
@@ -1210,6 +1228,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             foreach (JToken protectionReadinessErrorsValue in ((JArray)protectionReadinessErrorsArray))
                                             {
                                                 propertiesInstance.ProtectionReadinessErrors.Add(((string)protectionReadinessErrorsValue));
+                                            }
+                                        }
+                                        
+                                        JToken supportedReplicationProvidersArray = propertiesValue["supportedReplicationProviders"];
+                                        if (supportedReplicationProvidersArray != null && supportedReplicationProvidersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken supportedReplicationProvidersValue in ((JArray)supportedReplicationProvidersArray))
+                                            {
+                                                propertiesInstance.SupportedReplicationProviders.Add(((string)supportedReplicationProvidersValue));
                                             }
                                         }
                                         

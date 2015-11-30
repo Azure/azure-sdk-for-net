@@ -87,12 +87,25 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicationProtectedItemId = value; }
         }
         
+        private IList<string> _supportedReplicationProviders;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Supported Replication Providers for the
+        /// protectable item.
+        /// </summary>
+        public IList<string> SupportedReplicationProviders
+        {
+            get { return this._supportedReplicationProviders; }
+            set { this._supportedReplicationProviders = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProtectableItemProperties class.
         /// </summary>
         public ProtectableItemProperties()
         {
             this.ProtectionReadinessErrors = new LazyList<string>();
+            this.SupportedReplicationProviders = new LazyList<string>();
         }
     }
 }
