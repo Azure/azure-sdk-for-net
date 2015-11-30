@@ -8984,11 +8984,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Get the list of all jobs.
         /// </summary>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='queryParameter'>
-        /// Optional.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -8996,7 +8996,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, JobQueryParameter queryParameter, CancellationToken cancellationToken)
+        public async Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -9007,8 +9007,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("queryParameter", queryParameter);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -9030,6 +9030,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/replicationJobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
+            if (parameters != null && parameters.StartTime != null)
+            {
+                queryParameters.Add("StartTime=" + Uri.EscapeDataString(parameters.StartTime));
+            }
+            if (parameters != null && parameters.EndTime != null)
+            {
+                queryParameters.Add("EndTime=" + Uri.EscapeDataString(parameters.EndTime));
+            }
+            if (parameters != null && parameters.FabricId != null)
+            {
+                queryParameters.Add("FabricId=" + Uri.EscapeDataString(parameters.FabricId));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

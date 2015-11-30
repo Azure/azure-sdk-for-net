@@ -102,7 +102,8 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var response = client.Jobs.List(RequestHeaders, null);
+                JobQueryParameter queryParam = new JobQueryParameter();
+                var response = client.Jobs.List(queryParam, RequestHeaders);
 
                 Assert.True(response.Jobs.Count > 0, "Jobs count can't be less than 1");
                 Assert.True(response.Jobs.All(

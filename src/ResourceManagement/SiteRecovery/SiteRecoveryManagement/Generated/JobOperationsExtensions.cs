@@ -411,20 +411,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='queryParameter'>
-        /// Optional.
         /// </param>
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        public static JobListResponse List(this IJobOperations operations, CustomRequestHeaders customRequestHeaders, JobQueryParameter queryParameter)
+        public static JobListResponse List(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).ListAsync(customRequestHeaders, queryParameter);
+                return ((IJobOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -436,18 +436,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='queryParameter'>
-        /// Optional.
         /// </param>
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        public static Task<JobListResponse> ListAsync(this IJobOperations operations, CustomRequestHeaders customRequestHeaders, JobQueryParameter queryParameter)
+        public static Task<JobListResponse> ListAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(customRequestHeaders, queryParameter, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
