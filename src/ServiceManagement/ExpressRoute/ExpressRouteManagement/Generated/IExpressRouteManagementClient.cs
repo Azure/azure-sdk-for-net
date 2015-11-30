@@ -117,6 +117,26 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get; 
         }
         
+        IDedicatedCircuitPeeringArpInfoOperations DedicatedCircuitPeeringArpInfo
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitPeeringRoutingInfoOperations DedicatedCircuitPeeringRoutingInfo
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitPeeringRoutingSummaryOperations DedicatedCircuitPeeringRoutingSummary
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitPeeringStatsOperations DedicatedCircuitPeeringStats
+        {
+            get; 
+        }
+        
         IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
         {
             get; 

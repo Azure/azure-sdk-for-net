@@ -148,6 +148,34 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get { return this._dedicatedCircuits; }
         }
         
+        private IDedicatedCircuitPeeringArpInfoOperations _dedicatedCircuitPeeringArpInfo;
+        
+        public virtual IDedicatedCircuitPeeringArpInfoOperations DedicatedCircuitPeeringArpInfo
+        {
+            get { return this._dedicatedCircuitPeeringArpInfo; }
+        }
+        
+        private IDedicatedCircuitPeeringRoutingInfoOperations _dedicatedCircuitPeeringRoutingInfo;
+        
+        public virtual IDedicatedCircuitPeeringRoutingInfoOperations DedicatedCircuitPeeringRoutingInfo
+        {
+            get { return this._dedicatedCircuitPeeringRoutingInfo; }
+        }
+        
+        private IDedicatedCircuitPeeringRoutingSummaryOperations _dedicatedCircuitPeeringRoutingSummary;
+        
+        public virtual IDedicatedCircuitPeeringRoutingSummaryOperations DedicatedCircuitPeeringRoutingSummary
+        {
+            get { return this._dedicatedCircuitPeeringRoutingSummary; }
+        }
+        
+        private IDedicatedCircuitPeeringStatsOperations _dedicatedCircuitPeeringStats;
+        
+        public virtual IDedicatedCircuitPeeringStatsOperations DedicatedCircuitPeeringStats
+        {
+            get { return this._dedicatedCircuitPeeringStats; }
+        }
+        
         private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProviders;
         
         public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
@@ -169,6 +197,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
+            this._dedicatedCircuitPeeringRoutingInfo = new DedicatedCircuitPeeringRoutingInfoOperations(this);
+            this._dedicatedCircuitPeeringRoutingSummary = new DedicatedCircuitPeeringRoutingSummaryOperations(this);
+            this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
             this._apiVersion = "2011-10-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -245,6 +277,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
+            this._dedicatedCircuitPeeringRoutingInfo = new DedicatedCircuitPeeringRoutingInfoOperations(this);
+            this._dedicatedCircuitPeeringRoutingSummary = new DedicatedCircuitPeeringRoutingSummaryOperations(this);
+            this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
             this._apiVersion = "2011-10-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -383,6 +419,50 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             if (value == BgpPeeringAccessType.Microsoft)
             {
                 return "microsoft";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type DeviceHAState.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static DeviceHAState ParseDeviceHAState(string value)
+        {
+            if ("primary".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return DeviceHAState.Primary;
+            }
+            if ("secondary".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return DeviceHAState.Secondary;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type DeviceHAState to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string DeviceHAStateToString(DeviceHAState value)
+        {
+            if (value == DeviceHAState.Primary)
+            {
+                return "primary";
+            }
+            if (value == DeviceHAState.Secondary)
+            {
+                return "secondary";
             }
             throw new ArgumentOutOfRangeException("value");
         }
