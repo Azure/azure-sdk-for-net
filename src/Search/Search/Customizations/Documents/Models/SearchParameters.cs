@@ -127,10 +127,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the number of search results to retrieve. This can be
         /// used in conjunction with Skip to implement client-side paging of
-        /// search results. If results are truncated due to server-side
-        /// paging, the response will include a continuation token that can
-        /// be passed to ContinueSearch to retrieve the next page of results.
-        /// See <c see="DocumentSearchResponse.ContinuationToken">DocumentSearchResponse.ContinuationToken</c> for more information.
+        /// search results.
         /// </summary>
         public int? Top { get; set; }
 

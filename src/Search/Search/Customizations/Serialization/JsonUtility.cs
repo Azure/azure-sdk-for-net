@@ -23,41 +23,40 @@ namespace Microsoft.Azure.Search
         public static readonly JsonSerializerSettings DocumentDeserializerSettings =
             CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
 
+        private static readonly IContractResolver CamelCaseResolver =
+            new ValueTypePreservingContractResolver(new CamelCasePropertyNamesContractResolver());
+
+        private static readonly IContractResolver DefaultResolver =
+            new ValueTypePreservingContractResolver(new DefaultContractResolver());
+
         public static JsonSerializerSettings CreateDefaultSettings()
         {
-            var settings = new JsonSerializerSettings()
+            return new JsonSerializerSettings()
             {
-                Formatting = Formatting.Indented,
+                ContractResolver = CamelCaseResolver,
+                Converters = new JsonConverter[]
+                {
+                    new StringEnumConverter() { CamelCaseText = true }
+                },
                 DefaultValueHandling = DefaultValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                Formatting = Formatting.Indented
             };
-
-            settings.Converters.Add(new StringEnumConverter() { CamelCaseText = true });
-
-            return settings;
         }
 
         public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
         {
-            var settings =
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented,
-                    Converters = new JsonConverter[]
-                    { 
-                        new GeographyPointConverter(),
-                        new IndexActionConverter<T>(),
-                        new DateTimeConverter()
-                    },
-                    DefaultValueHandling = DefaultValueHandling.Ignore
-                };
-
-            if (useCamelCase)
+            return new JsonSerializerSettings()
             {
-                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            }
-
-            return settings;
+                ContractResolver = useCamelCase ? CamelCaseResolver : DefaultResolver,
+                Converters = new JsonConverter[]
+                { 
+                    new GeographyPointConverter(),
+                    new IndexActionConverter<T>(),
+                    new DateTimeConverter()
+                },
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
         }
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>() where T : class
@@ -101,21 +100,19 @@ namespace Microsoft.Azure.Search
             where TSuggestResult : SuggestResultBase<TDoc>, new()
             where TDoc : class
         {
-            var settings =
-                new JsonSerializerSettings()
-                {
-                    DateParseHandling = DateParseHandling.DateTimeOffset,
-                    Converters = new JsonConverter[]
-                    { 
-                        new GeographyPointConverter(),
-                        new DocumentConverter(),
-                        new DateTimeConverter(),
-                        new SearchResultConverter<TSearchResult, TDoc>(),
-                        new SuggestResultConverter<TSuggestResult, TDoc>()
-                    }
-                };
-
-            return settings;
+            return new JsonSerializerSettings()
+            {
+                ContractResolver = DefaultResolver,
+                Converters = new JsonConverter[]
+                { 
+                    new GeographyPointConverter(),
+                    new DocumentConverter(),
+                    new DateTimeConverter(),
+                    new SearchResultConverter<TSearchResult, TDoc>(),
+                    new SuggestResultConverter<TSuggestResult, TDoc>()
+                },
+                DateParseHandling = DateParseHandling.DateTimeOffset
+            };
         }
     }
 }

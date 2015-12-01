@@ -86,6 +86,19 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                 testEnv.ServicePrincipal, password, testEnv.AsAzureEnvironment())
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
+#if NET45
+                        else
+                        {
+                            ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
+                            ActiveDirectoryClientSettings directoryClientSettings = new ActiveDirectoryClientSettings()
+                            {
+                                ClientId = testEnv.ClientId,
+                                PromptBehavior = PromptBehavior.Auto,
+                                ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
+                            };
+                            testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant, directoryClientSettings, TestUtilities.AsAzureEnvironment(testEnv)).ConfigureAwait(false).GetAwaiter().GetResult();
+                        }
+#endif
                     }
                 }//end-of-if connectionString present
 
