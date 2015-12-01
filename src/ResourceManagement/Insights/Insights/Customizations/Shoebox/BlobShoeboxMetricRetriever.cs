@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
         {
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
 
-            var metricsPerBlob = new Dictionary<string, Task<Dictionary<string, List<MetricValueBlob>>>>(StringComparer.OrdinalIgnoreCase);
+            var ongoingTasksPerBlob = new Dictionary<string, Task<Dictionary<string, List<MetricValueBlob>>>>();
+            var metricsPerBlob = new Dictionary<string, Dictionary<string, List<MetricValueBlob>>>(StringComparer.OrdinalIgnoreCase);
             
             // We download all the relevant blobs first and then use the data later, to avoid download the same blob more than once.
             foreach (MetricDefinition metricDefinition in definitions)
@@ -37,6 +38,11 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 
                 foreach (MetricAvailability availability in metricDefinition.MetricAvailabilities)
                 {
+                    if (filter != null && filter.TimeGrain != default(TimeSpan) && filter.TimeGrain != availability.TimeGrain)
+                    {
+                        continue;
+                    }
+
                     if (availability.BlobLocation == null)
                     {
                         continue;
@@ -45,17 +51,27 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
                     foreach (BlobInfo blobInfo in availability.BlobLocation.BlobInfo)
                     {
                         string blobId = GetBlobEndpoint(blobInfo);
-                        if (!metricsPerBlob.ContainsKey(blobId))
+                        if (!metricsPerBlob.ContainsKey(blobId) && !ongoingTasksPerBlob.ContainsKey(blobId))
                         {
-                            metricsPerBlob.Add(blobId, FetchMetricValuesFromBlob(blobInfo, filter));
+                            ongoingTasksPerBlob.Add(blobId, FetchMetricValuesFromBlob(blobInfo, filter));
+                        }
+
+                        if (ongoingTasksPerBlob.Count == Util.NumberOfParallelCallsForMetricBlobs)
+                        {
+                            foreach (var blobMetricPair in ongoingTasksPerBlob)
+                            {
+                                metricsPerBlob[blobMetricPair.Key] = await blobMetricPair.Value;
+                            }
+
+                            ongoingTasksPerBlob.Clear();
                         }
                     }
                 }
             }
 
-            foreach (var task in metricsPerBlob.Values)
+            foreach (var blobMetricPair in ongoingTasksPerBlob)
             {
-                await task;
+                metricsPerBlob[blobMetricPair.Key] = await blobMetricPair.Value;
             }
 
             var result = new MetricListResponse
@@ -76,6 +92,11 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 
                 foreach (MetricAvailability availability in metricDefinition.MetricAvailabilities)
                 {
+                    if (filter != null && filter.TimeGrain != default(TimeSpan) && filter.TimeGrain != availability.TimeGrain)
+                    {
+                        continue;
+                    }
+
                     if (availability.BlobLocation == null)
                     {
                         continue;
@@ -87,8 +108,9 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
                         string blobId = GetBlobEndpoint(blobInfo);
 
                         List<MetricValueBlob> metricsInBlob;
-                        if (metricsPerBlob[blobId].Result.TryGetValue(metricDefinition.Name.Value, out metricsInBlob))
+                        if (metricsPerBlob[blobId].TryGetValue(metricDefinition.Name.Value, out metricsInBlob))
                         {
+                            metricsInBlob.Sort(CompareMetrics);
                             metricValues.AddRange(metricsInBlob);
                         }
                     }
@@ -113,6 +135,11 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
             return result;
         }
 
+        private int CompareMetrics(MetricValueBlob a, MetricValueBlob b)
+        {
+            return a.time.CompareTo(b.time);
+        }
+
         private static string GetBlobEndpoint(BlobInfo blobInfo)
         {
             return blobInfo.BlobUri.Split(questionMark, StringSplitOptions.RemoveEmptyEntries)[0];
@@ -128,7 +155,6 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
                 if (lastSeen == null)
                 {
                     lastSeen = GetConvertedMetric(m);
-                    lastSeen.Average = lastSeen.Total;
                     result.Add(lastSeen);
                 }
                 else
@@ -141,7 +167,6 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
                     {
                         lastSeen.Average = lastSeen.Total / lastSeen.Count;
                         lastSeen = GetConvertedMetric(m);
-                        lastSeen.Average = lastSeen.Total;
                         result.Add(lastSeen);
                     }
                 }
@@ -157,7 +182,6 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 
         private static void Aggregate(MetricValue lastSeen, MetricValueBlob m)
         {
-            lastSeen.Average += m.total;
             lastSeen.Total += m.total;
             lastSeen.Count += m.count;
 
