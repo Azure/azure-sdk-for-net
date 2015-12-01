@@ -3,7 +3,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.WindowsAzure.Management.Sql
+    Microsoft.Azure.Management.Sql
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Sql">
       <PackageVersion>0.42.0-prerelease</PackageVersion>
