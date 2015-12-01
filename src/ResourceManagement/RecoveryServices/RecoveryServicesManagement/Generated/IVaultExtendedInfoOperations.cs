@@ -38,7 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Get the vault extended info.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the vault.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the resource.
