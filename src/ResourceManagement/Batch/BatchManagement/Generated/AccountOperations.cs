@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -323,6 +323,27 @@ namespace Microsoft.Azure.Management.Batch
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
+                                
+                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int coreQuotaInstance = ((int)coreQuotaValue);
+                                    propertiesInstance.CoreQuota = coreQuotaInstance;
+                                }
+                                
+                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int poolQuotaInstance = ((int)poolQuotaValue);
+                                    propertiesInstance.PoolQuota = poolQuotaInstance;
+                                }
+                                
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                    propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
+                                }
                             }
                             
                             BatchManagementError errorInstance = new BatchManagementError();
@@ -466,7 +487,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -541,11 +562,11 @@ namespace Microsoft.Azure.Management.Batch
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -630,7 +651,7 @@ namespace Microsoft.Azure.Management.Batch
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -704,7 +725,7 @@ namespace Microsoft.Azure.Management.Batch
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -802,7 +823,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -829,7 +850,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -938,6 +959,27 @@ namespace Microsoft.Azure.Management.Batch
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
+                                
+                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int coreQuotaInstance = ((int)coreQuotaValue);
+                                    propertiesInstance.CoreQuota = coreQuotaInstance;
+                                }
+                                
+                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int poolQuotaInstance = ((int)poolQuotaValue);
+                                    propertiesInstance.PoolQuota = poolQuotaInstance;
+                                }
+                                
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                    propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
+                                }
                             }
                         }
                         
@@ -1019,7 +1061,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + "batchAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1046,7 +1088,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1160,6 +1202,27 @@ namespace Microsoft.Azure.Management.Batch
                                             AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
+                                        
+                                        JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                        if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int coreQuotaInstance = ((int)coreQuotaValue);
+                                            propertiesInstance.CoreQuota = coreQuotaInstance;
+                                        }
+                                        
+                                        JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                        if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int poolQuotaInstance = ((int)poolQuotaValue);
+                                            propertiesInstance.PoolQuota = poolQuotaInstance;
+                                        }
+                                        
+                                        JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                        if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                            propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1237,7 +1300,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "Microsoft.Batch";
             url = url + "/actions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1264,7 +1327,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1455,7 +1518,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/listKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1482,7 +1545,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1735,6 +1798,27 @@ namespace Microsoft.Azure.Management.Batch
                                             AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
+                                        
+                                        JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                        if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int coreQuotaInstance = ((int)coreQuotaValue);
+                                            propertiesInstance.CoreQuota = coreQuotaInstance;
+                                        }
+                                        
+                                        JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                        if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int poolQuotaInstance = ((int)poolQuotaValue);
+                                            propertiesInstance.PoolQuota = poolQuotaInstance;
+                                        }
+                                        
+                                        JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                        if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                        {
+                                            int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                            propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1859,7 +1943,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/regenerateKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1886,7 +1970,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2073,7 +2157,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2100,7 +2184,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2234,6 +2318,27 @@ namespace Microsoft.Azure.Management.Batch
                                 {
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int coreQuotaInstance = ((int)coreQuotaValue);
+                                    propertiesInstance.CoreQuota = coreQuotaInstance;
+                                }
+                                
+                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int poolQuotaInstance = ((int)poolQuotaValue);
+                                    propertiesInstance.PoolQuota = poolQuotaInstance;
+                                }
+                                
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                    propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
                                 }
                             }
                         }

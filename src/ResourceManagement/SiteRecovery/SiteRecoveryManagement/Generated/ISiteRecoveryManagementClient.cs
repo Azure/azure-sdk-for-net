@@ -85,10 +85,75 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get; set; 
         }
         
+        string ResourceType
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Definition of fabric operations for the Site Recovery extension.
+        /// </summary>
+        IFabricOperations Fabrics
+        {
+            get; 
+        }
+        
         /// <summary>
         /// Definition for Job Operations.
         /// </summary>
         IJobOperations Jobs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Logical Network operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        ILogicalNetworkOperations LogicalNetwork
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of NetworkMapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        INetworkMappingOperations NetworkMapping
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Network operations for the Site Recovery extension.
+        /// </summary>
+        INetworkOperations Network
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Policy operations for the Site Recovery extension.
+        /// </summary>
+        IPolicyOperations Policies
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Protectable Item operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IProtectableItemOperations ProtectableItem
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Protection Container mapping operations for the Site
+        /// Recovery extension.
+        /// </summary>
+        IProtectionContainerMappingOperations ProtectionContainerMapping
         {
             get; 
         }
@@ -103,36 +168,27 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Definition of protection entity operations for the Site Recovery
-        /// extension.
+        /// Definition of provider operations for the Site Recovery extension.
         /// </summary>
-        IProtectionEntityOperations ProtectionEntity
+        IRecoveryServicesProviderOperations RecoveryServicesProvider
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Protection Profile operations for the Site Recovery
-        /// extension.
+        /// Definition of Replication protected item operations for the Site
+        /// Recovery extension.
         /// </summary>
-        IProtectionProfileOperations ProtectionProfile
+        IReplicationProtectedItemOperations ReplicationProtectedItem
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of recoveryplan operations for the Site Recovery
+        /// Definition of vCenter entity operations for the Site Recovery
         /// extension.
         /// </summary>
-        IRecoveryPlanOperations RecoveryPlan
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Definition of server operations for the Site Recovery extension.
-        /// </summary>
-        IServerOperations Servers
+        IVCenterOperations VCenters
         {
             get; 
         }

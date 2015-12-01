@@ -588,7 +588,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -782,7 +781,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -982,7 +980,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1176,7 +1173,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1398,7 +1394,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1503,6 +1498,13 @@ namespace Microsoft.Azure.Management.Authorization
                                         }
                                     }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -1668,7 +1670,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1773,6 +1774,13 @@ namespace Microsoft.Azure.Management.Authorization
                                         }
                                     }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -1906,7 +1914,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2011,6 +2018,393 @@ namespace Microsoft.Azure.Management.Authorization
                                         }
                                     }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the resource group.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public async Task<RoleAssignmentListResult> ListForResourceGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListForResourceGroupNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RoleAssignmentListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                                    result.RoleAssignments.Add(roleAssignmentInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        roleAssignmentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleAssignmentInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        roleAssignmentInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
+                                        roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
+                                        
+                                        JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                        if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                        {
+                                            string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                            propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                        }
+                                        
+                                        JToken principalIdValue = propertiesValue["principalId"];
+                                        if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            propertiesInstance.PrincipalId = principalIdInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the resource.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public async Task<RoleAssignmentListResult> ListForResourceNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListForResourceNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RoleAssignmentListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                                    result.RoleAssignments.Add(roleAssignmentInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        roleAssignmentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleAssignmentInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        roleAssignmentInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
+                                        roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
+                                        
+                                        JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                        if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                        {
+                                            string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                            propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                        }
+                                        
+                                        JToken principalIdValue = propertiesValue["principalId"];
+                                        if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            propertiesInstance.PrincipalId = principalIdInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -2140,7 +2534,6 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2245,6 +2638,393 @@ namespace Microsoft.Azure.Management.Authorization
                                         }
                                     }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the scope.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public async Task<RoleAssignmentListResult> ListForScopeNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListForScopeNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RoleAssignmentListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                                    result.RoleAssignments.Add(roleAssignmentInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        roleAssignmentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleAssignmentInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        roleAssignmentInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
+                                        roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
+                                        
+                                        JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                        if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                        {
+                                            string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                            propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                        }
+                                        
+                                        JToken principalIdValue = propertiesValue["principalId"];
+                                        if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            propertiesInstance.PrincipalId = principalIdInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets role assignments of the subscription.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role assignment list operation result.
+        /// </returns>
+        public async Task<RoleAssignmentListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RoleAssignmentListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                                    result.RoleAssignments.Add(roleAssignmentInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        roleAssignmentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleAssignmentInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        roleAssignmentInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
+                                        roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
+                                        
+                                        JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                        if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                        {
+                                            string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                            propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                        }
+                                        
+                                        JToken principalIdValue = propertiesValue["principalId"];
+                                        if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            propertiesInstance.PrincipalId = principalIdInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         

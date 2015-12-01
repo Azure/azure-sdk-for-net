@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.TrafficManager
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.TrafficManager">
-      <PackageVersion>0.9.3-preview</PackageVersion>
+      <PackageVersion>1.0.0</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

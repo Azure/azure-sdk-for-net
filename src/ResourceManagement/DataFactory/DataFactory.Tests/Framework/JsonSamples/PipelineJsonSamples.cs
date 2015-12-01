@@ -633,6 +633,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string AzureMLUpdatePipeline = @"
+{
+    name: ""My updatable machine learning pipeline"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""ML Update Resource Activity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLUpdateResource"",
+                typeProperties: {
+                    trainedModelDatasetName: ""retraining output dataset"",
+                    trainedModelName: ""Decision Tree trained model""
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""retraining output dataset""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""some other output""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
+
 //        [JsonSample("ExtraProperties")]
 //        public const string ExtraPropertiesPipeline = @"
 //{
@@ -1023,6 +1069,96 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyAzureDataLakeToAzureDataLake = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from adl to adl"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""AzureDataLakeStoreSource"",
+                        recursive: true,
+                    },
+                    sink: 
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""adlIn""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""adlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(propertyBagKeys: new string[] 
+            { 
+                // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
+                "properties.activities[0].typeProperties.parameters.parameter1",
+                "properties.activities[0].typeProperties.parameters.Parameter2",
+            })]
+        public const string DataLakeAnalyticsActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Data Lake analytics pipeline"",
+        activities:
+        [
+            {
+                name: ""DataLakeAnalyticsUSQL"",
+                inputs: [ {name: ""DataLake-Table-In""} ],
+                outputs: [ {name: ""DataLake-Table-Out""} ],
+                linkedServiceName: ""Linked-ServiceDataLakeAnalytics"",
+                type: ""DataLakeAnalyticsU-SQL"",
+                typeProperties:
+                {
+                    script: ""CREATE DATABASE test;"",
+                    degreeOfParallelism: 3,
+                    priority: 100,
+                    parameters:
+                    {
+                        ""parameter1"": ""value1"",
+                        ""Parameter2"": ""Value2""
+                    }
+                },
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
             }
         ]
     }

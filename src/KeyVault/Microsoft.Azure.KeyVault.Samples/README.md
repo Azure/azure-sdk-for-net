@@ -7,7 +7,7 @@
 ##Pre-requisites
 1. Visual Studio 2013 or Visual Studio 2012
 2. Azure SDK 2.5 and an active Azure subscription
-3. Azure PowerShell version 0.9.1 or newer
+3. Azure PowerShell version 1.0.0 or newer
 4. NuGet version 2.7 or newer
 5. nuget.org (https://www.nuget.org/api/v2/) should be an available package source in Visual Studio NuGet Package Manager settings
 

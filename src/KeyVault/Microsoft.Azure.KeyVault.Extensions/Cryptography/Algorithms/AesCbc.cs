@@ -19,6 +19,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// AESCBC with PKCS7 Padding
+    /// </summary>
     public abstract class AesCbc : SymmetricEncryptionAlgorithm
     {
         protected AesCbc( string name )
@@ -35,8 +38,14 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             // Create the AES provider
-            using ( var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv } )
+            using ( var aes = Aes.Create() )
             {
+                aes.Mode    = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.KeySize = key.Length*8;
+                aes.Key     = key;
+                aes.IV      = iv;
+
                 return aes.CreateDecryptor();
             }
         }
@@ -50,13 +59,22 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             // Create the AES provider
-            using ( var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv } )
+            using ( var aes = Aes.Create() )
             {
+                aes.Mode    = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.KeySize = key.Length * 8;
+                aes.Key     = key;
+                aes.IV      = iv;
+
                 return aes.CreateEncryptor();
             }
         }
     }
 
+    /// <summary>
+    /// AESCBC 128bit key with PKCS7 Padding
+    /// </summary>
     public class Aes128Cbc : AesCbc
     {
         public const string AlgorithmName = "A128CBC";
@@ -68,6 +86,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
     }
 
+    /// <summary>
+    /// AESCBC 192bit key with PKCS7 Padding
+    /// </summary>
     public class Aes192Cbc : AesCbc
     {
         public const string AlgorithmName = "A192CBC";
@@ -79,6 +100,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
     }
 
+    /// <summary>
+    /// AESCBC 256bit key with PKCS7 Padding
+    /// </summary>
     public class Aes256Cbc : AesCbc
     {
         public const string AlgorithmName = "A256CBC";

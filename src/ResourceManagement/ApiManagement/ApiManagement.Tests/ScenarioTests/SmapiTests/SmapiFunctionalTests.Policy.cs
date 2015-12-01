@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     format,
                     policyDoc.ToStream(),
-                    null);
+                    "*");
 
                 Assert.NotNull(setResponse);
 

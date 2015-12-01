@@ -29,6 +29,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// </summary>
     public partial class ListDefinitionFilterParameters
     {
+        private bool _atScopeAndBelow;
+        
+        /// <summary>
+        /// Optional. If specified, also returns all role definition at scope
+        /// and below.
+        /// </summary>
+        public bool AtScopeAndBelow
+        {
+            get { return this._atScopeAndBelow; }
+            set { this._atScopeAndBelow = value; }
+        }
+        
         private string _roleName;
         
         /// <summary>

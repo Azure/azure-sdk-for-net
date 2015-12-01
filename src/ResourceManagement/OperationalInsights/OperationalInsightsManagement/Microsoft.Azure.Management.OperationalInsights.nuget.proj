@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.OperationalInsights
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.OperationalInsights">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.10.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

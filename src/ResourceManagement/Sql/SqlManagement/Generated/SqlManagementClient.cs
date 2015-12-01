@@ -233,6 +233,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._secureConnection; }
         }
         
+        private ISecurityAlertPolicyOperations _securityAlertPolicy;
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Security Alert policy.  Contains operations to:
+        /// Create, Retrieve and Update policy.
+        /// </summary>
+        public virtual ISecurityAlertPolicyOperations SecurityAlertPolicy
+        {
+            get { return this._securityAlertPolicy; }
+        }
+        
         private IServerAdministratorOperations _serverAdministrators;
         
         /// <summary>
@@ -332,6 +344,7 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -416,6 +429,7 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);

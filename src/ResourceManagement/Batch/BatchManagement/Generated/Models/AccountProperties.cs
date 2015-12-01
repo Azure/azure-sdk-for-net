@@ -42,6 +42,40 @@ namespace Microsoft.Azure.Management.Batch.Models
             set { this._accountEndpoint = value; }
         }
         
+        private int _activeJobAndJobScheduleQuota;
+        
+        /// <summary>
+        /// Optional. The active job and job schedule quota for this Batch
+        /// account.
+        /// </summary>
+        public int ActiveJobAndJobScheduleQuota
+        {
+            get { return this._activeJobAndJobScheduleQuota; }
+            set { this._activeJobAndJobScheduleQuota = value; }
+        }
+        
+        private int _coreQuota;
+        
+        /// <summary>
+        /// Optional. The core quota for this Batch account.
+        /// </summary>
+        public int CoreQuota
+        {
+            get { return this._coreQuota; }
+            set { this._coreQuota = value; }
+        }
+        
+        private int _poolQuota;
+        
+        /// <summary>
+        /// Optional. The pool quota for this Batch account.
+        /// </summary>
+        public int PoolQuota
+        {
+            get { return this._poolQuota; }
+            set { this._poolQuota = value; }
+        }
+        
         private AccountProvisioningState _provisioningState;
         
         /// <summary>
