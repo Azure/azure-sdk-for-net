@@ -99,9 +99,15 @@ namespace Microsoft.Azure.KeyVault
             if ( string.IsNullOrWhiteSpace( kid ) )
                 throw new ArgumentNullException( "kid" );
 
-            // If the resolver has a name prefix, only handle kid that have that prefix
-            if ( !string.IsNullOrEmpty( _name ) && !kid.StartsWith( _name, StringComparison.OrdinalIgnoreCase ) )
-                return null;
+            // If the resolver has a name prefix, only handle kid that have that prefix.
+            if ( _name != null )
+            {
+                var vaultUrl = new Uri( _name );
+                var keyUrl   = new Uri( kid );
+
+                if ( string.Compare( vaultUrl.Scheme, keyUrl.Scheme, true ) != 0 || string.Compare( vaultUrl.Authority, keyUrl.Authority, true ) != 0 || vaultUrl.Port != keyUrl.Port )
+                    return null;
+            }
 
             if ( KeyIdentifier.IsKeyIdentifier( kid ) )
                 return await ResolveKeyFromKeyAsync( kid, token ).ConfigureAwait( false );
@@ -125,11 +131,12 @@ namespace Microsoft.Azure.KeyVault
             if ( !vaultUri.Host.EndsWith( "vault.azure.net" ) )
                 throw new ArgumentException( "The vaultName must end with vault.azure.net" );
 
-            if ( !string.IsNullOrWhiteSpace( vaultUri.PathAndQuery) )
+            if ( string.CompareOrdinal( vaultUri.PathAndQuery, "/" ) != 0 )
                 throw new ArgumentException( "The vaultName cannot contain a path or query string" );
 
             return vaultUri.AbsoluteUri;
         }
+
 
         private Task<IKey> ResolveKeyFromKeyAsync( string kid, CancellationToken token )
         {
@@ -162,7 +169,7 @@ namespace Microsoft.Azure.KeyVault
 
                         if ( keyBytes != null )
                         {
-                            return new SymmetricKey( sid, keyBytes );
+                            return new SymmetricKey( secret.Id, keyBytes );
                         }
                     }
 
@@ -171,7 +178,7 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Converts a Base64Url encoded string to a byte array
+        /// Converts a Base64 or Base64Url encoded string to a byte array
         /// </summary>
         /// <param name="input">The Base64Url encoded string</param>
         /// <returns>The byte array represented by the enconded string</returns>
@@ -199,6 +206,5 @@ namespace Microsoft.Azure.KeyVault
 
             return input + new string( '=', count );
         }
-
     }
 }
