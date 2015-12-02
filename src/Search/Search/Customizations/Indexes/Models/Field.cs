@@ -149,8 +149,8 @@ namespace Microsoft.Azure.Search.Models
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context)
         {
-            this.Type = DataType.Create(this.rawType);
-            this.Analyzer = AnalyzerName.Create(this.rawAnalyzerName);
+            this.Type = DataType.Create(this.rawType);  // Type cannot be null, but Analyzer can be.
+            this.Analyzer = this.rawAnalyzerName != null ? AnalyzerName.Create(this.rawAnalyzerName) : null;
         }
     }
 }

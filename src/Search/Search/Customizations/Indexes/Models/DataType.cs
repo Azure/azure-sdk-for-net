@@ -74,12 +74,12 @@ namespace Microsoft.Azure.Search.Models
         /// known data type.
         /// </summary>
         /// <param name="name">Name of the data type.</param>
-        /// <returns>A DataType instance with the given name, or null if name is null.</returns>
+        /// <returns>A DataType instance with the given name.</returns>
         public static DataType Create(string name)
         {
             if (name == null)
             {
-                return null;
+                throw new ArgumentNullException("name");
             }
 
             // Data types are purposefully open-ended. If we get one we don't recognize, just create a new object.

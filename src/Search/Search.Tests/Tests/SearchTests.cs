@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
-    using Newtonsoft.Json;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
@@ -597,9 +597,8 @@ namespace Microsoft.Azure.Search.Tests
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            JsonSerializationException e =
-                Assert.Throws<JsonSerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
-            Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.Message);
+            RestException e = Assert.Throws<RestException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
         }
 
         protected void TestCanFilterNonNullableType()

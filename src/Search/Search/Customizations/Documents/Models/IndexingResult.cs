@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
         /// <c cref="Microsoft.Azure.Search.Models.IndexingResult.Key">Key</c>.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public bool? Succeeded { get; private set; }
+        public bool Succeeded { get; private set; }
 
     }
 }

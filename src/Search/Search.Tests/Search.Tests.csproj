@@ -233,6 +233,12 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanIndexWithPascalCaseFields.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanMergeDynamicDocuments.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanMergeStaticallyTypedDocuments.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CountingDocsOfNewIndexGivesZero.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
