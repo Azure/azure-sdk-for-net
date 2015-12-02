@@ -27,26 +27,27 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get DedicatedCircuitPeeringStats operation response.
+    /// The Get DedicatedCircuitPeeringRouteTableSummary operation response.
     /// </summary>
-    public partial class DedicatedCircuitPeeringStatsGetResponse : AzureOperationResponse
+    public partial class DedicatedCircuitPeeringRouteTableSummaryGetResponse : AzureOperationResponse
     {
-        private AzureDedicatedCircuitPeeringStats _dedicatedCircuitPeeringStats;
+        private AzureDedicatedCircuitPeeringRouteTableSummary _dedicatedCircuitPeeringRouteTableSummary;
         
         /// <summary>
-        /// Optional. Stats of the requested dedicated circuit at peering level.
+        /// Optional. BGP path, prefix and attribute information for all
+        /// connections to BGP neighbors.
         /// </summary>
-        public AzureDedicatedCircuitPeeringStats DedicatedCircuitPeeringStats
+        public AzureDedicatedCircuitPeeringRouteTableSummary DedicatedCircuitPeeringRouteTableSummary
         {
-            get { return this._dedicatedCircuitPeeringStats; }
-            set { this._dedicatedCircuitPeeringStats = value; }
+            get { return this._dedicatedCircuitPeeringRouteTableSummary; }
+            set { this._dedicatedCircuitPeeringRouteTableSummary = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitPeeringStatsGetResponse class.
+        /// DedicatedCircuitPeeringRouteTableSummaryGetResponse class.
         /// </summary>
-        public DedicatedCircuitPeeringStatsGetResponse()
+        public DedicatedCircuitPeeringRouteTableSummaryGetResponse()
         {
         }
     }

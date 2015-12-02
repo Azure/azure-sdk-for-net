@@ -27,22 +27,27 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    public partial interface IDedicatedCircuitStatsOperations
+    public partial interface IDedicatedCircuitPeeringRouteTableInfoOperations
     {
         /// <summary>
-        /// The Get Dedicated Circuit Stats operation retrieves the
-        /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices at circuit level.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrieves
+        /// VPNv4 information from the BGP database.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Whether the device is primary or secondary.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitStats operation response.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation response.
         /// </returns>
-        Task<DedicatedCircuitStatsGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken);
+        Task<DedicatedCircuitPeeringRouteTableInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
     }
 }

@@ -155,18 +155,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get { return this._dedicatedCircuitPeeringArpInfo; }
         }
         
-        private IDedicatedCircuitPeeringRoutingInfoOperations _dedicatedCircuitPeeringRoutingInfo;
+        private IDedicatedCircuitPeeringRouteTableInfoOperations _dedicatedCircuitPeeringRouteTableInfo;
         
-        public virtual IDedicatedCircuitPeeringRoutingInfoOperations DedicatedCircuitPeeringRoutingInfo
+        public virtual IDedicatedCircuitPeeringRouteTableInfoOperations DedicatedCircuitPeeringRouteTableInfo
         {
-            get { return this._dedicatedCircuitPeeringRoutingInfo; }
+            get { return this._dedicatedCircuitPeeringRouteTableInfo; }
         }
         
-        private IDedicatedCircuitPeeringRoutingSummaryOperations _dedicatedCircuitPeeringRoutingSummary;
+        private IDedicatedCircuitPeeringRouteTableSummaryOperations _dedicatedCircuitPeeringRouteTableSummary;
         
-        public virtual IDedicatedCircuitPeeringRoutingSummaryOperations DedicatedCircuitPeeringRoutingSummary
+        public virtual IDedicatedCircuitPeeringRouteTableSummaryOperations DedicatedCircuitPeeringRouteTableSummary
         {
-            get { return this._dedicatedCircuitPeeringRoutingSummary; }
+            get { return this._dedicatedCircuitPeeringRouteTableSummary; }
         }
         
         private IDedicatedCircuitPeeringStatsOperations _dedicatedCircuitPeeringStats;
@@ -181,6 +181,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
         {
             get { return this._dedicatedCircuitServiceProviders; }
+        }
+        
+        private IDedicatedCircuitStatsOperations _dedicatedCircuitStats;
+        
+        public virtual IDedicatedCircuitStatsOperations DedicatedCircuitStats
+        {
+            get { return this._dedicatedCircuitStats; }
         }
         
         /// <summary>
@@ -198,10 +205,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
-            this._dedicatedCircuitPeeringRoutingInfo = new DedicatedCircuitPeeringRoutingInfoOperations(this);
-            this._dedicatedCircuitPeeringRoutingSummary = new DedicatedCircuitPeeringRoutingSummaryOperations(this);
+            this._dedicatedCircuitPeeringRouteTableInfo = new DedicatedCircuitPeeringRouteTableInfoOperations(this);
+            this._dedicatedCircuitPeeringRouteTableSummary = new DedicatedCircuitPeeringRouteTableSummaryOperations(this);
             this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._dedicatedCircuitStats = new DedicatedCircuitStatsOperations(this);
             this._apiVersion = "2011-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -278,10 +286,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
-            this._dedicatedCircuitPeeringRoutingInfo = new DedicatedCircuitPeeringRoutingInfoOperations(this);
-            this._dedicatedCircuitPeeringRoutingSummary = new DedicatedCircuitPeeringRoutingSummaryOperations(this);
+            this._dedicatedCircuitPeeringRouteTableInfo = new DedicatedCircuitPeeringRouteTableInfoOperations(this);
+            this._dedicatedCircuitPeeringRouteTableSummary = new DedicatedCircuitPeeringRouteTableSummaryOperations(this);
             this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._dedicatedCircuitStats = new DedicatedCircuitStatsOperations(this);
             this._apiVersion = "2011-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

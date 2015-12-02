@@ -27,15 +27,14 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Dedicated Circuit Peering Arp Info operation response.
+    /// The Get DedicatedCircuitPeeringArpInfo operation response.
     /// </summary>
     public partial class DedicatedCircuitPeeringArpInfoGetResponse : AzureOperationResponse
     {
         private AzureDedicatedCircuitPeeringArpInfo _dedicatedCircuitPeeringArpInfo;
         
         /// <summary>
-        /// Optional. ARP information of the requested peering of circuit on
-        /// specific device.
+        /// Optional. The Address Resolution Protocol (ARP) table statistic.
         /// </summary>
         public AzureDedicatedCircuitPeeringArpInfo DedicatedCircuitPeeringArpInfo
         {

@@ -27,26 +27,26 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get DedicatedCircuitPeeringStats operation response.
+    /// The Get DedicatedCircuitPeeringRouteTableInfo operation response.
     /// </summary>
-    public partial class DedicatedCircuitPeeringStatsGetResponse : AzureOperationResponse
+    public partial class DedicatedCircuitPeeringRouteTableInfoGetResponse : AzureOperationResponse
     {
-        private AzureDedicatedCircuitPeeringStats _dedicatedCircuitPeeringStats;
+        private AzureDedicatedCircuitPeeringRouteTableInfo _dedicatedCircuitPeeringRouteTableInfo;
         
         /// <summary>
-        /// Optional. Stats of the requested dedicated circuit at peering level.
+        /// Optional. VPNv4 information from the BGP database.
         /// </summary>
-        public AzureDedicatedCircuitPeeringStats DedicatedCircuitPeeringStats
+        public AzureDedicatedCircuitPeeringRouteTableInfo DedicatedCircuitPeeringRouteTableInfo
         {
-            get { return this._dedicatedCircuitPeeringStats; }
-            set { this._dedicatedCircuitPeeringStats = value; }
+            get { return this._dedicatedCircuitPeeringRouteTableInfo; }
+            set { this._dedicatedCircuitPeeringRouteTableInfo = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitPeeringStatsGetResponse class.
+        /// DedicatedCircuitPeeringRouteTableInfoGetResponse class.
         /// </summary>
-        public DedicatedCircuitPeeringStatsGetResponse()
+        public DedicatedCircuitPeeringRouteTableInfoGetResponse()
         {
         }
     }

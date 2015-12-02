@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <summary>
         /// The Get Dedicated Circuit Stats operation retrieves the
         /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices.
+        /// devices at circuit level.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Stats operation response.
+        /// The Get DedicatedCircuitStats operation response.
         /// </returns>
         public async Task<DedicatedCircuitStatsGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
         {

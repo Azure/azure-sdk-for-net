@@ -25,61 +25,70 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Describes the Address Resolution Protocol (ARP) table statistic.
+    /// Describes VPNv4 information from the BGP database.
     /// </summary>
-    public partial class AzureDedicatedCircuitPeeringArpInfo
+    public partial class AzureDedicatedCircuitPeeringRouteTableInfo
     {
-        private int _age;
+        private string _locPrf;
         
         /// <summary>
-        /// Optional. Specifies duration since the switch with a MAC address
-        /// was mapped to the IP address.
+        /// Optional. Specifies the local preference.
         /// </summary>
-        public int Age
+        public string LocPrf
         {
-            get { return this._age; }
-            set { this._age = value; }
+            get { return this._locPrf; }
+            set { this._locPrf = value; }
         }
         
-        private string _interface;
+        private string _network;
         
         /// <summary>
-        /// Optional. Specifies switch interface where packets are forwarded.
+        /// Optional. Specifies the network address from the BGP table.
         /// </summary>
-        public string Interface
+        public string Network
         {
-            get { return this._interface; }
-            set { this._interface = value; }
+            get { return this._network; }
+            set { this._network = value; }
         }
         
-        private string _ipAddress;
+        private string _nextHop;
         
         /// <summary>
-        /// Optional. Specifies IP address of the switch that the ARP table
-        /// automatically maps to the MAC address of the switch.
+        /// Optional. Specifies the address of the BGP next hop.
         /// </summary>
-        public string IpAddress
+        public string NextHop
         {
-            get { return this._ipAddress; }
-            set { this._ipAddress = value; }
+            get { return this._nextHop; }
+            set { this._nextHop = value; }
         }
         
-        private string _macAddress;
+        private string _path;
         
         /// <summary>
-        /// Optional. Specifies MAC address of the switch.
+        /// Optional. Specifies the BGP path per route.
         /// </summary>
-        public string MacAddress
+        public string Path
         {
-            get { return this._macAddress; }
-            set { this._macAddress = value; }
+            get { return this._path; }
+            set { this._path = value; }
+        }
+        
+        private int _weight;
+        
+        /// <summary>
+        /// Optional. Specifies the BGP weight.
+        /// </summary>
+        public int Weight
+        {
+            get { return this._weight; }
+            set { this._weight = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureDedicatedCircuitPeeringArpInfo class.
+        /// AzureDedicatedCircuitPeeringRouteTableInfo class.
         /// </summary>
-        public AzureDedicatedCircuitPeeringArpInfo()
+        public AzureDedicatedCircuitPeeringRouteTableInfo()
         {
         }
     }

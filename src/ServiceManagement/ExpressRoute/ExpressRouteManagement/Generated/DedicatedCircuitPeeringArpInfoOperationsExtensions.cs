@@ -40,8 +40,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public static partial class DedicatedCircuitPeeringArpInfoOperationsExtensions
     {
         /// <summary>
-        /// The Get Dedicated Circuit Peering Arp Information operation
-        /// retrieves the ARP information for specific BGP.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
+        /// Address Resolution Protocol (ARP) table statistic.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Peering Arp Info operation response.
+        /// The Get DedicatedCircuitPeeringArpInfo operation response.
         /// </returns>
         public static DedicatedCircuitPeeringArpInfoGetResponse Get(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
@@ -69,8 +69,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get Dedicated Circuit Peering Arp Information operation
-        /// retrieves the ARP information for specific BGP.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
+        /// Address Resolution Protocol (ARP) table statistic.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Peering Arp Info operation response.
+        /// The Get DedicatedCircuitPeeringArpInfo operation response.
         /// </returns>
         public static Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {

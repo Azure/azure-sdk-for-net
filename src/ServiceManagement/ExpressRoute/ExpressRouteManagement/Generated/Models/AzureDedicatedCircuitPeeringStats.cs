@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Describes bytes in/ bytes out information at circuit level.
+    /// Describes bytes in/bytes out information at peering level.
     /// </summary>
-    public partial class AzureDedicatedCircuitStats
+    public partial class AzureDedicatedCircuitPeeringStats
     {
         private ulong _primaryBytesIn;
         
         /// <summary>
-        /// Optional. Specifies bytesin of the circuit on primary device.
+        /// Optional. Specifies bytesin of the circuit on primary device at
+        /// peering level.
         /// </summary>
         public ulong PrimaryBytesIn
         {
@@ -43,7 +44,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private ulong _primaryBytesOut;
         
         /// <summary>
-        /// Optional. Specifies bytesout of the circuit on primary device.
+        /// Optional. Specifies bytesout of the circuit on primary device at
+        /// peering level.
         /// </summary>
         public ulong PrimaryBytesOut
         {
@@ -54,7 +56,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private ulong _secondaryBytesIn;
         
         /// <summary>
-        /// Optional. Specifies bytesin of the circuit on secondary device.
+        /// Optional. Specifies bytesin of the circuit on secondary device at
+        /// peering level.
         /// </summary>
         public ulong SecondaryBytesIn
         {
@@ -65,7 +68,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private ulong _secondaryBytesOut;
         
         /// <summary>
-        /// Optional. Specifies bytesout of the circuit on secondary device.
+        /// Optional. Specifies bytesout of the circuit on secondary device at
+        /// peering level.
         /// </summary>
         public ulong SecondaryBytesOut
         {
@@ -74,9 +78,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AzureDedicatedCircuitStats class.
+        /// Initializes a new instance of the AzureDedicatedCircuitPeeringStats
+        /// class.
         /// </summary>
-        public AzureDedicatedCircuitStats()
+        public AzureDedicatedCircuitPeeringStats()
         {
         }
     }

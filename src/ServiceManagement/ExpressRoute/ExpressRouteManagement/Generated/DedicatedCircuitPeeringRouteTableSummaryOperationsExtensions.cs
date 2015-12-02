@@ -37,50 +37,62 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class DedicatedCircuitStatsOperationsExtensions
+    public static partial class DedicatedCircuitPeeringRouteTableSummaryOperationsExtensions
     {
         /// <summary>
-        /// The Get Dedicated Circuit Stats operation retrieves the
-        /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices at circuit level.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation
+        /// retrieves BGP path, prefix and attribute information for all
+        /// connections to BGP neighbors.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitStatsOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringRouteTableSummaryOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
         /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitStats operation response.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation response.
         /// </returns>
-        public static DedicatedCircuitStatsGetResponse Get(this IDedicatedCircuitStatsOperations operations, string serviceKey)
+        public static DedicatedCircuitPeeringRouteTableSummaryGetResponse Get(this IDedicatedCircuitPeeringRouteTableSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDedicatedCircuitStatsOperations)s).GetAsync(serviceKey);
+                return ((IDedicatedCircuitPeeringRouteTableSummaryOperations)s).GetAsync(serviceKey, accessType, devicePath);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Dedicated Circuit Stats operation retrieves the
-        /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices at circuit level.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation
+        /// retrieves BGP path, prefix and attribute information for all
+        /// connections to BGP neighbors.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitStatsOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringRouteTableSummaryOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
         /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitStats operation response.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation response.
         /// </returns>
-        public static Task<DedicatedCircuitStatsGetResponse> GetAsync(this IDedicatedCircuitStatsOperations operations, string serviceKey)
+        public static Task<DedicatedCircuitPeeringRouteTableSummaryGetResponse> GetAsync(this IDedicatedCircuitPeeringRouteTableSummaryOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
-            return operations.GetAsync(serviceKey, CancellationToken.None);
+            return operations.GetAsync(serviceKey, accessType, devicePath, CancellationToken.None);
         }
     }
 }

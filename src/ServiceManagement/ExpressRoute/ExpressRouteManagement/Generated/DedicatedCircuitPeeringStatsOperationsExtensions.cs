@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Stats operation response.
+        /// The Get DedicatedCircuitPeeringStats operation response.
         /// </returns>
         public static DedicatedCircuitPeeringStatsGetResponse Get(this IDedicatedCircuitPeeringStatsOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Stats operation response.
+        /// The Get DedicatedCircuitPeeringStats operation response.
         /// </returns>
         public static Task<DedicatedCircuitPeeringStatsGetResponse> GetAsync(this IDedicatedCircuitPeeringStatsOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {

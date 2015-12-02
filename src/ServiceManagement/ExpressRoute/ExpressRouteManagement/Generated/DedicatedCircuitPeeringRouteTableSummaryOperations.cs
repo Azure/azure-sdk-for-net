@@ -34,16 +34,16 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitPeeringStatsOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitPeeringStatsOperations
+    internal partial class DedicatedCircuitPeeringRouteTableSummaryOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitPeeringRouteTableSummaryOperations
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitPeeringStatsOperations class.
+        /// DedicatedCircuitPeeringRouteTableSummaryOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DedicatedCircuitPeeringStatsOperations(ExpressRouteManagementClient client)
+        internal DedicatedCircuitPeeringRouteTableSummaryOperations(ExpressRouteManagementClient client)
         {
             this._client = client;
         }
@@ -60,9 +60,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get Dedicated Circuit Stats operation retrieves the
-        /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices for specified peering type.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation
+        /// retrieves BGP path, prefix and attribute information for all
+        /// connections to BGP neighbors.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -70,13 +70,16 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public or microsoft.
         /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitPeeringStats operation response.
+        /// The Get DedicatedCircuitPeeringRouteTableSummary operation response.
         /// </returns>
-        public async Task<DedicatedCircuitPeeringStatsGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async Task<DedicatedCircuitPeeringRouteTableSummaryGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -93,6 +96,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceKey", serviceKey);
                 tracingParameters.Add("accessType", accessType);
+                tracingParameters.Add("devicePath", devicePath);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -107,7 +111,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             url = url + Uri.EscapeDataString(serviceKey);
             url = url + "/bgppeerings/";
             url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
-            url = url + "/stats";
+            url = url + "/routeTableSummary/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.DevicePathToString(devicePath));
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=1.0");
             if (queryParameters.Count > 0)
@@ -169,47 +174,54 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     }
                     
                     // Create Result
-                    DedicatedCircuitPeeringStatsGetResponse result = null;
+                    DedicatedCircuitPeeringRouteTableSummaryGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DedicatedCircuitPeeringStatsGetResponse();
+                        result = new DedicatedCircuitPeeringRouteTableSummaryGetResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement dedicatedCircuitPeeringStatsElement = responseDoc.Element(XName.Get("DedicatedCircuitPeeringStats", "http://schemas.microsoft.com/windowsazure"));
-                        if (dedicatedCircuitPeeringStatsElement != null)
+                        XElement dedicatedCircuitPeeringRouteTableSummaryElement = responseDoc.Element(XName.Get("DedicatedCircuitPeeringRouteTableSummary", "http://schemas.microsoft.com/windowsazure"));
+                        if (dedicatedCircuitPeeringRouteTableSummaryElement != null)
                         {
-                            AzureDedicatedCircuitPeeringStats dedicatedCircuitPeeringStatsInstance = new AzureDedicatedCircuitPeeringStats();
-                            result.DedicatedCircuitPeeringStats = dedicatedCircuitPeeringStatsInstance;
+                            AzureDedicatedCircuitPeeringRouteTableSummary dedicatedCircuitPeeringRouteTableSummaryInstance = new AzureDedicatedCircuitPeeringRouteTableSummary();
+                            result.DedicatedCircuitPeeringRouteTableSummary = dedicatedCircuitPeeringRouteTableSummaryInstance;
                             
-                            XElement primaryBytesInElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("PrimaryBytesIn", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryBytesInElement != null)
+                            XElement neighborElement = dedicatedCircuitPeeringRouteTableSummaryElement.Element(XName.Get("Neighbor", "http://schemas.microsoft.com/windowsazure"));
+                            if (neighborElement != null)
                             {
-                                ulong primaryBytesInInstance = ulong.Parse(primaryBytesInElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.PrimaryBytesIn = primaryBytesInInstance;
+                                string neighborInstance = neighborElement.Value;
+                                dedicatedCircuitPeeringRouteTableSummaryInstance.Neighbor = neighborInstance;
                             }
                             
-                            XElement primaryBytesOutElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("PrimaryBytesOut", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryBytesOutElement != null)
+                            XElement vElement = dedicatedCircuitPeeringRouteTableSummaryElement.Element(XName.Get("V", "http://schemas.microsoft.com/windowsazure"));
+                            if (vElement != null)
                             {
-                                ulong primaryBytesOutInstance = ulong.Parse(primaryBytesOutElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.PrimaryBytesOut = primaryBytesOutInstance;
+                                int vInstance = int.Parse(vElement.Value, CultureInfo.InvariantCulture);
+                                dedicatedCircuitPeeringRouteTableSummaryInstance.V = vInstance;
                             }
                             
-                            XElement secondaryBytesInElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("SecondaryBytesIn", "http://schemas.microsoft.com/windowsazure"));
-                            if (secondaryBytesInElement != null)
+                            XElement asElement = dedicatedCircuitPeeringRouteTableSummaryElement.Element(XName.Get("AS", "http://schemas.microsoft.com/windowsazure"));
+                            if (asElement != null)
                             {
-                                ulong secondaryBytesInInstance = ulong.Parse(secondaryBytesInElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.SecondaryBytesIn = secondaryBytesInInstance;
+                                int asInstance = int.Parse(asElement.Value, CultureInfo.InvariantCulture);
+                                dedicatedCircuitPeeringRouteTableSummaryInstance.AS = asInstance;
                             }
                             
-                            XElement secondaryBytesOutElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("SecondaryBytesOut", "http://schemas.microsoft.com/windowsazure"));
-                            if (secondaryBytesOutElement != null)
+                            XElement upDownElement = dedicatedCircuitPeeringRouteTableSummaryElement.Element(XName.Get("UpDown", "http://schemas.microsoft.com/windowsazure"));
+                            if (upDownElement != null)
                             {
-                                ulong secondaryBytesOutInstance = ulong.Parse(secondaryBytesOutElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.SecondaryBytesOut = secondaryBytesOutInstance;
+                                string upDownInstance = upDownElement.Value;
+                                dedicatedCircuitPeeringRouteTableSummaryInstance.UpDown = upDownInstance;
+                            }
+                            
+                            XElement statePfxRcdElement = dedicatedCircuitPeeringRouteTableSummaryElement.Element(XName.Get("StatePfxRcd", "http://schemas.microsoft.com/windowsazure"));
+                            if (statePfxRcdElement != null)
+                            {
+                                string statePfxRcdInstance = statePfxRcdElement.Value;
+                                dedicatedCircuitPeeringRouteTableSummaryInstance.StatePfxRcd = statePfxRcdInstance;
                             }
                         }
                         

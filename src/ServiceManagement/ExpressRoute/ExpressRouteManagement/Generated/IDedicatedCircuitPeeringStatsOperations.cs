@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Stats operation response.
+        /// The Get DedicatedCircuitPeeringStats operation response.
         /// </returns>
         Task<DedicatedCircuitPeeringStatsGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
     }

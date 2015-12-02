@@ -30,8 +30,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public partial interface IDedicatedCircuitPeeringArpInfoOperations
     {
         /// <summary>
-        /// The Get Dedicated Circuit Peering Arp Information operation
-        /// retrieves the ARP information for specific BGP.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
+        /// Address Resolution Protocol (ARP) table statistic.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Peering Arp Info operation response.
+        /// The Get DedicatedCircuitPeeringArpInfo operation response.
         /// </returns>
         Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
     }

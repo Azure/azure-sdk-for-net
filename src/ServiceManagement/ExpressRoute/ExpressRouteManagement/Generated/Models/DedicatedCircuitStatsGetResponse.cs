@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Dedicated Circuit Stats operation response.
+    /// The Get DedicatedCircuitStats operation response.
     /// </summary>
     public partial class DedicatedCircuitStatsGetResponse : AzureOperationResponse
     {
         private AzureDedicatedCircuitStats _dedicatedCircuitStats;
         
         /// <summary>
-        /// Optional. Stats of the requested dedicated circuit.
+        /// Optional. Stats of the requested dedicated circuit at circuit level.
         /// </summary>
         public AzureDedicatedCircuitStats DedicatedCircuitStats
         {
