@@ -174,10 +174,17 @@ namespace Microsoft.Azure.Management.HDInsight
         private static Dictionary<string, Dictionary<string, string>> GetMetastoreConfigIaas(Metastore metastore,
             string metastoreType)
         {
+            var server = metastore.Server;
+            var index = server.IndexOf('.');
+            if (index > 0)
+            {
+                server = server.Substring(0, index);
+            }
+
             var connectionUrl =
                 string.Format(
                     "jdbc:sqlserver://{0}.database.windows.net;database={1};encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300;sendStringParametersAsUnicode=true;prepareSQL=0",
-                    metastore.Server, metastore.Database);
+                    server, metastore.Database);
             var configurations = new Dictionary<string, Dictionary<string, string>>();
             if (metastoreType.Equals("hive", StringComparison.OrdinalIgnoreCase))
             {
