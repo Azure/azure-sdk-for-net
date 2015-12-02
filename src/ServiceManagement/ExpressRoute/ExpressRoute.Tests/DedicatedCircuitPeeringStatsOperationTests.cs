@@ -13,7 +13,7 @@
     public class DedicatedCircuitPeeringStatsOperationTests : ExpressRouteTestBase
     {
         [Fact]
-        public void CanGetCircuitStats()
+        public void CanGetPeeringStatsIfPeeringExists()
         {
             using (var undoContext = UndoContext.Current)
             {
@@ -54,79 +54,91 @@
                 Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, newPrivatePeeringParams.SecondaryPeerSubnet);
                 Assert.Equal(getResponse.BgpPeering.VlanId, newPrivatePeeringParams.VirtualLanId);
                 Assert.Equal(getResponse.BgpPeering.State, BgpPeeringState.Enabled);
-                var newPublicPeeringParams = new BorderGatewayProtocolPeeringNewParameters()
+
+                // TODO: need to debug this call to check response
+                var getArpInfoResponse = expressRouteClient.DedicatedCircuitPeeringArpInfo.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Primary);
+                TestUtilities.ValidateOperationResponse(getArpInfoResponse);
+                Assert.NotNull(getArpInfoResponse.DedicatedCircuitPeeringArpInfo);           
+
+                var getRouteTableInfoResponse = expressRouteClient.DedicatedCircuitPeeringRouteTableInfo.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Secondary);
+                TestUtilities.ValidateOperationResponse(getRouteTableInfoResponse);
+                Assert.NotNull(getRouteTableInfoResponse.DedicatedCircuitPeeringRouteTableInfo);
+
+                var getRouteTableSummaryResponse = expressRouteClient.DedicatedCircuitPeeringRouteTableSummary.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Primary);
+                TestUtilities.ValidateOperationResponse(getRouteTableSummaryResponse);
+                Assert.NotNull(getRouteTableSummaryResponse.DedicatedCircuitPeeringRouteTableSummary);
+
+                var getPeeringStatsResponse = expressRouteClient.DedicatedCircuitPeeringStats.Get(serviceKey.ToString(), BgpPeeringAccessType.Private);
+                TestUtilities.ValidateOperationResponse(getPeeringStatsResponse);
+                Assert.NotNull(getPeeringStatsResponse.DedicatedCircuitPeeringStats);
+
+                var getCircuitStatsResponse = expressRouteClient.DedicatedCircuitStats.Get(serviceKey.ToString());
+                TestUtilities.ValidateOperationResponse(getCircuitStatsResponse);
+                Assert.NotNull(getCircuitStatsResponse.DedicatedCircuitStats);
+
+            }
+        }
+
+        [Fact]
+        public void CanGetPeeringStatsIfPeeringNotExists()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var expressRouteClient = GetCustomerExpressRouteManagementClient();
+                var provider = expressRouteClient.DedicatedCircuitServiceProviders.List().Single(p => p.Name.Equals(GetProviderName(), StringComparison.CurrentCultureIgnoreCase));
+                var location = provider.DedicatedCircuitLocations.Split(',').First();
+                var bandwidth = provider.DedicatedCircuitBandwidths.First().Bandwidth;
+                var circuitName = TestUtilities.GenerateName("circuit");
+                var newCircuitParams = new DedicatedCircuitNewParameters()
                 {
-                    PeerAutonomousSystemNumber = PublicPeerAsn,
-                    PrimaryPeerSubnet = PublicPrimaryPeerSubnet,
-                    SecondaryPeerSubnet = PublicSecondaryPeerSubnet,
+                    Bandwidth = bandwidth,
+                    CircuitName = circuitName,
+                    Location = location,
+                    ServiceProviderName = provider.Name
+                };
+                var newResponse = expressRouteClient.DedicatedCircuits.New(newCircuitParams);
+                TestUtilities.ValidateOperationResponse(newResponse);
+                Guid serviceKey;
+                Assert.True(Guid.TryParse(newResponse.Data, out serviceKey));
+
+                var newPrivatePeeringParams = new BorderGatewayProtocolPeeringNewParameters()
+                {
+                    PeerAutonomousSystemNumber = PrivatePeerAsn,
+                    PrimaryPeerSubnet = PrivatePrimaryPeerSubnet,
+                    SecondaryPeerSubnet = PrivateSecondaryPeerSubnet,
                     SharedKey = TestUtilities.GenerateName("SharedKey"),
-                    VirtualLanId = PublicVlanId
+                    VirtualLanId = PrivateVlanId
                 };
                 newResponse = expressRouteClient.BorderGatewayProtocolPeerings.New(serviceKey.ToString(),
-                                                                                   BgpPeeringAccessType.Public,
-                                                                                   newPublicPeeringParams);
+                                                                                   BgpPeeringAccessType.Private,
+                                                                                   newPrivatePeeringParams);
                 TestUtilities.ValidateOperationResponse(newResponse);
-                getResponse = expressRouteClient.BorderGatewayProtocolPeerings.Get(serviceKey.ToString(), BgpPeeringAccessType.Public);
+                var getResponse = expressRouteClient.BorderGatewayProtocolPeerings.Get(serviceKey.ToString(), BgpPeeringAccessType.Private);
                 TestUtilities.ValidateOperationResponse(getResponse);
-                Assert.Equal(getResponse.BgpPeering.PeerAsn, newPublicPeeringParams.PeerAutonomousSystemNumber);
-                Assert.Equal(getResponse.BgpPeering.PrimaryPeerSubnet, newPublicPeeringParams.PrimaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, newPublicPeeringParams.SecondaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.VlanId, newPublicPeeringParams.VirtualLanId);
+                Assert.Equal(getResponse.BgpPeering.PeerAsn, newPrivatePeeringParams.PeerAutonomousSystemNumber);
+                Assert.Equal(getResponse.BgpPeering.PrimaryPeerSubnet, newPrivatePeeringParams.PrimaryPeerSubnet);
+                Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, newPrivatePeeringParams.SecondaryPeerSubnet);
+                Assert.Equal(getResponse.BgpPeering.VlanId, newPrivatePeeringParams.VirtualLanId);
                 Assert.Equal(getResponse.BgpPeering.State, BgpPeeringState.Enabled);
 
-                BorderGatewayProtocolPeeringUpdateParameters updatePrivatePeeringParams = new BorderGatewayProtocolPeeringUpdateParameters
-                    ()
-                {
-                    PeerAutonomousSystemNumber = UpdatePrivatePeerAsn,
-                    PrimaryPeerSubnet = UpdatePrivatePrimaryPeerSubnet,
-                    SecondaryPeerSubnet = UpdatePrivateSecondaryPeerSubnet,
-                    SharedKey = TestUtilities.GenerateName("SharedKey"),
-                    VirtualLanId = UpdatePrivateVlanId
-                };
 
-                var updateResponse = expressRouteClient.BorderGatewayProtocolPeerings.Update(serviceKey.ToString(),
-                                                                                             BgpPeeringAccessType
-                                                                                                 .Private,
-                                                                                             updatePrivatePeeringParams);
-                TestUtilities.ValidateOperationResponse(updateResponse);
-                getResponse = expressRouteClient.BorderGatewayProtocolPeerings.Get(serviceKey.ToString(), BgpPeeringAccessType.Private);
-                TestUtilities.ValidateOperationResponse(getResponse);
-                Assert.Equal(getResponse.BgpPeering.PeerAsn, updatePrivatePeeringParams.PeerAutonomousSystemNumber);
-                Assert.Equal(getResponse.BgpPeering.PrimaryPeerSubnet, updatePrivatePeeringParams.PrimaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, updatePrivatePeeringParams.SecondaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.VlanId, updatePrivatePeeringParams.VirtualLanId);
-                Assert.Equal(getResponse.BgpPeering.State, BgpPeeringState.Enabled);
+                // TODO: need to debug this call to check response
+                var getArpInfoResponse = expressRouteClient.DedicatedCircuitPeeringArpInfo.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Primary);
+                TestUtilities.ValidateOperationResponse(getArpInfoResponse);
 
-                BorderGatewayProtocolPeeringUpdateParameters updatePublicPeeringParams = new BorderGatewayProtocolPeeringUpdateParameters
-                    ()
-                {
-                    PeerAutonomousSystemNumber = UpdatePublicPeerAsn,
-                    PrimaryPeerSubnet = UpdatePublicPrimaryPeerSubnet,
-                    SecondaryPeerSubnet = UpdatePublicSecondaryPeerSubnet,
-                    SharedKey = TestUtilities.GenerateName("SharedKey"),
-                    VirtualLanId = UpdatePublicVlanId
-                };
+                var getRouteTableInfoResponse = expressRouteClient.DedicatedCircuitPeeringRouteTableInfo.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Secondary);
+                TestUtilities.ValidateOperationResponse(getRouteTableInfoResponse);
 
-                updateResponse = expressRouteClient.BorderGatewayProtocolPeerings.Update(serviceKey.ToString(),
-                                                                                             BgpPeeringAccessType
-                                                                                                 .Public,
-                                                                                             updatePublicPeeringParams);
-                TestUtilities.ValidateOperationResponse(updateResponse);
-                getResponse = expressRouteClient.BorderGatewayProtocolPeerings.Get(serviceKey.ToString(), BgpPeeringAccessType.Public);
-                TestUtilities.ValidateOperationResponse(getResponse);
-                Assert.Equal(getResponse.BgpPeering.PeerAsn, updatePublicPeeringParams.PeerAutonomousSystemNumber);
-                Assert.Equal(getResponse.BgpPeering.PrimaryPeerSubnet, updatePublicPeeringParams.PrimaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, updatePublicPeeringParams.SecondaryPeerSubnet);
-                Assert.Equal(getResponse.BgpPeering.VlanId, updatePublicPeeringParams.VirtualLanId);
-                Assert.Equal(getResponse.BgpPeering.State, BgpPeeringState.Enabled);
+                var getRouteTableSummaryResponse = expressRouteClient.DedicatedCircuitPeeringRouteTableSummary.Get(serviceKey.ToString(), BgpPeeringAccessType.Private, DevicePath.Primary);
+                TestUtilities.ValidateOperationResponse(getRouteTableSummaryResponse);
 
-                var removeResponse = expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey.ToString(),
-                                                                                             BgpPeeringAccessType
-                                                                                                 .Private);
-                TestUtilities.ValidateOperationResponse(removeResponse);
-                removeResponse = expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey.ToString(),
-                                                                                         BgpPeeringAccessType.Public);
-                TestUtilities.ValidateOperationResponse(removeResponse);
+                var getPeeringStatsResponse = expressRouteClient.DedicatedCircuitPeeringStats.Get(serviceKey.ToString(), BgpPeeringAccessType.Private);
+                TestUtilities.ValidateOperationResponse(getPeeringStatsResponse);
+
+                var getCircuitStatsResponse = expressRouteClient.DedicatedCircuitStats.Get(serviceKey.ToString());
+                TestUtilities.ValidateOperationResponse(getCircuitStatsResponse);
+
             }
         }
     }
