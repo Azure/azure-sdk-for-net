@@ -120,6 +120,8 @@
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
+    <Exec Command="dnvm use 1.0.0-rc1-final -r coreclr -a x64" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    
     <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
     <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
 
