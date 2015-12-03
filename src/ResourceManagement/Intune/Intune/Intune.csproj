@@ -37,7 +37,7 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.0.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+          <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.2.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
           <Private>True</Private>
         </Reference>
       </ItemGroup>
@@ -56,14 +56,13 @@
           <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.4.1\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.0.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
       </ItemGroup>
     </When>
   </Choose>
   <ItemGroup>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.2.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
