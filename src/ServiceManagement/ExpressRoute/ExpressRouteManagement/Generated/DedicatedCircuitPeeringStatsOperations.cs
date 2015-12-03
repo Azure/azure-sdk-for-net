@@ -181,35 +181,35 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         XElement dedicatedCircuitPeeringStatsElement = responseDoc.Element(XName.Get("DedicatedCircuitPeeringStats", "http://schemas.microsoft.com/windowsazure"));
                         if (dedicatedCircuitPeeringStatsElement != null)
                         {
-                            AzureDedicatedCircuitStats dedicatedCircuitPeeringStatsInstance = new AzureDedicatedCircuitStats();
-                            result.DedicatedCircuitPeeringStats = dedicatedCircuitPeeringStatsInstance;
+                            AzureDedicatedCircuitStats dedicatedCircuitStatsInstance = new AzureDedicatedCircuitStats();
+                            result.DedicatedCircuitStats = dedicatedCircuitStatsInstance;
                             
                             XElement primaryBytesInElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("PrimaryBytesIn", "http://schemas.microsoft.com/windowsazure"));
                             if (primaryBytesInElement != null)
                             {
                                 ulong primaryBytesInInstance = ulong.Parse(primaryBytesInElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.PrimaryBytesIn = primaryBytesInInstance;
+                                dedicatedCircuitStatsInstance.PrimaryBytesIn = primaryBytesInInstance;
                             }
                             
                             XElement primaryBytesOutElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("PrimaryBytesOut", "http://schemas.microsoft.com/windowsazure"));
                             if (primaryBytesOutElement != null)
                             {
                                 ulong primaryBytesOutInstance = ulong.Parse(primaryBytesOutElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.PrimaryBytesOut = primaryBytesOutInstance;
+                                dedicatedCircuitStatsInstance.PrimaryBytesOut = primaryBytesOutInstance;
                             }
                             
                             XElement secondaryBytesInElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("SecondaryBytesIn", "http://schemas.microsoft.com/windowsazure"));
                             if (secondaryBytesInElement != null)
                             {
                                 ulong secondaryBytesInInstance = ulong.Parse(secondaryBytesInElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.SecondaryBytesIn = secondaryBytesInInstance;
+                                dedicatedCircuitStatsInstance.SecondaryBytesIn = secondaryBytesInInstance;
                             }
                             
                             XElement secondaryBytesOutElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("SecondaryBytesOut", "http://schemas.microsoft.com/windowsazure"));
                             if (secondaryBytesOutElement != null)
                             {
                                 ulong secondaryBytesOutInstance = ulong.Parse(secondaryBytesOutElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringStatsInstance.SecondaryBytesOut = secondaryBytesOutInstance;
+                                dedicatedCircuitStatsInstance.SecondaryBytesOut = secondaryBytesOutInstance;
                             }
                         }
                         
