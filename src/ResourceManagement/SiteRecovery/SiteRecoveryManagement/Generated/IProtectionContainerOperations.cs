@@ -133,5 +133,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
         Task<ProtectionContainerListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all ProtectionContainers for the given vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionContainers operation.
+        /// </returns>
+        Task<ProtectionContainerListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -291,5 +291,45 @@ namespace Microsoft.Azure.Management.SiteRecovery
         {
             return operations.ListAsync(fabricName, customRequestHeaders, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Get the list of all ProtectionContainers for the given vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionContainers operation.
+        /// </returns>
+        public static ProtectionContainerListResponse ListAll(this IProtectionContainerOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionContainerOperations)s).ListAllAsync(customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all ProtectionContainers for the given vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionContainers operation.
+        /// </returns>
+        public static Task<ProtectionContainerListResponse> ListAllAsync(this IProtectionContainerOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAllAsync(customRequestHeaders, CancellationToken.None);
+        }
     }
 }
