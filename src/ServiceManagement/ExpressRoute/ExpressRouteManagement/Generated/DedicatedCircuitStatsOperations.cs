@@ -62,10 +62,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <summary>
         /// The Get Dedicated Circuit Stats operation retrieves the
         /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices at circuit level.
+        /// devices for specified peering type.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -73,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get DedicatedCircuitStats operation response.
         /// </returns>
-        public async Task<DedicatedCircuitStatsListResponse> ListAsync(string serviceKey, CancellationToken cancellationToken)
+        public async Task<DedicatedCircuitStatsGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -89,7 +92,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceKey", serviceKey);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                tracingParameters.Add("accessType", accessType);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
@@ -101,6 +105,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             url = url + "/services/networking/dedicatedcircuits/";
             url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
             url = url + "/stats";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=1.0");
@@ -163,13 +169,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     }
                     
                     // Create Result
-                    DedicatedCircuitStatsListResponse result = null;
+                    DedicatedCircuitStatsGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DedicatedCircuitStatsListResponse();
+                        result = new DedicatedCircuitStatsGetResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
                         XElement dedicatedCircuitStatsElement = responseDoc.Element(XName.Get("DedicatedCircuitStats", "http://schemas.microsoft.com/windowsazure"));

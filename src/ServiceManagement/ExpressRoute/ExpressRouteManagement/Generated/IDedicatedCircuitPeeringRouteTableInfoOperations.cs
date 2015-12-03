@@ -30,8 +30,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public partial interface IDedicatedCircuitPeeringRouteTableInfoOperations
     {
         /// <summary>
-        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrieves
-        /// VPNv4 information from the BGP database.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
@@ -46,8 +45,62 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitPeeringRouteTableInfo operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DedicatedCircuitPeeringRouteTableInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
+        Task<ExpressRouteOperationResponse> BeginGetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Whether the device is primary or secondary.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken);
     }
 }

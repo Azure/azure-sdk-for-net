@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public static partial class DedicatedCircuitPeeringArpInfoOperationsExtensions
     {
         /// <summary>
-        /// The XXX.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The XXX.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The XXX.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The XXX.
+        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
