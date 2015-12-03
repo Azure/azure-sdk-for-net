@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
             //Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=None;Environment=Prod;UserId=admin@franktrtestdomain.onmicrosoft.com;Password=XXXXXX");         
             //Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=None;Environment=Prod;UserId=admin@IntuneAzureCLIMSUA06.onmicrosoft.com;Password=XXXXXX");         
             //AZURE_TEST_MODE = None, Record, Playback
-            //Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            //Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
         }
     }
 }
