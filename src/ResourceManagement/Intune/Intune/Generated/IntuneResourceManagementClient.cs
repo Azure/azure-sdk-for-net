@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Intune
             this.Ios = new IosOperations(this);
             this.Android = new AndroidOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-01-14-privatepreview";
+            this.ApiVersion = "2015-01-14-preview";
             this.AcceptLanguage = "en-US";
             if (this.Credentials != null)
             {
