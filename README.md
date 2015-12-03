@@ -10,12 +10,12 @@ that take advantage of scalable cloud computing resources.
     * .NET Portable Framework, using profile 111
 
 ### Prerequisites:
-  Visual Studio 2015 RTM with ASP.NET. For details, check out the [installtion doc](http://docs.asp.net/en/latest/getting-started/installing-on-windows.html). 
+  Visual Studio 2015 RTM with ASP.NET. For details, check out the [installation doc](http://docs.asp.net/en/latest/getting-started/installing-on-windows.html). 
   
-  Note, after done, run "_dnvm list_" command to check the 'coreclr' runtime is installed with right version of '_1.0.0-rc1-final_'. If not, run ì_dnvm install 1.0.0-rc1-final -r coreclr -a x64 -p_î. Remember always use "_-p_" flag, so the selection can persist. 
+  Note, after done, run "_dnvm list_" command to check the 'coreclr' runtime is installed with right version of '_1.0.0-rc1-final_'. If not, run ‚Äú_dnvm install 1.0.0-rc1-final -r coreclr -a x64 -Persistent_‚Äù. Remember always use "_-Persistent_" flag, so the selection can persist. 
 
 ### Known issue and workaround:
-   Due to this [build issue on portable framework](aspnet/dnx#2967), when install VS 2015, use the default option. If you didn't, go to ì_C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETPortable\v4.5\Profile\Profile111\SupportedFrameworks_î, remove several profile xmls and only keep core targets of ì_.NET Framework 4.5.xml_î, ì_Windows 8.xml_î, and ì_Windows Phone 8.1.xml_î.
+   Due to this [build issue on portable framework](aspnet/dnx#2967), when install VS 2015, use the default option. If you didn't, go to ‚Äú_C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\\.NETPortable\v4.5\Profile\Profile111\SupportedFrameworks_‚Äù, remove several profile xmls and only keep core targets of ‚Äú_.NET Framework 4.5.xml_‚Äù, ‚Äú_Windows 8.xml_‚Äù, and ‚Äú_Windows Phone 8.1.xml_‚Äù.
    
 ### To build:
 

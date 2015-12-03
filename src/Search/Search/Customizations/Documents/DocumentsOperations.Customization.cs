@@ -323,12 +323,19 @@ namespace Microsoft.Azure.Search
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -351,21 +358,28 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new TSearchResult();
-                if (string.IsNullOrEmpty(responseContent) == false)
+                try
                 {
-                    DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
-                    result.Body.Count = deserializedResult.Count;
-                    result.Body.Coverage = deserializedResult.Coverage;
-                    result.Body.Facets = deserializedResult.Facets;
-                    result.Body.Results = deserializedResult.Documents;
-                    result.Body.ContinuationToken =
-                        deserializedResult.NextLink != null ?
-                            new SearchContinuationToken(
-                                deserializedResult.NextLink,
-                                deserializedResult.NextPageParameters) :
-                            null;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = new TSearchResult();
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
+                        result.Body.Count = deserializedResult.Count;
+                        result.Body.Coverage = deserializedResult.Coverage;
+                        result.Body.Facets = deserializedResult.Facets;
+                        result.Body.Results = deserializedResult.Documents;
+                        result.Body.ContinuationToken =
+                            deserializedResult.NextLink != null ?
+                                new SearchContinuationToken(
+                                    deserializedResult.NextLink,
+                                    deserializedResult.NextPageParameters) :
+                                null;
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
             if (shouldTrace)
@@ -498,12 +512,19 @@ namespace Microsoft.Azure.Search
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -526,8 +547,15 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonUtility.DeserializeObject<T>(responseContent, jsonSerializerSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonUtility.DeserializeObject<T>(responseContent, jsonSerializerSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -647,12 +675,19 @@ namespace Microsoft.Azure.Search
             if (statusCode != HttpStatusCode.OK && statusCode != (HttpStatusCode)207)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -675,8 +710,15 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK || statusCode == (HttpStatusCode)207)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonUtility.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonUtility.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -922,12 +964,19 @@ namespace Microsoft.Azure.Search
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -950,13 +999,20 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new TSuggestResult();
-                if (string.IsNullOrEmpty(responseContent) == false)
+                try
                 {
-                    DocumentSuggestResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
-                    result.Body.Coverage = deserializedResult.Coverage;
-                    result.Body.Results = deserializedResult.Documents;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = new TSuggestResult();
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        DocumentSuggestResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
+                        result.Body.Coverage = deserializedResult.Coverage;
+                        result.Body.Results = deserializedResult.Documents;
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
             if (shouldTrace)
