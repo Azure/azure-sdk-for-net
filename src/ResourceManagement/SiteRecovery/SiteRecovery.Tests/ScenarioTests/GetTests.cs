@@ -104,6 +104,18 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
+        public void GetAllProtectedContainerTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var protectionContainerList = client.ProtectionContainer.ListAll(RequestHeaders);
+            }
+        }
+
 	[Fact]
         public void GetReplicationProtectedItems()
         {
