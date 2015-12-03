@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1e882188-fa04-4846-91ee-22d58a50d74c"
+          "8f12b2af-6b69-4cce-972c-1448e7827263"
         ],
         "accept-language": [
           "en-US"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-request-id": [
-          "15505c0e-558c-4057-9615-1d632e60f200"
+          "dfbed8b8-63e1-4016-bc81-cce677a20fbb"
         ],
         "x-ms-correlation-request-id": [
-          "47ef26b0-e3e9-4264-823c-94cbd71b0232"
+          "80916659-a0c4-4358-92ce-e8277534fb0c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151203T010001Z:47ef26b0-e3e9-4264-823c-94cbd71b0232"
+          "WESTUS:20151203T010030Z:80916659-a0c4-4358-92ce-e8277534fb0c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Dec 2015 01:00:00 GMT"
+          "Thu, 03 Dec 2015 01:00:29 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -64,7 +64,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "64a17e1c-341e-4942-ac2f-8e2ebdd61bb8"
+          "1d7ad874-97a9-4b89-8197-98db66f1904d"
         ],
         "accept-language": [
           "en-US"
@@ -88,25 +88,25 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "14997"
         ],
         "Elapsed-Time-Milliseconds": [
-          "6680"
+          "648"
         ],
         "service-name": [
           "AdminExperienceService"
         ],
         "client-request-id": [
-          "64a17e1c-341e-4942-ac2f-8e2ebdd61bb8"
+          "1d7ad874-97a9-4b89-8197-98db66f1904d"
         ],
         "unique-request-id": [
-          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
+          "cb0b3637-4558-45f4-864f-94895d5fd67d"
         ],
         "x-ms-request-id": [
-          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
+          "cb0b3637-4558-45f4-864f-94895d5fd67d"
         ],
         "related-activity-id": [
-          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
+          "cb0b3637-4558-45f4-864f-94895d5fd67d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -122,13 +122,92 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "4a88f1dc-f215-4f46-b55c-9b26a8ecafa8"
+          "dbe66066-8c30-4bdd-bb64-1731c3e62e9d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151203T010008Z:4a88f1dc-f215-4f46-b55c-9b26a8ecafa8"
+          "WESTUS:20151203T010032Z:dbe66066-8c30-4bdd-bb64-1731c3e62e9d"
         ],
         "Date": [
-          "Thu, 03 Dec 2015 01:00:08 GMT"
+          "Thu, 03 Dec 2015 01:00:32 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.msua06/flaggedUsers/d8aeb100-6e17-4cf7-bbda-169000d03c1e?api-version=2015-01-14-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYubXN1YTA2L2ZsYWdnZWRVc2Vycy9kOGFlYjEwMC02ZTE3LTRjZjctYmJkYS0xNjkwMDBkMDNjMWU/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "40f2045d-7aef-4b8c-8021-e2cf3ca1dad8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/fef.msua06/flaggedUsers/d8aeb100-6e17-4cf7-bbda-169000d03c1e\",\r\n  \"name\": \"d8aeb100-6e17-4cf7-bbda-169000d03c1e\",\r\n  \"type\": \"Microsoft.Intune/locations/flaggedUsers\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"Joe Admin\",\r\n    \"errorCount\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "259"
+        ],
+        "Content-Type": [
+          "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Thu, 03 Dec 2015 00:59:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "Elapsed-Time-Milliseconds": [
+          "460"
+        ],
+        "service-name": [
+          "AdminExperienceService"
+        ],
+        "client-request-id": [
+          "40f2045d-7aef-4b8c-8021-e2cf3ca1dad8"
+        ],
+        "unique-request-id": [
+          "b5161f62-0c3a-4426-a914-302a6d36e48f"
+        ],
+        "x-ms-request-id": [
+          "b5161f62-0c3a-4426-a914-302a6d36e48f"
+        ],
+        "related-activity-id": [
+          "b5161f62-0c3a-4426-a914-302a6d36e48f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "4cd93c55-2f85-413a-8567-12b5e6ec4b27"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151203T010032Z:4cd93c55-2f85-413a-8567-12b5e6ec4b27"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:00:32 GMT"
         ]
       },
       "StatusCode": 200
