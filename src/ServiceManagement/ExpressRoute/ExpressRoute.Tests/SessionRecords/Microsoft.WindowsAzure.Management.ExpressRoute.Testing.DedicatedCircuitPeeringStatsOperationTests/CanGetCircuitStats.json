@@ -1,0 +1,323 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>128</Bandwidth>\r\n        <Label>256</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>\"Columbia1 DC\"</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>MSIT</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4608"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "97f73c30e1e87dd0aebbd5c9a2ed4aa9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:42:41 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>200</Bandwidth>\r\n  <CircuitName>circuit5</CircuitName>\r\n  <Location>Boydton 1 DC</Location>\r\n  <ServiceProviderName>BVTAzureIXP01</ServiceProviderName>\r\n  <Sku>Standard</Sku>\r\n  <BillingType>ServiceProviderType</BillingType>\r\n</CreateDedicatedCircuit>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "340"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "210"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "95786bfc7b2d7a67a64746b78fa96903"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:42:48 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/95786bfc-7b2d-7a67-a647-46b78fa96903",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NTc4NmJmYy03YjJkLTdhNjctYTY0Ny00NmI3OGZhOTY5MDM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-03T01:42:11.8148974</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "358"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "0bf868bc58f47687816d6cf63af583f9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:42:48 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/95786bfc-7b2d-7a67-a647-46b78fa96903",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NTc4NmJmYy03YjJkLTdhNjctYTY0Ny00NmI3OGZhOTY5MDM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-03T01:42:11.8148974</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "358"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "af5896e76bf9799e9f714cf97f41ac2b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:43:20 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/95786bfc-7b2d-7a67-a647-46b78fa96903",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NTc4NmJmYy03YjJkLTdhNjctYTY0Ny00NmI3OGZhOTY5MDM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-03T01:42:11.8148974</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "358"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "7c57e336db91710e950fa15d1a3b3fea"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:43:51 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/95786bfc-7b2d-7a67-a647-46b78fa96903",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NTc4NmJmYy03YjJkLTdhNjctYTY0Ny00NmI3OGZhOTY5MDM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-03T01:42:11.8148974</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "358"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "573ff360dd5270b7ba926e573cada1fe"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:44:22 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/95786bfc-7b2d-7a67-a647-46b78fa96903",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NTc4NmJmYy03YjJkLTdhNjctYTY0Ny00NmI3OGZhOTY5MDM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>65d12ee6-0d7c-4e37-9ddc-7357354bbef8</Data>\r\n  <HealthStatus />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>95786bfc-7b2d-7a67-a647-46b78fa96903</ID>\r\n  <OperationCompletedTime>2015-12-03T01:43:46.4951083</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-03T01:42:11.8148974</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "511"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "e7b6392aacd17e5c855980ab45de5da6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:44:52 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits/65d12ee6-0d7c-4e37-9ddc-7357354bbef8/stats?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzY1ZDEyZWU2LTBkN2MtNGUzNy05ZGRjLTczNTczNTRiYmVmOC9zdGF0cz9hcGktdmVyc2lvbj0xLjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<DedicatedCircuitStats xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <PrimaryBytesIn>0</PrimaryBytesIn>\r\n  <PrimaryBytesOut>0</PrimaryBytesOut>\r\n  <SecondaryBytesIn>0</SecondaryBytesIn>\r\n  <SecondaryBytesOut>0</SecondaryBytesOut>\r\n</DedicatedCircuitStats>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "297"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "41ecca533c867b408f5ce7e25c86f1b7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 01:44:54 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanGetCircuitStats": [
+      "circuit5"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "6418ec2a-e390-424d-a490-1fee167c5a7a",
+    "TEST_PROVIDER_NAME": "BVTAzureIXP01"
+  }
+}
