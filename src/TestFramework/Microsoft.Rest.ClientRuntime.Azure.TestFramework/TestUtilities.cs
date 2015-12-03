@@ -109,7 +109,37 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             return methodName;
         }
+#if NET45
+        /// <summary> 
+        /// Get the method name of the calling method 
+        /// </summary> 
+        /// <param name="index">How deep into the strack trace to look - here we want the caller's caller.</param> 
+        /// <returns>The name of the declaring method</returns> 
+        [MethodImpl(MethodImplOptions.NoInlining)] 
+        public static string GetCurrentMethodName(int index = 1)
+        { 
+            StackTrace st = new StackTrace(); 
+            StackFrame sf = st.GetFrame(index); 
+ 
 
+            return sf.GetMethod().Name; 
+        } 
+ 
+        /// <summary> 
+        /// Get the typename of the callling class 
+        /// </summary> 
+        /// <param name="index">How deep into the strack trace to look - here we want the caller's caller.</param> 
+        /// <returns>The name of the declaring type</returns> 
+        [MethodImpl(MethodImplOptions.NoInlining)] 
+        public static string GetCallingClass(int index = 1)
+        { 
+            StackTrace st = new StackTrace(); 
+            StackFrame sf = st.GetFrame(index); 
+ 
+
+            return sf.GetMethod().ReflectedType.ToString(); 
+        } 
+#endif  
         /// <summary>
         /// Break up the connection string into key-value pairs
         /// </summary>

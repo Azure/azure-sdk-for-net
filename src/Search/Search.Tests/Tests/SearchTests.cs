@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
@@ -509,6 +510,127 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc2, response.Results[0].Document);
         }
 
+        protected void TestCanRoundTripNonNullableValueTypes()
+        {
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = new Index()
+            {
+                Name = TestUtilities.GenerateName(),
+                Fields = new[]
+                {
+                    new Field("Key", DataType.String) { IsKey = true },
+                    new Field("Rating", DataType.Int32),
+                    new Field("Count", DataType.Int64),
+                    new Field("IsEnabled", DataType.Boolean),
+                    new Field("Ratio", DataType.Double),
+                    new Field("StartDate", DataType.DateTimeOffset),
+                    new Field("EndDate", DataType.DateTimeOffset)
+                }
+            };
+
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+            DateTimeOffset startDate = new DateTimeOffset(2015, 11, 24, 14, 01, 00, TimeSpan.FromHours(-8));
+            DateTime endDate = startDate.UtcDateTime + TimeSpan.FromDays(15);
+
+            var doc1 = new NonNullableModel() 
+            { 
+                Key = "123", 
+                Count = 3, 
+                EndDate = endDate, 
+                IsEnabled = true, 
+                Rating = 5, 
+                Ratio = 3.14, 
+                StartDate = startDate
+            };
+
+            var doc2 = new NonNullableModel()
+            {
+                Key = "456",
+                Count = default(long),
+                EndDate = default(DateTime),
+                IsEnabled = default(bool),
+                Rating = default(int),
+                Ratio = default(double),
+                StartDate = default(DateTimeOffset)
+            };
+
+            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+                
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            DocumentSearchResult<NonNullableModel> response = indexClient.Documents.Search<NonNullableModel>("*");
+            
+            Assert.Equal(2, response.Results.Count);
+            Assert.Equal(doc1, response.Results[0].Document);
+            Assert.Equal(doc2, response.Results[1].Document);
+        }
+
+        protected void TestNullCannotBeConvertedToValueType()
+        {
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = new Index()
+            {
+                Name = TestUtilities.GenerateName(),
+                Fields = new[]
+                {
+                    new Field("Key", DataType.String) { IsKey = true },
+                    new Field("IntValue", DataType.Int32)
+                }
+            };
+
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+            var doc = new ModelWithNullableInt()
+            {
+                Key = "123",
+                IntValue = null
+            };
+
+            var batch = IndexBatch.Create(IndexAction.Create(doc));
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            RestException e = Assert.Throws<RestException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
+        }
+
+        protected void TestCanFilterNonNullableType()
+        {
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = new Index()
+            {
+                Name = TestUtilities.GenerateName(),
+                Fields = new[]
+                {
+                    new Field("Key", DataType.String) { IsKey = true },
+                    new Field("IntValue", DataType.Int32) { IsFilterable = true }
+                }
+            };
+
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+            var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
+            var batch = IndexBatch.Create(IndexAction.Create(doc));
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            var parameters = new SearchParameters() { Filter = "IntValue eq 0" };
+            DocumentSearchResult<ModelWithInt> response = indexClient.Documents.Search<ModelWithInt>("*", parameters);
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
+        }
+
         private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)
         {
             int existingDocumentCount = Data.TestDocuments.Length;
@@ -605,6 +727,47 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.Equal(expectedFacets[i].Value, actualFacets[i].Value);
                 Assert.Equal(expectedFacets[i].Count, actualFacets[i].Count);
+            }
+        }
+
+        private class NonNullableModel
+        {
+            public string Key { get; set; }
+
+            public int Rating { get; set; }
+
+            public long Count { get; set; }
+
+            public bool IsEnabled { get; set; }
+
+            public double Ratio { get; set; }
+
+            public DateTimeOffset StartDate { get; set; }
+
+            public DateTime EndDate { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                NonNullableModel other = obj as NonNullableModel;
+
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return
+                    this.Count == other.Count &&
+                    this.EndDate == other.EndDate &&
+                    this.IsEnabled == other.IsEnabled &&
+                    this.Key == other.Key &&
+                    this.Rating == other.Rating &&
+                    this.Ratio == other.Ratio &&
+                    this.StartDate == other.StartDate;
+            }
+
+            public override int GetHashCode()
+            {
+                return (this.Key != null) ? this.Key.GetHashCode() : 0;
             }
         }
     }

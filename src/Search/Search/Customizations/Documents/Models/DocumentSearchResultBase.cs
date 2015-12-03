@@ -47,17 +47,24 @@ namespace Microsoft.Azure.Search.Models
         public IList<TResult> Results { get; internal set; }
 
         /// <summary>
-        /// Gets a continuation token that can be used to fetch the next page of search results from an
-        /// Azure Search index.
+        /// Gets a continuation token that is used to continue fetching search results. This is necessary when Azure
+        /// Search cannot fulfill a search request with a single response.
         /// </summary>
         /// <remarks>
-        /// This property will be null unless you request more results than the page size. This can happen either when
-        /// you do not specify <c cref="SearchParameters.Top">Top</c> and there are more than 50 results (default page
-        /// size is 50), or when you specify a value greater than 1000 for <c cref="SearchParameters.Top">Top</c> and
-        /// there are more than 1000 results (maximum page size is 1000). In either case, you can pass the value of
-        /// this property to the
+        /// <para>
+        /// This property will be null unless Azure Search can't return all the requested documents in a single Search
+        /// response. That can happen for different reasons which are implementation-specific and subject to change.
+        /// Robust clients should always be ready to handle cases where fewer documents than expected are returned and
+        /// a continuation token is included to continue retrieving documents. If this property is not null, you can
+        /// pass its value to the
         /// <c cref="IDocumentsOperations.ContinueSearchWithHttpMessagesAsync(SearchContinuationToken, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, System.Threading.CancellationToken)">ContinueSearchAsync</c>
-        /// method to retrieve the next page of results.
+        /// method to retrieve more search results.
+        /// </para>
+        /// <para>
+        /// Note that this property is not meant to help you implement paging of search results. You can implement
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
+        /// search parameters.
+        /// </para>
         /// </remarks>
         public SearchContinuationToken ContinuationToken { get; internal set; }
     }

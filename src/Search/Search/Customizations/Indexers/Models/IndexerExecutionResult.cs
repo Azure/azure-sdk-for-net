@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the IndexerExecutionResult class.
         /// </summary>
-        public IndexerExecutionResult(IndexerExecutionStatus? status = default(IndexerExecutionStatus?), string errorMessage = default(string), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), IList<ItemError> errors = default(IList<ItemError>), int? itemCount = default(int?), int? failedItemCount = default(int?), string initialTrackingState = default(string), string finalTrackingState = default(string))
+        public IndexerExecutionResult(IndexerExecutionStatus status = default(IndexerExecutionStatus), string errorMessage = default(string), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), IList<ItemError> errors = default(IList<ItemError>), int itemCount = default(int), int failedItemCount = default(int), string initialTrackingState = default(string), string finalTrackingState = default(string))
         {
             Status = status;
             ErrorMessage = errorMessage;
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         /// 'inProgress', 'reset'.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public IndexerExecutionStatus? Status { get; private set; }
+        public IndexerExecutionStatus Status { get; private set; }  // TODO: Note in the Swagger spec that it's non-nullable
 
         /// <summary>
         /// Gets the error message indicating the top-level error, if any.
@@ -70,14 +70,14 @@ namespace Microsoft.Azure.Search.Models
         /// items where indexing was attempted but failed.
         /// </summary>
         [JsonProperty(PropertyName = "itemsProcessed")]
-        public int? ItemCount { get; private set; }
+        public int ItemCount { get; private set; }  // TODO: Note in the Swagger spec that it's non-nullable
 
         /// <summary>
         /// Gets the number of items that failed to be indexed during this
         /// indexer execution.
         /// </summary>
         [JsonProperty(PropertyName = "itemsFailed")]
-        public int? FailedItemCount { get; private set; }
+        public int FailedItemCount { get; private set; }  // TODO: Note in the Swagger spec that it's non-nullable
 
         /// <summary>
         /// Change tracking state with which an indexer execution started.

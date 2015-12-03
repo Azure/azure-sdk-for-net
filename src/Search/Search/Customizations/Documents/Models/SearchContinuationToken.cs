@@ -7,7 +7,8 @@ namespace Microsoft.Azure.Search.Models
     using System;
 
     /// <summary>
-    /// Encapsulates state required to fetch the next page of search results from an Azure Search index.
+    /// Encapsulates state required to continue fetching search results. This is necessary when Azure Search cannot
+    /// fulfill a search request with a single response.
     /// </summary>
     public class SearchContinuationToken
     {

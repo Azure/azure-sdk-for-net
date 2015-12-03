@@ -132,5 +132,23 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestCanSearchWithDateTimeInStaticModel);
         }
+
+        [Fact]
+        public void CanRoundTripNonNullableValueTypes()
+        {
+            Run(TestCanRoundTripNonNullableValueTypes);
+        }
+
+        [Fact]
+        public void NullCannotBeConvertedToValueType()
+        {
+            Run(TestNullCannotBeConvertedToValueType);
+        }
+
+        [Fact]
+        public void CanFilterNonNullableType()
+        {
+            Run(TestCanFilterNonNullableType);
+        }
     }
 }
