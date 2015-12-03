@@ -3453,11 +3453,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -3479,6 +3479,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -4858,11 +4865,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -4884,6 +4891,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -6322,11 +6336,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -6348,6 +6362,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -7974,11 +7995,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -8000,6 +8021,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -9438,11 +9466,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -9464,6 +9492,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -11090,11 +11125,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -11116,6 +11151,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -12554,11 +12596,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -12580,6 +12622,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -14018,11 +14067,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -14044,6 +14093,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -15482,11 +15538,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -15508,6 +15564,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -16946,11 +17009,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -16972,6 +17035,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -18410,11 +18480,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                 }
                                 
-                                JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                 {
-                                    string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                    propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                    string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                    propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                 }
                                 
                                 JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -18436,6 +18506,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string protectionStateInstance = ((string)protectionStateValue);
                                     propertiesInstance.ProtectionState = protectionStateInstance;
+                                }
+                                
+                                JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                    propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                 }
                                 
                                 JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -19922,11 +19999,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                         }
                                         
-                                        JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                        if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                        JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                        if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                         {
-                                            string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                            propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                            string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                            propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                         }
                                         
                                         JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -19948,6 +20025,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStateInstance = ((string)protectionStateValue);
                                             propertiesInstance.ProtectionState = protectionStateInstance;
+                                        }
+                                        
+                                        JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                        if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                            propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                         }
                                         
                                         JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -21372,11 +21456,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                         }
                                         
-                                        JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                        if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                        JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                        if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                         {
-                                            string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                            propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                            string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                            propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                         }
                                         
                                         JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -21398,6 +21482,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStateInstance = ((string)protectionStateValue);
                                             propertiesInstance.ProtectionState = protectionStateInstance;
+                                        }
+                                        
+                                        JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                        if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                            propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                         }
                                         
                                         JToken activeLocationValue = propertiesValue["activeLocation"];
@@ -22793,11 +22884,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.RecoveryFabricFriendlyName = recoveryFabricFriendlyNameInstance;
                                         }
                                         
-                                        JToken recoveryFabricArmIDValue = propertiesValue["recoveryFabricArmID"];
-                                        if (recoveryFabricArmIDValue != null && recoveryFabricArmIDValue.Type != JTokenType.Null)
+                                        JToken recoveryFabricIdValue = propertiesValue["recoveryFabricId"];
+                                        if (recoveryFabricIdValue != null && recoveryFabricIdValue.Type != JTokenType.Null)
                                         {
-                                            string recoveryFabricArmIDInstance = ((string)recoveryFabricArmIDValue);
-                                            propertiesInstance.RecoveryFabricArmID = recoveryFabricArmIDInstance;
+                                            string recoveryFabricIdInstance = ((string)recoveryFabricIdValue);
+                                            propertiesInstance.RecoveryFabricId = recoveryFabricIdInstance;
                                         }
                                         
                                         JToken primaryProtectionContainerFriendlyNameValue = propertiesValue["primaryProtectionContainerFriendlyName"];
@@ -22819,6 +22910,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStateInstance = ((string)protectionStateValue);
                                             propertiesInstance.ProtectionState = protectionStateInstance;
+                                        }
+                                        
+                                        JToken protectionStateDescriptionValue = propertiesValue["protectionStateDescription"];
+                                        if (protectionStateDescriptionValue != null && protectionStateDescriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string protectionStateDescriptionInstance = ((string)protectionStateDescriptionValue);
+                                            propertiesInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
                                         }
                                         
                                         JToken activeLocationValue = propertiesValue["activeLocation"];
