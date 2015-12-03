@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -60,8 +59,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
-        /// Address Resolution Protocol (ARP) table statistic.
+        /// The XXX.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -76,9 +74,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitPeeringArpInfo operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken)
+        public async Task<ExpressRouteOperationResponse> BeginGetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -96,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 tracingParameters.Add("serviceKey", serviceKey);
                 tracingParameters.Add("accessType", accessType);
                 tracingParameters.Add("devicePath", devicePath);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginGetAsync", tracingParameters);
             }
             
             // Construct URL
@@ -118,6 +117,258 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 url = url + "?" + string.Join("&", queryParameters);
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ExpressRouteOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ExpressRouteOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The XXX.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<ExpressRouteOperationStatusResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken)
+        {
+            ExpressRouteManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceKey", serviceKey);
+                tracingParameters.Add("accessType", accessType);
+                tracingParameters.Add("devicePath", devicePath);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationResponse response = await client.DedicatedCircuitPeeringArpInfo.BeginGetAsync(serviceKey, accessType, devicePath, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationStatusResponse result = await client.DedicatedCircuitPeeringArpInfo.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.DedicatedCircuitPeeringArpInfo.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != ExpressRouteOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationId", operationId);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/operation/";
+            url = url + Uri.EscapeDataString(operationId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -173,47 +424,65 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     }
                     
                     // Create Result
-                    DedicatedCircuitPeeringArpInfoGetResponse result = null;
+                    ExpressRouteOperationStatusResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DedicatedCircuitPeeringArpInfoGetResponse();
+                        result = new ExpressRouteOperationStatusResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement dedicatedCircuitPeeringArpInfoElement = responseDoc.Element(XName.Get("DedicatedCircuitPeeringArpInfo", "http://schemas.microsoft.com/windowsazure"));
-                        if (dedicatedCircuitPeeringArpInfoElement != null)
+                        XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationElement != null)
                         {
-                            AzureDedicatedCircuitPeeringArpInfo dedicatedCircuitPeeringArpInfoInstance = new AzureDedicatedCircuitPeeringArpInfo();
-                            result.DedicatedCircuitPeeringArpInfo = dedicatedCircuitPeeringArpInfoInstance;
-                            
-                            XElement ageElement = dedicatedCircuitPeeringArpInfoElement.Element(XName.Get("Age", "http://schemas.microsoft.com/windowsazure"));
-                            if (ageElement != null)
+                            XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
                             {
-                                int ageInstance = int.Parse(ageElement.Value, CultureInfo.InvariantCulture);
-                                dedicatedCircuitPeeringArpInfoInstance.Age = ageInstance;
+                                string idInstance = idElement.Value;
+                                result.Id = idInstance;
                             }
                             
-                            XElement interfaceElement = dedicatedCircuitPeeringArpInfoElement.Element(XName.Get("Interface", "http://schemas.microsoft.com/windowsazure"));
-                            if (interfaceElement != null)
+                            XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
                             {
-                                string interfaceInstance = interfaceElement.Value;
-                                dedicatedCircuitPeeringArpInfoInstance.Interface = interfaceInstance;
+                                ExpressRouteOperationStatus statusInstance = ((ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
                             }
                             
-                            XElement ipAddressElement = dedicatedCircuitPeeringArpInfoElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (ipAddressElement != null)
+                            XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                            if (httpStatusCodeElement != null)
                             {
-                                string ipAddressInstance = ipAddressElement.Value;
-                                dedicatedCircuitPeeringArpInfoInstance.IpAddress = ipAddressInstance;
+                                HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
+                                result.HttpStatusCode = httpStatusCodeInstance;
                             }
                             
-                            XElement macAddressElement = dedicatedCircuitPeeringArpInfoElement.Element(XName.Get("MacAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (macAddressElement != null)
+                            XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                            if (dataElement != null)
                             {
-                                string macAddressInstance = macAddressElement.Value;
-                                dedicatedCircuitPeeringArpInfoInstance.MacAddress = macAddressInstance;
+                                string dataInstance = dataElement.Value;
+                                result.Data = dataInstance;
+                            }
+                            
+                            XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                            if (errorElement != null)
+                            {
+                                ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
+                                result.Error = errorInstance;
+                                
+                                XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    errorInstance.Message = messageInstance;
+                                }
                             }
                         }
                         

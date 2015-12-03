@@ -40,8 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public static partial class DedicatedCircuitPeeringArpInfoOperationsExtensions
     {
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
-        /// Address Resolution Protocol (ARP) table statistic.
+        /// The XXX.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -57,9 +56,71 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitPeeringArpInfo operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DedicatedCircuitPeeringArpInfoGetResponse Get(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
+        public static ExpressRouteOperationResponse BeginGet(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitPeeringArpInfoOperations)s).BeginGetAsync(serviceKey, accessType, devicePath);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The XXX.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringArpInfoOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<ExpressRouteOperationResponse> BeginGetAsync(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
+        {
+            return operations.BeginGetAsync(serviceKey, accessType, devicePath, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The XXX.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringArpInfoOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public or microsoft.
+        /// </param>
+        /// <param name='devicePath'>
+        /// Required. Whether the device is primary or secondary.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse Get(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -69,8 +130,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrieves the
-        /// Address Resolution Protocol (ARP) table statistic.
+        /// The XXX.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -86,11 +146,81 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the device is primary or secondary.
         /// </param>
         /// <returns>
-        /// The Get DedicatedCircuitPeeringArpInfo operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<DedicatedCircuitPeeringArpInfoGetResponse> GetAsync(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
+        public static Task<ExpressRouteOperationStatusResponse> GetAsync(this IDedicatedCircuitPeeringArpInfoOperations operations, string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath)
         {
             return operations.GetAsync(serviceKey, accessType, devicePath, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringArpInfoOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse GetOperationStatus(this IDedicatedCircuitPeeringArpInfoOperations operations, string operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitPeeringArpInfoOperations)s).GetOperationStatusAsync(operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitPeeringArpInfoOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(this IDedicatedCircuitPeeringArpInfoOperations operations, string operationId)
+        {
+            return operations.GetOperationStatusAsync(operationId, CancellationToken.None);
         }
     }
 }
