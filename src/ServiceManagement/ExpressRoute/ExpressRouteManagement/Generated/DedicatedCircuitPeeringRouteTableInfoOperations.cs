@@ -59,7 +59,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrives
+        /// RouteTable.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -223,7 +224,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrives
+        /// RouteTable.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.

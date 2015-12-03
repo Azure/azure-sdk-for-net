@@ -30,7 +30,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public partial interface IDedicatedCircuitPeeringRouteTableInfoOperations
     {
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrives
+        /// RouteTable.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
@@ -51,7 +52,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginGetAsync(string serviceKey, BgpPeeringAccessType accessType, DevicePath devicePath, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get DedicatedCircuitPeeringArpInfo operation retrives ARP Table.
+        /// The Get DedicatedCircuitPeeringRouteTableInfo operation retrives
+        /// RouteTable.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
