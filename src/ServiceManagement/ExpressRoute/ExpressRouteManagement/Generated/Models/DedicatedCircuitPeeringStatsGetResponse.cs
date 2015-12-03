@@ -31,12 +31,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class DedicatedCircuitPeeringStatsGetResponse : AzureOperationResponse
     {
-        private AzureDedicatedCircuitPeeringStats _dedicatedCircuitPeeringStats;
+        private AzureDedicatedCircuitStats _dedicatedCircuitPeeringStats;
         
         /// <summary>
         /// Optional. Stats of the requested dedicated circuit at peering level.
         /// </summary>
-        public AzureDedicatedCircuitPeeringStats DedicatedCircuitPeeringStats
+        public AzureDedicatedCircuitStats DedicatedCircuitPeeringStats
         {
             get { return this._dedicatedCircuitPeeringStats; }
             set { this._dedicatedCircuitPeeringStats = value; }
