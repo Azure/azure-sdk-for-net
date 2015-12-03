@@ -2474,6 +2474,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (customDetailsValue2 != null && customDetailsValue2.Type != JTokenType.Null)
                                 {
                                     string typeName2 = ((string)customDetailsValue2["instanceType"]);
+                                    if (typeName2 == "AsrJobDetails")
+                                    {
+                                        AsrJobDetails asrJobDetailsInstance = new AsrJobDetails();
+                                        
+                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
+                                            asrJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                asrJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = asrJobDetailsInstance;
+                                    }
                                     if (typeName2 == "TestFailoverJobDetails")
                                     {
                                         TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
@@ -2572,21 +2595,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
-                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        JToken instanceTypeValue14 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue14 != null && instanceTypeValue14.Type != JTokenType.Null)
                                         {
-                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
-                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                            string instanceTypeInstance14 = ((string)instanceTypeValue14);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance14;
                                         }
                                         
-                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
-                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        JToken affectedObjectDetailsSequenceElement2 = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement2 != null && affectedObjectDetailsSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            foreach (JProperty property2 in affectedObjectDetailsSequenceElement2)
                                             {
-                                                string affectedObjectDetailsKey = ((string)property.Name);
-                                                string affectedObjectDetailsValue = ((string)property.Value);
-                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                string affectedObjectDetailsKey2 = ((string)property2.Name);
+                                                string affectedObjectDetailsValue2 = ((string)property2.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey2, affectedObjectDetailsValue2);
                                             }
                                         }
                                         propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
@@ -2624,10 +2647,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement)
+                                    foreach (JProperty property3 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property2.Name);
-                                        string tagsValue = ((string)property2.Value);
+                                        string tagsKey = ((string)property3.Name);
+                                        string tagsValue = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -2664,10 +2687,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement2)
+                                foreach (JProperty property4 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property3.Name);
-                                    string tagsValue2 = ((string)property3.Value);
+                                    string tagsKey2 = ((string)property4.Name);
+                                    string tagsValue2 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -4509,6 +4532,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (customDetailsValue2 != null && customDetailsValue2.Type != JTokenType.Null)
                                 {
                                     string typeName2 = ((string)customDetailsValue2["instanceType"]);
+                                    if (typeName2 == "AsrJobDetails")
+                                    {
+                                        AsrJobDetails asrJobDetailsInstance = new AsrJobDetails();
+                                        
+                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
+                                            asrJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                asrJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = asrJobDetailsInstance;
+                                    }
                                     if (typeName2 == "TestFailoverJobDetails")
                                     {
                                         TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
@@ -4607,21 +4653,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
-                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        JToken instanceTypeValue14 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue14 != null && instanceTypeValue14.Type != JTokenType.Null)
                                         {
-                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
-                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                            string instanceTypeInstance14 = ((string)instanceTypeValue14);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance14;
                                         }
                                         
-                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
-                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        JToken affectedObjectDetailsSequenceElement2 = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement2 != null && affectedObjectDetailsSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            foreach (JProperty property2 in affectedObjectDetailsSequenceElement2)
                                             {
-                                                string affectedObjectDetailsKey = ((string)property.Name);
-                                                string affectedObjectDetailsValue = ((string)property.Value);
-                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                string affectedObjectDetailsKey2 = ((string)property2.Name);
+                                                string affectedObjectDetailsValue2 = ((string)property2.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey2, affectedObjectDetailsValue2);
                                             }
                                         }
                                         propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
@@ -4659,10 +4705,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement)
+                                    foreach (JProperty property3 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property2.Name);
-                                        string tagsValue = ((string)property2.Value);
+                                        string tagsKey = ((string)property3.Name);
+                                        string tagsValue = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -4699,10 +4745,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement2)
+                                foreach (JProperty property4 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property3.Name);
-                                    string tagsValue2 = ((string)property3.Value);
+                                    string tagsKey2 = ((string)property4.Name);
+                                    string tagsValue2 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -6599,6 +6645,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (customDetailsValue2 != null && customDetailsValue2.Type != JTokenType.Null)
                                 {
                                     string typeName2 = ((string)customDetailsValue2["instanceType"]);
+                                    if (typeName2 == "AsrJobDetails")
+                                    {
+                                        AsrJobDetails asrJobDetailsInstance = new AsrJobDetails();
+                                        
+                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
+                                            asrJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                asrJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = asrJobDetailsInstance;
+                                    }
                                     if (typeName2 == "TestFailoverJobDetails")
                                     {
                                         TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
@@ -6697,21 +6766,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
-                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        JToken instanceTypeValue14 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue14 != null && instanceTypeValue14.Type != JTokenType.Null)
                                         {
-                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
-                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                            string instanceTypeInstance14 = ((string)instanceTypeValue14);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance14;
                                         }
                                         
-                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
-                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        JToken affectedObjectDetailsSequenceElement2 = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement2 != null && affectedObjectDetailsSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            foreach (JProperty property2 in affectedObjectDetailsSequenceElement2)
                                             {
-                                                string affectedObjectDetailsKey = ((string)property.Name);
-                                                string affectedObjectDetailsValue = ((string)property.Value);
-                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                string affectedObjectDetailsKey2 = ((string)property2.Name);
+                                                string affectedObjectDetailsValue2 = ((string)property2.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey2, affectedObjectDetailsValue2);
                                             }
                                         }
                                         propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
@@ -6749,10 +6818,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement)
+                                    foreach (JProperty property3 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property2.Name);
-                                        string tagsValue = ((string)property2.Value);
+                                        string tagsKey = ((string)property3.Name);
+                                        string tagsValue = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -6789,10 +6858,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement2)
+                                foreach (JProperty property4 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property3.Name);
-                                    string tagsValue2 = ((string)property3.Value);
+                                    string tagsKey2 = ((string)property4.Name);
+                                    string tagsValue2 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -8693,6 +8762,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (customDetailsValue2 != null && customDetailsValue2.Type != JTokenType.Null)
                                 {
                                     string typeName2 = ((string)customDetailsValue2["instanceType"]);
+                                    if (typeName2 == "AsrJobDetails")
+                                    {
+                                        AsrJobDetails asrJobDetailsInstance = new AsrJobDetails();
+                                        
+                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
+                                            asrJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                        }
+                                        
+                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            {
+                                                string affectedObjectDetailsKey = ((string)property.Name);
+                                                string affectedObjectDetailsValue = ((string)property.Value);
+                                                asrJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                            }
+                                        }
+                                        propertiesInstance.CustomDetails = asrJobDetailsInstance;
+                                    }
                                     if (typeName2 == "TestFailoverJobDetails")
                                     {
                                         TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
@@ -8791,21 +8883,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
-                                        if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                        JToken instanceTypeValue14 = customDetailsValue2["instanceType"];
+                                        if (instanceTypeValue14 != null && instanceTypeValue14.Type != JTokenType.Null)
                                         {
-                                            string instanceTypeInstance13 = ((string)instanceTypeValue13);
-                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                            string instanceTypeInstance14 = ((string)instanceTypeValue14);
+                                            testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance14;
                                         }
                                         
-                                        JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
-                                        if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                        JToken affectedObjectDetailsSequenceElement2 = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                        if (affectedObjectDetailsSequenceElement2 != null && affectedObjectDetailsSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                            foreach (JProperty property2 in affectedObjectDetailsSequenceElement2)
                                             {
-                                                string affectedObjectDetailsKey = ((string)property.Name);
-                                                string affectedObjectDetailsValue = ((string)property.Value);
-                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                string affectedObjectDetailsKey2 = ((string)property2.Name);
+                                                string affectedObjectDetailsValue2 = ((string)property2.Value);
+                                                testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey2, affectedObjectDetailsValue2);
                                             }
                                         }
                                         propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
@@ -8843,10 +8935,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement)
+                                    foreach (JProperty property3 in tagsSequenceElement)
                                     {
-                                        string tagsKey = ((string)property2.Name);
-                                        string tagsValue = ((string)property2.Value);
+                                        string tagsKey = ((string)property3.Name);
+                                        string tagsValue = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
@@ -8883,10 +8975,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement2)
+                                foreach (JProperty property4 in tagsSequenceElement2)
                                 {
-                                    string tagsKey2 = ((string)property3.Name);
-                                    string tagsValue2 = ((string)property3.Value);
+                                    string tagsKey2 = ((string)property4.Name);
+                                    string tagsValue2 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
@@ -10831,6 +10923,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         if (customDetailsValue2 != null && customDetailsValue2.Type != JTokenType.Null)
                                         {
                                             string typeName2 = ((string)customDetailsValue2["instanceType"]);
+                                            if (typeName2 == "AsrJobDetails")
+                                            {
+                                                AsrJobDetails asrJobDetailsInstance = new AsrJobDetails();
+                                                
+                                                JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
+                                                if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance13 = ((string)instanceTypeValue13);
+                                                    asrJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                                }
+                                                
+                                                JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                                if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                                    {
+                                                        string affectedObjectDetailsKey = ((string)property.Name);
+                                                        string affectedObjectDetailsValue = ((string)property.Value);
+                                                        asrJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                    }
+                                                }
+                                                propertiesInstance.CustomDetails = asrJobDetailsInstance;
+                                            }
                                             if (typeName2 == "TestFailoverJobDetails")
                                             {
                                                 TestFailoverJobDetails testFailoverJobDetailsInstance = new TestFailoverJobDetails();
@@ -10929,21 +11044,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken instanceTypeValue13 = customDetailsValue2["instanceType"];
-                                                if (instanceTypeValue13 != null && instanceTypeValue13.Type != JTokenType.Null)
+                                                JToken instanceTypeValue14 = customDetailsValue2["instanceType"];
+                                                if (instanceTypeValue14 != null && instanceTypeValue14.Type != JTokenType.Null)
                                                 {
-                                                    string instanceTypeInstance13 = ((string)instanceTypeValue13);
-                                                    testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance13;
+                                                    string instanceTypeInstance14 = ((string)instanceTypeValue14);
+                                                    testFailoverJobDetailsInstance.InstanceType = instanceTypeInstance14;
                                                 }
                                                 
-                                                JToken affectedObjectDetailsSequenceElement = ((JToken)customDetailsValue2["affectedObjectDetails"]);
-                                                if (affectedObjectDetailsSequenceElement != null && affectedObjectDetailsSequenceElement.Type != JTokenType.Null)
+                                                JToken affectedObjectDetailsSequenceElement2 = ((JToken)customDetailsValue2["affectedObjectDetails"]);
+                                                if (affectedObjectDetailsSequenceElement2 != null && affectedObjectDetailsSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property in affectedObjectDetailsSequenceElement)
+                                                    foreach (JProperty property2 in affectedObjectDetailsSequenceElement2)
                                                     {
-                                                        string affectedObjectDetailsKey = ((string)property.Name);
-                                                        string affectedObjectDetailsValue = ((string)property.Value);
-                                                        testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey, affectedObjectDetailsValue);
+                                                        string affectedObjectDetailsKey2 = ((string)property2.Name);
+                                                        string affectedObjectDetailsValue2 = ((string)property2.Value);
+                                                        testFailoverJobDetailsInstance.AffectedObjectDetails.Add(affectedObjectDetailsKey2, affectedObjectDetailsValue2);
                                                     }
                                                 }
                                                 propertiesInstance.CustomDetails = testFailoverJobDetailsInstance;
@@ -10981,10 +11096,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken tagsSequenceElement = ((JToken)propertiesValue["tags"]);
                                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property2 in tagsSequenceElement)
+                                            foreach (JProperty property3 in tagsSequenceElement)
                                             {
-                                                string tagsKey = ((string)property2.Name);
-                                                string tagsValue = ((string)property2.Value);
+                                                string tagsKey = ((string)property3.Name);
+                                                string tagsValue = ((string)property3.Value);
                                                 propertiesInstance.Tags.Add(tagsKey, tagsValue);
                                             }
                                         }
@@ -11021,10 +11136,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JToken tagsSequenceElement2 = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property3 in tagsSequenceElement2)
+                                        foreach (JProperty property4 in tagsSequenceElement2)
                                         {
-                                            string tagsKey2 = ((string)property3.Name);
-                                            string tagsValue2 = ((string)property3.Value);
+                                            string tagsKey2 = ((string)property4.Name);
+                                            string tagsValue2 = ((string)property4.Value);
                                             jobInstance.Tags.Add(tagsKey2, tagsValue2);
                                         }
                                     }
