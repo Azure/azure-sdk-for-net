@@ -54,11 +54,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get DedicatedCircuitStats operation response.
         /// </returns>
-        public static DedicatedCircuitStatsGetResponse Get(this IDedicatedCircuitStatsOperations operations, string serviceKey)
+        public static DedicatedCircuitStatsListResponse List(this IDedicatedCircuitStatsOperations operations, string serviceKey)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDedicatedCircuitStatsOperations)s).GetAsync(serviceKey);
+                return ((IDedicatedCircuitStatsOperations)s).ListAsync(serviceKey);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -78,9 +78,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get DedicatedCircuitStats operation response.
         /// </returns>
-        public static Task<DedicatedCircuitStatsGetResponse> GetAsync(this IDedicatedCircuitStatsOperations operations, string serviceKey)
+        public static Task<DedicatedCircuitStatsListResponse> ListAsync(this IDedicatedCircuitStatsOperations operations, string serviceKey)
         {
-            return operations.GetAsync(serviceKey, CancellationToken.None);
+            return operations.ListAsync(serviceKey, CancellationToken.None);
         }
     }
 }

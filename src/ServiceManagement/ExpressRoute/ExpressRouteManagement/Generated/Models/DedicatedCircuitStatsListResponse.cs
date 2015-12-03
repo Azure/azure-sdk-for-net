@@ -21,28 +21,33 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
-namespace Microsoft.WindowsAzure.Management.ExpressRoute
+namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
-    public partial interface IDedicatedCircuitStatsOperations
+    /// <summary>
+    /// The Get DedicatedCircuitStats operation response.
+    /// </summary>
+    public partial class DedicatedCircuitStatsListResponse : AzureOperationResponse
     {
+        private AzureDedicatedCircuitStats _dedicatedCircuitStats;
+        
         /// <summary>
-        /// The Get Dedicated Circuit Stats operation retrieves the
-        /// bytesin/bytesout of the dedicated circuit on primary/secondary
-        /// devices at circuit level.
+        /// Optional. Stats of the requested dedicated circuit at circuit level.
         /// </summary>
-        /// <param name='serviceKey'>
-        /// The service key representing the circuit.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get DedicatedCircuitStats operation response.
-        /// </returns>
-        Task<DedicatedCircuitStatsListResponse> ListAsync(string serviceKey, CancellationToken cancellationToken);
+        public AzureDedicatedCircuitStats DedicatedCircuitStats
+        {
+            get { return this._dedicatedCircuitStats; }
+            set { this._dedicatedCircuitStats = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DedicatedCircuitStatsListResponse
+        /// class.
+        /// </summary>
+        public DedicatedCircuitStatsListResponse()
+        {
+        }
     }
 }

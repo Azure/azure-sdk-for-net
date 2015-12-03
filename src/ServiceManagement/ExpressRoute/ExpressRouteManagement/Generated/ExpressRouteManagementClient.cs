@@ -169,13 +169,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get { return this._dedicatedCircuitPeeringRouteTableSummary; }
         }
         
-        private IDedicatedCircuitPeeringStatsOperations _dedicatedCircuitPeeringStats;
-        
-        public virtual IDedicatedCircuitPeeringStatsOperations DedicatedCircuitPeeringStats
-        {
-            get { return this._dedicatedCircuitPeeringStats; }
-        }
-        
         private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProviders;
         
         public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
@@ -207,7 +200,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
             this._dedicatedCircuitPeeringRouteTableInfo = new DedicatedCircuitPeeringRouteTableInfoOperations(this);
             this._dedicatedCircuitPeeringRouteTableSummary = new DedicatedCircuitPeeringRouteTableSummaryOperations(this);
-            this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
             this._dedicatedCircuitStats = new DedicatedCircuitStatsOperations(this);
             this._apiVersion = "2011-10-01";
@@ -288,7 +280,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitPeeringArpInfo = new DedicatedCircuitPeeringArpInfoOperations(this);
             this._dedicatedCircuitPeeringRouteTableInfo = new DedicatedCircuitPeeringRouteTableInfoOperations(this);
             this._dedicatedCircuitPeeringRouteTableSummary = new DedicatedCircuitPeeringRouteTableSummaryOperations(this);
-            this._dedicatedCircuitPeeringStats = new DedicatedCircuitPeeringStatsOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
             this._dedicatedCircuitStats = new DedicatedCircuitStatsOperations(this);
             this._apiVersion = "2011-10-01";

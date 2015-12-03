@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get DedicatedCircuitStats operation response.
         /// </returns>
-        public async Task<DedicatedCircuitStatsGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
+        public async Task<DedicatedCircuitStatsListResponse> ListAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceKey", serviceKey);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
@@ -163,13 +163,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     }
                     
                     // Create Result
-                    DedicatedCircuitStatsGetResponse result = null;
+                    DedicatedCircuitStatsListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DedicatedCircuitStatsGetResponse();
+                        result = new DedicatedCircuitStatsListResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
                         XElement dedicatedCircuitStatsElement = responseDoc.Element(XName.Get("DedicatedCircuitStats", "http://schemas.microsoft.com/windowsazure"));
