@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
+                httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
