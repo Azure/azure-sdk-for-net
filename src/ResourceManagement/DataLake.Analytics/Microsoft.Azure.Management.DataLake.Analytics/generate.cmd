@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.12.0-Nightly20151022
+set autoRestVersion=0.13.0-Nightly20151202
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 :: TODO: Uncomment these and remove the local ones once they are checked in.
