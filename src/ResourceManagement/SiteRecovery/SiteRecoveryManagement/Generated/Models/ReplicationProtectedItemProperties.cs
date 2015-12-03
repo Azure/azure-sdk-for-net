@@ -189,6 +189,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._protectionState = value; }
         }
         
+        private string _protectionStateDescription;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection state description.
+        /// </summary>
+        public string ProtectionStateDescription
+        {
+            get { return this._protectionStateDescription; }
+            set { this._protectionStateDescription = value; }
+        }
+        
         private ReplicationProviderSpecificSettings _providerSpecificDetails;
         
         /// <summary>
@@ -200,17 +211,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._providerSpecificDetails = value; }
         }
         
-        private string _recoveryFabricArmID;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Arm ID of recovery fabric.
-        /// </summary>
-        public string RecoveryFabricArmID
-        {
-            get { return this._recoveryFabricArmID; }
-            set { this._recoveryFabricArmID = value; }
-        }
-        
         private string _recoveryFabricFriendlyName;
         
         /// <summary>
@@ -220,6 +220,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._recoveryFabricFriendlyName; }
             set { this._recoveryFabricFriendlyName = value; }
+        }
+        
+        private string _recoveryFabricId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Arm Id of recovery fabric.
+        /// </summary>
+        public string RecoveryFabricId
+        {
+            get { return this._recoveryFabricId; }
+            set { this._recoveryFabricId = value; }
         }
         
         private string _recoveryProtectionContainerFriendlyName;
