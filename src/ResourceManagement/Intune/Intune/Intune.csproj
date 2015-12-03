@@ -60,14 +60,6 @@
     </When>
   </Choose>
   <ItemGroup>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
-      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
       <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.2.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
