@@ -17,29 +17,25 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Request routing rule of application gateway
+    /// Path rule of URL path map of application gateway
     /// </summary>
-    public partial class ApplicationGatewayRequestRoutingRule : SubResource
+    public partial class ApplicationGatewayPathRule : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ApplicationGatewayRequestRoutingRule class.
+        /// Initializes a new instance of the ApplicationGatewayPathRule class.
         /// </summary>
-        public ApplicationGatewayRequestRoutingRule() { }
+        public ApplicationGatewayPathRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ApplicationGatewayRequestRoutingRule class.
+        /// Initializes a new instance of the ApplicationGatewayPathRule class.
         /// </summary>
-        public ApplicationGatewayRequestRoutingRule(string name = default(string), string etag = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayPathRule(string name = default(string), string etag = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
-            RuleType = ruleType;
+            Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
-            HttpListener = httpListener;
-            UrlPathMap = urlPathMap;
             ProvisioningState = provisioningState;
         }
 
@@ -58,39 +54,26 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the rule type. Possible values for this property
-        /// include: 'Basic', 'PathBasedRouting'.
+        /// Gets or sets the path rules of URL path map
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ruleType")]
-        public string RuleType { get; set; }
+        [JsonProperty(PropertyName = "properties.paths")]
+        public IList<string> Paths { get; set; }
 
         /// <summary>
-        /// Gets or sets backend address pool resource of application gateway
+        /// Gets or sets backend address pool resource of URL path map
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets frontend port resource of application gateway
+        /// Gets or sets backend http settings resource of URL path map
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettings")]
         public SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets http listener resource of application gateway
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.httpListener")]
-        public SubResource HttpListener { get; set; }
-
-        /// <summary>
-        /// Gets or sets url path map resource of application gateway
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.urlPathMap")]
-        public SubResource UrlPathMap { get; set; }
-
-        /// <summary>
-        /// Gets or sets Provisioning state of the request routing rule
-        /// resource Updating/Deleting/Failed
+        /// Gets or sets path rule of URL path map resource
+        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

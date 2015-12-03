@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationGateway class.
         /// </summary>
-        public ApplicationGateway(string etag = default(string), ApplicationGatewaySku sku = default(ApplicationGatewaySku), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), string resourceGuid = default(string), string provisioningState = default(string))
+        public ApplicationGateway(string etag = default(string), ApplicationGatewaySku sku = default(ApplicationGatewaySku), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             Sku = sku;
@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendAddressPools = backendAddressPools;
             BackendHttpSettingsCollection = backendHttpSettingsCollection;
             HttpListeners = httpListeners;
+            UrlPathMaps = urlPathMaps;
             RequestRoutingRules = requestRoutingRules;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -115,6 +116,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpListeners")]
         public IList<ApplicationGatewayHttpListener> HttpListeners { get; set; }
+
+        /// <summary>
+        /// Gets or sets URL path map of application gateway resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.urlPathMaps")]
+        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; set; }
 
         /// <summary>
         /// Gets or sets request routing rules of application gateway resource

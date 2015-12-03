@@ -48,21 +48,34 @@ namespace Networks.Tests
             return sslCert;
         }
 
-        private ApplicationGateway CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string subscriptionId)
+        private ApplicationGateway CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId)
         {
-            var appGwName = TestUtilities.GenerateName();
             var gatewayIPConfigName = TestUtilities.GenerateName();
             var frontendIPConfigName = TestUtilities.GenerateName();
-            var frontendPortName = TestUtilities.GenerateName();
+            var frontendPort1Name = TestUtilities.GenerateName();
+            var frontendPort2Name = TestUtilities.GenerateName();            
             var backendAddressPoolName = TestUtilities.GenerateName();
-            var backendHttpSettingsName = TestUtilities.GenerateName();
-            var requestRoutingRuleName = TestUtilities.GenerateName();
-            var httpListenerName = TestUtilities.GenerateName();
+            var backendHttpSettings1Name = TestUtilities.GenerateName();
+            var backendHttpSettings2Name = TestUtilities.GenerateName();
+            var requestRoutingRule1Name = TestUtilities.GenerateName();
+            var requestRoutingRule2Name = TestUtilities.GenerateName();
+            var httpListener1Name = TestUtilities.GenerateName();
+            var httpListener2Name = TestUtilities.GenerateName();            
             var probeName = TestUtilities.GenerateName();
+            var sslCertName = TestUtilities.GenerateName();
+            var password = "1234";
+            ApplicationGatewaySslCertificate sslCert = CreateSslCertificate(sslCertName, password);
+
+            //var httpListenerMultiHostingName = TestUtilities.GenerateName();
+            //var frontendPortMultiHostingName = TestUtilities.GenerateName();
+            //var urlPathMapName = TestUtilities.GenerateName();
+            //var imagePathRuleName = TestUtilities.GenerateName();
+            //var videoPathRuleName = TestUtilities.GenerateName();
+            //var requestRoutingRuleMultiHostingName = TestUtilities.GenerateName();
 
             var appGw = new ApplicationGateway()
             {
-                Location = location,
+                Location = location,                
                 Sku = new ApplicationGatewaySku()
                     {
                         Name = ApplicationGatewaySkuName.StandardSmall,
@@ -79,7 +92,11 @@ namespace Networks.Tests
                                 Id = subnet.Id
                             }
                         }
-                    },            
+                    },
+                SslCertificates = new List<ApplicationGatewaySslCertificate>()
+                    {
+                        sslCert
+                    },
                 FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
                     { 
                         new ApplicationGatewayFrontendIPConfiguration()
@@ -96,9 +113,19 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayFrontendPort()
                         {
-                            Name = frontendPortName,
+                            Name = frontendPort1Name,
                             Port = 80
-                        }
+                        },
+                        new ApplicationGatewayFrontendPort()
+                        {
+                            Name = frontendPort2Name,
+                            Port = 443
+                        },
+                        //new ApplicationGatewayFrontendPort()
+                        //{
+                        //    Name = frontendPortMultiHostingName,
+                        //    Port = 8080
+                        //}
                     },
                 Probes = new List<ApplicationGatewayProbe>
                     {
@@ -135,7 +162,7 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayBackendHttpSettings()
                         {
-                            Name = backendHttpSettingsName,
+                            Name = backendHttpSettings1Name,
                             Port = 80,
                             Protocol = ApplicationGatewayProtocol.Http,
                             CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
@@ -145,17 +172,24 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "probes", probeName)
                             }
+                        },
+                        new ApplicationGatewayBackendHttpSettings()
+                        {
+                            Name = backendHttpSettings2Name,
+                            Port = 80,
+                            Protocol = ApplicationGatewayProtocol.Http,
+                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,                            
                         }
                     },
                 HttpListeners = new List<ApplicationGatewayHttpListener>
                     {
                         new ApplicationGatewayHttpListener()
                         {
-                            Name = httpListenerName,
+                            Name = httpListener1Name,
                             FrontendPort = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "frontendPorts", frontendPortName)
+                                    resourceGroupName, appGwName, "frontendPorts", frontendPort1Name)
                             },
                             FrontendIPConfiguration = new SubResource()
                             {
@@ -164,18 +198,104 @@ namespace Networks.Tests
                             },
                             SslCertificate = null,
                             Protocol = ApplicationGatewayProtocol.Http
-                        }
+                        },
+                        new ApplicationGatewayHttpListener()
+                        {
+                            Name = httpListener2Name,
+                            FrontendPort = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "frontendPorts", frontendPort2Name)
+                            },
+                            FrontendIPConfiguration = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
+                            },
+                            SslCertificate = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "sslCertificates", sslCertName)
+                            },
+                            Protocol = ApplicationGatewayProtocol.Https                            
+                        },                        
+                        //new ApplicationGatewayHttpListener()
+                        //{
+                        //    Name = httpListenerMultiHostingName,
+                        //    FrontendPort = new SubResource()
+                        //    {
+                        //        Id = GetChildAppGwResourceId(subscriptionId,
+                        //            resourceGroupName, appGwName, "frontendPorts", frontendPortMultiHostingName)
+                        //    },
+                        //    FrontendIPConfiguration = new SubResource()
+                        //    {
+                        //        Id = GetChildAppGwResourceId(subscriptionId,
+                        //            resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
+                        //    },
+                        //    SslCertificate = null,
+                        //    Protocol = ApplicationGatewayProtocol.Http
+                        //}
                     },
+                //UrlPathMaps = new List<ApplicationGatewayUrlPathMap>()
+                //    {
+                //        new ApplicationGatewayUrlPathMap()
+                //        {
+                //            Name = urlPathMapName,
+                //            DefaultBackendAddressPool = new SubResource()
+                //            {
+                //                Id = GetChildAppGwResourceId(subscriptionId,
+                //                    resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
+                //            },
+                //            DefaultBackendHttpSettings = new SubResource()
+                //            {
+                //                Id = GetChildAppGwResourceId(subscriptionId,
+                //                    resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
+                //            },
+                //            PathRules = new List<ApplicationGatewayPathRule>()
+                //            {
+                //                new ApplicationGatewayPathRule()
+                //                {
+                //                    Name = imagePathRuleName,
+                //                    Paths = new List<string>() { "/images*" },
+                //                    BackendAddressPool = new SubResource()
+                //                    {
+                //                        Id = GetChildAppGwResourceId(subscriptionId,
+                //                        resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
+                //                    },
+                //                    BackendHttpSettings = new SubResource()
+                //                    {
+                //                        Id = GetChildAppGwResourceId(subscriptionId,
+                //                        resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
+                //                    }
+                //                },
+                //                new ApplicationGatewayPathRule()
+                //                {
+                //                    Name = videoPathRuleName,
+                //                    Paths = new List<string>() { "/videos*" },
+                //                    BackendAddressPool = new SubResource()
+                //                    {
+                //                        Id = GetChildAppGwResourceId(subscriptionId,
+                //                        resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
+                //                    },
+                //                    BackendHttpSettings = new SubResource()
+                //                    {
+                //                        Id = GetChildAppGwResourceId(subscriptionId,
+                //                        resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    },                
                 RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
                     {
                         new ApplicationGatewayRequestRoutingRule()
                         {
-                            Name = requestRoutingRuleName,
+                            Name = requestRoutingRule1Name,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
                             HttpListener = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "httpListeners", httpListenerName)
+                                    resourceGroupName, appGwName, "httpListeners", httpListener1Name)
                             },
                             BackendAddressPool = new SubResource()
                             {
@@ -185,9 +305,44 @@ namespace Networks.Tests
                             BackendHttpSettings = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
+                                    resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings1Name)
                             }
-                        }
+                        },
+                        new ApplicationGatewayRequestRoutingRule()
+                        {
+                            Name = requestRoutingRule2Name,
+                            RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
+                            HttpListener = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "httpListeners", httpListener2Name)
+                            },
+                            BackendAddressPool = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
+                            },
+                            BackendHttpSettings = new SubResource()
+                            {
+                                Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings2Name)
+                            }
+                        },
+                        //new ApplicationGatewayRequestRoutingRule()
+                        //{
+                        //    Name = requestRoutingRuleMultiHostingName,
+                        //    RuleType = ApplicationGatewayRequestRoutingRuleType.PathBasedRouting,
+                        //    HttpListener = new SubResource()
+                        //    {
+                        //        Id = GetChildAppGwResourceId(subscriptionId,
+                        //            resourceGroupName, appGwName, "httpListeners", httpListenerMultiHostingName)
+                        //    },
+                        //    UrlPathMap = new SubResource()
+                        //    {
+                        //        Id = GetChildAppGwResourceId(subscriptionId,
+                        //            resourceGroupName, appGwName, "urlPathMaps", urlPathMapName)
+                        //    }
+                        //}
                     }
             };
             return appGw;
@@ -331,21 +486,18 @@ namespace Networks.Tests
 
         private void CompareApplicationGateway(ApplicationGateway gw1, ApplicationGateway gw2)
         {
-
-            Assert.Equal(gw1.Name, gw2.Name);
             Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
             Assert.Equal(gw1.Sku.Tier, gw2.Sku.Tier);
             Assert.Equal(gw1.Sku.Capacity, gw2.Sku.Capacity);
-            //Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
-            //Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
+            Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
+            Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
             Assert.Equal(gw1.Probes.Count, gw2.Probes.Count);
             Assert.Equal(gw1.SslCertificates.Count, gw2.SslCertificates.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
-            Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
-            //Assert.Equal(gw1.ResourceGuid, gw2.ResourceGuid);
+            Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
         }
 
         [Fact]
@@ -370,31 +522,33 @@ namespace Networks.Tests
                     });
 
                 var vnetName = TestUtilities.GenerateName();
-                var subnetName = TestUtilities.GenerateName();                
+                var subnetName = TestUtilities.GenerateName();
+                var appGwName = TestUtilities.GenerateName();
 
                 var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
                 var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
                 Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
                 var subnet = getSubnetResponse;
 
-                var appGw = CreateApplicationGateway(location, subnet, resourceGroupName, networkManagementClient.SubscriptionId);     
+                var appGw = CreateApplicationGateway(location, subnet, resourceGroupName, appGwName, networkManagementClient.SubscriptionId);     
 
                 // Put AppGw                
-                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw.Name, appGw);                
+                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
                 Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
                 
                 // Get AppGw
-                var getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGw.Name);
+                var getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
+                Assert.Equal(appGwName, getResp.Name);
                 CompareApplicationGateway(appGw, getResp);
 
                 //Start AppGw
-                networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);
+                networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGwName);
                 
                 //Stop AppGw
-                networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGw.Name);
+                networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGwName);
                 
                 // Delete AppGw
-                networkManagementClient.ApplicationGateways.Delete(resourceGroupName, appGw.Name);
+                networkManagementClient.ApplicationGateways.Delete(resourceGroupName, appGwName);
             }
         }        
     }

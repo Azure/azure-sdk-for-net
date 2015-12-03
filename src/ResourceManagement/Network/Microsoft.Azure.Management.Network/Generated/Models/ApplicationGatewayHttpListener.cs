@@ -31,14 +31,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayHttpListener
         /// class.
         /// </summary>
-        public ApplicationGatewayHttpListener(string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), SubResource sslCertificate = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayHttpListener(string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), string requireServerNameIndication = default(string), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;
             Protocol = protocol;
+            HostName = hostName;
             SslCertificate = sslCertificate;
+            RequireServerNameIndication = requireServerNameIndication;
             ProvisioningState = provisioningState;
         }
 
@@ -77,10 +79,22 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Protocol { get; set; }
 
         /// <summary>
+        /// Gets or sets the host name of http listener
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostName")]
+        public string HostName { get; set; }
+
+        /// <summary>
         /// Gets or sets ssl certificate resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslCertificate")]
         public SubResource SslCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the requireServerNameIndication of http listener
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requireServerNameIndication")]
+        public string RequireServerNameIndication { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the http listener resource
