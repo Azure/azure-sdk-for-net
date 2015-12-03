@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.HDInsight
             return createParamsExtended;
         }
 
-        private static Dictionary<string, Dictionary<string, string>> GetMetastoreConfig(Metastore metastore,
+        internal static Dictionary<string, Dictionary<string, string>> GetMetastoreConfig(Metastore metastore,
             OSType osType, string metastoreType)
         {
             var server = "";
@@ -200,8 +200,8 @@ namespace Microsoft.Azure.Management.HDInsight
                         {"hive_database_name", metastore.Database},
                         {"hive_database_type", "mssql"},
                         {"hive_existing_mssql_server_database", metastore.Database},
-                        {"hive_existing_mssql_server_host", string.Format("{0}.database.windows.net)", server)},
-                        {"hive_hostname", string.Format("{0}.database.windows.net)", server)}
+                        {"hive_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
+                        {"hive_hostname", string.Format("{0}.database.windows.net", server)}
                     });
             }
             else
@@ -223,13 +223,11 @@ namespace Microsoft.Azure.Management.HDInsight
                 configurations.Add(ConfigurationKey.OozieEnv, new Dictionary<string, string>
                 {
                     {"oozie_database", "Existing MSSQL Server database with SQL authentication"},
+                    {"oozie_database_name", metastore.Database},
                     {"oozie_database_type", "mssql"},
                     {"oozie_existing_mssql_server_database", metastore.Database},
-                    {
-                        "oozie_existing_mssql_server_host",
-                        string.Format("{0}.database.windows.net)", server)
-                    },
-                    {"oozie_hostname", string.Format("{0}.database.windows.net)", server)}
+                    {"oozie_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
+                    {"oozie_hostname", string.Format("{0}.database.windows.net", server)}
                 });
             }
             return configurations;
