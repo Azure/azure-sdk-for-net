@@ -33,4 +33,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.8.0")]
+[assembly: AssemblyFileVersion("1.0.9.0")]
+
+[assembly:InternalsVisibleTo("HDInsight.Tests")]
