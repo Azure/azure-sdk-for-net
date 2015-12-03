@@ -181,7 +181,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         XElement dedicatedCircuitPeeringStatsElement = responseDoc.Element(XName.Get("DedicatedCircuitPeeringStats", "http://schemas.microsoft.com/windowsazure"));
                         if (dedicatedCircuitPeeringStatsElement != null)
                         {
-                            AzureDedicatedCircuitPeeringStats dedicatedCircuitPeeringStatsInstance = new AzureDedicatedCircuitPeeringStats();
+                            AzureDedicatedCircuitStats dedicatedCircuitPeeringStatsInstance = new AzureDedicatedCircuitStats();
                             result.DedicatedCircuitPeeringStats = dedicatedCircuitPeeringStatsInstance;
                             
                             XElement primaryBytesInElement = dedicatedCircuitPeeringStatsElement.Element(XName.Get("PrimaryBytesIn", "http://schemas.microsoft.com/windowsazure"));
