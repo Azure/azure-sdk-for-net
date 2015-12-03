@@ -9122,17 +9122,22 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/replicationJobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.StartTime != null)
             {
-                queryParameters.Add("StartTime=" + Uri.EscapeDataString(parameters.StartTime));
+                odataFilter.Add("StartTime eq '" + Uri.EscapeDataString(parameters.StartTime) + "'");
             }
             if (parameters != null && parameters.EndTime != null)
             {
-                queryParameters.Add("EndTime=" + Uri.EscapeDataString(parameters.EndTime));
+                odataFilter.Add("EndTime eq '" + Uri.EscapeDataString(parameters.EndTime) + "'");
             }
             if (parameters != null && parameters.FabricId != null)
             {
-                queryParameters.Add("FabricId=" + Uri.EscapeDataString(parameters.FabricId));
+                odataFilter.Add("FabricId eq '" + Uri.EscapeDataString(parameters.FabricId) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (queryParameters.Count > 0)
             {
