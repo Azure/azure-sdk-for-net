@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the list of recovery azure vm sizes.
     /// </summary>
-    public partial class TargetComputeSizeResponse : AzureOperationResponse, IEnumerable<TargetComputeSize>
+    public partial class TargetComputeSizeResponse : OperationCommonResponse
     {
         private IList<TargetComputeSize> _targetComputeSizes;
         
@@ -51,22 +50,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public TargetComputeSizeResponse()
         {
             this.TargetComputeSizes = new LazyList<TargetComputeSize>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of TargetComputeSizes.
-        /// </summary>
-        public IEnumerator<TargetComputeSize> GetEnumerator()
-        {
-            return this.TargetComputeSizes.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of TargetComputeSizes.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

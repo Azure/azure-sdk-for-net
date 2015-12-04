@@ -1073,10 +1073,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     vCenterInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1356,6 +1400,34 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string cultureInstance = ((string)cultureValue);
                                 result.Culture = cultureInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
@@ -1543,6 +1615,34 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 string cultureInstance = ((string)cultureValue);
                                 result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
                             }
                         }
                         
@@ -1850,6 +1950,34 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 string cultureInstance = ((string)cultureValue);
                                 result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
                             }
                         }
                         
@@ -2170,10 +2298,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -2455,10 +2627,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();

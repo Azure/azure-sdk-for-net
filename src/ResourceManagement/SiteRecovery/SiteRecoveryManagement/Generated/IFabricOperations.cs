@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<FabricOperationResponse> GetRenewCertificateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.

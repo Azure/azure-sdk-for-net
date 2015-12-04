@@ -944,6 +944,34 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                     propertiesInstance.ResourceId = resourceIdInstance;
                                 }
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }

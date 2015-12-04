@@ -809,7 +809,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -831,7 +831,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -29,7 +28,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// Model class for alerts response.
     /// </summary>
-    public partial class AlertSettingsResponse : AzureOperationResponse
+    public partial class AlertSettingsResponse : OperationCommonResponse
     {
         private AlertSettings _alert;
         

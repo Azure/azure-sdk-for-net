@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -29,7 +28,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for recovery point object.
     /// </summary>
-    public partial class RecoveryPointResponse : AzureOperationResponse
+    public partial class RecoveryPointResponse : OperationCommonResponse
     {
         private RecoveryPoint _recoveryPoint;
         

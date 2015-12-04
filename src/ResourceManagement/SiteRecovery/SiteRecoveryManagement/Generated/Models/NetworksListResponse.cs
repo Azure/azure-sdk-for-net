@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the list of Networks.
     /// </summary>
-    public partial class NetworksListResponse : AzureOperationResponse
+    public partial class NetworksListResponse : OperationCommonResponse
     {
         private IList<Network> _networksList;
         

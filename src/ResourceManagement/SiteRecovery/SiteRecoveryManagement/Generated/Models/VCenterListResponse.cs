@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the list vCenters operation.
     /// </summary>
-    public partial class VCenterListResponse : AzureOperationResponse
+    public partial class VCenterListResponse : OperationCommonResponse
     {
         private string _nextLink;
         

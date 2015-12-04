@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// Model class for list alerts response.
     /// </summary>
-    public partial class AlertSettingsListResponse : AzureOperationResponse
+    public partial class AlertSettingsListResponse : OperationCommonResponse
     {
         private IList<AlertSettings> _alerts;
         

@@ -22,13 +22,14 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// A standard service response for long running operations.
     /// </summary>
-    public partial class LongRunningOperationResponse : AzureOperationResponse
+    public partial class LongRunningOperationResponse : OperationCommonResponse
     {
         private string _asyncOperation;
         

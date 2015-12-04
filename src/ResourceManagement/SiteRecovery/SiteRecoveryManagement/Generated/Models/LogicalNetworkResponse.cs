@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -29,7 +28,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the Logical Network object.
     /// </summary>
-    public partial class LogicalNetworkResponse : AzureOperationResponse
+    public partial class LogicalNetworkResponse : OperationCommonResponse
     {
         private LogicalNetwork _logicalNetwork;
         
