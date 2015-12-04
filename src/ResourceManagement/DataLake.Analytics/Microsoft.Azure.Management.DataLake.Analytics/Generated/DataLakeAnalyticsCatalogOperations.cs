@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -131,10 +130,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -339,10 +338,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -538,10 +537,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -733,10 +732,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -902,10 +901,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/externaldatasources/{externalDataSourceName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1090,9 +1089,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/externaldatasources").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1285,10 +1284,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/credentials/{credentialName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1473,9 +1472,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/credentials").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1676,11 +1675,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures/{procedureName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{procedureName}", Uri.EscapeDataString(procedureName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1873,10 +1872,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2076,11 +2075,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2272,10 +2271,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2475,11 +2474,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views/{viewName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{viewName}", Uri.EscapeDataString(viewName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2671,10 +2670,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2882,12 +2881,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics/{statisticsName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
             url = url.Replace("{statisticsName}", Uri.EscapeDataString(statisticsName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3087,11 +3086,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3231,17 +3230,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all catalog type items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all catalog type items.
-        /// </param>
-        /// <param name='orderby'>
-        /// Query parameters. If null is passed returns all catalog type items.
         /// </param>
         /// <param name='select'>
         /// Query parameters. If null is passed returns all catalog type items.
@@ -3252,7 +3242,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Expression<Func<USqlType, bool>> filter = default(Expression<Func<USqlType, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3292,10 +3282,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("orderby", orderby);
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3304,26 +3291,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/types").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
@@ -3528,11 +3507,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions/{tableValuedFunctionName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableValuedFunctionName}", Uri.EscapeDataString(tableValuedFunctionName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3725,10 +3704,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3921,10 +3900,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/assemblies/{assemblyName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{assemblyName}", Uri.EscapeDataString(assemblyName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4109,9 +4088,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/assemblies").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4303,10 +4282,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4490,9 +4469,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4677,9 +4656,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4856,8 +4835,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -599,22 +599,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='accountName'>
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -626,9 +614,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='format'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
-            public static IPage<StorageAccount> ListStorageAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, Expression<Func<StorageAccount, bool>> filter = default(Expression<Func<StorageAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<StorageAccount> ListStorageAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListStorageAccountsAsync(resourceGroupName, accountName, filter, top, skip, expand, select, orderby, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListStorageAccountsAsync(resourceGroupName, accountName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -645,22 +633,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='accountName'>
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -675,9 +651,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageAccount>> ListStorageAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, Expression<Func<StorageAccount, bool>> filter = default(Expression<Func<StorageAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageAccount>> ListStorageAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, filter, top, skip, expand, select, orderby, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -696,22 +672,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Data Lake Store
             /// accounts for.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -723,9 +687,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='format'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
-            public static IPage<DataLakeStoreAccount> ListDataLakeStoreAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, Expression<Func<DataLakeStoreAccount, bool>> filter = default(Expression<Func<DataLakeStoreAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<DataLakeStoreAccount> ListDataLakeStoreAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListDataLakeStoreAccountsAsync(resourceGroupName, accountName, filter, top, skip, expand, select, orderby, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListDataLakeStoreAccountsAsync(resourceGroupName, accountName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -743,22 +707,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Data Lake Store
             /// accounts for.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -773,9 +725,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, Expression<Func<DataLakeStoreAccount, bool>> filter = default(Expression<Func<DataLakeStoreAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, filter, top, skip, expand, select, orderby, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -790,22 +742,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -817,9 +757,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='format'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
-            public static IPage<DataLakeAnalyticsAccount> List(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, Expression<Func<DataLakeAnalyticsAccount, bool>> filter = default(Expression<Func<DataLakeAnalyticsAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<DataLakeAnalyticsAccount> List(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListAsync(resourceGroupName, filter, top, skip, expand, select, orderby, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).ListAsync(resourceGroupName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -833,22 +773,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
             /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='expand'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
-            /// </param>
-            /// <param name='orderby'>
             /// Query parameters. If null is passed returns all account items.
             /// </param>
             /// <param name='count'>
@@ -863,9 +791,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeAnalyticsAccount>> ListAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, Expression<Func<DataLakeAnalyticsAccount, bool>> filter = default(Expression<Func<DataLakeAnalyticsAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeAnalyticsAccount>> ListAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeAnalyticsAccount>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, top, skip, expand, select, orderby, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<DataLakeAnalyticsAccount>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1002,9 +930,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
             /// </param>
-            public static void Create(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount Create(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1027,9 +955,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> CreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>
@@ -1049,9 +978,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
             /// </param>
-            public static void BeginCreate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount BeginCreate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1074,9 +1003,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginCreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>
@@ -1095,54 +1025,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
-            public static void Update(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount Update(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Data Lake Analytics account object specified by the
-            /// accountName with the contents of the account object.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Updates the Data Lake Analytics account object specified by the
-            /// accountName with the contents of the account object.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
-            /// </param>
-            public static void BeginUpdate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
-            {
-                Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1164,9 +1049,56 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> UpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Updates the Data Lake Analytics account object specified by the
+            /// accountName with the contents of the account object.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// </param>
+            public static DataLakeAnalyticsAccount BeginUpdate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            {
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Data Lake Analytics account object specified by the
+            /// accountName with the contents of the account object.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>

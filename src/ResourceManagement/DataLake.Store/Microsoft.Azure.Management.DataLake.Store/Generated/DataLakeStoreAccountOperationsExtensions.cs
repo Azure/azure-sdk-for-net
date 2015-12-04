@@ -250,9 +250,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Store account operation.
             /// </param>
-            public static void Create(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount Create(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -273,9 +273,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> CreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeStoreAccount> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>
@@ -293,9 +294,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Store account operation.
             /// </param>
-            public static void BeginCreate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount BeginCreate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -316,9 +317,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginCreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> BeginCreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeStoreAccount> result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>
@@ -337,54 +339,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Store account operation.
             /// </param>
-            public static void Update(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount Update(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Store account operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Store account operation.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
-            /// </param>
-            public static void BeginUpdate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
-            {
-                Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -406,9 +363,56 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> UpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DataLakeStoreAccount> result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Updates the Data Lake Store account object specified by the account name
+            /// with the contents of the account object.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the update Data Lake Store account operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the update Data Lake Store account operation.
+            /// </param>
+            public static DataLakeStoreAccount BeginUpdate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            {
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Data Lake Store account object specified by the account name
+            /// with the contents of the account object.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// Parameters supplied to the update Data Lake Store account operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the update Data Lake Store account operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataLakeStoreAccount> BeginUpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<DataLakeStoreAccount> result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
             }
 
             /// <summary>

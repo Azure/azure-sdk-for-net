@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -890,24 +890,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
-            /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all catalog type items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all catalog type items.
-            /// </param>
-            /// <param name='orderby'>
-            /// Query parameters. If null is passed returns all catalog type items.
             /// </param>
             /// <param name='select'>
             /// Query parameters. If null is passed returns all catalog type items.
             /// </param>
-            public static IPage<USqlType> ListTypes(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, Expression<Func<USqlType, bool>> filter = default(Expression<Func<USqlType, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string))
+            public static IPage<USqlType> ListTypes(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, resourceGroupName, filter, top, skip, orderby, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -929,17 +920,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            /// <param name='filter'>
+            /// <param name='odataQuery'>
             /// The filter to apply on the operation.
-            /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all catalog type items.
-            /// </param>
-            /// <param name='skip'>
-            /// Query parameters. If null is passed returns all catalog type items.
-            /// </param>
-            /// <param name='orderby'>
-            /// Query parameters. If null is passed returns all catalog type items.
             /// </param>
             /// <param name='select'>
             /// Query parameters. If null is passed returns all catalog type items.
@@ -947,9 +929,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, Expression<Func<USqlType, bool>> filter = default(Expression<Func<USqlType, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlType>> ListTypesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlType>> result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, filter, top, skip, orderby, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlType>> result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -424,17 +423,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all catalog type items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all catalog type items.
-        /// </param>
-        /// <param name='orderby'>
-        /// Query parameters. If null is passed returns all catalog type items.
         /// </param>
         /// <param name='select'>
         /// Query parameters. If null is passed returns all catalog type items.
@@ -445,7 +435,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Expression<Func<USqlType, bool>> filter = default(Expression<Func<USqlType, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table valued function from the current
         /// Data Lake Analytics catalog

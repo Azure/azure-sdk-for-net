@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -1946,22 +1945,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to list Storage accounts for.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
         /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='expand'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='orderby'>
         /// Query parameters. If null is passed returns all account items.
         /// </param>
         /// <param name='count'>
@@ -1979,7 +1966,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListStorageAccountsWithHttpMessagesAsync(string resourceGroupName, string accountName, Expression<Func<StorageAccount, bool>> filter = default(Expression<Func<StorageAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<StorageAccount>>> ListStorageAccountsWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2006,12 +1993,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("search", search);
                 tracingParameters.Add("format", format);
@@ -2025,29 +2008,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2179,22 +2150,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Data Lake Analytics account to list Data Lake Store
         /// accounts for.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
         /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='expand'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='orderby'>
         /// Query parameters. If null is passed returns all account items.
         /// </param>
         /// <param name='count'>
@@ -2212,7 +2171,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListDataLakeStoreAccountsWithHttpMessagesAsync(string resourceGroupName, string accountName, Expression<Func<DataLakeStoreAccount, bool>> filter = default(Expression<Func<DataLakeStoreAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListDataLakeStoreAccountsWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2239,12 +2198,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("search", search);
                 tracingParameters.Add("format", format);
@@ -2258,29 +2213,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2408,22 +2351,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
         /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='expand'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all account items.
-        /// </param>
-        /// <param name='orderby'>
         /// Query parameters. If null is passed returns all account items.
         /// </param>
         /// <param name='count'>
@@ -2441,7 +2372,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListWithHttpMessagesAsync(string resourceGroupName, Expression<Func<DataLakeAnalyticsAccount, bool>> filter = default(Expression<Func<DataLakeAnalyticsAccount, bool>>), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2463,12 +2394,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("search", search);
                 tracingParameters.Add("format", format);
@@ -2481,29 +2408,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2957,10 +2872,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse response = await BeginCreateWithHttpMessagesAsync(
+            AzureOperationResponse<DataLakeAnalyticsAccount> response = await BeginCreateWithHttpMessagesAsync(
                 resourceGroupName, name, parameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(response,
                 customHeaders,
@@ -2987,7 +2902,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3093,6 +3008,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if ((int)statusCode != 201 && (int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -3102,12 +3031,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
+            var result = new AzureOperationResponse<DataLakeAnalyticsAccount>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)statusCode == 201)
+            {
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<DataLakeAnalyticsAccount>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)statusCode == 200)
+            {
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<DataLakeAnalyticsAccount>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -3135,10 +3090,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse response = await BeginUpdateWithHttpMessagesAsync(
+            AzureOperationResponse<DataLakeAnalyticsAccount> response = await BeginUpdateWithHttpMessagesAsync(
                 resourceGroupName, name, parameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(response,
                 customHeaders,
@@ -3164,7 +3119,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3266,6 +3221,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if ((int)statusCode != 200 && (int)statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -3275,12 +3244,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
+            var result = new AzureOperationResponse<DataLakeAnalyticsAccount>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)statusCode == 200)
+            {
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<DataLakeAnalyticsAccount>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)statusCode == 201)
+            {
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<DataLakeAnalyticsAccount>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {

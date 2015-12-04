@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -154,17 +153,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all JobInfo items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all JobInfo items.
-        /// </param>
-        /// <param name='orderby'>
-        /// Query parameters. If null is passed returns all JobInfo items.
         /// </param>
         /// <param name='select'>
         /// Query parameters. If null is passed returns all JobInfo items.
@@ -175,7 +165,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, string resourceGroupName, Expression<Func<JobInformation, bool>> filter = default(Expression<Func<JobInformation, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, string resourceGroupName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics JobInformation
         /// objects within the specified resource group with a link to the

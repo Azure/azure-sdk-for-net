@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -110,9 +109,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/GetStatistics").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -296,9 +295,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/GetDebugDataPath").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -487,8 +486,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "BuildJob").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -689,9 +688,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobId}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{jobId}", Uri.EscapeDataString(jobId));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -879,9 +878,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/CancelJob").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1038,9 +1037,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1174,17 +1173,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='odataQuery'>
         /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='top'>
-        /// Query parameters. If null is passed returns all JobInfo items.
-        /// </param>
-        /// <param name='skip'>
-        /// Query parameters. If null is passed returns all JobInfo items.
-        /// </param>
-        /// <param name='orderby'>
-        /// Query parameters. If null is passed returns all JobInfo items.
         /// </param>
         /// <param name='select'>
         /// Query parameters. If null is passed returns all JobInfo items.
@@ -1195,7 +1185,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, string resourceGroupName, Expression<Func<JobInformation, bool>> filter = default(Expression<Func<JobInformation, bool>>), int? top = default(int?), int? skip = default(int?), string orderby = default(string), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, string resourceGroupName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1225,10 +1215,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("orderby", orderby);
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1237,24 +1224,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("jobServiceUri", Uri.EscapeDataString(this.Client.JobServiceUri));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
-            }
-            if (top != null)
-            {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderby != null)
-            {
-                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
