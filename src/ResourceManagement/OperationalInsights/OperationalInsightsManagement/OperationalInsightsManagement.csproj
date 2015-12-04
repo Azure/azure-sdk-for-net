@@ -26,8 +26,6 @@
     <Compile Include="Generated\Models\Metadata.cs" />
     <Compile Include="Generated\Models\MetadataSchema.cs" />
     <Compile Include="Generated\Models\MetricName.cs" />
-    <Compile Include="Generated\Models\SavedSearchItems.cs" />
-    <Compile Include="Generated\Models\SavedSearchMetadata.cs" />
     <Compile Include="Generated\Models\SavedSearchProperties.cs" />
     <Compile Include="Generated\Models\SavedSearchValue.cs" />
     <Compile Include="Generated\Models\SchemaValue.cs" />

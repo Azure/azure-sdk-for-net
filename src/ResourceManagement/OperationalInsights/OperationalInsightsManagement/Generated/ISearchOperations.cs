@@ -156,8 +156,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// A unique workspace instance name.
         /// </param>
-        /// <param name='requestId'>
-        /// The request id to be updated.
+        /// <param name='id'>
+        /// The id of the search to be updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The list workspaces operation response.
         /// </returns>
-        Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string requestId, CancellationToken cancellationToken);
+        Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the schema for a given workspace.

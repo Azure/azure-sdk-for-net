@@ -347,17 +347,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// Required. A unique workspace instance name.
         /// </param>
-        /// <param name='requestId'>
-        /// Required. The request id to be updated.
+        /// <param name='id'>
+        /// Required. The id of the search to be updated.
         /// </param>
         /// <returns>
         /// The list workspaces operation response.
         /// </returns>
-        public static SearchGetSearchResultResponse GetSearchResultUpdate(this ISearchOperations operations, string resourceGroupName, string workspaceName, string requestId)
+        public static SearchGetSearchResultResponse GetSearchResultUpdate(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISearchOperations)s).GetSearchResultUpdateAsync(resourceGroupName, workspaceName, requestId);
+                return ((ISearchOperations)s).GetSearchResultUpdateAsync(resourceGroupName, workspaceName, id);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -375,15 +375,15 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// Required. A unique workspace instance name.
         /// </param>
-        /// <param name='requestId'>
-        /// Required. The request id to be updated.
+        /// <param name='id'>
+        /// Required. The id of the search to be updated.
         /// </param>
         /// <returns>
         /// The list workspaces operation response.
         /// </returns>
-        public static Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string requestId)
+        public static Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
         {
-            return operations.GetSearchResultUpdateAsync(resourceGroupName, workspaceName, requestId, CancellationToken.None);
+            return operations.GetSearchResultUpdateAsync(resourceGroupName, workspaceName, id, CancellationToken.None);
         }
         
         /// <summary>

@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// </summary>
     public partial class SearchSavedSearchResponse : AzureOperationResponse
     {
-        private SavedSearchMetadata _metadata;
+        private Metadata _metadata;
         
         /// <summary>
         /// Optional. Gets or sets the metadata from search results.
         /// </summary>
-        public SavedSearchMetadata Metadata
+        public Metadata Metadata
         {
             get { return this._metadata; }
             set { this._metadata = value; }

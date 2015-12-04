@@ -563,51 +563,182 @@ namespace Microsoft.Azure.Management.OperationalInsights
                             JToken metadataValue = responseDoc["__metadata"];
                             if (metadataValue != null && metadataValue.Type != JTokenType.Null)
                             {
-                                SavedSearchMetadata metadataInstance = new SavedSearchMetadata();
+                                Metadata metadataInstance = new Metadata();
                                 result.Metadata = metadataInstance;
                                 
-                                JToken itemsArray = metadataValue["items"];
-                                if (itemsArray != null && itemsArray.Type != JTokenType.Null)
+                                JToken resultTypeValue = metadataValue["resultType"];
+                                if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken itemsValue in ((JArray)itemsArray))
+                                    string resultTypeInstance = ((string)resultTypeValue);
+                                    metadataInstance.ResultType = resultTypeInstance;
+                                }
+                                
+                                JToken totalValue = metadataValue["total"];
+                                if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                {
+                                    int totalInstance = ((int)totalValue);
+                                    metadataInstance.Total = totalInstance;
+                                }
+                                
+                                JToken topValue = metadataValue["top"];
+                                if (topValue != null && topValue.Type != JTokenType.Null)
+                                {
+                                    int topInstance = ((int)topValue);
+                                    metadataInstance.Top = topInstance;
+                                }
+                                
+                                JToken skipValue = metadataValue["skip"];
+                                if (skipValue != null && skipValue.Type != JTokenType.Null)
+                                {
+                                    int skipInstance = ((int)skipValue);
+                                    metadataInstance.Skip = skipInstance;
+                                }
+                                
+                                JToken idValue = metadataValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    Guid idInstance = Guid.Parse(((string)idValue));
+                                    metadataInstance.Id = idInstance;
+                                }
+                                
+                                JToken coreResponsesArray = metadataValue["CoreResponses"];
+                                if (coreResponsesArray != null && coreResponsesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken coreResponsesValue in ((JArray)coreResponsesArray))
                                     {
-                                        SavedSearchItems savedSearchItemsInstance = new SavedSearchItems();
-                                        metadataInstance.Items.Add(savedSearchItemsInstance);
+                                        metadataInstance.CoreResponses.Add(((string)coreResponsesValue));
+                                    }
+                                }
+                                
+                                JToken coreSummariesArray = metadataValue["CoreSummaries"];
+                                if (coreSummariesArray != null && coreSummariesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken coreSummariesValue in ((JArray)coreSummariesArray))
+                                    {
+                                        CoreSummary coreSummaryInstance = new CoreSummary();
+                                        metadataInstance.CoreSummaries.Add(coreSummaryInstance);
                                         
-                                        JToken keyValue = itemsValue["Key"];
-                                        if (keyValue != null && keyValue.Type != JTokenType.Null)
+                                        JToken statusValue = coreSummariesValue["Status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
                                         {
-                                            string keyInstance = ((string)keyValue);
-                                            savedSearchItemsInstance.Key = keyInstance;
+                                            string statusInstance = ((string)statusValue);
+                                            coreSummaryInstance.Status = statusInstance;
                                         }
                                         
-                                        JToken typeValue = itemsValue["Type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
+                                        if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            string typeInstance = ((string)typeValue);
-                                            savedSearchItemsInstance.Type = typeInstance;
+                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken statusValue2 = metadataValue["Status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = ((string)statusValue2);
+                                    metadataInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken startTimeValue = metadataValue["StartTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                    metadataInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken lastUpdatedValue = metadataValue["LastUpdated"];
+                                if (lastUpdatedValue != null && lastUpdatedValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastUpdatedInstance = ((DateTime)lastUpdatedValue);
+                                    metadataInstance.LastUpdated = lastUpdatedInstance;
+                                }
+                                
+                                JToken eTagValue = metadataValue["ETag"];
+                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                {
+                                    string eTagInstance = ((string)eTagValue);
+                                    metadataInstance.ETag = eTagInstance;
+                                }
+                                
+                                JToken sortArray = metadataValue["sort"];
+                                if (sortArray != null && sortArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken sortValue in ((JArray)sortArray))
+                                    {
+                                        Sort sortInstance = new Sort();
+                                        metadataInstance.Sort.Add(sortInstance);
+                                        
+                                        JToken nameValue = sortValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            sortInstance.Name = nameInstance;
                                         }
                                         
-                                        JToken typeVersionValue = itemsValue["TypeVersion"];
-                                        if (typeVersionValue != null && typeVersionValue.Type != JTokenType.Null)
+                                        JToken orderValue = sortValue["order"];
+                                        if (orderValue != null && orderValue.Type != JTokenType.Null)
                                         {
-                                            int typeVersionInstance = ((int)typeVersionValue);
-                                            savedSearchItemsInstance.TypeVersion = typeVersionInstance;
+                                            string orderInstance = ((string)orderValue);
+                                            sortInstance.Order = orderInstance;
                                         }
-                                        
-                                        JToken revisionValue = itemsValue["Revision"];
-                                        if (revisionValue != null && revisionValue.Type != JTokenType.Null)
-                                        {
-                                            int revisionInstance = ((int)revisionValue);
-                                            savedSearchItemsInstance.Revision = revisionInstance;
-                                        }
-                                        
-                                        JToken eTagValue = itemsValue["ETag"];
-                                        if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime eTagInstance = ((DateTime)eTagValue);
-                                            savedSearchItemsInstance.ETag = eTagInstance;
-                                        }
+                                    }
+                                }
+                                
+                                JToken requestTimeValue = metadataValue["requestTime"];
+                                if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
+                                {
+                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    metadataInstance.RequestTime = requestTimeInstance;
+                                }
+                                
+                                JToken aggregatedValueFieldValue = metadataValue["aggregatedValueField"];
+                                if (aggregatedValueFieldValue != null && aggregatedValueFieldValue.Type != JTokenType.Null)
+                                {
+                                    string aggregatedValueFieldInstance = ((string)aggregatedValueFieldValue);
+                                    metadataInstance.AggregatedValueField = aggregatedValueFieldInstance;
+                                }
+                                
+                                JToken aggregatedGroupingFieldsValue = metadataValue["aggregatedGroupingFields"];
+                                if (aggregatedGroupingFieldsValue != null && aggregatedGroupingFieldsValue.Type != JTokenType.Null)
+                                {
+                                    string aggregatedGroupingFieldsInstance = ((string)aggregatedGroupingFieldsValue);
+                                    metadataInstance.AggregatedGroupingFields = aggregatedGroupingFieldsInstance;
+                                }
+                                
+                                JToken sumValue = metadataValue["sum"];
+                                if (sumValue != null && sumValue.Type != JTokenType.Null)
+                                {
+                                    int sumInstance = ((int)sumValue);
+                                    metadataInstance.Sum = sumInstance;
+                                }
+                                
+                                JToken maxValue = metadataValue["max"];
+                                if (maxValue != null && maxValue.Type != JTokenType.Null)
+                                {
+                                    int maxInstance = ((int)maxValue);
+                                    metadataInstance.Max = maxInstance;
+                                }
+                                
+                                JToken schemaValue = metadataValue["schema"];
+                                if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                {
+                                    MetadataSchema schemaInstance = new MetadataSchema();
+                                    metadataInstance.Schema = schemaInstance;
+                                    
+                                    JToken nameValue2 = schemaValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        schemaInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken versionValue = schemaValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        int versionInstance = ((int)versionValue);
+                                        schemaInstance.Version = versionInstance;
                                     }
                                 }
                             }
@@ -620,11 +751,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                     SavedSearchValue savedSearchValueInstance = new SavedSearchValue();
                                     result.Value.Add(savedSearchValueInstance);
                                     
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    JToken idValue2 = valueValue["id"];
+                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                     {
-                                        string idInstance = ((string)idValue);
-                                        savedSearchValueInstance.Id = idInstance;
+                                        string idInstance2 = ((string)idValue2);
+                                        savedSearchValueInstance.Id = idInstance2;
                                     }
                                     
                                     JToken etagValue = valueValue["etag"];
@@ -661,11 +792,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                             propertiesInstance.Query = queryInstance;
                                         }
                                         
-                                        JToken versionValue = propertiesValue["Version"];
-                                        if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                        JToken versionValue2 = propertiesValue["Version"];
+                                        if (versionValue2 != null && versionValue2.Type != JTokenType.Null)
                                         {
-                                            int versionInstance = ((int)versionValue);
-                                            propertiesInstance.Version = versionInstance;
+                                            int versionInstance2 = ((int)versionValue2);
+                                            propertiesInstance.Version = versionInstance2;
                                         }
                                     }
                                 }
@@ -2048,8 +2179,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// Required. A unique workspace instance name.
         /// </param>
-        /// <param name='requestId'>
-        /// Required. The request id to be updated.
+        /// <param name='id'>
+        /// Required. The id of the search to be updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2057,7 +2188,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The list workspaces operation response.
         /// </returns>
-        public async Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string requestId, CancellationToken cancellationToken)
+        public async Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2068,9 +2199,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ArgumentNullException("workspaceName");
             }
-            if (requestId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException("requestId");
+                throw new ArgumentNullException("id");
             }
             
             // Tracing
@@ -2082,7 +2213,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
-                tracingParameters.Add("requestId", requestId);
+                tracingParameters.Add("id", id);
                 TracingAdapter.Enter(invocationId, this, "GetSearchResultUpdateAsync", tracingParameters);
             }
             
@@ -2098,7 +2229,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
             url = url + Uri.EscapeDataString(workspaceName);
             url = url + "/search/";
-            url = url + Uri.EscapeDataString(requestId);
+            url = url + Uri.EscapeDataString(id);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-20");
             if (queryParameters.Count > 0)

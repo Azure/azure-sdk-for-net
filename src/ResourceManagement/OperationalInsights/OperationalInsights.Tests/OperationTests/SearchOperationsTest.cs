@@ -35,33 +35,32 @@ namespace OperationalInsights.Tests.OperationTests
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();
+
+                var client = TestHelper.GetOperationalInsightsManagementClient(handler);
+
+                // Rasha's workspace is the only one in int with cold data, which is necessary to test the update search method
+                string resourceGroupName = "OI-Default-East-US";
+                string workspaceName = "rasha";
+                int topCount = 25;
+
+                SearchGetSearchResultParameters parameters = new SearchGetSearchResultParameters();
+                parameters.Query = "*";
+                parameters.Top = topCount;
+                var searchResult = client.Search.GetSearchResult(resourceGroupName, workspaceName, parameters);
+                Assert.NotNull(searchResult);
+                Assert.NotNull(searchResult.Metadata);
+                Assert.NotNull(searchResult.Value);
+                Assert.Equal(searchResult.Value.Count, topCount);
+
+                String[] idStrings = searchResult.Id.Split('/');
+                var updatedSearchResult = client.Search.GetSearchResultUpdate(
+                    resourceGroupName,
+                    workspaceName,
+                    idStrings[idStrings.Length - 1]);
+                Assert.NotNull(updatedSearchResult);
+                Assert.NotNull(searchResult.Metadata);
+                Assert.NotNull(searchResult.Value);
             }
-
-            var client = TestHelper.GetOperationalInsightsManagementClient(handler);
-
-            //string resourceGroupName = "mms-eus";
-            //string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
-
-            // Rasha's workspace is the only one in int with cold data, which is necessary to test the update search method
-            string resourceGroupName = "OI-Default-East-US";
-            string workspaceName = "rasha";
-            int topCount = 25;
-
-            SearchGetSearchResultParameters parameters = new SearchGetSearchResultParameters();
-            parameters.Query = "*";
-            parameters.Top = topCount;
-            var searchResult = client.Search.GetSearchResult(resourceGroupName, workspaceName, parameters);
-            Assert.NotNull(searchResult);
-            Assert.NotNull(searchResult.Metadata);
-            Assert.NotNull(searchResult.Value);
-            Assert.Equal(searchResult.Value.Count, topCount);
-
-            String[] idStrings = searchResult.Id.Split('/');
-            var updatedSearchResult = client.Search.GetSearchResultUpdate(
-                resourceGroupName,
-                workspaceName,
-                idStrings[idStrings.Length - 1]);
-            Assert.NotNull(updatedSearchResult);
         }
 
         [Fact]
@@ -72,20 +71,20 @@ namespace OperationalInsights.Tests.OperationTests
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();
+
+                var client = TestHelper.GetOperationalInsightsManagementClient(handler);
+
+                string resourceGroupName = "mms-eus";
+                string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
+
+                var schemaResult = client.Search.GetSchema(resourceGroupName, workspaceName);
+
+                Assert.NotNull(schemaResult);
+                Assert.NotNull(schemaResult.Metadata);
+                Assert.Equal(schemaResult.Metadata.ResultType, "schema");
+                Assert.NotNull(schemaResult.Value);
+                Assert.NotEqual(schemaResult.Value.Count, 0);
             }
-
-            var client = TestHelper.GetOperationalInsightsManagementClient(handler);
-
-            string resourceGroupName = "mms-eus";
-            string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
-
-            var schemaResult = client.Search.GetSchema(resourceGroupName, workspaceName);
-
-            Assert.NotNull(schemaResult);
-            Assert.NotNull(schemaResult.Metadata);
-            Assert.Equal(schemaResult.Metadata.ResultType, "schema");
-            Assert.NotNull(schemaResult.Value);
-            Assert.NotEqual(schemaResult.Value.Count, 0);
         }
 
         [Fact]
@@ -96,42 +95,40 @@ namespace OperationalInsights.Tests.OperationTests
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();
+
+                var client = TestHelper.GetOperationalInsightsManagementClient(handler);
+
+                string resourceGroupName = "mms-eus";
+                string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
+
+                var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+
+                Assert.NotNull(savedSearchesResult);
+                Assert.NotNull(savedSearchesResult.Value);
+                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+
+                String[] idStrings = savedSearchesResult.Value[0].Id.Split('/');
+                string id = idStrings[idStrings.Length - 1];
+
+                var savedSearchResult = client.Search.GetSavedSearch(
+                    resourceGroupName,
+                    workspaceName,
+                    id);
+                Assert.NotNull(savedSearchResult);
+                Assert.NotNull(savedSearchResult.ETag);
+                Assert.NotEqual(savedSearchResult.ETag, "");
+                Assert.NotNull(savedSearchResult.Id);
+                Assert.NotEqual(savedSearchResult.Id, "");
+                Assert.NotNull(savedSearchResult.Properties);
+                Assert.NotNull(savedSearchResult.Properties.Query);
+                Assert.NotEqual(savedSearchResult.Properties.Query, "");
+
+                var savedSearchResults = client.Search.GetSavedSearchResults(resourceGroupName, workspaceName, id);
+                Assert.NotNull(savedSearchResults);
+                Assert.NotNull(savedSearchResults.Metadata);
+                Assert.NotNull(savedSearchResults.Value);
+                Assert.NotEqual(savedSearchResults.Value.Count, 0);
             }
-
-            var client = TestHelper.GetOperationalInsightsManagementClient(handler);
-            
-            string resourceGroupName = "mms-eus";
-            string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
-
-            var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
-        
-            Assert.NotNull(savedSearchesResult);
-            Assert.NotNull(savedSearchesResult.Value);
-            Assert.NotEqual(savedSearchesResult.Value.Count, 0);
-
-            String[] idStrings = savedSearchesResult.Value[0].Id.Split('/');
-
-            var savedSearchResult = client.Search.GetSavedSearch(
-                resourceGroupName,
-                workspaceName,
-                idStrings[idStrings.Length - 1]);
-            Assert.NotNull(savedSearchResult);
-            Assert.NotNull(savedSearchResult.ETag);
-            Assert.NotEqual(savedSearchResult.ETag, "");
-            Assert.NotNull(savedSearchResult.Id);
-            Assert.NotEqual(savedSearchResult.Id, "");
-            Assert.NotNull(savedSearchResult.Properties);
-            Assert.NotNull(savedSearchResult.Properties.Query);
-            Assert.NotEqual(savedSearchResult.Properties.Query, "");
-
-            var savedSearchResults = client.Search.GetSavedSearchResults(
-                resourceGroupName,
-                workspaceName,
-                "0022aa2d-e4c2-4792-8672-c46e77ed116e");
-            Assert.NotNull(savedSearchResults);
-            Assert.NotNull(savedSearchResults.Metadata);
-            Assert.NotNull(savedSearchResults.Value);
-            Assert.NotEqual(savedSearchResults.Value.Count, 0);
         }
 
         [Fact]
@@ -142,58 +139,62 @@ namespace OperationalInsights.Tests.OperationTests
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();
-            }
 
-            var client = TestHelper.GetOperationalInsightsManagementClient(handler);
+                var client = TestHelper.GetOperationalInsightsManagementClient(handler);
 
-            string resourceGroupName = "mms-eus";
-            string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
-            string newSavedSearchId = "test-new-saved-search-id-2015";
+                string resourceGroupName = "mms-eus";
+                string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
+                string newSavedSearchId = "test-new-saved-search-id-2015";
 
-            SearchPutSavedSearchParameters parameters = new SearchPutSavedSearchParameters();
-            parameters.Properties = new SavedSearchProperties();
-            parameters.Properties.Version = 1;
-            parameters.Properties.Query = "* | measure Count() by Type";
-            parameters.Properties.DisplayName = "Put Saved Search Test";
-            parameters.Properties.Category = "Put Saved Search Test Category";
+                SearchPutSavedSearchParameters parameters = new SearchPutSavedSearchParameters();
+                parameters.Properties = new SavedSearchProperties();
+                parameters.Properties.Version = 1;
+                parameters.Properties.Query = "* | measure Count() by Type";
+                parameters.Properties.DisplayName = "Put Saved Search Test";
+                parameters.Properties.Category = "Put Saved Search Test Category";
 
-            var putSavedSearchResults = client.Search.PutSavedSearch(resourceGroupName, workspaceName, newSavedSearchId, parameters);
-            Assert.NotNull(putSavedSearchResults);
+                var putSavedSearchResults = client.Search.PutSavedSearch(
+                    resourceGroupName,
+                    workspaceName,
+                    newSavedSearchId,
+                    parameters);
+                Assert.NotNull(putSavedSearchResults);
 
-            // Verify that the saved search was saved
-            var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
-            Assert.NotNull(savedSearchesResult);
+                // Verify that the saved search was saved
+                var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+                Assert.NotNull(savedSearchesResult);
 
-            bool foundSavedSearch = false;
-            for (int i = 0; i < savedSearchesResult.Value.Count; i++)
-            {
-                SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
-                if (properties.Category.Equals(parameters.Properties.Category)
-                    && properties.Version == parameters.Properties.Version
-                    && properties.Query.Equals(parameters.Properties.Query)
-                    && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                bool foundSavedSearch = false;
+                for (int i = 0; i < savedSearchesResult.Value.Count; i++)
                 {
-                    foundSavedSearch = true;
+                    SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
+                    if (properties.Category.Equals(parameters.Properties.Category)
+                        && properties.Version == parameters.Properties.Version
+                        && properties.Query.Equals(parameters.Properties.Query)
+                        && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                    {
+                        foundSavedSearch = true;
+                    }
                 }
-            }
-            Assert.True(foundSavedSearch);
+                Assert.True(foundSavedSearch);
 
-            client.Search.DeleteSavedSearch(resourceGroupName, workspaceName, newSavedSearchId);
-            savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+                client.Search.DeleteSavedSearch(resourceGroupName, workspaceName, newSavedSearchId);
+                savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
 
-            foundSavedSearch = false;
-            for (int i = 0; i < savedSearchesResult.Value.Count; i++)
-            {
-                SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
-                if (properties.Category.Equals(parameters.Properties.Category)
-                    && properties.Version == parameters.Properties.Version
-                    && properties.Query.Equals(parameters.Properties.Query)
-                    && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                foundSavedSearch = false;
+                for (int i = 0; i < savedSearchesResult.Value.Count; i++)
                 {
-                    foundSavedSearch = true;
+                    SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
+                    if (properties.Category.Equals(parameters.Properties.Category)
+                        && properties.Version == parameters.Properties.Version
+                        && properties.Query.Equals(parameters.Properties.Query)
+                        && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                    {
+                        foundSavedSearch = true;
+                    }
                 }
+                Assert.False(foundSavedSearch);
             }
-            Assert.False(foundSavedSearch);
         }
 
     }
