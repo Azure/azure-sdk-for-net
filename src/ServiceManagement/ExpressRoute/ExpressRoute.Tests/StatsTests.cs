@@ -14,7 +14,7 @@
     public class DedicatedCircuitPeeringStatsOperationTests : ExpressRouteTestBase
     {
        [Fact(Skip = "TODO: we have a prod bug which will cause this fail, will re-record after fix that")]
-        public void CanNotGetPeeringStatsIfPeeringNotExist()
+        public void CanNotGetStats()
         {
             using (var undoContext = UndoContext.Current)
             {
