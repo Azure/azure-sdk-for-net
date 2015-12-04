@@ -137,13 +137,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     /*Add DateTime, others if required*/
                     else
                     {
-                        propQuery.Add(
-                            new System.Text.StringBuilder()
-                            .Append(property.Name)
-                            .Append(" eq '")
-                            .Append(propValue.ToString())
-                            .Append("'")
-                            .ToString());
+                        if (propValue.ToString().Contains("Hyak.Common.LazyList"))
+                        {
+                            // Just skip the property.
+                        }
+                        else
+                        {
+                            propQuery.Add(
+                                new System.Text.StringBuilder()
+                                .Append(property.Name)
+                                .Append(" eq '")
+                                .Append(propValue.ToString())
+                                .Append("'")
+                                .ToString());
+                        }
                     }
                 }
             }
