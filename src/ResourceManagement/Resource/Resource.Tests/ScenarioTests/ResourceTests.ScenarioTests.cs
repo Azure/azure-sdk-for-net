@@ -24,6 +24,7 @@ using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
+using Microsoft.Rest.Azure.OData;
 
 namespace ResourceGroups.Tests
 {
@@ -72,7 +73,7 @@ namespace ResourceGroups.Tests
                 var groups = client.ResourceGroups.List();
                 foreach (var group in groups)
                 {
-                    var resources = client.ResourceGroups.ListResources(group.Name, r => r.ResourceType == "Microsoft.Web/sites");
+                    var resources = client.ResourceGroups.ListResources(group.Name, new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/sites"));
                     foreach (var resource in resources)
                     {
                         client.Resources.Delete(group.Name, 
@@ -174,7 +175,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.First().Location),
                     string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.First().Location, websiteLocation));
 
-                listResult = client.ResourceGroups.ListResources(groupName, top: 10);
+                listResult = client.ResourceGroups.ListResources(groupName, new ODataQuery<GenericResourceFilter> { Top = 10 });
 
                 Assert.Equal(1, listResult.Count());
                 Assert.Equal(resourceName, listResult.First().Name);
@@ -227,7 +228,7 @@ namespace ResourceGroups.Tests
                         Properties = JObject.Parse("{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     });
 
-                var listResult = client.ResourceGroups.ListResources(groupName, r => r.Tagname == tagName);
+                var listResult = client.ResourceGroups.ListResources(groupName, new ODataQuery<GenericResourceFilter>(r => r.Tagname == tagName));
 
                 Assert.Equal(1, listResult.Count());
                 Assert.Equal(resourceName, listResult.First().Name);
@@ -291,8 +292,8 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.ResourceGroups.ListResources(groupName, 
-                    r => r.Tagname == tagName && r.Tagvalue == tagValue);
+                var listResult = client.ResourceGroups.ListResources(groupName,
+                    new ODataQuery<GenericResourceFilter>(r => r.Tagname == tagName && r.Tagvalue == tagValue));
 
                 Assert.Equal(1, listResult.Count());
                 Assert.Equal(resourceName, listResult.First().Name);
@@ -379,7 +380,7 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.Resources.List(r => r.ResourceType == "Microsoft.Web/sites");
+                var listResult = client.Resources.List(new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/sites"));
 
                 Assert.NotEmpty(listResult);
                 Assert.Equal(2, listResult.First().Tags.Count);

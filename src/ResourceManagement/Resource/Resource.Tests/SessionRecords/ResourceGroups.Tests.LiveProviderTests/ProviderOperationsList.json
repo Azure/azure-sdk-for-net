@@ -1,55 +1,55 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/providers/microsoft.insights?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5NzdjZGItMTYzZi00MzVmLTljMzItMzllYzhhZTYxZjRkL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "74599dee-afc5-4007-854f-24d8b312161c"
+          "f37f67f0-7ce6-4cfe-af84-2b781836dfe8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/providers/microsoft.insights\",\r\n  \"namespace\": \"microsoft.insights\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n    \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"components\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"webtests\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"queries\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"alertrules\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"autoscalesettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventtypes\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-11-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-06-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"automatedExportSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"diagnosticSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"metricDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"logDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights\",\r\n  \"namespace\": \"microsoft.insights\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n    \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"components\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"webtests\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"queries\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"alertrules\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"autoscalesettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventtypes\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-11-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-06-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"automatedExportSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"diagnosticSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"metricDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"logDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Unregistered\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "2991"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 04 Dec 2015 00:20:22 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14999"
         ],
         "x-ms-request-id": [
-          "d389922b-f267-4761-a0d7-eab7de30eed5"
+          "f5b84b10-8711-45a2-a681-753da55d3018"
         ],
         "x-ms-correlation-request-id": [
-          "d389922b-f267-4761-a0d7-eab7de30eed5"
+          "f5b84b10-8711-45a2-a681-753da55d3018"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151022T202225Z:d389922b-f267-4761-a0d7-eab7de30eed5"
+          "WESTUS:20151204T002022Z:f5b84b10-8711-45a2-a681-753da55d3018"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 22 Oct 2015 20:22:25 GMT"
         ]
       },
       "StatusCode": 200
@@ -61,52 +61,55 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1d56cf1c-a2a3-4f63-a1d1-dc0d74f75221"
+          "8941c5e7-6a22-4ab5-9c1f-cdfdc15f704e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Write\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule write\",\r\n        \"description\": \"Writing to an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Delete\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule delete\",\r\n        \"description\": \"Deleting an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule read\",\r\n        \"description\": \"Reading an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Write\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting write\",\r\n        \"description\": \"Writing to an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Delete\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting delete\",\r\n        \"description\": \"Deleting an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting read\",\r\n        \"description\": \"Reading an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Incidents/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule Incidents read\",\r\n        \"description\": \"Reading an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/eventtypes/values/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Events\",\r\n        \"operation\": \"Event types management values read\",\r\n        \"description\": \"Read management event type values\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/eventtypes/digestevents/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Digest events\",\r\n        \"operation\": \"Event types management digest read\",\r\n        \"description\": \"Read management event type digest\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Scaleup/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale scale up operation\",\r\n        \"description\": \"Autoscale scale up operation\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Scaledown/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale scale down operation\",\r\n        \"description\": \"Autoscale scale down operation\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Activated/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule activated\",\r\n        \"description\": \"Alert Rule activated\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Resolved/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule resolved\",\r\n        \"description\": \"Alert Rule resolved\"\r\n      },\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Write\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule write\",\r\n        \"description\": \"Writing to an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Delete\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule delete\",\r\n        \"description\": \"Deleting an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule read\",\r\n        \"description\": \"Reading an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Write\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting write\",\r\n        \"description\": \"Writing to an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Delete\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting delete\",\r\n        \"description\": \"Deleting an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale Setting read\",\r\n        \"description\": \"Reading an autoscale setting configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Incidents/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule Incidents read\",\r\n        \"description\": \"Reading an alert rule configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/eventtypes/values/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Events\",\r\n        \"operation\": \"Event types management values read\",\r\n        \"description\": \"Read management event type values\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/eventtypes/digestevents/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Digest events\",\r\n        \"operation\": \"Event types management digest read\",\r\n        \"description\": \"Read management event type digest\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/DiagnosticSettings/Write\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Diagnostic settings\",\r\n        \"operation\": \"Diagnostic settings write\",\r\n        \"description\": \"Writing to diagnostic settings configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/DiagnosticSettings/Delete\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Diagnostic settings\",\r\n        \"operation\": \"Diagnostic settings delete\",\r\n        \"description\": \"Deleting diagnostic settings configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/DiagnosticSettings/Read\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Diagnostic settings\",\r\n        \"operation\": \"Diagnostic settings read\",\r\n        \"description\": \"Reading a diagnostic settings configuration\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Scaleup/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale scale up operation\",\r\n        \"description\": \"Autoscale scale up operation\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AutoscaleSettings/Scaledown/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Autoscale\",\r\n        \"operation\": \"Autoscale scale down operation\",\r\n        \"description\": \"Autoscale scale down operation\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Activated/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule activated\",\r\n        \"description\": \"Alert Rule activated\"\r\n      },\r\n      \"properties\": {}\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Insights/AlertRules/Resolved/Action\",\r\n      \"display\": {\r\n        \"publisher\": \"Microsoft\",\r\n        \"provider\": \"Microsoft Monitoring Insights\",\r\n        \"resource\": \"Alert Rules\",\r\n        \"operation\": \"Alert Rule resolved\",\r\n        \"description\": \"Alert Rule resolved\"\r\n      },\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "3432"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 04 Dec 2015 00:20:22 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "188da708-4493-4efb-8fbd-973f28cb0720"
+          "3f9c52d5-333a-4699-b73e-c225443c66cc"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "2f2e6120-97b9-4ca0-a0e4-27a9cac64253"
+          "11e935e8-c281-4d62-a5fa-06c7058b7648"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151022T202225Z:2f2e6120-97b9-4ca0-a0e4-27a9cac64253"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 22 Oct 2015 20:22:25 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "WESTUS:20151204T002023Z:11e935e8-c281-4d62-a5fa-06c7058b7648"
         ]
       },
       "StatusCode": 200
@@ -118,13 +121,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "379be9e0-00f4-4d23-abc4-7a9ce7fb3d44"
+          "7df592c1-0c34-42ab-8575-af9b97fc4f8d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'operations' could not be found in the namespace 'microsoft.insights' for api version '2015-01-01'. The supported api-versions are '2014-04-01,2014-06-01,2015-04-01'.\"\r\n  }\r\n}",
@@ -138,6 +141,12 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 04 Dec 2015 00:20:22 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
@@ -148,22 +157,16 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "d071a9fb-4581-46e6-b734-f108e897b4be"
+          "7beaf6d3-641d-46e9-a861-41235dfd19ec"
         ],
         "x-ms-correlation-request-id": [
-          "d071a9fb-4581-46e6-b734-f108e897b4be"
+          "7beaf6d3-641d-46e9-a861-41235dfd19ec"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151022T202225Z:d071a9fb-4581-46e6-b734-f108e897b4be"
+          "WESTUS:20151204T002023Z:7beaf6d3-641d-46e9-a861-41235dfd19ec"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 22 Oct 2015 20:22:25 GMT"
         ]
       },
       "StatusCode": 404
@@ -171,6 +174,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
+    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
   }
 }

@@ -1,56 +1,104 @@
 ﻿{
-    "$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "siteName": {
-            "type": "string"
-        },
-        "hostingPlanName": {
-            "type": "string"
-        },
-        "siteMode": {
-            "type": "string"
-        },
-        "computeMode": {
-            "type": "string"
-        },
-        "siteLocation": {
-            "type": "string"
-        },
-        "sku": {
-            "type": "string"
-        },
-        "workerSize": {
-            "type": "string"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the web app that you wish to create."
+      }
     },
-    "resources": [
+    "hostingPlanName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
+    },
+    "siteLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location to use for creating the web app and hosting plan. It must be one of the Azure locations that support web apps."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue": "Free",
+      "metadata": {
+        "description": "The pricing tier for the hosting plan."
+      }
+    },
+    "workerSize": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0",
+      "metadata": {
+        "description": "The instance size of the hosting plan (small, medium, or large)."
+      }
+    },
+    "repoURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/davidebbo-test/Mvc52Application.git",
+      "metadata": {
+        "description": "The URL for the GitHub repository that contains the project to deploy."
+      }
+    },
+    "branch": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "The branch of the GitHub repository to use."
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-04-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('siteLocation')]",
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "sku": "[parameters('sku')]",
+        "workerSize": "[parameters('workerSize')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "apiVersion": "2015-04-01",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('siteLocation')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[parameters('hostingPlanName')]"
+      },
+      "resources": [
         {
-            "apiVersion": "01-01-2014",
-            "name": "[parameters('siteName')]",
-            "type": "Microsoft.Web/Sites",
-            "location": "[parameters('siteLocation')]",
-            "dependsOn": [
-                "[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
-            ],
-            "properties": {
-                "name": "[parameters('siteName')]",
-                "serverFarm": "[parameters('hostingPlanName')]",
-                "computeMode": "[parameters('computeMode')]",
-                "siteMode": "[parameters('siteMode')]"
-            }
-        },
-        {
-            "apiVersion": "01-01-2014",
-            "name": "[parameters('hostingPlanName')]",
-            "type": "Microsoft.Web/serverFarms",
-            "location": "[parameters('siteLocation')]",
-            "properties": {
-                "name": "[parameters('hostingPlanName')]",
-                "sku": "[parameters('sku')]",
-                "workerSize": "[parameters('workerSize')]",
-                "numberOfWorkers": "1"
-            }
+          "apiVersion": "2015-04-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": true
+          }
         }
-    ]
+      ]
+    }
+  ]
 }
