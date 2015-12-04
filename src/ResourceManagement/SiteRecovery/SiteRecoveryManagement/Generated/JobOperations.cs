@@ -9347,21 +9347,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             List<string> odataFilter = new List<string>();
-            if (parameters != null && parameters.StartTime != null)
+            if (parameters != null && parameters.ToQueryString() != null)
             {
-                odataFilter.Add("StartTime eq '" + Uri.EscapeDataString(parameters.StartTime) + "'");
-            }
-            if (parameters != null && parameters.EndTime != null)
-            {
-                odataFilter.Add("EndTime eq '" + Uri.EscapeDataString(parameters.EndTime) + "'");
-            }
-            if (parameters != null && parameters.FabricId != null)
-            {
-                odataFilter.Add("FabricId eq '" + Uri.EscapeDataString(parameters.FabricId) + "'");
+                odataFilter.Add(Uri.EscapeDataString(parameters.ToQueryString().ToString()));
             }
             if (odataFilter.Count > 0)
             {
-                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (queryParameters.Count > 0)
             {
