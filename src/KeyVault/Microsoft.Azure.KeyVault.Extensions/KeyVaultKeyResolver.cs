@@ -128,9 +128,6 @@ namespace Microsoft.Azure.KeyVault
             if ( vaultUri.Scheme != Uri.UriSchemeHttps )
                 throw new ArgumentException( "The vaultName must use the https scheme" );
 
-            if ( !vaultUri.Host.EndsWith( "vault.azure.net" ) )
-                throw new ArgumentException( "The vaultName must end with vault.azure.net" );
-
             if ( string.CompareOrdinal( vaultUri.PathAndQuery, "/" ) != 0 )
                 throw new ArgumentException( "The vaultName cannot contain a path or query string" );
 
