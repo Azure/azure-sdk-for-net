@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -55,6 +55,44 @@ namespace Microsoft.Azure.Management.Authorization
             public static async Task<RoleDefinition> DeleteAsync( this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<RoleDefinition> result = await operations.DeleteWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get role definition by name (GUID).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope
+            /// </param>
+            /// <param name='roleDefinitionId'>
+            /// Role definition Id
+            /// </param>
+            public static RoleDefinition Get(this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId)
+            {
+                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).GetAsync(scope, roleDefinitionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get role definition by name (GUID).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope
+            /// </param>
+            /// <param name='roleDefinitionId'>
+            /// Role definition Id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RoleDefinition> GetAsync( this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<RoleDefinition> result = await operations.GetWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -109,38 +147,6 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='roleDefinitionId'>
-            /// Role definition Id
-            /// </param>
-            public static RoleDefinition Get(this IRoleDefinitionsOperations operations, string roleDefinitionId)
-            {
-                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).GetAsync(roleDefinitionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get role definition by name (GUID).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleDefinitionId'>
-            /// Role definition Id
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RoleDefinition> GetAsync( this IRoleDefinitionsOperations operations, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<RoleDefinition> result = await operations.GetWithHttpMessagesAsync(roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Get role definition by name (GUID).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleDefinitionId'>
             /// Fully qualified role definition Id
             /// </param>
             public static RoleDefinition GetById(this IRoleDefinitionsOperations operations, string roleDefinitionId)
@@ -167,39 +173,48 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Get role definitions.
+            /// Get all role definitions that are applicable at scope and above. Use
+            /// atScopeAndBelow filter to search below the given scope as well
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='scope'>
+            /// Scope
             /// </param>
-            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations, Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>))
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>))
             {
-                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).ListAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).ListAsync(scope, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get role definitions.
+            /// Get all role definitions that are applicable at scope and above. Use
+            /// atScopeAndBelow filter to search below the given scope as well
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='scope'>
+            /// Scope
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<RoleDefinition>> result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<RoleDefinition>> result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
-            /// Get role definitions.
+            /// Get all role definitions that are applicable at scope and above. Use
+            /// atScopeAndBelow filter to search below the given scope as well
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +228,8 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Get role definitions.
+            /// Get all role definitions that are applicable at scope and above. Use
+            /// atScopeAndBelow filter to search below the given scope as well
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

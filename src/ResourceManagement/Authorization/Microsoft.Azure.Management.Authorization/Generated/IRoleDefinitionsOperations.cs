@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -41,6 +40,22 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         Task<AzureOperationResponse<RoleDefinition>> DeleteWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get role definition by name (GUID).
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
+        /// <param name='roleDefinitionId'>
+        /// Role definition Id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates a role definition.
         /// </summary>
         /// <param name='scope'>
@@ -63,19 +78,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// Role definition Id
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// </summary>
-        /// <param name='roleDefinitionId'>
         /// Fully qualified role definition Id
         /// </param>
         /// <param name='customHeaders'>
@@ -86,10 +88,14 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         Task<AzureOperationResponse<RoleDefinition>> GetByIdWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,9 +103,10 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

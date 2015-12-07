@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// <summary>
     /// Operation
     /// </summary>
-    public partial class Operation
+    public partial class ProviderOperation
     {
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the ProviderOperation class.
         /// </summary>
-        public Operation() { }
+        public ProviderOperation() { }
 
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the ProviderOperation class.
         /// </summary>
-        public Operation(string name = default(string), string displayName = default(string), string description = default(string), string origin = default(string), object properties = default(object))
+        public ProviderOperation(string name = default(string), string displayName = default(string), string description = default(string), string origin = default(string), object properties = default(object))
         {
             Name = name;
             DisplayName = displayName;

@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.1.0-preview",
   "description": "Provides capabilities to query Microsoft Azure Management Authorization.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Management", "Authorization", "REST HTTP client", "windowsazureofficial" ],
@@ -11,7 +11,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.1.0, 3.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.2.0, 3.0)" 
   },
 
   "frameworks": {
