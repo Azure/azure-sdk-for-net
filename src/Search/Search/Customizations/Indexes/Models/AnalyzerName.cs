@@ -437,12 +437,12 @@ namespace Microsoft.Azure.Search.Models
         /// known analyzer.
         /// </summary>
         /// <param name="name">Name of the analyzer.</param>
-        /// <returns>An AnalyzerName instance with the given name, or null if name is null.</returns>
+        /// <returns>An AnalyzerName instance with the given name.</returns>
         public static AnalyzerName Create(string name)
         {
             if (name == null)
             {
-                return null;
+                throw new ArgumentNullException("name");
             }
 
             // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.

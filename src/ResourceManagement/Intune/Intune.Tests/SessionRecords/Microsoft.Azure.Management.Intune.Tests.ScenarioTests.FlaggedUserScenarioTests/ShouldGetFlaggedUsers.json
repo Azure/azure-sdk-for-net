@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-privatepreview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.Intune/locations/hostName?api-version=2015-01-14-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9ob3N0TmFtZT9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "37e60105-1925-4b39-893b-565aaeed0caa"
+          "1e882188-fa04-4846-91ee-22d58a50d74c"
         ],
         "accept-language": [
           "en-US"
@@ -16,10 +16,10 @@
           "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.bmsua01\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Intune/locations/hostName\",\r\n  \"type\": \"Microsoft.Intune/locations\",\r\n  \"name\": \"hostname\",\r\n  \"properties\": {\r\n    \"hostName\": \"fef.msua06\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "149"
+          "148"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14996"
+          "14999"
         ],
         "x-ms-request-id": [
-          "7822c498-4e38-41aa-b5ca-7bcb5ff415e6"
+          "15505c0e-558c-4057-9615-1d632e60f200"
         ],
         "x-ms-correlation-request-id": [
-          "4295e2d5-9251-4cd5-8882-09e71b83f067"
+          "47ef26b0-e3e9-4264-823c-94cbd71b0232"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151124T021446Z:4295e2d5-9251-4cd5-8882-09e71b83f067"
+          "WESTUS:20151203T010001Z:47ef26b0-e3e9-4264-823c-94cbd71b0232"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Nov 2015 02:14:46 GMT"
+          "Thu, 03 Dec 2015 01:00:00 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -58,13 +58,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers?api-version=2015-01-14-privatepreview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYuYm1zdWEwMS9mbGFnZ2VkVXNlcnM/YXBpLXZlcnNpb249MjAxNS0wMS0xNC1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Intune/locations/fef.msua06/flaggedUsers?api-version=2015-01-14-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW50dW5lL2xvY2F0aW9ucy9mZWYubXN1YTA2L2ZsYWdnZWRVc2Vycz9hcGktdmVyc2lvbj0yMDE1LTAxLTE0LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "46e59399-6eda-4bc7-8146-65b7846ab088"
+          "64a17e1c-341e-4942-ac2f-8e2ebdd61bb8"
         ],
         "accept-language": [
           "en-US"
@@ -73,10 +73,10 @@
           "Microsoft.Azure.Management.Intune.IntuneResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.bmsua01/flaggedUsers/f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n      \"name\": \"f4058390-f6d0-459b-9c36-3cf9d88e87f5\",\r\n      \"type\": \"Microsoft.Intune/locations/flaggedUsers\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"(株)パソナ　パソナキャリアカンパニー 鹿島建設株式会社\",\r\n        \"errorCount\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Intune/locations/fef.msua06/flaggedUsers/d8aeb100-6e17-4cf7-bbda-169000d03c1e\",\r\n      \"name\": \"d8aeb100-6e17-4cf7-bbda-169000d03c1e\",\r\n      \"type\": \"Microsoft.Intune/locations/flaggedUsers\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Joe Admin\",\r\n        \"errorCount\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "341"
+          "271"
         ],
         "Content-Type": [
           "application/json;odata=minimalmetadata;streaming=true;charset=utf-8,application/json;odata=minimalmetadata;streaming=true;charset=utf-8"
@@ -88,25 +88,25 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14995"
+          "14998"
         ],
         "Elapsed-Time-Milliseconds": [
-          "3759"
+          "6680"
         ],
         "service-name": [
           "AdminExperienceService"
         ],
         "client-request-id": [
-          "46e59399-6eda-4bc7-8146-65b7846ab088"
+          "64a17e1c-341e-4942-ac2f-8e2ebdd61bb8"
         ],
         "unique-request-id": [
-          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
         ],
         "x-ms-request-id": [
-          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
         ],
         "related-activity-id": [
-          "49f5d62e-7300-4006-9402-a4b5aadb37f0"
+          "2200ccbd-cde0-4cc1-a2ed-0c223099e6d5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -122,13 +122,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "8efcfa3c-f5fb-49ce-a9a2-a6054aba63a2"
+          "4a88f1dc-f215-4f46-b55c-9b26a8ecafa8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151124T021450Z:8efcfa3c-f5fb-49ce-a9a2-a6054aba63a2"
+          "WESTUS:20151203T010008Z:4a88f1dc-f215-4f46-b55c-9b26a8ecafa8"
         ],
         "Date": [
-          "Tue, 24 Nov 2015 02:14:50 GMT"
+          "Thu, 03 Dec 2015 01:00:08 GMT"
         ]
       },
       "StatusCode": 200

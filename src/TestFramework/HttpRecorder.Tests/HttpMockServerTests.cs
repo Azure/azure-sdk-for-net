@@ -265,8 +265,8 @@ namespace HttpRecorder.Tests
             var result3 = client3.DoStuffA().Result;
             HttpMockServer.Flush(currentDir);
 
-            Assert.True(File.Exists(HttpMockServer.CallerIdentity + "\\testA.json"));
-            Assert.True(File.Exists(HttpMockServer.CallerIdentity + "\\testB.json"));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, "testA.json")));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, "testB.json")));
         }
 
         [Fact]
@@ -283,7 +283,7 @@ namespace HttpRecorder.Tests
             var result3 = client3.DoStuffA().Result;
             HttpMockServer.Flush(currentDir);
 
-            Assert.True(File.Exists(HttpMockServer.CallerIdentity + "\\testB.json"));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, "testB.json")));
         }
 
         [Fact]
@@ -296,10 +296,10 @@ namespace HttpRecorder.Tests
             var result2 = client2.DoStuffA().Result;
             var name = HttpMockServer.GetAssetName("testA", "tst");
             HttpMockServer.Flush(currentDir);
-            RecordEntryPack pack = RecordEntryPack.Deserialize(HttpMockServer.CallerIdentity + "\\testA.json");
+            RecordEntryPack pack = RecordEntryPack.Deserialize(Path.Combine(HttpMockServer.CallerIdentity, "testA.json"));
 
             Assert.NotNull(name);
-            Assert.True(File.Exists(HttpMockServer.CallerIdentity + "\\testA.json"));
+            Assert.True(File.Exists(Path.Combine(HttpMockServer.CallerIdentity, "testA.json")));
             Assert.Equal(2, pack.Entries.Count);
             Assert.Equal(1, pack.Names["testA"].Count);
         }

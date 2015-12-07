@@ -349,6 +349,142 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanMergeDynamicDocuments()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var originalDoc =
+                    new Document()
+                    {
+                        { "hotelId", "1" },
+                        { "baseRate", 199.0 },
+                        { "description", "Best hotel in town" },
+                        { "descriptionFr", "Meilleur hôtel en ville" },
+                        { "hotelName", "Fancy Stay" },
+                        { "category", "Luxury" },
+                        { "tags", new[] { "pool", "view", "wifi", "concierge" } },
+                        { "parkingIncluded", false },
+                        { "smokingAllowed", false },
+                        { "lastRenovationDate", new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)) },
+                        { "rating", 5 },
+                        { "location", GeographyPoint.Create(47.678581, -122.131577) }
+                    };
+
+                var updatedDoc =
+                    new Document()
+                    {
+                        { "hotelId", "1" },
+                        { "baseRate", 99.0 },
+                        { "description", null },
+                        { "category", "Business" },
+                        { "tags", new[] { "pool", "view", "wifi" } },
+                        { "parkingIncluded", true },
+                        { "lastRenovationDate", null },
+                        { "rating", 4 },
+                        { "location", null }
+                    };
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        { "hotelId", "1" },
+                        { "baseRate", 99.0 },
+                        { "description", null },
+                        { "descriptionFr", "Meilleur hôtel en ville" },
+                        { "hotelName", "Fancy Stay" },
+                        { "category", "Business" },
+                        { "tags", new[] { "pool", "view", "wifi" } },
+                        { "parkingIncluded", true },
+                        { "smokingAllowed", false },
+                        { "lastRenovationDate", null },
+                        { "rating", 4L },
+                        { "location", null }
+                    };
+
+                client.Documents.Index(IndexBatch.Create(new IndexAction(IndexActionType.Upload, originalDoc)));
+                SearchTestUtilities.WaitForIndexing();
+
+                client.Documents.Index(IndexBatch.Create(new IndexAction(IndexActionType.Merge, updatedDoc)));
+                SearchTestUtilities.WaitForIndexing();
+
+                Document actualDoc = client.Documents.Get("1");
+
+                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanMergeStaticallyTypedDocuments()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var originalDoc =
+                    new Hotel()
+                    {
+                        HotelId = "1",
+                        BaseRate = 199.0,
+                        Description = "Best hotel in town",
+                        DescriptionFr = "Meilleur hôtel en ville",
+                        HotelName = "Fancy Stay",
+                        Category = "Luxury",
+                        Tags = new[] { "pool", "view", "wifi", "concierge" },
+                        ParkingIncluded = false,
+                        SmokingAllowed = false,
+                        LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                        Rating = 5,
+                        Location = GeographyPoint.Create(47.678581, -122.131577)
+                    };
+
+                var updatedDoc =
+                    new Hotel()
+                    {
+                        HotelId = "1",
+                        BaseRate = 99.0,
+                        Description = null,
+                        Category = "Business",
+                        Tags = new[] { "pool", "view", "wifi" },
+                        ParkingIncluded = true,
+                        LastRenovationDate = null,
+                        Rating = 4,
+                        Location = null
+                    };
+
+                var expectedDoc =
+                    new Hotel()
+                    {
+                        HotelId = "1",
+                        BaseRate = 99.0,
+                        Description = "Best hotel in town",
+                        DescriptionFr = "Meilleur hôtel en ville",
+                        HotelName = "Fancy Stay",
+                        Category = "Business",
+                        Tags = new[] { "pool", "view", "wifi" },
+                        ParkingIncluded = true,
+                        SmokingAllowed = false,
+                        LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                        Rating = 4,
+                        Location = GeographyPoint.Create(47.678581, -122.131577)
+                    };
+
+                client.Documents.Index(IndexBatch.Create(IndexAction.Create(IndexActionType.Upload, originalDoc)));
+                SearchTestUtilities.WaitForIndexing();
+
+                client.Documents.Index(IndexBatch.Create(IndexAction.Create(IndexActionType.Merge, updatedDoc)));
+                SearchTestUtilities.WaitForIndexing();
+
+                Hotel actualDoc = client.Documents.Get<Hotel>("1");
+
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
         private static void AssertIsPartialFailure(
             IndexBatchException e, 
             IndexBatch batch, 
