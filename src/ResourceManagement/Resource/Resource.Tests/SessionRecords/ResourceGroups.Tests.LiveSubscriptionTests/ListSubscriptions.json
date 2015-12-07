@@ -7,49 +7,52 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2c9561d8-cc19-4a83-9b59-a94597673eaa"
+          "fff21d49-f6df-4aed-a2e9-e80676026e2f"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.SubscriptionClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.SubscriptionClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d\",\r\n      \"subscriptionId\": \"00977cdb-163f-435f-9c32-39ec8ae61f4d\",\r\n      \"displayName\": \"node\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/279b0675-cf67-467f-98f0-67ae31eb540f\",\r\n      \"subscriptionId\": \"279b0675-cf67-467f-98f0-67ae31eb540f\",\r\n      \"displayName\": \"Azure SDK CI\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101\",\r\n      \"subscriptionId\": \"6b085460-5f21-477e-ba44-1035046e9101\",\r\n      \"displayName\": \"Azure SDK Infrastructure\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c\",\r\n      \"subscriptionId\": \"db1ab6f0-4769-4b27-930e-01e2ef9c123c\",\r\n      \"displayName\": \"Azure SDK sandbox\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115\",\r\n      \"subscriptionId\": \"3ca49042-782a-4cc9-89b5-ee1b487fe115\",\r\n      \"displayName\": \"AzSdkCore1\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Public_2014-09-01\",\r\n        \"quotaId\": \"PayAsYouGo_2014-09-01\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "1080"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
-        ],
-        "x-ms-correlation-request-id": [
-          "755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20151022T202552Z:755e9f6d-ce9e-4a29-8f1f-d5e40b320aed"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Oct 2015 20:25:52 GMT"
+          "Fri, 04 Dec 2015 00:26:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "83419a55-7ff9-4a46-813d-7fbece7aad1d"
+        ],
+        "x-ms-correlation-request-id": [
+          "83419a55-7ff9-4a46-813d-7fbece7aad1d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151204T002635Z:83419a55-7ff9-4a46-813d-7fbece7aad1d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ]
       },
       "StatusCode": 200
@@ -57,6 +60,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
+    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
   }
 }

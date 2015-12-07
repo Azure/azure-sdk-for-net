@@ -7,49 +7,52 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eebb2377-2a6f-44e9-acd1-95dae4c6ed4d"
+          "b30ab939-2c4c-4ca6-a63a-e284f4f669e3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.SubscriptionClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.SubscriptionClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/1449d5b7-8a83-47db-ae4c-9b03e888bad0\",\r\n      \"tenantId\": \"1449d5b7-8a83-47db-ae4c-9b03e888bad0\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "116"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "14995"
-        ],
-        "x-ms-request-id": [
-          "00cb31b5-8455-47fd-9f65-9018775f9c03"
-        ],
-        "x-ms-correlation-request-id": [
-          "00cb31b5-8455-47fd-9f65-9018775f9c03"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20151022T203058Z:00cb31b5-8455-47fd-9f65-9018775f9c03"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Oct 2015 20:30:58 GMT"
+          "Fri, 04 Dec 2015 00:27:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "3ff1e50f-efa7-423b-b5b8-1dccf6e1a70f"
+        ],
+        "x-ms-correlation-request-id": [
+          "3ff1e50f-efa7-423b-b5b8-1dccf6e1a70f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151204T002800Z:3ff1e50f-efa7-423b-b5b8-1dccf6e1a70f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ]
       },
       "StatusCode": 200
@@ -57,6 +60,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
+    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
   }
 }

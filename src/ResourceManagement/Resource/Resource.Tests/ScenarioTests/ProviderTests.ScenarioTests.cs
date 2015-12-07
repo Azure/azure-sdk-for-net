@@ -177,12 +177,11 @@ namespace ResourceGroups.Tests
 
                 var operations = client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion);
 
-                Assert.NotNull(operations);
-                Assert.NotEmpty(operations.Value);
-                Assert.NotEmpty(operations.Value.First().Name);
-                Assert.NotNull(operations.Value.First().Display);
+                Assert.NotEmpty(operations);
+                Assert.NotEmpty(operations.First().Name);
+                Assert.NotNull(operations.First().Display);
                 IEnumerable<ResourceProviderOperationDefinition> definitions =
-                    operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.OrdinalIgnoreCase));
+                    operations.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(definitions);
                 Assert.NotEmpty(definitions);
                 Assert.Equal(1, definitions.Count());

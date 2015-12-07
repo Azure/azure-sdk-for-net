@@ -37,6 +37,6 @@
     },
     "dependencies": {
         "Microsoft.Azure.Test.HttpRecorder": "",
-        "Microsoft.Rest.ClientRuntime.Azure": "2.1.0"
+        "Microsoft.Rest.ClientRuntime.Azure": "2.2.0"
     }
 }

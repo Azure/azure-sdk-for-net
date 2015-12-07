@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the ProviderOperationsMetadata class.
         /// </summary>
-        public ProviderOperationsMetadata(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<ResourceType> resourceTypes = default(IList<ResourceType>), IList<Operation> operations = default(IList<Operation>))
+        public ProviderOperationsMetadata(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<ResourceType> resourceTypes = default(IList<ResourceType>), IList<ProviderOperation> operations = default(IList<ProviderOperation>))
         {
             Id = id;
             Name = name;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Gets or sets the provider operations
         /// </summary>
         [JsonProperty(PropertyName = "operations")]
-        public IList<Operation> Operations { get; set; }
+        public IList<ProviderOperation> Operations { get; set; }
 
     }
 }

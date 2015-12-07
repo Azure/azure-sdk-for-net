@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the ResourceType class.
         /// </summary>
-        public ResourceType(string name = default(string), string displayName = default(string), IList<Operation> operations = default(IList<Operation>))
+        public ResourceType(string name = default(string), string displayName = default(string), IList<ProviderOperation> operations = default(IList<ProviderOperation>))
         {
             Name = name;
             DisplayName = displayName;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Gets or sets the resource type operations
         /// </summary>
         [JsonProperty(PropertyName = "operations")]
-        public IList<Operation> Operations { get; set; }
+        public IList<ProviderOperation> Operations { get; set; }
 
     }
 }
