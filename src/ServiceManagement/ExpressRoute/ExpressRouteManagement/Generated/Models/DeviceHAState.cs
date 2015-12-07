@@ -22,31 +22,21 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Create or update Azure Sql Database Server communication link
-    /// parameters properties.
+    /// The device level.
     /// </summary>
-    public partial class ServerCommunicationLinkCreateOrUpdateProperties
+    public enum DeviceHAState
     {
-        private string _partnerServer;
+        /// <summary>
+        /// The device is primary device.
+        /// </summary>
+        Primary = 0,
         
         /// <summary>
-        /// Optional. Gets the name of the partner server.
+        /// The device is secondary device.
         /// </summary>
-        public string PartnerServer
-        {
-            get { return this._partnerServer; }
-            set { this._partnerServer = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ServerCommunicationLinkCreateOrUpdateProperties class.
-        /// </summary>
-        public ServerCommunicationLinkCreateOrUpdateProperties()
-        {
-        }
+        Secondary = 1,
     }
 }

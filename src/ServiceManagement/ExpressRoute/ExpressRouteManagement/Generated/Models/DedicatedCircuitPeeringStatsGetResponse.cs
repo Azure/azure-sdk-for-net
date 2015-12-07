@@ -21,42 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL Database Server communication
-    /// link.
+    /// The Get DedicatedCircuitPeeringStats operation response.
     /// </summary>
-    public partial class ServerCommunicationLinkProperties
+    public partial class DedicatedCircuitPeeringStatsGetResponse : AzureOperationResponse
     {
-        private string _partnerServer;
+        private AzureDedicatedCircuitStats _dedicatedCircuitStats;
         
         /// <summary>
-        /// Optional. Gets the name of the partner server.
+        /// Optional. Stats of the requested dedicated circuit at peering level.
         /// </summary>
-        public string PartnerServer
+        public AzureDedicatedCircuitStats DedicatedCircuitStats
         {
-            get { return this._partnerServer; }
-            set { this._partnerServer = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets the state.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._dedicatedCircuitStats; }
+            set { this._dedicatedCircuitStats = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerCommunicationLinkProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DedicatedCircuitPeeringStatsGetResponse class.
         /// </summary>
-        public ServerCommunicationLinkProperties()
+        public DedicatedCircuitPeeringStatsGetResponse()
         {
         }
     }

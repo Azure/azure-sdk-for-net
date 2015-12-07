@@ -22,32 +22,32 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Represents the response to a get server communication link request.
+    /// The Get DedicatedCircuitPeeringRouteTableSummary operation response.
     /// </summary>
-    public partial class ServerCommunicationLinkGetResponse : AzureOperationResponse
+    public partial class DedicatedCircuitPeeringRouteTableSummaryGetResponse : AzureOperationResponse
     {
-        private ServerCommunicationLink _serverCommunicationLink;
+        private AzureDedicatedCircuitPeeringRouteTableSummary _dedicatedCircuitPeeringRouteTableSummary;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Database Server communication
-        /// link.
+        /// Optional. BGP path, prefix and attribute information for all
+        /// connections to BGP neighbors.
         /// </summary>
-        public ServerCommunicationLink ServerCommunicationLink
+        public AzureDedicatedCircuitPeeringRouteTableSummary DedicatedCircuitPeeringRouteTableSummary
         {
-            get { return this._serverCommunicationLink; }
-            set { this._serverCommunicationLink = value; }
+            get { return this._dedicatedCircuitPeeringRouteTableSummary; }
+            set { this._dedicatedCircuitPeeringRouteTableSummary = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// ServerCommunicationLinkGetResponse class.
+        /// DedicatedCircuitPeeringRouteTableSummaryGetResponse class.
         /// </summary>
-        public ServerCommunicationLinkGetResponse()
+        public DedicatedCircuitPeeringRouteTableSummaryGetResponse()
         {
         }
     }
