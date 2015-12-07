@@ -279,9 +279,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// The definition of a ProtectedItemCreateOrUpdateResponse.
         /// </returns>
-        public static GetOperationResultResponse GetOperationResult(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static ProtectedItemCreateOrUpdateResponse GetOperationResult(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -319,9 +319,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// The definition of a ProtectedItemCreateOrUpdateResponse.
         /// </returns>
-        public static Task<GetOperationResultResponse> GetOperationResultAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectedItemCreateOrUpdateResponse> GetOperationResultAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetOperationResultAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, operationId, customRequestHeaders, CancellationToken.None);
         }
