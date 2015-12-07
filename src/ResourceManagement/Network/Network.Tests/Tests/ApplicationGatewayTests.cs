@@ -63,8 +63,6 @@ namespace Networks.Tests
             var httpListener2Name = TestUtilities.GenerateName();            
             var probeName = TestUtilities.GenerateName();
             var sslCertName = TestUtilities.GenerateName();
-            var password = "1234";
-            ApplicationGatewaySslCertificate sslCert = CreateSslCertificate(sslCertName, password);
 
             //var httpListenerMultiHostingName = TestUtilities.GenerateName();
             //var frontendPortMultiHostingName = TestUtilities.GenerateName();
@@ -93,10 +91,6 @@ namespace Networks.Tests
                             }
                         }
                     },
-                SslCertificates = new List<ApplicationGatewaySslCertificate>()
-                    {
-                        sslCert
-                    },
                 FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
                     { 
                         new ApplicationGatewayFrontendIPConfiguration()
@@ -119,7 +113,7 @@ namespace Networks.Tests
                         new ApplicationGatewayFrontendPort()
                         {
                             Name = frontendPort2Name,
-                            Port = 443
+                            Port = 88
                         },
                         //new ApplicationGatewayFrontendPort()
                         //{
@@ -212,12 +206,8 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                             },
-                            SslCertificate = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "sslCertificates", sslCertName)
-                            },
-                            Protocol = ApplicationGatewayProtocol.Https                            
+                            SslCertificate = null,
+                            Protocol = ApplicationGatewayProtocol.Http
                         },                        
                         //new ApplicationGatewayHttpListener()
                         //{
@@ -348,142 +338,6 @@ namespace Networks.Tests
             return appGw;
         }
 
-        private ApplicationGateway CreateApplicationGatewayWithSsl(string location, Subnet subnet, string resourceGroupName, string subscriptionId)
-        {
-            var appGwName = TestUtilities.GenerateName();
-            var gatewayIPConfigName = TestUtilities.GenerateName();
-            var frontendIPConfigName = TestUtilities.GenerateName();
-            var frontendPortName = TestUtilities.GenerateName();
-            var backendAddressPoolName = TestUtilities.GenerateName();
-            var backendHttpSettingsName = TestUtilities.GenerateName();
-            var requestRoutingRuleName = TestUtilities.GenerateName();
-            var sslCertName = TestUtilities.GenerateName();            
-            var httpListenerName = TestUtilities.GenerateName();
-            var password = "1234";                        
-            ApplicationGatewaySslCertificate sslCert = CreateSslCertificate(sslCertName, password);
-
-            var appGw = new ApplicationGateway()
-            {
-                Location = location,
-                Sku = new ApplicationGatewaySku()
-                {
-                    Name = ApplicationGatewaySkuName.StandardLarge,
-                    Tier = ApplicationGatewayTier.Standard,
-                    Capacity = 2
-                },
-                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
-                    {
-                        new ApplicationGatewayIPConfiguration()
-                        {
-                            Name = gatewayIPConfigName,
-                            Subnet = new SubResource()
-                            {
-                                Id = subnet.Id
-                            }
-                        }
-                    },
-                SslCertificates = new List<ApplicationGatewaySslCertificate>()
-                    {
-                        sslCert
-                    },
-                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
-                    { 
-                        new ApplicationGatewayFrontendIPConfiguration()
-                        {
-                            Name = frontendIPConfigName,
-                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                            Subnet = new SubResource()
-                            {
-                                Id = subnet.Id
-                            } 
-                        }                    
-                    },
-                FrontendPorts = new List<ApplicationGatewayFrontendPort>
-                    {
-                        new ApplicationGatewayFrontendPort()
-                        {
-                            Name = frontendPortName,
-                            Port = 443
-                        }
-                    },
-                BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
-                    {
-                        new ApplicationGatewayBackendAddressPool()
-                        {
-                            Name = backendAddressPoolName,
-                            BackendAddresses = new List<ApplicationGatewayBackendAddress>()
-                            {
-                                new ApplicationGatewayBackendAddress()
-                                {
-                                    IpAddress = "10.2.0.1"
-                                },
-                                new ApplicationGatewayBackendAddress()
-                                {
-                                    IpAddress = "10.2.0.2"
-                                }
-                            }
-                        }
-                    },
-                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings> 
-                    {
-                        new ApplicationGatewayBackendHttpSettings()
-                        {
-                            Name = backendHttpSettingsName,
-                            Port = 80,
-                            Protocol = ApplicationGatewayProtocol.Http,
-                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled
-                        }
-                    },
-                HttpListeners = new List<ApplicationGatewayHttpListener>
-                    {
-                        new ApplicationGatewayHttpListener()
-                        {
-                            Name = httpListenerName,
-                            FrontendPort = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "frontendPorts", frontendPortName)
-                            },
-                            FrontendIPConfiguration = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
-                            },
-                            SslCertificate = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "sslCertificates", sslCertName)
-                            },
-                            Protocol = ApplicationGatewayProtocol.Https
-                        }
-                    },
-                RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
-                    {
-                        new ApplicationGatewayRequestRoutingRule()
-                        {
-                            Name = requestRoutingRuleName,
-                            RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "httpListeners", httpListenerName)
-                            },
-                            BackendAddressPool = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
-                            },
-                            BackendHttpSettings = new SubResource()
-                            {
-                                Id = GetChildAppGwResourceId(subscriptionId,
-                                    resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
-                            }
-                        }
-                    }
-            };
-            return appGw;
-        }
-
         private void CompareApplicationGateway(ApplicationGateway gw1, ApplicationGateway gw2)
         {
             Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
@@ -493,7 +347,6 @@ namespace Networks.Tests
             Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
             Assert.Equal(gw1.Probes.Count, gw2.Probes.Count);
-            Assert.Equal(gw1.SslCertificates.Count, gw2.SslCertificates.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
@@ -533,7 +386,7 @@ namespace Networks.Tests
                 var appGw = CreateApplicationGateway(location, subnet, resourceGroupName, appGwName, networkManagementClient.SubscriptionId);     
 
                 // Put AppGw                
-                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
+           var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
                 Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
                 
                 // Get AppGw
