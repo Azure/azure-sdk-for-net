@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayRequestRoutingRule class.
         /// </summary>
-        public ApplicationGatewayRequestRoutingRule(string name = default(string), string etag = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), string provisioningState = default(string))
+        public ApplicationGatewayRequestRoutingRule(string name = default(string), string etag = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
             HttpListener = httpListener;
+            UrlPathMap = urlPathMap;
             ProvisioningState = provisioningState;
         }
 
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the rule type. Possible values for this property
-        /// include: 'Basic'.
+        /// include: 'Basic', 'PathBasedRouting'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ruleType")]
         public string RuleType { get; set; }
@@ -80,6 +81,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpListener")]
         public SubResource HttpListener { get; set; }
+
+        /// <summary>
+        /// Gets or sets url path map resource of application gateway
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.urlPathMap")]
+        public SubResource UrlPathMap { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the request routing rule

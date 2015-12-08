@@ -27,7 +27,7 @@
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "Microsoft.Azure.Management.Authorization": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure": "2.2.0",
     "Microsoft.Azure.Management.Resources": "3.1.1-preview"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"

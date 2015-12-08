@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.13.0-Nightly20151119
+set autoRestVersion=0.13.0-Nightly20151202
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 if  "%1" == "" (

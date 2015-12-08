@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -42,14 +41,8 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='resourceName'>
         /// Resource identity.
         /// </param>
-        /// <param name='atScope'>
-        /// if true atScope() method will be used in filtering
-        /// </param>
-        /// <param name='principalId'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='assignedTo'>
-        /// The filter to apply on the operation.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,21 +50,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets role assignments of the resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name.
         /// </param>
-        /// <param name='atScope'>
-        /// if true atScope() method will be used in filtering
-        /// </param>
-        /// <param name='principalId'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='assignedTo'>
-        /// The filter to apply on the operation.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,7 +66,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete role assignment.
         /// </summary>
@@ -176,14 +163,8 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Gets role assignments of the subscription.
         /// </summary>
-        /// <param name='atScope'>
-        /// if true atScope() method will be used in filtering
-        /// </param>
-        /// <param name='principalId'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='assignedTo'>
-        /// The filter to apply on the operation.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -191,21 +172,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListWithHttpMessagesAsync(bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListWithHttpMessagesAsync(ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets role assignments of the scope.
         /// </summary>
         /// <param name='scope'>
         /// Scope.
         /// </param>
-        /// <param name='atScope'>
-        /// if true atScope() method will be used in filtering
-        /// </param>
-        /// <param name='principalId'>
-        /// The filter to apply on the operation.
-        /// </param>
-        /// <param name='assignedTo'>
-        /// The filter to apply on the operation.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -213,7 +188,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, bool? atScope = default(bool?), string principalId = default(string), string assignedTo = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets role assignments of the resource.
         /// </summary>

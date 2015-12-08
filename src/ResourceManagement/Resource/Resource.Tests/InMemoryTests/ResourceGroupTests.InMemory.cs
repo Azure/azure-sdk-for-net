@@ -25,6 +25,7 @@ using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 using Xunit;
+using Microsoft.Rest.Azure.OData;
 
 namespace ResourceGroups.Tests
 {
@@ -344,7 +345,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.List(top: 5);
+            var result = client.ResourceGroups.List(new ODataQuery<ResourceGroupFilter> { Top = 5 });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -379,8 +380,8 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.Delete(null));
-            Assert.Throws<CloudException>(() => client.ResourceGroups.Delete("~`123"));
+            Assert.Throws<ValidationException>(() => client.ResourceGroups.Delete(null));
+            Assert.Throws<ValidationException>(() => client.ResourceGroups.Delete("~`123"));
         }
     }
 }

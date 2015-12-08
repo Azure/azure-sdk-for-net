@@ -31,13 +31,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendHttpSettings class.
         /// </summary>
-        public ApplicationGatewayBackendHttpSettings(string name = default(string), string etag = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), string provisioningState = default(string))
+        public ApplicationGatewayBackendHttpSettings(string name = default(string), string etag = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
             Port = port;
             Protocol = protocol;
             CookieBasedAffinity = cookieBasedAffinity;
+            RequestTimeout = requestTimeout;
+            Probe = probe;
             ProvisioningState = provisioningState;
         }
 
@@ -74,6 +76,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public string CookieBasedAffinity { get; set; }
+
+        /// <summary>
+        /// Gets or sets request timeout
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requestTimeout")]
+        public int? RequestTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets probe resource of application gateway
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.probe")]
+        public SubResource Probe { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the backend http settings

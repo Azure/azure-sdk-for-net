@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -115,7 +115,6 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("DELETE");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -159,12 +158,19 @@ namespace Microsoft.Azure.Management.Authorization
             if ((int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -185,8 +191,173 @@ namespace Microsoft.Azure.Management.Authorization
             // Deserialize Response
             if ((int)statusCode == 200)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
+        /// <param name='roleDefinitionId'>
+        /// Role definition Id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "roleDefinitionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("roleDefinitionId", roleDefinitionId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}").ToString();
+            url = url.Replace("{scope}", scope);
+            url = url.Replace("{roleDefinitionId}", Uri.EscapeDataString(roleDefinitionId));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if ((int)statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<RoleDefinition>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)statusCode == 200)
+            {
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -270,7 +441,6 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("PUT");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -318,12 +488,19 @@ namespace Microsoft.Azure.Management.Authorization
             if ((int)statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -344,144 +521,15 @@ namespace Microsoft.Azure.Management.Authorization
             // Deserialize Response
             if ((int)statusCode == 201)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// </summary>
-        /// <param name='roleDefinitionId'>
-        /// Role definition Id
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (roleDefinitionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "roleDefinitionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("roleDefinitionId", roleDefinitionId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
-            }
-            // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}").ToString();
-            url = url.Replace("{roleDefinitionId}", Uri.EscapeDataString(roleDefinitionId));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
+                try
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
+                catch (JsonException ex)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    throw new RestException("Unable to deserialize the response.", ex);
                 }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<RoleDefinition>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)statusCode == 200)
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -546,7 +594,6 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -590,12 +637,19 @@ namespace Microsoft.Azure.Management.Authorization
             if ((int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -616,8 +670,15 @@ namespace Microsoft.Azure.Management.Authorization
             // Deserialize Response
             if ((int)statusCode == 200)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<RoleDefinition>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -627,10 +688,14 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get role definitions.
+        /// Get all role definitions that are applicable at scope and above. Use
+        /// atScopeAndBelow filter to search below the given scope as well
         /// </summary>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -638,8 +703,12 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(Expression<Func<RoleDefinition, bool>> filter = default(Expression<Func<RoleDefinition, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -655,18 +724,24 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions").ToString();
+            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions").ToString();
+            url = url.Replace("{scope}", scope);
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
             }
             if (this.Client.ApiVersion != null)
             {
@@ -681,7 +756,6 @@ namespace Microsoft.Azure.Management.Authorization
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-version", this.Client.ApiVersion);
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
@@ -725,12 +799,19 @@ namespace Microsoft.Azure.Management.Authorization
             if ((int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -751,8 +832,15 @@ namespace Microsoft.Azure.Management.Authorization
             // Deserialize Response
             if ((int)statusCode == 200)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<RoleDefinition>>(responseContent, this.Client.DeserializationSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<Page<RoleDefinition>>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {
@@ -762,7 +850,8 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get role definitions.
+        /// Get all role definitions that are applicable at scope and above. Use
+        /// atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -846,12 +935,19 @@ namespace Microsoft.Azure.Management.Authorization
             if ((int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
+                try
                 {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    if (errorBody != null)
+                    {
+                        ex = new CloudException(errorBody.Message);
+                        ex.Body = errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
@@ -872,8 +968,15 @@ namespace Microsoft.Azure.Management.Authorization
             // Deserialize Response
             if ((int)statusCode == 200)
             {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<Page<RoleDefinition>>(responseContent, this.Client.DeserializationSettings);
+                try
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result.Body = JsonConvert.DeserializeObject<Page<RoleDefinition>>(responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    throw new RestException("Unable to deserialize the response.", ex);
+                }
             }
             if (shouldTrace)
             {

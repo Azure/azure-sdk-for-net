@@ -23,7 +23,7 @@ using Xunit;
 using Microsoft.Rest;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-
+using Microsoft.Rest.Azure.OData;
 
 namespace ResourceGroups.Tests
 {
@@ -928,7 +928,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", d => d.ProvisioningState == "Succeeded", top: 10);
+            var result = client.Deployments.List("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -948,6 +948,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextPageLink);
         }
 
+        // TODO: Fix
         [Fact]
         public void DeploymentTestsListForGroupValidateMessage()
         {
@@ -1037,14 +1038,14 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", d => d.ProvisioningState == "Succeeded", 10);
+            var result = client.Deployments.List("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
             Assert.True(handler.Uri.ToString().Contains("$top=10"));
             Assert.True(handler.Uri.ToString().Contains("$filter=provisioningState eq 'Succeeded'"));
-            Assert.True(handler.Uri.ToString().Contains("resourcegroups/foo/deployments"));
+            Assert.True(handler.Uri.ToString().Contains("resourcegroups/foo/providers/Microsoft.Resources/deployments"));
 
             // Validate result
             Assert.Equal("myrealease-3.14", result.First().Name);

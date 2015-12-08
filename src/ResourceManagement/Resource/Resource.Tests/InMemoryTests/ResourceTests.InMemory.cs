@@ -22,6 +22,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Rest;
+using Microsoft.Rest.Azure.OData;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -158,7 +159,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.ListResources("foo", r => r.ResourceType == "Sites");
+            var result = client.ResourceGroups.ListResources("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
             /*new ResourceListParameters
             {              
                 ResourceType = "Sites"
@@ -202,7 +203,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.ListResources("foo", r => r.ResourceType == "Sites");
+            var result = client.ResourceGroups.ListResources("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
 
 
             // Validate headers
