@@ -691,6 +691,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='skipToken'>
         /// Continuation Token.
         /// </param>
+        /// <param name='parameters'>
+        /// Protected items query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -700,7 +703,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        Task<ReplicationProtectedItemListResponse> ListAllAsync(string skipToken, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ReplicationProtectedItemListResponse> ListAllAsync(string skipToken, ProtectedItemsQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get subsequent page data for replication protected items under

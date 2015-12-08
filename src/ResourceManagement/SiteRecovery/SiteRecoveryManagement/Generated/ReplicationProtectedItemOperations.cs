@@ -3688,6 +3688,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
                                 }
                                 
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                }
+                                
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                 if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                 {
@@ -5141,6 +5148,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -6655,6 +6669,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -8402,6 +8423,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
                                 }
                                 
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                }
+                                
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                 if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                 {
@@ -9914,6 +9942,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -11661,6 +11696,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
                                 }
                                 
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                }
+                                
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                 if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                 {
@@ -13173,6 +13215,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -14689,6 +14738,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
                                 }
                                 
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                }
+                                
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                 if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                 {
@@ -16201,6 +16257,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -17717,6 +17780,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
                                 }
                                 
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                }
+                                
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                 if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                 {
@@ -19229,6 +19299,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string activeLocationInstance = ((string)activeLocationValue);
                                     propertiesInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                {
+                                    string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                    propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                 }
                                 
                                 JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -20794,6 +20871,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.ActiveLocation = activeLocationInstance;
                                         }
                                         
+                                        JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                        if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                            propertiesInstance.TestFailoverState = testFailoverStateInstance;
+                                        }
+                                        
                                         JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
                                         if (testFailoverStateDescriptionValue != null && testFailoverStateDescriptionValue.Type != JTokenType.Null)
                                         {
@@ -22074,6 +22158,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='skipToken'>
         /// Optional. Continuation Token.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Protected items query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -22083,7 +22170,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        public async Task<ReplicationProtectedItemListResponse> ListAllAsync(string skipToken, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ReplicationProtectedItemListResponse> ListAllAsync(string skipToken, ProtectedItemsQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -22095,6 +22182,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("skipToken", skipToken);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAllAsync", tracingParameters);
             }
@@ -22121,6 +22209,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 queryParameters.Add("skipToken=" + Uri.EscapeDataString(skipToken));
             }
             queryParameters.Add("api-version=2015-11-10");
+            List<string> odataFilter = new List<string>();
+            if (parameters != null && parameters.ToQueryString() != null)
+            {
+                odataFilter.Add(Uri.EscapeDataString(parameters.ToQueryString().ToString()));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -22293,6 +22390,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string activeLocationInstance = ((string)activeLocationValue);
                                             propertiesInstance.ActiveLocation = activeLocationInstance;
+                                        }
+                                        
+                                        JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                        if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                            propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                         }
                                         
                                         JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];
@@ -23765,6 +23869,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string activeLocationInstance = ((string)activeLocationValue);
                                             propertiesInstance.ActiveLocation = activeLocationInstance;
+                                        }
+                                        
+                                        JToken testFailoverStateValue = propertiesValue["testFailoverState"];
+                                        if (testFailoverStateValue != null && testFailoverStateValue.Type != JTokenType.Null)
+                                        {
+                                            string testFailoverStateInstance = ((string)testFailoverStateValue);
+                                            propertiesInstance.TestFailoverState = testFailoverStateInstance;
                                         }
                                         
                                         JToken testFailoverStateDescriptionValue = propertiesValue["testFailoverStateDescription"];

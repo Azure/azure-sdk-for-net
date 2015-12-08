@@ -163,8 +163,40 @@ namespace SiteRecovery.Tests
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
                 List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
+
                 var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
                     null,
+                    null,
+                    RequestHeaders);
+                itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                while (protectedItemsResponse.NextLink != null)
+                {
+                    protectedItemsResponse = client.ReplicationProtectedItem.ListAllNext(
+                        protectedItemsResponse.NextLink,
+                        RequestHeaders);
+
+                    itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                }
+            }
+        }
+
+        [Fact]
+        public void EnumerateProtectedItemsUnderFabric()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
+                var queryParams = new ProtectedItemsQueryParameter
+                {
+                    SourceFabricName = "2163c4b41217f3a2274ffa9914d6707b5a93b013683762e18378d0af4fe2ca0c"
+                };
+
+                var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    queryParams,
                     RequestHeaders);
                 itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
                 while (protectedItemsResponse.NextLink != null)

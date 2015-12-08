@@ -277,6 +277,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicationHealthErrors = value; }
         }
         
+        private string _testFailoverState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Test failover state.
+        /// </summary>
+        public string TestFailoverState
+        {
+            get { return this._testFailoverState; }
+            set { this._testFailoverState = value; }
+        }
+        
         private string _testFailoverStateDescription;
         
         /// <summary>
