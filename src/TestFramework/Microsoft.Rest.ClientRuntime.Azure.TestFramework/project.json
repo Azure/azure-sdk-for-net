@@ -1,4 +1,4 @@
-{
+﻿{
     "version": "1.0.1-preview",
     "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
     "authors": [ "Microsoft Corporation" ],
@@ -37,6 +37,6 @@
     },
     "dependencies": {
         "Microsoft.Azure.Test.HttpRecorder": "",
-      "Microsoft.Rest.ClientRuntime.Azure": "2.2.0"
+        "Microsoft.Rest.ClientRuntime.Azure": "2.2.0"
     }
 }

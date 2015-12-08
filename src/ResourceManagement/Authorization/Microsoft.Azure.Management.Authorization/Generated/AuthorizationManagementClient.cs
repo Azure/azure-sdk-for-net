@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Management.Authorization
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -73,11 +71,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
-
         public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
 
         public virtual IPermissionsOperations Permissions { get; private set; }
+
+        public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
 
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
 
@@ -262,9 +260,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         private void Initialize()
         {
-            this.ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             this.ClassicAdministrators = new ClassicAdministratorsOperations(this);
             this.Permissions = new PermissionsOperations(this);
+            this.ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             this.RoleAssignments = new RoleAssignmentsOperations(this);
             this.RoleDefinitions = new RoleDefinitionsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
