@@ -34,6 +34,6 @@
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.1.0-preview",
     "Microsoft.Azure.Test.HttpRecorder": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.2.0"
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.2.0, 3.0)"
   }
 }
