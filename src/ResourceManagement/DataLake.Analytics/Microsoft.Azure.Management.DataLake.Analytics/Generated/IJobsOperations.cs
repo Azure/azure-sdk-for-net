@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// DataLakeAnalyticsJobOperations operations.
+    /// JobsOperations operations.
     /// </summary>
-    public partial interface IDataLakeAnalyticsJobOperations
+    public partial interface IJobsOperations
     {
         /// <summary>
         /// Gets the job statistics object specified by the job ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
         /// JobInfo ID.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string accountName, string jobIdentity, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the U-SQL job debug data information specified by the job ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
         /// JobInfo ID.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -60,16 +60,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string accountName, string jobIdentity, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Builds (compiles) the specified job in the specified Data Lake
         /// Analytics account for job correctness and validation.
         /// </summary>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to build the job for
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account to build the job for
         /// </param>
         /// <param name='parameters'>
         /// The parameters to build a job, which simulates submission.
@@ -80,19 +80,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountName, string resourceGroupName, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string resourceGroupName, string accountName, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Submits the specified job to the specified Data Lake Analytics
         /// account for computation.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to create the job for
         /// </param>
         /// <param name='jobId'>
         /// The parameters to submit a job.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to submit a job.
@@ -103,61 +103,78 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountName, string jobId, string resourceGroupName, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Cancels the running job specified by the job ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to cancel the job for
         /// </param>
         /// <param name='jobIdentity'>
         /// JobInfo ID to cancel.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string accountName, string jobIdentity, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the JobInfo object specified by the job ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
         /// JobInfo ID.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string accountName, string jobIdentity, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics JobInformation
         /// objects within the specified resource group with a link to the
         /// next page, if any.
         /// </summary>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to get the job from
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='odataQuery'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all JobInfo items.
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='search'>
+        /// Gets or sets a free form search. A free-text search expression to
+        /// match for whether a particular entry should be included in the
+        /// feed, e.g. Categories?$search=blue OR green. Optional.
+        /// </param>
+        /// <param name='format'>
+        /// Gets or sets the return format. Return the response in particular
+        /// formatxii without access to request headers for standard
+        /// content-type negotiation (e.g Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,7 +182,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, string resourceGroupName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics JobInformation
         /// objects within the specified resource group with a link to the

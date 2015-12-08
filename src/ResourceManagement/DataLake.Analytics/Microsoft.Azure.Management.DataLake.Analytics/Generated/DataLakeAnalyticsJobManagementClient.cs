@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IDataLakeAnalyticsJobOperations DataLakeAnalyticsJob { get; private set; }
+        public virtual IJobsOperations Jobs { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsJobManagementClient class.
@@ -258,9 +258,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
-            this.DataLakeAnalyticsJob = new DataLakeAnalyticsJobOperations(this);
+            this.Jobs = new JobsOperations(this);
             this.BaseUri = new Uri("https://accountName.jobServiceUri");
             this.ApiVersion = "2015-10-01-preview";
+            this.JobServiceUri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {
@@ -288,6 +289,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobProperties>("jobType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobProperties>("jobType"));
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    

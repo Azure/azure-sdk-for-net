@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
-        IDataLakeAnalyticsCatalogOperations DataLakeAnalyticsCatalog { get; }
+        ICatalogOperations Catalog { get; }
 
     }
 }

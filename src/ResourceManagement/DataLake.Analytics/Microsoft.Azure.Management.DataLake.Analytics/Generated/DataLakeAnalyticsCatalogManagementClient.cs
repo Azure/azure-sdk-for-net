@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IDataLakeAnalyticsCatalogOperations DataLakeAnalyticsCatalog { get; private set; }
+        public virtual ICatalogOperations Catalog { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsCatalogManagementClient class.
@@ -258,9 +258,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
-            this.DataLakeAnalyticsCatalog = new DataLakeAnalyticsCatalogOperations(this);
+            this.Catalog = new CatalogOperations(this);
             this.BaseUri = new Uri("https://accountName.catalogServiceUri");
             this.ApiVersion = "2015-10-01-preview";
+            this.CatalogServiceUri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

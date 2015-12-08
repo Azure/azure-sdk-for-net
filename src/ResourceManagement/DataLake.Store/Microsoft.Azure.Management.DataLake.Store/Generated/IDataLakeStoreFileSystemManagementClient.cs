@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
-        IDataLakeStoreFileSystemOperations DataLakeStoreFileSystem { get; }
+        IFileSystemOperations FileSystem { get; }
 
     }
 }

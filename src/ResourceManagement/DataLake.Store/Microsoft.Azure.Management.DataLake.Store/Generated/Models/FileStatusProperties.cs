@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
 
         /// <summary>
         /// Gets or sets the type of the path object. Possible values for this
-        /// property include: 'FILE', 'DIRECTORY'.
+        /// property include: 'File', 'Directory'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public FileType? Type { get; set; }

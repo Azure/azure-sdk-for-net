@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Microsoft.Rest.Azure;
     using Models;
 
-    public static partial class DataLakeAnalyticsCatalogOperationsExtensions
+    public static partial class CatalogOperationsExtensions
     {
             /// <summary>
             /// Creates the specified secret for use with external data sources in the
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to create the secret (name and password)
             /// </param>
-            public static USqlSecret CreateSecret(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
+            public static USqlSecret CreateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> CreateSecretAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> CreateSecretAsync( this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlSecret> result = await operations.CreateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to modify the secret (name and password)
             /// </param>
-            public static USqlSecret UpdateSecret(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
+            public static USqlSecret UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> UpdateSecretAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> UpdateSecretAsync( this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlSecret> result = await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -154,9 +154,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlSecret GetSecret(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName)
+            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> GetSecretAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> GetSecretAsync( this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlSecret> result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -204,9 +204,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static void DeleteSecret(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName)
+            public static void DeleteSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName)
             {
-                Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSecretAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSecretAsync( this ICatalogOperations operations, string accountName, string databaseName, string secretName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteSecretWithHttpMessagesAsync(accountName, databaseName, secretName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -254,9 +254,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlExternalDataSource GetExternalDataSource(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, string resourceGroupName)
+            public static USqlExternalDataSource GetExternalDataSource(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync( this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlExternalDataSource> result = await operations.GetExternalDataSourceWithHttpMessagesAsync(accountName, databaseName, externalDataSourceName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -303,9 +303,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSources(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -324,12 +337,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync( this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlExternalDataSource>> result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlExternalDataSource>> result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -352,9 +378,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlCredential GetCredential(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string credentialName, string resourceGroupName)
+            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -379,7 +405,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlCredential> GetCredentialAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string credentialName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlCredential> GetCredentialAsync( this ICatalogOperations operations, string accountName, string databaseName, string credentialName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlCredential> result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -401,9 +427,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlCredential> ListCredentials(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListCredentialsAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -422,12 +461,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlCredential>> ListCredentialsAsync( this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlCredential>> result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlCredential>> result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -453,9 +505,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlProcedure GetProcedure(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, string resourceGroupName)
+            public static USqlProcedure GetProcedure(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -483,7 +535,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlProcedure> GetProcedureAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlProcedure> GetProcedureAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlProcedure> result = await operations.GetProcedureWithHttpMessagesAsync(accountName, databaseName, schemaName, procedureName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -508,9 +560,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlProcedure> ListProcedures(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -532,12 +597,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlProcedure>> ListProceduresAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlProcedure>> result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlProcedure>> result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -562,9 +640,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlTable GetTable(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName)
+            public static USqlTable GetTable(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -591,7 +669,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTable> GetTableAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTable> GetTableAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlTable> result = await operations.GetTableWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -615,9 +693,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTable> ListTables(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -638,12 +729,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTable>> ListTablesAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlTable>> result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlTable>> result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -668,9 +772,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlView GetView(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, string resourceGroupName)
+            public static USqlView GetView(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -697,7 +801,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlView> GetViewAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlView> GetViewAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlView> result = await operations.GetViewWithHttpMessagesAsync(accountName, databaseName, schemaName, viewName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -721,9 +825,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlView> ListViews(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -744,12 +861,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlView>> ListViewsAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlView>> result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlView>> result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -777,9 +907,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlTableStatistics GetTableStatistic(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, string resourceGroupName)
+            public static USqlTableStatistics GetTableStatistic(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -809,7 +939,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableStatistics> GetTableStatisticAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTableStatistics> GetTableStatisticAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlTableStatistics> result = await operations.GetTableStatisticWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, statisticsName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -836,9 +966,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatistics(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -862,12 +1005,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlTableStatistics>> result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlTableStatistics>> result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -891,14 +1047,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all catalog type items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
-            public static IPage<USqlType> ListTypes(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string))
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlType> ListTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -921,17 +1084,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all catalog type items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlType>> ListTypesAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlType>> result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlType>> result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -957,9 +1127,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlTableValuedFunction GetTableValuedFunction(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, string resourceGroupName)
+            public static USqlTableValuedFunction GetTableValuedFunction(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -987,7 +1157,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlTableValuedFunction> result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableValuedFunctionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1012,9 +1182,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1036,12 +1219,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlTableValuedFunction>> result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlTableValuedFunction>> result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1064,9 +1260,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlAssembly GetAssembly(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string assemblyName, string resourceGroupName)
+            public static USqlAssembly GetAssembly(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1091,7 +1287,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlAssembly> GetAssemblyAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string assemblyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlAssembly> GetAssemblyAsync( this ICatalogOperations operations, string accountName, string databaseName, string assemblyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlAssembly> result = await operations.GetAssemblyWithHttpMessagesAsync(accountName, databaseName, assemblyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1113,9 +1309,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssemblies(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListAssembliesAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1134,12 +1343,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync( this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlAssemblyClr>> result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlAssemblyClr>> result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1161,9 +1383,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlSchema GetSchema(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
+            public static USqlSchema GetSchema(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1187,7 +1409,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSchema> GetSchemaAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSchema> GetSchemaAsync( this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlSchema> result = await operations.GetSchemaWithHttpMessagesAsync(accountName, databaseName, schemaName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1208,9 +1430,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlSchema> ListSchemas(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListSchemasAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1228,12 +1463,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlSchema>> ListSchemasAsync( this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlSchema>> result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlSchema>> result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1253,9 +1501,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static USqlDatabase GetDatabase(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
+            public static USqlDatabase GetDatabase(this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).GetDatabaseAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(accountName, databaseName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1277,7 +1525,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlDatabase> GetDatabaseAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlDatabase> GetDatabaseAsync( this ICatalogOperations operations, string accountName, string databaseName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<USqlDatabase> result = await operations.GetDatabaseWithHttpMessagesAsync(accountName, databaseName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1296,9 +1544,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlDatabase> ListDatabases(this IDataLakeAnalyticsCatalogOperations operations, string accountName, string resourceGroupName)
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListDatabasesAsync(accountName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1314,12 +1575,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
+            /// <param name='odataQuery'>
+            /// Gets or sets OData filter. Optional.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlDatabase>> ListDatabasesAsync( this IDataLakeAnalyticsCatalogOperations operations, string accountName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlDatabase>> ListDatabasesAsync( this ICatalogOperations operations, string accountName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<USqlDatabase>> result = await operations.ListDatabasesWithHttpMessagesAsync(accountName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IPage<USqlDatabase>> result = await operations.ListDatabasesWithHttpMessagesAsync(accountName, resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1336,9 +1610,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSourcesNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlExternalDataSource> ListExternalDataSourcesNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListExternalDataSourcesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1357,7 +1631,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlExternalDataSource>> result = await operations.ListExternalDataSourcesNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1376,9 +1650,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlCredential> ListCredentialsNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlCredential> ListCredentialsNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListCredentialsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1397,7 +1671,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlCredential>> ListCredentialsNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlCredential>> result = await operations.ListCredentialsNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1416,9 +1690,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlProcedure> ListProceduresNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlProcedure> ListProceduresNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListProceduresNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1437,7 +1711,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlProcedure>> result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1455,9 +1729,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTable> ListTablesNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlTable> ListTablesNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTablesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1475,7 +1749,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTable>> ListTablesNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlTable>> result = await operations.ListTablesNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1493,9 +1767,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlView> ListViewsNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlView> ListViewsNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListViewsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1513,7 +1787,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlView>> ListViewsNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlView>> result = await operations.ListViewsNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1531,9 +1805,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatisticsNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlTableStatistics> ListTableStatisticsNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTableStatisticsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1551,7 +1825,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlTableStatistics>> result = await operations.ListTableStatisticsNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1570,9 +1844,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlType> ListTypesNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlType> ListTypesNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTypesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1591,7 +1865,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlType>> ListTypesNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlType>> result = await operations.ListTypesNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1610,9 +1884,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListTableValuedFunctionsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1631,7 +1905,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlTableValuedFunction>> result = await operations.ListTableValuedFunctionsNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1650,9 +1924,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssembliesNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlAssemblyClr> ListAssembliesNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListAssembliesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1671,7 +1945,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlAssemblyClr>> result = await operations.ListAssembliesNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1689,9 +1963,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlSchema> ListSchemasNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlSchema> ListSchemasNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListSchemasNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1709,7 +1983,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlSchema>> ListSchemasNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlSchema>> result = await operations.ListSchemasNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -1728,9 +2002,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='resourceGroupName'>
             /// The name of the resourceGroup the Data Lake Analytics account is in
             /// </param>
-            public static IPage<USqlDatabase> ListDatabasesNext(this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<USqlDatabase> ListDatabasesNext(this ICatalogOperations operations, string nextPageLink, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IDataLakeAnalyticsCatalogOperations)s).ListDatabasesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1749,7 +2023,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlDatabase>> ListDatabasesNextAsync( this IDataLakeAnalyticsCatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlDatabase>> ListDatabasesNextAsync( this ICatalogOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IPage<USqlDatabase>> result = await operations.ListDatabasesNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;

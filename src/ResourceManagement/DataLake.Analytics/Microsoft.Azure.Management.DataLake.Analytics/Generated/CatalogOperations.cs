@@ -19,23 +19,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
-    /// DataLakeAnalyticsCatalogOperations operations.
+    /// CatalogOperations operations.
     /// </summary>
-    internal partial class DataLakeAnalyticsCatalogOperations : IServiceOperations<DataLakeAnalyticsCatalogManagementClient>, IDataLakeAnalyticsCatalogOperations
+    internal partial class CatalogOperations : IServiceOperations<DataLakeAnalyticsCatalogManagementClient>, ICatalogOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeAnalyticsCatalogOperations class.
+        /// Initializes a new instance of the CatalogOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataLakeAnalyticsCatalogOperations(DataLakeAnalyticsCatalogManagementClient client)
+        internal CatalogOperations(DataLakeAnalyticsCatalogManagementClient client)
         {
             if (client == null) 
             {
@@ -130,10 +131,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -338,10 +339,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -537,10 +538,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -732,10 +733,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/secrets/{secretName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{secretName}", Uri.EscapeDataString(secretName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -901,10 +902,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/externaldatasources/{externalDataSourceName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1041,13 +1042,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1083,16 +1097,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListExternalDataSources", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/externaldatasources").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1284,10 +1317,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/credentials/{credentialName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1424,13 +1457,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1466,16 +1512,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListCredentials", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/credentials").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1675,11 +1740,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures/{procedureName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{procedureName}", Uri.EscapeDataString(procedureName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1819,13 +1884,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1866,17 +1944,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListProcedures", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -2075,11 +2172,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2218,13 +2315,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -2265,17 +2375,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListTables", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -2474,11 +2603,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views/{viewName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{viewName}", Uri.EscapeDataString(viewName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2617,13 +2746,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -2664,17 +2806,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListViews", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -2881,12 +3042,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics/{statisticsName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
             url = url.Replace("{statisticsName}", Uri.EscapeDataString(statisticsName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3028,13 +3189,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3080,18 +3254,37 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListTableStatistics", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -3231,10 +3424,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// Gets or sets OData filter. Optional.
         /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all catalog type items.
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3242,7 +3442,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3284,6 +3484,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListTypes", tracingParameters);
@@ -3291,10 +3492,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/types").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -3307,6 +3508,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (select != null)
             {
                 queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -3507,11 +3712,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions/{tableValuedFunctionName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             url = url.Replace("{tableValuedFunctionName}", Uri.EscapeDataString(tableValuedFunctionName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3651,13 +3856,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3698,17 +3916,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListTableValuedFunctions", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -3900,10 +4137,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/assemblies/{assemblyName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{assemblyName}", Uri.EscapeDataString(assemblyName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4040,13 +4277,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -4082,16 +4332,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListAssemblies", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/assemblies").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -4282,10 +4551,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas/{schemaName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             url = url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4421,13 +4690,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -4463,16 +4745,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListSchemas", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}/schemas").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -4656,9 +4957,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases/{databaseName}").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             url = url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4792,13 +5093,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each entry
+        /// to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -4829,15 +5143,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListDatabases", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "catalog/usql/databases").ToString();
-            url = url.Replace("accountName", Uri.EscapeDataString(accountName));
-            url = url.Replace("catalogServiceUri", Uri.EscapeDataString(this.Client.CatalogServiceUri));
+            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("{catalogServiceUri}", Uri.EscapeDataString(this.Client.CatalogServiceUri));
             List<string> queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// DataLakeAnalyticsCatalogOperations operations.
+    /// CatalogOperations operations.
     /// </summary>
-    public partial interface IDataLakeAnalyticsCatalogOperations
+    public partial interface ICatalogOperations
     {
         /// <summary>
         /// Creates the specified secret for use with external data sources in
@@ -155,13 +155,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified credential from the current Data Lake
         /// Analytics catalog
@@ -198,13 +211,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified procedure from the current Data Lake
         /// Analytics catalog
@@ -247,13 +273,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
@@ -296,13 +335,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified view from the current Data Lake Analytics
         /// catalog
@@ -345,13 +397,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table from the current Data Lake Analytics
         /// catalog
@@ -400,13 +465,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of catalog types within the specified database
         /// and schema for the current Data Lake Analytics catalog
@@ -424,10 +502,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// Gets or sets OData filter. Optional.
         /// </param>
         /// <param name='select'>
-        /// Query parameters. If null is passed returns all catalog type items.
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -435,7 +520,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table valued function from the current
         /// Data Lake Analytics catalog
@@ -478,13 +563,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified assembly from the current Data Lake
         /// Analytics catalog
@@ -521,13 +619,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified schema from the current Data Lake
         /// Analytics catalog
@@ -564,13 +675,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified database from the current Data Lake
         /// Analytics catalog
@@ -601,13 +725,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='resourceGroupName'>
         /// The name of the resourceGroup the Data Lake Analytics account is in
         /// </param>
+        /// <param name='odataQuery'>
+        /// Gets or sets OData filter. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of external data sources from the current Data
         /// Lake Analytics catalog

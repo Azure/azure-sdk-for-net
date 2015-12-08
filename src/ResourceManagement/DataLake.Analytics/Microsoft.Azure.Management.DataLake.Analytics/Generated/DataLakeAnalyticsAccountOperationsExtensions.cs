@@ -600,19 +600,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             public static IPage<StorageAccount> ListStorageAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
@@ -634,19 +642,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -673,19 +689,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             public static IPage<DataLakeStoreAccount> ListDataLakeStoreAccounts(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
@@ -708,19 +732,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -743,19 +775,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             public static IPage<DataLakeAnalyticsAccount> List(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
@@ -774,19 +814,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// Gets or sets OData filter. Optional.
             /// </param>
             /// <param name='select'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Query parameters. If null is passed returns all account items.
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
-        IDataLakeAnalyticsJobOperations DataLakeAnalyticsJob { get; }
+        IJobsOperations Jobs { get; }
 
     }
 }

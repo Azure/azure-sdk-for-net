@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum FileType
     {
-        [EnumMember(Value = "FILE")]
-        FILE,
-        [EnumMember(Value = "DIRECTORY")]
-        DIRECTORY
+        [EnumMember(Value = "File")]
+        File,
+        [EnumMember(Value = "Directory")]
+        Directory
     }
 }

@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IDataLakeStoreFileSystemOperations DataLakeStoreFileSystem { get; private set; }
+        public virtual IFileSystemOperations FileSystem { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreFileSystemManagementClient class.
@@ -251,9 +251,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         private void Initialize()
         {
-            this.DataLakeStoreFileSystem = new DataLakeStoreFileSystemOperations(this);
+            this.FileSystem = new FileSystemOperations(this);
             this.BaseUri = new Uri("https://accountName.dataLakeServiceUri");
             this.ApiVersion = "2015-10-01-preview";
+            this.DataLakeServiceUri = "azuredatalakestore.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

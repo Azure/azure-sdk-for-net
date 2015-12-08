@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FileOperationResultResult class.
         /// </summary>
-        public FileOperationResultResult(bool? boolean = default(bool?))
+        public FileOperationResultResult(bool? operationResult = default(bool?))
         {
-            Boolean = boolean;
+            OperationResult = operationResult;
         }
 
         /// <summary>
         /// Gets or sets the result of the operation or request
         /// </summary>
-        [JsonProperty(PropertyName = "boolean")]
-        public bool? Boolean { get; set; }
+        [JsonProperty(PropertyName = "operationResult")]
+        public bool? OperationResult { get; set; }
 
     }
 }

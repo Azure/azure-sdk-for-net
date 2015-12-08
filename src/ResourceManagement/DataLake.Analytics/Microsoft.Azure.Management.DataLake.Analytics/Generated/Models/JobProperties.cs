@@ -29,11 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobProperties class.
         /// </summary>
-        public JobProperties(string script, string runtimeVersion = default(string), string type = default(string))
+        public JobProperties(string script, string runtimeVersion = default(string))
         {
             RuntimeVersion = runtimeVersion;
             Script = script;
-            Type = type;
         }
 
         /// <summary>
@@ -47,13 +46,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "script")]
         public string Script { get; set; }
-
-        /// <summary>
-        /// Gets or sets the job type of the current job (i.e. Hive or U-SQL).
-        /// Possible values for this property include: 'USql', 'Hive'.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
