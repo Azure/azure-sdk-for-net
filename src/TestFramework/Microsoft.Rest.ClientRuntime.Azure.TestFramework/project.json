@@ -1,42 +1,39 @@
 ﻿{
-    "version": "1.0.0-preview",
-    "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
-    "authors": [ "Microsoft Corporation" ],
-    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "compilationOptions": {
-        "delaySign": true,
-        "keyFile": "../../../tools/MSSharedLibKey.snk"
+  "version": "1.0.0-preview",
+  "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
+  "authors": [ "Microsoft Corporation" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  "compilationOptions": {
+    "delaySign": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Net.Http": "",
+        "System.Runtime": { "type": "build" },
+        "System.Threading.Tasks": { "type": "build" }
+      }
     },
-    "frameworks": {
-        "net45": {
-            "dependencies": {
-                "Microsoft.Rest.ClientRuntime.Azure.Authentication": "0.11.0"
-            },
-            "frameworkAssemblies": {
-                "System.Net.Http": "",
-                "System.Runtime": { "type": "build" },
-                "System.Threading.Tasks": { "type": "build" }
-            }
-        },
-        "dnxcore50": {
-            "dependencies": {
-                "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.0.0-preview",
-                "System.Console": "4.0.0-beta-23516",
-                "System.Diagnostics.Debug": "4.0.11-beta-23516",
-                "System.Diagnostics.StackTrace": "4.0.1-beta-23516",
-                "System.Threading.Thread": "4.0.0-beta-23516",
-                "Microsoft.CSharp": "4.0.1-beta-23516",
-                "System.Collections": "4.0.11-beta-23516",
-                "System.Linq": "4.0.1-beta-23516",
-                "System.Runtime": "4.0.21-beta-23516",
-                "System.Threading": "4.0.11-beta-23516",
-                "System.Net.Http": "4.0.1-beta-23516"
-            }
-        }
-    },
-    "dependencies": {
-        "Microsoft.Azure.Test.HttpRecorder": "",
-        "Microsoft.Rest.ClientRuntime.Azure": "2.2.0"
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0.0-beta-23516",
+        "System.Diagnostics.Debug": "4.0.11-beta-23516",
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23516",
+        "System.Threading.Thread": "4.0.0-beta-23516",
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",
+        "System.Net.Http": "4.0.1-beta-23516"
+      }
     }
+  },
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.1.0-preview",
+    "Microsoft.Azure.Test.HttpRecorder": "",
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.2.0, 3.0)"
+  }
 }

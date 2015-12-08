@@ -9,7 +9,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Newtonsoft.Json": "6.0.8"
+    "Newtonsoft.Json": "7.0.1"
   },
   "frameworks": {
     "net45": {
