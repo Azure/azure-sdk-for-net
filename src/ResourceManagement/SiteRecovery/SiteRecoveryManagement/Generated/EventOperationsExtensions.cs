@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IEventOperations.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='parameters'>
         /// Optional. Filter for the events to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -46,11 +46,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list events operation.
         /// </returns>
-        public static EventListResponse List(this IEventOperations operations, string filter, CustomRequestHeaders customRequestHeaders)
+        public static EventListResponse List(this IEventOperations operations, EventQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IEventOperations)s).ListAsync(filter, customRequestHeaders);
+                return ((IEventOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IEventOperations.
         /// </param>
-        /// <param name='filter'>
+        /// <param name='parameters'>
         /// Optional. Filter for the events to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -71,9 +71,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list events operation.
         /// </returns>
-        public static Task<EventListResponse> ListAsync(this IEventOperations operations, string filter, CustomRequestHeaders customRequestHeaders)
+        public static Task<EventListResponse> ListAsync(this IEventOperations operations, EventQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(filter, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }

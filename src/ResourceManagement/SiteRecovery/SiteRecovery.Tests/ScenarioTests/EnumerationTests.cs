@@ -251,7 +251,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var response = client.Events.List(string.Empty, RequestHeaders);
+                var response = client.Events.List(new EventQueryParameter(), RequestHeaders);
                 Assert.NotNull(response);
                 Assert.NotEmpty(response.Events);
             }

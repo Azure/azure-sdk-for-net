@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Get the list of events under the vault.
         /// </summary>
-        /// <param name='filter'>
+        /// <param name='parameters'>
         /// Filter for the events to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -47,6 +47,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list events operation.
         /// </returns>
-        Task<EventListResponse> ListAsync(string filter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<EventListResponse> ListAsync(EventQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

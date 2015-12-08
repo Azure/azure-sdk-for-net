@@ -19,6 +19,7 @@ using Microsoft.Azure.Test;
 using System.Net;
 using System.Linq;
 using Xunit;
+using System;
 
 
 namespace SiteRecovery.Tests
@@ -278,6 +279,28 @@ namespace SiteRecovery.Tests
                     containersResponse.ProtectionContainers[0].Name,
                     RequestHeaders);
                 Assert.NotNull(containersMappingResponse);
+            }
+        }
+
+        [Fact]
+        public void GetEvents()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(
+                    new EventQueryParameter
+                    {
+                        StartTime = DateTime.Now.AddDays(-21).ToString(),
+                        EndTime = DateTime.Now.AddDays(-7).ToString(),
+                        AffectedObjectFriendlyName = "sadko-1102-1",
+                        FabricName = "21e443a8cf90841638add43368f2f69db0e8b7511acdbb1c1111e3a75e5095b6"
+                    },
+                    RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
             }
         }
     }

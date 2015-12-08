@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Get the list of events under the vault.
         /// </summary>
-        /// <param name='filter'>
+        /// <param name='parameters'>
         /// Optional. Filter for the events to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list events operation.
         /// </returns>
-        public async Task<EventListResponse> ListAsync(string filter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<EventListResponse> ListAsync(EventQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -109,6 +109,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/replicationEvents";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
+            List<string> odataFilter = new List<string>();
+            if (parameters != null && parameters.ToQueryString() != null)
+            {
+                odataFilter.Add(Uri.EscapeDataString(parameters.ToQueryString().ToString()));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -220,11 +229,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.EventType = eventTypeInstance;
                                         }
                                         
-                                        JToken affectedObjectNameValue = propertiesValue["affectedObjectName"];
-                                        if (affectedObjectNameValue != null && affectedObjectNameValue.Type != JTokenType.Null)
+                                        JToken affectedObjectFriendlyNameValue = propertiesValue["affectedObjectFriendlyName"];
+                                        if (affectedObjectFriendlyNameValue != null && affectedObjectFriendlyNameValue.Type != JTokenType.Null)
                                         {
-                                            string affectedObjectNameInstance = ((string)affectedObjectNameValue);
-                                            propertiesInstance.AffectedObjectName = affectedObjectNameInstance;
+                                            string affectedObjectFriendlyNameInstance = ((string)affectedObjectFriendlyNameValue);
+                                            propertiesInstance.AffectedObjectFriendlyName = affectedObjectFriendlyNameInstance;
                                         }
                                         
                                         JToken severityValue = propertiesValue["severity"];

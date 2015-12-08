@@ -20,23 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of Monitoring Event Properties.
+    /// Implements the event query parameter.
     /// </summary>
-    public partial class EventProperties
+    public partial class EventQueryParameter
     {
         private string _affectedObjectFriendlyName;
         
         /// <summary>
-        /// Optional. The source of the event on which it is rised (for
-        /// example, VM, VMM etc).
+        /// Optional. The affected object name of the events to be queried.
         /// </summary>
         public string AffectedObjectFriendlyName
         {
@@ -44,22 +40,22 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._affectedObjectFriendlyName = value; }
         }
         
-        private string _description;
+        private string _endTime;
         
         /// <summary>
-        /// Optional. The event name.
+        /// Optional. The end time of the time range within which the events
+        /// are to be queried.
         /// </summary>
-        public string Description
+        public string EndTime
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._endTime; }
+            set { this._endTime = value; }
         }
         
         private string _eventType;
         
         /// <summary>
-        /// Optional. The type of the event. For example: VM Health, Server
-        /// Health, Job Failure etc.
+        /// Optional. The type of the events to be queried.
         /// </summary>
         public string EventType
         {
@@ -70,7 +66,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _fabricName;
         
         /// <summary>
-        /// Optional. The site Id.
+        /// Optional. The affected object server id of the events to be queried.
         /// </summary>
         public string FabricName
         {
@@ -78,33 +74,10 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._fabricName = value; }
         }
         
-        private IList<HealthError> _healthErrors;
-        
-        /// <summary>
-        /// Optional. The list of errors / warnings capturing details
-        /// associated with the issue(s).
-        /// </summary>
-        public IList<HealthError> HealthErrors
-        {
-            get { return this._healthErrors; }
-            set { this._healthErrors = value; }
-        }
-        
-        private EventProviderSpecificDetails _providerDetails;
-        
-        /// <summary>
-        /// Optional. The provider specific settings.
-        /// </summary>
-        public EventProviderSpecificDetails ProviderDetails
-        {
-            get { return this._providerDetails; }
-            set { this._providerDetails = value; }
-        }
-        
         private string _severity;
         
         /// <summary>
-        /// Optional. The severity of the event.
+        /// Optional. The severity of the events to be queried.
         /// </summary>
         public string Severity
         {
@@ -115,7 +88,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _sourceId;
         
         /// <summary>
-        /// Optional. The Id of the monitoring event.
+        /// Optional. The source id of the events to be queried.
         /// </summary>
         public string SourceId
         {
@@ -123,23 +96,23 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._sourceId = value; }
         }
         
-        private DateTime _timeOfOccurrence;
+        private string _startTime;
         
         /// <summary>
-        /// Optional. The time of occurence of the event.
+        /// Optional. The start time of the time range within which the events
+        /// are to be queried.
         /// </summary>
-        public DateTime TimeOfOccurrence
+        public string StartTime
         {
-            get { return this._timeOfOccurrence; }
-            set { this._timeOfOccurrence = value; }
+            get { return this._startTime; }
+            set { this._startTime = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventProperties class.
+        /// Initializes a new instance of the EventQueryParameter class.
         /// </summary>
-        public EventProperties()
+        public EventQueryParameter()
         {
-            this.HealthErrors = new LazyList<HealthError>();
         }
     }
 }
