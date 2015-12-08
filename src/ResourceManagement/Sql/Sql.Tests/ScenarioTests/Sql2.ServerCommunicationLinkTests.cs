@@ -29,7 +29,6 @@ namespace Sql2.Tests.ScenarioTests
     /// </summary>
     public class Sql2ServerCommunicationLinkScenarioTests : TestBase
     {
-        [Fact]
         public void ServerCommunicationLinkCrud()
         {
             var handler = new BasicDelegatingHandler();
