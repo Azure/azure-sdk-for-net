@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Search.Tests
                 Index index =
                     new Index()
                     {
-                        Name = TestUtilities.GenerateName(),
+                        Name = SearchTestUtilities.GenerateName(),
                         Fields = new[]
                         {
                             new Field("ISBN", DataType.String) { IsKey = true },
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Search.Tests
                 Index index =
                     new Index()
                     {
-                        Name = TestUtilities.GenerateName(),
+                        Name = SearchTestUtilities.GenerateName(),
                         Fields = new[]
                         {
                             new Field("ISBN", DataType.String) { IsKey = true },
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Search.Tests
                 Index index =
                     new Index()
                     {
-                        Name = TestUtilities.GenerateName(),
+                        Name = SearchTestUtilities.GenerateName(),
                         Fields = new[]
                         {
                             new Field("ISBN", DataType.String) { IsKey = true },

@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchServiceClient searchClient = this.GetSearchServiceClient();
 
-            TargetIndexName = TestUtilities.GenerateName();
+            TargetIndexName = SearchTestUtilities.GenerateName();
 
-            DataSourceName = TestUtilities.GenerateName();
+            DataSourceName = SearchTestUtilities.GenerateName();
 
             var index = new Index(
                 TargetIndexName,
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         public Indexer CreateTestIndexer()
         {
-            return new Indexer(TestUtilities.GenerateName(), DataSourceName, TargetIndexName)
+            return new Indexer(SearchTestUtilities.GenerateName(), DataSourceName, TargetIndexName)
             {
                 // We can't test startTime because it's an absolute time that must be within 24 hours of the current
                 // time. That doesn't play well with recorded mock payloads.

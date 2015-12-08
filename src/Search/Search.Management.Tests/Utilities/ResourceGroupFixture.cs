@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             Location = provider.ResourceTypes.First().Locations.First();
 
             // Create resource group
-            ResourceGroupName = TestUtilities.GenerateName();
+            ResourceGroupName = SearchTestUtilities.GenerateName();
             ResourceGroup resourceGroup =
                 client.ResourceGroups.CreateOrUpdate(ResourceGroupName, new ResourceGroup() { Location = Location });
             Assert.NotNull(resourceGroup);
