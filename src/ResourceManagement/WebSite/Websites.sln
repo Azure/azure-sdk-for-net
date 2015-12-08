@@ -9,7 +9,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestFramework", "..\..\Test
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Websites", "Microsoft.Azure.Management.Websites\Microsoft.Azure.Management.Websites.xproj", "{F0FBD614-4B4B-445B-B562-235CDB3844B7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebSites.Tests", "WebSites.Tests\WebSites.Tests.xproj", "{B90E2BDB-EC54-437A-A05F-545FB573FACF}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebSites.Tests", "WebSite.Tests\WebSites.Tests.xproj", "{B90E2BDB-EC54-437A-A05F-545FB573FACF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
