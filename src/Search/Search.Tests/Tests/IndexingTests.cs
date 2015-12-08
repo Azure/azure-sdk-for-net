@@ -26,8 +26,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 var batch = new IndexBatch(new[]
                 {
-                    new IndexAction(
-                        IndexActionType.Upload, 
+                    IndexAction.Upload(
                         new Document()
                         {
                             { "hotelId", "1" },
@@ -43,8 +42,7 @@ namespace Microsoft.Azure.Search.Tests
                             { "rating", 5 },
                             { "location", GeographyPoint.Create(47.678581, -122.131577) }
                         }),
-                    new IndexAction(
-                        IndexActionType.Upload,
+                    IndexAction.Upload(
                         new Document()
                         {
                             { "hotelId", "2" },
@@ -60,8 +58,7 @@ namespace Microsoft.Azure.Search.Tests
                             { "rating", 1 },
                             { "location", GeographyPoint.Create(49.678581, -122.131577) }
                         }),
-                    new IndexAction(
-                        IndexActionType.Merge,
+                    IndexAction.Merge(
                         new Document()
                         {
                             { "hotelId", "3" },
@@ -69,9 +66,8 @@ namespace Microsoft.Azure.Search.Tests
                             { "description", "Surprisingly expensive" },
                             { "lastRenovationDate", null }
                         }),
-                    new IndexAction(IndexActionType.Delete, new Document() { { "hotelId", "4" } }),
-                    new IndexAction(
-                        IndexActionType.MergeOrUpload,
+                    IndexAction.Delete(keyName: "hotelId", keyValue: "4"),
+                    IndexAction.MergeOrUpload(
                         new Document()
                         {
                             { "hotelId", "5" },
@@ -106,10 +102,9 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
 
-                var batch = IndexBatch.Create(new[]
+                var batch = IndexBatch.New(new[]
                 {
-                    IndexAction.Create(
-                        IndexActionType.Upload,
+                    IndexAction.Upload(
                         new Hotel()
                         {
                             HotelId = "1",
@@ -125,8 +120,7 @@ namespace Microsoft.Azure.Search.Tests
                             Rating = 5,
                             Location = GeographyPoint.Create(47.678581, -122.131577)
                         }),
-                    IndexAction.Create(
-                        IndexActionType.Upload,
+                    IndexAction.Upload(
                         new Hotel()
                         {
                             HotelId = "2",
@@ -142,8 +136,7 @@ namespace Microsoft.Azure.Search.Tests
                             Rating = 1,
                             Location = GeographyPoint.Create(49.678581, -122.131577)
                         }),
-                    IndexAction.Create(
-                        IndexActionType.Merge,
+                    IndexAction.Merge(
                         new Hotel()
                         {
                             HotelId = "3",
@@ -151,9 +144,8 @@ namespace Microsoft.Azure.Search.Tests
                             Description = "Surprisingly expensive",
                             LastRenovationDate = null
                         }),
-                    IndexAction.Create(IndexActionType.Delete, new Hotel() { HotelId = "4" }),
-                    IndexAction.Create(
-                        IndexActionType.MergeOrUpload,
+                    IndexAction.Delete(new Hotel() { HotelId = "4" }),
+                    IndexAction.MergeOrUpload(
                         new Hotel()
                         {
                             HotelId = "5",
@@ -187,7 +179,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
 
-                var batch = IndexBatch.Create(new[] { IndexAction.Create(new Hotel() { HotelId = "1" }) });
+                var batch = IndexBatch.Upload(new[] { new Hotel() { HotelId = "1" } });
 
                 DocumentIndexResult documentIndexResult = client.Documents.Index(batch);
 
@@ -219,12 +211,10 @@ namespace Microsoft.Azure.Search.Tests
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
                 var batch =
-                    IndexBatch.Create(
-                        new[] 
-                        { 
-                            IndexAction.Create(
-                                new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" }) 
-                        });
+                    IndexBatch.Upload(new[] 
+                    { 
+                        new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" } 
+                    });
 
                 DocumentIndexResult indexResponse = indexClient.Documents.Index(batch);
 
@@ -259,11 +249,11 @@ namespace Microsoft.Azure.Search.Tests
                 DateTime unspecifiedDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
                 var batch =
-                    IndexBatch.Create(
+                    IndexBatch.Upload(
                         new[] 
                         { 
-                            IndexAction.Create(new Book() { ISBN = "1", PublishDate = utcDateTime }),
-                            IndexAction.Create(new Book() { ISBN = "2", PublishDate = unspecifiedDateTime })
+                            new Book() { ISBN = "1", PublishDate = utcDateTime },
+                            new Book() { ISBN = "2", PublishDate = unspecifiedDateTime }
                         });
 
                 indexClient.Documents.Index(batch);
@@ -303,11 +293,11 @@ namespace Microsoft.Azure.Search.Tests
                 DateTime unspecifiedDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
                 var batch =
-                    new IndexBatch(
+                    IndexBatch.Upload(
                         new[] 
                         { 
-                            new IndexAction(new Document() { { "ISBN", "1" }, { "PublishDate", utcDateTime } }),
-                            new IndexAction(new Document() { { "ISBN", "2" }, { "PublishDate", unspecifiedDateTime } })
+                            new Document() { { "ISBN", "1" }, { "PublishDate", utcDateTime } },
+                            new Document() { { "ISBN", "2" }, { "PublishDate", unspecifiedDateTime } }
                         });
 
                 indexClient.Documents.Index(batch);
@@ -328,7 +318,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
 
-                var batch = new IndexBatch(new[] { new IndexAction(new Document()) });
+                var batch = IndexBatch.Upload(new[] { new Document() });
 
                 CloudException e = Assert.Throws<CloudException>(() => client.Documents.Index(batch));
                 Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -405,10 +395,10 @@ namespace Microsoft.Azure.Search.Tests
                         { "location", null }
                     };
 
-                client.Documents.Index(IndexBatch.Create(new IndexAction(IndexActionType.Upload, originalDoc)));
+                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
-                client.Documents.Index(IndexBatch.Create(new IndexAction(IndexActionType.Merge, updatedDoc)));
+                client.Documents.Index(IndexBatch.Merge(new[] { updatedDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
                 Document actualDoc = client.Documents.Get("1");
@@ -473,10 +463,10 @@ namespace Microsoft.Azure.Search.Tests
                         Location = GeographyPoint.Create(47.678581, -122.131577)
                     };
 
-                client.Documents.Index(IndexBatch.Create(IndexAction.Create(IndexActionType.Upload, originalDoc)));
+                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
-                client.Documents.Index(IndexBatch.Create(IndexAction.Create(IndexActionType.Merge, updatedDoc)));
+                client.Documents.Index(IndexBatch.Merge(new[] { updatedDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");

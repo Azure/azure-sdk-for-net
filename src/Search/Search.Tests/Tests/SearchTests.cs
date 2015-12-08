@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Search.Tests
                 StartDate = default(DateTimeOffset)
             };
 
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Search.Tests
                 IntValue = null
             };
 
-            var batch = IndexBatch.Create(IndexAction.Create(doc));
+            var batch = IndexBatch.Upload(new[] { doc });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
             var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
-            var batch = IndexBatch.Create(IndexAction.Create(doc));
+            var batch = IndexBatch.Upload(new[] { doc });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -639,19 +639,18 @@ namespace Microsoft.Azure.Search.Tests
                 Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
                 .Select(id => id.ToString());
 
-            IEnumerable<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id });
-            List<IndexAction<Hotel>> actions = hotels.Select(h => IndexAction.Create(h)).ToList();
+            List<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
 
-            for (int i = 0; i < actions.Count; i += 1000)
+            for (int i = 0; i < hotels.Count; i += 1000)
             {
-                IEnumerable<IndexAction<Hotel>> nextActions = actions.Skip(i).Take(1000);
+                IEnumerable<Hotel> nextHotels = hotels.Skip(i).Take(1000);
 
-                if (!nextActions.Any())
+                if (!nextHotels.Any())
                 {
                     break;
                 }
 
-                var batch = IndexBatch.Create(nextActions);
+                var batch = IndexBatch.Upload(nextHotels);
                 client.Documents.Index(batch);
 
                 SearchTestUtilities.WaitForIndexing();

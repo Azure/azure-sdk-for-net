@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "location", GeographyPoint.Create(47.678581, -122.131577) }
                     };
 
-                var batch = new IndexBatch(new[] { new IndexAction(expectedDoc) });
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "location", null }
                     };
 
-                var batch = new IndexBatch(new[] { new IndexAction(expectedDoc) });
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "hotelName", new DateTimeOffset(2015, 2, 11, 12, 58, 0, TimeSpan.Zero) }
                     };
 
-                var batch = new IndexBatch(new[] { new IndexAction(indexedDoc) });
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Search.Tests
                         Location = GeographyPoint.Create(47.678581, -122.131577)
                     };
 
-                var batch = IndexBatch.Create(IndexAction.Create(expectedDoc));
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "hotelId", complexKey }
                     };
 
-                var batch = new IndexBatch(new[] { new IndexAction(expectedDoc) });
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Search.Tests
                         LastRenovationDate = new DateTimeOffset(2010, 6, 27, 8, 0, 0, TimeSpan.Zero)
                     };
 
-                var batch = IndexBatch.Create(IndexAction.Create(indexedDoc));
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Search.Tests
                         Location = null
                     };
 
-                var batch = IndexBatch.Create(IndexAction.Create(expectedDoc));
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
                 var expectedDoc = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
-                var batch = IndexBatch.Create(IndexAction.Create(expectedDoc));
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
                 indexClient.Documents.Index(batch);
 
                 Book actualDoc = indexClient.Documents.Get<Book>("123");
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Search.Tests
                         HotelName = "Roach Motel"
                     };
 
-                var batch = IndexBatch.Create(IndexAction.Create(indexedDoc));
+                var batch = IndexBatch.Upload(new[] { indexedDoc });
                 client.Documents.Index(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("2", new[] { "description", "hotelName" });
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Search.Tests
                         Description = "Surprisingly expensive"
                     };
 
-                var batch = IndexBatch.Create(IndexAction.Create(indexedDoc));
+                var batch = IndexBatch.Upload(new[] { indexedDoc });
                 client.Documents.Index(batch);
 
                 string[] selectedFields = new[] { "hotelId", "ThisFieldDoesNotExist" };

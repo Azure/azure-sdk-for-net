@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
