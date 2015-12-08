@@ -883,12 +883,41 @@ namespace Microsoft.Azure.Management.Network
         /// client package operation through Network resource provider.
         /// </param>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse<string>> GeneratevpnclientpackageWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<string> response = await BeginGeneratevpnclientpackageWithHttpMessagesAsync(
+                resourceGroupName, virtualNetworkGatewayName, parameters, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// The Generatevpnclientpackage operation generates Vpn client package for
+        /// P2S client of the virtual network gateway in the specified resource group
+        /// through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkGatewayName'>
+        /// The name of the virtual network gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Generating  Virtual Network Gateway Vpn
+        /// client package operation through Network resource provider.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<string>> BeginGeneratevpnclientpackageWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -921,7 +950,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("virtualNetworkGatewayName", virtualNetworkGatewayName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Generatevpnclientpackage", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginGeneratevpnclientpackage", tracingParameters);
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -987,7 +1016,7 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 202)
+            if ((int)statusCode != 202 && (int)statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1014,7 +1043,7 @@ namespace Microsoft.Azure.Management.Network
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 202)
+            if ((int)statusCode == 200)
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<string>(responseContent, this.Client.DeserializationSettings);
