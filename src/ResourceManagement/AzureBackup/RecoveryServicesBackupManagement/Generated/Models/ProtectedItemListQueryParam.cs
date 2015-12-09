@@ -62,28 +62,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._providerType = value; }
         }
         
-        private string _skipToken;
-        
-        /// <summary>
-        /// Optional. Skip Token query parameter
-        /// </summary>
-        public string SkipToken
-        {
-            get { return this._skipToken; }
-            set { this._skipToken = value; }
-        }
-        
-        private string _topToken;
-        
-        /// <summary>
-        /// Optional. Top Token query parameter
-        /// </summary>
-        public string TopToken
-        {
-            get { return this._topToken; }
-            set { this._topToken = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ProtectedItemListQueryParam class.
         /// </summary>

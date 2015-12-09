@@ -130,6 +130,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

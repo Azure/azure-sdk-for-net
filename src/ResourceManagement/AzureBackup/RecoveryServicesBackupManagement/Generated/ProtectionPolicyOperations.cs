@@ -1146,7 +1146,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1304,7 +1304,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1318,7 +1318,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     // Create Result
                     ProtectionPolicyResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -2565,13 +2565,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            ProtectionPolicyResourceList itemListInstance = new ProtectionPolicyResourceList();
+                            result.ItemList = itemListInstance;
+                            
                             JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     ProtectionPolicyResource protectionPolicyResourceInstance = new ProtectionPolicyResource();
-                                    result.Value.Add(protectionPolicyResourceInstance);
+                                    itemListInstance.Value.Add(protectionPolicyResourceInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -2985,7 +2988,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
+                                itemListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

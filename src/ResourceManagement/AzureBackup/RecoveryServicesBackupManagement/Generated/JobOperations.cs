@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -357,13 +357,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -473,7 +466,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -814,7 +807,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -864,7 +857,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -953,13 +946,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -1069,7 +1055,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -1414,7 +1400,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -1464,7 +1450,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -1553,13 +1539,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -1669,7 +1648,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -2012,7 +1991,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -2062,7 +2041,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -2151,13 +2130,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -2267,7 +2239,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -2461,6 +2433,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -2470,7 +2445,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2492,6 +2467,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("queryFilter", queryFilter);
+                tracingParameters.Add("paginationParams", paginationParams);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -2531,25 +2507,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 odataFilter.Add("jobId eq '" + Uri.EscapeDataString(queryFilter.JobId) + "'");
             }
-            if (queryFilter != null)
+            if (queryFilter != null && queryFilter.StartTime != null)
             {
-                odataFilter.Add("startTime eq '" + Uri.EscapeDataString(queryFilter.StartTime.ToString()) + "'");
+                odataFilter.Add("startTime eq '" + Uri.EscapeDataString(queryFilter.StartTime) + "'");
             }
-            if (queryFilter != null)
+            if (queryFilter != null && queryFilter.EndTime != null)
             {
-                odataFilter.Add("endTime eq '" + Uri.EscapeDataString(queryFilter.EndTime.ToString()) + "'");
-            }
-            if (queryFilter != null && queryFilter.SkipToken != null)
-            {
-                odataFilter.Add("skipToken eq '" + Uri.EscapeDataString(queryFilter.SkipToken) + "'");
-            }
-            if (queryFilter != null && queryFilter.TopToken != null)
-            {
-                odataFilter.Add("topToken eq '" + Uri.EscapeDataString(queryFilter.TopToken) + "'");
+                odataFilter.Add("endTime eq '" + Uri.EscapeDataString(queryFilter.EndTime) + "'");
             }
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            if (paginationParams != null && paginationParams.SkipToken != null)
+            {
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(paginationParams.SkipToken));
+            }
+            if (paginationParams != null && paginationParams.Top != null)
+            {
+                queryParameters.Add("$top=" + Uri.EscapeDataString(paginationParams.Top));
             }
             if (queryParameters.Count > 0)
             {
@@ -2640,7 +2616,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["ObjectType"]);
+                                        string typeName = ((string)propertiesValue["objectType"]);
                                         if (typeName == "Job")
                                         {
                                             Job jobInstance = new Job();
@@ -2690,7 +2666,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                                string typeName2 = ((string)extendedInfoValue["objectType"]);
                                                 if (typeName2 == "IaaSVMJobExtendedInfo")
                                                 {
                                                     IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -2779,13 +2755,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName == "IaaSVMJob")
                                         {
                                             IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                            
-                                            JToken instanceIdValue = propertiesValue["instanceId"];
-                                            if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                            {
-                                                string instanceIdInstance = ((string)instanceIdValue);
-                                                iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                            }
                                             
                                             JToken durationValue2 = propertiesValue["duration"];
                                             if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -2895,7 +2864,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                                string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                                 if (typeName3 == "IaaSVMJobExtendedInfo")
                                                 {
                                                     IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();

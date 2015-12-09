@@ -93,6 +93,7 @@
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,12 +109,14 @@
     <Compile Include="Generated\Models\ErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\IaaSVMErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\IaaSVMJob.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobProperties.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -129,6 +132,7 @@
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,6 +148,7 @@
     <Compile Include="Generated\Models\JobDetailsResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\JobExtendedInfo.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -183,6 +188,9 @@
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\OperationResultInfo.cs" />
+    <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
+    <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -216,6 +224,7 @@
     <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\ProtectedItemListQueryParam.cs">
       <SubType>Code</SubType>
     </Compile>

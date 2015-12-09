@@ -280,6 +280,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     iaaSVMProtectableObjectInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                                 }
                                                 
+                                                JToken containerUriValue = propertiesValue["containerUri"];
+                                                if (containerUriValue != null && containerUriValue.Type != JTokenType.Null)
+                                                {
+                                                    string containerUriInstance = ((string)containerUriValue);
+                                                    iaaSVMProtectableObjectInstance.ContainerUri = containerUriInstance;
+                                                }
+                                                
+                                                JToken protectableObjectUriValue = propertiesValue["protectableObjectUri"];
+                                                if (protectableObjectUriValue != null && protectableObjectUriValue.Type != JTokenType.Null)
+                                                {
+                                                    string protectableObjectUriInstance = ((string)protectableObjectUriValue);
+                                                    iaaSVMProtectableObjectInstance.ProtectableObjectUri = protectableObjectUriInstance;
+                                                }
+                                                
                                                 JToken friendlyNameValue2 = propertiesValue["friendlyName"];
                                                 if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
