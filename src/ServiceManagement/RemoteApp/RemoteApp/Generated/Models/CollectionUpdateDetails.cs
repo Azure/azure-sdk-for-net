@@ -75,6 +75,17 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
             set { this._planName = value; }
         }
         
+        private string _subnetName;
+        
+        /// <summary>
+        /// Optional. The name of the subnet to be used to patch the collection.
+        /// </summary>
+        public string SubnetName
+        {
+            get { return this._subnetName; }
+            set { this._subnetName = value; }
+        }
+        
         private string _templateImageName;
         
         /// <summary>
