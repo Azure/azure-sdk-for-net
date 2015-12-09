@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
@@ -33,26 +31,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectionPolicyListResponse : AzureOperationResponse
     {
-        private string _nextLink;
+        private ProtectionPolicyResourceList _itemList;
         
         /// <summary>
-        /// Optional. Next Link
+        /// Optional. ItemList
         /// </summary>
-        public string NextLink
+        public ProtectionPolicyResourceList ItemList
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<ProtectionPolicyResource> _value;
-        
-        /// <summary>
-        /// Optional. value
-        /// </summary>
-        public IList<ProtectionPolicyResource> Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._itemList; }
+            set { this._itemList = value; }
         }
         
         /// <summary>
@@ -61,7 +48,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         public ProtectionPolicyListResponse()
         {
-            this.Value = new LazyList<ProtectionPolicyResource>();
         }
     }
 }

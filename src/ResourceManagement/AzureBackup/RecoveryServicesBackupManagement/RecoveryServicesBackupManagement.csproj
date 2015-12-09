@@ -114,6 +114,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
+    <Compile Include="Generated\Models\IaaSVMJobProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\IaaSVMJobQueryFilters.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,6 +137,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\JobBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\JobDetailsResource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\JobDetailsResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\JobExtendedInfo.cs" />
@@ -172,6 +184,7 @@
     </Compile>
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
+    <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs">
       <SubType>Code</SubType>
     </Compile>

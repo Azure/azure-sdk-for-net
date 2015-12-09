@@ -279,9 +279,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static GetOperationResultResponse GetOperationResult(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static ProtectedItemResponse GetOperationResult(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -319,9 +319,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static Task<GetOperationResultResponse> GetOperationResultAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectedItemResponse> GetOperationResultAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetOperationResultAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, operationId, customRequestHeaders, CancellationToken.None);
         }
@@ -342,17 +342,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a ProtectedItemsListResponse.
         /// </returns>
-        public static ProtectedItemListResponse List(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static ProtectedItemListResponse List(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectedItemOperations)s).ListAsync(resourceGroupName, resourceName, queryFilter, customRequestHeaders);
+                return ((IProtectedItemOperations)s).ListAsync(resourceGroupName, resourceName, queryFilter, paginationParams, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -373,15 +376,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a ProtectedItemsListResponse.
         /// </returns>
-        public static Task<ProtectedItemListResponse> ListAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectedItemListResponse> ListAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(resourceGroupName, resourceName, queryFilter, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, resourceName, queryFilter, paginationParams, customRequestHeaders, CancellationToken.None);
         }
     }
 }

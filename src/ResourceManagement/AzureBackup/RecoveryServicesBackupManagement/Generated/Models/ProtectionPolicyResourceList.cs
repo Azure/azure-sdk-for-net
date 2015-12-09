@@ -20,54 +20,47 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableObject object.
+    /// The definition of a ProtectionPolicyResourceList.
     /// </summary>
-    public partial class IaaSVMProtectableObject : ProtectableObject
+    public partial class ProtectionPolicyResourceList
     {
-        private string _containerUri;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. Container Uri
+        /// Optional. Next Link
         /// </summary>
-        public string ContainerUri
+        public string NextLink
         {
-            get { return this._containerUri; }
-            set { this._containerUri = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
-        private string _protectableObjectUri;
+        private IList<ProtectionPolicyResource> _value;
         
         /// <summary>
-        /// Optional. ProtectableObject Uri
+        /// Optional. value
         /// </summary>
-        public string ProtectableObjectUri
+        public IList<ProtectionPolicyResource> Value
         {
-            get { return this._protectableObjectUri; }
-            set { this._protectableObjectUri = value; }
-        }
-        
-        private string _virtualMachineVersion;
-        
-        /// <summary>
-        /// Optional. Classic or Classic VM
-        /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectableObject class.
+        /// Initializes a new instance of the ProtectionPolicyResourceList
+        /// class.
         /// </summary>
-        public IaaSVMProtectableObject()
+        public ProtectionPolicyResourceList()
         {
+            this.Value = new LazyList<ProtectionPolicyResource>();
         }
     }
 }

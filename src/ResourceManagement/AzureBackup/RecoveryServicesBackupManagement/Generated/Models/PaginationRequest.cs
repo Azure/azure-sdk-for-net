@@ -21,52 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableObject object.
+    /// The definition of a GetOperationResultResponse.
     /// </summary>
-    public partial class IaaSVMProtectableObject : ProtectableObject
+    public partial class PaginationRequest
     {
-        private string _containerUri;
+        private string _skipToken;
         
         /// <summary>
-        /// Optional. Container Uri
+        /// Optional. It will work as continuation token
         /// </summary>
-        public string ContainerUri
+        public string SkipToken
         {
-            get { return this._containerUri; }
-            set { this._containerUri = value; }
+            get { return this._skipToken; }
+            set { this._skipToken = value; }
         }
         
-        private string _protectableObjectUri;
+        private string _top;
         
         /// <summary>
-        /// Optional. ProtectableObject Uri
+        /// Optional. It will decide result count
         /// </summary>
-        public string ProtectableObjectUri
+        public string Top
         {
-            get { return this._protectableObjectUri; }
-            set { this._protectableObjectUri = value; }
-        }
-        
-        private string _virtualMachineVersion;
-        
-        /// <summary>
-        /// Optional. Classic or Classic VM
-        /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._top; }
+            set { this._top = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectableObject class.
+        /// Initializes a new instance of the PaginationRequest class.
         /// </summary>
-        public IaaSVMProtectableObject()
+        public PaginationRequest()
         {
         }
     }
