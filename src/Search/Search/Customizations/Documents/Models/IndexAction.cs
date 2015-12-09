@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class IndexAction : IndexActionBase<Document>
     {
-        private IndexAction(IndexActionType actionType, Document document) : base(document, actionType)
+        private IndexAction(IndexActionType actionType, Document document)
+            : base(actionType, document)
         {
             // Do nothing.
         }

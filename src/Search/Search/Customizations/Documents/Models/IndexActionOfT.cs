@@ -12,7 +12,8 @@ namespace Microsoft.Azure.Search.Models
     /// </typeparam>
     public class IndexAction<T> : IndexActionBase<T> where T : class
     {
-        internal IndexAction(IndexActionType actionType, T document) : base(document, actionType)
+        internal IndexAction(IndexActionType actionType, T document)
+            : base(actionType, document)
         {
         }
     }

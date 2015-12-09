@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the IndexActionBase class with the given action type.
         /// </summary>
-        /// <param name="document">The document on which the action will be performed.</param>
         /// <param name="actionType">The type of action to perform on the document.</param>
-        protected IndexActionBase(T document, IndexActionType actionType)
+        /// <param name="document">The document on which the action will be performed.</param>
+        protected IndexActionBase(IndexActionType actionType, T document)
         {
             this.Document = document;
             this.ActionType = actionType;
