@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
@@ -146,9 +147,9 @@ namespace Microsoft.Azure.Search.Tests
 
             AssertKeySequenceEqual(response, "1");
 
-            // Note: Highlighting is not perfect due to the way Azure Search builds edge n-grams for suggestions.
             Assert.True(
-                response.Results[0].Text.StartsWith("Best <b>hotel in</b> town", StringComparison.Ordinal));
+                response.Results[0].Text.StartsWith("Best <b>hotel</b> in town", StringComparison.Ordinal),
+                String.Format(CultureInfo.InvariantCulture, "Actual text: {0}", response.Results[0].Text));
         }
 
         protected void TestOrderByProgressivelyBreaksTies()
