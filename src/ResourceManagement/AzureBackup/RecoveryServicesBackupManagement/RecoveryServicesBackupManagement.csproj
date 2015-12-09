@@ -82,9 +82,6 @@
     <Compile Include="Generated\IRecoveryServicesBackupManagementClient.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\IRecoveryServicesBackupVaultManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\IRestoreOperations.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -150,9 +147,6 @@
     </Compile>
     <Compile Include="Generated\Models\JobExtendedInfo.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobProperties.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\JobQueryFilters.cs">
@@ -234,9 +228,6 @@
     <Compile Include="Generated\Models\ProtectedItemResource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\ProtectedItemResourceList.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\ProtectedItemResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -268,9 +259,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs">
@@ -370,12 +358,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\RecoveryServicesBackupManagementClientExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RecoveryServicesBackupVaultManagementClientExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\RestoreOperations.cs">
