@@ -423,6 +423,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='policyStream'>
         /// Required. Policy stream.
         /// </param>
+        /// <param name='etag'>
+        /// Optional. ETag.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -430,7 +433,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, string etag, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -466,6 +469,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("aid", aid);
                 tracingParameters.Add("format", format);
                 tracingParameters.Add("policyStream", policyStream);
+                tracingParameters.Add("etag", etag);
                 TracingAdapter.Enter(invocationId, this, "SetAsync", tracingParameters);
             }
             
@@ -513,6 +517,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", etag);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
