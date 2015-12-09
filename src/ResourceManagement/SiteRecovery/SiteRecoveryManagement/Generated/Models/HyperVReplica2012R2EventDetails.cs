@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// Model class for event details of a HyperVReplica 2012 R2 E2E event.
     /// </summary>
-    public partial class HyperVReplica2012R2EventDetails : EventProviderSpecificDetails
+    public partial class HyperVReplica2012R2EventDetails : HyperVReplica2012EventDetails
     {
         /// <summary>
         /// Initializes a new instance of the HyperVReplica2012R2EventDetails
