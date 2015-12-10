@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -52,7 +51,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <summary>
         /// Gets a list of resource providers.
         /// </summary>
-        /// <param name='odataQuery'>
+        /// <param name='top'>
         /// Query parameters. If null is passed returns all deployments.
         /// </param>
         /// <param name='customHeaders'>
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(ODataQuery<int?> odataQuery = default(ODataQuery<int?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a resource provider.
         /// </summary>

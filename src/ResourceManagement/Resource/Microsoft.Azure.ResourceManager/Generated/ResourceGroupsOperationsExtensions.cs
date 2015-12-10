@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<GenericResource> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>))
             {
@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.Resources
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<GenericResource>> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<GenericResource>> result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<bool?> CheckExistenceAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> CreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroup> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> GetAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroup> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroup> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.Resources
             /// The operations group for this extension method.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<ResourceGroup> List(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>))
             {
@@ -295,14 +295,14 @@ namespace Microsoft.Azure.Management.Resources
             /// The operations group for this extension method.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<ResourceGroup>> ListAsync( this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ResourceGroup>> result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<GenericResource>> ListResourcesNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<GenericResource>> result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ResourceGroup>> ListNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ResourceGroup>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

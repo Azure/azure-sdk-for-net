@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagValue> CreateOrUpdateValueAsync( this ITagsOperations operations, string tagName, string tagValue, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagValue> result = await operations.CreateOrUpdateValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagDetails> CreateOrUpdateAsync( this ITagsOperations operations, string tagName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagDetails> result = await operations.CreateOrUpdateWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<TagDetails>> ListAsync( this ITagsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<TagDetails>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<TagDetails>> ListNextAsync( this ITagsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<TagDetails>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

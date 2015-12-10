@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -41,7 +40,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='resourceName'>
         /// The resource name.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -50,14 +49,14 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets policy assignments of the resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -66,7 +65,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete policy assignment.
         /// </summary>
@@ -163,7 +162,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <summary>
         /// Gets policy assignments of the subscription.
         /// </summary>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -172,14 +171,14 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets policy assignments of the scope.
         /// </summary>
         /// <param name='scope'>
         /// Scope.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -188,7 +187,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets policy assignments of the resource.
         /// </summary>
