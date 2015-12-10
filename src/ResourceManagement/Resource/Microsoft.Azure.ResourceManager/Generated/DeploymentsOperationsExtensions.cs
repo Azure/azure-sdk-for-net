@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<bool?> CheckExistenceAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentExtended> CreateOrUpdateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentExtended> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentExtended> BeginCreateOrUpdateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentExtended> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentExtended> GetAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentExtended> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentValidateResult> ValidateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentValidateResult> result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Resources
             /// The name of the resource group to filter by. The name is case insensitive.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<DeploymentExtended> List(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>))
             {
@@ -370,14 +370,14 @@ namespace Microsoft.Azure.Management.Resources
             /// The name of the resource group to filter by. The name is case insensitive.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<DeploymentExtended>> ListAsync( this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DeploymentExtended>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<DeploymentExtended>> ListNextAsync( this IDeploymentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DeploymentExtended>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

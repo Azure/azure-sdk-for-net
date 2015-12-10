@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Query parameters. If null is passed returns all resource groups.
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets a collection of resource groups.
         /// </summary>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
