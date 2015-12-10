@@ -4,7 +4,9 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Contains a batch of document upload, merge, and/or delete operations to send to the Azure Search index.
@@ -21,13 +23,100 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Creates a new instance of the IndexBatch class.
+        /// Creates a new IndexBatch for deleting a batch of documents.
         /// </summary>
-        /// <param name="actions">The index actions to include in the batch.</param>
+        /// <param name="keyName">The name of the key field that uniquely identifies documents in the index.</param>
+        /// <param name="keyValues">The keys of the documents to delete.</param>
         /// <returns>A new IndexBatch.</returns>
-        public static IndexBatch Create(params IndexAction[] actions)
+        public static IndexBatch Delete(string keyName, IEnumerable<string> keyValues)
         {
-            return new IndexBatch(actions);
+            if (keyName == null)
+            {
+                throw new ArgumentNullException("keyName");
+            }
+
+            if (keyValues == null)
+            {
+                throw new ArgumentNullException("keyValues");
+            }
+
+            return new IndexBatch(keyValues.Select(v => IndexAction.Delete(keyName, v)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for merging documents into existing documents in the index.
+        /// </summary>
+        /// <param name="documents">The documents to merge; Set only the fields that you want to change.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch Merge(IEnumerable<Document> documents)
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch(documents.Select(d => IndexAction.Merge(d)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for merging documents into existing documents in the index.
+        /// </summary>
+        /// <param name="documents">The documents to merge; Set only the properties that you want to change.</param>
+        /// <returns>A new IndexBatch.</returns>
+        /// <remarks>
+        /// If type T contains non-nullable value-typed properties, these properties may not merge correctly. If you
+        /// do not set such a property, it will automatically take its default value (for example, 0 for int or false
+        /// for bool), which will override the value of the property currently stored in the index, even if this was
+        /// not your intent. For this reason, it is strongly recommended that you always declare value-typed
+        /// properties to be nullable in type T.
+        /// </remarks>
+        public static IndexBatch<T> Merge<T>(IEnumerable<T> documents) where T : class
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch<T>(documents.Select(d => IndexAction.Merge(d)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for uploading documents to the index, or merging them into existing documents
+        /// for those that already exist in the index.
+        /// </summary>
+        /// <param name="documents">The documents to merge or upload.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch MergeOrUpload(IEnumerable<Document> documents)
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch(documents.Select(d => IndexAction.MergeOrUpload(d)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for uploading documents to the index, or merging them into existing documents
+        /// for those that already exist in the index.
+        /// </summary>
+        /// <param name="documents">The documents to merge or upload.</param>
+        /// <returns>A new IndexBatch.</returns>
+        /// <remarks>
+        /// If type T contains non-nullable value-typed properties, these properties may not merge correctly. If you
+        /// do not set such a property, it will automatically take its default value (for example, 0 for int or false
+        /// for bool), which will override the value of the property currently stored in the index, even if this was
+        /// not your intent. For this reason, it is strongly recommended that you always declare value-typed
+        /// properties to be nullable in type T.
+        /// </remarks>
+        public static IndexBatch<T> MergeOrUpload<T>(IEnumerable<T> documents) where T : class
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch<T>(documents.Select(d => IndexAction.MergeOrUpload(d)));
         }
 
         /// <summary>
@@ -42,26 +131,39 @@ namespace Microsoft.Azure.Search.Models
         /// You can use this method as a convenience if you don't want to explicitly specify your model class as a
         /// type parameter.
         /// </remarks>
-        public static IndexBatch<T> Create<T>(IEnumerable<IndexAction<T>> actions) where T : class
+        public static IndexBatch<T> New<T>(IEnumerable<IndexAction<T>> actions) where T : class
         {
             return new IndexBatch<T>(actions);
         }
 
         /// <summary>
-        /// Creates a new instance of the IndexBatch class.
+        /// Creates a new IndexBatch for uploading documents to the index.
         /// </summary>
-        /// <typeparam name="T">
-        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
-        /// </typeparam>
-        /// <param name="actions">The index actions to include in the batch.</param>
+        /// <param name="documents">The documents to upload.</param>
         /// <returns>A new IndexBatch.</returns>
-        /// <remarks>
-        /// You can use this method as a convenience if you don't want to explicitly specify your model class as a
-        /// type parameter.
-        /// </remarks>
-        public static IndexBatch<T> Create<T>(params IndexAction<T>[] actions) where T : class
+        public static IndexBatch Upload(IEnumerable<Document> documents)
         {
-            return new IndexBatch<T>(actions);
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch(documents.Select(d => IndexAction.Upload(d)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for uploading documents to the index.
+        /// </summary>
+        /// <param name="documents">The documents to upload.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch<T> Upload<T>(IEnumerable<T> documents) where T : class
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return new IndexBatch<T>(documents.Select(d => IndexAction.Upload(d)));
         }
     }
 }

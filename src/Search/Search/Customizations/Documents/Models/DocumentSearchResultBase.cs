@@ -24,8 +24,9 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the total count of results found by the search operation, or null if the count was not requested.
         /// </summary>
         /// <remarks>
-        /// If present, the count may be greater than the number of results in this response. In that case, use the
-        /// ContinuationToken property to fetch the next page of results.
+        /// If present, the count may be greater than the number of results in this response. This can happen if you
+        /// use the <c cref="SearchParameters.Top">Top</c> or <c cref="SearchParameters.Skip">Skip</c> parameters, or
+        /// if Azure Search can't return all the requested documents in a single Search response.
         /// </remarks>
         public long? Count { get; internal set; }
 
