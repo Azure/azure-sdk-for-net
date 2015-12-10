@@ -222,15 +222,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Definition of storage mapping operations for the Site Recovery
         /// extension.
         /// </summary>
-        IStorageMappingOperations StorageMapping
+        IStorageClassificationMappingOperations StorageClassificationMapping
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of storage operations for the Site Recovery extension.
+        /// Definition of storage classification operations for the Site
+        /// Recovery extension.
         /// </summary>
-        IStorageOperations Storage
+        IStorageClassificationOperations StorageClassification
         {
             get; 
         }

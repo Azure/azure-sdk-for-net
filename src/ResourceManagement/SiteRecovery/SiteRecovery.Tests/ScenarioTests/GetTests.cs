@@ -74,6 +74,33 @@ namespace SiteRecovery.Tests
         }
 
         [Fact]
+        public void GetStorageClassification()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                FabricListResponse responseServers = client.Fabrics.List(RequestHeaders);
+
+                FabricResponse response = client.Fabrics.Get(responseServers.Fabrics[0].Name, RequestHeaders);
+
+                foreach (Fabric fabric in responseServers.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType == "VMM")
+                    {
+                        var storageClassifications = client.StorageClassification.List(fabric.Name, RequestHeaders);
+
+                        var storageClassification = client.StorageClassification.Get(
+                            fabric.Name, 
+                            storageClassifications.StorageClassifications[0].Name, 
+                            RequestHeaders);
+                    }
+                }
+            }
+        }
+
+        [Fact]
         public void GetProtectedContainerTest()
         {
             using (UndoContext context = UndoContext.Current)

@@ -274,25 +274,26 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get { return this._replicationProtectedItem; }
         }
         
-        private IStorageMappingOperations _storageMapping;
+        private IStorageClassificationMappingOperations _storageClassificationMapping;
         
         /// <summary>
         /// Definition of storage mapping operations for the Site Recovery
         /// extension.
         /// </summary>
-        public virtual IStorageMappingOperations StorageMapping
+        public virtual IStorageClassificationMappingOperations StorageClassificationMapping
         {
-            get { return this._storageMapping; }
+            get { return this._storageClassificationMapping; }
         }
         
-        private IStorageOperations _storage;
+        private IStorageClassificationOperations _storageClassification;
         
         /// <summary>
-        /// Definition of storage operations for the Site Recovery extension.
+        /// Definition of storage classification operations for the Site
+        /// Recovery extension.
         /// </summary>
-        public virtual IStorageOperations Storage
+        public virtual IStorageClassificationOperations StorageClassification
         {
-            get { return this._storage; }
+            get { return this._storageClassification; }
         }
         
         private IVCenterOperations _vCenters;
@@ -328,8 +329,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
-            this._storageMapping = new StorageMappingOperations(this);
-            this._storage = new StorageOperations(this);
+            this._storageClassificationMapping = new StorageClassificationMappingOperations(this);
+            this._storageClassification = new StorageClassificationOperations(this);
             this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -478,8 +479,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
             this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
-            this._storageMapping = new StorageMappingOperations(this);
-            this._storage = new StorageOperations(this);
+            this._storageClassificationMapping = new StorageClassificationMappingOperations(this);
+            this._storageClassification = new StorageClassificationOperations(this);
             this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;

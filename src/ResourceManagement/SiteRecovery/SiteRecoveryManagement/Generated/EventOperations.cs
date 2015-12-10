@@ -305,6 +305,34 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 HyperVReplica2012R2EventDetails hyperVReplica2012R2EventDetailsInstance = new HyperVReplica2012R2EventDetails();
                                                 
+                                                JToken containerNameValue2 = providerSpecificDetailsValue["containerName"];
+                                                if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string containerNameInstance2 = ((string)containerNameValue2);
+                                                    hyperVReplica2012R2EventDetailsInstance.ContainerName = containerNameInstance2;
+                                                }
+                                                
+                                                JToken fabricNameValue3 = providerSpecificDetailsValue["fabricName"];
+                                                if (fabricNameValue3 != null && fabricNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string fabricNameInstance3 = ((string)fabricNameValue3);
+                                                    hyperVReplica2012R2EventDetailsInstance.FabricName = fabricNameInstance3;
+                                                }
+                                                
+                                                JToken remoteContainerNameValue2 = providerSpecificDetailsValue["remoteContainerName"];
+                                                if (remoteContainerNameValue2 != null && remoteContainerNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string remoteContainerNameInstance2 = ((string)remoteContainerNameValue2);
+                                                    hyperVReplica2012R2EventDetailsInstance.RemoteContainerName = remoteContainerNameInstance2;
+                                                }
+                                                
+                                                JToken remoteFabricNameValue2 = providerSpecificDetailsValue["remoteFabricName"];
+                                                if (remoteFabricNameValue2 != null && remoteFabricNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string remoteFabricNameInstance2 = ((string)remoteFabricNameValue2);
+                                                    hyperVReplica2012R2EventDetailsInstance.RemoteFabricName = remoteFabricNameInstance2;
+                                                }
+                                                
                                                 JToken instanceTypeValue2 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue2 != null && instanceTypeValue2.Type != JTokenType.Null)
                                                 {
@@ -317,25 +345,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 HyperVReplicaAzureEventDetails hyperVReplicaAzureEventDetailsInstance = new HyperVReplicaAzureEventDetails();
                                                 
-                                                JToken containerNameValue2 = providerSpecificDetailsValue["containerName"];
-                                                if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                                JToken containerNameValue3 = providerSpecificDetailsValue["containerName"];
+                                                if (containerNameValue3 != null && containerNameValue3.Type != JTokenType.Null)
                                                 {
-                                                    string containerNameInstance2 = ((string)containerNameValue2);
-                                                    hyperVReplicaAzureEventDetailsInstance.ContainerName = containerNameInstance2;
+                                                    string containerNameInstance3 = ((string)containerNameValue3);
+                                                    hyperVReplicaAzureEventDetailsInstance.ContainerName = containerNameInstance3;
                                                 }
                                                 
-                                                JToken fabricNameValue3 = providerSpecificDetailsValue["fabricName"];
-                                                if (fabricNameValue3 != null && fabricNameValue3.Type != JTokenType.Null)
+                                                JToken fabricNameValue4 = providerSpecificDetailsValue["fabricName"];
+                                                if (fabricNameValue4 != null && fabricNameValue4.Type != JTokenType.Null)
                                                 {
-                                                    string fabricNameInstance3 = ((string)fabricNameValue3);
-                                                    hyperVReplicaAzureEventDetailsInstance.FabricName = fabricNameInstance3;
+                                                    string fabricNameInstance4 = ((string)fabricNameValue4);
+                                                    hyperVReplicaAzureEventDetailsInstance.FabricName = fabricNameInstance4;
                                                 }
                                                 
-                                                JToken remoteContainerNameValue2 = providerSpecificDetailsValue["remoteContainerName"];
-                                                if (remoteContainerNameValue2 != null && remoteContainerNameValue2.Type != JTokenType.Null)
+                                                JToken remoteContainerNameValue3 = providerSpecificDetailsValue["remoteContainerName"];
+                                                if (remoteContainerNameValue3 != null && remoteContainerNameValue3.Type != JTokenType.Null)
                                                 {
-                                                    string remoteContainerNameInstance2 = ((string)remoteContainerNameValue2);
-                                                    hyperVReplicaAzureEventDetailsInstance.RemoteContainerName = remoteContainerNameInstance2;
+                                                    string remoteContainerNameInstance3 = ((string)remoteContainerNameValue3);
+                                                    hyperVReplicaAzureEventDetailsInstance.RemoteContainerName = remoteContainerNameInstance3;
                                                 }
                                                 
                                                 JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
