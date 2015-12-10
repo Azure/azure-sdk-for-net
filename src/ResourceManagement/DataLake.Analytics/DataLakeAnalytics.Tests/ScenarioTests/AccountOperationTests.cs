@@ -17,18 +17,27 @@ using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Xunit;
 namespace DataLakeAnalytics.Tests
 {
-    public class AccountOperationTests : TestBase
+    public class AccountOperationTests : TestBase, IDisposable
     {
         private CommonTestFixture commonData;
         public AccountOperationTests()
         {
             commonData = new CommonTestFixture(this.GetType().FullName);
+        }
+
+        public void Dispose()
+        {
+            if (commonData != null)
+            {
+                commonData.Dispose();
+            }
         }
 
         [Fact]
@@ -41,31 +50,28 @@ namespace DataLakeAnalytics.Tests
                 // Create a test account
                 var responseCreate =
                     clientToUse.DataLakeAnalyticsAccount.Create(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName,
-                        parameters: new DataLakeAnalyticsAccountCreateOrUpdateParameters
+                        parameters: new DataLakeAnalyticsAccount
                         {
-                            DataLakeAnalyticsAccount = new DataLakeAnalyticsAccount
+                            Name = commonData.DataLakeAnalyticsAccountName,
+                            Location = commonData.Location,
+                            Properties = new DataLakeAnalyticsAccountProperties
                             {
-                                Name = commonData.DataLakeAnalyticsAccountName,
-                                Location = commonData.Location,
-                                Properties = new DataLakeAnalyticsAccountProperties
+                                DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
+                                DataLakeStoreAccounts = new List<DataLakeStoreAccount>
                                 {
-                                    DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
-                                    DataLakeStoreAccounts = new List<DataLakeStoreAccount>
+                                    new DataLakeStoreAccount
                                     {
-                                        new DataLakeStoreAccount
+                                        Name = commonData.DataLakeStoreAccountName,
+                                        Properties = new DataLakeStoreAccountProperties
                                         {
-                                            Name = commonData.DataLakeStoreAccountName,
-                                            Properties = new DataLakeStoreAccountProperties
-                                            {
-                                                Suffix = commonData.DataLakeStoreAccountSuffix
-                                            }
+                                            Suffix = commonData.DataLakeStoreAccountSuffix
                                         }
                                     }
-                                },
-                                Tags = new Dictionary<string, string>
-                                {
-                                    { "testkey","testvalue" }
                                 }
+                            },
+                            Tags = new Dictionary<string, string>
+                            {
+                                { "testkey","testvalue" }
                             }
                         });
 
@@ -110,10 +116,7 @@ namespace DataLakeAnalytics.Tests
                 newAccount.Properties.DataLakeStoreAccounts = null;
                 newAccount.Properties.StorageAccounts = null;
 
-                var updateResponse = clientToUse.DataLakeAnalyticsAccount.Update(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, new DataLakeAnalyticsAccountCreateOrUpdateParameters
-                    {
-                        DataLakeAnalyticsAccount = newAccount,
-                    });
+                var updateResponse = clientToUse.DataLakeAnalyticsAccount.Update(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, newAccount);
 
                 Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, updateResponse.Properties.ProvisioningState);
 
@@ -134,12 +137,8 @@ namespace DataLakeAnalytics.Tests
                 // Create another account and ensure that list account returns both
                 var accountToChange = responseGet;
                 accountToChange.Name = accountToChange.Name + "secondacct";
-                var parameters = new DataLakeAnalyticsAccountCreateOrUpdateParameters
-                {
-                    DataLakeAnalyticsAccount = accountToChange
-                };
 
-                clientToUse.DataLakeAnalyticsAccount.Create(commonData.ResourceGroupName, accountToChange.Name, parameters);
+                clientToUse.DataLakeAnalyticsAccount.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
 
                 var listResponse = clientToUse.DataLakeAnalyticsAccount.List(commonData.ResourceGroupName, null);
 
@@ -148,12 +147,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Add, list and remove a data source to the first account
                 clientToUse.DataLakeAnalyticsAccount.AddDataLakeStoreAccount(commonData.ResourceGroupName,
-                    commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName,
-                    new AddDataLakeStoreParameters
-                    {
-                        Properties =
-                            new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
-                    });
+                    commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName, new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix});
 
                 // Get the data sources and confirm there are 2
                 var getDataSourceResponse =
@@ -184,14 +178,10 @@ namespace DataLakeAnalytics.Tests
                 // Add, list and remove an azure blob source to the first account
                 clientToUse.DataLakeAnalyticsAccount.AddStorageAccount(commonData.ResourceGroupName,
                     commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName,
-                    new AddStorageAccountParameters
+                    new StorageAccountProperties
                     {
-                        Properties =
-                            new StorageAccountProperties
-                            {
-                                Suffix = commonData.StorageAccountSuffix,
-                                AccessKey = commonData.StorageAccountAccessKey
-                            }
+                        Suffix = commonData.StorageAccountSuffix,
+                        AccessKey = commonData.StorageAccountAccessKey
                     });
 
                 // Get the data sources and confirm there is 1

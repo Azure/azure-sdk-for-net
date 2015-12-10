@@ -116,10 +116,7 @@ namespace DataLakeAnalytics.Tests
             if (!exists)
             {
                 dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName, accountName,
-                    new DataLakeStoreAccountCreateOrUpdateParameters
-                    {
-                        DataLakeStoreAccount = new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location, Name = accountName }
-                    });
+                    new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location, Name = accountName });
 
                 accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
                     accountName);
@@ -184,38 +181,34 @@ namespace DataLakeAnalytics.Tests
 
             var accountCreateResponse =
                 dataLakeAnalyticsManagementClient.DataLakeAnalyticsAccount.Create(resourceGroupName, accountName,
-                    new DataLakeAnalyticsAccountCreateOrUpdateParameters
-                    {
-                        DataLakeAnalyticsAccount =
-                            new DataLakeAnalyticsAccount
-                            {
-                                Location = location,
-                                Name = accountName,
-                                Properties =
-                                    new DataLakeAnalyticsAccountProperties
+                new DataLakeAnalyticsAccount
+                {
+                    Location = location,
+                    Name = accountName,
+                    Properties =
+                        new DataLakeAnalyticsAccountProperties
+                        {
+                            DataLakeStoreAccounts =
+                                new List
+                                    <
+                                        Microsoft.Azure.Management.DataLake.Analytics.Models.
+                                            DataLakeStoreAccount>
+                                {
+                                    new Microsoft.Azure.Management.DataLake.Analytics.Models.
+                                        DataLakeStoreAccount
                                     {
-                                        DataLakeStoreAccounts =
-                                            new List
-                                                <
-                                                    Microsoft.Azure.Management.DataLake.Analytics.Models.
-                                                        DataLakeStoreAccount>
-                                            {
-                                                new Microsoft.Azure.Management.DataLake.Analytics.Models.
-                                                    DataLakeStoreAccount
-                                                {
-                                                    Name = dataLakeStoreAccountName,
-                                                    Properties = new Microsoft.Azure.Management.DataLake.Analytics.Models.DataLakeStoreAccountProperties
-                                                    {
-                                                        Suffix =
-                                                            datalakeStoreEndpoint.Replace(
-                                                                string.Format("{0}.", dataLakeStoreAccountName), "")
-                                                    }
-                                                }
-                                            },
-                                        DefaultDataLakeStoreAccount = dataLakeStoreAccountName
+                                        Name = dataLakeStoreAccountName,
+                                        Properties = new Microsoft.Azure.Management.DataLake.Analytics.Models.DataLakeStoreAccountProperties
+                                        {
+                                            Suffix =
+                                                datalakeStoreEndpoint.Replace(
+                                                    string.Format("{0}.", dataLakeStoreAccountName), "")
+                                        }
                                     }
-                            }
-                    });
+                                },
+                            DefaultDataLakeStoreAccount = dataLakeStoreAccountName
+                        }     
+                });
             var accountGetResponse = dataLakeAnalyticsManagementClient.DataLakeAnalyticsAccount.Get(resourceGroupName,
                 accountName);
 
@@ -338,10 +331,10 @@ AS BEGIN
   T(a, b);
 END;", dbName, tableName, tvfName, viewName, procName);
 
-            RunJobToCompletion(dataLakeAnalyticsJobManagementClient, resourceGroupName, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
+            RunJobToCompletion(dataLakeAnalyticsJobManagementClient, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
         }
 
-        internal void RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string resourceGroupName, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
+        internal void RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
         {
             var createOrBuildParams = new JobInfoBuildOrCreateParameters
             {
@@ -358,14 +351,12 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     }
                 }
             };
-            var jobCreateResponse = jobClient.Jobs.Create(resourceGroupName,
-                dataLakeAnalyticsAccountName, jobIdToUse.ToString(), createOrBuildParams);
+            var jobCreateResponse = jobClient.Jobs.Create(dataLakeAnalyticsAccountName, jobIdToUse.ToString(), createOrBuildParams);
 
             Assert.NotNull(jobCreateResponse);
 
             // Poll the job until it finishes
-            var getJobResponse = jobClient.Jobs.Get(resourceGroupName,
-                dataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+            var getJobResponse = jobClient.Jobs.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId);
             Assert.NotNull(getJobResponse);
 
             int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -375,8 +366,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 // wait 5 seconds before polling again
                 TestUtilities.Wait(5000);
                 curWaitInSeconds += 5;
-                getJobResponse = jobClient.Jobs.Get(resourceGroupName,
-                    dataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                getJobResponse = jobClient.Jobs.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId);
                 Assert.NotNull(getJobResponse);
             }
 

@@ -71,7 +71,10 @@ namespace DataLakeAnalytics.Tests
         public static DataLakeAnalyticsCatalogManagementClient GetDataLakeAnalyticsCatalogManagementClient(this TestBase testBase, MockContext context)
         {
             var client = context.GetServiceClient<DataLakeAnalyticsCatalogManagementClient>();
-            client.CatalogServiceUri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://", "");
+            
+            // reset back to the default to ensure the logic works as expected.
+            client.BaseUri = new System.Uri("https://accountname.catalogserviceuri");
+            client.Catalogserviceuri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://", "");
             return client;
         }
 
@@ -83,7 +86,10 @@ namespace DataLakeAnalytics.Tests
         public static DataLakeAnalyticsJobManagementClient GetDataLakeAnalyticsJobManagementClient(this TestBase testBase, MockContext context)
         {
             var client = context.GetServiceClient<DataLakeAnalyticsJobManagementClient>();
-            client.JobServiceUri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://", "");
+
+            // reset back to the default to ensure the logic works as expected.
+            client.BaseUri = new System.Uri("https://accountname.jobserviceuri");
+            client.Jobserviceuri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri.OriginalString.Replace("https://", "");
             return client;
         }
     }

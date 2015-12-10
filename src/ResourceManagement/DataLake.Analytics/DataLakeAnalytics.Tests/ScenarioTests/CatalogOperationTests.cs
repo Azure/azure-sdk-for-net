@@ -25,7 +25,7 @@ using Microsoft.Rest.Azure;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class CatalogOperationTests : TestBase
+    public class CatalogOperationTests : TestBase, IDisposable
     {
         private CommonTestFixture commonData;
 
@@ -33,6 +33,14 @@ namespace DataLakeAnalytics.Tests
         {
             commonData = new CommonTestFixture(this.GetType().FullName);
 
+        }
+
+        public void Dispose()
+        {
+            if (commonData != null)
+            {
+                commonData.Dispose();
+            }
         }
 
         [Fact]
@@ -43,7 +51,7 @@ namespace DataLakeAnalytics.Tests
             {
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
                 {
-                    var dbListResponse = clientToUse.Catalog.ListDatabases(commonData.ResourceGroupName,
+                    var dbListResponse = clientToUse.Catalog.ListDatabases(
                         commonData.DataLakeAnalyticsAccountName);
 
                     Assert.True(dbListResponse.Count() >= 1);
@@ -52,13 +60,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(dbListResponse.Any(db => db.DatabaseName.Equals(commonData.DatabaseName)));
 
                     // Get the specific Database as well
-                    var dbGetResponse = clientToUse.Catalog.GetDatabase(commonData.ResourceGroupName,
+                    var dbGetResponse = clientToUse.Catalog.GetDatabase(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName);
 
                     Assert.Equal(commonData.DatabaseName, dbGetResponse.DatabaseName);
 
                     // Get the table list
-                    var tableListResponse = clientToUse.Catalog.ListTables(commonData.ResourceGroupName,
+                    var tableListResponse = clientToUse.Catalog.ListTables(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
 
                     Assert.True(tableListResponse.Count() >= 1);
@@ -67,13 +75,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tableListResponse.Any(table => table.TableName.Equals(commonData.TableName)));
 
                     // Get the specific table as well
-                    var tableGetResponse = clientToUse.Catalog.GetTable(commonData.ResourceGroupName,
+                    var tableGetResponse = clientToUse.Catalog.GetTable(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.TableName);
 
                     Assert.Equal(commonData.TableName, tableGetResponse.TableName);
 
                     // Get the TVF list
-                    var tvfListResponse = clientToUse.Catalog.ListTableValuedFunctions(commonData.ResourceGroupName,
+                    var tvfListResponse = clientToUse.Catalog.ListTableValuedFunctions(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
 
                     Assert.True(tvfListResponse.Count() >= 1);
@@ -82,13 +90,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tvfListResponse.Any(tvf => tvf.TvfName.Equals(commonData.TvfName)));
 
                     // Get the specific TVF as well
-                    var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(commonData.ResourceGroupName,
+                    var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.TvfName);
 
                     Assert.Equal(commonData.TvfName, tvfGetResponse.TvfName);
 
                     // Get the View list
-                    var viewListResponse = clientToUse.Catalog.ListViews(commonData.ResourceGroupName,
+                    var viewListResponse = clientToUse.Catalog.ListViews(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
 
                     Assert.True(viewListResponse.Count() >= 1);
@@ -97,13 +105,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(viewListResponse.Any(view => view.ViewName.Equals(commonData.ViewName)));
 
                     // Get the specific view as well
-                    var viewGetResponse = clientToUse.Catalog.GetView(commonData.ResourceGroupName,
+                    var viewGetResponse = clientToUse.Catalog.GetView(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.ViewName);
 
                     Assert.Equal(commonData.ViewName, viewGetResponse.ViewName);
 
                     // Get the Procedure list
-                    var procListResponse = clientToUse.Catalog.ListProcedures(commonData.ResourceGroupName,
+                    var procListResponse = clientToUse.Catalog.ListProcedures(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
 
                     Assert.True(procListResponse.Count() >= 1);
@@ -112,13 +120,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(procListResponse.Any(proc => proc.ProcName.Equals(commonData.ProcName)));
 
                     // Get the specific procedure as well
-                    var procGetResponse = clientToUse.Catalog.GetProcedure(commonData.ResourceGroupName,
+                    var procGetResponse = clientToUse.Catalog.GetProcedure(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.ProcName);
 
                     Assert.Equal(commonData.ProcName, procGetResponse.ProcName);
 
                     // Get all the types
-                    var typeGetResponse = clientToUse.Catalog.ListTypes(commonData.ResourceGroupName,
+                    var typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", null);
 
 
@@ -126,7 +134,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.NotEmpty(typeGetResponse);
 
                     // Get all the types that are not complex
-                    typeGetResponse = clientToUse.Catalog.ListTypes(commonData.ResourceGroupName,
+                    typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", new Microsoft.Rest.Azure.OData.ODataQuery<USqlType>{Filter = "isComplexType eq false"});
 
 
@@ -147,7 +155,7 @@ namespace DataLakeAnalytics.Tests
                     using (var jobClient = commonData.GetDataLakeAnalyticsJobManagementClient(context))
                     {
                         // create the secret
-                        var secretCreateResponse = clientToUse.Catalog.CreateSecret(commonData.ResourceGroupName,
+                        var secretCreateResponse = clientToUse.Catalog.CreateSecret(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName,
                             new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
                             {
@@ -159,7 +167,7 @@ namespace DataLakeAnalytics.Tests
                          * TODO: Enable once confirmed that we throw 409s when a secret already exists
                         // Attempt to create the secret again, which should throw
                         Assert.Throws<CloudException>(
-                            () => clientToUse.Catalog.CreateSecret(commonData.ResourceGroupName,
+                            () => clientToUse.Catalog.CreateSecret(
                                 commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName,
                                 new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
                                 {
@@ -170,7 +178,7 @@ namespace DataLakeAnalytics.Tests
                         */
 
                         // Get the secret and ensure the response contains a date.
-                        var secretGetResponse = clientToUse.Catalog.GetSecret(commonData.ResourceGroupName,
+                        var secretGetResponse = clientToUse.Catalog.GetSecret(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName);
 
                         Assert.NotNull(secretGetResponse);
@@ -181,12 +189,12 @@ namespace DataLakeAnalytics.Tests
                             string.Format(
                                 @"USE {0}; CREATE CREDENTIAL {1} WITH USER_NAME = ""scope@rkm4grspxa"", IDENTITY = ""{2}"";",
                                 commonData.DatabaseName, commonData.CredentialName, commonData.SecretName);
-                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, 
                             commonData.DataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
                             credentialCreationScript);
 
                         // Get the Credential list
-                        var credListResponse = clientToUse.Catalog.ListCredentials(commonData.ResourceGroupName,
+                        var credListResponse = clientToUse.Catalog.ListCredentials(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName);
                         Assert.True(credListResponse.Count() >= 1);
 
@@ -194,7 +202,7 @@ namespace DataLakeAnalytics.Tests
                         Assert.True(credListResponse.Any(cred => cred.CredentialName.Equals(commonData.CredentialName)));
 
                         // Get the specific credential as well
-                        var credGetResponse = clientToUse.Catalog.GetCredential(commonData.ResourceGroupName,
+                        var credGetResponse = clientToUse.Catalog.GetCredential(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.CredentialName);
                         Assert.Equal(commonData.CredentialName, credGetResponse.CredentialName);
 
@@ -202,16 +210,16 @@ namespace DataLakeAnalytics.Tests
                         var credentialDropScript =
                             string.Format(
                                 @"USE {0}; DROP CREDENTIAL {1};", commonData.DatabaseName, commonData.CredentialName);
-                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, 
                             commonData.DataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
                             credentialDropScript);
 
                         // Delete the secret
-                        clientToUse.Catalog.DeleteSecret(commonData.ResourceGroupName,
+                        clientToUse.Catalog.DeleteSecret(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName);
 
                         // Try to get the secret which should throw
-                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(commonData.ResourceGroupName,
+                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
                             commonData.DataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName));
                     }
 

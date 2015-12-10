@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        public string JobServiceUri { get; set; }
+        public string Jobserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -259,9 +259,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         private void Initialize()
         {
             this.Jobs = new JobsOperations(this);
-            this.BaseUri = new Uri("https://accountName.jobServiceUri");
+            this.BaseUri = new Uri("https://accountname.jobserviceuri");
             this.ApiVersion = "2015-10-01-preview";
-            this.JobServiceUri = "azuredatalakeanalytics.net";
+            this.Jobserviceuri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {
@@ -289,8 +289,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobProperties>("jobType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobProperties>("jobType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobProperties>("type"));
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    

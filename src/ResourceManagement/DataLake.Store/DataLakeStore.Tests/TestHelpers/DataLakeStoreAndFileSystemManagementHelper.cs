@@ -104,10 +104,7 @@ namespace DataLakeStore.Tests
             if (!exists)
             {
                 dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName, accountName,
-                    new DataLakeStoreAccountCreateOrUpdateParameters
-                    {
-                        DataLakeStoreAccount = new DataLakeStoreAccount {Location = location, Name = accountName}
-                    });
+                    new DataLakeStoreAccount {Location = location, Name = accountName});
                 
                 accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
                     accountName);

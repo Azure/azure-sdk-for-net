@@ -17,6 +17,7 @@ using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,31 +27,25 @@ namespace DataLakeStore.Tests
     public class AccountOperationTests : TestBase
     {   
         private CommonTestFixture commonData;
-        public AccountOperationTests()
-        {
-            commonData = new CommonTestFixture(this.GetType().FullName);
-        }
 
         [Fact]
         public void CreateGetUpdateDeleteTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreManagementClient(context);
 
                 // Create a test account
                 var responseCreate =
                     clientToUse.DataLakeStoreAccount.Create(resourceGroupName: commonData.ResourceGroupName, name: commonData.DataLakeStoreAccountName,
-                        parameters: new DataLakeStoreAccountCreateOrUpdateParameters
+                        parameters: new DataLakeStoreAccount
                         {
-                            DataLakeStoreAccount = new DataLakeStoreAccount
+                            Name = commonData.DataLakeStoreAccountName,
+                            Location = commonData.Location,
+                            Tags = new Dictionary<string, string>
                             {
-                                Name = commonData.DataLakeStoreAccountName,
-                                Location = commonData.Location,
-                                Tags = new Dictionary<string, string>
-                                {
-                                { "testkey","testvalue" }
-                                }
+                            { "testkey","testvalue" }
                             }
                         });
 
@@ -90,15 +85,13 @@ namespace DataLakeStore.Tests
                 {"updatedKey", "updatedValue"}
             };
 
-                var updateResponse = clientToUse.DataLakeStoreAccount.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName, new DataLakeStoreAccountCreateOrUpdateParameters
+                var updateResponse = clientToUse.DataLakeStoreAccount.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName,
+                new DataLakeStoreAccount
                 {
-                    DataLakeStoreAccount = new DataLakeStoreAccount
+                    Name = newAccount.Name,
+                    Tags = new Dictionary<string, string>
                     {
-                        Name = newAccount.Name,
-                        Tags = new Dictionary<string, string>
-                        {
-                            {"updatedKey", "updatedValue"}
-                        }
+                        {"updatedKey", "updatedValue"}
                     }
                 });
 
@@ -118,12 +111,8 @@ namespace DataLakeStore.Tests
                 // Create another account and ensure that list account returns both
                 var accountToChange = updateResponseGet;
                 accountToChange.Name = accountToChange.Name + "acct2";
-                var parameters = new DataLakeStoreAccountCreateOrUpdateParameters
-                {
-                    DataLakeStoreAccount = accountToChange
-                };
 
-                clientToUse.DataLakeStoreAccount.Create(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName, parameters);
+                clientToUse.DataLakeStoreAccount.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
 
                 var listResponse = clientToUse.DataLakeStoreAccount.List(commonData.ResourceGroupName, null);
 

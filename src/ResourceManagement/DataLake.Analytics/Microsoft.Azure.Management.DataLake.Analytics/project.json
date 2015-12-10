@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.2.0, 3.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.3.0, 3.0)"
   },
 
   "frameworks": {

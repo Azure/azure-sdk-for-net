@@ -24,12 +24,19 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class JobOperationTests : TestBase
+    public class JobOperationTests : TestBase, IDisposable
     {
         private CommonTestFixture commonData;
         public JobOperationTests()
         {
             commonData = new CommonTestFixture(this.GetType().FullName);
+        }
+        public void Dispose()
+        {
+            if (commonData != null)
+            {
+                commonData.Dispose();
+            }
         }
 
         [Fact] 
@@ -67,16 +74,15 @@ namespace DataLakeAnalytics.Tests
                         Job = jobToSubmit
                     };
 
-                var jobCreateResponse = clientToUse.Jobs.Create(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, jobId.ToString(), createOrBuildParams);
+                var jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, jobId.ToString(), createOrBuildParams);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Cancel the job
-                clientToUse.Jobs.Cancel(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                clientToUse.Jobs.Cancel(commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
 
                 // Get the job and ensure that it says it was cancelled.
-                var getCancelledJobResponse = clientToUse.Jobs.Get(commonData.ResourceGroupName,
-                    commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                var getCancelledJobResponse = clientToUse.Jobs.Get(commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
 
                 Assert.Equal(JobResult.Cancelled, getCancelledJobResponse.Result);
                 Assert.NotNull(getCancelledJobResponse.ErrorMessage);
@@ -84,12 +90,12 @@ namespace DataLakeAnalytics.Tests
 
                 // Resubmit the job
                 createOrBuildParams.Job.JobId = secondId.ToString();
-                jobCreateResponse = clientToUse.Jobs.Create(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, secondId.ToString(), createOrBuildParams);
+                jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, secondId.ToString(), createOrBuildParams);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Poll the job until it finishes
-                var getJobResponse = clientToUse.Jobs.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                var getJobResponse = clientToUse.Jobs.Get(commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
                 Assert.NotNull(getJobResponse);
 
                 int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -99,7 +105,7 @@ namespace DataLakeAnalytics.Tests
                     // wait 5 seconds before polling again
                     TestUtilities.Wait(5000);
                     curWaitInSeconds += 5;
-                    getJobResponse = clientToUse.Jobs.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                    getJobResponse = clientToUse.Jobs.Get(commonData.DataLakeAnalyticsAccountName, jobCreateResponse.JobId);
                     Assert.NotNull(getJobResponse);
                 }
 
@@ -111,23 +117,23 @@ namespace DataLakeAnalytics.Tests
                     string.Format("Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                         getJobResponse.JobId, getJobResponse.State, getJobResponse.Result, getJobResponse.ErrorMessage));
 
-                var listJobResponse = clientToUse.Jobs.List(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, null);
+                var listJobResponse = clientToUse.Jobs.List(commonData.DataLakeAnalyticsAccountName, null);
                 Assert.NotNull(listJobResponse);
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
                 // Just compile the job
-                var compileResponse = clientToUse.Jobs.Build(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, createOrBuildParams);
+                var compileResponse = clientToUse.Jobs.Build(commonData.DataLakeAnalyticsAccountName, createOrBuildParams);
                 Assert.NotNull(compileResponse);
 
                 // list the jobs both with a hand crafted query string and using the parameters
-                listJobResponse = clientToUse.Jobs.List(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, select:  "jobId" );
+                listJobResponse = clientToUse.Jobs.List(commonData.DataLakeAnalyticsAccountName, select:  "jobId" );
                 Assert.NotNull(listJobResponse);
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
                 
                 /* TODO: re-enable if we can figure out a way to include this
-                listJobResponse = clientToUse.Jobs.ListWithQueryString(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, "$select=jobId");
+                listJobResponse = clientToUse.Jobs.ListWithQueryString(commonData.DataLakeAnalyticsAccountName, "$select=jobId");
                 Assert.NotNull(listJobResponse);
                 
                 Assert.True(listJobResponse.Value.Any(job => job.JobId == getJobResponse.JobId));

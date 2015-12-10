@@ -44,6 +44,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        string SubscriptionId { get; set; }
+
+        /// <summary>
         /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }
@@ -51,7 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        string DataLakeServiceUri { get; set; }
+        string Datalakeserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.

@@ -17,28 +17,30 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The result of the request or operation.
+    /// Defines headers for BeginCreate operation.
     /// </summary>
-    public partial class FileOperationResultResult
+    public partial class FileSystemBeginCreateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the FileOperationResultResult class.
+        /// Initializes a new instance of the FileSystemBeginCreateHeaders
+        /// class.
         /// </summary>
-        public FileOperationResultResult() { }
+        public FileSystemBeginCreateHeaders() { }
 
         /// <summary>
-        /// Initializes a new instance of the FileOperationResultResult class.
+        /// Initializes a new instance of the FileSystemBeginCreateHeaders
+        /// class.
         /// </summary>
-        public FileOperationResultResult(bool? operationResult = default(bool?))
+        public FileSystemBeginCreateHeaders(string location = default(string))
         {
-            OperationResult = operationResult;
+            Location = location;
         }
 
         /// <summary>
-        /// Gets or sets the result of the operation or request
+        /// The location of the file to be created
         /// </summary>
-        [JsonProperty(PropertyName = "operationResult")]
-        public bool? OperationResult { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }

@@ -53,10 +53,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the job statistics object specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -68,15 +65,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (jobIdentity == null)
             {
@@ -90,9 +83,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -101,8 +94,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("jobIdentity", jobIdentity);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetStatistics", tracingParameters);
@@ -110,9 +102,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/GetStatistics").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -128,14 +120,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -239,10 +223,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the U-SQL job debug data information specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -254,15 +235,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (jobIdentity == null)
             {
@@ -276,9 +253,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -287,8 +264,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("jobIdentity", jobIdentity);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetDebugDataPath", tracingParameters);
@@ -296,9 +272,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/GetDebugDataPath").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -314,14 +290,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -426,10 +394,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Builds (compiles) the specified job in the specified Data Lake Analytics
         /// account for job correctness and validation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to build the job for
         /// </param>
         /// <param name='parameters'>
@@ -441,15 +406,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string resourceGroupName, string accountName, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (parameters == null)
             {
@@ -467,9 +428,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -478,8 +439,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Build", tracingParameters);
@@ -487,8 +447,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "BuildJob").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -504,14 +464,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -620,10 +572,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Submits the specified job to the specified Data Lake Analytics account for
         /// computation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to create the job for
         /// </param>
         /// <param name='jobId'>
@@ -638,15 +587,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (jobId == null)
             {
@@ -668,9 +613,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -679,8 +624,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -689,9 +633,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobId}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
             url = url.Replace("{jobId}", Uri.EscapeDataString(jobId));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -707,14 +651,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -822,10 +758,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Cancels the running job specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to cancel the job for
         /// </param>
         /// <param name='jobIdentity'>
@@ -837,15 +770,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (jobIdentity == null)
             {
@@ -859,9 +788,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -870,8 +799,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("jobIdentity", jobIdentity);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Cancel", tracingParameters);
@@ -879,9 +807,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}/CancelJob").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -897,14 +825,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -981,10 +901,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the JobInfo object specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -996,15 +913,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (jobIdentity == null)
             {
@@ -1018,9 +931,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1029,8 +942,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("jobIdentity", jobIdentity);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
@@ -1038,9 +950,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs/{jobIdentity}").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
             url = url.Replace("{jobIdentity}", Uri.EscapeDataString(jobIdentity));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1056,14 +968,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -1168,14 +1072,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the first page of the Data Lake Analytics JobInformation objects
         /// within the specified resource group with a link to the next page, if any.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -1203,15 +1104,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountname, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceGroupName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1221,9 +1118,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.JobServiceUri == null)
+            if (this.Client.Jobserviceuri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.JobServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Jobserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1232,9 +1129,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("search", search);
@@ -1245,8 +1141,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "Jobs").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{jobServiceUri}", Uri.EscapeDataString(this.Client.JobServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("jobserviceuri", Uri.EscapeDataString(this.Client.Jobserviceuri));
             List<string> queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -1286,14 +1182,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))
@@ -1401,24 +1289,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListNextWithHttpMessagesAsync(string nextPageLink, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1432,7 +1313,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListNext", tracingParameters);
             }
@@ -1450,14 +1330,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (resourceGroupName != null)
-            {
-                if (httpRequest.Headers.Contains("resourceGroupName"))
-                {
-                    httpRequest.Headers.Remove("resourceGroupName");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("resourceGroupName", resourceGroupName);
-            }
             if (this.Client.SubscriptionId != null)
             {
                 if (httpRequest.Headers.Contains("subscriptionId"))

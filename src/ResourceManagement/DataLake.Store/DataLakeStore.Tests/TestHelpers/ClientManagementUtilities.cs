@@ -16,6 +16,7 @@ using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Net.Http;
 
 namespace DataLakeStore.Tests
 {
@@ -49,7 +50,10 @@ namespace DataLakeStore.Tests
         public static DataLakeStoreFileSystemManagementClient GetDataLakeStoreFileSystemManagementClient(this TestBase testBase, MockContext context)
         {
             var client = context.GetServiceClient<DataLakeStoreFileSystemManagementClient>();
-            client.DataLakeServiceUri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeStoreServiceUri.OriginalString.Replace("https://", "");
+            
+            // reset this back to the default.
+            client.BaseUri = new System.Uri("https://accountname.datalakeserviceuri");
+            client.Datalakeserviceuri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeStoreServiceUri.OriginalString.Replace("https://", "");
             return client;
         }
     }

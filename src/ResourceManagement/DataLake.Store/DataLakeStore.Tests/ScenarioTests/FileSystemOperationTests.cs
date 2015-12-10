@@ -22,7 +22,6 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
-using Microsoft.Azure.Test;
 using Xunit;
 
 namespace DataLakeStore.Tests
@@ -45,11 +44,6 @@ namespace DataLakeStore.Tests
         #endregion
         private CommonTestFixture commonData;
 
-        public FileSystemOperationTests()
-        {
-            commonData = new CommonTestFixture(this.GetType().FullName);
-        }
-
         #region SDK Tests
 
         [Fact]
@@ -57,6 +51,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -71,6 +66,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -96,6 +92,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -110,6 +107,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -125,6 +123,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -142,6 +141,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -160,6 +160,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -167,8 +168,8 @@ namespace DataLakeStore.Tests
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
                     // Append to the file that we created
-                    var beginAppendResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginAppend(filePath,
-                        commonData.DataLakeStoreFileSystemAccountName, null);
+                    var beginAppendResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginAppendWithHttpMessagesAsync(filePath,
+                        commonData.DataLakeStoreFileSystemAccountName, null).Result.Headers;
                     Assert.True(!string.IsNullOrEmpty(beginAppendResponse.Location));
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
@@ -185,6 +186,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -207,6 +209,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -248,6 +251,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -289,6 +293,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -340,6 +345,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -354,7 +360,7 @@ namespace DataLakeStore.Tests
                     var moveFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(filePath,
                         commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder1, fileToMove));
-                    Assert.True(moveFileResponse.OperationResult);
+                    Assert.True(moveFileResponse.Boolean);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder1, fileToMove),
                         FileType.File,
@@ -369,7 +375,7 @@ namespace DataLakeStore.Tests
                     // Now move folder completely.
                     var moveFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(targetFolder1,
                         commonData.DataLakeStoreFileSystemAccountName, targetFolder2);
-                    Assert.True(moveFolderResponse.OperationResult);
+                    Assert.True(moveFolderResponse.Boolean);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, targetFolder2,
                         FileType.Directory, 0);
@@ -396,6 +402,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -430,6 +437,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -449,6 +457,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -519,6 +528,7 @@ namespace DataLakeStore.Tests
             // This test simply tests that all bool/empty return actions return successfully
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
@@ -530,7 +540,7 @@ namespace DataLakeStore.Tests
                     // Set replication on file
                     var replicationResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.SetReplication(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, 3);
-                    Assert.True(replicationResponse.OperationResult);
+                    Assert.True(replicationResponse.Boolean);
 
                     /*
                  * This API is available but all values put into it are ignored. Commenting this out until this API is fully functional.
@@ -574,6 +584,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -592,6 +603,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -625,6 +637,7 @@ namespace DataLakeStore.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -677,7 +690,7 @@ namespace DataLakeStore.Tests
                 : folderToCreate;
 
             var response = commonData.DataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
-            Assert.True(response.OperationResult);
+            Assert.True(response.Boolean);
 
             return folderPath;
         }
@@ -708,14 +721,14 @@ namespace DataLakeStore.Tests
                 return filePath;
             }
 
-            var beginCreateFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath,
-                caboAccountName, null);
+            var beginCreateFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginCreateWithHttpMessagesAsync(filePath,
+                caboAccountName).Result.Headers;
             Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
 
             if (!withContents)
             {
                 commonData.DataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
-                    null);
+                    new MemoryStream());
             }
             else
             {
@@ -745,7 +758,7 @@ namespace DataLakeStore.Tests
             }
             else
             {
-                var beginOpenResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
+                var beginOpenResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginOpenWithHttpMessagesAsync(filePath, caboAccountName, null).Result.Headers;
                 Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
 
                 openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
@@ -765,7 +778,7 @@ namespace DataLakeStore.Tests
                 try
                 {
                     var deleteFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                    Assert.True(!deleteFolderResponse.OperationResult);
+                    Assert.True(!deleteFolderResponse.Boolean);
                 }
                 catch (Exception e)
                 {
@@ -776,7 +789,7 @@ namespace DataLakeStore.Tests
             {
                 // Delete a folder
                 var deleteFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                Assert.True(deleteFolderResponse.OperationResult);
+                Assert.True(deleteFolderResponse.Boolean);
             }
         }
 
@@ -788,7 +801,7 @@ namespace DataLakeStore.Tests
                 try
                 {
                     var deleteFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                    Assert.True(!deleteFileResponse.OperationResult);
+                    Assert.True(!deleteFileResponse.Boolean);
                 }
                 catch (Exception e)
                 {
@@ -799,9 +812,10 @@ namespace DataLakeStore.Tests
             {
                 // Delete a file
                 var deleteFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                Assert.True(deleteFileResponse.OperationResult);
+                Assert.True(deleteFileResponse.Boolean);
             }
         }
+
         #endregion
     }
 }

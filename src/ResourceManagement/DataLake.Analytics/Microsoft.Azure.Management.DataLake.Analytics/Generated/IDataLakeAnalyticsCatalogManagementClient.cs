@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        string CatalogServiceUri { get; set; }
+        string Catalogserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.

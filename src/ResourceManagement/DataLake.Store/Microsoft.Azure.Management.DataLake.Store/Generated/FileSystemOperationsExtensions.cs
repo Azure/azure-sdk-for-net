@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using Rest.Azure.OData;
 
     public static partial class FileSystemOperationsExtensions
     {
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to append to using concurrent append.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='streamContents'>
@@ -43,9 +42,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountName, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND")
+            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(filePath, accountName, streamContents, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(filePath, accountname, streamContents, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to append to using concurrent append.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='streamContents'>
@@ -74,9 +73,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountName, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, accountName, streamContents, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, accountname, streamContents, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -88,7 +87,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='path'>
             /// The path to the file or folder to check access for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='fsaction'>
@@ -100,9 +99,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void CheckAccess(this IFileSystemOperations operations, string path, string accountName, string fsaction = default(string), string op = "CHECKACCESS")
+            public static void CheckAccess(this IFileSystemOperations operations, string path, string accountname, string fsaction = default(string), string op = "CHECKACCESS")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CheckAccessAsync(path, accountName, fsaction, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CheckAccessAsync(path, accountname, fsaction, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -114,7 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='path'>
             /// The path to the file or folder to check access for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='fsaction'>
@@ -129,9 +128,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckAccessAsync( this IFileSystemOperations operations, string path, string accountName, string fsaction = default(string), string op = "CHECKACCESS", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckAccessAsync( this IFileSystemOperations operations, string path, string accountname, string fsaction = default(string), string op = "CHECKACCESS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CheckAccessWithHttpMessagesAsync(path, accountName, fsaction, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.CheckAccessWithHttpMessagesAsync(path, accountname, fsaction, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -143,7 +142,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='path'>
             /// The path to the directory to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='permission'>
@@ -154,9 +153,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileOperationResultResult Mkdirs(this IFileSystemOperations operations, string path, string accountName, string permission = default(string), string op = "MKDIRS")
+            public static FileOperationResult Mkdirs(this IFileSystemOperations operations, string path, string accountname, string permission = default(string), string op = "MKDIRS")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).MkdirsAsync(path, accountName, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).MkdirsAsync(path, accountname, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -168,7 +167,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='path'>
             /// The path to the directory to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='permission'>
@@ -182,9 +181,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResultResult> MkdirsAsync( this IFileSystemOperations operations, string path, string accountName, string permission = default(string), string op = "MKDIRS", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileOperationResult> MkdirsAsync( this IFileSystemOperations operations, string path, string accountname, string permission = default(string), string op = "MKDIRS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileOperationResultResult> result = await operations.MkdirsWithHttpMessagesAsync(path, accountName, permission, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.MkdirsWithHttpMessagesAsync(path, accountname, permission, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -197,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='destinationPath'>
             /// The path to the destination file resulting from the concatenation.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='sources'>
@@ -209,9 +208,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void Concat(this IFileSystemOperations operations, string destinationPath, string accountName, string sources = default(string), string op = "CONCAT")
+            public static void Concat(this IFileSystemOperations operations, string destinationPath, string accountname, string sources = default(string), string op = "CONCAT")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(destinationPath, accountName, sources, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(destinationPath, accountname, sources, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,7 +222,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='destinationPath'>
             /// The path to the destination file resulting from the concatenation.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='sources'>
@@ -238,9 +237,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcatAsync( this IFileSystemOperations operations, string destinationPath, string accountName, string sources = default(string), string op = "CONCAT", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcatAsync( this IFileSystemOperations operations, string destinationPath, string accountname, string sources = default(string), string op = "CONCAT", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ConcatWithHttpMessagesAsync(destinationPath, accountName, sources, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.ConcatWithHttpMessagesAsync(destinationPath, accountname, sources, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -254,7 +253,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='msConcatDestinationPath'>
             /// The path to the destination file resulting from the concatenation.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='streamContents'>
@@ -278,9 +277,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void MsConcat(this IFileSystemOperations operations, string msConcatDestinationPath, string accountName, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT")
+            public static void MsConcat(this IFileSystemOperations operations, string msConcatDestinationPath, string accountname, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(msConcatDestinationPath, accountName, streamContents, deletesourcedirectory, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(msConcatDestinationPath, accountname, streamContents, deletesourcedirectory, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -294,7 +293,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='msConcatDestinationPath'>
             /// The path to the destination file resulting from the concatenation.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='streamContents'>
@@ -321,9 +320,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MsConcatAsync( this IFileSystemOperations operations, string msConcatDestinationPath, string accountName, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task MsConcatAsync( this IFileSystemOperations operations, string msConcatDestinationPath, string accountname, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.MsConcatWithHttpMessagesAsync(msConcatDestinationPath, accountName, streamContents, deletesourcedirectory, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.MsConcatWithHttpMessagesAsync(msConcatDestinationPath, accountname, streamContents, deletesourcedirectory, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -335,20 +334,24 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='listFilePath'>
             /// The path to the file to retrieve status for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='top'>
             /// Gets or sets the number of items to return. Optional.
+            /// </param>
+            /// <param name='skip'>
+            /// Gets or sets the number of items to skip over before returning elements.
+            /// Optional.
             /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string listFilePath, string accountName, ODataQuery<int?> odataQuery = default(ODataQuery<int?>), string op = "LISTSTATUS")
+            public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string listFilePath, string accountname, int? top = default(int?), int? skip = default(int?), string op = "LISTSTATUS")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(listFilePath, accountName, odataQuery, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(listFilePath, accountname, top, skip, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -360,11 +363,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='listFilePath'>
             /// The path to the file to retrieve status for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='top'>
             /// Gets or sets the number of items to return. Optional.
+            /// </param>
+            /// <param name='skip'>
+            /// Gets or sets the number of items to skip over before returning elements.
+            /// Optional.
             /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
@@ -374,9 +381,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileStatusesResult> ListFileStatusAsync( this IFileSystemOperations operations, string listFilePath, string accountName, ODataQuery<int?> odataQuery = default(ODataQuery<int?>), string op = "LISTSTATUS", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileStatusesResult> ListFileStatusAsync( this IFileSystemOperations operations, string listFilePath, string accountname, int? top = default(int?), int? skip = default(int?), string op = "LISTSTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileStatusesResult> result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountName, odataQuery, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountname, top, skip, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -389,7 +396,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='getContentSummaryFilePath'>
             /// The path to the file to retrieve the summary for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -397,9 +404,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static ContentSummaryResult GetContentSummary(this IFileSystemOperations operations, string getContentSummaryFilePath, string accountName, string op = "GETCONTENTSUMMARY")
+            public static ContentSummaryResult GetContentSummary(this IFileSystemOperations operations, string getContentSummaryFilePath, string accountname, string op = "GETCONTENTSUMMARY")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetContentSummaryAsync(getContentSummaryFilePath, accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetContentSummaryAsync(getContentSummaryFilePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -411,7 +418,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='getContentSummaryFilePath'>
             /// The path to the file to retrieve the summary for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -422,9 +429,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContentSummaryResult> GetContentSummaryAsync( this IFileSystemOperations operations, string getContentSummaryFilePath, string accountName, string op = "GETCONTENTSUMMARY", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContentSummaryResult> GetContentSummaryAsync( this IFileSystemOperations operations, string getContentSummaryFilePath, string accountname, string op = "GETCONTENTSUMMARY", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ContentSummaryResult> result = await operations.GetContentSummaryWithHttpMessagesAsync(getContentSummaryFilePath, accountName, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetContentSummaryWithHttpMessagesAsync(getContentSummaryFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -437,7 +444,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='getFilePath'>
             /// The path to the file to retrieve status for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -445,9 +452,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileStatusResult GetFileStatus(this IFileSystemOperations operations, string getFilePath, string accountName, string op = "GETFILESTATUS")
+            public static FileStatusResult GetFileStatus(this IFileSystemOperations operations, string getFilePath, string accountname, string op = "GETFILESTATUS")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileStatusAsync(getFilePath, accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileStatusAsync(getFilePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -459,7 +466,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='getFilePath'>
             /// The path to the file to retrieve status for.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -470,9 +477,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileStatusResult> GetFileStatusAsync( this IFileSystemOperations operations, string getFilePath, string accountName, string op = "GETFILESTATUS", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileStatusResult> GetFileStatusAsync( this IFileSystemOperations operations, string getFilePath, string accountname, string op = "GETFILESTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileStatusResult> result = await operations.GetFileStatusWithHttpMessagesAsync(getFilePath, accountName, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetFileStatusWithHttpMessagesAsync(getFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -487,7 +494,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to append to.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to append to the file in
             /// </param>
             /// <param name='streamContents'>
@@ -506,9 +513,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void DirectAppend(this IFileSystemOperations operations, string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true)
+            public static void DirectAppend(this IFileSystemOperations operations, string directFilePath, string accountname, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectAppendAsync(directFilePath, accountName, streamContents, buffersize, op, append), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectAppendAsync(directFilePath, accountname, streamContents, buffersize, op, append), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -522,7 +529,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to append to.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to append to the file in
             /// </param>
             /// <param name='streamContents'>
@@ -544,9 +551,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DirectAppendAsync( this IFileSystemOperations operations, string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DirectAppendAsync( this IFileSystemOperations operations, string directFilePath, string accountname, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DirectAppendWithHttpMessagesAsync(directFilePath, accountName, streamContents, buffersize, op, append, null, cancellationToken).ConfigureAwait(false);
+                await operations.DirectAppendWithHttpMessagesAsync(directFilePath, accountname, streamContents, buffersize, op, append, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -560,12 +567,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to create the file in
             /// </param>
             /// <param name='streamContents'>
             /// The file contents to include when creating the file. This parameter is
-            /// required, however it can be an empty stream. Just not null.
+            /// optional, resulting in an empty file if not specified.
             /// </param>
             /// <param name='buffersize'>
             /// The size of the buffer used in transferring data.
@@ -592,9 +599,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void DirectCreate(this IFileSystemOperations operations, string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true)
+            public static void DirectCreate(this IFileSystemOperations operations, string directFilePath, string accountname, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectCreateAsync(directFilePath, accountName, streamContents, buffersize, overwrite, blocksize, replication, permission, op, write), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectCreateAsync(directFilePath, accountname, streamContents, buffersize, overwrite, blocksize, replication, permission, op, write), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -608,12 +615,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to create the file in
             /// </param>
             /// <param name='streamContents'>
             /// The file contents to include when creating the file. This parameter is
-            /// required, however it can be an empty stream. Just not null.
+            /// optional, resulting in an empty file if not specified.
             /// </param>
             /// <param name='buffersize'>
             /// The size of the buffer used in transferring data.
@@ -643,9 +650,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DirectCreateAsync( this IFileSystemOperations operations, string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DirectCreateAsync( this IFileSystemOperations operations, string directFilePath, string accountname, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DirectCreateWithHttpMessagesAsync(directFilePath, accountName, streamContents, buffersize, overwrite, blocksize, replication, permission, op, write, null, cancellationToken).ConfigureAwait(false);
+                await operations.DirectCreateWithHttpMessagesAsync(directFilePath, accountname, streamContents, buffersize, overwrite, blocksize, replication, permission, op, write, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -659,7 +666,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to open.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='length'>
@@ -678,9 +685,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static byte[] DirectOpen(this IFileSystemOperations operations, string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true)
+            public static byte[] DirectOpen(this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectOpenAsync(directFilePath, accountName, length, offset, buffersize, op, read), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectOpenAsync(directFilePath, accountname, length, offset, buffersize, op, read), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -694,7 +701,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='directFilePath'>
             /// The path to the file to open.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='length'>
@@ -716,9 +723,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<byte[]> DirectOpenAsync( this IFileSystemOperations operations, string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<byte[]> DirectOpenAsync( this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<byte[]> result = await operations.DirectOpenWithHttpMessagesAsync(directFilePath, accountName, length, offset, buffersize, op, read, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.DirectOpenWithHttpMessagesAsync(directFilePath, accountname, length, offset, buffersize, op, read, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -731,7 +738,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setAclFilePath'>
             /// The path to the directory or file to set ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -743,9 +750,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void SetAcl(this IFileSystemOperations operations, string setAclFilePath, string accountName, string aclspec, string op = "SETACL")
+            public static void SetAcl(this IFileSystemOperations operations, string setAclFilePath, string accountname, string aclspec, string op = "SETACL")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetAclAsync(setAclFilePath, accountName, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetAclAsync(setAclFilePath, accountname, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -757,7 +764,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setAclFilePath'>
             /// The path to the directory or file to set ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -772,9 +779,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetAclAsync( this IFileSystemOperations operations, string setAclFilePath, string accountName, string aclspec, string op = "SETACL", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetAclAsync( this IFileSystemOperations operations, string setAclFilePath, string accountname, string aclspec, string op = "SETACL", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SetAclWithHttpMessagesAsync(setAclFilePath, accountName, aclspec, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.SetAclWithHttpMessagesAsync(setAclFilePath, accountname, aclspec, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -786,7 +793,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='modifyAclFilePath'>
             /// The path to the directory or file to modify ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -798,9 +805,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void ModifyAclEntries(this IFileSystemOperations operations, string modifyAclFilePath, string accountName, string aclspec, string op = "MODIFYACLENTRIES")
+            public static void ModifyAclEntries(this IFileSystemOperations operations, string modifyAclFilePath, string accountname, string aclspec, string op = "MODIFYACLENTRIES")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ModifyAclEntriesAsync(modifyAclFilePath, accountName, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ModifyAclEntriesAsync(modifyAclFilePath, accountname, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -812,7 +819,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='modifyAclFilePath'>
             /// The path to the directory or file to modify ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -827,9 +834,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ModifyAclEntriesAsync( this IFileSystemOperations operations, string modifyAclFilePath, string accountName, string aclspec, string op = "MODIFYACLENTRIES", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ModifyAclEntriesAsync( this IFileSystemOperations operations, string modifyAclFilePath, string accountname, string aclspec, string op = "MODIFYACLENTRIES", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ModifyAclEntriesWithHttpMessagesAsync(modifyAclFilePath, accountName, aclspec, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.ModifyAclEntriesWithHttpMessagesAsync(modifyAclFilePath, accountname, aclspec, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -841,7 +848,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='removeAclFilePath'>
             /// The path to the directory or file to remove ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -853,9 +860,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void RemoveAclEntries(this IFileSystemOperations operations, string removeAclFilePath, string accountName, string aclspec, string op = "REMOVEACLENTRIES")
+            public static void RemoveAclEntries(this IFileSystemOperations operations, string removeAclFilePath, string accountname, string aclspec, string op = "REMOVEACLENTRIES")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclEntriesAsync(removeAclFilePath, accountName, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclEntriesAsync(removeAclFilePath, accountname, aclspec, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -867,7 +874,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='removeAclFilePath'>
             /// The path to the directory or file to remove ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='aclspec'>
@@ -882,9 +889,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveAclEntriesAsync( this IFileSystemOperations operations, string removeAclFilePath, string accountName, string aclspec, string op = "REMOVEACLENTRIES", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RemoveAclEntriesAsync( this IFileSystemOperations operations, string removeAclFilePath, string accountname, string aclspec, string op = "REMOVEACLENTRIES", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.RemoveAclEntriesWithHttpMessagesAsync(removeAclFilePath, accountName, aclspec, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.RemoveAclEntriesWithHttpMessagesAsync(removeAclFilePath, accountname, aclspec, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -896,7 +903,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='removeDefaultAclFilePath'>
             /// The path to the directory or file to remove ACL on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -904,9 +911,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void RemoveDefaultAcl(this IFileSystemOperations operations, string removeDefaultAclFilePath, string accountName, string op = "REMOVEDEFAULTACL")
+            public static void RemoveDefaultAcl(this IFileSystemOperations operations, string removeDefaultAclFilePath, string accountname, string op = "REMOVEDEFAULTACL")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(removeDefaultAclFilePath, accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(removeDefaultAclFilePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -918,7 +925,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='removeDefaultAclFilePath'>
             /// The path to the directory or file to remove ACL on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -929,9 +936,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveDefaultAclAsync( this IFileSystemOperations operations, string removeDefaultAclFilePath, string accountName, string op = "REMOVEDEFAULTACL", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RemoveDefaultAclAsync( this IFileSystemOperations operations, string removeDefaultAclFilePath, string accountname, string op = "REMOVEDEFAULTACL", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.RemoveDefaultAclWithHttpMessagesAsync(removeDefaultAclFilePath, accountName, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.RemoveDefaultAclWithHttpMessagesAsync(removeDefaultAclFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -943,7 +950,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='aclFilePath'>
             /// The path to the directory or file to remove ACL on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -951,9 +958,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void RemoveAcl(this IFileSystemOperations operations, string aclFilePath, string accountName, string op = "REMOVEACL")
+            public static void RemoveAcl(this IFileSystemOperations operations, string aclFilePath, string accountname, string op = "REMOVEACL")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(aclFilePath, accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(aclFilePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -965,7 +972,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='aclFilePath'>
             /// The path to the directory or file to remove ACL on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -976,9 +983,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveAclAsync( this IFileSystemOperations operations, string aclFilePath, string accountName, string op = "REMOVEACL", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RemoveAclAsync( this IFileSystemOperations operations, string aclFilePath, string accountname, string op = "REMOVEACL", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.RemoveAclWithHttpMessagesAsync(aclFilePath, accountName, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.RemoveAclWithHttpMessagesAsync(aclFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -990,7 +997,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='aclFilePath'>
             /// The path to the directory or file to get ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -998,9 +1005,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static AclStatusResult GetAclStatus(this IFileSystemOperations operations, string aclFilePath, string accountName, string op = "GETACLSTATUS")
+            public static AclStatusResult GetAclStatus(this IFileSystemOperations operations, string aclFilePath, string accountname, string op = "GETACLSTATUS")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetAclStatusAsync(aclFilePath, accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetAclStatusAsync(aclFilePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1012,7 +1019,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='aclFilePath'>
             /// The path to the directory or file to get ACLs on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -1023,9 +1030,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclStatusResult> GetAclStatusAsync( this IFileSystemOperations operations, string aclFilePath, string accountName, string op = "GETACLSTATUS", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AclStatusResult> GetAclStatusAsync( this IFileSystemOperations operations, string aclFilePath, string accountname, string op = "GETACLSTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AclStatusResult> result = await operations.GetAclStatusWithHttpMessagesAsync(aclFilePath, accountName, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetAclStatusWithHttpMessagesAsync(aclFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1039,7 +1046,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to append to.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to append to the file in
             /// </param>
             /// <param name='buffersize'>
@@ -1050,9 +1057,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileCreateOpenAndAppendResult BeginAppend(this IFileSystemOperations operations, string filePath, string accountName, long? buffersize = default(long?), string op = "APPEND")
+            public static void BeginAppend(this IFileSystemOperations operations, string filePath, string accountname, long? buffersize = default(long?), string op = "APPEND")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginAppendAsync(filePath, accountName, buffersize, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginAppendAsync(filePath, accountname, buffersize, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1065,7 +1072,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to append to.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to append to the file in
             /// </param>
             /// <param name='buffersize'>
@@ -1079,10 +1086,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileCreateOpenAndAppendResult> BeginAppendAsync( this IFileSystemOperations operations, string filePath, string accountName, long? buffersize = default(long?), string op = "APPEND", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, long? buffersize = default(long?), string op = "APPEND", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileCreateOpenAndAppendResult> result = await operations.BeginAppendWithHttpMessagesAsync(filePath, accountName, buffersize, op, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                await operations.BeginAppendWithHttpMessagesAsync(filePath, accountname, buffersize, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1095,7 +1101,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to create the file in
             /// </param>
             /// <param name='buffersize'>
@@ -1118,9 +1124,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileCreateOpenAndAppendResult BeginCreate(this IFileSystemOperations operations, string filePath, string accountName, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE")
+            public static void BeginCreate(this IFileSystemOperations operations, string filePath, string accountname, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginCreateAsync(filePath, accountName, buffersize, overwrite, blocksize, replication, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginCreateAsync(filePath, accountname, buffersize, overwrite, blocksize, replication, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1133,7 +1139,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to create.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Store account to create the file in
             /// </param>
             /// <param name='buffersize'>
@@ -1159,10 +1165,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileCreateOpenAndAppendResult> BeginCreateAsync( this IFileSystemOperations operations, string filePath, string accountName, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginCreateAsync( this IFileSystemOperations operations, string filePath, string accountname, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileCreateOpenAndAppendResult> result = await operations.BeginCreateWithHttpMessagesAsync(filePath, accountName, buffersize, overwrite, blocksize, replication, permission, op, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                await operations.BeginCreateWithHttpMessagesAsync(filePath, accountname, buffersize, overwrite, blocksize, replication, permission, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1175,7 +1180,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to open.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='length'>
@@ -1189,9 +1194,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileCreateOpenAndAppendResult BeginOpen(this IFileSystemOperations operations, string filePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN")
+            public static void BeginOpen(this IFileSystemOperations operations, string filePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginOpenAsync(filePath, accountName, length, offset, buffersize, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).BeginOpenAsync(filePath, accountname, length, offset, buffersize, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1204,7 +1209,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file to open.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the data lake account that the file lives in.
             /// </param>
             /// <param name='length'>
@@ -1221,10 +1226,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileCreateOpenAndAppendResult> BeginOpenAsync( this IFileSystemOperations operations, string filePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginOpenAsync( this IFileSystemOperations operations, string filePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileCreateOpenAndAppendResult> result = await operations.BeginOpenWithHttpMessagesAsync(filePath, accountName, length, offset, buffersize, op, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                await operations.BeginOpenWithHttpMessagesAsync(filePath, accountname, length, offset, buffersize, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1236,7 +1240,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file or folder to delete.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='recursive'>
@@ -1247,9 +1251,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileOperationResultResult Delete(this IFileSystemOperations operations, string filePath, string accountName, bool? recursive = default(bool?), string op = "DELETE")
+            public static FileOperationResult Delete(this IFileSystemOperations operations, string filePath, string accountname, bool? recursive = default(bool?), string op = "DELETE")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DeleteAsync(filePath, accountName, recursive, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DeleteAsync(filePath, accountname, recursive, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1261,7 +1265,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='filePath'>
             /// The path to the file or folder to delete.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='recursive'>
@@ -1275,9 +1279,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResultResult> DeleteAsync( this IFileSystemOperations operations, string filePath, string accountName, bool? recursive = default(bool?), string op = "DELETE", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileOperationResult> DeleteAsync( this IFileSystemOperations operations, string filePath, string accountname, bool? recursive = default(bool?), string op = "DELETE", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileOperationResultResult> result = await operations.DeleteWithHttpMessagesAsync(filePath, accountName, recursive, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.DeleteWithHttpMessagesAsync(filePath, accountname, recursive, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1290,7 +1294,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='symLinkFilePath'>
             /// The path to the directory or file to create a symlink of.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='destination'>
@@ -1305,9 +1309,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void CreateSymLink(this IFileSystemOperations operations, string symLinkFilePath, string accountName, string destination, bool? createParent = false, string op = "CREATESYMLINK")
+            public static void CreateSymLink(this IFileSystemOperations operations, string symLinkFilePath, string accountname, string destination, bool? createParent = false, string op = "CREATESYMLINK")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateSymLinkAsync(symLinkFilePath, accountName, destination, createParent, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateSymLinkAsync(symLinkFilePath, accountname, destination, createParent, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1319,7 +1323,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='symLinkFilePath'>
             /// The path to the directory or file to create a symlink of.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='destination'>
@@ -1337,9 +1341,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateSymLinkAsync( this IFileSystemOperations operations, string symLinkFilePath, string accountName, string destination, bool? createParent = false, string op = "CREATESYMLINK", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateSymLinkAsync( this IFileSystemOperations operations, string symLinkFilePath, string accountname, string destination, bool? createParent = false, string op = "CREATESYMLINK", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CreateSymLinkWithHttpMessagesAsync(symLinkFilePath, accountName, destination, createParent, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.CreateSymLinkWithHttpMessagesAsync(symLinkFilePath, accountname, destination, createParent, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1351,7 +1355,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='renameFilePath'>
             /// The path to the directory to move/rename.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='destination'>
@@ -1362,9 +1366,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileOperationResultResult Rename(this IFileSystemOperations operations, string renameFilePath, string accountName, string destination, string op = "RENAME")
+            public static FileOperationResult Rename(this IFileSystemOperations operations, string renameFilePath, string accountname, string destination, string op = "RENAME")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).RenameAsync(renameFilePath, accountName, destination, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).RenameAsync(renameFilePath, accountname, destination, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1376,7 +1380,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='renameFilePath'>
             /// The path to the directory to move/rename.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='destination'>
@@ -1390,9 +1394,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResultResult> RenameAsync( this IFileSystemOperations operations, string renameFilePath, string accountName, string destination, string op = "RENAME", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileOperationResult> RenameAsync( this IFileSystemOperations operations, string renameFilePath, string accountname, string destination, string op = "RENAME", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileOperationResultResult> result = await operations.RenameWithHttpMessagesAsync(renameFilePath, accountName, destination, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.RenameWithHttpMessagesAsync(renameFilePath, accountname, destination, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1405,7 +1409,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setOwnerFilePath'>
             /// The path to the directory or file to set the owner on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='owner'>
@@ -1421,9 +1425,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void SetOwner(this IFileSystemOperations operations, string setOwnerFilePath, string accountName, string owner = default(string), string group = default(string), string op = "SETOWNER")
+            public static void SetOwner(this IFileSystemOperations operations, string setOwnerFilePath, string accountname, string owner = default(string), string group = default(string), string op = "SETOWNER")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetOwnerAsync(setOwnerFilePath, accountName, owner, group, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetOwnerAsync(setOwnerFilePath, accountname, owner, group, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1435,7 +1439,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setOwnerFilePath'>
             /// The path to the directory or file to set the owner on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='owner'>
@@ -1454,9 +1458,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetOwnerAsync( this IFileSystemOperations operations, string setOwnerFilePath, string accountName, string owner = default(string), string group = default(string), string op = "SETOWNER", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetOwnerAsync( this IFileSystemOperations operations, string setOwnerFilePath, string accountname, string owner = default(string), string group = default(string), string op = "SETOWNER", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SetOwnerWithHttpMessagesAsync(setOwnerFilePath, accountName, owner, group, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.SetOwnerWithHttpMessagesAsync(setOwnerFilePath, accountname, owner, group, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1468,7 +1472,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setPermissionFilePath'>
             /// The path to the directory or file to set permissions on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='permission'>
@@ -1480,9 +1484,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void SetPermission(this IFileSystemOperations operations, string setPermissionFilePath, string accountName, string permission = default(string), string op = "SETPERMISSION")
+            public static void SetPermission(this IFileSystemOperations operations, string setPermissionFilePath, string accountname, string permission = default(string), string op = "SETPERMISSION")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetPermissionAsync(setPermissionFilePath, accountName, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetPermissionAsync(setPermissionFilePath, accountname, permission, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1494,7 +1498,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setPermissionFilePath'>
             /// The path to the directory or file to set permissions on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='permission'>
@@ -1509,9 +1513,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetPermissionAsync( this IFileSystemOperations operations, string setPermissionFilePath, string accountName, string permission = default(string), string op = "SETPERMISSION", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetPermissionAsync( this IFileSystemOperations operations, string setPermissionFilePath, string accountname, string permission = default(string), string op = "SETPERMISSION", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SetPermissionWithHttpMessagesAsync(setPermissionFilePath, accountName, permission, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.SetPermissionWithHttpMessagesAsync(setPermissionFilePath, accountname, permission, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1523,7 +1527,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setReplicationFilePath'>
             /// The path to the directory or file to create a replication of.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='replication'>
@@ -1534,9 +1538,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static FileOperationResultResult SetReplication(this IFileSystemOperations operations, string setReplicationFilePath, string accountName, int? replication = default(int?), string op = "SETREPLICATION")
+            public static FileOperationResult SetReplication(this IFileSystemOperations operations, string setReplicationFilePath, string accountname, int? replication = default(int?), string op = "SETREPLICATION")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetReplicationAsync(setReplicationFilePath, accountName, replication, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetReplicationAsync(setReplicationFilePath, accountname, replication, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1548,7 +1552,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='setReplicationFilePath'>
             /// The path to the directory or file to create a replication of.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='replication'>
@@ -1562,9 +1566,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResultResult> SetReplicationAsync( this IFileSystemOperations operations, string setReplicationFilePath, string accountName, int? replication = default(int?), string op = "SETREPLICATION", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileOperationResult> SetReplicationAsync( this IFileSystemOperations operations, string setReplicationFilePath, string accountname, int? replication = default(int?), string op = "SETREPLICATION", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FileOperationResultResult> result = await operations.SetReplicationWithHttpMessagesAsync(setReplicationFilePath, accountName, replication, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.SetReplicationWithHttpMessagesAsync(setReplicationFilePath, accountname, replication, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1616,7 +1620,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='sourcePath'>
             /// The path to the directory or file to set permissions on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='modificationtime'>
@@ -1630,9 +1634,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void SetTimes(this IFileSystemOperations operations, string sourcePath, string accountName, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES")
+            public static void SetTimes(this IFileSystemOperations operations, string sourcePath, string accountname, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetTimesAsync(sourcePath, accountName, modificationtime, accesstime, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetTimesAsync(sourcePath, accountname, modificationtime, accesstime, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1644,7 +1648,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='sourcePath'>
             /// The path to the directory or file to set permissions on.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='modificationtime'>
@@ -1661,9 +1665,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetTimesAsync( this IFileSystemOperations operations, string sourcePath, string accountName, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetTimesAsync( this IFileSystemOperations operations, string sourcePath, string accountname, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SetTimesWithHttpMessagesAsync(sourcePath, accountName, modificationtime, accesstime, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.SetTimesWithHttpMessagesAsync(sourcePath, accountname, modificationtime, accesstime, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1672,7 +1676,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -1680,9 +1684,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static HomeDirectoryResult GetHomeDirectory(this IFileSystemOperations operations, string accountName, string op = "GETHOMEDIRECTORY")
+            public static HomeDirectoryResult GetHomeDirectory(this IFileSystemOperations operations, string accountname, string op = "GETHOMEDIRECTORY")
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetHomeDirectoryAsync(accountName, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetHomeDirectoryAsync(accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1691,7 +1695,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the account to use
             /// </param>
             /// <param name='op'>
@@ -1702,9 +1706,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HomeDirectoryResult> GetHomeDirectoryAsync( this IFileSystemOperations operations, string accountName, string op = "GETHOMEDIRECTORY", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HomeDirectoryResult> GetHomeDirectoryAsync( this IFileSystemOperations operations, string accountname, string op = "GETHOMEDIRECTORY", CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<HomeDirectoryResult> result = await operations.GetHomeDirectoryWithHttpMessagesAsync(accountName, op, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetHomeDirectoryWithHttpMessagesAsync(accountname, op, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1718,10 +1722,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The link to the file to create including all required parameters.
             /// </param>
             /// <param name='streamContents'>
-            /// The file contents to include when creating the file. This parameter is
-            /// required, however it can be an empty stream. Just not null.
+            /// The file contents to include when creating the file. This parameter is not
+            /// required, and if not passed results an empty file.
             /// </param>
-            public static void Create(this IFileSystemOperations operations, string fileCreateRequestLink, System.IO.Stream streamContents)
+            public static void Create(this IFileSystemOperations operations, string fileCreateRequestLink, System.IO.Stream streamContents = default(System.IO.Stream))
             {
                 Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(fileCreateRequestLink, streamContents), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1736,13 +1740,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The link to the file to create including all required parameters.
             /// </param>
             /// <param name='streamContents'>
-            /// The file contents to include when creating the file. This parameter is
-            /// required, however it can be an empty stream. Just not null.
+            /// The file contents to include when creating the file. This parameter is not
+            /// required, and if not passed results an empty file.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync( this IFileSystemOperations operations, string fileCreateRequestLink, System.IO.Stream streamContents, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync( this IFileSystemOperations operations, string fileCreateRequestLink, System.IO.Stream streamContents = default(System.IO.Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.CreateWithHttpMessagesAsync(fileCreateRequestLink, streamContents, null, cancellationToken).ConfigureAwait(false);
             }
@@ -1775,7 +1779,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<byte[]> OpenAsync( this IFileSystemOperations operations, string fileOpenRequestLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<byte[]> result = await operations.OpenWithHttpMessagesAsync(fileOpenRequestLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.OpenWithHttpMessagesAsync(fileOpenRequestLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

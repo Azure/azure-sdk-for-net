@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        string JobServiceUri { get; set; }
+        string Jobserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.

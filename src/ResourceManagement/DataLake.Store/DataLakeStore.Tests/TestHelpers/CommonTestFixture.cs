@@ -28,11 +28,12 @@ namespace DataLakeStore.Tests
         public string Location = "East US 2";
         public string AclUserId = "027c28d5-c91d-49f0-98c5-d10134b169b3";
         public DataLakeStoreFileSystemManagementClient DataLakeStoreFileSystemClient { get; set; }
-
-        public CommonTestFixture(string callingClassName)
+        private MockContext context;
+        public CommonTestFixture(MockContext contextToUse)
         {
-            using (MockContext context = MockContext.Start(callingClassName, "FixtureSetup"))
+            try
             {
+                context = contextToUse;
                 var dataLakeStoreAndFileSystemManagementHelper = new DataLakeStoreAndFileSystemManagementHelper(this, context);
                 dataLakeStoreAndFileSystemManagementHelper.TryRegisterSubscriptionForResource();
                 dataLakeStoreAndFileSystemManagementHelper.TryRegisterSubscriptionForResource("Microsoft.Storage");
@@ -45,6 +46,19 @@ namespace DataLakeStore.Tests
                 this.HostUrl =
                     dataLakeStoreAndFileSystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName,
                         this.Location, this.DataLakeStoreFileSystemAccountName);
+            }
+            catch
+            {
+                Cleanup();
+                throw;
+            }
+        }
+
+        private void Cleanup()
+        {
+            if(context != null )
+            {
+                context.Dispose();
             }
         }
     }

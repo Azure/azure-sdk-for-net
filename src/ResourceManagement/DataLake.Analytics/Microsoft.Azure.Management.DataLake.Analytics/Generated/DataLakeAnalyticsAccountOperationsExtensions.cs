@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<StorageAccount> GetStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccount> result = await operations.GetStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and suffix to update the storage
             /// account with.
             /// </param>
-            public static void UpdateStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
+            public static void UpdateStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters)
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).UpdateStorageAccountAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.UpdateStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and optional suffix for the Azure
             /// Storage Account.
             /// </param>
-            public static void AddStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
+            public static void AddStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters)
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).AddStorageAccountAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.AddStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<BlobContainer> GetStorageContainerAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BlobContainer> result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> ListStorageContainersAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<BlobContainer>> result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> StorageContainersListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<BlobContainer>> result = await operations.StorageContainersListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.StorageContainersListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> SasTokensListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<SasTokenInfo>> result = await operations.SasTokensListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.SasTokensListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> ListSasTokensAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<SasTokenInfo>> result = await operations.ListSasTokensWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListSasTokensWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeStoreAccount> GetDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.GetDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the optional properties associated with the
             /// named Data Lake account.
             /// </param>
-            public static void AddDataLakeStoreAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters))
+            public static void AddDataLakeStoreAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountProperties parameters = default(DataLakeStoreAccountProperties))
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).AddDataLakeStoreAccountAsync(resourceGroupName, accountName, dataLakeStoreAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -580,7 +580,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountProperties parameters = default(DataLakeStoreAccountProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.AddDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -600,7 +600,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Data Lake Analytics account to list Storage accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -669,7 +669,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<StorageAccount>> ListStorageAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -689,7 +689,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -732,7 +732,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// accounts for.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -759,7 +759,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -775,7 +775,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -814,7 +814,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeAnalyticsAccount>> ListAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeAnalyticsAccount>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -879,7 +879,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> GetAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -978,7 +978,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount Create(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount Create(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1003,9 +1003,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> CreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> CreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1026,7 +1026,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount BeginCreate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount BeginCreate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1051,9 +1051,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1073,7 +1073,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount Update(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount Update(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1097,9 +1097,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> UpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> UpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1119,7 +1119,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount BeginUpdate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters)
+            public static DataLakeAnalyticsAccount BeginUpdate(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1143,9 +1143,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeAnalyticsAccount> result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1179,7 +1179,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> ListStorageContainersNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<BlobContainer>> result = await operations.ListStorageContainersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListStorageContainersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1213,7 +1213,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> StorageContainersListNextNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<BlobContainer>> result = await operations.StorageContainersListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.StorageContainersListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1247,7 +1247,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> SasTokensListNextNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<SasTokenInfo>> result = await operations.SasTokensListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.SasTokensListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1281,7 +1281,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> ListSasTokensNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<SasTokenInfo>> result = await operations.ListSasTokensNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListSasTokensNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1317,7 +1317,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<StorageAccount>> ListStorageAccountsNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<StorageAccount>> result = await operations.ListStorageAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListStorageAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1353,7 +1353,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListDataLakeStoreAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListDataLakeStoreAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1389,7 +1389,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeAnalyticsAccount>> ListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeAnalyticsAccount>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        public string CatalogServiceUri { get; set; }
+        public string Catalogserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -259,9 +259,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         private void Initialize()
         {
             this.Catalog = new CatalogOperations(this);
-            this.BaseUri = new Uri("https://accountName.catalogServiceUri");
+            this.BaseUri = new Uri("https://accountname.catalogserviceuri");
             this.ApiVersion = "2015-10-01-preview";
-            this.CatalogServiceUri = "azuredatalakeanalytics.net";
+            this.Catalogserviceuri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

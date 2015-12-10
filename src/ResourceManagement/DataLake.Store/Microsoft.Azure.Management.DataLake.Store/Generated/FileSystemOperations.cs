@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
     using Models;
-    using Rest.Azure.OData;
 
     /// <summary>
     /// FileSystemOperations operations.
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='filePath'>
         /// The path to the file to append to using concurrent append.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the data lake account that the file lives in.
         /// </param>
         /// <param name='streamContents'>
@@ -76,15 +75,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountName, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (streamContents == null)
             {
@@ -94,9 +93,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -116,8 +119,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "WebHdfsExt/{filePath}").ToString();
             url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -137,6 +140,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -212,7 +223,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='path'>
         /// The path to the file or folder to check access for.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='fsaction'>
@@ -230,23 +241,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string path, string accountName, string fsaction = default(string), string op = "CHECKACCESS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string path, string accountname, string fsaction = default(string), string op = "CHECKACCESS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (path == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "path");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -256,7 +271,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("path", path);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("fsaction", fsaction);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -266,8 +281,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
             url = url.Replace("{path}", Uri.EscapeDataString(path));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (fsaction != null)
             {
@@ -291,6 +306,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -362,7 +385,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='path'>
         /// The path to the directory to create.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='permission'>
@@ -379,23 +402,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileOperationResultResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, string permission = default(string), string op = "MKDIRS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountname, string permission = default(string), string op = "MKDIRS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (path == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "path");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -405,7 +432,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("path", path);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -415,8 +442,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
             url = url.Replace("{path}", Uri.EscapeDataString(path));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (permission != null)
             {
@@ -440,6 +467,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -505,7 +540,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResultResult>();
+            var result = new AzureOperationResponse<FileOperationResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -518,7 +553,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResultResult>(responseContent, this.Client.DeserializationSettings);
+                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -538,7 +573,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='destinationPath'>
         /// The path to the destination file resulting from the concatenation.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='sources'>
@@ -556,23 +591,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountName, string sources = default(string), string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountname, string sources = default(string), string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (destinationPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "destinationPath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -582,7 +621,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("destinationPath", destinationPath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("sources", sources);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -592,8 +631,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{destinationPath}").ToString();
             url = url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (sources != null)
             {
@@ -617,6 +656,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -690,7 +737,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='msConcatDestinationPath'>
         /// The path to the destination file resulting from the concatenation.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='streamContents'>
@@ -720,15 +767,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, string accountName, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, string accountname, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (msConcatDestinationPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "msConcatDestinationPath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (streamContents == null)
             {
@@ -738,9 +785,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -750,7 +801,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("msConcatDestinationPath", msConcatDestinationPath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("deletesourcedirectory", deletesourcedirectory);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
@@ -761,8 +812,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{msConcatDestinationPath}").ToString();
             url = url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (deletesourcedirectory != null)
             {
@@ -786,6 +837,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -807,9 +866,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -861,11 +919,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='listFilePath'>
         /// The path to the file to retrieve status for.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='top'>
         /// Gets or sets the number of items to return. Optional.
+        /// </param>
+        /// <param name='skip'>
+        /// Gets or sets the number of items to skip over before returning elements.
+        /// Optional.
         /// </param>
         /// <param name='op'>
         /// This is the REQUIRED value for this parameter and method combination.
@@ -878,23 +940,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string listFilePath, string accountName, ODataQuery<int?> odataQuery = default(ODataQuery<int?>), string op = "LISTSTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string listFilePath, string accountname, int? top = default(int?), int? skip = default(int?), string op = "LISTSTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (listFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "listFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -904,8 +970,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("listFilePath", listFilePath);
-                tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("accountname", accountname);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("skip", skip);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListFileStatus", tracingParameters);
@@ -914,16 +981,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{listFilePath}").ToString();
             url = url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (top != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (skip != null)
+            {
+                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
@@ -943,6 +1010,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1041,7 +1116,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='getContentSummaryFilePath'>
         /// The path to the file to retrieve the summary for.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -1055,23 +1130,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string getContentSummaryFilePath, string accountName, string op = "GETCONTENTSUMMARY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string getContentSummaryFilePath, string accountname, string op = "GETCONTENTSUMMARY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (getContentSummaryFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "getContentSummaryFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1081,7 +1160,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("getContentSummaryFilePath", getContentSummaryFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetContentSummary", tracingParameters);
@@ -1090,8 +1169,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/va/{getContentSummaryFilePath}").ToString();
             url = url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -1111,6 +1190,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1209,7 +1296,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='getFilePath'>
         /// The path to the file to retrieve status for.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -1223,23 +1310,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string getFilePath, string accountName, string op = "GETFILESTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string getFilePath, string accountname, string op = "GETFILESTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (getFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "getFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1249,7 +1340,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("getFilePath", getFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetFileStatus", tracingParameters);
@@ -1258,8 +1349,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{getFilePath}").ToString();
             url = url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -1279,6 +1370,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1379,7 +1478,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='directFilePath'>
         /// The path to the file to append to.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Store account to append to the file in
         /// </param>
         /// <param name='streamContents'>
@@ -1404,15 +1503,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DirectAppendWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DirectAppendWithHttpMessagesAsync(string directFilePath, string accountname, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (streamContents == null)
             {
@@ -1422,9 +1521,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1434,7 +1537,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
@@ -1446,8 +1549,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
             url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (buffersize != null)
             {
@@ -1475,6 +1578,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1496,9 +1607,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1552,12 +1662,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='directFilePath'>
         /// The path to the file to create.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Store account to create the file in
         /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when creating the file. This parameter is
-        /// required, however it can be an empty stream. Just not null.
+        /// optional, resulting in an empty file if not specified.
         /// </param>
         /// <param name='buffersize'>
         /// The size of the buffer used in transferring data.
@@ -1590,27 +1700,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DirectCreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DirectCreateWithHttpMessagesAsync(string directFilePath, string accountname, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (streamContents == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1620,7 +1730,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("overwrite", overwrite);
@@ -1636,8 +1746,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
             url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (buffersize != null)
             {
@@ -1681,6 +1791,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1702,9 +1820,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1758,7 +1875,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='directFilePath'>
         /// The path to the file to open.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the data lake account that the file lives in.
         /// </param>
         /// <param name='length'>
@@ -1783,23 +1900,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<byte[]>> DirectOpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<byte[]>> DirectOpenWithHttpMessagesAsync(string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1809,7 +1930,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("length", length);
                 tracingParameters.Add("offset", offset);
                 tracingParameters.Add("buffersize", buffersize);
@@ -1822,8 +1943,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
             url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (length != null)
             {
@@ -1859,6 +1980,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -1936,8 +2065,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<byte[]>(responseContent, this.Client.DeserializationSettings);
+                    var responseContent = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    result.Body = responseContent;
                 }
                 catch (JsonException ex)
                 {
@@ -1957,7 +2086,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='setAclFilePath'>
         /// The path to the directory or file to set ACLs on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='aclspec'>
@@ -1975,15 +2104,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> SetAclWithHttpMessagesAsync(string setAclFilePath, string accountName, string aclspec, string op = "SETACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetAclWithHttpMessagesAsync(string setAclFilePath, string accountname, string aclspec, string op = "SETACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (setAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setAclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (aclspec == null)
             {
@@ -1993,9 +2122,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2005,7 +2138,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setAclFilePath", setAclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2015,8 +2148,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setAclFilePath}").ToString();
             url = url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2040,6 +2173,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2111,7 +2252,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='modifyAclFilePath'>
         /// The path to the directory or file to modify ACLs on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='aclspec'>
@@ -2129,15 +2270,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string modifyAclFilePath, string accountName, string aclspec, string op = "MODIFYACLENTRIES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string modifyAclFilePath, string accountname, string aclspec, string op = "MODIFYACLENTRIES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (modifyAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "modifyAclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (aclspec == null)
             {
@@ -2147,9 +2288,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2159,7 +2304,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("modifyAclFilePath", modifyAclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2169,8 +2314,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{modifyAclFilePath}").ToString();
             url = url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2194,6 +2339,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2265,7 +2418,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='removeAclFilePath'>
         /// The path to the directory or file to remove ACLs on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='aclspec'>
@@ -2283,15 +2436,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string removeAclFilePath, string accountName, string aclspec, string op = "REMOVEACLENTRIES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string removeAclFilePath, string accountname, string aclspec, string op = "REMOVEACLENTRIES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (removeAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "removeAclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (aclspec == null)
             {
@@ -2301,9 +2454,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2313,7 +2470,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("removeAclFilePath", removeAclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2323,8 +2480,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeAclFilePath}").ToString();
             url = url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2348,6 +2505,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2419,7 +2584,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='removeDefaultAclFilePath'>
         /// The path to the directory or file to remove ACL on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -2433,23 +2598,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string removeDefaultAclFilePath, string accountName, string op = "REMOVEDEFAULTACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string removeDefaultAclFilePath, string accountname, string op = "REMOVEDEFAULTACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (removeDefaultAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "removeDefaultAclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2459,7 +2628,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("removeDefaultAclFilePath", removeDefaultAclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "RemoveDefaultAcl", tracingParameters);
@@ -2468,8 +2637,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeDefaultAclFilePath}").ToString();
             url = url.Replace("{removeDefaultAclFilePath}", Uri.EscapeDataString(removeDefaultAclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -2489,6 +2658,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2560,7 +2737,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='aclFilePath'>
         /// The path to the directory or file to remove ACL on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -2574,23 +2751,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string aclFilePath, string accountName, string op = "REMOVEACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string aclFilePath, string accountname, string op = "REMOVEACL", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (aclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2600,7 +2781,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("aclFilePath", aclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "RemoveAcl", tracingParameters);
@@ -2609,8 +2790,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
             url = url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -2630,6 +2811,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2701,7 +2890,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='aclFilePath'>
         /// The path to the directory or file to get ACLs on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -2715,23 +2904,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string aclFilePath, string accountName, string op = "GETACLSTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string aclFilePath, string accountname, string op = "GETACLSTATUS", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (aclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2741,7 +2934,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("aclFilePath", aclFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetAclStatus", tracingParameters);
@@ -2750,8 +2943,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
             url = url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -2771,6 +2964,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2870,7 +3071,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='filePath'>
         /// The path to the file to append to.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Store account to append to the file in
         /// </param>
         /// <param name='buffersize'>
@@ -2887,23 +3088,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileCreateOpenAndAppendResult>> BeginAppendWithHttpMessagesAsync(string filePath, string accountName, long? buffersize = default(long?), string op = "APPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<FileSystemBeginAppendHeaders>> BeginAppendWithHttpMessagesAsync(string filePath, string accountname, long? buffersize = default(long?), string op = "APPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2913,7 +3118,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2923,8 +3128,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
             url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (buffersize != null)
             {
@@ -2948,6 +3153,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -2990,20 +3203,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if ((int)statusCode != 307)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -3013,25 +3212,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileCreateOpenAndAppendResult>();
+            var result = new AzureOperationHeaderResponse<FileSystemBeginAppendHeaders>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            // Deserialize Response
-            if ((int)statusCode == 307)
+            try
             {
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileCreateOpenAndAppendResult>(responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
-                }
+                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginAppendHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                throw new RestException("Unable to deserialize the headers.", ex);
             }
             if (shouldTrace)
             {
@@ -3047,7 +3241,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='filePath'>
         /// The path to the file to create.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Store account to create the file in
         /// </param>
         /// <param name='buffersize'>
@@ -3076,23 +3270,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileCreateOpenAndAppendResult>> BeginCreateWithHttpMessagesAsync(string filePath, string accountName, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<FileSystemBeginCreateHeaders>> BeginCreateWithHttpMessagesAsync(string filePath, string accountname, long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3102,7 +3300,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("overwrite", overwrite);
                 tracingParameters.Add("blocksize", blocksize);
@@ -3116,8 +3314,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
             url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (buffersize != null)
             {
@@ -3157,6 +3355,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -3199,20 +3405,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if ((int)statusCode != 307)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -3222,25 +3414,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileCreateOpenAndAppendResult>();
+            var result = new AzureOperationHeaderResponse<FileSystemBeginCreateHeaders>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            // Deserialize Response
-            if ((int)statusCode == 307)
+            try
             {
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileCreateOpenAndAppendResult>(responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
-                }
+                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginCreateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                throw new RestException("Unable to deserialize the headers.", ex);
             }
             if (shouldTrace)
             {
@@ -3256,7 +3443,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='filePath'>
         /// The path to the file to open.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the data lake account that the file lives in.
         /// </param>
         /// <param name='length'>
@@ -3276,23 +3463,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileCreateOpenAndAppendResult>> BeginOpenWithHttpMessagesAsync(string filePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<FileSystemBeginOpenHeaders>> BeginOpenWithHttpMessagesAsync(string filePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3302,7 +3493,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("length", length);
                 tracingParameters.Add("offset", offset);
                 tracingParameters.Add("buffersize", buffersize);
@@ -3314,8 +3505,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
             url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (length != null)
             {
@@ -3347,6 +3538,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -3389,20 +3588,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if ((int)statusCode != 307)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -3412,25 +3597,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileCreateOpenAndAppendResult>();
+            var result = new AzureOperationHeaderResponse<FileSystemBeginOpenHeaders>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            // Deserialize Response
-            if ((int)statusCode == 307)
+            try
             {
-                try
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileCreateOpenAndAppendResult>(responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
-                }
+                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginOpenHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                throw new RestException("Unable to deserialize the headers.", ex);
             }
             if (shouldTrace)
             {
@@ -3445,7 +3625,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='filePath'>
         /// The path to the file or folder to delete.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='recursive'>
@@ -3462,23 +3642,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileOperationResultResult>> DeleteWithHttpMessagesAsync(string filePath, string accountName, bool? recursive = default(bool?), string op = "DELETE", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> DeleteWithHttpMessagesAsync(string filePath, string accountname, bool? recursive = default(bool?), string op = "DELETE", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3488,7 +3672,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3498,8 +3682,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
             url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (recursive != null)
             {
@@ -3523,6 +3707,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -3588,7 +3780,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResultResult>();
+            var result = new AzureOperationResponse<FileOperationResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3601,7 +3793,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResultResult>(responseContent, this.Client.DeserializationSettings);
+                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -3621,7 +3813,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='symLinkFilePath'>
         /// The path to the directory or file to create a symlink of.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='destination'>
@@ -3642,15 +3834,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CreateSymLinkWithHttpMessagesAsync(string symLinkFilePath, string accountName, string destination, bool? createParent = false, string op = "CREATESYMLINK", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateSymLinkWithHttpMessagesAsync(string symLinkFilePath, string accountname, string destination, bool? createParent = false, string op = "CREATESYMLINK", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (symLinkFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "symLinkFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (destination == null)
             {
@@ -3660,9 +3852,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3672,7 +3868,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("symLinkFilePath", symLinkFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("destination", destination);
                 tracingParameters.Add("createParent", createParent);
                 tracingParameters.Add("op", op);
@@ -3683,8 +3879,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{symLinkFilePath}").ToString();
             url = url.Replace("{symLinkFilePath}", Uri.EscapeDataString(symLinkFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (destination != null)
             {
@@ -3712,6 +3908,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -3783,7 +3987,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='renameFilePath'>
         /// The path to the directory to move/rename.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='destination'>
@@ -3800,15 +4004,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileOperationResultResult>> RenameWithHttpMessagesAsync(string renameFilePath, string accountName, string destination, string op = "RENAME", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> RenameWithHttpMessagesAsync(string renameFilePath, string accountname, string destination, string op = "RENAME", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (renameFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "renameFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (destination == null)
             {
@@ -3818,9 +4022,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3830,7 +4038,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("renameFilePath", renameFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("destination", destination);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3840,8 +4048,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{renameFilePath}").ToString();
             url = url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (destination != null)
             {
@@ -3865,6 +4073,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -3930,7 +4146,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResultResult>();
+            var result = new AzureOperationResponse<FileOperationResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3943,7 +4159,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResultResult>(responseContent, this.Client.DeserializationSettings);
+                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -3963,7 +4179,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='setOwnerFilePath'>
         /// The path to the directory or file to set the owner on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='owner'>
@@ -3985,23 +4201,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string setOwnerFilePath, string accountName, string owner = default(string), string group = default(string), string op = "SETOWNER", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string setOwnerFilePath, string accountname, string owner = default(string), string group = default(string), string op = "SETOWNER", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (setOwnerFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setOwnerFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4011,7 +4231,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setOwnerFilePath", setOwnerFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("owner", owner);
                 tracingParameters.Add("group", group);
                 tracingParameters.Add("op", op);
@@ -4022,8 +4242,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setOwnerFilePath}").ToString();
             url = url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (owner != null)
             {
@@ -4051,6 +4271,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -4122,7 +4350,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='setPermissionFilePath'>
         /// The path to the directory or file to set permissions on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='permission'>
@@ -4140,23 +4368,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string setPermissionFilePath, string accountName, string permission = default(string), string op = "SETPERMISSION", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string setPermissionFilePath, string accountname, string permission = default(string), string op = "SETPERMISSION", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (setPermissionFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setPermissionFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4166,7 +4398,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setPermissionFilePath", setPermissionFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -4176,8 +4408,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setPermissionFilePath}").ToString();
             url = url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (permission != null)
             {
@@ -4201,6 +4433,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -4272,7 +4512,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='setReplicationFilePath'>
         /// The path to the directory or file to create a replication of.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='replication'>
@@ -4289,23 +4529,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FileOperationResultResult>> SetReplicationWithHttpMessagesAsync(string setReplicationFilePath, string accountName, int? replication = default(int?), string op = "SETREPLICATION", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> SetReplicationWithHttpMessagesAsync(string setReplicationFilePath, string accountname, int? replication = default(int?), string op = "SETREPLICATION", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (setReplicationFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setReplicationFilePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4315,7 +4559,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setReplicationFilePath", setReplicationFilePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("replication", replication);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -4325,8 +4569,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setReplicationFilePath}").ToString();
             url = url.Replace("{setReplicationFilePath}", Uri.EscapeDataString(setReplicationFilePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (replication != null)
             {
@@ -4350,6 +4594,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -4415,7 +4667,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResultResult>();
+            var result = new AzureOperationResponse<FileOperationResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4428,7 +4680,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResultResult>(responseContent, this.Client.DeserializationSettings);
+                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -4482,8 +4734,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{fileAppendRequestLink}").ToString();
-            url = url.Replace("{fileAppendRequestLink}", fileAppendRequestLink);
+            var url = fileAppendRequestLink;
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
             {
@@ -4516,9 +4767,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -4570,7 +4820,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='sourcePath'>
         /// The path to the directory or file to set permissions on.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='modificationtime'>
@@ -4590,23 +4840,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> SetTimesWithHttpMessagesAsync(string sourcePath, string accountName, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetTimesWithHttpMessagesAsync(string sourcePath, string accountname, long? modificationtime = default(long?), long? accesstime = default(long?), string op = "SETTIMES", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (sourcePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sourcePath");
             }
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4616,7 +4870,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("sourcePath", sourcePath);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("modificationtime", modificationtime);
                 tracingParameters.Add("accesstime", accesstime);
                 tracingParameters.Add("op", op);
@@ -4627,8 +4881,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{sourcePath}").ToString();
             url = url.Replace("{sourcePath}", Uri.EscapeDataString(sourcePath));
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (modificationtime != null)
             {
@@ -4656,6 +4910,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -4724,7 +4986,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Get the home directory for the specified account.
         /// </summary>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the account to use
         /// </param>
         /// <param name='op'>
@@ -4738,19 +5000,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountName, string op = "GETHOMEDIRECTORY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountname, string op = "GETHOMEDIRECTORY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (accountName == null)
+            if (accountname == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.DataLakeServiceUri == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DataLakeServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4759,7 +5025,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetHomeDirectory", tracingParameters);
@@ -4767,8 +5033,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1").ToString();
-            url = url.Replace("{accountName}", Uri.EscapeDataString(accountName));
-            url = url.Replace("{dataLakeServiceUri}", Uri.EscapeDataString(this.Client.DataLakeServiceUri));
+            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
+            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
             List<string> queryParameters = new List<string>();
             if (op != null)
             {
@@ -4788,6 +5054,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
             httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.SubscriptionId != null)
+            {
+                if (httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    httpRequest.Headers.Remove("subscriptionId");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (httpRequest.Headers.Contains("accept-language"))
@@ -4887,8 +5161,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The link to the file to create including all required parameters.
         /// </param>
         /// <param name='streamContents'>
-        /// The file contents to include when creating the file. This parameter is
-        /// required, however it can be an empty stream. Just not null.
+        /// The file contents to include when creating the file. This parameter is not
+        /// required, and if not passed results an empty file.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4896,15 +5170,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string fileCreateRequestLink, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string fileCreateRequestLink, System.IO.Stream streamContents = default(System.IO.Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (fileCreateRequestLink == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fileCreateRequestLink");
-            }
-            if (streamContents == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4920,8 +5190,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{fileCreateRequestLink}").ToString();
-            url = url.Replace("{fileCreateRequestLink}", fileCreateRequestLink);
+            var url = fileCreateRequestLink;
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
             {
@@ -4954,9 +5223,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -5032,9 +5300,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 ServiceClientTracing.Enter(invocationId, this, "Open", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "{fileOpenRequestLink}").ToString();
-            url = url.Replace("{fileOpenRequestLink}", fileOpenRequestLink);
+            var url = fileOpenRequestLink;
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
             {
@@ -5123,8 +5389,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<byte[]>(responseContent, this.Client.DeserializationSettings);
+                    var responseContent = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    result.Body = responseContent;
                 }
                 catch (JsonException ex)
                 {

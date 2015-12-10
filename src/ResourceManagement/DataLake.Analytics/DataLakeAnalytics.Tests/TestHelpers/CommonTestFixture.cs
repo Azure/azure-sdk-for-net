@@ -18,7 +18,7 @@ using System;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class CommonTestFixture : TestBase
+    public class CommonTestFixture : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
         public string SecondDataLakeAnalyticsAccountName { get; set; }
@@ -41,11 +41,12 @@ namespace DataLakeAnalytics.Tests
         public string HostUrl { get; set; }
         public string Location = "East US 2";
         public DataLakeAnalyticsManagementHelper DataLakeAnalyticsManagementHelper { get; set; }
-
+        private MockContext context;
         public CommonTestFixture(string callingClassName)
         {
-            using (MockContext context = MockContext.Start(callingClassName, "FixtureSetup"))
+            try 
             {
+                context = MockContext.Start(callingClassName, "FixtureSetup");
                 DataLakeAnalyticsManagementHelper = new DataLakeAnalyticsManagementHelper(this, context);
                 DataLakeAnalyticsManagementHelper.TryRegisterSubscriptionForResource();
                 DataLakeAnalyticsManagementHelper.TryRegisterSubscriptionForResource("Microsoft.Storage");
@@ -79,6 +80,23 @@ namespace DataLakeAnalytics.Tests
                 TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
                 DataLakeAnalyticsManagementHelper.CreateCatalog(this.ResourceGroupName,
                     this.SecondDataLakeAnalyticsAccountName, this.DatabaseName, this.TableName, this.TvfName, this.ViewName, this.ProcName);
+            }
+            catch
+            {
+                Cleanup();
+                throw;
+            }
+        }
+
+        public void Dispose()
+        {
+            Cleanup();
+        }
+        private void Cleanup()
+        {
+            if (context != null)
+            {
+                context.Dispose();
             }
         }
     }

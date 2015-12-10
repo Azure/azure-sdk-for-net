@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FirewallRule> GetFirewallRuleAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FirewallRule> result = await operations.GetFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<FirewallRule>> ListFirewallRulesAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<FirewallRule>> result = await operations.ListFirewallRulesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListFirewallRulesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<FirewallRule>> FirewallRulesListNextAsync( this IDataLakeStoreAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<FirewallRule>> result = await operations.FirewallRulesListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.FirewallRulesListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the create firewall rule operation.
             /// </param>
-            public static FirewallRule CreateOrUpdateFirewallRule(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string name, DataLakeStoreFirewallRuleCreateOrUpdateParameters parameters)
+            public static FirewallRule CreateOrUpdateFirewallRule(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string name, FirewallRule parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).CreateOrUpdateFirewallRuleAsync(resourceGroupName, accountName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -229,9 +229,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateFirewallRuleAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string name, DataLakeStoreFirewallRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> CreateOrUpdateFirewallRuleAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string name, FirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FirewallRule> result = await operations.CreateOrUpdateFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Store account operation.
             /// </param>
-            public static DataLakeStoreAccount Create(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount Create(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> CreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> CreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Store account operation.
             /// </param>
-            public static DataLakeStoreAccount BeginCreate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount BeginCreate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -317,9 +317,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> BeginCreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> BeginCreateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Store account operation.
             /// </param>
-            public static DataLakeStoreAccount Update(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount Update(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -363,9 +363,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> UpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> UpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Store account operation.
             /// </param>
-            public static DataLakeStoreAccount BeginUpdate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters)
+            public static DataLakeStoreAccount BeginUpdate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
                 return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -409,9 +409,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> BeginUpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> BeginUpdateAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<DataLakeStoreAccount> GetAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataLakeStoreAccount> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -538,7 +538,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -576,7 +576,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the resource group.
             /// </param>
             /// <param name='odataQuery'>
-            /// Gets or sets OData filter. Optional.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -637,7 +637,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<FirewallRule>> ListFirewallRulesNextAsync( this IDataLakeStoreAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<FirewallRule>> result = await operations.ListFirewallRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListFirewallRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<FirewallRule>> FirewallRulesListNextNextAsync( this IDataLakeStoreAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<FirewallRule>> result = await operations.FirewallRulesListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.FirewallRulesListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -705,7 +705,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListNextAsync( this IDataLakeStoreAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<DataLakeStoreAccount>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

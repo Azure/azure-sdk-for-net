@@ -51,6 +51,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every service
+        /// call.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
         /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
@@ -58,7 +65,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        public string DataLakeServiceUri { get; set; }
+        public string Datalakeserviceuri { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -106,7 +113,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = ClientCertificateOption.Automatic
+        }, handlers)
         {
             if (baseUri == null)
             {
@@ -127,7 +138,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
+            AutomaticDecompression = rootHandler.AutomaticDecompression,
+            CookieContainer = rootHandler.CookieContainer,
+            Credentials = rootHandler.Credentials,
+            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
+            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
+            PreAuthenticate = rootHandler.PreAuthenticate,
+            Proxy = rootHandler.Proxy,
+            UseCookies = rootHandler.UseCookies,
+            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
+            UseProxy = rootHandler.UseProxy
+        }, handlers)
         {
             if (baseUri == null)
             {
@@ -145,7 +170,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = ClientCertificateOption.Automatic
+        }, handlers)
         {
             if (credentials == null)
             {
@@ -170,7 +199,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
+            AutomaticDecompression = rootHandler.AutomaticDecompression,
+            CookieContainer = rootHandler.CookieContainer,
+            Credentials = rootHandler.Credentials,
+            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
+            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
+            PreAuthenticate = rootHandler.PreAuthenticate,
+            Proxy = rootHandler.Proxy,
+            UseCookies = rootHandler.UseCookies,
+            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
+            UseProxy = rootHandler.UseProxy
+        }, handlers)
         {
             if (credentials == null)
             {
@@ -195,7 +238,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = ClientCertificateOption.Automatic
+        }, handlers)
         {
             if (baseUri == null)
             {
@@ -228,7 +275,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
+        {
+            AllowAutoRedirect = false,
+            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
+            AutomaticDecompression = rootHandler.AutomaticDecompression,
+            CookieContainer = rootHandler.CookieContainer,
+            Credentials = rootHandler.Credentials,
+            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
+            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
+            PreAuthenticate = rootHandler.PreAuthenticate,
+            Proxy = rootHandler.Proxy,
+            UseCookies = rootHandler.UseCookies,
+            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
+            UseProxy = rootHandler.UseProxy
+        }, handlers)
         {
             if (baseUri == null)
             {
@@ -252,9 +313,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         private void Initialize()
         {
             this.FileSystem = new FileSystemOperations(this);
-            this.BaseUri = new Uri("https://accountName.dataLakeServiceUri");
+            this.BaseUri = new Uri("https://accountname.datalakeserviceuri");
             this.ApiVersion = "2015-10-01-preview";
-            this.DataLakeServiceUri = "azuredatalakestore.net";
+            this.Datalakeserviceuri = "azuredatalakestore.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

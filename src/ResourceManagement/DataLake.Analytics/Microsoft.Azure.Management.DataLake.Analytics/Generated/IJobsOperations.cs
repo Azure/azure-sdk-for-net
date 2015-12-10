@@ -26,10 +26,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the job statistics object specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -41,14 +38,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the U-SQL job debug data information specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -60,15 +54,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobDataPath>> GetDebugDataPathWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Builds (compiles) the specified job in the specified Data Lake
         /// Analytics account for job correctness and validation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to build the job for
         /// </param>
         /// <param name='parameters'>
@@ -80,15 +71,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string resourceGroupName, string accountName, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Submits the specified job to the specified Data Lake Analytics
         /// account for computation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to create the job for
         /// </param>
         /// <param name='jobId'>
@@ -103,14 +91,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Cancels the running job specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to cancel the job for
         /// </param>
         /// <param name='jobIdentity'>
@@ -122,14 +107,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the JobInfo object specified by the job ID.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='jobIdentity'>
@@ -141,20 +123,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string accountname, string jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics JobInformation
         /// objects within the specified resource group with a link to the
         /// next page, if any.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='accountName'>
+        /// <param name='accountname'>
         /// The name of the Data Lake Analytics account to get the job from
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// Gets or sets OData Select statement. Limits the properties on each
@@ -182,7 +161,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountname, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics JobInformation
         /// objects within the specified resource group with a link to the
@@ -191,15 +170,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobInformation>>> ListNextWithHttpMessagesAsync(string nextPageLink, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

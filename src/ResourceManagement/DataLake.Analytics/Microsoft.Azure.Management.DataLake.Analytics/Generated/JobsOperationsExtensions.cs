@@ -26,18 +26,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
             /// JobInfo ID.
             /// </param>
-            public static JobStatistics GetStatistics(this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity)
+            public static JobStatistics GetStatistics(this IJobsOperations operations, string accountname, string jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetStatisticsAsync(resourceGroupName, accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetStatisticsAsync(accountname, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,10 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
@@ -58,9 +52,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStatistics> GetStatisticsAsync( this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobStatistics> GetStatisticsAsync( this IJobsOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobStatistics> result = await operations.GetStatisticsWithHttpMessagesAsync(resourceGroupName, accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetStatisticsWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -70,18 +64,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
             /// JobInfo ID.
             /// </param>
-            public static JobDataPath GetDebugDataPath(this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity)
+            public static JobDataPath GetDebugDataPath(this IJobsOperations operations, string accountname, string jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetDebugDataPathAsync(resourceGroupName, accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetDebugDataPathAsync(accountname, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,10 +81,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
@@ -102,9 +90,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDataPath> GetDebugDataPathAsync( this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobDataPath> GetDebugDataPathAsync( this IJobsOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobDataPath> result = await operations.GetDebugDataPathWithHttpMessagesAsync(resourceGroupName, accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetDebugDataPathWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -115,18 +103,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to build the job for
             /// </param>
             /// <param name='parameters'>
             /// The parameters to build a job, which simulates submission.
             /// </param>
-            public static JobInformation Build(this IJobsOperations operations, string resourceGroupName, string accountName, JobInfoBuildOrCreateParameters parameters)
+            public static JobInformation Build(this IJobsOperations operations, string accountname, JobInfoBuildOrCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).BuildAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).BuildAsync(accountname, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,10 +121,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to build the job for
             /// </param>
             /// <param name='parameters'>
@@ -148,9 +130,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> BuildAsync( this IJobsOperations operations, string resourceGroupName, string accountName, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> BuildAsync( this IJobsOperations operations, string accountname, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobInformation> result = await operations.BuildWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.BuildWithHttpMessagesAsync(accountname, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -161,10 +143,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to create the job for
             /// </param>
             /// <param name='jobId'>
@@ -173,9 +152,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters to submit a job.
             /// </param>
-            public static JobInformation Create(this IJobsOperations operations, string resourceGroupName, string accountName, string jobId, JobInfoBuildOrCreateParameters parameters)
+            public static JobInformation Create(this IJobsOperations operations, string accountname, string jobId, JobInfoBuildOrCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).CreateAsync(resourceGroupName, accountName, jobId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).CreateAsync(accountname, jobId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,10 +164,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to create the job for
             /// </param>
             /// <param name='jobId'>
@@ -200,9 +176,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> CreateAsync( this IJobsOperations operations, string resourceGroupName, string accountName, string jobId, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> CreateAsync( this IJobsOperations operations, string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobInformation> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, jobId, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateWithHttpMessagesAsync(accountname, jobId, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -212,18 +188,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to cancel the job for
             /// </param>
             /// <param name='jobIdentity'>
             /// JobInfo ID to cancel.
             /// </param>
-            public static void Cancel(this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity)
+            public static void Cancel(this IJobsOperations operations, string accountname, string jobIdentity)
             {
-                Task.Factory.StartNew(s => ((IJobsOperations)s).CancelAsync(resourceGroupName, accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IJobsOperations)s).CancelAsync(accountname, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -232,10 +205,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to cancel the job for
             /// </param>
             /// <param name='jobIdentity'>
@@ -244,9 +214,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync( this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync( this IJobsOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CancelWithHttpMessagesAsync(resourceGroupName, accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
+                await operations.CancelWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -255,18 +225,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
             /// JobInfo ID.
             /// </param>
-            public static JobInformation Get(this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity)
+            public static JobInformation Get(this IJobsOperations operations, string accountname, string jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetAsync(resourceGroupName, accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).GetAsync(accountname, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -275,10 +242,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='jobIdentity'>
@@ -287,9 +251,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> GetAsync( this IJobsOperations operations, string resourceGroupName, string accountName, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> GetAsync( this IJobsOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobInformation> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -300,14 +264,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -329,9 +290,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// formatxii without access to request headers for standard content-type
             /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
-            public static IPage<JobInformation> List(this IJobsOperations operations, string resourceGroupName, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<JobInformation> List(this IJobsOperations operations, string accountname, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListAsync(resourceGroupName, accountName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListAsync(accountname, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -341,14 +302,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
+            /// <param name='accountname'>
             /// The name of the Data Lake Analytics account to get the job from
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// Gets or sets OData Select statement. Limits the properties on each entry
@@ -373,9 +331,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformation>> ListAsync( this IJobsOperations operations, string resourceGroupName, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobInformation>> ListAsync( this IJobsOperations operations, string accountname, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobInformation>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(accountname, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -389,12 +347,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<JobInformation> ListNext(this IJobsOperations operations, string nextPageLink, string resourceGroupName)
+            public static IPage<JobInformation> ListNext(this IJobsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListNextAsync(nextPageLink, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -407,15 +362,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformation>> ListNextAsync( this IJobsOperations operations, string nextPageLink, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobInformation>> ListNextAsync( this IJobsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobInformation>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
