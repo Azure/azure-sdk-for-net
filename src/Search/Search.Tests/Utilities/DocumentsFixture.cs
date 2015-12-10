@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchIndexClient indexClient = this.GetSearchIndexClient();
 
-            var batch = IndexBatch.Create(TestDocuments.Select(d => IndexAction.Create(d)));
+            var batch = IndexBatch.Upload(TestDocuments);
             indexClient.Documents.Index(batch);
 
             SearchTestUtilities.WaitForIndexing();

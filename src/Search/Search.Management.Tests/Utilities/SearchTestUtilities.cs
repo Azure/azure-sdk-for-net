@@ -18,6 +18,11 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             return TestUtilities.GenerateName(prefix: "azs-");
         }
 
+        public static string GenerateName()
+        {
+            return TestUtilities.GenerateName();
+        }
+
         public static void WaitForIndexing()
         {
             TestUtilities.Wait(TimeSpan.FromSeconds(2));
