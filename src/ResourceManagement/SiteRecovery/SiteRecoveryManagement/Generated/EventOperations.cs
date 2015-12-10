@@ -208,11 +208,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         EventProperties propertiesInstance = new EventProperties();
                                         eventInstance.Properties = propertiesInstance;
                                         
-                                        JToken sourceIdValue = propertiesValue["sourceId"];
-                                        if (sourceIdValue != null && sourceIdValue.Type != JTokenType.Null)
+                                        JToken eventCodeValue = propertiesValue["eventCode"];
+                                        if (eventCodeValue != null && eventCodeValue.Type != JTokenType.Null)
                                         {
-                                            string sourceIdInstance = ((string)sourceIdValue);
-                                            propertiesInstance.SourceId = sourceIdInstance;
+                                            string eventCodeInstance = ((string)eventCodeValue);
+                                            propertiesInstance.EventCode = eventCodeInstance;
                                         }
                                         
                                         JToken descriptionValue = propertiesValue["description"];

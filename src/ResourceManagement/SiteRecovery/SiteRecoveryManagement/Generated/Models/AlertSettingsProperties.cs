@@ -53,39 +53,16 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._locale = value; }
         }
         
-        private string _sendToSubscriptionAdmin;
+        private string _sendToOwners;
         
         /// <summary>
         /// Optional. A value indicating whether to send email to subscription
-        /// administrator.
+        /// owners.
         /// </summary>
-        public string SendToSubscriptionAdmin
+        public string SendToOwners
         {
-            get { return this._sendToSubscriptionAdmin; }
-            set { this._sendToSubscriptionAdmin = value; }
-        }
-        
-        private string _sendToSubscriptionCoAdmins;
-        
-        /// <summary>
-        /// Optional. A value indicating whether to send email to subscription
-        /// co-admins.
-        /// </summary>
-        public string SendToSubscriptionCoAdmins
-        {
-            get { return this._sendToSubscriptionCoAdmins; }
-            set { this._sendToSubscriptionCoAdmins = value; }
-        }
-        
-        private string _serverId;
-        
-        /// <summary>
-        /// Optional. The server id for which this email is configured.
-        /// </summary>
-        public string ServerId
-        {
-            get { return this._serverId; }
-            set { this._serverId = value; }
+            get { return this._sendToOwners; }
+            set { this._sendToOwners = value; }
         }
         
         /// <summary>

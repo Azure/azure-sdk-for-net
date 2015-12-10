@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._endTime = value; }
         }
         
+        private string _eventCode;
+        
+        /// <summary>
+        /// Optional. The source id of the events to be queried.
+        /// </summary>
+        public string EventCode
+        {
+            get { return this._eventCode; }
+            set { this._eventCode = value; }
+        }
+        
         private string _eventType;
         
         /// <summary>
@@ -83,17 +94,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._severity; }
             set { this._severity = value; }
-        }
-        
-        private string _sourceId;
-        
-        /// <summary>
-        /// Optional. The source id of the events to be queried.
-        /// </summary>
-        public string SourceId
-        {
-            get { return this._sourceId; }
-            set { this._sourceId = value; }
         }
         
         private string _startTime;

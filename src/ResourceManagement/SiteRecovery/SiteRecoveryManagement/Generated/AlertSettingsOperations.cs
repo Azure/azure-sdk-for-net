@@ -172,14 +172,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     JObject propertiesValue = new JObject();
                     configureAlertSettingsRequestValue["properties"] = propertiesValue;
                     
-                    if (input.Properties.SendToSubscriptionAdmin != null)
+                    if (input.Properties.SendToOwners != null)
                     {
-                        propertiesValue["sendToSubscriptionAdmin"] = input.Properties.SendToSubscriptionAdmin;
-                    }
-                    
-                    if (input.Properties.SendToSubscriptionCoAdmins != null)
-                    {
-                        propertiesValue["sendToSubscriptionCoAdmins"] = input.Properties.SendToSubscriptionCoAdmins;
+                        propertiesValue["sendToOwners"] = input.Properties.SendToOwners;
                     }
                     
                     if (input.Properties.CustomEmailAddresses != null)
@@ -256,18 +251,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 AlertSettingsProperties propertiesInstance = new AlertSettingsProperties();
                                 alertInstance.Properties = propertiesInstance;
                                 
-                                JToken sendToSubscriptionAdminValue = propertiesValue2["sendToSubscriptionAdmin"];
-                                if (sendToSubscriptionAdminValue != null && sendToSubscriptionAdminValue.Type != JTokenType.Null)
+                                JToken sendToOwnersValue = propertiesValue2["sendToOwners"];
+                                if (sendToOwnersValue != null && sendToOwnersValue.Type != JTokenType.Null)
                                 {
-                                    string sendToSubscriptionAdminInstance = ((string)sendToSubscriptionAdminValue);
-                                    propertiesInstance.SendToSubscriptionAdmin = sendToSubscriptionAdminInstance;
-                                }
-                                
-                                JToken sendToSubscriptionCoAdminsValue = propertiesValue2["sendToSubscriptionCoAdmins"];
-                                if (sendToSubscriptionCoAdminsValue != null && sendToSubscriptionCoAdminsValue.Type != JTokenType.Null)
-                                {
-                                    string sendToSubscriptionCoAdminsInstance = ((string)sendToSubscriptionCoAdminsValue);
-                                    propertiesInstance.SendToSubscriptionCoAdmins = sendToSubscriptionCoAdminsInstance;
+                                    string sendToOwnersInstance = ((string)sendToOwnersValue);
+                                    propertiesInstance.SendToOwners = sendToOwnersInstance;
                                 }
                                 
                                 JToken customEmailAddressesArray2 = propertiesValue2["customEmailAddresses"];
@@ -277,13 +265,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         propertiesInstance.CustomEmailAddresses.Add(((string)customEmailAddressesValue));
                                     }
-                                }
-                                
-                                JToken serverIdValue = propertiesValue2["serverId"];
-                                if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
-                                {
-                                    string serverIdInstance = ((string)serverIdValue);
-                                    propertiesInstance.ServerId = serverIdInstance;
                                 }
                                 
                                 JToken localeValue = propertiesValue2["locale"];
@@ -543,18 +524,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         AlertSettingsProperties propertiesInstance = new AlertSettingsProperties();
                                         alertSettingsInstance.Properties = propertiesInstance;
                                         
-                                        JToken sendToSubscriptionAdminValue = propertiesValue["sendToSubscriptionAdmin"];
-                                        if (sendToSubscriptionAdminValue != null && sendToSubscriptionAdminValue.Type != JTokenType.Null)
+                                        JToken sendToOwnersValue = propertiesValue["sendToOwners"];
+                                        if (sendToOwnersValue != null && sendToOwnersValue.Type != JTokenType.Null)
                                         {
-                                            string sendToSubscriptionAdminInstance = ((string)sendToSubscriptionAdminValue);
-                                            propertiesInstance.SendToSubscriptionAdmin = sendToSubscriptionAdminInstance;
-                                        }
-                                        
-                                        JToken sendToSubscriptionCoAdminsValue = propertiesValue["sendToSubscriptionCoAdmins"];
-                                        if (sendToSubscriptionCoAdminsValue != null && sendToSubscriptionCoAdminsValue.Type != JTokenType.Null)
-                                        {
-                                            string sendToSubscriptionCoAdminsInstance = ((string)sendToSubscriptionCoAdminsValue);
-                                            propertiesInstance.SendToSubscriptionCoAdmins = sendToSubscriptionCoAdminsInstance;
+                                            string sendToOwnersInstance = ((string)sendToOwnersValue);
+                                            propertiesInstance.SendToOwners = sendToOwnersInstance;
                                         }
                                         
                                         JToken customEmailAddressesArray = propertiesValue["customEmailAddresses"];
@@ -564,13 +538,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 propertiesInstance.CustomEmailAddresses.Add(((string)customEmailAddressesValue));
                                             }
-                                        }
-                                        
-                                        JToken serverIdValue = propertiesValue["serverId"];
-                                        if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
-                                        {
-                                            string serverIdInstance = ((string)serverIdValue);
-                                            propertiesInstance.ServerId = serverIdInstance;
                                         }
                                         
                                         JToken localeValue = propertiesValue["locale"];

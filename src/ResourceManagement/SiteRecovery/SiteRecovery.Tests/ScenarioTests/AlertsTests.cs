@@ -52,16 +52,14 @@ namespace SiteRecovery.Tests
                         {
                             CustomEmailAddresses = emailAddresses,
                             Locale = "en-us",
-                            SendToSubscriptionAdmin = "Send",
-                            SendToSubscriptionCoAdmins = "DoNotSend"
+                            SendToOwners = "Send"
                         }
                     },
                     RequestHeaders);
                 Assert.NotNull(configureResponse);
                 Assert.NotNull(configureResponse.Alert);
                 Assert.Equal(HttpStatusCode.OK, configureResponse.StatusCode);
-                Assert.Equal("Send", configureResponse.Alert.Properties.SendToSubscriptionAdmin);
-                Assert.Equal("DoNotSend", configureResponse.Alert.Properties.SendToSubscriptionCoAdmins);
+                Assert.Equal("Send", configureResponse.Alert.Properties.SendToOwners);
                 Assert.Equal("en-us", configureResponse.Alert.Properties.Locale);
                 Assert.NotEmpty(configureResponse.Alert.Properties.CustomEmailAddresses);
             }
