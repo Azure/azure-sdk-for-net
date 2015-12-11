@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets the default authentication provider to use when
         /// multiple providers are configured.
-        /// This settings is only needed if multiple providers are
-        /// configured if the unauthenticated client
+        /// This setting is only needed if multiple providers are
+        /// configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage". Possible
         /// values for this property include: 'AzureActiveDirectory',
         /// 'Facebook', 'Google', 'MicrosoftAccount', 'Twitter'.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// of Facebook Login authentication.
         /// This setting is optional.
         /// Facebook Login documentation:
-        /// https://developers.google.com/identity/sign-in/web/
+        /// https://developers.facebook.com/docs/facebook-login
         /// </summary>
         [JsonProperty(PropertyName = "facebookOAuthScopes")]
         public IList<string> FacebookOAuthScopes { get; set; }

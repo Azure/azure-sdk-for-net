@@ -25,13 +25,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Domain class.
         /// </summary>
-        public Domain(Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), DateTime? createdTime = default(DateTime?), DateTime? expirationTime = default(DateTime?), DateTime? lastRenewedTime = default(DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent))
+        public Domain(Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), DateTime? createdTime = default(DateTime?), DateTime? expirationTime = default(DateTime?), DateTime? lastRenewedTime = default(DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent))
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
             ContactRegistrant = contactRegistrant;
             ContactTech = contactTech;
             RegistrationStatus = registrationStatus;
+            ProvisioningState = provisioningState;
             NameServers = nameServers;
             Privacy = privacy;
             CreatedTime = createdTime;
@@ -77,6 +78,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.registrationStatus")]
         public DomainStatus? RegistrationStatus { get; set; }
+
+        /// <summary>
+        /// Domain provisioning state. Possible values for this property
+        /// include: 'Succeeded', 'Failed', 'Canceled', 'InProgress'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProvisioningState? ProvisioningState { get; set; }
 
         /// <summary>
         /// Name servers

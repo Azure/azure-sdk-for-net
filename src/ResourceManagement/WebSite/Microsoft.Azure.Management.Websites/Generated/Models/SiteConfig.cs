@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteConfig class.
         /// </summary>
-        public SiteConfig(int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), bool? requestTracingEnabled = default(bool?), DateTime? requestTracingExpirationTime = default(DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), string publishingPassword = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<NameValuePair> metadata = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), string autoSwapSlotName = default(string))
+        public SiteConfig(int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), bool? requestTracingEnabled = default(bool?), DateTime? requestTracingExpirationTime = default(DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), string publishingPassword = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<NameValuePair> metadata = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string))
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -62,6 +62,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             AutoHealRules = autoHealRules;
             TracingOptions = tracingOptions;
             VnetName = vnetName;
+            Cors = cors;
+            ApiDefinition = apiDefinition;
             AutoSwapSlotName = autoSwapSlotName;
         }
 
@@ -277,6 +279,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetName")]
         public string VnetName { get; set; }
+
+        /// <summary>
+        /// Cross-Origin Resource Sharing (CORS) settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public CorsSettings Cors { get; set; }
+
+        /// <summary>
+        /// Information about the formal API definition for the web app.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiDefinition")]
+        public ApiDefinitionInfo ApiDefinition { get; set; }
 
         /// <summary>
         /// Auto swap slot name
