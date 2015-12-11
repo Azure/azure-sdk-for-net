@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateStorageAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateStorageAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AddStorageAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AddStorageAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1808,7 +1808,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AddDataLakeStoreAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountProperties parameters = default(DataLakeStoreAccountProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AddDataLakeStoreAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

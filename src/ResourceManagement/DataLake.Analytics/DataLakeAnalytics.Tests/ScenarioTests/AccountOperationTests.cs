@@ -123,6 +123,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(updateResponseGet.Properties.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
 
                 // Create another account and ensure that list account returns both
+                responseGet = clientToUse.DataLakeAnalyticsAccount.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);
                 var accountToChange = responseGet;
                 accountToChange.Name = accountToChange.Name + "secondacct";
 
@@ -135,7 +136,9 @@ namespace DataLakeAnalytics.Tests
 
                 // Add, list and remove a data source to the first account
                 clientToUse.DataLakeAnalyticsAccount.AddDataLakeStoreAccount(commonData.ResourceGroupName,
-                    commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName, new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix});
+                    commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName, new AddDataLakeStoreParameters {
+                    Properties = new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
+                    });
 
                 // Get the data sources and confirm there are 2
                 var getDataSourceResponse =
@@ -165,12 +168,12 @@ namespace DataLakeAnalytics.Tests
 
                 // Add, list and remove an azure blob source to the first account
                 clientToUse.DataLakeAnalyticsAccount.AddStorageAccount(commonData.ResourceGroupName,
-                    commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName,
-                    new StorageAccountProperties
+                    commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName, new AddStorageAccountParameters {
+                    Properties = new StorageAccountProperties
                     {
                         Suffix = commonData.StorageAccountSuffix,
                         AccessKey = commonData.StorageAccountAccessKey
-                    });
+                    }});
 
                 // Get the data sources and confirm there is 1
                 var getDataSourceBlobResponse =

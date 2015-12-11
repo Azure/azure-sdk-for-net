@@ -15,9 +15,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Defines values for JobType.
     /// </summary>
-    public static class JobType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum JobType
     {
-        public const string USql = "USql";
-        public const string Hive = "Hive";
+        [EnumMember(Value = "USql")]
+        USql,
+        [EnumMember(Value = "Hive")]
+        Hive
     }
 }

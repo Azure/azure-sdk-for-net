@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInformation class.
         /// </summary>
-        public JobInformation(string jobId, string name, string type, JobProperties properties, string submitter = default(string), string errorMessage = default(string), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTime? submitTime = default(DateTime?), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
+        public JobInformation(string jobId, string name, JobType? type, JobProperties properties, string submitter = default(string), string errorMessage = default(string), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTime? submitTime = default(DateTime?), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
         {
             JobId = jobId;
             Name = name;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Possible values for this property include: 'USql', 'Hive'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public JobType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the user or account that submitted the job.

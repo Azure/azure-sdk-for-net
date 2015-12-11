@@ -144,7 +144,7 @@ namespace DataLakeAnalytics.Tests
                 "Account failed to be provisioned into the success state. Actual State: " +
                 accountGetResponse.Properties.ProvisioningState);
 
-            return accountGetResponse.Properties.Endpoint;
+            return accountGetResponse.Properties.Endpoint.Replace(string.Format("{0}.",accountName), "");
         }
 
         public string TryCreateStorageAccount(string resourceGroupName, string storageAccountName, string label, string description, string location, out string storageAccountSuffix)

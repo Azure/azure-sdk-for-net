@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and suffix to update the storage
             /// account with.
             /// </param>
-            public static void UpdateStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters)
+            public static void UpdateStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).UpdateStorageAccountAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.UpdateStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and optional suffix for the Azure
             /// Storage Account.
             /// </param>
-            public static void AddStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters)
+            public static void AddStorageAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).AddStorageAccountAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, StorageAccountProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.AddStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the optional properties associated with the
             /// named Data Lake account.
             /// </param>
-            public static void AddDataLakeStoreAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountProperties parameters = default(DataLakeStoreAccountProperties))
+            public static void AddDataLakeStoreAccount(this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters))
             {
                 Task.Factory.StartNew(s => ((IDataLakeAnalyticsAccountOperations)s).AddDataLakeStoreAccountAsync(resourceGroupName, accountName, dataLakeStoreAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -580,7 +580,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountProperties parameters = default(DataLakeStoreAccountProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.AddDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
