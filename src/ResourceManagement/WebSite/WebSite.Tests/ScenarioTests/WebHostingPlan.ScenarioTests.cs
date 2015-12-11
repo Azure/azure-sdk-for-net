@@ -260,7 +260,7 @@ namespace WebSites.Tests.ScenarioTests
                     ServerFarmId = serverfarmId
                 });
 
-                var endTime = DateTime.UtcNow;
+                var endTime = DateTime.Parse("2015-12-11T09:52:42Z");
                 var metricNames = new List<string> { "MemoryPercentage", "CpuPercentage", "DiskQueueLength", "HttpQueueLength", "BytesReceived", "BytesSent" };
                 metricNames.Sort();
                 var result = webSitesClient.ServerFarms.GetServerFarmMetrics(resourceGroupName: resourceGroupName,
