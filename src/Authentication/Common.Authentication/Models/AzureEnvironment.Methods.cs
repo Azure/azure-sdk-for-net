@@ -145,8 +145,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.USGovernmentSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.USGovernmentGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, null },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.USGovernmentKeyVaultDnsSuffix},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.USGovernmentKeyVaultServiceEndpointResourceId},
                         { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, null},
                         { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, null}
                     }
@@ -391,7 +391,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
+        public const string USGovernmentKeyVaultDnsSuffix = "vault.usgovcloudapi.net";
+
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
+
+        public const string USGovernmentKeyVaultServiceEndpointResourceId = "https://vault.usgovcloudapi.net";
 
         public const string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix = "azuredatalakeanalytics.net";
 
