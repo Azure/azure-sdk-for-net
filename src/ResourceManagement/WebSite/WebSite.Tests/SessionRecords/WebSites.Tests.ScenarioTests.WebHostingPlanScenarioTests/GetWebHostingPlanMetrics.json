@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0113e765-35be-4a23-bd32-d5595b3f57b7"
+          "4aad5023-6525-4afe-923a-1724e20458bd"
         ],
         "accept-language": [
           "en-US"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:02 GMT"
+          "Fri, 11 Dec 2015 01:52:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,16 +37,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14796"
+          "14853"
         ],
         "x-ms-request-id": [
-          "564931ec-6fc9-4189-b248-bb44d406fa47"
+          "aac6bba3-9ff8-4680-86b2-293d149dd3e6"
         ],
         "x-ms-correlation-request-id": [
-          "564931ec-6fc9-4189-b248-bb44d406fa47"
+          "aac6bba3-9ff8-4680-86b2-293d149dd3e6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013403Z:564931ec-6fc9-4189-b248-bb44d406fa47"
+          "CENTRALUS:20151211T015225Z:aac6bba3-9ff8-4680-86b2-293d149dd3e6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -55,8 +55,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourcegroups/csmrg159?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTU5P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourcegroups/csmrg235?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlZ3JvdXBzL2NzbXJnMjM1P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -67,7 +67,7 @@
           "29"
         ],
         "x-ms-client-request-id": [
-          "db32691a-9e7a-4cd8-9393-75f4f259a9a6"
+          "9a8873c5-9026-45a5-b812-a939b3836691"
         ],
         "accept-language": [
           "en-US"
@@ -76,7 +76,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159\",\r\n  \"name\": \"csmrg159\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235\",\r\n  \"name\": \"csmrg235\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "169"
@@ -91,22 +91,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:02 GMT"
+          "Fri, 11 Dec 2015 01:52:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1009"
+          "1044"
         ],
         "x-ms-request-id": [
-          "17c8fca7-f5ad-4f55-8798-46163dbb69f4"
+          "9d37a710-a531-419f-8ec3-ec27807e1418"
         ],
         "x-ms-correlation-request-id": [
-          "17c8fca7-f5ad-4f55-8798-46163dbb69f4"
+          "9d37a710-a531-419f-8ec3-ec27807e1418"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013403Z:17c8fca7-f5ad-4f55-8798-46163dbb69f4"
+          "CENTRALUS:20151211T015225Z:9d37a710-a531-419f-8ec3-ec27807e1418"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -115,10 +115,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zL2NzbXNmMzU3Mz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMjM1L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zL2NzbXNmMTIyNz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"name\": \"csmsf3573\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"name\": \"csmsf1227\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -127,7 +127,7 @@
           "160"
         ],
         "x-ms-client-request-id": [
-          "4faae42d-2c08-4c9d-8ceb-5cce01417ae0"
+          "a4c61105-a03e-4d24-9bc7-3a5af5273c2a"
         ],
         "accept-language": [
           "en-US"
@@ -139,7 +139,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573\",\r\n  \"name\": \"csmsf3573\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"csmsf3573\",\r\n    \"workerSize\": 0,\r\n    \"workerSizeId\": 0,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg159-WestUSwebspace\",\r\n    \"subscription\": \"3312c132-fc40-493f-9c97-82d80256a313\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": 0,\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"West US\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"kind\": null,\r\n    \"resourceGroup\": \"csmrg159\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227\",\r\n  \"name\": \"csmsf1227\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"csmsf1227\",\r\n    \"workerSize\": 0,\r\n    \"workerSizeId\": 0,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg235-WestUSwebspace\",\r\n    \"subscription\": \"3312c132-fc40-493f-9c97-82d80256a313\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": 0,\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"West US\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"kind\": null,\r\n    \"resourceGroup\": \"csmrg235\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -151,7 +151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:08 GMT"
+          "Fri, 11 Dec 2015 01:52:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -169,7 +169,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c5e087d7-b143-4317-973c-ae2aa96eea46"
+          "6a55d3f3-3ee5-4396-90cc-6a27c05d149e"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -178,31 +178,31 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1053"
+          "950"
         ],
         "x-ms-correlation-request-id": [
-          "3b5fefc8-5c91-4a05-96e8-1ed1b20a59fa"
+          "2575a258-7261-451f-bc9e-04412081be98"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013409Z:3b5fefc8-5c91-4a05-96e8-1ed1b20a59fa"
+          "CENTRALUS:20151211T015238Z:2575a258-7261-451f-bc9e-04412081be98"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/sites/csmws4750?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL2NzbXdzNDc1MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/sites/csmws799?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMjM1L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL2NzbXdzNzk5P2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws4750\",\r\n    \"serverFarmId\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourcegroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws799\",\r\n    \"serverFarmId\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourcegroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "283"
+          "282"
         ],
         "x-ms-client-request-id": [
-          "4f3c4abd-15bb-457a-a4d7-96e913e86036"
+          "f07f1b9a-3eb5-4b7c-b097-9195b5af25c7"
         ],
         "accept-language": [
           "en-US"
@@ -214,7 +214,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/sites/csmws4750\",\r\n  \"name\": \"csmws4750\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws4750\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws4750.waws-ppedf.windows-int.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg159-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-ppedf-bay-001.api.admin-waws-ppedf.windows-int.net:454/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/webspaces/csmrg159-WestUSwebspace/sites/csmws4750\",\r\n    \"repositorySiteName\": \"csmws4750\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws4750.scm.waws-ppedf.windows-int.net\",\r\n      \"csmws4750.waws-ppedf.windows-int.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws4750.scm.waws-ppedf.windows-int.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      },\r\n      {\r\n        \"name\": \"csmws4750.waws-ppedf.windows-int.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573\",\r\n    \"lastModifiedTimeUtc\": \"2015-12-11T01:34:13.887\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws4750\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": null,\r\n    \"outboundIpAddresses\": \"104.40.21.237,104.40.20.76,104.40.19.34,104.40.22.12\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {\r\n      \"tag1\": \"value1\",\r\n      \"tag2\": \"\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/sites/csmws799\",\r\n  \"name\": \"csmws799\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws799\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws799.waws-ppedf.windows-int.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg235-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-ppedf-bay-001.api.admin-waws-ppedf.windows-int.net:454/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/webspaces/csmrg235-WestUSwebspace/sites/csmws799\",\r\n    \"repositorySiteName\": \"csmws799\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws799.scm.waws-ppedf.windows-int.net\",\r\n      \"csmws799.waws-ppedf.windows-int.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws799.scm.waws-ppedf.windows-int.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      },\r\n      {\r\n        \"name\": \"csmws799.waws-ppedf.windows-int.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227\",\r\n    \"lastModifiedTimeUtc\": \"2015-12-11T01:52:43.273\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws799\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": null,\r\n    \"outboundIpAddresses\": \"104.40.21.237,104.40.20.76,104.40.19.34,104.40.22.12\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {\r\n      \"tag1\": \"value1\",\r\n      \"tag2\": \"\"\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -226,7 +226,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:12 GMT"
+          "Fri, 11 Dec 2015 01:52:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -244,7 +244,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f569ba8c-849e-4e69-b40d-b76afee6ce55"
+          "dd6d6b64-72fb-4368-b791-f3019f5fcac5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -253,25 +253,25 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1052"
+          "949"
         ],
         "x-ms-correlation-request-id": [
-          "98382663-a005-467f-9282-1e7f77abf661"
+          "4fddd1bd-cfc8-457f-ae79-8810cf4c6140"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013412Z:98382663-a005-467f-9282-1e7f77abf661"
+          "CENTRALUS:20151211T015242Z:4fddd1bd-cfc8-457f-ae79-8810cf4c6140"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573/metrics?details=true&$filter=(name.value%20eq%20'BytesReceived'%20or%20name.value%20eq%20'BytesSent'%20or%20name.value%20eq%20'CpuPercentage'%20or%20name.value%20eq%20'DiskQueueLength'%20or%20name.value%20eq%20'HttpQueueLength'%20or%20name.value%20eq%20'MemoryPercentage')%20and%20startTime%20eq%202015-12-10T01:34:12Z%20and%20endTime%20eq%202015-12-11T01:34:12Z%20and%20timeGrain%20eq%20duration'PT1H'&api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zL2NzbXNmMzU3My9tZXRyaWNzP2RldGFpbHM9dHJ1ZSYkZmlsdGVyPSUyOG5hbWUudmFsdWUlMjBlcSUyMCUyN0J5dGVzUmVjZWl2ZWQlMjclMjBvciUyMG5hbWUudmFsdWUlMjBlcSUyMCUyN0J5dGVzU2VudCUyNyUyMG9yJTIwbmFtZS52YWx1ZSUyMGVxJTIwJTI3Q3B1UGVyY2VudGFnZSUyNyUyMG9yJTIwbmFtZS52YWx1ZSUyMGVxJTIwJTI3RGlza1F1ZXVlTGVuZ3RoJTI3JTIwb3IlMjBuYW1lLnZhbHVlJTIwZXElMjAlMjdIdHRwUXVldWVMZW5ndGglMjclMjBvciUyMG5hbWUudmFsdWUlMjBlcSUyMCUyN01lbW9yeVBlcmNlbnRhZ2UlMjclMjklMjBhbmQlMjBzdGFydFRpbWUlMjBlcSUyMDIwMTUtMTItMTBUMDElM0EzNCUzQTEyWiUyMGFuZCUyMGVuZFRpbWUlMjBlcSUyMDIwMTUtMTItMTFUMDElM0EzNCUzQTEyWiUyMGFuZCUyMHRpbWVHcmFpbiUyMGVxJTIwZHVyYXRpb24lMjdQVDFIJTI3JmFwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227/metrics?details=true&$filter=(name.value%20eq%20'BytesReceived'%20or%20name.value%20eq%20'BytesSent'%20or%20name.value%20eq%20'CpuPercentage'%20or%20name.value%20eq%20'DiskQueueLength'%20or%20name.value%20eq%20'HttpQueueLength'%20or%20name.value%20eq%20'MemoryPercentage')%20and%20startTime%20eq%202015-12-10T01:52:42Z%20and%20endTime%20eq%202015-12-11T01:52:42Z%20and%20timeGrain%20eq%20duration'PT1H'&api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMjM1L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zL2NzbXNmMTIyNy9tZXRyaWNzP2RldGFpbHM9dHJ1ZSYkZmlsdGVyPSUyOG5hbWUudmFsdWUlMjBlcSUyMCUyN0J5dGVzUmVjZWl2ZWQlMjclMjBvciUyMG5hbWUudmFsdWUlMjBlcSUyMCUyN0J5dGVzU2VudCUyNyUyMG9yJTIwbmFtZS52YWx1ZSUyMGVxJTIwJTI3Q3B1UGVyY2VudGFnZSUyNyUyMG9yJTIwbmFtZS52YWx1ZSUyMGVxJTIwJTI3RGlza1F1ZXVlTGVuZ3RoJTI3JTIwb3IlMjBuYW1lLnZhbHVlJTIwZXElMjAlMjdIdHRwUXVldWVMZW5ndGglMjclMjBvciUyMG5hbWUudmFsdWUlMjBlcSUyMCUyN01lbW9yeVBlcmNlbnRhZ2UlMjclMjklMjBhbmQlMjBzdGFydFRpbWUlMjBlcSUyMDIwMTUtMTItMTBUMDElM0E1MiUzQTQyWiUyMGFuZCUyMGVuZFRpbWUlMjBlcSUyMDIwMTUtMTItMTFUMDElM0E1MiUzQTQyWiUyMGFuZCUyMHRpbWVHcmFpbiUyMGVxJTIwZHVyYXRpb24lMjdQVDFIJTI3JmFwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "af1fccda-b1db-4924-b6b0-b4d9d6efbdeb"
+          "2e1fa045-5211-462a-89f1-06f389588335"
         ],
         "accept-language": [
           "en-US"
@@ -283,7 +283,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms/csmsf3573/metrics\",\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"MemoryPercentage\",\r\n        \"localizedValue\": \"Memory Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"MemoryPercentage\",\r\n        \"localizedValue\": \"Memory Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"HttpQueueLength\",\r\n        \"localizedValue\": \"Http Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"HttpQueueLength\",\r\n        \"localizedValue\": \"Http Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DiskQueueLength\",\r\n        \"localizedValue\": \"Disk Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DiskQueueLength\",\r\n        \"localizedValue\": \"Disk Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CpuPercentage\",\r\n        \"localizedValue\": \"CPU Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CpuPercentage\",\r\n        \"localizedValue\": \"CPU Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesSent\",\r\n        \"localizedValue\": \"Data Out\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesSent\",\r\n        \"localizedValue\": \"Data Out\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesReceived\",\r\n        \"localizedValue\": \"Data In\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesReceived\",\r\n        \"localizedValue\": \"Data In\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:34:12Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms/csmsf1227/metrics\",\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"MemoryPercentage\",\r\n        \"localizedValue\": \"Memory Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"MemoryPercentage\",\r\n        \"localizedValue\": \"Memory Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"HttpQueueLength\",\r\n        \"localizedValue\": \"Http Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"HttpQueueLength\",\r\n        \"localizedValue\": \"Http Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DiskQueueLength\",\r\n        \"localizedValue\": \"Disk Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DiskQueueLength\",\r\n        \"localizedValue\": \"Disk Queue Length\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CpuPercentage\",\r\n        \"localizedValue\": \"CPU Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CpuPercentage\",\r\n        \"localizedValue\": \"CPU Percentage\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesSent\",\r\n        \"localizedValue\": \"Data Out\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesSent\",\r\n        \"localizedValue\": \"Data Out\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesReceived\",\r\n        \"localizedValue\": \"Data In\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BytesReceived\",\r\n        \"localizedValue\": \"Data In\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"timeGrain\": \"PT1H\",\r\n      \"startTime\": \"2015-12-10T01:00:00Z\",\r\n      \"endTime\": \"2015-12-11T01:52:42Z\",\r\n      \"metricValues\": [],\r\n      \"resourceId\": null,\r\n      \"properties\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -295,7 +295,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:13 GMT"
+          "Fri, 11 Dec 2015 01:52:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -310,7 +310,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "11b85bdf-6e62-44b1-854e-7fc07821e0d2"
+          "03715c9f-353b-442c-9361-54a70516e761"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -319,13 +319,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14851"
+          "14755"
         ],
         "x-ms-correlation-request-id": [
-          "eda299eb-72e9-4648-a9f4-712ddabb4f0e"
+          "1a15f889-084e-4b21-915f-276a45b14b5d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013414Z:eda299eb-72e9-4648-a9f4-712ddabb4f0e"
+          "CENTRALUS:20151211T015244Z:1a15f889-084e-4b21-915f-276a45b14b5d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -334,13 +334,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/sites/csmws4750?deleteEmptyServerFarm=True&deleteAllSlots=True&api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL2NzbXdzNDc1MD9kZWxldGVFbXB0eVNlcnZlckZhcm09VHJ1ZSZkZWxldGVBbGxTbG90cz1UcnVlJmFwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/sites/csmws799?deleteEmptyServerFarm=True&deleteAllSlots=True&api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMjM1L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL2NzbXdzNzk5P2RlbGV0ZUVtcHR5U2VydmVyRmFybT1UcnVlJmRlbGV0ZUFsbFNsb3RzPVRydWUmYXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e5e0f0de-c73d-480f-8e48-52f4766ea749"
+          "cd705ff4-a87e-464a-a341-f580da173f35"
         ],
         "accept-language": [
           "en-US"
@@ -364,13 +364,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:16 GMT"
+          "Fri, 11 Dec 2015 01:52:46 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D133B40AE0F5A0\""
+          "\"1D133B6A01748C0\""
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -379,7 +379,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "8b2bf337-72ca-4ca9-9d0d-261d57f6e03d"
+          "101c2c33-e918-4bf9-b2b5-bf07505e49b3"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -388,25 +388,25 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1051"
+          "948"
         ],
         "x-ms-correlation-request-id": [
-          "94960b1b-10d9-4e98-a2a7-6223be0b7ee2"
+          "e2bbdda0-5d09-4dfd-bd9c-9fa16b36c01c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013416Z:94960b1b-10d9-4e98-a2a7-6223be0b7ee2"
+          "CENTRALUS:20151211T015246Z:e2bbdda0-5d09-4dfd-bd9c-9fa16b36c01c"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg159/providers/Microsoft.Web/serverfarms?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/csmrg235/providers/Microsoft.Web/serverfarms?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2NzbXJnMjM1L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NlcnZlcmZhcm1zP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87096ce5-0318-46d6-bed1-8209a5b7cdbf"
+          "afdb274b-51b9-4966-b8be-5213b6a464a1"
         ],
         "accept-language": [
           "en-US"
@@ -430,7 +430,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 11 Dec 2015 01:34:16 GMT"
+          "Fri, 11 Dec 2015 01:52:46 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -448,7 +448,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "245d5186-121e-4312-afc6-c6be18de38eb"
+          "a25a0cd3-569d-4319-8f4e-67dd448f2c48"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -457,13 +457,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14850"
+          "14754"
         ],
         "x-ms-correlation-request-id": [
-          "e889659a-45ab-49f6-bd6a-0be6bbe80138"
+          "2c7f3322-1d26-45ad-8a83-d089eebf810e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151211T013417Z:e889659a-45ab-49f6-bd6a-0be6bbe80138"
+          "CENTRALUS:20151211T015246Z:2c7f3322-1d26-45ad-8a83-d089eebf810e"
         ]
       },
       "StatusCode": 200
@@ -471,9 +471,9 @@
   ],
   "Names": {
     "GetWebHostingPlanMetrics": [
-      "csmsf3573",
-      "csmrg159",
-      "csmws4750"
+      "csmsf1227",
+      "csmrg235",
+      "csmws799"
     ]
   },
   "Variables": {

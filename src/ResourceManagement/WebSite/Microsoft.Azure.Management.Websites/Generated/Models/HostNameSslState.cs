@@ -25,14 +25,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the HostNameSslState class.
         /// </summary>
-        public HostNameSslState(SslState? sslState, string name = default(string), string virtualIP = default(string), string thumbprint = default(string), bool? toUpdate = default(bool?), bool? toUpdateIpBasedSsl = default(bool?))
+        public HostNameSslState(SslState? sslState, string name = default(string), string virtualIP = default(string), string thumbprint = default(string), bool? toUpdate = default(bool?))
         {
             Name = name;
             SslState = sslState;
             VirtualIP = virtualIP;
             Thumbprint = thumbprint;
             ToUpdate = toUpdate;
-            ToUpdateIpBasedSsl = toUpdateIpBasedSsl;
         }
 
         /// <summary>
@@ -66,12 +65,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "toUpdate")]
         public bool? ToUpdate { get; set; }
-
-        /// <summary>
-        /// Set this flag to update existing host name
-        /// </summary>
-        [JsonProperty(PropertyName = "toUpdateIpBasedSsl")]
-        public bool? ToUpdateIpBasedSsl { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ManagedHostingEnvironment class.
         /// </summary>
-        public ManagedHostingEnvironment(string managedHostingEnvironmentName = default(string), string managedHostingEnvironmentLocation = default(string), ManagedHostingEnvironmentStatus? status = default(ManagedHostingEnvironmentStatus?), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), string subscriptionId = default(string), string resourceGroup = default(string), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), bool? suspended = default(bool?))
+        public ManagedHostingEnvironment(string managedHostingEnvironmentName = default(string), string managedHostingEnvironmentLocation = default(string), ManagedHostingEnvironmentStatus? status = default(ManagedHostingEnvironmentStatus?), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), string subscriptionId = default(string), string resourceGroup = default(string), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), bool? suspended = default(bool?), string apiManagementAccount = default(string))
         {
             ManagedHostingEnvironmentName = managedHostingEnvironmentName;
             ManagedHostingEnvironmentLocation = managedHostingEnvironmentLocation;
@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             EnvironmentIsHealthy = environmentIsHealthy;
             EnvironmentStatus = environmentStatus;
             Suspended = suspended;
+            ApiManagementAccount = apiManagementAccount;
         }
 
         /// <summary>
@@ -112,6 +113,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.suspended")]
         public bool? Suspended { get; set; }
+
+        /// <summary>
+        /// Resource id of the api management account associated with this
+        /// managed hosting environment (read only)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiManagementAccount")]
+        public string ApiManagementAccount { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

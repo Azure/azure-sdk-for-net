@@ -73,8 +73,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual ICertificateOrdersOperations CertificateOrders { get; private set; }
-
         public virtual ICertificatesOperations Certificates { get; private set; }
 
         public virtual IClassicMobileServicesOperations ClassicMobileServices { get; private set; }
@@ -82,8 +80,6 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IDomainsOperations Domains { get; private set; }
 
         public virtual IGlobalModelOperations GlobalModel { get; private set; }
-
-        public virtual IGlobalCertificateOrderOperations GlobalCertificateOrder { get; private set; }
 
         public virtual IGlobalDomainRegistrationOperations GlobalDomainRegistration { get; private set; }
 
@@ -217,13 +213,10 @@ namespace Microsoft.Azure.Management.WebSites
         private void Initialize()
         {
             this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            this.CertificateOrders = new CertificateOrdersOperations(this);
             this.Certificates = new CertificatesOperations(this);
             this.ClassicMobileServices = new ClassicMobileServicesOperations(this);
             this.Domains = new DomainsOperations(this);
             this.GlobalModel = new GlobalModelOperations(this);
-            this.GlobalCertificateOrder = new GlobalCertificateOrderOperations(this);
             this.GlobalDomainRegistration = new GlobalDomainRegistrationOperations(this);
             this.GlobalResourceGroups = new GlobalResourceGroupsOperations(this);
             this.HostingEnvironments = new HostingEnvironmentsOperations(this);

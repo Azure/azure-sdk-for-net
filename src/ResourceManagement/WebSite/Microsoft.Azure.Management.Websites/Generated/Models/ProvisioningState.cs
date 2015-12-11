@@ -9,14 +9,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for CertificateAction.
+    /// Defines values for ProvisioningState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CertificateAction
+    public enum ProvisioningState
     {
-        [EnumMember(Value = "Rekey")]
-        Rekey,
-        [EnumMember(Value = "Renew")]
-        Renew
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "Canceled")]
+        Canceled,
+        [EnumMember(Value = "InProgress")]
+        InProgress
     }
 }
