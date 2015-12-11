@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             }
             url = url + "/BuildJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1158,7 +1158,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/CancelJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1326,7 +1326,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 url = url + Uri.EscapeDataString(parameters.Job.JobId.ToString());
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2336,7 +2336,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2980,7 +2980,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/GetDebugDataPath";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3161,7 +3161,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/GetStatistics";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3497,7 +3497,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             {
                 queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.Select));
             }
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4815,7 +4815,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             {
                 queryParameters.Add(queryString);
             }
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
