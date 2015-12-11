@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInformation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Submits the specified job to the specified Data Lake Analytics
         /// account for computation.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInformation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Cancels the running job specified by the job ID.
         /// </summary>

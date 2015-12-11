@@ -24,27 +24,15 @@ using System.Net;
 using Xunit;
 namespace DataLakeAnalytics.Tests
 {
-    public class AccountOperationTests : TestBase, IDisposable
+    public class AccountOperationTests : TestBase
     {
         private CommonTestFixture commonData;
-        public AccountOperationTests()
-        {
-            commonData = new CommonTestFixture(this.GetType().FullName);
-        }
-
-        public void Dispose()
-        {
-            if (commonData != null)
-            {
-                commonData.Dispose();
-            }
-        }
-
         [Fact]
         public void CreateGetUpdateDeleteTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeAnalyticsManagementClient(context);
 
                 // Create a test account

@@ -973,7 +973,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group the account will be associated with.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the create Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to create.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
@@ -995,7 +995,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group the account will be associated with.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the create Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to create.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
@@ -1021,7 +1021,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group the account will be associated with.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the create Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to create.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
@@ -1043,7 +1043,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group the account will be associated with.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the create Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to create.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create Data Lake Analytics account operation.
@@ -1068,7 +1068,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
@@ -1089,7 +1089,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
@@ -1114,7 +1114,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
@@ -1135,7 +1135,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the update Data Lake Analytics account operation.
+            /// The name of the Data Lake Analytics account to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.

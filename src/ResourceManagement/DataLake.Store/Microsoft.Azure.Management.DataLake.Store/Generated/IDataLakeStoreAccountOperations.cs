@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the account to add the firewall rule to
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the create firewall rule operation.
+        /// The new of the firewall rule to create or update.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create firewall rule operation.
@@ -123,8 +123,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the resource group the account will be associated with.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the create Data Lake Store account
-        /// operation.
+        /// The name of the Data Lake Store account to create.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create Data Lake Store account
@@ -144,8 +143,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the resource group the account will be associated with.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the create Data Lake Store account
-        /// operation.
+        /// The name of the Data Lake Store account to create.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create Data Lake Store account
@@ -166,8 +164,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the update Data Lake Store account
-        /// operation.
+        /// The name of the Data Lake Store account to update.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the update Data Lake Store account
@@ -188,8 +185,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the update Data Lake Store account
-        /// operation.
+        /// The name of the Data Lake Store account to update.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the update Data Lake Store account

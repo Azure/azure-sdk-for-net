@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 // 
@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobInformation>> BuildWithHttpMessagesAsync(string accountname, JobInformation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountname == null)
             {
@@ -587,7 +587,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountname, string jobId, JobInformation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountname == null)
             {
@@ -1432,3 +1432,4 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
     }
 }
+

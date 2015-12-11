@@ -90,8 +90,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://management.azure.com/"),
                 ServiceManagementUri = new Uri("https://management.core.windows.net"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
-                DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "prod" environment is published
-                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "prod" environment is published
+                DataLakeStoreServiceUri = new Uri("https://azuredatalakestore.net"),
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://azuredatalakeanalytics.net")
             });
             EnvEndpoints.Add(EnvironmentNames.Dogfood, new TestEndpoints
             {

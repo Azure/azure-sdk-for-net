@@ -168,8 +168,8 @@ namespace DataLakeStore.Tests
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
                     // Append to the file that we created
-                    var beginAppendResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginAppendWithHttpMessagesAsync(filePath,
-                        commonData.DataLakeStoreFileSystemAccountName, null).Result.Headers;
+                    var beginAppendResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginAppend(filePath,
+                        commonData.DataLakeStoreFileSystemAccountName, null);
                     Assert.True(!string.IsNullOrEmpty(beginAppendResponse.Location));
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
@@ -721,8 +721,8 @@ namespace DataLakeStore.Tests
                 return filePath;
             }
 
-            var beginCreateFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginCreateWithHttpMessagesAsync(filePath,
-                caboAccountName).Result.Headers;
+            var beginCreateFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath,
+                caboAccountName);
             Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
 
             if (!withContents)
@@ -758,7 +758,7 @@ namespace DataLakeStore.Tests
             }
             else
             {
-                var beginOpenResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginOpenWithHttpMessagesAsync(filePath, caboAccountName, null).Result.Headers;
+                var beginOpenResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
                 Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
 
                 openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);

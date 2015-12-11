@@ -18,7 +18,7 @@ using System;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class CommonTestFixture : TestBase, IDisposable
+    public class CommonTestFixture : TestBase
     {
         public string ResourceGroupName { set; get; }
         public string SecondDataLakeAnalyticsAccountName { get; set; }
@@ -42,11 +42,11 @@ namespace DataLakeAnalytics.Tests
         public string Location = "East US 2";
         public DataLakeAnalyticsManagementHelper DataLakeAnalyticsManagementHelper { get; set; }
         private MockContext context;
-        public CommonTestFixture(string callingClassName)
+        public CommonTestFixture(MockContext contextToUse)
         {
             try 
             {
-                context = MockContext.Start(callingClassName, "FixtureSetup");
+                context = contextToUse;
                 DataLakeAnalyticsManagementHelper = new DataLakeAnalyticsManagementHelper(this, context);
                 DataLakeAnalyticsManagementHelper.TryRegisterSubscriptionForResource();
                 DataLakeAnalyticsManagementHelper.TryRegisterSubscriptionForResource("Microsoft.Storage");
@@ -72,14 +72,8 @@ namespace DataLakeAnalytics.Tests
                 this.StorageAccountAccessKey = DataLakeAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
                 this.StorageAccountSuffix = storageSuffix;
 
-                this.DataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.DataLakeStoreAccountName, this.Location);
-                this.SecondDataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.SecondDataLakeStoreAccountName, this.Location);
-                this.HostUrl =
-                    DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(this.ResourceGroupName,
-                        this.Location, this.DataLakeStoreAccountName, this.SecondDataLakeAnalyticsAccountName);
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
-                DataLakeAnalyticsManagementHelper.CreateCatalog(this.ResourceGroupName,
-                    this.SecondDataLakeAnalyticsAccountName, this.DatabaseName, this.TableName, this.TvfName, this.ViewName, this.ProcName);
+                this.DataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreAccountName);
+                this.SecondDataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.SecondDataLakeStoreAccountName);
             }
             catch
             {
@@ -88,10 +82,6 @@ namespace DataLakeAnalytics.Tests
             }
         }
 
-        public void Dispose()
-        {
-            Cleanup();
-        }
         private void Cleanup()
         {
             if (context != null)

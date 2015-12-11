@@ -25,23 +25,9 @@ using Microsoft.Rest.Azure;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class CatalogOperationTests : TestBase, IDisposable
+    public class CatalogOperationTests : TestBase
     {
         private CommonTestFixture commonData;
-
-        public CatalogOperationTests()
-        {
-            commonData = new CommonTestFixture(this.GetType().FullName);
-
-        }
-
-        public void Dispose()
-        {
-            if (commonData != null)
-            {
-                commonData.Dispose();
-            }
-        }
 
         [Fact]
         public void GetCatalogItemsTest()
@@ -49,6 +35,13 @@ namespace DataLakeAnalytics.Tests
             // this test currently tests for Database, table TVF, view, types and procedure
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
+                commonData.HostUrl =
+                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
+                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
+                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
+                    commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
                 {
                     var dbListResponse = clientToUse.Catalog.ListDatabases(
@@ -150,6 +143,13 @@ namespace DataLakeAnalytics.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
+                commonData.HostUrl =
+                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
+                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
+                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
+                    commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
                 {
                     using (var jobClient = commonData.GetDataLakeAnalyticsJobManagementClient(context))

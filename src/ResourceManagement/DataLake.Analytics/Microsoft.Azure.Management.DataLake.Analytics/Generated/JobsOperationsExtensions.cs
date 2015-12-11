@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters to build a job, which simulates submission.
             /// </param>
-            public static JobInformation Build(this IJobsOperations operations, string accountname, JobInfoBuildOrCreateParameters parameters)
+            public static JobInformation Build(this IJobsOperations operations, string accountname, JobInformation parameters)
             {
                 return Task.Factory.StartNew(s => ((IJobsOperations)s).BuildAsync(accountname, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> BuildAsync( this IJobsOperations operations, string accountname, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> BuildAsync( this IJobsOperations operations, string accountname, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var result = await operations.BuildWithHttpMessagesAsync(accountname, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters to submit a job.
             /// </param>
-            public static JobInformation Create(this IJobsOperations operations, string accountname, string jobId, JobInfoBuildOrCreateParameters parameters)
+            public static JobInformation Create(this IJobsOperations operations, string accountname, string jobId, JobInformation parameters)
             {
                 return Task.Factory.StartNew(s => ((IJobsOperations)s).CreateAsync(accountname, jobId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> CreateAsync( this IJobsOperations operations, string accountname, string jobId, JobInfoBuildOrCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> CreateAsync( this IJobsOperations operations, string accountname, string jobId, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var result = await operations.CreateWithHttpMessagesAsync(accountname, jobId, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;

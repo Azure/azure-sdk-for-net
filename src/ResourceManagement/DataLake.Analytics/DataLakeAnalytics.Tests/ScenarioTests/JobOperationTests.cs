@@ -24,34 +24,25 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace DataLakeAnalytics.Tests
 {
-    public class JobOperationTests : TestBase, IDisposable
+    public class JobOperationTests : TestBase
     {
         private CommonTestFixture commonData;
-        public JobOperationTests()
-        {
-            commonData = new CommonTestFixture(this.GetType().FullName);
-        }
-        public void Dispose()
-        {
-            if (commonData != null)
-            {
-                commonData.Dispose();
-            }
-        }
 
         [Fact] 
         public void SubmitGetListCancelTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                commonData = new CommonTestFixture(context);
+                commonData.HostUrl =
+                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
+                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
+                
+                // TODO: Remove this sleep once defect 5022906 is fixed
+                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
                 var clientToUse = this.GetDataLakeAnalyticsJobManagementClient(context);
                 var accountClient = this.GetDataLakeAnalyticsManagementClient(context);
 
-                // TODO: Remove this sleep once defect 5022906 is fixed
-                TestUtilities.Wait(120000); // Wait for two minutes to submit the job, which gives the CJS queue a chance to create.
-
-                // We need to hardcode the job ID to use for the mocks.
-                // TODO: come up with some way to re-generate this when necessary (i.e. re-running/running the test against the server).
                 Guid jobId = TestUtilities.GenerateGuid();
                 var secondId = TestUtilities.GenerateGuid();
                 // Submit a job to the account
@@ -69,12 +60,7 @@ namespace DataLakeAnalytics.Tests
                     }
                 };
 
-                var createOrBuildParams = new JobInfoBuildOrCreateParameters
-                    {
-                        Job = jobToSubmit
-                    };
-
-                var jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, jobId.ToString(), createOrBuildParams);
+                var jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, jobId.ToString(), jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
@@ -89,8 +75,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
-                createOrBuildParams.Job.JobId = secondId.ToString();
-                jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, secondId.ToString(), createOrBuildParams);
+                jobToSubmit.JobId = secondId.ToString();
+                jobCreateResponse = clientToUse.Jobs.Create(commonData.DataLakeAnalyticsAccountName, secondId.ToString(), jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
@@ -123,7 +109,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
                 // Just compile the job
-                var compileResponse = clientToUse.Jobs.Build(commonData.DataLakeAnalyticsAccountName, createOrBuildParams);
+                var compileResponse = clientToUse.Jobs.Build(commonData.DataLakeAnalyticsAccountName, jobToSubmit);
                 Assert.NotNull(compileResponse);
 
                 // list the jobs both with a hand crafted query string and using the parameters

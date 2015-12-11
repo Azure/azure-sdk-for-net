@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 // 
@@ -169,9 +169,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(streamContents, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            httpRequest.Content = new StreamContent(streamContents);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -2065,8 +2064,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 try
                 {
-                    var responseContent = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                    result.Body = responseContent;
+                    result.Body = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 catch (JsonException ex)
                 {
@@ -3221,7 +3219,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             try
             {
-                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginAppendHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginAppendHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -3423,7 +3421,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             try
             {
-                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginCreateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginCreateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -3606,7 +3604,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             try
             {
-                result.Headers = httpResponse.Headers.ToJson().ToObject<FileSystemBeginOpenHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginOpenHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -4733,7 +4731,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 ServiceClientTracing.Enter(invocationId, this, "Append", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = fileAppendRequestLink;
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
@@ -5189,7 +5186,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 ServiceClientTracing.Enter(invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = fileCreateRequestLink;
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
@@ -5389,8 +5385,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 try
                 {
-                    var responseContent = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                    result.Body = responseContent;
+                    result.Body = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 catch (JsonException ex)
                 {
@@ -5406,3 +5401,4 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
     }
 }
+

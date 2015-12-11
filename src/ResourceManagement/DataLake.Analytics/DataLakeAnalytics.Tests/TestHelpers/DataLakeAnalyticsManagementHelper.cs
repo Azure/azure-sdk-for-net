@@ -335,20 +335,17 @@ END;", dbName, tableName, tvfName, viewName, procName);
         }
 
         internal void RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
-        {
-            var createOrBuildParams = new JobInfoBuildOrCreateParameters
+        { 
+            var createOrBuildParams = new JobInformation
             {
-                Job = new JobInformation
+                Name = TestUtilities.GenerateName("testjob1"),
+                JobId = jobIdToUse.ToString(),
+                Type = JobType.USql,
+                DegreeOfParallelism = 2,
+                Properties = new USql
                 {
-                    Name = TestUtilities.GenerateName("testjob1"),
-                    JobId = jobIdToUse.ToString(),
-                    Type = JobType.USql,
-                    DegreeOfParallelism = 2,
-                    Properties = new USql
-                    {
-                        // Type = JobType.USql,
-                        Script = scriptToRun
-                    }
+                    // Type = JobType.USql,
+                    Script = scriptToRun
                 }
             };
             var jobCreateResponse = jobClient.Jobs.Create(dataLakeAnalyticsAccountName, jobIdToUse.ToString(), createOrBuildParams);
