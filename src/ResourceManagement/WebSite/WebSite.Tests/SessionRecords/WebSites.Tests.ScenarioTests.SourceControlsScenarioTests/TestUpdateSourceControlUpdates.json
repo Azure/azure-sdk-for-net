@@ -13,61 +13,64 @@
           "137"
         ],
         "x-ms-client-request-id": [
-          "22912b1d-bb2b-4b7c-bb92-1260c97190b3"
+          "563801e6-6220-4b1f-91bf-a1f411fc8071"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/1.0.0.1"
         ],
         "Accept": [
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"GitHub\",\r\n  \"type\": \"Microsoft.Web/sourcecontrols\",\r\n  \"kind\": null,\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"plan\": null,\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\",\r\n    \"refreshToken\": null,\r\n    \"expirationTime\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"GitHub\",\r\n  \"type\": \"Microsoft.Web/sourcecontrols\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\",\r\n    \"refreshToken\": null,\r\n    \"expirationTime\": null\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "238"
-        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 01:35:43 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9a8826f9-ff0f-4535-83ad-3d7e48cc42a2"
-        ],
-        "x-ms-ratelimit-remaining-tenant-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "26494317-27ad-4476-a2b7-c3f95f0d0eb2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20151007T200754Z:26494317-27ad-4476-a2b7-c3f95f0d0eb2"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 07 Oct 2015 20:07:54 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
+          "c9186d98-4e1c-4885-b64b-8bbc7dff622c"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "c10f7e6a-cdf3-4c26-9c04-a5317adc98f6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151211T013544Z:c10f7e6a-cdf3-4c26-9c04-a5317adc98f6"
         ]
       },
       "StatusCode": 200
@@ -79,61 +82,64 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "352c987b-6cbd-4228-a5ae-96ac3a2f9d0d"
+          "7e378fe8-fa65-4df0-972f-c402f281e653"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/1.0.0.1"
         ],
         "Accept": [
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"GitHub\",\r\n  \"type\": \"Microsoft.Web/sourcecontrols\",\r\n  \"kind\": null,\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"plan\": null,\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\",\r\n    \"refreshToken\": null,\r\n    \"expirationTime\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"GitHub\",\r\n  \"type\": \"Microsoft.Web/sourcecontrols\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\",\r\n    \"refreshToken\": null,\r\n    \"expirationTime\": null\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "238"
-        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 01:35:43 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "15c389b7-c2b0-4264-8f96-3c9ca5ae07d0"
-        ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
-        ],
-        "x-ms-correlation-request-id": [
-          "b033c7e3-fe0e-4435-9d63-bc7ec281f844"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20151007T200754Z:b033c7e3-fe0e-4435-9d63-bc7ec281f844"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 07 Oct 2015 20:07:54 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
+          "86f3f84c-3dcc-438d-a0e9-76458d443a47"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "b8db174e-96b7-40f4-a132-4adfcf78093f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151211T013544Z:b8db174e-96b7-40f4-a132-4adfcf78093f"
         ]
       },
       "StatusCode": 200
@@ -145,61 +151,64 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "acfb6ead-99c2-4017-9f27-5482f81fdc75"
+          "cb5ccf11-d929-4439-83f1-06d450c1903f"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/1.0.0.1"
         ],
         "Accept": [
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"GitHub\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"GitHub\",\r\n        \"token\": \"myToken\",\r\n        \"tokenSecret\": \"myTokenSecret\",\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"Bitbucket\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"Bitbucket\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"CodePlex\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"CodePlex\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"Dropbox\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"Dropbox\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"VSO\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"VSO\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"OneDrive\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"kind\": null,\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"plan\": null,\r\n      \"properties\": {\r\n        \"name\": \"OneDrive\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"GitHub\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"name\": \"GitHub\",\r\n        \"token\": \"myToken\",\r\n        \"tokenSecret\": \"myTokenSecret\",\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"Bitbucket\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"name\": \"Bitbucket\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"Dropbox\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"name\": \"Dropbox\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": null,\r\n      \"name\": \"OneDrive\",\r\n      \"type\": \"Microsoft.Web/sourcecontrols\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"name\": \"OneDrive\",\r\n        \"token\": null,\r\n        \"tokenSecret\": null,\r\n        \"refreshToken\": null,\r\n        \"expirationTime\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "1391"
-        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 01:35:44 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "44ebfad2-7867-4142-95d1-462f03e8eead"
-        ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "14996"
-        ],
-        "x-ms-correlation-request-id": [
-          "111451be-787c-4223-9dbc-642ee3adf6a0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20151007T200754Z:111451be-787c-4223-9dbc-642ee3adf6a0"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 07 Oct 2015 20:07:54 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
+          "4c0ede8d-d79a-45da-8dae-d1228c8f2973"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "5e629590-4884-4bb7-8e2c-8c29b18717df"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151211T013544Z:5e629590-4884-4bb7-8e2c-8c29b18717df"
         ]
       },
       "StatusCode": 200
@@ -207,6 +216,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "4adb32ad-8327-4cbb-b775-b84b4465bb38"
+    "SubscriptionId": "3312c132-fc40-493f-9c97-82d80256a313"
   }
 }

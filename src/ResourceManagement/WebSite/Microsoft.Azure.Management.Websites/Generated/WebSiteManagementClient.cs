@@ -216,6 +216,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         private void Initialize()
         {
+            this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             this.CertificateOrders = new CertificateOrdersOperations(this);
             this.Certificates = new CertificatesOperations(this);
             this.ClassicMobileServices = new ClassicMobileServicesOperations(this);

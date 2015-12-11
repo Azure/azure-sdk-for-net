@@ -217,7 +217,8 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        //[Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        [Fact]
         public void GetWebHostingPlanMetrics()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
