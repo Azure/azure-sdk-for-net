@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationNetworks?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3JnMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXNCVlREMi92YXVsdHMvcnN2L3JlcGxpY2F0aW9uTmV0d29ya3M/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "74b782fe-c26e-4ade-a460-ab3ab346c1f4"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/0ec5e9b1-7abc-4170-9832-007db538524b\",\r\n      \"name\": \"0ec5e9b1-7abc-4170-9832-007db538524b\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"a8bf70a7-1139-4b41-9aa1-d5275d149044\",\r\n            \"friendlyName\": \"VMNetPri-Vlan_0\",\r\n            \"addressList\": [\r\n              \"10.1.0.0/24-1 0\"\r\n            ]\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VMNetPri-Vlan\",\r\n        \"networkType\": \"VLANNetwork\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/16f0dae7-cfe7-45da-905e-26f0ae472c00\",\r\n      \"name\": \"16f0dae7-cfe7-45da-905e-26f0ae472c00\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"vmNetwork2\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/2764c51b-a77e-45ff-9f5b-0302f33b5d8f\",\r\n      \"name\": \"2764c51b-a77e-45ff-9f5b-0302f33b5d8f\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"vmNetwork1\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/46b417d0-652f-4560-b1f2-a346dd2308e5\",\r\n      \"name\": \"46b417d0-652f-4560-b1f2-a346dd2308e5\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"phase2RecoveryVMNetwork\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/509a4ddd-67f5-4f0f-8bc0-9161c69e409c\",\r\n      \"name\": \"509a4ddd-67f5-4f0f-8bc0-9161c69e409c\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"corp\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/54ae484c-75ae-4522-ad22-b4c949846272\",\r\n      \"name\": \"54ae484c-75ae-4522-ad22-b4c949846272\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VMNetPri-Vlan\",\r\n        \"networkType\": \"VLANNetwork\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/7c583bab-0619-49bb-8dae-69daa552bd2c\",\r\n      \"name\": \"7c583bab-0619-49bb-8dae-69daa552bd2c\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"phase2PrimaryVMNetwork\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/81e01161-3ffa-4d7b-95fb-42549397659e\",\r\n      \"name\": \"81e01161-3ffa-4d7b-95fb-42549397659e\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"vm1VMNetworkOnLN-WnvLogicalNetwork\",\r\n        \"networkType\": \"WindowsNetworkVirtualization\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/dc433301-8d81-4fc8-8e73-749173bd8b0f\",\r\n      \"name\": \"dc433301-8d81-4fc8-8e73-749173bd8b0f\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"678a36ed-2372-4105-aa63-77072c97aa97\",\r\n            \"friendlyName\": \"VMSubnet-Wnv\",\r\n            \"addressList\": [\r\n              \"180.0.0.0/24-0 0\"\r\n            ]\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VMNetPri-Wnv\",\r\n        \"networkType\": \"WindowsNetworkVirtualization\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/e174caf6-232e-4ec2-9d6d-867d0f9c39ae\",\r\n      \"name\": \"e174caf6-232e-4ec2-9d6d-867d0f9c39ae\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VMNetPri-NoIso\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationNetworks/f61b92b7-14b0-4fc7-b9b2-041c3846d2f0\",\r\n      \"name\": \"f61b92b7-14b0-4fc7-b9b2-041c3846d2f0\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"e839e5dc-ee5d-4511-bc0e-ba96d87000c9\",\r\n            \"friendlyName\": \"VMSubnet-Wnv\",\r\n            \"addressList\": [\r\n              \"180.0.0.0/24-0 0\"\r\n            ]\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VMNetPri-Wnv\",\r\n        \"networkType\": \"WindowsNetworkVirtualization\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "6083"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "74b782fe-c26e-4ade-a460-ab3ab346c1f4 11/6/2015 3:23:19 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "74b782fe-c26e-4ade-a460-ab3ab346c1f4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-correlation-request-id": [
+          "64ec68c9-1f4f-446c-83e9-505d4ecd70dd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151106T152320Z:64ec68c9-1f4f-446c-83e9-505d4ecd70dd"
+        ],
+        "Date": [
+          "Fri, 06 Nov 2015 15:23:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
+  }
+}

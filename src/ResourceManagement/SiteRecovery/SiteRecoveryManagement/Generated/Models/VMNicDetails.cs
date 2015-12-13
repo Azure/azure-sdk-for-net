@@ -25,14 +25,25 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Update VM properties input object.
+    /// Hyper V VM network details.
     /// </summary>
     public partial class VMNicDetails
     {
+        private string _ipAddressType;
+        
+        /// <summary>
+        /// Optional. Gets or sets ipv4 address type.
+        /// </summary>
+        public string IpAddressType
+        {
+            get { return this._ipAddressType; }
+            set { this._ipAddressType = value; }
+        }
+        
         private string _nicId;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets the nic Id.
         /// </summary>
         public string NicId
         {
@@ -43,7 +54,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryVMNetworkId;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets recovery VM network Id.
         /// </summary>
         public string RecoveryVMNetworkId
         {
@@ -54,7 +65,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryVMSubnetName;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets recovery VM subnet name.
         /// </summary>
         public string RecoveryVMSubnetName
         {
@@ -65,7 +76,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _replicaNicStaticIPAddress;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets replica nic static IP address.
         /// </summary>
         public string ReplicaNicStaticIPAddress
         {
@@ -73,10 +84,21 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicaNicStaticIPAddress = value; }
         }
         
+        private string _selectionType;
+        
+        /// <summary>
+        /// Optional. Gets or sets selection type for failover.
+        /// </summary>
+        public string SelectionType
+        {
+            get { return this._selectionType; }
+            set { this._selectionType = value; }
+        }
+        
         private string _vMNetworkName;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets VM network name.
         /// </summary>
         public string VMNetworkName
         {
@@ -87,7 +109,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _vMSubnetName;
         
         /// <summary>
-        /// Optional. Selected Primary NIC Id
+        /// Optional. Gets or sets VM subnet name.
         /// </summary>
         public string VMSubnetName
         {

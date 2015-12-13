@@ -23,14 +23,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// The definition of a Task object.
     /// </summary>
-    public partial class AsrTask : ResourceBaseExtended
+    public partial class AsrTask
     {
         private IList<string> _actions;
         
@@ -54,15 +53,26 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._endTime = value; }
         }
         
-        private string _extendedDetails;
+        private string _id;
         
         /// <summary>
-        /// Optional. Extended details of the task.
+        /// Required. Id of the task.
         /// </summary>
-        public string ExtendedDetails
+        public string ID
         {
-            get { return this._extendedDetails; }
-            set { this._extendedDetails = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. Task name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         private DateTime _startTime;
@@ -87,38 +97,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._state = value; }
         }
         
-        private string _stateDescription;
-        
-        /// <summary>
-        /// Required. StateDescription of the task.
-        /// </summary>
-        public string StateDescription
-        {
-            get { return this._stateDescription; }
-            set { this._stateDescription = value; }
-        }
-        
-        private string _taskName;
+        private string _taskFriendlyName;
         
         /// <summary>
         /// Required. Name of the task.
         /// </summary>
-        public string TaskName
+        public string TaskFriendlyName
         {
-            get { return this._taskName; }
-            set { this._taskName = value; }
-        }
-        
-        private string _taskType;
-        
-        /// <summary>
-        /// Required. Exact type of the task. Accordingly ExtentedDetails will
-        /// have data.
-        /// </summary>
-        public string TaskType
-        {
-            get { return this._taskType; }
-            set { this._taskType = value; }
+            get { return this._taskFriendlyName; }
+            set { this._taskFriendlyName = value; }
         }
         
         /// <summary>

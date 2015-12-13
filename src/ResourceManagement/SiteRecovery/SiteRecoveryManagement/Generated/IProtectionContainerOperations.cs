@@ -34,10 +34,59 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public partial interface IProtectionContainerOperations
     {
         /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginDiscoverProtectableItemAsync(string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> DiscoverProtectableItemAsync(string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the protected container by Id.
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Protection Container ID.
+        /// <param name='fabricName'>
+        /// Fabric Name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection Container Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -48,11 +97,31 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Protection Container object.
         /// </returns>
-        Task<ProtectionContainerResponse> GetAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ProtectionContainerResponse> GetAsync(string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all ProtectionContainers for the given server.
         /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric Unique name.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -62,6 +131,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
-        Task<ProtectionContainerListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ProtectionContainerListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

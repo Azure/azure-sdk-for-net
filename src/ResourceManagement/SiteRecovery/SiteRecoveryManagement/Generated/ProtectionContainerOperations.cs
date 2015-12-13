@@ -25,9 +25,12 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Newtonsoft.Json.Linq;
@@ -64,10 +67,294 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> BeginDiscoverProtectableItemAsync(string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException("protectionContainerName");
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("protectionContainerName", protectionContainerName);
+                tracingParameters.Add("input", input);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "BeginDiscoverProtectableItemAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/replicationFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/replicationProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerName);
+            url = url + "/discoverProtectableItem";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-10");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject discoverProtectableItemRequestValue = new JObject();
+                requestDoc = discoverProtectableItemRequestValue;
+                
+                if (input.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    discoverProtectableItemRequestValue["properties"] = propertiesValue;
+                    
+                    if (input.Properties.FriendlyName != null)
+                    {
+                        propertiesValue["friendlyName"] = input.Properties.FriendlyName;
+                    }
+                    
+                    if (input.Properties.IpAddress != null)
+                    {
+                        propertiesValue["ipAddress"] = input.Properties.IpAddress;
+                    }
+                    
+                    if (input.Properties.OsType != null)
+                    {
+                        propertiesValue["osType"] = input.Properties.OsType;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LongRunningOperationResponse result = null;
+                    // Deserialize Response
+                    result = new LongRunningOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Discovers a protectable item.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Discover Protectable Item Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> DiscoverProtectableItemAsync(string fabricName, string protectionContainerName, DiscoverProtectableItemRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            SiteRecoveryManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("protectionContainerName", protectionContainerName);
+                tracingParameters.Add("input", input);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "DiscoverProtectableItemAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ProtectionContainer.BeginDiscoverProtectableItemAsync(fabricName, protectionContainerName, input, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// Get the protected container by Id.
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Required. Protection Container ID.
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection Container Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -78,12 +365,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Protection Container object.
         /// </returns>
-        public async Task<ProtectionContainerResponse> GetAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectionContainerResponse> GetAsync(string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (protectionContainerId == null)
+            if (fabricName == null)
             {
-                throw new ArgumentNullException("protectionContainerId");
+                throw new ArgumentNullException("fabricName");
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException("protectionContainerName");
             }
             
             // Tracing
@@ -93,7 +384,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("protectionContainerId", protectionContainerId);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("protectionContainerName", protectionContainerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
@@ -110,13 +402,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/ProtectionContainers/";
-            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/replicationFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/replicationProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-10");
+            queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -201,25 +495,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 ProtectionContainerProperties propertiesInstance = new ProtectionContainerProperties();
                                 protectionContainerInstance.Properties = propertiesInstance;
                                 
-                                JToken serverIdValue = propertiesValue["serverId"];
-                                if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
+                                JToken fabricFriendlyNameValue = propertiesValue["fabricFriendlyName"];
+                                if (fabricFriendlyNameValue != null && fabricFriendlyNameValue.Type != JTokenType.Null)
                                 {
-                                    string serverIdInstance = ((string)serverIdValue);
-                                    propertiesInstance.ServerId = serverIdInstance;
-                                }
-                                
-                                JToken fabricObjectIdValue = propertiesValue["fabricObjectId"];
-                                if (fabricObjectIdValue != null && fabricObjectIdValue.Type != JTokenType.Null)
-                                {
-                                    string fabricObjectIdInstance = ((string)fabricObjectIdValue);
-                                    propertiesInstance.FabricObjectId = fabricObjectIdInstance;
-                                }
-                                
-                                JToken roleValue = propertiesValue["role"];
-                                if (roleValue != null && roleValue.Type != JTokenType.Null)
-                                {
-                                    string roleInstance = ((string)roleValue);
-                                    propertiesInstance.Role = roleInstance;
+                                    string fabricFriendlyNameInstance = ((string)fabricFriendlyNameValue);
+                                    propertiesInstance.FabricFriendlyName = fabricFriendlyNameInstance;
                                 }
                                 
                                 JToken friendlyNameValue = propertiesValue["friendlyName"];
@@ -236,307 +516,70 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FabricType = fabricTypeInstance;
                                 }
                                 
-                                JToken availableProtectionProfilesArray = propertiesValue["availableProtectionProfiles"];
-                                if (availableProtectionProfilesArray != null && availableProtectionProfilesArray.Type != JTokenType.Null)
+                                JToken protectedItemCountValue = propertiesValue["protectedItemCount"];
+                                if (protectedItemCountValue != null && protectedItemCountValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken availableProtectionProfilesValue in ((JArray)availableProtectionProfilesArray))
-                                    {
-                                        ProtectionProfile protectionProfileInstance = new ProtectionProfile();
-                                        propertiesInstance.AvailableProtectionProfiles.Add(protectionProfileInstance);
-                                        
-                                        JToken propertiesValue2 = availableProtectionProfilesValue["properties"];
-                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                        {
-                                            ProtectionProfileProperties propertiesInstance2 = new ProtectionProfileProperties();
-                                            protectionProfileInstance.CustomData = propertiesInstance2;
-                                            
-                                            JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                            }
-                                            
-                                            JToken protectedEntityCountValue = propertiesValue2["protectedEntityCount"];
-                                            if (protectedEntityCountValue != null && protectedEntityCountValue.Type != JTokenType.Null)
-                                            {
-                                                int protectedEntityCountInstance = ((int)protectedEntityCountValue);
-                                                propertiesInstance2.ProtectedEntityCount = protectedEntityCountInstance;
-                                            }
-                                            
-                                            JToken replicationProviderValue = propertiesValue2["replicationProvider"];
-                                            if (replicationProviderValue != null && replicationProviderValue.Type != JTokenType.Null)
-                                            {
-                                                string replicationProviderInstance = ((string)replicationProviderValue);
-                                                propertiesInstance2.ReplicationProvider = replicationProviderInstance;
-                                            }
-                                            
-                                            JToken replicationProviderSettingsValue = propertiesValue2["replicationProviderSettings"];
-                                            if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
-                                            {
-                                                string typeName = ((string)replicationProviderSettingsValue["__type"]);
-                                                if (typeName == "HyperVReplicaProtectionProfileDetails")
-                                                {
-                                                    HyperVReplicaProtectionProfileDetails hyperVReplicaProtectionProfileDetailsInstance = new HyperVReplicaProtectionProfileDetails();
-                                                    
-                                                    JToken recoveryPointsValue = replicationProviderSettingsValue["recoveryPoints"];
-                                                    if (recoveryPointsValue != null && recoveryPointsValue.Type != JTokenType.Null)
-                                                    {
-                                                        int recoveryPointsInstance = ((int)recoveryPointsValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.RecoveryPoints = recoveryPointsInstance;
-                                                    }
-                                                    
-                                                    JToken applicationConsistentSnapshotFrequencyInHoursValue = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
-                                                    if (applicationConsistentSnapshotFrequencyInHoursValue != null && applicationConsistentSnapshotFrequencyInHoursValue.Type != JTokenType.Null)
-                                                    {
-                                                        int applicationConsistentSnapshotFrequencyInHoursInstance = ((int)applicationConsistentSnapshotFrequencyInHoursValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance;
-                                                    }
-                                                    
-                                                    JToken compressionValue = replicationProviderSettingsValue["compression"];
-                                                    if (compressionValue != null && compressionValue.Type != JTokenType.Null)
-                                                    {
-                                                        string compressionInstance = ((string)compressionValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.Compression = compressionInstance;
-                                                    }
-                                                    
-                                                    JToken initialReplicationMethodValue = replicationProviderSettingsValue["initialReplicationMethod"];
-                                                    if (initialReplicationMethodValue != null && initialReplicationMethodValue.Type != JTokenType.Null)
-                                                    {
-                                                        string initialReplicationMethodInstance = ((string)initialReplicationMethodValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.InitialReplicationMethod = initialReplicationMethodInstance;
-                                                    }
-                                                    
-                                                    JToken onlineReplicationStartTimeValue = replicationProviderSettingsValue["onlineReplicationStartTime"];
-                                                    if (onlineReplicationStartTimeValue != null && onlineReplicationStartTimeValue.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan onlineReplicationStartTimeInstance = TimeSpan.Parse(((string)onlineReplicationStartTimeValue), CultureInfo.InvariantCulture);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance;
-                                                    }
-                                                    
-                                                    JToken offlineReplicationImportPathValue = replicationProviderSettingsValue["offlineReplicationImportPath"];
-                                                    if (offlineReplicationImportPathValue != null && offlineReplicationImportPathValue.Type != JTokenType.Null)
-                                                    {
-                                                        string offlineReplicationImportPathInstance = ((string)offlineReplicationImportPathValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationImportPath = offlineReplicationImportPathInstance;
-                                                    }
-                                                    
-                                                    JToken offlineReplicationExportPathValue = replicationProviderSettingsValue["offlineReplicationExportPath"];
-                                                    if (offlineReplicationExportPathValue != null && offlineReplicationExportPathValue.Type != JTokenType.Null)
-                                                    {
-                                                        string offlineReplicationExportPathInstance = ((string)offlineReplicationExportPathValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationExportPath = offlineReplicationExportPathInstance;
-                                                    }
-                                                    
-                                                    JToken replicationPortValue = replicationProviderSettingsValue["replicationPort"];
-                                                    if (replicationPortValue != null && replicationPortValue.Type != JTokenType.Null)
-                                                    {
-                                                        ushort replicationPortInstance = ((ushort)replicationPortValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicationPort = replicationPortInstance;
-                                                    }
-                                                    
-                                                    JToken allowedAuthenticationTypeValue = replicationProviderSettingsValue["allowedAuthenticationType"];
-                                                    if (allowedAuthenticationTypeValue != null && allowedAuthenticationTypeValue.Type != JTokenType.Null)
-                                                    {
-                                                        ushort allowedAuthenticationTypeInstance = ((ushort)allowedAuthenticationTypeValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.AllowedAuthenticationType = allowedAuthenticationTypeInstance;
-                                                    }
-                                                    
-                                                    JToken replicaDeletionOptionValue = replicationProviderSettingsValue["replicaDeletionOption"];
-                                                    if (replicaDeletionOptionValue != null && replicaDeletionOptionValue.Type != JTokenType.Null)
-                                                    {
-                                                        string replicaDeletionOptionInstance = ((string)replicaDeletionOptionValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicaDeletionOption = replicaDeletionOptionInstance;
-                                                    }
-                                                    
-                                                    JToken replicationFrequencyInSecondsValue = replicationProviderSettingsValue["replicationFrequencyInSeconds"];
-                                                    if (replicationFrequencyInSecondsValue != null && replicationFrequencyInSecondsValue.Type != JTokenType.Null)
-                                                    {
-                                                        ushort replicationFrequencyInSecondsInstance = ((ushort)replicationFrequencyInSecondsValue);
-                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicationFrequencyInSeconds = replicationFrequencyInSecondsInstance;
-                                                    }
-                                                    propertiesInstance2.ReplicationProviderSettings = hyperVReplicaProtectionProfileDetailsInstance;
-                                                }
-                                                if (typeName == "HyperVReplicaAzureProtectionProfileDetails")
-                                                {
-                                                    HyperVReplicaAzureProtectionProfileDetails hyperVReplicaAzureProtectionProfileDetailsInstance = new HyperVReplicaAzureProtectionProfileDetails();
-                                                    
-                                                    JToken recoveryPointHistoryDurationValue = replicationProviderSettingsValue["recoveryPointHistoryDuration"];
-                                                    if (recoveryPointHistoryDurationValue != null && recoveryPointHistoryDurationValue.Type != JTokenType.Null)
-                                                    {
-                                                        int recoveryPointHistoryDurationInstance = ((int)recoveryPointHistoryDurationValue);
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.RecoveryPointHistoryDuration = recoveryPointHistoryDurationInstance;
-                                                    }
-                                                    
-                                                    JToken applicationConsistentSnapshotFrequencyInHoursValue2 = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
-                                                    if (applicationConsistentSnapshotFrequencyInHoursValue2 != null && applicationConsistentSnapshotFrequencyInHoursValue2.Type != JTokenType.Null)
-                                                    {
-                                                        int applicationConsistentSnapshotFrequencyInHoursInstance2 = ((int)applicationConsistentSnapshotFrequencyInHoursValue2);
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance2;
-                                                    }
-                                                    
-                                                    JToken replicationIntervalValue = replicationProviderSettingsValue["replicationInterval"];
-                                                    if (replicationIntervalValue != null && replicationIntervalValue.Type != JTokenType.Null)
-                                                    {
-                                                        int replicationIntervalInstance = ((int)replicationIntervalValue);
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ReplicationInterval = replicationIntervalInstance;
-                                                    }
-                                                    
-                                                    JToken onlineReplicationStartTimeValue2 = replicationProviderSettingsValue["onlineReplicationStartTime"];
-                                                    if (onlineReplicationStartTimeValue2 != null && onlineReplicationStartTimeValue2.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan onlineReplicationStartTimeInstance2 = TimeSpan.Parse(((string)onlineReplicationStartTimeValue2), CultureInfo.InvariantCulture);
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance2;
-                                                    }
-                                                    
-                                                    JToken encryptionValue = replicationProviderSettingsValue["encryption"];
-                                                    if (encryptionValue != null && encryptionValue.Type != JTokenType.Null)
-                                                    {
-                                                        string encryptionInstance = ((string)encryptionValue);
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.Encryption = encryptionInstance;
-                                                    }
-                                                    
-                                                    JToken activeStorageAccountValue = replicationProviderSettingsValue["activeStorageAccount"];
-                                                    if (activeStorageAccountValue != null && activeStorageAccountValue.Type != JTokenType.Null)
-                                                    {
-                                                        CustomerStorageAccount activeStorageAccountInstance = new CustomerStorageAccount();
-                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ActiveStorageAccount = activeStorageAccountInstance;
-                                                        
-                                                        JToken storageAccountNameValue = activeStorageAccountValue["storageAccountName"];
-                                                        if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
-                                                        {
-                                                            string storageAccountNameInstance = ((string)storageAccountNameValue);
-                                                            activeStorageAccountInstance.StorageAccountName = storageAccountNameInstance;
-                                                        }
-                                                        
-                                                        JToken subscriptionIdValue = activeStorageAccountValue["subscriptionId"];
-                                                        if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                                                        {
-                                                            string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                                            activeStorageAccountInstance.SubscriptionId = subscriptionIdInstance;
-                                                        }
-                                                    }
-                                                    propertiesInstance2.ReplicationProviderSettings = hyperVReplicaAzureProtectionProfileDetailsInstance;
-                                                }
-                                            }
-                                            
-                                            JToken associationStatusValue = propertiesValue2["associationStatus"];
-                                            if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
-                                            {
-                                                string associationStatusInstance = ((string)associationStatusValue);
-                                                propertiesInstance2.AssociationStatus = associationStatusInstance;
-                                            }
-                                            
-                                            JToken associationDetailArray = propertiesValue2["associationDetail"];
-                                            if (associationDetailArray != null && associationDetailArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken associationDetailValue in ((JArray)associationDetailArray))
-                                                {
-                                                    ProtectionProfileAssociationDetails protectionProfileAssociationDetailsInstance = new ProtectionProfileAssociationDetails();
-                                                    propertiesInstance2.AssociationDetail.Add(protectionProfileAssociationDetailsInstance);
-                                                    
-                                                    JToken primaryProtectionContainerIdValue = associationDetailValue["primaryProtectionContainerId"];
-                                                    if (primaryProtectionContainerIdValue != null && primaryProtectionContainerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string primaryProtectionContainerIdInstance = ((string)primaryProtectionContainerIdValue);
-                                                        protectionProfileAssociationDetailsInstance.PrimaryProtectionContainerId = primaryProtectionContainerIdInstance;
-                                                    }
-                                                    
-                                                    JToken recoveryProtectionContainerIdValue = associationDetailValue["recoveryProtectionContainerId"];
-                                                    if (recoveryProtectionContainerIdValue != null && recoveryProtectionContainerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string recoveryProtectionContainerIdInstance = ((string)recoveryProtectionContainerIdValue);
-                                                        protectionProfileAssociationDetailsInstance.RecoveryProtectionContainerId = recoveryProtectionContainerIdInstance;
-                                                    }
-                                                    
-                                                    JToken associationStatusValue2 = associationDetailValue["associationStatus"];
-                                                    if (associationStatusValue2 != null && associationStatusValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string associationStatusInstance2 = ((string)associationStatusValue2);
-                                                        protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance2;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken idValue = availableProtectionProfilesValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            protectionProfileInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken nameValue = availableProtectionProfilesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            protectionProfileInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken typeValue = availableProtectionProfilesValue["type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                        {
-                                            string typeInstance = ((string)typeValue);
-                                            protectionProfileInstance.Type = typeInstance;
-                                        }
-                                        
-                                        JToken locationValue = availableProtectionProfilesValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            protectionProfileInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken tagsSequenceElement = ((JToken)availableProtectionProfilesValue["tags"]);
-                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in tagsSequenceElement)
-                                            {
-                                                string tagsKey = ((string)property.Name);
-                                                string tagsValue = ((string)property.Value);
-                                                protectionProfileInstance.Tags.Add(tagsKey, tagsValue);
-                                            }
-                                        }
-                                    }
+                                    int protectedItemCountInstance = ((int)protectedItemCountValue);
+                                    propertiesInstance.ProtectedItemCount = protectedItemCountInstance;
+                                }
+                                
+                                JToken pairingStatusValue = propertiesValue["pairingStatus"];
+                                if (pairingStatusValue != null && pairingStatusValue.Type != JTokenType.Null)
+                                {
+                                    string pairingStatusInstance = ((string)pairingStatusValue);
+                                    propertiesInstance.PairingStatus = pairingStatusInstance;
+                                }
+                                
+                                JToken roleValue = propertiesValue["role"];
+                                if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                {
+                                    string roleInstance = ((string)roleValue);
+                                    propertiesInstance.Role = roleInstance;
+                                }
+                                
+                                JToken fabricSpecificDetailsValue = propertiesValue["fabricSpecificDetails"];
+                                if (fabricSpecificDetailsValue != null && fabricSpecificDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)fabricSpecificDetailsValue["instanceType"]);
                                 }
                             }
                             
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string idInstance2 = ((string)idValue2);
-                                protectionContainerInstance.Id = idInstance2;
+                                string idInstance = ((string)idValue);
+                                protectionContainerInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                protectionContainerInstance.Name = nameInstance2;
+                                string nameInstance = ((string)nameValue);
+                                protectionContainerInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                protectionContainerInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                protectionContainerInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                protectionContainerInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                protectionContainerInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    protectionContainerInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -572,8 +615,192 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetDiscoverProtectableItemStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LongRunningOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new LongRunningOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken locationValue = responseDoc["Location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["RetryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                int retryAfterInstance = ((int)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken asyncOperationValue = responseDoc["AsyncOperation"];
+                            if (asyncOperationValue != null && asyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string asyncOperationInstance = ((string)asyncOperationValue);
+                                result.AsyncOperation = asyncOperationInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.InProgress;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Get the list of all ProtectionContainers for the given server.
         /// </summary>
+        /// <param name='fabricName'>
+        /// Required. Fabric Unique name.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -583,9 +810,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
-        public async Task<ProtectionContainerListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectionContainerListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -594,6 +825,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -610,12 +842,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "SiteRecoveryVault";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/ProtectionContainers";
+            url = url + "/replicationFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/replicationProtectionContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-10");
+            queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -705,25 +939,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         ProtectionContainerProperties propertiesInstance = new ProtectionContainerProperties();
                                         protectionContainerInstance.Properties = propertiesInstance;
                                         
-                                        JToken serverIdValue = propertiesValue["serverId"];
-                                        if (serverIdValue != null && serverIdValue.Type != JTokenType.Null)
+                                        JToken fabricFriendlyNameValue = propertiesValue["fabricFriendlyName"];
+                                        if (fabricFriendlyNameValue != null && fabricFriendlyNameValue.Type != JTokenType.Null)
                                         {
-                                            string serverIdInstance = ((string)serverIdValue);
-                                            propertiesInstance.ServerId = serverIdInstance;
-                                        }
-                                        
-                                        JToken fabricObjectIdValue = propertiesValue["fabricObjectId"];
-                                        if (fabricObjectIdValue != null && fabricObjectIdValue.Type != JTokenType.Null)
-                                        {
-                                            string fabricObjectIdInstance = ((string)fabricObjectIdValue);
-                                            propertiesInstance.FabricObjectId = fabricObjectIdInstance;
-                                        }
-                                        
-                                        JToken roleValue = propertiesValue["role"];
-                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
-                                        {
-                                            string roleInstance = ((string)roleValue);
-                                            propertiesInstance.Role = roleInstance;
+                                            string fabricFriendlyNameInstance = ((string)fabricFriendlyNameValue);
+                                            propertiesInstance.FabricFriendlyName = fabricFriendlyNameInstance;
                                         }
                                         
                                         JToken friendlyNameValue = propertiesValue["friendlyName"];
@@ -740,307 +960,70 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.FabricType = fabricTypeInstance;
                                         }
                                         
-                                        JToken availableProtectionProfilesArray = propertiesValue["availableProtectionProfiles"];
-                                        if (availableProtectionProfilesArray != null && availableProtectionProfilesArray.Type != JTokenType.Null)
+                                        JToken protectedItemCountValue = propertiesValue["protectedItemCount"];
+                                        if (protectedItemCountValue != null && protectedItemCountValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken availableProtectionProfilesValue in ((JArray)availableProtectionProfilesArray))
-                                            {
-                                                ProtectionProfile protectionProfileInstance = new ProtectionProfile();
-                                                propertiesInstance.AvailableProtectionProfiles.Add(protectionProfileInstance);
-                                                
-                                                JToken propertiesValue2 = availableProtectionProfilesValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    ProtectionProfileProperties propertiesInstance2 = new ProtectionProfileProperties();
-                                                    protectionProfileInstance.CustomData = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken protectedEntityCountValue = propertiesValue2["protectedEntityCount"];
-                                                    if (protectedEntityCountValue != null && protectedEntityCountValue.Type != JTokenType.Null)
-                                                    {
-                                                        int protectedEntityCountInstance = ((int)protectedEntityCountValue);
-                                                        propertiesInstance2.ProtectedEntityCount = protectedEntityCountInstance;
-                                                    }
-                                                    
-                                                    JToken replicationProviderValue = propertiesValue2["replicationProvider"];
-                                                    if (replicationProviderValue != null && replicationProviderValue.Type != JTokenType.Null)
-                                                    {
-                                                        string replicationProviderInstance = ((string)replicationProviderValue);
-                                                        propertiesInstance2.ReplicationProvider = replicationProviderInstance;
-                                                    }
-                                                    
-                                                    JToken replicationProviderSettingsValue = propertiesValue2["replicationProviderSettings"];
-                                                    if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
-                                                    {
-                                                        string typeName = ((string)replicationProviderSettingsValue["__type"]);
-                                                        if (typeName == "HyperVReplicaProtectionProfileDetails")
-                                                        {
-                                                            HyperVReplicaProtectionProfileDetails hyperVReplicaProtectionProfileDetailsInstance = new HyperVReplicaProtectionProfileDetails();
-                                                            
-                                                            JToken recoveryPointsValue = replicationProviderSettingsValue["recoveryPoints"];
-                                                            if (recoveryPointsValue != null && recoveryPointsValue.Type != JTokenType.Null)
-                                                            {
-                                                                int recoveryPointsInstance = ((int)recoveryPointsValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.RecoveryPoints = recoveryPointsInstance;
-                                                            }
-                                                            
-                                                            JToken applicationConsistentSnapshotFrequencyInHoursValue = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
-                                                            if (applicationConsistentSnapshotFrequencyInHoursValue != null && applicationConsistentSnapshotFrequencyInHoursValue.Type != JTokenType.Null)
-                                                            {
-                                                                int applicationConsistentSnapshotFrequencyInHoursInstance = ((int)applicationConsistentSnapshotFrequencyInHoursValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance;
-                                                            }
-                                                            
-                                                            JToken compressionValue = replicationProviderSettingsValue["compression"];
-                                                            if (compressionValue != null && compressionValue.Type != JTokenType.Null)
-                                                            {
-                                                                string compressionInstance = ((string)compressionValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.Compression = compressionInstance;
-                                                            }
-                                                            
-                                                            JToken initialReplicationMethodValue = replicationProviderSettingsValue["initialReplicationMethod"];
-                                                            if (initialReplicationMethodValue != null && initialReplicationMethodValue.Type != JTokenType.Null)
-                                                            {
-                                                                string initialReplicationMethodInstance = ((string)initialReplicationMethodValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.InitialReplicationMethod = initialReplicationMethodInstance;
-                                                            }
-                                                            
-                                                            JToken onlineReplicationStartTimeValue = replicationProviderSettingsValue["onlineReplicationStartTime"];
-                                                            if (onlineReplicationStartTimeValue != null && onlineReplicationStartTimeValue.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan onlineReplicationStartTimeInstance = TimeSpan.Parse(((string)onlineReplicationStartTimeValue), CultureInfo.InvariantCulture);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance;
-                                                            }
-                                                            
-                                                            JToken offlineReplicationImportPathValue = replicationProviderSettingsValue["offlineReplicationImportPath"];
-                                                            if (offlineReplicationImportPathValue != null && offlineReplicationImportPathValue.Type != JTokenType.Null)
-                                                            {
-                                                                string offlineReplicationImportPathInstance = ((string)offlineReplicationImportPathValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationImportPath = offlineReplicationImportPathInstance;
-                                                            }
-                                                            
-                                                            JToken offlineReplicationExportPathValue = replicationProviderSettingsValue["offlineReplicationExportPath"];
-                                                            if (offlineReplicationExportPathValue != null && offlineReplicationExportPathValue.Type != JTokenType.Null)
-                                                            {
-                                                                string offlineReplicationExportPathInstance = ((string)offlineReplicationExportPathValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationExportPath = offlineReplicationExportPathInstance;
-                                                            }
-                                                            
-                                                            JToken replicationPortValue = replicationProviderSettingsValue["replicationPort"];
-                                                            if (replicationPortValue != null && replicationPortValue.Type != JTokenType.Null)
-                                                            {
-                                                                ushort replicationPortInstance = ((ushort)replicationPortValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicationPort = replicationPortInstance;
-                                                            }
-                                                            
-                                                            JToken allowedAuthenticationTypeValue = replicationProviderSettingsValue["allowedAuthenticationType"];
-                                                            if (allowedAuthenticationTypeValue != null && allowedAuthenticationTypeValue.Type != JTokenType.Null)
-                                                            {
-                                                                ushort allowedAuthenticationTypeInstance = ((ushort)allowedAuthenticationTypeValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.AllowedAuthenticationType = allowedAuthenticationTypeInstance;
-                                                            }
-                                                            
-                                                            JToken replicaDeletionOptionValue = replicationProviderSettingsValue["replicaDeletionOption"];
-                                                            if (replicaDeletionOptionValue != null && replicaDeletionOptionValue.Type != JTokenType.Null)
-                                                            {
-                                                                string replicaDeletionOptionInstance = ((string)replicaDeletionOptionValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicaDeletionOption = replicaDeletionOptionInstance;
-                                                            }
-                                                            
-                                                            JToken replicationFrequencyInSecondsValue = replicationProviderSettingsValue["replicationFrequencyInSeconds"];
-                                                            if (replicationFrequencyInSecondsValue != null && replicationFrequencyInSecondsValue.Type != JTokenType.Null)
-                                                            {
-                                                                ushort replicationFrequencyInSecondsInstance = ((ushort)replicationFrequencyInSecondsValue);
-                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicationFrequencyInSeconds = replicationFrequencyInSecondsInstance;
-                                                            }
-                                                            propertiesInstance2.ReplicationProviderSettings = hyperVReplicaProtectionProfileDetailsInstance;
-                                                        }
-                                                        if (typeName == "HyperVReplicaAzureProtectionProfileDetails")
-                                                        {
-                                                            HyperVReplicaAzureProtectionProfileDetails hyperVReplicaAzureProtectionProfileDetailsInstance = new HyperVReplicaAzureProtectionProfileDetails();
-                                                            
-                                                            JToken recoveryPointHistoryDurationValue = replicationProviderSettingsValue["recoveryPointHistoryDuration"];
-                                                            if (recoveryPointHistoryDurationValue != null && recoveryPointHistoryDurationValue.Type != JTokenType.Null)
-                                                            {
-                                                                int recoveryPointHistoryDurationInstance = ((int)recoveryPointHistoryDurationValue);
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.RecoveryPointHistoryDuration = recoveryPointHistoryDurationInstance;
-                                                            }
-                                                            
-                                                            JToken applicationConsistentSnapshotFrequencyInHoursValue2 = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
-                                                            if (applicationConsistentSnapshotFrequencyInHoursValue2 != null && applicationConsistentSnapshotFrequencyInHoursValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int applicationConsistentSnapshotFrequencyInHoursInstance2 = ((int)applicationConsistentSnapshotFrequencyInHoursValue2);
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance2;
-                                                            }
-                                                            
-                                                            JToken replicationIntervalValue = replicationProviderSettingsValue["replicationInterval"];
-                                                            if (replicationIntervalValue != null && replicationIntervalValue.Type != JTokenType.Null)
-                                                            {
-                                                                int replicationIntervalInstance = ((int)replicationIntervalValue);
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ReplicationInterval = replicationIntervalInstance;
-                                                            }
-                                                            
-                                                            JToken onlineReplicationStartTimeValue2 = replicationProviderSettingsValue["onlineReplicationStartTime"];
-                                                            if (onlineReplicationStartTimeValue2 != null && onlineReplicationStartTimeValue2.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan onlineReplicationStartTimeInstance2 = TimeSpan.Parse(((string)onlineReplicationStartTimeValue2), CultureInfo.InvariantCulture);
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance2;
-                                                            }
-                                                            
-                                                            JToken encryptionValue = replicationProviderSettingsValue["encryption"];
-                                                            if (encryptionValue != null && encryptionValue.Type != JTokenType.Null)
-                                                            {
-                                                                string encryptionInstance = ((string)encryptionValue);
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.Encryption = encryptionInstance;
-                                                            }
-                                                            
-                                                            JToken activeStorageAccountValue = replicationProviderSettingsValue["activeStorageAccount"];
-                                                            if (activeStorageAccountValue != null && activeStorageAccountValue.Type != JTokenType.Null)
-                                                            {
-                                                                CustomerStorageAccount activeStorageAccountInstance = new CustomerStorageAccount();
-                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ActiveStorageAccount = activeStorageAccountInstance;
-                                                                
-                                                                JToken storageAccountNameValue = activeStorageAccountValue["storageAccountName"];
-                                                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
-                                                                {
-                                                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
-                                                                    activeStorageAccountInstance.StorageAccountName = storageAccountNameInstance;
-                                                                }
-                                                                
-                                                                JToken subscriptionIdValue = activeStorageAccountValue["subscriptionId"];
-                                                                if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                                                                {
-                                                                    string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                                                    activeStorageAccountInstance.SubscriptionId = subscriptionIdInstance;
-                                                                }
-                                                            }
-                                                            propertiesInstance2.ReplicationProviderSettings = hyperVReplicaAzureProtectionProfileDetailsInstance;
-                                                        }
-                                                    }
-                                                    
-                                                    JToken associationStatusValue = propertiesValue2["associationStatus"];
-                                                    if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string associationStatusInstance = ((string)associationStatusValue);
-                                                        propertiesInstance2.AssociationStatus = associationStatusInstance;
-                                                    }
-                                                    
-                                                    JToken associationDetailArray = propertiesValue2["associationDetail"];
-                                                    if (associationDetailArray != null && associationDetailArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken associationDetailValue in ((JArray)associationDetailArray))
-                                                        {
-                                                            ProtectionProfileAssociationDetails protectionProfileAssociationDetailsInstance = new ProtectionProfileAssociationDetails();
-                                                            propertiesInstance2.AssociationDetail.Add(protectionProfileAssociationDetailsInstance);
-                                                            
-                                                            JToken primaryProtectionContainerIdValue = associationDetailValue["primaryProtectionContainerId"];
-                                                            if (primaryProtectionContainerIdValue != null && primaryProtectionContainerIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string primaryProtectionContainerIdInstance = ((string)primaryProtectionContainerIdValue);
-                                                                protectionProfileAssociationDetailsInstance.PrimaryProtectionContainerId = primaryProtectionContainerIdInstance;
-                                                            }
-                                                            
-                                                            JToken recoveryProtectionContainerIdValue = associationDetailValue["recoveryProtectionContainerId"];
-                                                            if (recoveryProtectionContainerIdValue != null && recoveryProtectionContainerIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string recoveryProtectionContainerIdInstance = ((string)recoveryProtectionContainerIdValue);
-                                                                protectionProfileAssociationDetailsInstance.RecoveryProtectionContainerId = recoveryProtectionContainerIdInstance;
-                                                            }
-                                                            
-                                                            JToken associationStatusValue2 = associationDetailValue["associationStatus"];
-                                                            if (associationStatusValue2 != null && associationStatusValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string associationStatusInstance2 = ((string)associationStatusValue2);
-                                                                protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance2;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = availableProtectionProfilesValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    protectionProfileInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = availableProtectionProfilesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    protectionProfileInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = availableProtectionProfilesValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    protectionProfileInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = availableProtectionProfilesValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    protectionProfileInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)availableProtectionProfilesValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        protectionProfileInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
+                                            int protectedItemCountInstance = ((int)protectedItemCountValue);
+                                            propertiesInstance.ProtectedItemCount = protectedItemCountInstance;
+                                        }
+                                        
+                                        JToken pairingStatusValue = propertiesValue["pairingStatus"];
+                                        if (pairingStatusValue != null && pairingStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string pairingStatusInstance = ((string)pairingStatusValue);
+                                            propertiesInstance.PairingStatus = pairingStatusInstance;
+                                        }
+                                        
+                                        JToken roleValue = propertiesValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            propertiesInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken fabricSpecificDetailsValue = propertiesValue["fabricSpecificDetails"];
+                                        if (fabricSpecificDetailsValue != null && fabricSpecificDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)fabricSpecificDetailsValue["instanceType"]);
                                         }
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        protectionContainerInstance.Id = idInstance2;
+                                        string idInstance = ((string)idValue);
+                                        protectionContainerInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        protectionContainerInstance.Name = nameInstance2;
+                                        string nameInstance = ((string)nameValue);
+                                        protectionContainerInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken typeValue2 = valueValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        protectionContainerInstance.Type = typeInstance2;
+                                        string typeInstance = ((string)typeValue);
+                                        protectionContainerInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken locationValue2 = valueValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        protectionContainerInstance.Location = locationInstance2;
+                                        string locationInstance = ((string)locationValue);
+                                        protectionContainerInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken tagsSequenceElement2 = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in tagsSequenceElement2)
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            string tagsKey2 = ((string)property2.Name);
-                                            string tagsValue2 = ((string)property2.Value);
-                                            protectionContainerInstance.Tags.Add(tagsKey2, tagsValue2);
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
