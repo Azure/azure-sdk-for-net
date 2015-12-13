@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> CreateOrUpdateDatebaseSecurityAlertPolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateDatabaseSecurityAlertPolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns an Azure SQL Database security alert policy.
