@@ -56,6 +56,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='recoveryPointId'>
         /// Recovery point id for the backup item
         /// </param>
+        /// <param name='request'>
+        /// RestoreRequest for the backup item
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -63,6 +66,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreRequest request, CancellationToken cancellationToken);
     }
 }

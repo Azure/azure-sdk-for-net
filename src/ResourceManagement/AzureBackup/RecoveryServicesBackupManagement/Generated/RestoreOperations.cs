@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -84,6 +86,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='recoveryPointId'>
         /// Optional. Recovery point id for the backup item
         /// </param>
+        /// <param name='request'>
+        /// Optional. RestoreRequest for the backup item
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -91,7 +96,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreRequest request, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -101,6 +106,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             if (resourceName == null)
             {
                 throw new ArgumentNullException("resourceName");
+            }
+            if (request != null)
+            {
+                if (request.Properties == null)
+                {
+                    throw new ArgumentNullException("request.Properties");
+                }
             }
             
             // Tracing
@@ -117,6 +129,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("protectedItemName", protectedItemName);
                 tracingParameters.Add("recoveryPointId", recoveryPointId);
+                tracingParameters.Add("request", request);
                 TracingAdapter.Enter(invocationId, this, "TriggerRestoreAsync", tracingParameters);
             }
             
@@ -191,6 +204,72 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (request != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    requestDoc = propertiesValue;
+                    if (request.Properties is IaasVMRestoreRequest)
+                    {
+                        propertiesValue["objectType"] = "IaasVMRestoreRequest";
+                        IaasVMRestoreRequest derived = ((IaasVMRestoreRequest)request.Properties);
+                        
+                        if (derived.RecoveryPointId != null)
+                        {
+                            propertiesValue["recoveryPointId"] = derived.RecoveryPointId;
+                        }
+                        
+                        if (derived.RecoveryType != null)
+                        {
+                            propertiesValue["recoveryType"] = derived.RecoveryType;
+                        }
+                        
+                        if (derived.StorageAccountName != null)
+                        {
+                            propertiesValue["storageAccountName"] = derived.StorageAccountName;
+                        }
+                        
+                        if (derived.VirtualMachineName != null)
+                        {
+                            propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
+                        }
+                        
+                        if (derived.CreateNewCloudService != null)
+                        {
+                            propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
+                        }
+                        
+                        propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
+                        
+                        if (derived.VirtualNetworkName != null)
+                        {
+                            propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;
+                        }
+                        
+                        if (derived.Region != null)
+                        {
+                            propertiesValue["region"] = derived.Region.Value;
+                        }
+                        
+                        if (derived.AffinityGroup != null)
+                        {
+                            propertiesValue["affinityGroup"] = derived.AffinityGroup.Value;
+                        }
+                        
+                        if (derived.SubnetName != null)
+                        {
+                            propertiesValue["subnetName"] = derived.SubnetName;
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -209,7 +288,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
