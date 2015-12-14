@@ -64,11 +64,11 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse CreateOrUpdateDatebaseSecurityAlertPolicy(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateDatabaseSecurityAlertPolicy(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISecurityAlertPolicyOperations)s).CreateOrUpdateDatebaseSecurityAlertPolicyAsync(resourceGroupName, serverName, databaseName, parameters);
+                return ((ISecurityAlertPolicyOperations)s).CreateOrUpdateDatabaseSecurityAlertPolicyAsync(resourceGroupName, serverName, databaseName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> CreateOrUpdateDatebaseSecurityAlertPolicyAsync(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateDatabaseSecurityAlertPolicyAsync(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateDatebaseSecurityAlertPolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateDatabaseSecurityAlertPolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
         
         /// <summary>
