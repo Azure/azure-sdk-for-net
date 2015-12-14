@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class IaasVMRestoreRequest : RestoreRequest
     {
-        private System.DateTime? _affinityGroup;
+        private string _affinityGroup;
         
         /// <summary>
         /// Optional. AffinityGroup of IaasVMRestoreRequest
         /// </summary>
-        public System.DateTime? AffinityGroup
+        public string AffinityGroup
         {
             get { return this._affinityGroup; }
             set { this._affinityGroup = value; }
@@ -85,12 +85,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._recoveryType = value; }
         }
         
-        private System.DateTime? _region;
+        private string _region;
         
         /// <summary>
         /// Optional. Region of IaasVMRestoreRequest
         /// </summary>
-        public System.DateTime? Region
+        public string Region
         {
             get { return this._region; }
             set { this._region = value; }
