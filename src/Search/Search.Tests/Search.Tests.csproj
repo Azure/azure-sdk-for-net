@@ -507,7 +507,7 @@
       <Project>{b89334ca-f73c-4b04-9b38-d61fee4d9de8}</Project>
       <Name>Search.Management.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Search\Search.csproj">
+    <ProjectReference Include="..\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj">
       <Project>{2c21cbe7-5d68-434a-bb20-463886be5551}</Project>
       <Name>Search</Name>
     </ProjectReference>
