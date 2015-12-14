@@ -237,12 +237,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
                         }
                         
-                        if (derived.CreateNewCloudService != null)
-                        {
-                            propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
-                        }
+                        propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
                         
-                        propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
+                        if (derived.CloudServiceOrResourceGroup != null)
+                        {
+                            propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
+                        }
                         
                         if (derived.VirtualNetworkName != null)
                         {
