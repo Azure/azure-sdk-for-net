@@ -41,23 +41,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._affinityGroup = value; }
         }
         
-        private bool _cloudServiceOrResourceGroup;
+        private string _cloudServiceOrResourceGroup;
         
         /// <summary>
         /// Optional. CloudServiceOrResourceGroup of IaasVMRestoreRequest
         /// </summary>
-        public bool CloudServiceOrResourceGroup
+        public string CloudServiceOrResourceGroup
         {
             get { return this._cloudServiceOrResourceGroup; }
             set { this._cloudServiceOrResourceGroup = value; }
         }
         
-        private string _createNewCloudService;
+        private bool _createNewCloudService;
         
         /// <summary>
         /// Optional. CreateNewCloudService of IaasVMRestoreRequest
         /// </summary>
-        public string CreateNewCloudService
+        public bool CreateNewCloudService
         {
             get { return this._createNewCloudService; }
             set { this._createNewCloudService = value; }
