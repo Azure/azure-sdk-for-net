@@ -1739,6 +1739,293 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Get the operation stauts of specific operationId.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required.
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// Required.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public async Task<GetOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException("protectedItemName");
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/protectionContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/protectedItems/";
+            url = url + Uri.EscapeDataString(protectedItemName);
+            url = url + "/operationStatus/";
+            url = url + Uri.EscapeDataString(operationId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-15");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetOperationStatusResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GetOperationStatusResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken operationStatusValue = responseDoc["OperationStatus"];
+                            if (operationStatusValue != null && operationStatusValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)operationStatusValue["objectType"]);
+                                if (typeName == "GetOperationStatus")
+                                {
+                                    GetOperationStatus getOperationStatusInstance = new GetOperationStatus();
+                                    
+                                    JToken idValue = operationStatusValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        getOperationStatusInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = operationStatusValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        getOperationStatusInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken statusValue = operationStatusValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        getOperationStatusInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = operationStatusValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        string startTimeInstance = ((string)startTimeValue);
+                                        getOperationStatusInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = operationStatusValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        string endTimeInstance = ((string)endTimeValue);
+                                        getOperationStatusInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken errorValue = operationStatusValue["error"];
+                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                    {
+                                        OperationStatusError errorInstance = new OperationStatusError();
+                                        getOperationStatusInstance.OperationStatusError = errorInstance;
+                                        
+                                        JToken codeValue = errorValue["code"];
+                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                        {
+                                            string codeInstance = ((string)codeValue);
+                                            errorInstance.Code = codeInstance;
+                                        }
+                                        
+                                        JToken messageValue = errorValue["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            errorInstance.Message = messageInstance;
+                                        }
+                                    }
+                                    
+                                    JToken propertiesValue = operationStatusValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)propertiesValue["ObjectType"]);
+                                        if (typeName2 == "OperationStatusJobExtendedInfo")
+                                        {
+                                            OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
+                                            
+                                            JToken jobIdValue = propertiesValue["jobId"];
+                                            if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                            {
+                                                string jobIdInstance = ((string)jobIdValue);
+                                                operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
+                                            }
+                                            getOperationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
+                                        }
+                                    }
+                                    result.OperationStatus = getOperationStatusInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Get the list of all protected Objects.
         /// </summary>
         /// <param name='resourceGroupName'>
