@@ -251,12 +251,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (derived.Region != null)
                         {
-                            propertiesValue["region"] = derived.Region.Value;
+                            propertiesValue["region"] = derived.Region;
                         }
                         
                         if (derived.AffinityGroup != null)
                         {
-                            propertiesValue["affinityGroup"] = derived.AffinityGroup.Value;
+                            propertiesValue["affinityGroup"] = derived.AffinityGroup;
                         }
                         
                         if (derived.SubnetName != null)
